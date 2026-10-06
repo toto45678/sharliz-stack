@@ -2,171 +2,323 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sharliz Tower – How high can you stack?</title>
 <meta name="description" content="Sharliz Tower is a colorful tower-stacking game. Drop wobbly Sharliz, build sky-high towers across 8 worlds and beat 8 epic bosses. Coming soon to iPhone and Android.">
 <meta property="og:title" content="Sharliz Tower – How high can you stack?">
-<meta property="og:description" content="Stack wobbly Sharliz, explore 8 worlds and beat 8 epic bosses. Coming soon.">
+<meta property="og:description" content="Stack wobbly Sharliz, explore 8 worlds and beat 8 epic bosses. Try the mini demo!">
 <meta property="og:image" content="img/og.jpg">
-<meta name="theme-color" content="#3b1677">
+<meta name="theme-color" content="#2a0f5c">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
 <style>
-:root{--deep:#2a0f5c;--purple:#4b1b94;--pink:#ff4fa3;--yellow:#ffd23f;--teal:#3ccbe6;--ink:#fff;--soft:#e9defd}
+:root{--deep:#230b4f;--purple:#4b1b94;--violet:#6b2bd1;--pink:#ff4fa3;--yellow:#ffd23f;--teal:#3ccbe6;--ink:#fff;--soft:#eadffe}
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:var(--deep);color:var(--ink);font:600 17px/1.55 Nunito,system-ui,sans-serif;overflow-x:hidden}
-h1,h2,h3,.btn,.tag{font-family:"Titan One",system-ui,sans-serif;font-weight:400;letter-spacing:.5px}
-img,video{display:block;max-width:100%}
-.wrap{max-width:1080px;margin:0 auto;padding:0 16px}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--deep);color:var(--ink);font:700 17px/1.5 Nunito,system-ui,sans-serif;overflow-x:hidden}
+h1,h2,h3,.btn,.pill,.badge,.title{font-family:"Titan One",system-ui,sans-serif;font-weight:400;letter-spacing:.4px}
+img,video,canvas{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font-size:20px;padding:14px 24px;border-radius:16px;color:#fff;
+  background:linear-gradient(#ff7cc0,#e8298a);box-shadow:0 6px 0 #9c1a5b,0 10px 20px rgba(0,0,0,.25);text-decoration:none;transition:transform .08s,box-shadow .08s;
+  text-shadow:0 2px 0 rgba(0,0,0,.2)}
+.btn:hover{filter:brightness(1.06)}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #9c1a5b}
+.btn.yellow{background:linear-gradient(#ffe46b,#ffb800);color:#5a2a00;box-shadow:0 6px 0 #b27400,0 10px 20px rgba(0,0,0,.25);text-shadow:none}
+.btn.yellow:active{box-shadow:0 2px 0 #b27400}
+.btn:focus-visible,input:focus-visible,summary:focus-visible,canvas:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
+
+/* top bar */
+.top{position:fixed;inset:0 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:10px 16px;transition:background .25s,box-shadow .25s}
+.top.solid{background:rgba(35,11,79,.9);backdrop-filter:blur(8px);box-shadow:0 4px 18px rgba(0,0,0,.3)}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:"Titan One";font-size:20px}
+.brand img{width:40px;border-radius:11px;box-shadow:0 3px 8px rgba(0,0,0,.35)}
+.top .btn{font-size:16px;padding:9px 16px;box-shadow:0 4px 0 #9c1a5b}
 
 /* hero */
-.hero{position:relative;min-height:100svh;display:flex;align-items:center;justify-content:center;text-align:center;
-  background:url(img/lobby.webp) center 30%/cover no-repeat;padding:48px 16px 120px;overflow:hidden}
-.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,15,92,.15) 0%,rgba(42,15,92,.05) 45%,var(--deep) 100%);pointer-events:none}
-.hero-in{position:relative;z-index:2;max-width:640px}
-.logo{width:min(520px,86vw);margin:0 auto;filter:drop-shadow(0 10px 24px rgba(0,0,0,.35));animation:bob 4s ease-in-out infinite}
-.tagline{font-family:"Titan One";font-size:clamp(26px,5.4vw,44px);margin:6px 0 4px;color:var(--yellow);
-  text-shadow:0 4px 0 #b2346f,0 8px 18px rgba(0,0,0,.4);-webkit-text-stroke:1.5px #7a1d55}
-.sub{font-size:clamp(17px,2.6vw,20px);margin:0 auto 22px;max-width:520px;text-shadow:0 2px 6px rgba(0,0,0,.5)}
-.stack{position:absolute;z-index:1;bottom:40px;width:96px}
-.stack img{width:100%;margin-top:-26px}
-.stack.l{left:4%;animation:sway 3.2s ease-in-out infinite}
-.stack.r{right:4%;animation:sway 3.6s ease-in-out infinite reverse}
-@media (max-width:720px){.stack{display:none}}
+.hero{position:relative;padding:86px 0 70px;background:url(img/lobby.webp) center 22%/cover no-repeat;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(ellipse at 50% 0%,rgba(255,255,255,.18),transparent 55%),
+  linear-gradient(180deg,rgba(35,11,79,.1),rgba(35,11,79,.35) 60%,var(--deep))}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.08fr .92fr;grid-template-areas:"a phone" "b phone";column-gap:40px;align-items:center}
+.copy-a{grid-area:a;align-self:end}.copy-b{grid-area:b;align-self:start}.hero .phone{grid-area:phone}
+.logo{width:min(480px,100%);filter:drop-shadow(0 12px 26px rgba(0,0,0,.4));animation:bob 4s ease-in-out infinite;margin:0 auto 0 0}
+.tagline{font-family:"Titan One";font-size:clamp(28px,4.2vw,46px);line-height:1.1;margin:4px 0 8px;color:var(--yellow);
+  text-shadow:0 4px 0 #b2346f,0 8px 20px rgba(0,0,0,.45);-webkit-text-stroke:1.5px #7a1d55}
+.sub{font-size:19px;margin:0 0 20px;max-width:480px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.pill{background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 14px;font-size:14px;display:inline-flex;gap:6px;align-items:center}
 
-/* signup */
-.signup{background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:2px solid rgba(255,255,255,.25);border-radius:22px;padding:18px;max-width:500px;margin:0 auto}
-.signup label{display:block;font-size:15px;margin-bottom:10px}
+/* signup card */
+.signup{background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.08));backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.3);
+  border-radius:24px;padding:18px;max-width:500px;box-shadow:0 14px 40px rgba(0,0,0,.3)}
+.gift{display:flex;align-items:center;gap:12px;margin:0 0 12px}
+.gift img{width:48px;flex:none;animation:wiggle 2.6s ease-in-out infinite}
+.gift b{font-family:"Titan One";font-weight:400;font-size:19px;display:block;line-height:1.15;color:var(--yellow)}
+.gift span{font-size:14px;color:var(--soft)}
 .row{display:flex;gap:8px;flex-wrap:wrap}
-.row input[type=email]{flex:1 1 220px;min-width:0;font:inherit;padding:14px 16px;border-radius:14px;border:0;color:#2a0f5c}
-.btn{border:0;cursor:pointer;font-size:19px;padding:13px 22px;border-radius:14px;color:#fff;background:linear-gradient(#ff6fb6,#e22f86);
-  box-shadow:0 5px 0 #9c1a5b;transition:transform .1s}
-.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #9c1a5b}
-.fine{font-size:13px;color:var(--soft);margin:10px 0 0;opacity:.9}
-.check{display:flex;gap:8px;align-items:flex-start;font-size:14px;margin-top:10px;text-align:left}
-.check input{margin-top:4px;width:18px;height:18px;flex:none}
-.thanks{display:none;font-family:"Titan One";font-size:22px;color:var(--yellow)}
-.badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
-.tag{background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.3);border-radius:999px;padding:6px 16px;font-size:15px}
+.row input[type=email]{flex:1 1 210px;min-width:0;font:inherit;font-size:17px;padding:14px 16px;border-radius:14px;border:3px solid transparent;color:#2a0f5c;background:#fff}
+.row .btn{flex:1 0 auto}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-top:12px;cursor:pointer}
+.check input{margin-top:2px;width:20px;height:20px;flex:none;accent-color:var(--pink)}
+.fine{font-size:13px;color:var(--soft);margin:10px 0 0}
+.err{color:#ffd0d0;font-size:14px;margin:8px 0 0}
+.err:empty{display:none}
+.thanks{display:none;text-align:center;padding:8px 0}
+.thanks .title{font-size:26px;color:var(--yellow);margin:6px 0}
+.thanks img{width:72px;margin:0 auto;animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+.done .form-in{display:none}.done .thanks{display:block}
+
+/* phone + demo */
+.phone{position:relative;border-radius:40px;padding:11px;background:linear-gradient(160deg,#3b1a7d,#140630);box-shadow:0 30px 60px rgba(0,0,0,.55),inset 0 0 0 2px #7a4ae0;
+  width:min(340px,100%);margin:0 auto}
+.screen{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:9/16;background:#ffd6ec}
+.screen canvas{width:100%;height:100%;touch-action:manipulation;cursor:pointer}
+.hud{position:absolute;inset:12px 12px auto;display:flex;justify-content:space-between;pointer-events:none}
+.hud span{background:rgba(35,11,79,.75);border-radius:999px;padding:4px 12px;font-family:"Titan One";font-size:15px}
+.hint{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:"Titan One";font-size:22px;color:#fff;text-shadow:0 3px 0 #7a1d55,0 0 12px rgba(0,0,0,.4);
+  pointer-events:none;animation:pulse 1.2s ease-in-out infinite}
+.over{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:24px;
+  background:rgba(35,11,79,.82);backdrop-filter:blur(3px)}
+.over.show{display:flex;animation:fade .3s}
+.over .title{font-size:30px;color:var(--yellow);line-height:1.1;text-shadow:0 3px 0 #7a1d55}
+.over p{margin:0;color:var(--soft)}
+.over .btn{width:100%;max-width:240px;font-size:18px}
+.demo-label{position:absolute;top:-16px;left:50%;transform:translateX(-50%) rotate(-3deg);z-index:3;white-space:nowrap}
+.badge{background:var(--yellow);color:#5a2a00;border-radius:12px;padding:5px 14px;font-size:16px;box-shadow:0 4px 0 #b27400}
 
 /* sections */
-section{padding:72px 0}
-h2{font-size:clamp(30px,5vw,46px);text-align:center;margin:0 0 10px;color:var(--yellow);text-shadow:0 4px 0 #7a1d55}
-.lead{text-align:center;max-width:620px;margin:0 auto 36px;color:var(--soft)}
+section{padding:80px 0;position:relative}
+h2{font-size:clamp(32px,5vw,50px);line-height:1.1;text-align:center;margin:0 0 10px;color:var(--yellow);text-shadow:0 4px 0 #7a1d55}
+.lead{text-align:center;max-width:620px;margin:0 auto 40px;color:var(--soft);font-size:18px}
 
-.play{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:40px;align-items:center}
-.phone{border-radius:34px;padding:10px;background:#140630;box-shadow:0 20px 50px rgba(0,0,0,.5),inset 0 0 0 2px #5a2fb0;max-width:320px;margin:0 auto;width:100%}
-.phone video{border-radius:26px;width:100%;aspect-ratio:9/16;object-fit:cover;background:#000}
-.feats{display:grid;gap:16px}
-.feat{display:flex;gap:16px;align-items:center;background:rgba(255,255,255,.07);border-radius:20px;padding:16px 18px}
-.feat img{width:58px;flex:none}
+.play{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:48px;align-items:center}
+.play .screen video{width:100%;height:100%;object-fit:cover}
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.feat{background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.04));border:2px solid rgba(255,255,255,.12);border-radius:22px;padding:18px;transition:transform .2s}
+.feat:hover{transform:translateY(-4px) rotate(-.5deg)}
+.feat img{width:56px;margin-bottom:8px}
 .feat h3{margin:0;font-size:22px}
-.feat p{margin:2px 0 0;color:var(--soft);font-size:16px}
-@media (max-width:760px){.play{grid-template-columns:1fr}}
+.feat p{margin:4px 0 0;color:var(--soft);font-size:16px;font-weight:600}
 
-.worlds{background:linear-gradient(180deg,var(--deep),#3b1677 50%,var(--deep))}
-.wgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.wgrid figure{margin:0;border-radius:18px;overflow:hidden;position:relative;aspect-ratio:1}
-.wgrid img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.wgrid figure:hover img{transform:scale(1.07)}
-.wgrid figcaption{position:absolute;left:0;right:0;bottom:0;padding:22px 10px 8px;font-family:"Titan One";font-size:18px;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.65))}
-@media (max-width:640px){.wgrid{grid-template-columns:repeat(2,1fr)}}
+.cast{background:linear-gradient(180deg,var(--deep),#3a1574)}
+.chars{display:flex;justify-content:center;gap:clamp(8px,3vw,40px);align-items:flex-end;flex-wrap:wrap}
+.char{text-align:center;cursor:pointer;background:none;border:0;color:inherit;font:inherit;padding:0;width:clamp(76px,15vw,150px)}
+.char .hat{width:62%;margin:0 auto -14%;position:relative;z-index:2;transition:transform .3s}
+.char .body{width:100%;margin:0 auto;transition:transform .3s cubic-bezier(.2,1.6,.4,1)}
+.char:hover .body,.char:focus-visible .body{transform:translateY(-10px) scale(1.06)}
+.char:hover .hat{transform:translateY(-16px) rotate(-8deg)}
+.char span{display:block;font-family:"Titan One";margin-top:8px;font-size:15px;color:var(--soft)}
+.note{text-align:center;color:var(--soft);margin-top:26px;font-size:16px}
 
-.bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.bgrid img{border-radius:20px;width:100%;aspect-ratio:1;object-fit:cover;box-shadow:0 10px 26px rgba(0,0,0,.4);border:3px solid rgba(255,210,63,.6)}
-.bgrid img:nth-child(odd){transform:rotate(-2deg)}.bgrid img:nth-child(even){transform:rotate(2deg)}
-@media (max-width:640px){.bgrid{grid-template-columns:repeat(2,1fr)}}
+.worlds{background:#3a1574}
+.rail{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.rail figure{margin:0;border-radius:22px;overflow:hidden;position:relative;aspect-ratio:1;box-shadow:0 10px 24px rgba(0,0,0,.35)}
+.rail img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.rail figure:hover img{transform:scale(1.08)}
+.rail figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 10px;font-family:"Titan One";font-size:19px;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.rail figcaption small{display:block;font-family:Nunito;font-size:12px;opacity:.85}
 
-.cta{text-align:center;background:radial-gradient(circle at 50% 20%,#6b2bd1,var(--deep) 70%)}
-.cta .icon{width:120px;border-radius:28px;margin:0 auto 18px;box-shadow:0 12px 30px rgba(0,0,0,.45)}
+.bosses{background:radial-gradient(ellipse at 50% 30%,#5b1a3e,#1a0638 70%)}
+.bosses h2{color:#ff6b6b;text-shadow:0 4px 0 #4a0b1f}
+.brail{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.boss{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:1;border:3px solid #ffb84d;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+.boss img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.boss:hover img{transform:scale(1.08)}
+.boss .badge{position:absolute;top:10px;left:10px;font-size:13px;padding:3px 10px}
+
+.parents{background:#3a1574}
+.faq{max-width:760px;margin:0 auto;display:grid;gap:12px}
+.faq details{background:rgba(255,255,255,.08);border-radius:18px;padding:0 20px;border:2px solid rgba(255,255,255,.1)}
+.faq summary{cursor:pointer;list-style:none;padding:18px 0;font-family:"Titan One";font-size:19px;display:flex;justify-content:space-between;gap:12px}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";color:var(--yellow);font-size:26px;line-height:.8;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{margin:0 0 18px;color:var(--soft);font-weight:600}
+.trust{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:30px}
+
+.cta{text-align:center;background:radial-gradient(circle at 50% 25%,#7a33e0,var(--deep) 70%)}
+.cta .icon{width:128px;border-radius:30px;margin:0 auto 18px;box-shadow:0 14px 34px rgba(0,0,0,.5);animation:bob 3.4s ease-in-out infinite}
+.cta .signup{margin:0 auto;text-align:left}
 
 footer{text-align:center;padding:30px 16px 40px;color:var(--soft);font-size:14px}
-footer a{color:var(--soft)}
-footer nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+
+/* sticky mobile CTA */
+.sticky{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60;display:none}
+.sticky .btn{width:100%}
+@media (max-width:900px){.sticky{display:block;transform:translateY(160%);transition:transform .3s}.sticky.on{transform:none} footer{padding-bottom:110px}}
+
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
+
+/* responsive */
+@media (max-width:900px){
+  .hero{padding-top:72px;text-align:center}
+  .hero .wrap{grid-template-columns:1fr;grid-template-areas:"a" "phone" "b";row-gap:24px}
+  .logo{margin:0 auto;width:min(380px,84%)}
+  .sub{margin:0 auto 4px}
+  .signup{margin:0 auto;text-align:left}
+  .chips{justify-content:center}
+  .hero .phone{width:min(300px,78vw)}
+  .play{grid-template-columns:1fr}
+  .play h2{text-align:center!important}
+  .play .phone{width:min(280px,72vw)}
+}
+@media (max-width:640px){
+  section{padding:60px 0}
+  .feats{grid-template-columns:1fr 1fr}
+  .feat{padding:14px}.feat h3{font-size:18px}.feat p{font-size:14px}.feat img{width:44px}
+  .rail,.brail{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:4px 16px 14px;scrollbar-width:none}
+  .rail::-webkit-scrollbar,.brail::-webkit-scrollbar{display:none}
+  .rail figure,.boss{flex:0 0 72%;scroll-snap-align:center}
+  .brand span{display:none}
+  .swipe{display:block!important}
+}
+.swipe{display:none;text-align:center;color:var(--soft);font-size:14px;margin-top:6px}
 
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes sway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important}}
+@keyframes wiggle{0%,80%,100%{transform:rotate(0)}85%{transform:rotate(-12deg)}90%{transform:rotate(10deg)}95%{transform:rotate(-6deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes pop{0%{transform:scale(0)}100%{transform:scale(1)}}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="stack l" aria-hidden="true"><img src="img/sh_orange.webp" alt=""><img src="img/sh_pink.webp" alt=""><img src="img/sh_teal.webp" alt=""></div>
-  <div class="stack r" aria-hidden="true"><img src="img/sh_magenta.webp" alt=""><img src="img/sh_teal.webp" alt=""><img src="img/sh_orange.webp" alt=""></div>
-  <div class="hero-in">
-    <h1 style="margin:0"><img class="logo" src="img/logo.webp" alt="Sharliz Tower"></h1>
-    <p class="tagline">How high can you stack?</p>
-    <p class="sub">Drop wobbly Sharliz, build a tower to the sky, and beat 8 epic bosses.</p>
-    <div id="join"></div>
-  </div>
+<header class="top" id="top">
+  <a class="brand" href="#"><img src="img/icon.png" alt=""><span>Sharliz Tower</span></a>
+  <a class="btn" href="#signup">Notify me</a>
 </header>
 
-<template id="signupTpl">
-  <form class="signup" action="#" method="post" novalidate>
-    <div class="form-in">
-      <label>Get one email when the game launches.</label>
-      <div class="row">
-        <input type="email" name="email" placeholder="Parent's email" required autocomplete="email" aria-label="Email address">
-        <button class="btn" type="submit">Notify me</button>
-      </div>
-      <label class="check"><input type="checkbox" name="adult" required> I am 16 or older (kids: ask a parent to sign up for you!)</label>
-      <p class="fine">Just the launch news. No spam, unsubscribe anytime. <a href="privacy.html" style="color:inherit">Privacy</a></p>
+<div class="hero">
+  <div class="wrap">
+    <div class="copy-a">
+      <h1 style="margin:0"><img class="logo" src="img/logo.webp" alt="Sharliz Tower"></h1>
+      <p class="tagline">How high can you stack?</p>
+      <p class="sub">Drop wobbly Sharliz, build a tower to the sky and beat 8 epic bosses. <b>Try it right here!</b></p>
     </div>
-    <p class="thanks" role="status">Yay! We'll let you know 🎉</p>
-  </form>
-</template>
+
+    <div class="phone">
+      <div class="demo-label"><span class="badge">▶ Play the mini demo</span></div>
+      <div class="screen">
+        <canvas id="demo" aria-label="Mini demo: tap to drop a Sharliz and stack them as high as you can"></canvas>
+        <div class="hud"><span id="score">0</span><span id="best">Best 0</span></div>
+        <div class="hint" id="hint">Tap to drop!</div>
+        <div class="over" id="over">
+          <img src="img/ic_trophy.webp" alt="" width="80">
+          <div class="title" id="overTitle">You stacked 0!</div>
+          <p id="overSub">The full game has 80 levels.</p>
+          <button class="btn yellow" id="again" type="button">Play again</button>
+          <a class="btn" href="#signup">Get the full game</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="copy-b">
+      <form class="signup" id="signup" novalidate>
+        <div class="form-in">
+          <div class="gift"><img src="img/ic_gift.webp" alt=""><div><b>Join the waitlist, get a launch gift!</b><span>One email when the game is out, with a free coin bonus.</span></div></div>
+          <div class="row">
+            <label class="sr" for="em1">Email</label>
+            <input id="em1" type="email" name="email" placeholder="Parent's email" required autocomplete="email">
+            <button class="btn" type="submit">Notify me</button>
+          </div>
+          <label class="check"><input type="checkbox" name="adult" required> I'm 16 or older. Kids: ask a grown-up to sign up for you!</label>
+          <p class="err" role="alert"></p>
+          <p class="fine">No spam, ever. Unsubscribe in one click. <a href="privacy.html">Privacy</a></p>
+        </div>
+        <div class="thanks" role="status"><img src="img/ic_star.webp" alt=""><div class="title">You're on the list!</div><p class="fine">We'll email you the moment Sharliz Tower launches.</p></div>
+      </form>
+      <div class="chips"><span class="pill">🍎 iPhone</span><span class="pill">🤖 Android</span><span class="pill">⭐ Free to play</span></div>
+    </div>
+  </div>
+</div>
 
 <main>
   <section>
     <div class="wrap play">
-      <div class="phone"><video src="img/clip.mp4" poster="img/clip_poster.jpg" autoplay muted loop playsinline aria-label="Gameplay clip"></video></div>
+      <div class="phone"><div class="screen"><video src="img/clip.mp4" poster="img/clip_poster.jpg" autoplay muted loop playsinline aria-label="Gameplay clip"></video></div></div>
       <div>
         <h2 style="text-align:left">Tap. Drop. Stack!</h2>
+        <p style="color:var(--soft);margin:0 0 22px;text-align:inherit">Easy to learn, impossible to put down. One tap is all it takes.</p>
         <div class="feats">
-          <div class="feat"><img src="img/sh_teal.webp" alt=""><div><h3>Perfect drops</h3><p>Time your tap, land it perfectly and watch the tower wobble higher and higher.</p></div></div>
-          <div class="feat"><img src="img/sh_orange.webp" alt=""><div><h3>80 levels, 8 worlds</h3><p>From sunny farms to candy land, deep oceans, volcanoes and outer space.</p></div></div>
-          <div class="feat"><img src="img/sh_pink.webp" alt=""><div><h3>Boss battles</h3><p>Every world ends with a giant boss. Stack fast to knock it out!</p></div></div>
-          <div class="feat"><img src="img/sh_magenta.webp" alt=""><div><h3>Collect and dress up</h3><p>Unlock Sharliz friends and silly hats. Every hat gives a different power.</p></div></div>
+          <div class="feat"><img src="img/ic_star.webp" alt=""><h3>Perfect drops</h3><p>Land it just right for combos, sparkles and big points.</p></div>
+          <div class="feat"><img src="img/ic_map.webp" alt=""><h3>80 levels</h3><p>8 worlds to explore, each with its own music.</p></div>
+          <div class="feat"><img src="img/ic_boss.webp" alt=""><h3>Boss battles</h3><p>Stack fast to knock out a giant boss in every world.</p></div>
+          <div class="feat"><img src="img/ic_hats.webp" alt=""><h3>Silly hats</h3><p>Every hat gives your Sharliz a different power.</p></div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="cast">
+    <div class="wrap">
+      <h2>Meet the Sharliz</h2>
+      <p class="lead">Squishy, wobbly and always up for a climb. Collect them all and dress them up!</p>
+      <div class="chars">
+        <button class="char" type="button"><img class="hat" src="img/skin_party.webp" alt=""><img class="body" src="img/sh_orange.webp" alt="Orange Sharliz"><span>Party hat</span></button>
+        <button class="char" type="button"><img class="hat" src="img/skin_pirate.webp" alt=""><img class="body" src="img/sh_pink.webp" alt="Pink Sharliz"><span>Pirate hat</span></button>
+        <button class="char" type="button"><img class="hat" src="img/skin_wizard.webp" alt=""><img class="body" src="img/sh_teal.webp" alt="Teal Sharliz"><span>Wizard hat</span></button>
+        <button class="char" type="button"><img class="hat" src="img/skin_king.webp" alt=""><img class="body" src="img/sh_magenta.webp" alt="Berry Sharliz"><span>King's crown</span></button>
+      </div>
+      <p class="note">Tap a Sharliz to say hi 👋</p>
     </div>
   </section>
 
   <section class="worlds">
     <div class="wrap">
       <h2>8 colorful worlds</h2>
-      <p class="lead">Every world has its own music, weather and surprises.</p>
-      <div class="wgrid">
-        <figure><img src="img/world_farm.webp" alt="Farm world" loading="lazy"><figcaption>Farm</figcaption></figure>
-        <figure><img src="img/world_city.webp" alt="City world" loading="lazy"><figcaption>City</figcaption></figure>
-        <figure><img src="img/world_desert.webp" alt="Desert world" loading="lazy"><figcaption>Desert</figcaption></figure>
-        <figure><img src="img/world_candy.webp" alt="Candy world" loading="lazy"><figcaption>Candy</figcaption></figure>
-        <figure><img src="img/world_snow.webp" alt="Snow world" loading="lazy"><figcaption>Snow</figcaption></figure>
-        <figure><img src="img/world_ocean.webp" alt="Ocean world" loading="lazy"><figcaption>Ocean</figcaption></figure>
-        <figure><img src="img/world_volcano.webp" alt="Volcano world" loading="lazy"><figcaption>Volcano</figcaption></figure>
-        <figure><img src="img/world_space.webp" alt="Space world" loading="lazy"><figcaption>Space</figcaption></figure>
+      <p class="lead">From sunny farms to outer space. Every world has new weather, music and surprises.</p>
+      <div class="rail">
+        <figure><img src="img/world_farm.webp" alt="" loading="lazy"><figcaption>Farm<small>World 1</small></figcaption></figure>
+        <figure><img src="img/world_city.webp" alt="" loading="lazy"><figcaption>City<small>World 2</small></figcaption></figure>
+        <figure><img src="img/world_desert.webp" alt="" loading="lazy"><figcaption>Desert<small>World 3</small></figcaption></figure>
+        <figure><img src="img/world_candy.webp" alt="" loading="lazy"><figcaption>Candy<small>World 4</small></figcaption></figure>
+        <figure><img src="img/world_snow.webp" alt="" loading="lazy"><figcaption>Snow<small>World 5</small></figcaption></figure>
+        <figure><img src="img/world_ocean.webp" alt="" loading="lazy"><figcaption>Ocean<small>World 6</small></figcaption></figure>
+        <figure><img src="img/world_volcano.webp" alt="" loading="lazy"><figcaption>Volcano<small>World 7</small></figcaption></figure>
+        <figure><img src="img/world_space.webp" alt="" loading="lazy"><figcaption>Space<small>World 8</small></figcaption></figure>
       </div>
+      <p class="swipe">Swipe to see all 8 →</p>
     </div>
   </section>
 
-  <section>
+  <section class="bosses">
     <div class="wrap">
       <h2>Beat 8 epic bosses</h2>
       <p class="lead">They're big, they're loud, and they really don't want your tower to grow.</p>
-      <div class="bgrid">
-        <img src="img/boss_farm.webp" alt="Farm boss" loading="lazy">
-        <img src="img/boss_city.webp" alt="City boss" loading="lazy">
-        <img src="img/boss_desert.webp" alt="Desert boss" loading="lazy">
-        <img src="img/boss_candy.webp" alt="Candy boss" loading="lazy">
-        <img src="img/boss_snow.webp" alt="Snow boss" loading="lazy">
-        <img src="img/boss_ocean.webp" alt="Ocean boss" loading="lazy">
-        <img src="img/boss_volcano.webp" alt="Volcano boss" loading="lazy">
-        <img src="img/boss_space.webp" alt="Space boss" loading="lazy">
+      <div class="brail">
+        <figure class="boss"><img src="img/boss_farm.webp" alt="Farm boss" loading="lazy"><span class="badge">BOSS 1/8</span></figure>
+        <figure class="boss"><img src="img/boss_city.webp" alt="City boss" loading="lazy"><span class="badge">BOSS 2/8</span></figure>
+        <figure class="boss"><img src="img/boss_desert.webp" alt="Desert boss" loading="lazy"><span class="badge">BOSS 3/8</span></figure>
+        <figure class="boss"><img src="img/boss_candy.webp" alt="Candy boss" loading="lazy"><span class="badge">BOSS 4/8</span></figure>
+        <figure class="boss"><img src="img/boss_snow.webp" alt="Snow boss" loading="lazy"><span class="badge">BOSS 5/8</span></figure>
+        <figure class="boss"><img src="img/boss_ocean.webp" alt="Ocean boss" loading="lazy"><span class="badge">BOSS 6/8</span></figure>
+        <figure class="boss"><img src="img/boss_volcano.webp" alt="Volcano boss" loading="lazy"><span class="badge">BOSS 7/8</span></figure>
+        <figure class="boss"><img src="img/boss_space.webp" alt="Space boss" loading="lazy"><span class="badge">BOSS 8/8</span></figure>
+      </div>
+      <p class="swipe">Swipe to see all 8 →</p>
+    </div>
+  </section>
+
+  <section class="parents">
+    <div class="wrap">
+      <h2>For parents</h2>
+      <p class="lead">Made for kids and families. Here's what you'll want to know.</p>
+      <div class="trust"><span class="pill">✅ No account needed</span><span class="pill">🔒 No personal data collected</span><span class="pill">👪 Parent gate on purchases</span></div>
+      <div class="faq">
+        <details><summary>Is it free?</summary><p>Yes. Sharliz Tower is free to download and play. There are optional in-game purchases, and every purchase is behind a parent gate.</p></details>
+        <details><summary>Does the game collect my child's data?</summary><p>No. There is no sign-up and no tracking. Game progress is saved only on your device.</p></details>
+        <details><summary>Are there ads?</summary><p>No pop-up ads in the game. Everything can be earned just by playing.</p></details>
+        <details><summary>When does it come out?</summary><p>Soon, on iPhone and Android. Join the waitlist and we'll send you one email on launch day.</p></details>
       </div>
     </div>
   </section>
@@ -174,10 +326,9 @@ footer nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bo
   <section class="cta">
     <div class="wrap">
       <img class="icon" src="img/icon.png" alt="Sharliz Tower app icon">
-      <h2>Coming soon</h2>
-      <p class="lead">Free to play on iPhone and Android.</p>
+      <h2>Be first to stack!</h2>
+      <p class="lead">Coming soon, free on iPhone and Android.</p>
       <div id="join2"></div>
-      <div class="badges"><span class="tag">iPhone</span><span class="tag">Android</span><span class="tag">Free to play</span></div>
     </div>
   </section>
 </main>
@@ -187,20 +338,171 @@ footer nav{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;margin-bo
   © 2026 Sharliz Tower
 </footer>
 
+<div class="sticky" id="sticky"><a class="btn" href="#signup">🎁 Get launch alert</a></div>
+<canvas id="confetti"></canvas>
+
 <script>
-// Signup form: one template rendered in two places. FORM_URL is set once a mailing-list service is chosen.
+// ---------- signup ----------
+// FORM_URL is filled in once a mailing-list service is chosen; until then submissions are not stored.
 const FORM_URL = '';
-const tpl = document.getElementById('signupTpl');
-['join','join2'].forEach(id => document.getElementById(id).appendChild(tpl.content.cloneNode(true)));
-document.querySelectorAll('.signup').forEach(f => f.addEventListener('submit', async e => {
+const form1 = document.getElementById('signup');
+const form2 = form1.cloneNode(true); form2.id = 'signup2';
+form2.querySelector('input[type=email]').id = 'em2'; form2.querySelector('label.sr').htmlFor = 'em2';
+document.getElementById('join2').appendChild(form2);
+[form1, form2].forEach(f => f.addEventListener('submit', async e => {
   e.preventDefault();
-  if (!f.email.checkValidity() || !f.adult.checked) { f.reportValidity(); return; }
-  if (FORM_URL) {
-    try { await fetch(FORM_URL, {method:'POST', body:new FormData(f), mode:'no-cors'}); } catch (_) {}
-  }
-  f.querySelector('.form-in').style.display = 'none';
-  f.querySelector('.thanks').style.display = 'block';
+  const err = f.querySelector('.err');
+  if (!f.email.value || !f.email.checkValidity()) { err.textContent = 'Please type a real email address.'; f.email.focus(); return; }
+  if (!f.adult.checked) { err.textContent = 'Please ask a grown-up to sign up for you.'; return; }
+  err.textContent = '';
+  if (FORM_URL) { try { await fetch(FORM_URL, {method:'POST', body:new FormData(f), mode:'no-cors'}); } catch (_) {} }
+  [form1, form2].forEach(x => x.classList.add('done'));
+  sticky.classList.remove('on');
+  confetti();
 }));
+
+// ---------- top bar + sticky CTA ----------
+const topBar = document.getElementById('top'), sticky = document.getElementById('sticky');
+let formVisible = true, finalVisible = false;
+addEventListener('scroll', () => topBar.classList.toggle('solid', scrollY > 30), {passive:true});
+new IntersectionObserver(es => {
+  formVisible = es[0].isIntersecting;
+  sticky.classList.toggle('on', !formVisible && !finalVisible && !form1.classList.contains('done'));
+}).observe(document.querySelector('.hero'));
+new IntersectionObserver(es => {
+  finalVisible = es[0].isIntersecting;
+  sticky.classList.toggle('on', !formVisible && !finalVisible && !form1.classList.contains('done'));
+}).observe(form2);
+
+// ---------- characters say hi ----------
+document.querySelectorAll('.char').forEach(c => c.addEventListener('click', () => {
+  c.querySelector('.body').animate([{transform:'scale(1,1)'},{transform:'scale(1.25,.75)'},{transform:'translateY(-30px) scale(.85,1.2)'},{transform:'scale(1,1)'}], {duration:600, easing:'ease-out'});
+}));
+
+// ---------- confetti ----------
+function confetti() {
+  const cv = document.getElementById('confetti'), cx = cv.getContext('2d');
+  cv.width = innerWidth; cv.height = innerHeight;
+  const cols = ['#ff4fa3','#ffd23f','#3ccbe6','#ff9a2e','#a46bff'];
+  const ps = Array.from({length:140}, () => ({x:innerWidth/2, y:innerHeight*.45, vx:(Math.random()-.5)*16, vy:-Math.random()*16-4, r:Math.random()*6+4, c:cols[Math.random()*5|0], a:Math.random()*6}));
+  let t = 0;
+  (function f() {
+    cx.clearRect(0,0,cv.width,cv.height);
+    ps.forEach(p => { p.x+=p.vx; p.y+=p.vy; p.vy+=.45; p.vx*=.99; p.a+=.2; cx.save(); cx.translate(p.x,p.y); cx.rotate(p.a); cx.fillStyle=p.c; cx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2); cx.restore(); });
+    if (++t < 160) requestAnimationFrame(f); else cx.clearRect(0,0,cv.width,cv.height);
+  })();
+}
+
+// ---------- mini demo ----------
+(() => {
+  const cv = document.getElementById('demo'), g = cv.getContext('2d');
+  const W = 360, H = 640, PW = 84;
+  const load = s => { const i = new Image(); i.src = s; return i; };
+  const bodies = ['orange','pink','teal','magenta'].map(c => load('img/sh_'+c+'.webp'));
+  const hats = ['party','pirate','wizard','king'].map(h => load('img/skin_'+h+'.webp'));
+  const bg = load('img/world_candy.webp');
+  const STARS = Array.from({length: 40}, () => [Math.random() * W, Math.random() * H, Math.random() * 1.6 + .6]);
+  const PH = PW * 1.2, STEP = PH * .74, BASE_Y = 560;
+  const hud = document.getElementById('score'), bestEl = document.getElementById('best');
+  const hint = document.getElementById('hint'), over = document.getElementById('over');
+  let best = 0; try { best = +localStorage.getItem('sharlizDemoBest') || 0; } catch (_) {}
+  bestEl.textContent = 'Best ' + best;
+  let tower, cur, cam, camT, t, state, pops, shake, started = false;
+
+  function fit() { const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); cv.width = Math.max(1, r.width * d); cv.height = Math.max(1, r.height * d); }
+  function newPiece() {
+    const n = tower.length;
+    return {k: n % 4, hat: Math.random() < .35 ? (Math.random()*4|0) : -1, x: W/2, y: 0, vy: 0, falling: false, phase: Math.random()*6, spd: 1.6 + Math.min(n, 20) * .09, amp: 110, rot: 0};
+  }
+  function reset() {
+    tower = [{x: W/2}];
+    cam = camT = 0; t = 0; pops = []; shake = 0; state = 'play';
+    cur = newPiece(); hud.textContent = '0'; over.classList.remove('show');
+  }
+  const landY = () => BASE_Y - (tower.length - 1) * STEP;   // bottom edge where the next piece lands
+  function drop() {
+    if (state !== 'play' || cur.falling) return;
+    if (!started) { started = true; hint.style.display = 'none'; }
+    cur.falling = true; cur.vy = 2;
+  }
+  function land() {
+    const topP = tower[tower.length - 1], off = cur.x - topP.x;
+    if (Math.abs(off) < PW * .55) {
+      const perfect = Math.abs(off) < 7;
+      tower.push({x: perfect ? topP.x : cur.x, k: cur.k, hat: cur.hat, squash: 1});
+      const n = tower.length - 1;
+      hud.textContent = n;
+      pops.push({txt: perfect ? 'PERFECT!' : ['Nice!','Great!','Wow!'][Math.random()*3|0], x: W/2, y: landY() - 40, life: 1, col: perfect ? '#ffd23f' : '#fff'});
+      camT = Math.max(0, (n - 3) * STEP);
+      cur = newPiece();
+    } else {
+      cur.fallOff = off > 0 ? 1 : -1; state = 'fail'; shake = 12;
+      setTimeout(gameOver, 900);
+    }
+  }
+  function gameOver() {
+    const n = tower.length - 1;
+    if (n > best) { best = n; try { localStorage.setItem('sharlizDemoBest', best); } catch (_) {} }
+    bestEl.textContent = 'Best ' + best;
+    document.getElementById('overTitle').textContent = 'You stacked ' + n + '!';
+    document.getElementById('overSub').textContent = n >= 10 ? 'Amazing! Wait till you meet the bosses.' : 'The full game has 80 levels and 8 bosses!';
+    state = 'over'; over.classList.add('show');
+  }
+  function drawPiece(p, x, y, sq) {
+    const img = bodies[p.k], s = sq || 0;
+    const w = PW * (1 + s * .18), h = PH * (1 - s * .15);
+    if (img.complete) g.drawImage(img, x - w/2, y - h, w, h);
+    if (p.hat >= 0 && hats[p.hat].complete) { const hi = hats[p.hat], hw = PW * .7, hh = hw * hi.naturalHeight / hi.naturalWidth; g.drawImage(hi, x - hw/2, y - h - hh * .62, hw, hh); }
+  }
+  function frame() {
+    t += 1/60;
+    cam += (camT - cam) * .08;
+    g.setTransform(cv.width / W, 0, 0, cv.height / H, 0, 0);
+    // sky gets darker (and starry) the higher the tower climbs
+    const bgY = cam * .25, k = Math.min(1, cam / 1400), mix = (a, b) => Math.round(a + (b - a) * k);
+    const top = [mix(120,30), mix(190,10), mix(255,80)], low = [mix(190,90), mix(228,40), mix(255,160)];
+    const sky = g.createLinearGradient(0, bgY - 420, 0, bgY);
+    sky.addColorStop(0, `rgb(${top})`); sky.addColorStop(1, `rgb(${low})`);
+    g.fillStyle = sky; g.fillRect(0, 0, W, H);
+    if (k > .3) { g.fillStyle = `rgba(255,255,255,${(k - .3) * 1.4})`; for (const [x, y, r] of STARS) { g.beginPath(); g.arc(x, (y + cam * .1) % H, r * (1 + .3 * Math.sin(t * 3 + x)), 0, 7); g.fill(); } }
+    if (bg.complete) {
+      g.drawImage(bg, (W - H)/2, bgY, H, H);
+      // blend the picture's pale sky into the live sky
+      const f = g.createLinearGradient(0, bgY - 2, 0, bgY + H * .5);
+      f.addColorStop(0, `rgba(${low},1)`); f.addColorStop(1, `rgba(${low},0)`);
+      g.fillStyle = f; g.fillRect(0, bgY - 2, W, H * .5 + 2);
+    }
+    const sx = shake ? (Math.random() - .5) * shake : 0; shake *= .85; if (shake < .5) shake = 0;
+    g.save(); g.translate(sx, cam);
+    g.fillStyle = '#e8298a'; g.beginPath(); g.roundRect(W/2 - 80, BASE_Y, 160, 30, 14); g.fill();
+    g.fillStyle = '#ff8cc6'; g.beginPath(); g.roundRect(W/2 - 80, BASE_Y, 160, 12, [14,14,0,0]); g.fill();
+    const n = tower.length, wob = Math.sin(t * 2.2) * Math.min(n, 14) * .6;
+    for (let i = 1; i < n; i++) {
+      const p = tower[i]; if (p.squash) p.squash *= .85;
+      drawPiece(p, p.x + wob * (i / n), BASE_Y - (i - 1) * STEP, p.squash);
+    }
+    if (state !== 'over') {
+      if (!cur.falling) { cur.x = W/2 + Math.sin(t * cur.spd + cur.phase) * cur.amp; cur.y = -cam + 205; }
+      else if (state === 'play') {
+        cur.vy += .9; cur.y += cur.vy;
+        if (cur.y >= landY()) { cur.y = landY(); land(); }
+      } else {
+        cur.vy += .9; cur.y += cur.vy; cur.x += cur.fallOff * 3; cur.rot += cur.fallOff * .08;
+      }
+      if (state === 'play' && !cur.falling) { g.strokeStyle = 'rgba(255,255,255,.6)'; g.lineWidth = 2; g.setLineDash([4, 7]); g.beginPath(); g.moveTo(cur.x, cur.y + 4); g.lineTo(cur.x, landY() - PH); g.stroke(); g.setLineDash([]); }
+      g.save(); g.translate(cur.x, cur.y); g.rotate(cur.rot); drawPiece(cur, 0, 0); g.restore();
+    }
+    g.textAlign = 'center'; g.font = '28px "Titan One", sans-serif'; g.lineWidth = 6; g.strokeStyle = '#7a1d55'; g.lineJoin = 'round';
+    pops = pops.filter(p => (p.life -= .02) > 0);
+    pops.forEach(p => { g.globalAlpha = Math.min(1, p.life * 2); const y = p.y - (1 - p.life) * 40; g.strokeText(p.txt, p.x, y); g.fillStyle = p.col; g.fillText(p.txt, p.x, y); });
+    g.globalAlpha = 1; g.restore();
+    requestAnimationFrame(frame);
+  }
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); drop(); });
+  cv.tabIndex = 0; cv.addEventListener('keydown', e => { if (e.code === 'Space' || e.code === 'Enter') { e.preventDefault(); drop(); } });
+  document.getElementById('again').addEventListener('click', reset);
+  addEventListener('resize', fit); fit(); reset(); requestAnimationFrame(frame);
+})();
 </script>
 </body>
 </html>
