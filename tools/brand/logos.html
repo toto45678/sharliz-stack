@@ -47,7 +47,7 @@ body{margin:0;background:transparent;padding:20px;display:flex;flex-wrap:wrap;ga
 </template>
 <script>
 const V={he:{W1:'מגדל',W2:'השארליזים',F1:250,T1:305,F2:120,T2:495,X1:668,X2:676,X3:664,X4:676,G1:160,U1:210,G2:96,U2:345,H2:100,DIR:'rtl',V1:90,RB:360,V2:383,PX:150,PY:90,FL:230},
-         en:{W1:'SHARLIZ',W2:'STACK',F1:200,T1:300,F2:130,T2:480,X1:770,X2:778,X3:765,X4:778,G1:150,U1:220,G2:100,U2:350,H2:100,DIR:'ltr',V1:100,RB:360,V2:382,PX:845,PY:100,FL:200}};
+         en:{W1:'SHARLIZ',W2:'TOWER',F1:200,T1:300,F2:130,T2:480,X1:770,X2:778,X3:765,X4:778,G1:150,U1:220,G2:100,U2:350,H2:100,DIR:'ltr',V1:100,RB:360,V2:382,PX:845,PY:100,FL:200}};
 const cls=['orng','pink','blue','berry','','orng','pink'];
 for(const L of ['he','en']){const v=V[L];let h=document.getElementById('T').innerHTML;
   const letters=[...v.W1].map((c,i)=>`<div class="bt ${cls[i%cls.length]}" style="position:relative;font-size:${v.FL}px;transform:translateY(${[0,-18,10,-10,6,-14,8][i]}px) rotate(${[-8,6,-4,9,-6,5,-7][i]}deg)"><span class="s">${c}</span><span class="f">${c}</span></div>`).join('');
