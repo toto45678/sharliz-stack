@@ -50,7 +50,8 @@ python3 -m http.server 8765       # manual look
 - Prices/IAP are test-mode only (`IAP` in v28.js; real payments need a native wrapper later).
 
 ## Status / open work (update when you finish something)
-Done recently: 3D bosses for all 8 worlds (Meshy multi-view), boss signature attacks, 3D gags, foreground caps (farm/ocean/volcano), PWA on GitHub Pages.
+Done Oct 6 (logo-icon, merged): new home-screen icon + lobby logo art made in Raz's ChatGPT (masters in `tools/brand/chatgpt/`, regenerate sizes with `python3 tools/brand/make_icons.py icon1|icon2`); lobby logo is now an image (`art/logo_he.webp` / `art/logo_en.webp`, English says SHARLIZ TOWER) via a build.py patch on `buildLogo`. Character look for any art: plain white oval eyes, NO pupils.
+Also done: 3D bosses for all 8 worlds (Meshy multi-view), boss signature attacks, 3D gags, foreground caps (farm/ocean/volcano), PWA on GitHub Pages.
 
 Done Oct 6 (src/v36.js + v36.css + build.py patches):
 - Smooth character outline while swinging (sheared strips, N=28, high-quality smoothing) — was a stair-step from 18 shifted strips.
