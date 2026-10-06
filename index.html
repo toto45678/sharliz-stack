@@ -616,18 +616,22 @@ canvas.wt{position:fixed;inset:0;width:100vw;height:100vh;z-index:98}
 @media (prefers-reduced-motion:reduce){.stars.triple img,.stars.triple::before,.triple-tag{animation:none}#overlay .confetti{display:none}}
 /* v37 – burst victory popup (compact card centred over the dimmed game) */
 #overlay.wb-ov.dim{background:radial-gradient(ellipse at 50% 50%,rgba(60,20,120,.45),rgba(8,4,26,.7));-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
-#overlay.wb-ov{align-items:center;padding-top:calc(env(safe-area-inset-top,0px) + 56px)}
+#overlay.wb-ov{align-items:center;padding-top:calc(env(safe-area-inset-top,0px) + 20px)}
 #card.card.win.wb{max-width:336px;gap:8px;padding:4px 14px 14px;background:radial-gradient(circle at 50% 20%,rgba(255,150,225,.6) 0,rgba(255,150,225,0) 40%),repeating-conic-gradient(from -3deg at 50% 20%,#8f2df0 0 8deg,#b833ff 8deg 16deg),#7a1fd6;
   border:4px solid var(--ink);border-radius:28px;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 7px 0 var(--ink),0 18px 40px rgba(0,0,0,.5)}
-.card.wb .card-title{rotate:-6deg;font-size:clamp(2.7rem,13vw,3.4rem);margin-top:-50px}
+.card.wb .card-title{rotate:-5deg;font-size:clamp(2.5rem,12vw,3.1rem);margin-top:44px}
+#card.card.win.wb{margin-top:140px}
+.card.wb:has(.triple-tag) .card-title{margin-top:58px}
+.card.wb .wb-top{position:absolute;left:0;right:0;bottom:calc(100% - 30px);display:flex;flex-direction:column;align-items:center;pointer-events:none;z-index:1}
+.card.wb .wb-hero{display:block;margin-bottom:-50px;filter:drop-shadow(0 5px 0 rgba(30,0,60,.4))}
+.card.wb .wb-top .stars{position:relative;isolation:auto;gap:0;margin:0}
+.card.wb>.card-title,.card.wb>.card-body{position:relative;z-index:2}
+.card.wb .stars img{width:66px;height:66px}.card.wb .stars img:nth-child(2){width:98px;height:98px;margin:0 -4px 14px}
+.card.wb .wb-top .triple-tag{position:absolute;z-index:3;top:calc(100% - 30px);left:50%;translate:-50% 0;margin:0;font-size:1.1rem;rotate:-4deg}
 .card.wb .card-title .bt-f{background-image:linear-gradient(180deg,#fffbe0 0%,#ffe24d 38%,#ffb000 72%,#ff7a00 100%)}
 .card.wb .card-body{gap:7px;padding-bottom:2px}
-.card.wb .card-anim{display:none}
-.card.wb .stars{order:-2;position:relative;rotate:-4deg;margin:0 0 -2px}
-.card.wb .stars img{width:58px;height:58px}.card.wb .stars img:nth-child(2){width:76px;height:76px;margin-bottom:12px}
 .card.wb .stars::after{content:'';position:absolute;left:50%;top:50%;width:230px;height:110px;margin:-55px 0 0 -115px;z-index:-1;pointer-events:none;
   background:repeating-conic-gradient(from 0deg at 50% 50%,rgba(255,236,120,.75) 0 3deg,rgba(255,236,120,0) 3deg 18deg);-webkit-mask:radial-gradient(ellipse,transparent 30%,#000 40%,transparent 72%);mask:radial-gradient(ellipse,transparent 30%,#000 40%,transparent 72%)}
-.card.wb .triple-tag{order:-1;position:relative;z-index:3;margin:-16px auto 0;font-size:1.15rem;rotate:-4deg}
 .card.wb p{color:#f4e6ff;font-size:.85rem;text-shadow:0 2px 0 rgba(40,0,70,.6)}
 .card.wb .new-hat{font-size:1rem}.card.wb .new-hat img,.card.wb .new-hat canvas{max-height:34px;width:auto}
 .card.wb .win-ms span{background:rgba(40,0,80,.4);color:#ffd9f2}
@@ -646,7 +650,7 @@ canvas.wt{position:fixed;inset:0;width:100vw;height:100vh;z-index:98}
 .card.wb .tally3 .tally-total strong{font-size:1.7rem;direction:ltr;unicode-bidi:isolate}
 .card.wb .actions{gap:10px}
 .card.wb .actions .btn.primary{rotate:-2deg;font-size:1.55rem;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 6px 0 var(--ink)}
-@media (max-height:700px){.card.wb .stars img{width:48px;height:48px}.card.wb .stars img:nth-child(2){width:62px;height:62px}.card.wb p{display:none}.card.wb .tally3 .t-ic{width:28px;height:28px}}
+@media (max-height:700px){#card.card.win.wb{margin-top:96px}.card.wb .wb-hero{margin-bottom:-40px}.card.wb .card-title{margin-top:38px;font-size:2.3rem}.card.wb .stars img{width:52px;height:52px}.card.wb .stars img:nth-child(2){width:76px;height:76px;margin-bottom:12px}.card.wb p{display:none}.card.wb .tally3 .t-ic{width:28px;height:28px}}
 
 </style>
 
@@ -4053,6 +4057,10 @@ function animStars(st){if(st.dataset.anim)return;st.dataset.anim='1';const imgs=
 /* --- v37: "burst" victory popup (Brawl-Stars-like energy, kept as a card over the game) --- */
 function winBurst(){const card=document.getElementById('card');if(!card||!card.classList.contains('win')||!card.querySelector('.stars'))return;
   card.classList.add('wb');const ov=document.getElementById('overlay');ov.classList.remove('rays','top');ov.classList.add('wb-ov','dim');
+  if(!card.querySelector('.wb-top')){const st=card.querySelector('.stars'),top=document.createElement('div');top.className='wb-top';
+    const old=card.querySelector('.card-body .card-anim');if(old)old.remove();
+    let hc=null;if(typeof H3!=='undefined'&&H3.baked){hc=document.createElement('canvas');hc.className='wb-hero';top.appendChild(hc)}
+    top.appendChild(st);card.prepend(top);if(hc)startCardHero(hc,'dance',innerHeight<700?130:170)}
   const tl=card.querySelector('.tally3');if(tl&&!tl.querySelector('.wb-coin')){const tot=tl.querySelector('.tally-total');if(tot)tot.classList.add('wb-coin')}}
 {const _so3=showOverlay;showOverlay=function(build,dim){document.getElementById('overlay').classList.remove('wb-ov');_so3(build,dim);winBurst();const rr=rerenderOverlay;if(rr)rerenderOverlay=()=>{rr();winBurst()}}}
 

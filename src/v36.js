@@ -53,5 +53,9 @@ function animStars(st){if(st.dataset.anim)return;st.dataset.anim='1';const imgs=
 /* --- v37: "burst" victory popup (Brawl-Stars-like energy, kept as a card over the game) --- */
 function winBurst(){const card=document.getElementById('card');if(!card||!card.classList.contains('win')||!card.querySelector('.stars'))return;
   card.classList.add('wb');const ov=document.getElementById('overlay');ov.classList.remove('rays','top');ov.classList.add('wb-ov','dim');
+  if(!card.querySelector('.wb-top')){const st=card.querySelector('.stars'),top=document.createElement('div');top.className='wb-top';
+    const old=card.querySelector('.card-body .card-anim');if(old)old.remove();
+    let hc=null;if(typeof H3!=='undefined'&&H3.baked){hc=document.createElement('canvas');hc.className='wb-hero';top.appendChild(hc)}
+    top.appendChild(st);card.prepend(top);if(hc)startCardHero(hc,'dance',innerHeight<700?130:170)}
   const tl=card.querySelector('.tally3');if(tl&&!tl.querySelector('.wb-coin')){const tot=tl.querySelector('.tally-total');if(tot)tot.classList.add('wb-coin')}}
 {const _so3=showOverlay;showOverlay=function(build,dim){document.getElementById('overlay').classList.remove('wb-ov');_so3(build,dim);winBurst();const rr=rerenderOverlay;if(rr)rerenderOverlay=()=>{rr();winBurst()}}}

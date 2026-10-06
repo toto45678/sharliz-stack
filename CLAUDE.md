@@ -56,7 +56,7 @@ Done Oct 6 (src/v36.js + v36.css + build.py patches):
 - Smooth character outline while swinging (sheared strips, N=28, high-quality smoothing) — was a stair-step from 18 shifted strips.
 - Popups: info messages go to a toast lane at the bottom (`toast()`, max 3, de-duplicated); landing feedback smaller, beside the tower; "nice" removed; boss damage numbers stay on the boss.
 - End card: coin rows grouped into ≤3 (clear / skill / bonuses) with icons, pill styling; stars drop in one by one with sound + sparks; 3 stars → rays, bouncing stars, "מושלם!" tag, confetti; mission checklist shows only missed missions.
-- Victory popup "burst" (v37, `winBurst()` in v36.js + `.card.wb` CSS): compact purple burst card centred over the dimmed game, tilted yellow title, stars on top, 3 tilted reward cards + yellow coin badge; hero canvas hidden on wins. Chosen by Tzach from 4 GPT mockups (#2).
+- Victory popup "burst" (v37, `winBurst()` in v36.js + `.card.wb` CSS): compact purple burst card centred over the dimmed game, tilted yellow title, stars on top, 3 tilted reward cards + yellow coin badge; stars + dancing hero (`.wb-top`, moved out of card-body) break out above the card top, middle star bigger. Chosen by Tzach from 4 GPT mockups (#2).
 
 Next: full bug hunt across the game (Tzach asked for it).
 
