@@ -1,14 +1,17 @@
 [
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155022_f4f91726-193a-4eca-8228-c32e60f8c60c.png",
-  "out": "tools/bosses/concept_cityN.png"
+  "out": "tools/bosses/concept_cityN.png",
+  "done": 1
  },
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155215_7d463abe-532c-4b80-90b4-501c79ac9a71.png",
-  "out": "tools/bosses/concept_dino.png"
+  "out": "tools/bosses/concept_dino.png",
+  "done": 1
  },
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155420_b0adf7fd-8b57-427f-941b-c4e0a738c0cd.png",
-  "out": "tools/bosses/concept_snowN.png"
+  "out": "tools/bosses/concept_snowN.png",
+  "done": 1
  }
 ]
