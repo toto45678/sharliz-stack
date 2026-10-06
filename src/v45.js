@@ -29,3 +29,5 @@ Object.assign(B3D_RIG,{
   crystal:{head:{y0:.66,py:.62,amp:.04},yaw:-.32,bob:.012,atk:'shake'}});
 // preload the stage's own boss with its world
 {const _pw=preloadWorld;preloadWorld=function(zid){_pw(zid);try{const z=zone();if(z&&z.id===zid&&z.sid!==zid&&B3D_META[z.sid]){hzPic('boss_'+z.sid);hzPic('boss_'+z.sid+'_hurt');b3Load(z.sid)}}catch(e){}}}
+// sticker book: all 30 bosses (the 8 classic ones + the stages that have their own boss picture)
+const bossAll=()=>BOSS_HATS.concat(ZONES.filter(z=>z.sid!==z.id).map(z=>z.sid));
