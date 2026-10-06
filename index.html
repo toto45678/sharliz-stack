@@ -3073,7 +3073,7 @@ function petStep(u,tt,dt){const t=(u.t+=dt);if(u.float){u.g.position.y=.12+Math.
 
 /* ---------- baking the in-game sprites (every colour wears your hat; the base of the tower is you) ---------- */
 /* baked sprite cache: the 3D sheets are kept on the device, so later launches skip the bake */
-const BAKE_V='b28';
+const BAKE_V='b29';
 function bakeDB(){if(!H3.dbP)H3.dbP=new Promise(res=>{try{const q=indexedDB.open('sharliz-bake',1);q.onupgradeneeded=()=>q.result.createObjectStore('s');q.onsuccess=()=>res(q.result);q.onerror=()=>res(null)}catch(e){res(null)}});return H3.dbP}
 function bakeGet(db,k){return new Promise(res=>{try{const r=db.transaction('s').objectStore('s').get(k);r.onsuccess=()=>res(r.result||null);r.onerror=()=>res(null)}catch(e){res(null)}})}
 function bakePut(col,sig,sheet,cells){bakeDB().then(db=>{if(!db||!sheet.toBlob)return;sheet.toBlob(b=>{if(!b)return;try{db.transaction('s','readwrite').objectStore('s').put({sig,blob:b,cells},BAKE_V+'|'+col)}catch(e){}},'image/webp',.92)})}
@@ -5318,6 +5318,11 @@ function csBuy(c,id){if(STYLE_CAT[c]){const q=STYLE_SKINS.find(q=>q.id===id);if(
     progress.coins-=q.price;progress.skins.push(id);progress[q.cat+'skin']=id;W3.sel=null;sfx.flourish&&sfx.flourish(2);saveProgress();updateWalletUI();renderWardrobe();return}
   wBuy()}
 {const _ow=openWardrobe;openWardrobe=function(...a){const r=_ow(...a);CS.slot=csSlotOf(W3.cat)||'look';return r}}
+// every pattern drawn 30% bigger (Tzach): paint at 1/1.3 size, then stretch to the full texture — periodic patterns stay seamless
+const PAT_SCALE=1.3;
+{const _pt=patternTex;patternTex=function(id,base){const _ct=canvasTex;
+  canvasTex=function(k,w,h,draw){return _ct(k+'_x'+PAT_SCALE,w,h,(g,W,H)=>{const c=document.createElement('canvas');c.width=Math.round(W/PAT_SCALE);c.height=Math.round(H/PAT_SCALE);draw(c.getContext('2d'),c.width,c.height);g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(c,0,0,W,H)})};
+  try{return _pt(id,base)}finally{canvasTex=_ct}}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
