@@ -1,0 +1,5 @@
+/* v39: hat power box in the wardrobe */
+.wd-foot{flex-wrap:wrap;gap:6px}
+.wd-perk.hatfx{display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 14px;font-size:.84rem;line-height:1.25}
+.wd-perk.hatfx .hp::before{content:'▲ ';color:#7cff5a}
+.wd-perk.hatfx .hm::before{content:'▼ ';color:#ff7a8a}
