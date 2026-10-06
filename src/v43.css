@@ -1,0 +1,4 @@
+/* v43 tester report */
+.tr-help{margin:0 0 8px;font-size:13px;opacity:.8;text-align:center}
+.tr-text{max-height:min(46vh,340px);overflow:auto;border:2px solid #120d2b;border-radius:12px;padding:8px 10px;font:600 13px/1.45 Rubik,system-ui,sans-serif;background:#fff8ea;color:#1a1020;text-align:start;-webkit-user-select:text;user-select:text}
+.tr-text div{overflow-wrap:anywhere}.tr-text .tr-stuck{color:#c2410c}

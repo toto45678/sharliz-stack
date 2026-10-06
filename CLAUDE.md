@@ -28,6 +28,7 @@ src/v40.js/.css        starter pack: one-time IAP 'starter' (₪9.90: 2000 coins
 src/v38.js/.css        daily login gift: 7-day streak calendar (progress.login), pops up once a day in the lobby
 src/v42.js/.css       seasons: 300 levels (ZONES expanded in build.py; z.sid stage id, z.season), night/storm look, map banners
 src/v44.js            22 new mechanics/enemies (MECH, MECH_OF stage→mechanic) + the 22 new bosses' attacks (BOSS_ATK[sid])
+src/v43.js/.css        tester report: anonymous per-level stats on the device (localStorage 'sharliz-tester'), hidden Settings row
 src/v33.js            3D bosses: loads art/b3d_<zone>.{wasm,json,_map/_mr/_nrm.webp}, procedural rig per boss (B3D_RIG),
                       idle/wind-up/attack signature move/phase roar/entrance/defeat (b3Draw)
 tools/build.py        applies exact-string patches (rep) to base.html, injects the modules + css, writes index.html
@@ -90,5 +91,6 @@ Seasons (branch seasons, Oct 6 — plan doc https://claude.ai/artifact/AjThwQ3sB
 
 Done Oct 6 (branch mechanics, src/v44.js): 22 new mechanics, one per new stage (MECH_OF): S2 night bats/blackout/scorpion/jelly/icicle/jellyfish/lava(passive)/portal; S3 storm tornado/newspaper/dunes(passive)/hail/freeze/waves(passive)/meteor/gravity + lightning everywhere in S3 + slippery landings; S4 monkey/ghost/cloud/egg/conveyor(passive)/mirror. Each has an intro card with a demo, tap-to-stop enemies give points. Season intro card the first time S2/S3/S4 starts. Night fireflies (tap → more light). Stage hazard list = own + up to 2 earlier ones of the season + seeded classics (mechList). New bosses attack with their stage mechanic (BOSS_ATK[sid]; phase 3 adds the classic attack). Bot: 0 JS errors on levels 81-300.
 NEXT: 22 new boss 3D models (Tzach: bosses must not repeat) — still reuse the S1 art-world models; then art+music for the 6 S4 worlds.
+Done Oct 6 (src/v43.js + v43.css, branch tester-report): beta "tester report" for kid testers. Counts per level: tries, wins, losses, quits (tries−wins−losses), seconds actually playing, best floor, boosters used; plus days played, launches, total play time, easy mode, coarse platform + screen size, last 5 JS errors. Stored only on the device in localStorage `sharliz-tester` (not in `progress`, so save codes don't carry it). Hidden: Settings → tap the "Language" label 5 times → a "Tester report" row appears (stays on); the report has Copy (for WhatsApp) and Reset (tap twice). Levels with 4+ losses/quits and no win are marked "stuck here". Retry and continue-from-checkpoint count as a new try. Beta plan: /mnt/project-files/testing/beta-plan.md.
 
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.

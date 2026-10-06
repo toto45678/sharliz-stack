@@ -201,8 +201,8 @@ rep("b.atkAt=time;BOSS_ATK[b.z](b);","b.atkAt=time;(BOSS_ATK[b.sid]||BOSS_ATK[b.
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v44.js')
-css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')
+css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')
