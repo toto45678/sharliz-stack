@@ -1,0 +1,82 @@
+[
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155019_04ca10de-4bf3-4772-b561-402d71cd1eec.png",
+  "out": "tools/bosses/concept_farmN.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155025_6681ce67-1241-46a9-941e-359099762c1d.png",
+  "out": "tools/bosses/concept_desertN.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155020_2e983cd9-0875-499a-85c5-b43bb36f9618.png",
+  "out": "tools/bosses/concept_candyN.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155019_c3a60f43-9f63-4ad8-a96c-144ecdb7d6ef.png",
+  "out": "tools/bosses/concept_snowN.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155023_9f8e511e-789f-4d6c-b565-904cad0bada3.png",
+  "out": "tools/bosses/concept_oceanN.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155021_74e203af-b499-43d8-acec-dfbc1bdd0ef2.png",
+  "out": "tools/bosses/concept_volcanoN.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155018_0d59d830-adca-4ad3-b074-5054fa75b880.png",
+  "out": "tools/bosses/concept_spaceN.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155020_6804796e-d305-439f-9d5f-c7e10c9c7908.png",
+  "out": "tools/bosses/concept_farmS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155021_66fd16db-e39e-4df4-89ce-ba33e37bae20.png",
+  "out": "tools/bosses/concept_cityS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155019_7f88cc59-5a33-4e19-b5f1-b4ba040f76ce.png",
+  "out": "tools/bosses/concept_desertS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155020_1606b9a4-7251-498e-bf67-23938a128286.png",
+  "out": "tools/bosses/concept_candyS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155056_529fc6db-35d1-4778-b784-4a0d94c14a87.png",
+  "out": "tools/bosses/concept_snowS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155058_ec76c6a2-9dac-4803-ba3b-bd48ca2d8276.png",
+  "out": "tools/bosses/concept_oceanS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155057_d25ef68c-25b6-4b39-9b46-a278318d3767.png",
+  "out": "tools/bosses/concept_volcanoS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155058_fbada4ec-7956-4d18-a183-637db5a7addf.png",
+  "out": "tools/bosses/concept_spaceS.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155101_56b0a602-1e38-4aa4-8115-bf1127820bba.png",
+  "out": "tools/bosses/concept_jungle.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155057_906348d1-fa1c-4972-8974-4242f4689fcc.png",
+  "out": "tools/bosses/concept_castle.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155057_f8045cd1-eea6-4c5c-be1c-fbcc97b09a85.png",
+  "out": "tools/bosses/concept_clouds.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155056_81db9a92-63e1-47d1-ade1-5f412964c88d.png",
+  "out": "tools/bosses/concept_factory.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_155058_dcad393a-2373-4001-a128-f9382080dea2.png",
+  "out": "tools/bosses/concept_crystal.png"
+ }
+]
