@@ -157,6 +157,8 @@ rep("if(combo>=5&&combo%5===0&&fever<=0","if(combo>=hatFevN()&&combo%hatFevN()==
 rep("fever=perk('fever')?12:8;partyT=1.6;","fever=(perk('fever')?12:8)*hatK('feverT');partyT=1.6;")
 # coin balloon appeared at the start of every level (coinNext was unset -> due at once); first one now after 12-22s
 rep("if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>(hz.coinNext||0)){","if(!hz.coinNext&&['aim','wait','drop'].includes(state))hz.coinNext=time+12+Math.random()*10;\n  if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>hz.coinNext){")
+# Suno world music (art/mus_<zone>.mp3, one track per world; lobby keeps mus_lobby_a)
+rep("const MUSF={map:['mus_lobby_a']};","const MUSF={map:['mus_lobby_a'],farm:['mus_farm'],city:['mus_city'],desert:['mus_desert'],snow:['mus_snow'],space:['mus_space'],candy:['mus_candy'],ocean:['mus_ocean'],volcano:['mus_volcano']};")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()

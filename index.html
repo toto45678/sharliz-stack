@@ -987,7 +987,7 @@ function scheduleStep(st,time){
 }
 /* ---------- Suno soundtrack: one track per world, two lobby takes, crossfaded loops ---------- */
 /* only tracks that actually ship are listed; anything missing falls back to the synth band for that world */
-const MUSF={map:['mus_lobby_a']};
+const MUSF={map:['mus_lobby_a'],farm:['mus_farm'],city:['mus_city'],desert:['mus_desert'],snow:['mus_snow'],space:['mus_space'],candy:['mus_candy'],ocean:['mus_ocean'],volcano:['mus_volcano']};
 const MUS={id:null,cur:null,pend:null,fades:[],vol:.6,last:{}};
 function musFade(a,to,dur,done){MUS.fades=MUS.fades.filter(f=>f.a!==a);MUS.fades.push({a,from:a.volume,to,t0:performance.now(),dur:dur*1000,done})}
 setInterval(()=>{const now=performance.now();MUS.fades=MUS.fades.filter(f=>{const e=Math.min(1,(now-f.t0)/f.dur);try{f.a.volume=Math.max(0,Math.min(1,f.from+(f.to-f.from)*e))}catch(err){}if(e>=1){if(f.done)f.done();return false}return true});

@@ -80,4 +80,6 @@ Bug hunt Oct 6 (build.py "v38" patches + v33/v36/v31/sw.js): autoplay bot (all 8
 - Card hero/stars/confetti stop when the card closes; victory card max-height; toasts cleared per level; share-sheet cancel; SW caches only OK pages.
 - Coin balloon no longer appears at the start of every level (first one after 12–22s).
 
-Backlog: 8 world music tracks (Suno — needs Tzach's OK), Tzach's own illustrations for the album "specials" page + how to earn them, store prep (DEV_OPEN=false, native wrapper, real IAP, privacy policy), check performance on iPhone.
+Done Oct 6 (branch world-music): Suno soundtrack per world — `art/mus_<zone>.mp3` (112 kbps, one take per world, picked from the 16 Suno "Sharliz Lobby" takes Tzach downloaded to Desktop\SHARLIZ GAME\music), registered in `MUSF` via a build.py patch; lobby still `mus_lobby_a`. Spare takes are on Tzach's PC if a world needs a swap.
+
+Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, store prep (DEV_OPEN=false, native wrapper, real IAP, privacy policy), check performance on iPhone.
