@@ -1888,7 +1888,7 @@ const scrToW=y=>y+camY-bump;              // screen y -> world y (particles live
 function hzPick(list){const p=hzPrimary(),w=list.map(h=>h===p?3:1);let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<list.length;i++){r-=w[i];if(r<=0)return list[i]}return list[0]}
 function resetHazards(){
   hz={crow:null,octo:null,ink:null,quake:null,gust:null,gustV:0,next:time+7+Math.random()*3,since:2,forceKind:null,firstDone:false,stars:[],boss:null};
-  if(isBoss()){const zi=zoneIdx(level),hp=3*(5+Math.round(etOf(zi)))+3*((ZONES[zi].season||1)-1);hz.boss={z:zone().id,sid:zone().sid,hp,max:hp,phase:1,stun:0,hurt:0,atk:time+6,wind:0,dead:0,x:W*.72,y:Math.max(H*.21,175),shown:0};hz.next=time+9}
+  if(isBoss()){const zi=zoneIdx(level),hp=3*(5+Math.round(etOf(zi)))+3*((ZONES[zi].season||1)-1);hz.boss={z:zone().base||zone().id,sid:zone().sid,ak:bossArt(),hp,max:hp,phase:1,stun:0,hurt:0,atk:time+6,wind:0,dead:0,x:W*.72,y:Math.max(H*.21,175),shown:0};hz.next=time+9}
 }
 function burst(x,wy,cols,n=14,sp=220){for(let i=0;i<n;i++)particles.push({x:x+rnd(-8,8),y:wy+rnd(-8,8),vx:rnd(-sp,sp),vy:rnd(-sp*1.3,-sp*.2),life:.9,c:pick(cols),sz:rnd(3,7)})}
 function knockTop(count,dir){
@@ -2005,7 +2005,7 @@ function updateBoss(dt,live){
 }
 let hudBottom=60;
 function drawBossBack(){
-  const b=hz.boss;if(!b)return;const z=b.z,im=hzPic(b.hurt>0&&Math.floor(b.hurt*12)%2===0||b.dead?'boss_'+z+'_hurt':'boss_'+z)||hzPic('boss_'+z);
+  const b=hz.boss;if(!b)return;const z=b.ak||b.z,im=hzPic(b.hurt>0&&Math.floor(b.hurt*12)%2===0||b.dead?'boss_'+z+'_hurt':'boss_'+z)||hzPic('boss_'+z);
   const k0=b.dead?(time-b.dead):0,bh=Math.min(H*.62,W*1.25),y=b.y+Math.sin(ft*.9)*H*.012+(1-b.shown)*H*.5-(scene&&scene.kit3?H*.1:0);if(b.dead&&k0>(B3D_META[z]&&B3.load[z]==='ok'?1.5:.7))return;
   ctx.save();ctx.translate(b.x,y);if(b.dead&&!(B3D_META[z]&&B3.load[z]==='ok')){const sc=1+k0*1.3;ctx.scale(sc,sc);ctx.globalAlpha=Math.max(0,1-k0*1.45)}const pw=b.wind>0?1+Math.sin(b.wind*16)*.05:1;ctx.scale(pw,2-pw);
   const bk=b.dead||b.stun>0||(b.hurt>0&&Math.floor(b.hurt*12)%2===0)?'hurt':'idle',m3=b3Ready(z),spd=m3?null:bspReady(z,bk);
@@ -2109,7 +2109,7 @@ function demoLoop(c,k){
       else if(k==='fog'){drawSharliz(a,cx,at(0));drawSharliz(b,cx,at(1));const up=p<1.4?Math.min(1,p/.5):Math.max(0,1-(p-1.4)/.4),im=hzPic('hz_octo');const x=238,y=110+60*(1-up);if(im)g.drawImage(im,x-38,y-38,76,76*im.naturalHeight/im.naturalWidth);else{g.fillStyle='#8b5cf6';g.beginPath();g.arc(x,y,30,0,7);g.fill()}if(p>.8&&p<1.4)ring(x,y,30)}
       else if(k==='quake'){const sh=p<2.2?Math.sin(tt*40)*4:0;[a,b,m].forEach((s,i)=>drawSharliz(s,cx+sh*(i+1)*.6,at(i),sh*.01));if(p>1.7&&p<2.4){g.fillStyle='#ffd60a';g.font='22px "Lilita One","Secular One",system-ui,sans-serif';g.textAlign='center';g.fillText('★',cx,at(3)-10)}if(p<2.2){g.strokeStyle=INK;g.lineWidth=3;g.beginPath();g.moveTo(40,gy);g.lineTo(52,gy+10);g.lineTo(46,gy+18);g.stroke()}}
       else if(k==='size'){const big=p<1.5,s2=Object.assign(m,{sz:big?1.3:.7}),e=Math.min(1,(p%1.5)/1);drawSharliz(a,cx,at(0));const y=20+(at(1)-20)*e*e;g.save();g.translate(cx,y+bh/2);g.scale(s2.sz,s2.sz);g.translate(-cx,-(y+bh/2));drawSharliz(b,cx,y);g.restore()}
-      else if(k==='boss'){drawSharliz(a,cx,at(0));drawSharliz(b,cx,at(1));const im=hzPic('boss_'+zone().id),bx=210,by=50+Math.sin(tt*2)*6,hit=p>1.3&&p<1.7;if(im){g.save();if(hit)g.globalAlpha=.6;g.drawImage(im,bx-50,by-50,100,100*im.naturalHeight/im.naturalWidth);g.restore()}
+      else if(k==='boss'){drawSharliz(a,cx,at(0));drawSharliz(b,cx,at(1));const im=hzPic('boss_'+bossArt()),bx=210,by=50+Math.sin(tt*2)*6,hit=p>1.3&&p<1.7;if(im){g.save();if(hit)g.globalAlpha=.6;g.drawImage(im,bx-50,by-50,100,100*im.naturalHeight/im.naturalWidth);g.restore()}
         if(p>.6&&p<1.3){const e=(p-.6)/.7,x=cx+(bx-cx)*e,y=at(1)+(by-at(1))*e-Math.sin(e*Math.PI)*40;g.save();g.translate(x,y);g.rotate(e*10);g.fillStyle='#ffd60a';g.strokeStyle=INK;g.lineWidth=2;star(12);g.stroke();g.fill();g.restore()}}
     });
     requestAnimationFrame(step)};
@@ -3144,7 +3144,7 @@ function updateLobby(){
   const total=progress.stars.reduce((a,b)=>a+(b||0),0),ws=worldStars(zi,LPZ);
   document.getElementById('pfName').textContent=t('lobProfile');document.getElementById('pfStars').textContent=total;
   document.getElementById('wSmall').textContent=t('worldN',{n:zi+1});document.getElementById('wName').textContent=t(z.key);
-  const th=document.getElementById('wThumb');const src='art/mapn_'+z.id+'.webp';if(!th.src.endsWith(src))th.src=src;
+  const th=document.getElementById('wThumb');const src='art/'+artAlias('mapn_'+z.id)+'.webp';if(!th.src.endsWith(src))th.src=src;
   document.getElementById('wBarI').style.width=Math.round(ws/(LPZ*3)*100)+'%';document.getElementById('wBarT').textContent=`★ ${ws}/${LPZ*3}`;
   document.getElementById('playLv').textContent=t('lobLv',{n:lvN});
   updateWalletUI();missionBadge();drawAvatar();bakeFromCache();loadHero3D();setHero3DSkin()}
@@ -3181,7 +3181,7 @@ function buildMap2D(animateFrom){
   const bandTop=z=>z===ZONES.length-1?0:(pinPos(z*LPZ+LPZ-1).y+pinPos(z*LPZ+LPZ).y)/2;
   const bandBot=z=>z===0?mapH:(pinPos(z*LPZ-1).y+pinPos(z*LPZ).y)/2;
   const nw=mapNew();
-  if(nw){g.fillStyle='#7fd1ff';g.fillRect(0,0,W,mapH);ZONES.forEach((z,i)=>{const lk=fogged(i),y0=mapH-MAP_MARGIN-(i+1)*ph;{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.mapf||SEASON_MAPF[z.season]||'')).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}
+  if(nw){g.fillStyle='#7fd1ff';g.fillRect(0,0,W,mapH);ZONES.forEach((z,i)=>{const lk=fogged(i),y0=mapH-MAP_MARGIN-(i+1)*ph;{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.ownMap?'':(z.mapf||SEASON_MAPF[z.season]||''))).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(!z.ownMap&&SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}
       if(lk){// thick magical fog over worlds you have not reached yet
         const fg=g.createLinearGradient(0,y0,0,y0+ph);fg.addColorStop(0,'rgba(236,230,255,.8)');fg.addColorStop(.5,'rgba(226,218,252,.62)');fg.addColorStop(1,'rgba(240,236,255,.85)');g.fillStyle=fg;g.fillRect(0,y0,W,ph+1);
         const rr=mulberry(i*311+5);for(let k=0;k<26;k++){const cx=rr()*W,cy=y0+rr()*ph,r=W*(.12+rr()*.16),gr=g.createRadialGradient(cx,cy,r*.1,cx,cy,r);gr.addColorStop(0,'rgba(255,255,255,.85)');gr.addColorStop(.6,'rgba(246,242,255,.45)');gr.addColorStop(1,'rgba(246,242,255,0)');g.fillStyle=gr;g.beginPath();g.arc(cx,cy,r,0,7);g.fill()}}});
@@ -3828,8 +3828,8 @@ function rareImg(r){const k='rare:'+r.id;if(STK_IMG[k])return STK_IMG[k];const s
 const SPECIALS=[];
 const STK_PAGES=[
   {id:'rare',items:()=>RARES.map(r=>({id:'rare:'+r.id,n:(progress.album||{})[r.id]||0,img:()=>rareImg(r),name:t('rr_'+r.id)}))},
-  {id:'boss',items:()=>BOSS_HATS.map(z=>({id:'boss:'+z,n:(progress.beat||{})[z]?1:0,src:'art/boss_'+z+'.webp',name:t(BOSS_NAMES[z])}))},
-  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+(z.sid||z.id),n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.sid||z.id])?1:0,src:'art/mapn_'+z.id+'.webp',round:true,name:t(z.key)}))},
+  {id:'boss',items:()=>(typeof bossAll==='function'?bossAll():BOSS_HATS).map(z=>({id:'boss:'+z,n:(progress.beat||{})[z]?1:0,src:'art/boss_'+z+'.webp',name:t(BOSS_NAMES[z])}))},
+  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+(z.sid||z.id),n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.sid||z.id])?1:0,src:'art/'+(typeof artAlias==='function'?artAlias('mapn_'+z.id):'mapn_'+z.id)+'.webp',round:true,name:t(z.key)}))},
   {id:'buddy',items:()=>Object.keys(WPET).filter(k=>k!=='none').map(k=>({id:'buddy:'+k,n:wOwned('pet',k)?1:0,img:()=>wThumb('pet',k),name:wName('pet',k),prem:!!WPET[k].real}))},
   {id:'hat',items:()=>wItems('hat').filter(k=>k!=='none').map(k=>({id:'hat:'+k,n:wOwned('hat',k)?1:0,src:WHATX[k]?null:'art/'+hatPicId(k)+'.webp',img:WHATX[k]?()=>wThumb('hat',k):null,name:wName('hat',k)}))},
   {id:'special',items:()=>{const L=lang==='he'?1:0,a=SPECIALS.map(s=>({id:'sp:'+s.id,n:(progress.stk||{})[s.id]||0,src:s.src,name:s.name[L],hint:s.how&&s.how[L]}));while(a.length<6)a.push({id:'soon'+a.length,n:0,soon:true,name:'?'});return a}}];
@@ -4005,7 +4005,7 @@ function g3Draw(gg){if(!G3.r)return false;const dt=Math.min(.05,frameDt||.016),f
 {const _sl=startLevel;startLevel=function(...a){const r=_sl.apply(this,a);setTimeout(()=>{try{g3Warm()}catch(e){}},1400);return r}}
 
 /* ===== v33: bosses as real 3D models (Meshy, from Tzach's reference + generated turnaround views), animated live ===== */
-const B3D_META={"farm":{"n":38812,"m":124488,"i32":false,"nb":116436,"w":0.9970786055145865,"d":0.7557441163309065,"tex":{"map":"b3d_farm_map.webp","mr":"b3d_farm_mr.webp","nrm":"b3d_farm_nrm.webp"},"mf":1,"rf":1},"city":{"n":37965,"m":124914,"i32":false,"nb":113896,"w":0.6979139609777909,"d":0.6196634604515161,"tex":{"map":"b3d_city_map.webp","mr":"b3d_city_mr.webp","nrm":"b3d_city_nrm.webp"},"mf":1,"rf":1},"desert":{"n":39135,"m":124590,"i32":false,"nb":117408,"w":0.6274397193190578,"d":0.5046778744466265,"tex":{"map":"b3d_desert_map.webp","mr":"b3d_desert_mr.webp","nrm":"b3d_desert_nrm.webp"},"mf":1,"rf":1},"candy":{"n":34444,"m":124314,"i32":false,"nb":103332,"w":1.0332486100975973,"d":1.027536976110279,"tex":{"map":"b3d_candy_map.webp","mr":"b3d_candy_mr.webp","nrm":"b3d_candy_nrm.webp"},"mf":1,"rf":1},"snow":{"n":36759,"m":124980,"i32":false,"nb":110280,"w":0.966443917576389,"d":0.7471366909438641,"tex":{"map":"b3d_snow_map.webp","mr":"b3d_snow_mr.webp","nrm":"b3d_snow_nrm.webp"},"mf":1,"rf":1},"ocean":{"n":37877,"m":124464,"i32":false,"nb":113632,"w":0.8870168838971733,"d":0.7918591161121195,"tex":{"map":"b3d_ocean_map.webp","mr":"b3d_ocean_mr.webp","nrm":"b3d_ocean_nrm.webp"},"mf":1,"rf":1},"volcano":{"n":37810,"m":124806,"i32":false,"nb":113432,"w":0.9054682159881421,"d":1.4893271011228224,"tex":{"map":"b3d_volcano_map.webp","mr":"b3d_volcano_mr.webp","nrm":"b3d_volcano_nrm.webp"},"mf":1,"rf":1},"space":{"n":36144,"m":123168,"i32":false,"nb":108432,"w":0.9287084960584248,"d":0.9265373913643371,"tex":{"map":"b3d_space_map.webp","mr":"b3d_space_mr.webp","nrm":"b3d_space_nrm.webp"},"mf":1,"rf":1}};
+const B3D_META={"candy":{"n":34444,"m":124314,"i32":false,"nb":103332,"w":1.0332486100975973,"d":1.027536976110279,"tex":{"map":"b3d_candy_map.webp","mr":"b3d_candy_mr.webp","nrm":"b3d_candy_nrm.webp"},"mf":1,"rf":1},"candyN":{"n":40966,"m":123846,"i32":false,"nb":122900,"w":0.7553444002686759,"d":0.49881956219062945,"tex":{"map":"b3d_candyN_map.webp","mr":"b3d_candyN_mr.webp","nrm":"b3d_candyN_nrm.webp"},"mf":1,"rf":1},"candyS":{"n":32576,"m":123759,"i32":false,"nb":97728,"w":0.8193933568261275,"d":0.4155527765325364,"tex":{"map":"b3d_candyS_map.webp","mr":"b3d_candyS_mr.webp","nrm":"b3d_candyS_nrm.webp"},"mf":1,"rf":1},"castle":{"n":33182,"m":123417,"i32":false,"nb":99548,"w":0.8341434989437205,"d":0.5710804379690226,"tex":{"map":"b3d_castle_map.webp","mr":"b3d_castle_mr.webp","nrm":"b3d_castle_nrm.webp"},"mf":1,"rf":1},"city":{"n":37965,"m":124914,"i32":false,"nb":113896,"w":0.6979139609777909,"d":0.6196634604515161,"tex":{"map":"b3d_city_map.webp","mr":"b3d_city_mr.webp","nrm":"b3d_city_nrm.webp"},"mf":1,"rf":1},"cityN":{"n":40613,"m":122787,"i32":false,"nb":121840,"w":0.8731182561192466,"d":0.782438585212308,"tex":{"map":"b3d_cityN_map.webp","mr":"b3d_cityN_mr.webp","nrm":"b3d_cityN_nrm.webp"},"mf":1,"rf":1},"cityS":{"n":47574,"m":123345,"i32":false,"nb":142724,"w":0.7603652410001992,"d":0.6571096610834463,"tex":{"map":"b3d_cityS_map.webp","mr":"b3d_cityS_mr.webp","nrm":"b3d_cityS_nrm.webp"},"mf":1,"rf":1},"clouds":{"n":37312,"m":124869,"i32":false,"nb":111936,"w":0.805864162575339,"d":0.4823674248213839,"tex":{"map":"b3d_clouds_map.webp","mr":"b3d_clouds_mr.webp","nrm":"b3d_clouds_nrm.webp"},"mf":1,"rf":1},"crystal":{"n":39804,"m":120798,"i32":false,"nb":119412,"w":0.8945350960361429,"d":0.7192715278364077,"tex":{"map":"b3d_crystal_map.webp","mr":"b3d_crystal_mr.webp","nrm":"b3d_crystal_nrm.webp"},"mf":1,"rf":1},"desert":{"n":39135,"m":124590,"i32":false,"nb":117408,"w":0.6274397193190578,"d":0.5046778744466265,"tex":{"map":"b3d_desert_map.webp","mr":"b3d_desert_mr.webp","nrm":"b3d_desert_nrm.webp"},"mf":1,"rf":1},"desertN":{"n":36958,"m":124056,"i32":false,"nb":110876,"w":0.7797834884241013,"d":0.726640612621069,"tex":{"map":"b3d_desertN_map.webp","mr":"b3d_desertN_mr.webp","nrm":"b3d_desertN_nrm.webp"},"mf":1,"rf":1},"desertS":{"n":35312,"m":123021,"i32":false,"nb":105936,"w":0.5861278039616005,"d":0.8847983682054442,"tex":{"map":"b3d_desertS_map.webp","mr":"b3d_desertS_mr.webp","nrm":"b3d_desertS_nrm.webp"},"mf":1,"rf":1},"dino":{"n":35275,"m":124110,"i32":false,"nb":105828,"w":0.7749699026096182,"d":0.6798837299189422,"tex":{"map":"b3d_dino_map.webp","mr":"b3d_dino_mr.webp","nrm":"b3d_dino_nrm.webp"},"mf":1,"rf":1},"factory":{"n":41965,"m":122256,"i32":false,"nb":125896,"w":0.8352194065766112,"d":0.6219299242124509,"tex":{"map":"b3d_factory_map.webp","mr":"b3d_factory_mr.webp","nrm":"b3d_factory_nrm.webp"},"mf":1,"rf":1},"farm":{"n":38812,"m":124488,"i32":false,"nb":116436,"w":0.9970786055145865,"d":0.7557441163309065,"tex":{"map":"b3d_farm_map.webp","mr":"b3d_farm_mr.webp","nrm":"b3d_farm_nrm.webp"},"mf":1,"rf":1},"farmN":{"n":53023,"m":124206,"i32":false,"nb":159072,"w":0.7823911629748165,"d":0.5321571031713301,"tex":{"map":"b3d_farmN_map.webp","mr":"b3d_farmN_mr.webp","nrm":"b3d_farmN_nrm.webp"},"mf":1,"rf":1},"farmS":{"n":34871,"m":125349,"i32":false,"nb":104616,"w":0.8032505652872383,"d":0.6970823140788708,"tex":{"map":"b3d_farmS_map.webp","mr":"b3d_farmS_mr.webp","nrm":"b3d_farmS_nrm.webp"},"mf":1,"rf":1},"jungle":{"n":46479,"m":124416,"i32":false,"nb":139440,"w":0.7784515826917253,"d":0.43842915829351825,"tex":{"map":"b3d_jungle_map.webp","mr":"b3d_jungle_mr.webp","nrm":"b3d_jungle_nrm.webp"},"mf":1,"rf":1},"ocean":{"n":37877,"m":124464,"i32":false,"nb":113632,"w":0.8870168838971733,"d":0.7918591161121195,"tex":{"map":"b3d_ocean_map.webp","mr":"b3d_ocean_mr.webp","nrm":"b3d_ocean_nrm.webp"},"mf":1,"rf":1},"oceanN":{"n":33746,"m":122991,"i32":false,"nb":101240,"w":0.8254180794118245,"d":0.673134484733848,"tex":{"map":"b3d_oceanN_map.webp","mr":"b3d_oceanN_mr.webp","nrm":"b3d_oceanN_nrm.webp"},"mf":1.0,"rf":1.0},"oceanS":{"n":34543,"m":123042,"i32":false,"nb":103632,"w":0.8802598219636293,"d":0.5722588366493915,"tex":{"map":"b3d_oceanS_map.webp","mr":"b3d_oceanS_mr.webp","nrm":"b3d_oceanS_nrm.webp"},"mf":1,"rf":1},"snow":{"n":36759,"m":124980,"i32":false,"nb":110280,"w":0.966443917576389,"d":0.7471366909438641,"tex":{"map":"b3d_snow_map.webp","mr":"b3d_snow_mr.webp","nrm":"b3d_snow_nrm.webp"},"mf":1,"rf":1},"snowN":{"n":39694,"m":123297,"i32":false,"nb":119084,"w":0.7271170758197903,"d":0.7605488826570413,"tex":{"map":"b3d_snowN_map.webp","mr":"b3d_snowN_mr.webp","nrm":"b3d_snowN_nrm.webp"},"mf":1,"rf":1},"snowS":{"n":39823,"m":122025,"i32":false,"nb":119472,"w":0.7774025361926379,"d":0.5469561235872445,"tex":{"map":"b3d_snowS_map.webp","mr":"b3d_snowS_mr.webp","nrm":"b3d_snowS_nrm.webp"},"mf":1,"rf":1},"space":{"n":36144,"m":123168,"i32":false,"nb":108432,"w":0.9287084960584248,"d":0.9265373913643371,"tex":{"map":"b3d_space_map.webp","mr":"b3d_space_mr.webp","nrm":"b3d_space_nrm.webp"},"mf":1,"rf":1},"spaceN":{"n":35197,"m":122982,"i32":false,"nb":105592,"w":0.8245909851318585,"d":0.577753457015219,"tex":{"map":"b3d_spaceN_map.webp","mr":"b3d_spaceN_mr.webp","nrm":"b3d_spaceN_nrm.webp"},"mf":1,"rf":1},"spaceS":{"n":34307,"m":124227,"i32":false,"nb":102924,"w":1.0130881690000724,"d":0.7738108627348989,"tex":{"map":"b3d_spaceS_map.webp","mr":"b3d_spaceS_mr.webp","nrm":"b3d_spaceS_nrm.webp"},"mf":1,"rf":1},"volcano":{"n":37810,"m":124806,"i32":false,"nb":113432,"w":0.9054682159881421,"d":1.4893271011228224,"tex":{"map":"b3d_volcano_map.webp","mr":"b3d_volcano_mr.webp","nrm":"b3d_volcano_nrm.webp"},"mf":1,"rf":1},"volcanoN":{"n":33374,"m":122508,"i32":false,"nb":100124,"w":0.857362728255052,"d":0.4809600235199802,"tex":{"map":"b3d_volcanoN_map.webp","mr":"b3d_volcanoN_mr.webp","nrm":"b3d_volcanoN_nrm.webp"},"mf":1,"rf":1},"volcanoS":{"n":37863,"m":124182,"i32":false,"nb":113592,"w":0.8884095454602855,"d":0.6109888050037889,"tex":{"map":"b3d_volcanoS_map.webp","mr":"b3d_volcanoS_mr.webp","nrm":"b3d_volcanoS_nrm.webp"},"mf":1,"rf":1}};
 // per-boss rig: regions of the normalised mesh (height 1, feet at y=0) that move procedurally
 const B3D_RIG={farm:{wing:{x0:.2,y0:.32,y1:.82,px:.16,py:.6,amp:.32},head:{y0:.62,py:.6,amp:.06},yaw:-.32,bob:.018},
   city:{wing:{x0:.17,y0:.28,y1:.62,px:.14,py:.48,amp:.3},head:{y0:.58,py:.56,amp:.07},yaw:-.32,bob:.02},
@@ -4075,7 +4075,8 @@ function b3Draw(b,bh,mod){const T=THREE,R=mod.R,t=ft,r=B3.r,d=Math.min(2,DPR||1)
     else if(z==='snow'){flap=A<.45?-1.4*(A/.45):1.6*(1-(A-.45)/.55);rx+=A<.45?-.16*(A/.45):.22*(1-(A-.45)/.55);yaw+=A<.45?.25*(A/.45):.25*(1-(A-.45)/.55)}
     else if(z==='ocean'){teK=5.5;y+=.07*s;sc+=.08*s;rz+=.08*Math.sin(A*18)}
     else if(z==='volcano'){y+=A<.4?.16*(A/.4):.16*Math.max(0,1-(A-.4)/.12);head=-.22*s;swK=3;if(A>.52&&A<.6)sq=1.12}
-    else if(z==='space'){yaw+=A*Math.PI*3;rz+=.28*Math.sin(A*Math.PI*2);y+=.06*s}}
+    else if(z==='space'){yaw+=A*Math.PI*3;rz+=.28*Math.sin(A*Math.PI*2);y+=.06*s}
+    else{const st=R.atk||'jump';if(st==='jump'){y+=.13*Math.abs(Math.sin(A*Math.PI*2));sq=1+.12*Math.cos(A*Math.PI*4)*(1-A)}else if(st==='spin'){yaw+=A*Math.PI*2;y+=.05*s}else if(st==='lunge'){rx+=.3*s;sc+=.14*s;head=-.2*s}else if(st==='shake'){rz+=.16*Math.sin(A*22)*s;sc+=.08*s}else if(st==='flap'){flap=Math.sin(A*30)*1.5;y+=.1*s}}}
   // phase change: a big roar pulse
   const pt=b.phAt?(time-b.phAt)/1.1:9;if(pt>=0&&pt<1&&!b.dead){const s=Math.sin(pt*Math.PI);sc+=.14*s;head-=.2*s;rz+=Math.sin(pt*50)*.04*s;flap=Math.sin(pt*28)*1.2;jgK=Math.max(jgK,4);teK=Math.max(teK,4);mod.roar=s}else mod.roar=0;
   // entrance: spins in and grows
@@ -4156,7 +4157,7 @@ function winBurst(){const card=document.getElementById('card');if(!card||!card.c
 
 /* --- v38: per-level cleanup: stale toasts; keep only this world's 3D boss in memory and start loading it early --- */
 {const _sl=startLevel;startLevel=function(...a){TOASTS.length=0;const r=_sl.apply(this,a);
-  try{if(typeof b3Drop==='function'&&B3.r){const z=zone().id;b3Drop([z]);if(mode==='levels')b3Load(z)}}catch(e){}return r}}
+  try{if(typeof b3Drop==='function'&&B3.r){const z=typeof bossArt==='function'?bossArt():zone().id;b3Drop([z]);if(mode==='levels')b3Load(z)}}catch(e){}return r}}
 
 /* ===== v38: daily login gift — 7-day streak calendar, pops up once a day in the lobby ===== */
 Object.assign(I18N.en,{dlTitle:'Daily gift',dlDay:'Day {n}',dlClaim:'Collect!',dlSub:'Come back every day — day 7 is a big chest!',dlStreak:'Streak: {n} days',dlBoost:'+ booster',dlBoost2:'+ 2 boosters'});
@@ -4357,7 +4358,7 @@ const seasonOf=lvN=>ZONES[Math.min(ZONES.length-1,Math.floor((lvN-1)/LPZ))].seas
 const SFX_S={lvl:-1,flies:[],drops:[],flash:0,nextBolt:0,bolt:null,nc:null};
 function seasonState(){if(SFX_S.lvl!==level||SFX_S.mode!==mode){SFX_S.lvl=level;SFX_S.mode=mode;SFX_S.flies=[];SFX_S.drops=[];SFX_S.flash=0;SFX_S.bolt=null;SFX_S.nextBolt=time+4+Math.random()*4}return SFX_S}
 const curSeason=()=>(zone()&&zone().season)||1;
-function seasonBg(){const s=curSeason();if(s===2){ctx.fillStyle='rgba(8,12,48,.42)';ctx.fillRect(0,0,W,H)}else if(s===3){ctx.fillStyle='rgba(28,34,52,.3)';ctx.fillRect(0,0,W,H)}}
+function seasonBg(){const s=curSeason();if(zone()&&zone().ownArt)return;if(s===2){ctx.fillStyle='rgba(8,12,48,.42)';ctx.fillRect(0,0,W,H)}else if(s===3){ctx.fillStyle='rgba(28,34,52,.3)';ctx.fillRect(0,0,W,H)}}
 function lightHole(g,x,y,r,k=1){const gr=g.createRadialGradient(x,y,r*.15,x,y,r);gr.addColorStop(0,`rgba(0,0,0,${k})`);gr.addColorStop(.55,`rgba(0,0,0,${.75*k})`);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,7);g.fill()}
 function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonState(),dt=Math.min(.05,frameDt||.016);
   if(s===2){// night: the tower lantern and the swinging Sharliz light the way; fireflies glow
@@ -4775,7 +4776,66 @@ function bossMech(k,b){const M=MECH[k];if(!M)return false;
     if(k==='lava')m.lvl=Math.max(m.lvl,tower.length-1-2.2);else if(k==='conveyor'){m.moved=0;m.dir=-m.dir}else if(m.t!==undefined)m.t+=.6;
     return false}            // passive bosses also use their classic attack
   if(hz.m[k])return true;let ok=false;try{ok=!!M.start()}catch(e){}return ok}
-for(const [sid,k] of Object.entries(MECH_OF))BOSS_ATK[sid]=b=>{const art=b.z;const ok=bossMech(k,b);if(!ok||b.phase>=3)BOSS_ATK[art](b)};
+for(const [sid,k] of Object.entries(MECH_OF))BOSS_ATK[sid]=b=>{const art=BOSS_ATK[b.z]&&b.z!==sid?b.z:(ZONES.find(z=>z.sid===sid)||{}).base||'farm';const ok=bossMech(k,b);if(!ok||b.phase>=3)BOSS_ATK[art](b)};
+
+/* ===== v45: 22 new bosses (seasons 2-4) — own 3D model per stage (art/b3d_<sid>.*, made with Higgsfield GPT-Image concept → Meshy 7),
+   own 2D picture (art/boss_<sid>.webp), own name. bossArt() picks the stage's model when it exists, else the art world's. ===== */
+Object.assign(I18N.en,{bFarmN:'Scarecrow King',bVolcanoN:'Fire Imp',bSpaceN:'Moon Rabbit',bCityS:'Rat King',bSnowS:'Penguin General',bOceanS:'Storm Shark',bClouds:'Angry Unicorn',bDino:'Triceratops'});
+Object.assign(I18N.he,{bFarmN:'מלך הדחלילים',bVolcanoN:'שד האש',bSpaceN:'ארנב הירח',bCityS:'מלך העכברושים',bSnowS:'גנרל הפינגווינים',bOceanS:'כריש הסערה',bClouds:'חד-הקרן הזועם',bDino:'טריצרטופס'});
+const bossArt=zz=>{zz=zz||zone();return zz&&B3D_META[zz.sid]?zz.sid:zz.id};
+// rig per new boss (regions of the normalised mesh: height 1, feet at y=0) + signature attack style (b3Draw: jump/spin/lunge/shake/flap)
+Object.assign(B3D_RIG,{
+  farmN:{head:{y0:.66,py:.62,amp:.07},yaw:-.32,bob:.015,atk:'shake'},
+  cityN:{head:{y0:.62,py:.6,amp:.06},yaw:-.32,bob:.015,atk:'lunge'},
+  desertN:{head:{y0:.5,py:.45,amp:.04},tail:{z0:.1,amp:.06,f:2.6},yaw:-.32,bob:.012,atk:'lunge'},
+  candyN:{head:{y0:.62,py:.6,amp:.05},yaw:-.32,hover:.02,atk:'spin'},
+  snowN:{head:{y0:.66,py:.62,amp:.06},yaw:-.32,bob:.015,atk:'lunge'},
+  oceanN:{head:{y0:.55,py:.5,amp:.04},jig:{amp:.018,y0:.05},yaw:-.32,hover:.03,atk:'jump'},
+  volcanoN:{head:{y0:.6,py:.56,amp:.06},yaw:-.32,hover:.025,atk:'jump'},
+  spaceN:{head:{y0:.62,py:.6,amp:.05},yaw:-.32,hover:.03,atk:'spin'},
+  farmS:{head:{y0:.64,py:.6,amp:.07},yaw:-.32,bob:.015,atk:'lunge'},
+  cityS:{head:{y0:.6,py:.56,amp:.06},yaw:-.32,bob:.015,atk:'shake'},
+  desertS:{sway:{y1:.7,amp:.08,f:2.2},yaw:-.32,bob:.01,atk:'lunge'},
+  candyS:{head:{y0:.66,py:.62,amp:.05},yaw:-.32,bob:.02,atk:'jump'},
+  snowS:{head:{y0:.62,py:.58,amp:.05},yaw:-.32,bob:.015,atk:'jump'},
+  oceanS:{head:{y0:.64,py:.6,amp:.05},yaw:-.32,bob:.015,atk:'lunge'},
+  volcanoS:{head:{y0:.64,py:.6,amp:.06},yaw:-.32,hover:.03,atk:'flap'},
+  spaceS:{tent:{y1:.3,amp:.035,n:6},yaw:-.2,hover:.035,atk:'spin'},
+  jungle:{head:{y0:.64,py:.6,amp:.06},yaw:-.32,bob:.02,atk:'jump'},
+  castle:{head:{y0:.6,py:.56,amp:.05},yaw:-.32,hover:.035,atk:'spin'},
+  clouds:{head:{y0:.62,py:.58,amp:.06},yaw:-.32,hover:.025,atk:'jump'},
+  dino:{head:{y0:.6,py:.56,amp:.06},yaw:-.32,bob:.015,atk:'lunge'},
+  factory:{head:{y0:.72,py:.68,amp:.04},yaw:-.32,bob:.01,atk:'shake'},
+  crystal:{head:{y0:.66,py:.62,amp:.04},yaw:-.32,bob:.012,atk:'shake'}});
+// preload the stage's own boss with its world
+{const _pw=preloadWorld;preloadWorld=function(zid){_pw(zid);try{const z=zone();if(z&&z.id===zid&&z.sid!==zid&&B3D_META[z.sid]){hzPic('boss_'+z.sid);hzPic('boss_'+z.sid+'_hurt');b3Load(z.sid)}}catch(e){}}}
+// sticker book: all 30 bosses (the 8 classic ones + the stages that have their own boss picture)
+const bossAll=()=>BOSS_HATS.concat(ZONES.filter(z=>z.sid!==z.id).map(z=>z.sid));
+
+/* ===== v46: own art for stages that used to borrow another world's art =====
+   build.py injects ART_OWN = stage ids that have art/w3b_,w3m_,w3f_,mapn_<sid>.webp (season-4 worlds first, later night/storm sets).
+   Such a stage switches its art id (z.id) to its sid; z.base keeps the world it was drawn from, and every per-world table /
+   fallback picture (pop engine far_/g_/s_/back_/mid_, music, map road, K3Y…) is aliased to that base until it gets its own. */
+const ART_OWN=["candyN", "candyS", "castle", "cityN", "cityS", "clouds", "crystal", "desertN", "desertS", "dino", "factory", "farmN", "farmS", "jungle", "oceanN", "oceanS", "snowN", "snowS", "spaceN", "spaceS", "volcanoN", "volcanoS"],ART_CAP=["farmN", "farmS", "oceanN", "oceanS", "volcanoN", "volcanoS"],ART_MAP=["castle", "clouds", "crystal", "dino", "factory", "jungle"];
+const ART_BASE={};
+// skies for the new worlds: [climb fraction, colour] like the classic ones
+const NEW_SKY={jungle:[[0,'#d6f0c8'],[.35,'#8fd3a8'],[.75,'#3f9a8a'],[1.05,'#24606e'],[1.4,'#14283e']],
+  castle:[[0,'#e7c9f0'],[.35,'#b18ad8'],[.75,'#6c4bb0'],[1.05,'#3a2a78'],[1.4,'#170f38']],
+  clouds:[[0,'#fde4f2'],[.35,'#d8e8ff'],[.75,'#9fc4ff'],[1.05,'#6a8fe0'],[1.4,'#2c3a8a']],
+  dino:[[0,'#ffe2b0'],[.35,'#ffc38a'],[.75,'#e98a6a'],[1.05,'#8e4f78'],[1.4,'#2e2050']],
+  factory:[[0,'#d9f3f0'],[.35,'#9fd8de'],[.75,'#5aa0b8'],[1.05,'#355f86'],[1.4,'#1a2448']],
+  crystal:[[0,'#d8c6ff'],[.35,'#a68af0'],[.75,'#6a4cc8'],[1.05,'#3b2a86'],[1.4,'#160e3a']]};
+for(const z of ZONES){if(!ART_OWN.includes(z.sid)||z.sid===z.id)continue;
+  ART_BASE[z.sid]=z.base=z.id;z.id=z.sid;z.ownArt=true;z.ownMap=ART_MAP.includes(z.sid);if(z.ownMap)z.mapf='';if(NEW_SKY[z.sid])z.sky=NEW_SKY[z.sid];
+  for(const k of ['w3b_','w3m_','w3f_'].concat(z.ownMap?['mapn_']:[],ART_CAP.includes(z.sid)?['w3c_']:[])){PIC_NAMES.push(k+z.sid);PIC_SET.add(k+z.sid)}
+  for(const T of [POP,K3Y,MAPROAD,LIFE,BAND,MUSF])if(T&&T[z.base]&&!T[z.sid])T[z.sid]=T[z.base];
+  if(typeof BASECOL!=='undefined'&&BASECOL['far_'+z.base])BASECOL['far_'+z.sid]=BASECOL['far_'+z.base]}
+// any picture the stage doesn't have yet comes from its base world
+var ART_RE=Object.keys(ART_BASE).length?new RegExp('^(.*_)('+Object.keys(ART_BASE).join('|')+')(_.*)?$'):null;
+function artAlias(n){if(!ART_RE||PIC_SET.has(n))return n;const m=n.match(ART_RE);return m?m[1]+ART_BASE[m[2]]+(m[3]||''):n}
+{const _p=pic;pic=function(n){return _p(artAlias(n))}}
+{const _l=loadPic;loadPic=function(n){return _l(artAlias(n))}}
+{const _h=hzPic;hzPic=function(n){return _h(/^(back|mid)_/.test(n)?artAlias(n):n)}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

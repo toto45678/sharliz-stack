@@ -187,6 +187,7 @@ rep("if(lk)g.filter='blur(5px) saturate(.55) brightness(1.08)';g.drawImage(pic('
     "{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.ownMap?'':(z.mapf||SEASON_MAPF[z.season]||''))).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(!z.ownMap&&SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}")
 # in-game season look: background tint + foreground (night darkness / storm rain) under the popups
 rep("const nm=t(BOSS_NAMES[z]);","const nm=t(BOSS_NAMES[b.sid]||BOSS_NAMES[z]);")
+rep("const th=document.getElementById('wThumb');const src='art/mapn_'+z.id+'.webp'","const th=document.getElementById('wThumb');const src='art/'+artAlias('mapn_'+z.id)+'.webp'")
 rep("hz.boss={z:zone().id,","hz.boss={z:zone().id,sid:zone().sid,")
 rep("ctx.save();if(shake>0)ctx.translate(","if(typeof seasonBg==='function')seasonBg();ctx.save();if(shake>0)ctx.translate(")
 rep("  drawKaleido();\n  for(const p of popups){","  if(typeof seasonFx==='function')seasonFx();drawKaleido();\n  for(const p of popups){")
@@ -198,7 +199,7 @@ rep("if(!swinger.entering){if(swinger.xs<-r){swinger.xs=-r;swinger.dir=1}if(swin
 rep("*hatFall()*dt;","*hatFall()*(hz.gravK||1)*dt;")
 rep("const p=hzPrimary(),bk='boss_'+zone().id;","const p=hzPrimary(),bk='boss_'+zone().sid;")
 rep("b.atkAt=time;BOSS_ATK[b.z](b);","b.atkAt=time;(BOSS_ATK[b.sid]||BOSS_ATK[b.z])(b);")
-rep("hz.boss={z:zone().id,sid:zone().sid,","hz.boss={z:zone().id,sid:zone().sid,ak:bossArt(),")
+rep("hz.boss={z:zone().id,sid:zone().sid,","hz.boss={z:zone().base||zone().id,sid:zone().sid,ak:bossArt(),")
 rep("const b=hz.boss;if(!b)return;const z=b.z,im=hzPic(","const b=hz.boss;if(!b)return;const z=b.ak||b.z,im=hzPic(")
 rep("const im=hzPic('boss_'+zone().id),bx=210","const im=hzPic('boss_'+bossArt()),bx=210")
 # ---- inject module + css

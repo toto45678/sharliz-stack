@@ -17,7 +17,8 @@ for(const z of ZONES){if(!ART_OWN.includes(z.sid)||z.sid===z.id)continue;
   for(const T of [POP,K3Y,MAPROAD,LIFE,BAND,MUSF])if(T&&T[z.base]&&!T[z.sid])T[z.sid]=T[z.base];
   if(typeof BASECOL!=='undefined'&&BASECOL['far_'+z.base])BASECOL['far_'+z.sid]=BASECOL['far_'+z.base]}
 // any picture the stage doesn't have yet comes from its base world
-const ART_RE=Object.keys(ART_BASE).length?new RegExp('^(.*_)('+Object.keys(ART_BASE).join('|')+')(_.*)?$'):null;
+var ART_RE=Object.keys(ART_BASE).length?new RegExp('^(.*_)('+Object.keys(ART_BASE).join('|')+')(_.*)?$'):null;
 function artAlias(n){if(!ART_RE||PIC_SET.has(n))return n;const m=n.match(ART_RE);return m?m[1]+ART_BASE[m[2]]+(m[3]||''):n}
 {const _p=pic;pic=function(n){return _p(artAlias(n))}}
 {const _l=loadPic;loadPic=function(n){return _l(artAlias(n))}}
+{const _h=hzPic;hzPic=function(n){return _h(/^(back|mid)_/.test(n)?artAlias(n):n)}}
