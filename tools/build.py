@@ -216,8 +216,11 @@ B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
 ART_OWN=sorted({os.path.basename(f)[4:-5] for f in _g.glob(P(ROOT,'art','w3b_*.webp'))} - {'farm','city','desert','candy','snow','ocean','volcano','space'})
 ART_OWN=[i for i in ART_OWN if all(os.path.exists(P(ROOT,'art',f'{k}_{i}.webp')) for k in ('w3m','w3f'))]
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')
-css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')
+# ---- v50: bonus stage "Treasure in the Clouds" after a boss win (src/v50.js)
+rep("const speed=()=>(","const speed=()=>mode==='bonus'?bnSpeed():(")
+rep(":[{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();",":[...bnAct(),{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();")
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')
+css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')
