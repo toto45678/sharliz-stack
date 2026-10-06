@@ -107,6 +107,14 @@ section{padding:80px 0;position:relative}
 h2{font-size:clamp(32px,5vw,50px);line-height:1.1;text-align:center;margin:0 0 10px;color:var(--yellow);text-shadow:0 4px 0 #7a1d55}
 .lead{text-align:center;max-width:620px;margin:0 auto 40px;color:var(--soft);font-size:18px}
 
+.trailer{padding-top:30px}
+.tv{position:relative;max-width:880px;margin:0 auto;border-radius:26px;overflow:hidden;background:#000;aspect-ratio:16/9;box-shadow:0 24px 60px rgba(0,0,0,.55),0 0 0 4px rgba(255,210,63,.55)}
+.tv video{width:100%;height:100%;object-fit:cover;display:block}
+.tv.tall{aspect-ratio:9/16;max-width:360px}
+.playbig{position:absolute;inset:0;margin:auto;width:96px;height:96px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(#ff7cc0,#e8298a);
+  box-shadow:0 8px 0 #9c1a5b,0 0 0 10px rgba(255,255,255,.18);color:#fff;font-size:38px;display:grid;place-items:center;animation:pulse 1.6s ease-in-out infinite}
+.playbig span{margin-left:6px}
+.tv.playing .playbig{display:none}
 .play{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:48px;align-items:center}
 .play .screen video{width:100%;height:100%;object-fit:cover}
 .feats{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -255,6 +263,16 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
 </div>
 
 <main>
+  <section class="trailer">
+    <div class="wrap">
+      <h2>Watch the trailer</h2>
+      <div class="tv tall" id="tv">
+        <video id="trailer" poster="img/trailer_poster_tall.jpg" preload="none" playsinline controls aria-label="Sharliz Tower trailer"></video>
+        <button class="playbig" id="playbig" type="button" aria-label="Play the trailer with sound"><span>▶</span></button>
+      </div>
+    </div>
+  </section>
+
   <section>
     <div class="wrap play">
       <div class="phone"><div class="screen"><video id="clip" data-src="img/clip.mp4" poster="img/clip_poster.jpg" preload="none" muted loop playsinline aria-label="Gameplay clip"></video></div></div>
@@ -389,6 +407,12 @@ new IntersectionObserver(es => {
 // ---------- gameplay clip loads only when scrolled near ----------
 const clip = document.getElementById('clip');
 new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { clip.src = clip.dataset.src; clip.play().catch(() => {}); o.disconnect(); } }, {rootMargin: '300px'}).observe(clip);
+
+// ---------- trailer ----------
+const tv = document.getElementById('tv'), trailer = document.getElementById('trailer');
+trailer.src = 'img/trailer_9x16.mp4';
+document.getElementById('playbig').addEventListener('click', () => { trailer.muted = false; trailer.play().catch(() => {}); });
+trailer.addEventListener('play', () => tv.classList.add('playing'));
 
 // ---------- characters say hi ----------
 document.querySelectorAll('.char').forEach(c => c.addEventListener('click', () => {
