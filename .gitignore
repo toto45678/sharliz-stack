@@ -1,0 +1,4 @@
+.smoke_*.png
+preview.html
+__pycache__/
+*.glb
