@@ -1,0 +1,98 @@
+[
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162817_7e9666be-b07e-45f1-9411-7e6f92f4d75d.png",
+  "out": "tools/worlds/jungle_w3b.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162819_08d00e82-c5f3-4bbc-9080-57cd3f256866.png",
+  "out": "tools/worlds/jungle_w3m.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162820_8f0f5da2-374d-4149-b67f-326f05496f04.png",
+  "out": "tools/worlds/jungle_w3f.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162819_7104f914-c2fd-4f65-87aa-5cb285fe50b1.png",
+  "out": "tools/worlds/jungle_mapn.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162821_4384350c-0d69-436c-b6ea-68bfe7a4f620.png",
+  "out": "tools/worlds/castle_w3b.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162818_cde04b84-dc7f-4392-b7ff-7c6540fea306.png",
+  "out": "tools/worlds/castle_w3m.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162820_ab4f9794-cab8-4cc9-8a55-0055c17b96cc.png",
+  "out": "tools/worlds/castle_w3f.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162818_31cfff48-d390-49de-99f9-420a2c59a6dc.png",
+  "out": "tools/worlds/castle_mapn.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162821_fcd7bcd4-696f-4cb5-962c-b5a1d29a2e8d.png",
+  "out": "tools/worlds/clouds_w3b.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162818_55429bf9-c2a0-4289-a79f-0fbce44882ac.png",
+  "out": "tools/worlds/clouds_w3m.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162820_c39cdff9-91b3-4eda-9f2e-2e7bcfb83b6e.png",
+  "out": "tools/worlds/clouds_w3f.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162819_e5c93de5-6422-4614-9a81-e3db279dd729.png",
+  "out": "tools/worlds/clouds_mapn.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162857_fa760654-38e1-482d-8555-7fb0fd82a042.png",
+  "out": "tools/worlds/dino_w3b.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162856_50a077be-71ea-4643-b4ce-3bd1caffd75e.png",
+  "out": "tools/worlds/dino_w3m.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162900_19f5af37-b936-4790-98be-fcdde4f797c4.png",
+  "out": "tools/worlds/dino_mapn.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162900_ae7d9db8-2a01-45c6-ad9b-dc8630eabd78.png",
+  "out": "tools/worlds/factory_w3b.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162855_80ddedec-166b-47d1-8383-0a12fb7f99ae.png",
+  "out": "tools/worlds/factory_w3m.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162858_7446fb9f-145b-4eb4-8ad7-9ff6425d3827.png",
+  "out": "tools/worlds/factory_w3f.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162857_f250a3cf-ea60-4360-b9ea-d955d6ba219c.png",
+  "out": "tools/worlds/factory_mapn.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162857_c22b1a68-ecda-479e-ac12-8fd83da49718.png",
+  "out": "tools/worlds/crystal_w3b.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162856_1969e381-5282-4ecd-8080-cb5822258b70.png",
+  "out": "tools/worlds/crystal_w3m.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162856_26798366-6212-49ab-92ec-f107094014bf.png",
+  "out": "tools/worlds/crystal_w3f.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162858_4baece5f-13ac-4132-8d07-36351fe2d490.png",
+  "out": "tools/worlds/crystal_mapn.png"
+ },
+ {
+  "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_160202_d7a76521-aa8d-43c5-9b85-39b91f00096b.glb",
+  "glb": "b3d_oceanN"
+ }
+]
