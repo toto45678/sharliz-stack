@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:'Lilita One';src:url(lilita.woff)}@font-face{font-family:'Secular One';src:url(secular.woff)}
+:root{--ink:#120d2b;--gf:'Lilita One','Secular One',sans-serif}
+body{margin:0;background:#333;display:flex;flex-wrap:wrap;gap:20px;padding:20px}
+.ic{position:relative;width:1024px;height:1024px;overflow:hidden;flex:none}
+.ic img{position:absolute;display:block}
+.rays{position:absolute;inset:-50%;background:repeating-conic-gradient(from 0deg at 50% 50%,var(--r1) 0 9deg,var(--r2) 9deg 18deg)}
+.glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 45%,var(--g) 0,transparent 55%)}
+.vig{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 55%,rgba(20,5,60,.45) 100%)}
+.shadow{position:absolute;border-radius:50%;background:radial-gradient(closest-side,rgba(20,5,50,.55),transparent)}
+.bt{position:absolute;font-family:var(--gf);white-space:nowrap;line-height:1}
+.bt .s,.bt .f{display:block}
+.bt .s{position:absolute;inset:0;color:var(--ink);-webkit-text-stroke:.2em var(--ink);paint-order:stroke fill;text-shadow:0 .1em 0 var(--ink)}
+.bt .f{position:relative;background:linear-gradient(180deg,#fffbe0 0%,#ffe24d 34%,#ffb000 64%,#ff7a00 100%);-webkit-background-clip:text;color:transparent}
+.bt.pink .f{background-image:linear-gradient(180deg,#fff0f6 0%,#ff9ccb 38%,#ff3e8f 70%,#c81e66 100%)}
+</style></head><body>
+
+<!-- A: classic tower, crisp -->
+<div class="ic" id="A" style="--r1:#8a3ad8;--r2:#a24fe6;--g:rgba(255,170,230,.95)">
+ <div class="rays"></div><div class="glow"></div><div class="vig"></div>
+ <div class="shadow" style="left:330px;top:930px;width:364px;height:70px"></div>
+ <img src="teal_2_none.png" style="left:392px;top:628px;width:240px;transform:rotate(-2deg)">
+ <img src="pink_4_none.png" style="left:400px;top:392px;width:240px;transform:rotate(4deg)">
+ <img src="orange_2_none.png" style="left:382px;top:160px;width:240px;transform:rotate(-5deg)">
+ <img src="skin_king.webp" style="left:410px;top:62px;width:170px;transform:rotate(-12deg)">
+</div>
+
+<!-- B: big face peeking -->
+<div class="ic" id="B" style="--r1:#ffb21f;--r2:#ffc94a;--g:rgba(255,255,220,.95)">
+ <div class="rays" style="inset:-60%;background:repeating-conic-gradient(from 0deg at 50% 50%,var(--r1) 0 10deg,var(--r2) 10deg 20deg)"></div><div class="glow"></div>
+ <div class="vig" style="background:radial-gradient(circle at 50% 50%,transparent 50%,rgba(170,60,0,.35) 100%)"></div>
+ <img src="pink_2_none.png" style="left:132px;top:300px;width:760px">
+ <img src="teal_0_none.png" style="left:395px;top:70px;width:250px;transform:rotate(8deg)">
+</div>
+
+<!-- C: Hebrew letter badge -->
+<div class="ic" id="C" style="--r1:#ff3e8f;--r2:#ff5ea3;--g:rgba(255,220,240,.9)">
+ <div class="rays"></div><div class="glow"></div><div class="vig"></div>
+ <div class="bt" style="font-size:860px;left:calc(50% + 40px);top:150px;transform:translateX(-50%) rotate(-4deg)"><span class="s" style="-webkit-text-stroke:.07em var(--ink);text-shadow:0 .05em 0 var(--ink),0 .08em .1em rgba(0,0,0,.4)">ש</span><span class="f">ש</span></div>
+ <img src="magenta_0_none.png" style="left:255px;top:178px;width:175px;transform:rotate(-10deg)">
+ <img src="orange_4_none.png" style="left:468px;top:160px;width:175px;transform:rotate(-3deg)">
+ <img src="teal_2_none.png" style="left:688px;top:140px;width:175px;transform:rotate(8deg)">
+</div>
+
+<!-- D: 5-high wobbly tower, night sky -->
+<div class="ic" id="D" style="background:linear-gradient(180deg,#1c0c58 0%,#4a1aa8 55%,#ff5ea3 100%)">
+ <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(255,220,120,.55),transparent 45%)"></div>
+ <div style="position:absolute;left:-10%;right:-10%;top:870px;height:300px;border-radius:50%;background:#2fd06a;box-shadow:inset 0 14px 0 #7cf09a,0 -6px 0 var(--ink)"></div>
+ <img src="teal_0_none.png" style="left:410px;top:668px;width:205px;transform:rotate(-3deg)">
+ <img src="orange_2_none.png" style="left:424px;top:453px;width:205px;transform:rotate(5deg)">
+ <img src="pink_0_none.png" style="left:398px;top:238px;width:205px;transform:rotate(-6deg)">
+ <img src="magenta_4_none.png" style="left:428px;top:28px;width:205px;transform:rotate(8deg)">
+ <svg style="position:absolute;left:0;top:0" width="1024" height="1024"><g fill="#fff6c8"><circle cx="130" cy="150" r="9"/><circle cx="860" cy="110" r="7"/><circle cx="780" cy="300" r="5"/><circle cx="210" cy="380" r="6"/><circle cx="900" cy="480" r="8"/><circle cx="110" cy="600" r="5"/></g></svg>
+</div>
+</body></html>

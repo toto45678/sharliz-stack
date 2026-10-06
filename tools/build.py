@@ -134,11 +134,16 @@ rep("const pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(env,.03).te
     "const regen=()=>{const pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(env,.03).texture;pm.dispose()};regen();r.domElement.addEventListener('webglcontextrestored',()=>setTimeout(()=>{try{regen()}catch(e){}},0));")
 # card animations kept drawing into the hidden card during the next level
 rep("(function loop(now){if(!c.isConnected)return;","(function loop(now){if(!c.isConnected||c.closest('[hidden]'))return;",2)
+# ---- v37: bigger dancing hero on the victory popup
+# ---- lobby logo: painted title art (art/logo_he|en.webp, made in tools/brand) instead of the CSS text
+rep("function buildLogo(){bigText(document.getElementById('logo1'),t('name1'));bigText(document.getElementById('logo2'),t('name2'))}",
+    "function buildLogo(){const l=document.querySelector('#title .logo');if(!l)return;l.classList.add('img');l.innerHTML=`<img src=\"art/logo_${lang==='he'?'he':'en'}.webp\" alt=\"${t('name1')} ${t('name2')}\" draggable=\"false\">`}")
+rep(".logo .l1{font-size:clamp(",".logo.img img{display:block;width:min(60vw,255px);height:auto;transform:rotate(-2deg);animation:logoIn .7s cubic-bezier(.3,1.7,.5,1) both}\n.logo .l1{font-size:clamp(")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')
-css=rd('v28.css')+'\n'+rd('v36.css')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')
+css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')
