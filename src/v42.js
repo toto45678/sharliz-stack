@@ -4,12 +4,12 @@
    the night/storm look in-game and on the map, and the season banners on the map. */
 Object.assign(I18N.en,{seasonN:'Season {n}',season1:'Daytime',season2:'Night',season3:'Storm',season4:'New Worlds',
   zJungle:'Jungle',zCastle:'Haunted Castle',zClouds:'Cloud Kingdom',zDino:'Dino Land',zFactory:'Robot Factory',zCrystal:'Crystal Cave',
-  bFarmN:'Night Owl',bCityN:'Alley Cat',bDesertN:'Scorpion King',bCandyN:'Sugar Witch',bSnowN:'Frost Wolf',bOceanN:'Lantern Fish',bVolcanoN:'Lava Dragon',bSpaceN:'Mothership',
+  bFarmN:'Night Owl',bCityN:'Alley Cat',bDesertN:'King Stinger',bCandyN:'Sugar Witch',bSnowN:'Frost Wolf',bOceanN:'Lantern Fish',bVolcanoN:'Lava Dragon',bSpaceN:'Mothership',
   bFarmS:'Thunder Goat',bCityS:'Mega Crane',bDesertS:'Sand Worm',bCandyS:'Gingerbread Giant',bSnowS:'Ice Dragon',bOceanS:'Ghost Ship',bVolcanoS:'Phoenix',bSpaceS:'Black Hole Eye',
   bJungle:'Gorilla King',bCastle:'Ghost King',bClouds:'Thunderbird',bDino:'T-Rex',bFactory:'Mega Robot',bCrystal:'Crystal Golem'});
 Object.assign(I18N.he,{seasonN:'עונה {n}',season1:'יום',season2:'לילה',season3:'סערה',season4:'עולמות חדשים',
   zJungle:'הג׳ונגל',zCastle:'הטירה הרדופה',zClouds:'ממלכת העננים',zDino:'עולם הדינוזאורים',zFactory:'מפעל הרובוטים',zCrystal:'מערת הקריסטלים',
-  bFarmN:'ינשוף הלילה',bCityN:'חתול הסמטאות',bDesertN:'מלך העקרבים',bCandyN:'מכשפת הסוכר',bSnowN:'זאב הכפור',bOceanN:'דג הפנס',bVolcanoN:'דרקון הלבה',bSpaceN:'ספינת האם',
+  bFarmN:'ינשוף הלילה',bCityN:'חתול הסמטאות',bDesertN:'המלך עוקץ',bCandyN:'מכשפת הסוכר',bSnowN:'זאב הכפור',bOceanN:'דג הפנס',bVolcanoN:'דרקון הלבה',bSpaceN:'ספינת האם',
   bFarmS:'תיש הרעם',bCityS:'מנוף הענק',bDesertS:'תולעת החול',bCandyS:'ענק הג׳ינג׳ר',bSnowS:'דרקון הקרח',bOceanS:'ספינת הרפאים',bVolcanoS:'עוף החול',bSpaceS:'עין החור השחור',
   bJungle:'מלך הגורילות',bCastle:'מלך הרוחות',bClouds:'ציפור הרעם',bDino:'טי-רקס',bFactory:'מגה-רובוט',bCrystal:'גולם הקריסטל'});
 for(const L of ['en','he']){const D=I18N[L];for(const k of ['zFarm','zCity','zDesert','zCandy','zSnow','zOcean','zVolcano','zSpace']){
