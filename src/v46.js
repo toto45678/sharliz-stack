@@ -2,7 +2,7 @@
    build.py injects ART_OWN = stage ids that have art/w3b_,w3m_,w3f_,mapn_<sid>.webp (season-4 worlds first, later night/storm sets).
    Such a stage switches its art id (z.id) to its sid; z.base keeps the world it was drawn from, and every per-world table /
    fallback picture (pop engine far_/g_/s_/back_/mid_, music, map road, K3Y…) is aliased to that base until it gets its own. */
-const ART_OWN=__ART_OWN__;
+const ART_OWN=__ART_OWN__,ART_CAP=__ART_CAP__;
 const ART_BASE={};
 // skies for the new worlds: [climb fraction, colour] like the classic ones
 const NEW_SKY={jungle:[[0,'#d6f0c8'],[.35,'#8fd3a8'],[.75,'#3f9a8a'],[1.05,'#24606e'],[1.4,'#14283e']],
@@ -12,8 +12,8 @@ const NEW_SKY={jungle:[[0,'#d6f0c8'],[.35,'#8fd3a8'],[.75,'#3f9a8a'],[1.05,'#246
   factory:[[0,'#d9f3f0'],[.35,'#9fd8de'],[.75,'#5aa0b8'],[1.05,'#355f86'],[1.4,'#1a2448']],
   crystal:[[0,'#d8c6ff'],[.35,'#a68af0'],[.75,'#6a4cc8'],[1.05,'#3b2a86'],[1.4,'#160e3a']]};
 for(const z of ZONES){if(!ART_OWN.includes(z.sid)||z.sid===z.id)continue;
-  ART_BASE[z.sid]=z.base=z.id;z.id=z.sid;z.mapf='';if(NEW_SKY[z.sid])z.sky=NEW_SKY[z.sid];
-  for(const k of ['w3b_','w3m_','w3f_','mapn_']){PIC_NAMES.push(k+z.sid);PIC_SET.add(k+z.sid)}
+  ART_BASE[z.sid]=z.base=z.id;z.id=z.sid;z.ownArt=true;z.mapf='';if(NEW_SKY[z.sid])z.sky=NEW_SKY[z.sid];
+  for(const k of ['w3b_','w3m_','w3f_','mapn_'].concat(ART_CAP.includes(z.sid)?['w3c_']:[])){PIC_NAMES.push(k+z.sid);PIC_SET.add(k+z.sid)}
   for(const T of [POP,K3Y,MAPROAD,LIFE,BAND,MUSF])if(T&&T[z.base]&&!T[z.sid])T[z.sid]=T[z.base];
   if(typeof BASECOL!=='undefined'&&BASECOL['far_'+z.base])BASECOL['far_'+z.sid]=BASECOL['far_'+z.base]}
 // any picture the stage doesn't have yet comes from its base world

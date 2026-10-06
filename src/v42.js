@@ -28,7 +28,7 @@ const seasonOf=lvN=>ZONES[Math.min(ZONES.length-1,Math.floor((lvN-1)/LPZ))].seas
 const SFX_S={lvl:-1,flies:[],drops:[],flash:0,nextBolt:0,bolt:null,nc:null};
 function seasonState(){if(SFX_S.lvl!==level||SFX_S.mode!==mode){SFX_S.lvl=level;SFX_S.mode=mode;SFX_S.flies=[];SFX_S.drops=[];SFX_S.flash=0;SFX_S.bolt=null;SFX_S.nextBolt=time+4+Math.random()*4}return SFX_S}
 const curSeason=()=>(zone()&&zone().season)||1;
-function seasonBg(){const s=curSeason();if(s===2){ctx.fillStyle='rgba(8,12,48,.42)';ctx.fillRect(0,0,W,H)}else if(s===3){ctx.fillStyle='rgba(28,34,52,.3)';ctx.fillRect(0,0,W,H)}}
+function seasonBg(){const s=curSeason();if(zone()&&zone().ownArt)return;if(s===2){ctx.fillStyle='rgba(8,12,48,.42)';ctx.fillRect(0,0,W,H)}else if(s===3){ctx.fillStyle='rgba(28,34,52,.3)';ctx.fillRect(0,0,W,H)}}
 function lightHole(g,x,y,r,k=1){const gr=g.createRadialGradient(x,y,r*.15,x,y,r);gr.addColorStop(0,`rgba(0,0,0,${k})`);gr.addColorStop(.55,`rgba(0,0,0,${.75*k})`);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,7);g.fill()}
 function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonState(),dt=Math.min(.05,frameDt||.016);
   if(s===2){// night: the tower lantern and the swinging Sharliz light the way; fireflies glow

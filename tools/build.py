@@ -184,7 +184,7 @@ rep("const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level),HZ_ORDER.length-1)];",
 # map: 30 stage panels — keep the canvas under iOS's area limit, tint night / storm panels
 rep("const dpr=Math.min(1.5,window.devicePixelRatio||1);mc.width=W*dpr;mc.height=mapH*dpr;","const dpr=Math.min(1.5,window.devicePixelRatio||1,Math.sqrt(12e6/(W*mapH)));mc.width=W*dpr;mc.height=mapH*dpr;")
 rep("if(lk)g.filter='blur(5px) saturate(.55) brightness(1.08)';g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';",
-    "{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.mapf||SEASON_MAPF[z.season]||'')).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}")
+    "{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.ownArt?'':(z.mapf||SEASON_MAPF[z.season]||''))).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(!z.ownArt&&SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}")
 # in-game season look: background tint + foreground (night darkness / storm rain) under the popups
 rep("const nm=t(BOSS_NAMES[z]);","const nm=t(BOSS_NAMES[b.sid]||BOSS_NAMES[z]);")
 rep("hz.boss={z:zone().id,","hz.boss={z:zone().id,sid:zone().sid,")
@@ -207,7 +207,7 @@ B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
 ART_OWN=sorted({os.path.basename(f)[4:-5] for f in _g.glob(P(ROOT,'art','w3b_*.webp'))} - {'farm','city','desert','candy','snow','ocean','volcano','space'})
 ART_OWN=[i for i in ART_OWN if all(os.path.exists(P(ROOT,'art',f'{k}_{i}.webp')) for k in ('w3m','w3f','mapn'))]
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN))
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))]))
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
