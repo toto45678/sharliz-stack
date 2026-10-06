@@ -58,6 +58,16 @@ Done Oct 6 (src/v36.js + v36.css + build.py patches):
 - End card: coin rows grouped into ≤3 (clear / skill / bonuses) with icons, pill styling; stars drop in one by one with sound + sparks; 3 stars → rays, bouncing stars, "מושלם!" tag, confetti; mission checklist shows only missed missions.
 - Victory popup "burst" (v37, `winBurst()` in v36.js + `.card.wb` CSS): compact purple burst card centred over the dimmed game, tilted yellow title, stars on top, 3 tilted reward cards + yellow coin badge; stars + dancing hero (`.wb-top`, moved out of card-body) break out above the card top, middle star bigger. Chosen by Tzach from 4 GPT mockups (#2).
 
-Next: full bug hunt across the game (Tzach asked for it).
+Bug hunt Oct 6 (build.py "v38" patches + v33/v36/v31/sw.js): autoplay bot (all 80 levels, win+lose, 0 JS errors) + 3 code reviews. Fixed:
+- Boss killed while a piece was still falling / tower collapsing → win never fired (game continued forever, boss dead). Win timer is now robust; landings/heart loss ignored after the killing blow, and a late landing can no longer flip a won level back to "bossdown".
+- Boss-gate "close" left the player stuck (only visible with DEV_OPEN=false) → goes to the map.
+- Pause→Restart in Endless/Daily/Duo now restarts the mode (endless coins could be farmed).
+- Game clock no longer runs during pause / intro cards (boss attacked right after "got it"; fast-mission timer).
+- fever/slow-mo/shake reset per level; stale boss wind-up can't hit a restarted level; boosters disabled after the last heart.
+- Saves without `stars` crashed every launch; save-code import now rebakes looks.
+- iOS: 'interrupted' audio resumes; env lighting regenerated after WebGL context restore; bake no longer caches blank sprites if the context is lost.
+- 3D boss: textures load before showing (no black flash), shader precompiled, only current world's boss kept in GPU memory, render cached (re-renders only when the pose changes), 404 retry.
+- Card hero/stars/confetti stop when the card closes; victory card max-height; toasts cleared per level; share-sheet cancel; SW caches only OK pages.
+Not changed (design?): every level starts with a coin balloon.
 
 Backlog: 8 world music tracks (Suno — needs Tzach's OK), Tzach's own illustrations for the album "specials" page + how to earn them, store prep (DEV_OPEN=false, native wrapper, real IAP, privacy policy), check performance on iPhone.

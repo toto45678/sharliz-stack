@@ -9,7 +9,7 @@ const B3D_RIG={farm:{wing:{x0:.2,y0:.32,y1:.82,px:.16,py:.6,amp:.32},head:{y0:.6
   ocean:{tent:{y1:.48,amp:.035,n:5},head:{y0:.6,py:.55,amp:.05},yaw:-.32,bob:.02},
   volcano:{head:{y0:.62,py:.6,amp:.07},tail:{z0:.2,amp:.09,f:2.4},yaw:-.45,bob:.012},
   space:{head:{y0:.55,py:.5,amp:.05},yaw:-.32,hover:.035}};
-const B3={r:null,cv:null,sc:null,cam:null,mods:{},load:{},t0:0,hit:0,lastHurt:0};
+const B3={r:null,cv:null,sc:null,cam:null,mods:{},load:{},gen:{},retry:{},t0:0,hit:0,lastHurt:0,k:''};
 function b3Ok(){return typeof THREE!=='undefined'&&H3&&H3.state==='ready'}
 function b3Init(){if(B3.r)return true;if(B3.bad||!b3Ok())return false;const T=THREE;
   try{const cv=document.createElement('canvas'),r=new T.WebGLRenderer({canvas:cv,alpha:true,antialias:true,preserveDrawingBuffer:true});
@@ -17,13 +17,16 @@ function b3Init(){if(B3.r)return true;if(B3.bad||!b3Ok())return false;const T=TH
     const sc=new T.Scene();const prev=B3OPT;B3OPT=B3GAME;try{studioEnv(T,r,sc)}finally{B3OPT=prev}
     const key=new T.DirectionalLight('#fff4e8',1.6);key.position.set(-2,3,4);sc.add(key);sc.add(new T.AmbientLight('#ffffff',.35));
     const cam=new T.OrthographicCamera(-.85,.85,1.2,-.1,.1,20);cam.position.set(0,0,8);cam.lookAt(0,0,0);
-    Object.assign(B3,{r,cv,sc,cam});return true}catch(e){console.warn('b3',e);B3.bad=true;return false}}
-function b3Load(z){if(!B3D_META[z]||B3.load[z])return;B3.load[z]='loading';if(!b3Init()){B3.load[z]=null;return}const T=THREE,M=B3D_META[z];
-  fetch('art/b3d_'+z+'.wasm').then(r=>r.arrayBuffer()).then(buf=>{
+    cv.addEventListener('webglcontextrestored',()=>{B3.k=''});Object.assign(B3,{r,cv,sc,cam});return true}catch(e){console.warn('b3',e);B3.bad=true;return false}}
+function b3Load(z){if(!B3D_META[z]||B3.load[z]||performance.now()<(B3.retry[z]||0))return;B3.load[z]='loading';if(!b3Init()){B3.load[z]=null;return}const T=THREE,M=B3D_META[z],gen=B3.gen[z]=(B3.gen[z]||0)+1;
+  let geo=null;
+  fetch('art/b3d_'+z+'.wasm').then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.arrayBuffer()}).then(buf=>{
     const n=M.n,P=new Float32Array(buf,0,n*3),Nr=new Int8Array(buf,n*12,n*3),U=new Float32Array(buf,n*12+M.nb,n*2),io=n*12+M.nb+n*8,I=M.i32?new Uint32Array(buf,io,M.m):new Uint16Array(buf,io,M.m);
     const g=new T.BufferGeometry();g.setAttribute('position',new T.BufferAttribute(P,3));g.setAttribute('normal',new T.BufferAttribute(Nr,3,true));g.setAttribute('uv',new T.BufferAttribute(U,2));g.setIndex(new T.BufferAttribute(I,1));
-    const tl=new T.TextureLoader(),tx=k=>{if(!M.tex[k])return null;const t=tl.load('art/'+M.tex[k]);t.flipY=false;if(k==='map')t.colorSpace=T.SRGBColorSpace;return t};
-    const mr=tx('mr'),mat=new T.MeshStandardMaterial({map:tx('map'),normalMap:tx('nrm'),roughnessMap:mr,metalnessMap:mr,roughness:M.rf,metalness:M.mf,envMapIntensity:.8});
+    geo=g;const tl=new T.TextureLoader(),tx=k=>M.tex[k]?tl.loadAsync('art/'+M.tex[k]).then(t=>{t.flipY=false;if(k==='map')t.colorSpace=T.SRGBColorSpace;return t}):Promise.resolve(null);
+    return Promise.all(['map','nrm','mr'].map(tx))}).then(([map,nrm,mr])=>{const g=geo;
+    if(B3.gen[z]!==gen){g.dispose();[map,nrm,mr].forEach(t=>t&&t.dispose());return}
+    const mat=new T.MeshStandardMaterial({map,normalMap:nrm,roughnessMap:mr,metalnessMap:mr,roughness:M.rf,metalness:M.mf,envMapIntensity:.8});
     const U_={uT:{value:0},uFlap:{value:0},uHead:{value:0},uSway:{value:0},uTent:{value:0},uJig:{value:0},uTail:{value:0}},R=B3D_RIG[z]||{};
     const f=v=>(+v).toFixed(3);
     mat.onBeforeCompile=sh=>{Object.assign(sh.uniforms,U_);const w=R.wing,h=R.head,sw=R.sway,te=R.tent,jg=R.jig,tl=R.tail;
@@ -36,12 +39,17 @@ function b3Load(z){if(!B3D_META[z]||B3.load[z])return;B3.load[z]='loading';if(!b
           float a=uFlap*k*s;vec2 p=vec2(transformed.x-s*${f(w.px)},transformed.y-${f(w.py)});float c=cos(a),sn=sin(a);transformed.xy=vec2(p.x*c-p.y*sn+s*${f(w.px)},p.x*sn+p.y*c+${f(w.py)});}`:''}
         ${h?`{float k=smoothstep(${f(h.y0-.05)},${f(h.y0+.05)},transformed.y);float a=uHead*k;vec2 p=vec2(transformed.x,transformed.y-${f(h.py)});float c=cos(a),sn=sin(a);transformed.xy=vec2(p.x*c-p.y*sn,p.x*sn+p.y*c+${f(h.py)});}`:''}
       `)};
-    const mesh=new T.Mesh(g,mat),grp=new T.Group();grp.add(mesh);grp.visible=false;B3.sc.add(grp);
-    B3.mods[z]={grp,mesh,mat,U:U_,R,z};B3.load[z]='ok'}).catch(e=>{console.warn('b3 load',e);B3.load[z]='fail'})}
+    const mesh=new T.Mesh(g,mat),grp=new T.Group();grp.add(mesh);B3.sc.add(grp);
+    for(const k in B3.mods)B3.mods[k].grp.visible=false;grp.visible=true;try{B3.r.compile(B3.sc,B3.cam)}catch(e){}grp.visible=false;B3.k='';
+    B3.mods[z]={grp,mesh,mat,U:U_,R,z};B3.load[z]='ok'}).catch(e=>{console.warn('b3 load',e);if(B3.gen[z]===gen){B3.load[z]=null;B3.retry[z]=performance.now()+8000}})}
+// free boss models that aren't needed (each one is ~16MB of GPU memory)
+function b3Drop(keep){for(const z in B3D_META){if(keep.includes(z))continue;const m=B3.mods[z];B3.gen[z]=(B3.gen[z]||0)+1;
+    if(m){B3.sc.remove(m.grp);m.mesh.geometry.dispose();['map','normalMap','roughnessMap'].forEach(k=>m.mat[k]&&m.mat[k].dispose());m.mat.dispose();delete B3.mods[z]}
+    if(B3.load[z])B3.load[z]=null}B3.k=''}
 function b3Ready(z){if(!B3D_META[z])return null;if(!B3.load[z])b3Load(z);return B3.load[z]==='ok'?B3.mods[z]:null}
 // draws the boss into the current ctx (already translated to the boss centre); bh = on-screen height of the boss
-function b3Draw(b,bh,mod){const T=THREE,R=mod.R,t=ft,r=B3.r,d=Math.min(2,DPR||1),cw=Math.round(Math.min(1100,bh*1.7*d)),ch=Math.round(cw*1.3/1.7);
-  if(B3.cv.width!==cw||B3.cv.height!==ch)r.setSize(cw,ch,false);
+function b3Draw(b,bh,mod){const T=THREE,R=mod.R,t=ft,r=B3.r,d=Math.min(2,DPR||1),cw=Math.round(Math.min(900,bh*1.7*d)),ch=Math.round(cw*1.3/1.7);
+  if(B3.cv.width!==cw||B3.cv.height!==ch){r.setSize(cw,ch,false);B3.k=''}
   for(const k in B3.mods)B3.mods[k].grp.visible=B3.mods[k]===mod;
   const g=mod.grp,U=mod.U,stun=b.stun>0&&!b.dead,wind=b.wind>0,hurt=b.hurt>0;
   // idle: proud bob + lazy flaps; wind-up: crouch + fast flaps; hurt: recoil; dizzy: wobble + droop
@@ -74,4 +82,5 @@ function b3Draw(b,bh,mod){const T=THREE,R=mod.R,t=ft,r=B3.r,d=Math.min(2,DPR||1)
   if(R.hover){y+=Math.sin(t*1.6)*R.hover;rz+=Math.sin(t*1.1)*.06}
   const S0=(R.sc||1)*sc;g.position.set(0,y,0);g.rotation.set(rx,yaw,rz);g.scale.set(S0/sq,S0*sq,S0/sq);
   if(hurt&&Math.floor(b.hurt*14)%2===0)em=Math.max(em,.55);const rr=mod.roar||0;mod.mat.emissive.setRGB(Math.max(em,.45*rr),em+.04*rr,em+.02*rr);
-  r.render(B3.sc,B3.cam);ctx.drawImage(B3.cv,-.85*bh,bh/2-1.2*bh,1.7*bh,1.3*bh);return true}
+  const key=[mod.z,cw,t,U.uFlap.value,U.uHead.value,U.uSway.value,U.uTent.value,U.uJig.value,U.uTail.value,y,rx,yaw,rz,S0,sq,em,rr].map(v=>typeof v==='number'?v.toFixed(4):v).join('|');
+  if(key!==B3.k){B3.k=key;r.render(B3.sc,B3.cam)}ctx.drawImage(B3.cv,-.85*bh,bh/2-1.2*bh,1.7*bh,1.3*bh);return true}

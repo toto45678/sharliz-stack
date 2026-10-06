@@ -12,7 +12,7 @@ function g3Init(){if(G3.r)return true;if(G3.ok===false||!g3Ok())return false;con
   catch(e){console.warn('g3',e);G3.ok=false}
   finally{B3OPT=prev}
   return !!G3.r}
-function g3Warm(){if(!g3Init())return;const P=G3.P;P.g.visible=true;G3.P2.g.visible=false;G3.sk.g.visible=true;try{G3.r.render(G3.sc,G3.cam)}catch(e){}G3.sk.g.visible=false}
+function g3Warm(){if(gag&&gag.g3)return;if(!g3Init())return;const P=G3.P;P.g.visible=true;G3.P2.g.visible=false;G3.sk.g.visible=true;try{G3.r.render(G3.sc,G3.cam)}catch(e){}G3.sk.g.visible=false}
 
 /* a cartoon skull + spine in Tzach's golden-bone style */
 function g3Skeleton(T){const g=new T.Group(),bone=new T.MeshPhysicalMaterial({color:'#f2c64e',roughness:.42,clearcoat:.5,clearcoatRoughness:.3}),

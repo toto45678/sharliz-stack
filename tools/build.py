@@ -84,14 +84,56 @@ rep("sfx.trombone();s.hidden=true;gag={name,filter,t:0,x:xOf(s.xs),wy:yOf(surviv
 rep("if(animReady('dance')&&!reduceMotion){setTimeout(()=>{if(state!=='win')return;s0.hidden=true;gag={name:'dance',filter:'',t:0,x:xOf(s0.xs),wy:yOf(tower.length-1)}},250)}",
     "const dG3=!animReady('dance')&&!reduceMotion&&g3Init();if((animReady('dance')||dG3)&&!reduceMotion){setTimeout(()=>{if(state!=='win')return;s0.hidden=true;gag={name:'dance',filter:'',t:0,x:xOf(s0.xs),wy:yOf(tower.length-1),g3:dG3,col:s0.color}},250)}")
 # ---- v36: smooth character outline while swinging (continuous sheared strips instead of 18 stepped ones)
-rep("bodyTop=ay-bh,N=18;","bodyTop=ay-bh,N=28;ctx.imageSmoothingQuality='high';")
+rep("bodyTop=ay-bh,N=18;","bodyTop=ay-bh,N=28;")
 rep(",yd1=-(ay-r1)*k*syk,o=off(t);",",yd1=-(ay-r1)*k*syk,o0=off(clamp((r0-bodyTop)/bh,0,1)),o1=off(clamp((r1-bodyTop)/bh,0,1)),sh=(o1-o0)/((yd1-yd0)||1);")
-rep("ctx.save();ctx.translate(o,0);ctx.scale(flip,1);","ctx.save();ctx.transform(1,0,sh,1,o0-sh*yd0,0);ctx.scale(flip,1);")
+rep("ctx.save();ctx.translate(o,0);ctx.scale(flip,1);","ctx.save();ctx.transform(1,0,sh,1,o0-sh*yd0,0);ctx.imageSmoothingQuality='high';ctx.scale(flip,1);")
 # ---- v36: landing feedback smaller, beside the tower, shorter; toast lane drawn last
 rep("size=Math.min(W*.14,62)*sc,px=clamp(p.x,W*.32,W*.68),py=Math.max(sy(p.y),140);","size=Math.min(W*.1,44)*sc,px=clamp(p.x+(p.x<W/2?1:-1)*S*1.8,W*.22,W*.78),py=Math.max(sy(p.y)+BH*.6,150);")
 rep("life:key?1.25:1.1,max:key?1.25:1.1","life:key?.95:1.1,max:key?.95:1.1")
 rep("  ctx.restore();\n}\nfunction star(r){","  ctx.restore();\n  drawToasts();\n}\nfunction star(r){")
-# ---- v37: bigger dancing hero on the victory popup
+# ---- v38: bug hunt fixes
+# boss gate "close" left the player stuck on the finished level (shows once DEV_OPEN=false)
+rep("sub:t('gateSub',{n:gateNeed(zi),h:worldStars(zi)}),actions:[{label:t('close'),primary:true,fn:hideOverlay}]",
+    "sub:t('gateSub',{n:gateNeed(zi),h:worldStars(zi)}),actions:[{label:t('close'),primary:true,fn:()=>{if(state==='map'||state==='title')hideOverlay();else go(()=>openMap())}}]")
+# boss killed by a star while the tower was collapsing -> the heart loss cancelled the win
+rep("sfx.crash();loseHeart(t('crash'),W/2,yOf(k),true,'whoops');","sfx.crash();if(hz.boss&&hz.boss.dead)return;loseHeart(t('crash'),W/2,yOf(k),true,'whoops');")
+# ...and a piece landing / missing right after the killing blow pulled the game back to 'wait' -> the win never fired (bot: levels 10, 20)
+rep("state='bossdown';swinger=null;setTimeout(()=>{if(state==='bossdown')win()},1500)","state='bossdown';swinger=null;setTimeout(()=>{if(hz.boss===b&&b.dead&&state!=='win'&&state!=='over')win()},1500)")
+rep("  state='wait';spawnAt=time+.25;updateHud();\n}\nfunction startCollapse","  if(hz.boss&&hz.boss.dead){if(state!=='win'&&state!=='over')state='bossdown';updateHud();return}\n  state='wait';spawnAt=time+.25;updateHud();\n}\nfunction startCollapse")
+rep("function loseHeart(msg,x,y,silent,key){","function loseHeart(msg,x,y,silent,key){if(hz.boss&&hz.boss.dead)return;")
+# pause -> restart in endless/daily/duo kept the old run (endless coins could be farmed)
+rep("{label:t('restart'),icon:'restart',fn:()=>go(()=>{score=levelStartScore;startLevel()})}","{label:t('restart'),icon:'restart',fn:()=>go(()=>{if(mode!=='levels'){startMode(mode);return}score=levelStartScore;startLevel()})}")
+# the game clock ran during pause / intro cards: boss attacked right after "got it", fast-mission timer counted pauses
+rep("if(state==='paused'||state==='intro') return;","if(state==='paused'||state==='intro'){if(lv)lv.t0+=dt;if(hz){if(hz.next)hz.next+=dt;if(hz.coinNext)hz.coinNext+=dt;if(hz.boss)hz.boss.atk+=dt}if(spawnAt)spawnAt+=dt;return}")
+# fever / slow-mo / shake carried into the next level
+rep("cv.style.filter='';wind=0;","cv.style.filter='';wind=0;fever=0;slowmoT=0;shake=0;")
+# a boss wind-up from the previous attempt could fire into a restarted level
+rep("setTimeout(()=>{if(!hz.boss||hz.boss.dead||!['aim','wait','drop'].includes(state))return;","setTimeout(()=>{if(hz.boss!==b||b.dead||!['aim','wait','drop'].includes(state))return;")
+# iOS 'interrupted' audio (call / Siri) never resumed
+rep("if(actx&&actx.state==='suspended') actx.resume(); return actx;","if(actx&&actx.state!=='running'){try{const p=actx.resume();if(p&&p.catch)p.catch(()=>{})}catch(e){}} return actx;")
+# world transition canvas: 100vh is taller than the visible area in iOS Safari
+rep("canvas.wt{position:fixed;inset:0;width:100vw;height:100vh;z-index:98}","canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}")
+# saves without a stars list (old / imported codes) crashed every launch
+rep("if(p&&p.unlocked)progress=p}catch(e){}","if(p&&p.unlocked)progress=p}catch(e){}\nprogress.stars=Array.isArray(progress.stars)?progress.stars:[];progress.unlocked=Math.max(1,+progress.unlocked||1);")
+rep("function wallet(){progress.owned=progress.owned||{};","function wallet(){progress.owned=progress.owned||{};if(!Array.isArray(progress.stars))progress.stars=[];")
+rep("if(!o||!o.unlocked)throw 0;progress=o;wallet();saveProgress();popupToast(t('loaded'));updateWalletUI()","if(!o||!o.unlocked)throw 0;progress=o;wallet();saveProgress();popupToast(t('loaded'));updateWalletUI();try{rebakeIfNeeded()}catch(e){}")
+# boosters could be spent after the last heart was lost
+rep("function useBooster(id){\n  const inv=wallet().inv;if(!inv[id])return;","function useBooster(id){\n  if(state==='over'||state==='win'||state==='bossdown')return;const inv=wallet().inv;if(!inv[id])return;")
+rep("if(hearts<=0){state='over';setTimeout(failGag,900)}","if(hearts<=0){state='over';renderBoosterBar();setTimeout(failGag,900)}")
+# mission / sticker badges on the map went stale
+rep("renderBoosterBar();if(typeof wBadge==='function')wBadge()}","renderBoosterBar();if(typeof wBadge==='function')wBadge();try{missionBadge();if(typeof stkBadge==='function')stkBadge()}catch(e){}}")
+# cancelling the share sheet still opened the photo screen
+rep("await navigator.share({files:[file],title:'Sharliz Stack'});return}}catch(e){}","await navigator.share({files:[file],title:'Sharliz Stack'});return}}catch(e){if(e&&e.name==='AbortError')return}")
+# WebGL context lost during the character bake cached invisible characters forever
+rep("cells.push([f*cw,0,cw,ch,cw/2,top*P_,1.5*P_,P_])}\n","cells.push([f*cw,0,cw,ch,cw/2,top*P_,1.5*P_,P_])}\n    if(r.getContext().isContextLost()){if(++BAKE_LOST<900){ci--;return true}}\n")
+rep("function rebakeIfNeeded(){","var BAKE_LOST=0;\nfunction rebakeIfNeeded(){")
+rep("function bakeChars0(){","function bakeChars0(){BAKE_LOST=0;")
+rep("CHARS[col]={pic:key,cells,b3d:true};bakePut(col,bakeSig(col,L,hat),sheet,cells);return true}}","CHARS[col]={pic:key,cells,b3d:true};if(BAKE_LOST<900)bakePut(col,bakeSig(col,L,hat),sheet,cells);return true}}")
+# lighting (environment map) vanished after iOS restored a lost WebGL context
+rep("const pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(env,.03).texture;pm.dispose();",
+    "const regen=()=>{const pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(env,.03).texture;pm.dispose()};regen();r.domElement.addEventListener('webglcontextrestored',()=>setTimeout(()=>{try{regen()}catch(e){}},0));")
+# card animations kept drawing into the hidden card during the next level
+rep("(function loop(now){if(!c.isConnected)return;","(function loop(now){if(!c.isConnected||c.closest('[hidden]'))return;",2)
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
