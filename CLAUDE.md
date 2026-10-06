@@ -23,6 +23,7 @@ src/base.html         the v27 single-file game (canvas 2D + three.js lobby). Pat
 src/v28.js/.css       v28 module: shop/IAP test-mode, buddy perks, weekly missions, personalities, lobby spin+sick, sticker book
 src/v29.js            foreground caps constant (+ retired boss sprite-sheet code, meta is empty now)
 src/v31.js            3D comic gags (fail: bleh/blehT melt & puke, bones/bonesP zap→skeleton; win: dance) rendered live with three.js
+src/v38.js/.css        daily login gift: 7-day streak calendar (progress.login), pops up once a day in the lobby
 src/v33.js            3D bosses: loads art/b3d_<zone>.{wasm,json,_map/_mr/_nrm.webp}, procedural rig per boss (B3D_RIG),
                       idle/wind-up/attack signature move/phase roar/entrance/defeat (b3Draw)
 tools/build.py        applies exact-string patches (rep) to base.html, injects the modules + css, writes index.html
@@ -58,6 +59,8 @@ Done Oct 6 (src/v36.js + v36.css + build.py patches):
 - Popups: info messages go to a toast lane at the bottom (`toast()`, max 3, de-duplicated); landing feedback smaller, beside the tower; "nice" removed; boss damage numbers stay on the boss.
 - End card: coin rows grouped into ≤3 (clear / skill / bonuses) with icons, pill styling; stars drop in one by one with sound + sparks; 3 stars → rays, bouncing stars, "מושלם!" tag, confetti; mission checklist shows only missed missions.
 - Victory popup "burst" (v37, `winBurst()` in v36.js + `.card.wb` CSS): compact purple burst card centred over the dimmed game, tilted yellow title, stars on top, 3 tilted reward cards + yellow coin badge; stars + dancing hero (`.wb-top`, moved out of card-body) break out above the card top, middle star bigger. Chosen by Tzach from 4 GPT mockups (#2).
+
+Done Oct 6 (src/v38.js + v38.css, branch daily-gift): daily login gift. 7-day streak calendar (50/80/100+booster/120/150+booster/200/400+2 boosters chest), pops up by itself the first time the lobby is idle each day (only after level 1), missing a day resets to day 1, after day 7 it starts over. State in `progress.login={last,streak}`. Part of the monetization plan (free + purchases, see project memory).
 
 Next: full bug hunt across the game (Tzach asked for it).
 

@@ -653,6 +653,22 @@ canvas.wt{position:fixed;inset:0;width:100vw;height:100vh;z-index:98}
 .card.wb .actions .btn.primary{rotate:-2deg;font-size:1.55rem;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 6px 0 var(--ink)}
 @media (max-height:700px){#card.card.win.wb{margin-top:96px}.card.wb .wb-hero{margin-bottom:-40px}.card.wb .card-title{margin-top:38px;font-size:2.3rem}.card.wb .stars img{width:52px;height:52px}.card.wb .stars img:nth-child(2){width:76px;height:76px;margin-bottom:12px}.card.wb p{display:none}.card.wb .tally3 .t-ic{width:28px;height:28px}}
 
+/* v38: daily gift calendar */
+.dl-grid{width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:2px 0 4px}
+.dl-day{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px 7px;border-radius:14px;background:linear-gradient(180deg,#5a7bff,#3046c9);border:3px solid var(--ink);box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 3px 0 rgba(8,10,40,.55);color:#fff}
+.dl-day small{font-family:var(--body);font-weight:800;font-size:.72rem;opacity:.95}
+.dl-day img{width:34px;height:34px;object-fit:contain}
+.dl-day b{font-family:var(--gf);font-weight:400;font-size:1.05rem;line-height:1}
+.dl-day i{font-style:normal;font-family:var(--body);font-weight:800;font-size:.62rem;color:#ffe680;line-height:1.1;text-align:center}
+.dl-day.big{grid-column:span 2;background:linear-gradient(180deg,#a77bff,#5b2bc2)}
+.dl-day.big img{width:46px;height:46px}
+.dl-day.now{background:linear-gradient(180deg,#ffd84a,#f08700);animation:megaGlow 1.4s ease-in-out infinite,dlBob 1.4s ease-in-out infinite}
+.dl-day.got{background:linear-gradient(180deg,#5d6690,#3a4170)}
+.dl-day.got>:not(em){opacity:.45;filter:grayscale(.7)}
+.dl-day em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:2.2rem;color:#7cff5a;text-shadow:0 2px 0 var(--ink),0 0 3px var(--ink)}
+.dl-sub{width:100%;text-align:center;font-size:.85rem;margin:4px 0 0}
+@keyframes dlBob{50%{transform:translateY(-3px) scale(1.04)}}
+
 </style>
 
 <div id="app">
@@ -4064,6 +4080,35 @@ function winBurst(){const card=document.getElementById('card');if(!card||!card.c
     top.appendChild(st);card.prepend(top);if(hc)startCardHero(hc,'dance',innerHeight<700?130:170)}
   const tl=card.querySelector('.tally3');if(tl&&!tl.querySelector('.wb-coin')){const tot=tl.querySelector('.tally-total');if(tot)tot.classList.add('wb-coin')}}
 {const _so3=showOverlay;showOverlay=function(build,dim){document.getElementById('overlay').classList.remove('wb-ov');_so3(build,dim);winBurst();const rr=rerenderOverlay;if(rr)rerenderOverlay=()=>{rr();winBurst()}}}
+
+/* ===== v38: daily login gift — 7-day streak calendar, pops up once a day in the lobby ===== */
+Object.assign(I18N.en,{dlTitle:'Daily gift',dlDay:'Day {n}',dlClaim:'Collect!',dlSub:'Come back every day — day 7 is a big chest!',dlStreak:'Streak: {n} days',dlBoost:'+ booster',dlBoost2:'+ 2 boosters'});
+Object.assign(I18N.he,{dlTitle:'מתנה יומית',dlDay:'יום {n}',dlClaim:'לקחת!',dlSub:'חוזרים כל יום, וביום 7 מחכה תיבה גדולה!',dlStreak:'רצף: {n} ימים',dlBoost:'+ בוסטר',dlBoost2:'+ 2 בוסטרים'});
+
+// coins per streak day; b = boosters added on top
+const DL_REWARDS=[{c:50},{c:80},{c:100,b:1},{c:120},{c:150,b:1},{c:200},{c:400,b:2}];
+function dlDate(off){const d=new Date();d.setDate(d.getDate()+off);return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
+function dlState(){const L=progress.login||{last:null,streak:0},td=dlDate(0);
+  if(L.last===td)return {claimed:true,day:L.streak};
+  return {claimed:false,day:L.last===dlDate(-1)?L.streak%7+1:1}}
+function dlClaim(){const s=dlState();if(s.claimed)return;const R=DL_REWARDS[s.day-1];
+  progress.login={last:dlDate(0),streak:s.day};progress.coins=(progress.coins||0)+R.c;
+  if(R.b){const inv=wallet().inv;for(let i=0;i<R.b;i++){const b=pick(['slow','laser','shield','heart']);inv[b]=(inv[b]||0)+1}}
+  saveProgress();sfx.coin(4);if(s.day===7)sfx.flourish(3);coinShower(R.c);updateWalletUI()}
+function openDailyGift(){showOverlay(()=>{const s0=dlState();return {title:t('dlTitle'),extra:card=>{
+  const s=dlState(),g=document.createElement('div');g.className='dl-grid';
+  DL_REWARDS.forEach((R,i)=>{const d=i+1,got=d<s.day||(s.claimed&&d===s.day),now=!s.claimed&&d===s.day,el=document.createElement('div');
+    el.className='dl-day'+(d===7?' big':'')+(got?' got':'')+(now?' now':'');
+    el.innerHTML=`<small></small><img src="art/${d===7?'ic_chest':R.b?'ic_gift':'ic_coin'}.webp" alt=""><b>${R.c}</b>`+(R.b?'<i></i>':'')+(got?'<em>✓</em>':'');
+    el.querySelector('small').textContent=t('dlDay',{n:d});if(R.b)el.querySelector('i').textContent=t(R.b>1?'dlBoost2':'dlBoost');g.appendChild(el)});
+  card.appendChild(g);const p=document.createElement('p');p.className='dl-sub';p.textContent=s.day>1?t('dlStreak',{n:s.claimed?s.day:s.day-1})+' · '+t('dlSub'):t('dlSub');card.appendChild(p)},
+  actions:s0.claimed?[{label:t('close'),primary:true,fn:hideOverlay}]:[{label:t('dlClaim'),primary:true,fn:()=>{dlClaim();rerenderOverlay();setTimeout(()=>{if(document.querySelector('.dl-grid'))hideOverlay()},1300)}}]}},true)}
+// show it by itself once per day, the first time the lobby is idle (not on the very first launch, before any level)
+let dlShownOn=null;
+function dlMaybe(){const td=dlDate(0);if(dlShownOn===td||dlState().claimed||progress.unlocked<2)return;
+  setTimeout(()=>{if(dlShownOn===td||state!=='title'||W3.on||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;dlShownOn=td;openDailyGift()},700)}
+{const _ul=updateLobby;updateLobby=function(){_ul();dlMaybe()}}
+dlMaybe();   // modules load after the boot toTitle(), so check once now too
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
