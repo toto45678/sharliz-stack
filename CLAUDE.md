@@ -40,6 +40,7 @@ src/v33.js            3D bosses: loads art/b3d_<zone>.{wasm,json,_map/_mr/_nrm.w
                       idle/wind-up/attack signature move/phase roar/entrance/defeat (b3Draw)
 tools/build.py        applies exact-string patches (rep) to base.html, injects the modules + css, writes index.html
 tools/smoke.py        headless check: python3 tools/smoke.py 1 10 20  → prints state + JS errors, saves .smoke_*.png
+tools/bot.py          autoplay bot (fast-forwards game time): python3 tools/bot.py .9 1 2 10 81 → win/over/stuck + JS errors per level. It never taps bombs, so classic bomb bosses can read as 'stuck'. Run shards in parallel with BOT_PORT.
 tools/glb2sh.py       Meshy GLB → compact boss format: python3 tools/glb2sh.py boss.glb b3d_<zone> art/
 ```
 
@@ -115,5 +116,15 @@ Done Oct 6 (branch style-shop, src/v48.js + v48.css): new style screen ("הגי�
 Done Oct 6 (src/v41.js + credits CSS at the end of v40.css, branch credits): Credits screen. Settings → Credits (lobby settings only, not the pause menu) lists attribution: Meshy 3D boss models of season 1 (made on Raz's FREE Meshy account → CC BY 4.0, credit is REQUIRED, do not remove), Higgsfield (season 2–4 bosses + new worlds; no credit required, kept as courtesy), three.js MIT, OFL fonts (Lilita One, Rubik, Secular One), Capacitor + cordova-plugin-purchase MIT. Add any new third-party asset here. Boss "Scorpion King" renamed "King Stinger" (Universal film title). IP review: /mnt/project-files/business/ip-review.md (project files).
 
 Done Oct 6 (build.py lvStep, branch gentler-curve): gentler floor goal inside each world (Tzach). The goal is `6 + round(2·etOf(world)) + lvStep(levelInWorld)`, with lvStep = [0,1,2,2,3,4,4,5,6]: +1 floor per level and a "rest" level (+0) at levels 4 and 7. It used to be +2 per level (+16 by level 9). The same change applies to starMissions. Swing speed/tolerance are unchanged. Sim (/mnt/project-files/testing/difficulty_sim.py), casual player on the last level of a world: farm 67%→95%, candy 14%→43%, farm-night 6%→26%. Slowing the swing per helper item is being built in the monetization thread, together with the item costs.
+
+Bug hunt 2 Oct 6 (branch fix-bugs, build.py "v50" patches + v28/v44/v45/v48): bot on all 300 levels, 0 JS errors, plus a code review. Fixed:
+- Sticker book on iPhone: the tab `scrollIntoView` also scrolled `#app` sideways on iOS (dark strip, close button lost). Now the tab strip scrolls itself and `#app` is reset on any scroll.
+- Sticker book boss page showed 8 of 30 (`bossAll()` filter broke when v46 made z.id = sid).
+- A landing after the last heart (lava burn during a fall) pulled the game out of 'over'. Lava no longer burns during a fall.
+- Freeze left an ice block drawn on the landed piece.
+- Night/storm stages lost snow/sand/ocean current/space fall cap/ambience: `baseId(z)` = classic world for seasons 2-3.
+- Mirror: tap flip done once in the pointer handler (coin balloon works), canvas unflipped on pause/win/loss.
+- Saved-look button used the missing key `save` (now `saveLook`).
+Open (not touched, trophy code is owned by the monetization/legal threads): TROPHY_FX.farmS gives `imm:'lightning'` (all of season 3), but farmS's mechanic is tornado.
 
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.
