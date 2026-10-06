@@ -198,10 +198,14 @@ rep("if(!swinger.entering){if(swinger.xs<-r){swinger.xs=-r;swinger.dir=1}if(swin
 rep("*hatFall()*dt;","*hatFall()*(hz.gravK||1)*dt;")
 rep("const p=hzPrimary(),bk='boss_'+zone().id;","const p=hzPrimary(),bk='boss_'+zone().sid;")
 rep("b.atkAt=time;BOSS_ATK[b.z](b);","b.atkAt=time;(BOSS_ATK[b.sid]||BOSS_ATK[b.z])(b);")
+rep("hz.boss={z:zone().id,sid:zone().sid,","hz.boss={z:zone().id,sid:zone().sid,ak:bossArt(),")
+rep("const b=hz.boss;if(!b)return;const z=b.z,im=hzPic(","const b=hz.boss;if(!b)return;const z=b.ak||b.z,im=hzPic(")
+rep("const im=hzPic('boss_'+zone().id),bx=210","const im=hzPic('boss_'+bossArt()),bx=210")
 # ---- inject module + css
-B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
+import glob as _g
+B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT,'art','b3d_*.json')))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
