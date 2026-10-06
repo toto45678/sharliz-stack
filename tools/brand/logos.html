@@ -1,0 +1,55 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:'Lilita One';src:url(lilita.woff)}@font-face{font-family:'Secular One';src:url(secular.woff)}
+:root{--ink:#120d2b;--gf:'Lilita One','Secular One',sans-serif}
+body{margin:0;background:transparent;padding:20px;display:flex;flex-wrap:wrap;gap:20px}
+.lg{position:relative;width:1000px;height:640px;flex:none;overflow:hidden}
+.lg img{position:absolute;display:block}
+.bt{position:absolute;font-family:var(--gf);white-space:nowrap;line-height:1}
+.bt .s,.bt .f{display:block}
+.bt .s{position:absolute;inset:0;color:var(--ink);-webkit-text-stroke:.16em var(--ink);paint-order:stroke fill;text-shadow:0 .09em 0 var(--ink),0 .14em .16em rgba(0,0,0,.35)}
+.bt .f{position:relative;background:linear-gradient(180deg,#fffbe0 0%,#ffe24d 34%,#ffb000 64%,#ff7a00 100%);-webkit-background-clip:text;color:transparent}
+.bt .f::after{content:'';}
+.pink .f{background-image:linear-gradient(180deg,#fff0f6 0%,#ff9ccb 38%,#ff3e8f 70%,#c81e66 100%)}
+.blue .f{background-image:linear-gradient(180deg,#f2fbff 0%,#9be0ff 40%,#3aa4ff 70%,#1f6ae0 100%)}
+.orng .f{background-image:linear-gradient(180deg,#fff3dc 0%,#ffc070 38%,#ff8a1e 70%,#d65a00 100%)}
+.berry .f{background-image:linear-gradient(180deg,#ffe6f2 0%,#ff6fb5 38%,#d4237d 70%,#8f0f50 100%)}
+.ctr{left:50%;transform:translateX(-50%)}
+.plaque{position:absolute;border:12px solid var(--ink);border-radius:60px;background:linear-gradient(180deg,#b65cff 0 48%,#8a2be2 52% 100%);box-shadow:inset 0 10px 0 rgba(255,255,255,.35),0 14px 0 var(--ink),0 22px 30px rgba(0,0,0,.4)}
+.rays{position:absolute;border-radius:50%;background:repeating-conic-gradient(rgba(255,240,180,.55) 0 8deg,transparent 8deg 18deg);-webkit-mask:radial-gradient(closest-side,#000 40%,transparent)}
+</style></head><body>
+<template id="T">
+<!-- L1: tower sitting on the title -->
+<div class="lg" data-snap id="L1_{L}">
+ <img src="teal_2_none.png" style="left:{X1}px;top:232px;width:96px;transform:rotate(-3deg)">
+ <img src="pink_0_none.png" style="left:{X2}px;top:138px;width:96px;transform:rotate(6deg)">
+ <img src="orange_2_none.png" style="left:{X3}px;top:44px;width:96px;transform:rotate(-7deg)">
+ <img src="skin_king.webp" style="left:{X4}px;top:-4px;width:76px;transform:rotate(-14deg)">
+ <div class="bt ctr" style="font-size:{F1}px;top:{T1}px;transform:translateX(-50%) rotate(-3deg)"><span class="s">{W1}</span><span class="f">{W1}</span></div>
+ <div class="bt pink ctr" style="font-size:{F2}px;top:{T2}px;transform:translateX(-50%) rotate(-3deg)"><span class="s">{W2}</span><span class="f">{W2}</span></div>
+</div>
+<!-- L2: plaque with peeking sharliz -->
+<div class="lg" data-snap id="L2_{L}">
+ <div class="rays" style="left:100px;top:-120px;width:800px;height:800px"></div>
+ <img src="orange_4_none.png" style="left:180px;top:80px;width:150px;transform:rotate(-14deg)">
+ <img src="teal_0_none.png" style="left:670px;top:80px;width:150px;transform:rotate(14deg)">
+ <img src="pink_2_none.png" style="left:420px;top:35px;width:160px">
+ <div class="plaque" style="left:120px;top:210px;width:736px;height:250px;transform:rotate(-2deg)"></div>
+ <div class="bt ctr" style="font-size:{G1}px;top:{U1}px;transform:translateX(-50%) rotate(-2deg)"><span class="s">{W1}</span><span class="f">{W1}</span></div>
+ <div class="bt pink ctr" style="font-size:{G2}px;top:{U2}px;transform:translateX(-50%) rotate(-2deg)"><span class="s">{W2}</span><span class="f">{W2}</span></div>
+</div>
+<!-- L3: wobbly letters, each a sharliz colour -->
+<div class="lg" data-snap id="L3_{L}">
+ <div style="position:absolute;left:50%;top:{V1}px;transform:translateX(-50%);display:flex;direction:{DIR};gap:4px">{LETTERS}</div>
+ <img src="ribbon.webp" style="left:110px;top:{RB}px;width:780px;height:190px">
+ <div class="bt ctr" style="font-size:{H2}px;top:{V2}px"><span class="s" style="-webkit-text-stroke:.12em var(--ink)">{W2}</span><span class="f">{W2}</span></div>
+ <img src="magenta_2_none.png" style="left:{PX}px;top:{PY}px;width:96px;transform:rotate(12deg)">
+</div>
+</template>
+<script>
+const V={he:{W1:'מגדל',W2:'השארליזים',F1:250,T1:305,F2:120,T2:495,X1:668,X2:676,X3:664,X4:676,G1:160,U1:210,G2:96,U2:345,H2:100,DIR:'rtl',V1:90,RB:360,V2:383,PX:150,PY:90,FL:230},
+         en:{W1:'SHARLIZ',W2:'STACK',F1:200,T1:300,F2:130,T2:480,X1:770,X2:778,X3:765,X4:778,G1:150,U1:220,G2:100,U2:350,H2:100,DIR:'ltr',V1:100,RB:360,V2:382,PX:845,PY:100,FL:200}};
+const cls=['orng','pink','blue','berry','','orng','pink'];
+for(const L of ['he','en']){const v=V[L];let h=document.getElementById('T').innerHTML;
+  const letters=[...v.W1].map((c,i)=>`<div class="bt ${cls[i%cls.length]}" style="position:relative;font-size:${v.FL}px;transform:translateY(${[0,-18,10,-10,6,-14,8][i]}px) rotate(${[-8,6,-4,9,-6,5,-7][i]}deg)"><span class="s">${c}</span><span class="f">${c}</span></div>`).join('');
+  v.LETTERS=letters;h=h.replace(/\{(\w+)\}/g,(m,k)=>k==='L'?L:(v[k]??m));document.body.insertAdjacentHTML('beforeend',h)}
+</script></body></html>
