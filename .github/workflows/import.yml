@@ -1,0 +1,48 @@
+name: Import generated assets
+# Claude sessions can't reach the Higgsfield CDN; they commit tools/import/<name>.json = [{"url":..., "out":"path"} | {"url":..., "glb":"b3d_<id>"}]
+# and this job downloads the files (GLBs are converted with tools/glb2sh.py into art/), then commits them back to the same branch.
+on:
+  push:
+    paths: ['tools/import/*.json']
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install numpy pillow
+      - name: download + convert
+        run: |
+          python3 - <<'PY'
+          import json,glob,os,urllib.request,subprocess
+          for f in sorted(glob.glob('tools/import/*.json')):
+              items=json.load(open(f));done=[]
+              for it in items:
+                  if it.get('done'):done.append(it);continue
+                  try:
+                      if 'glb' in it:
+                          tmp='/tmp/'+it['glb']+'.glb';urllib.request.urlretrieve(it['url'],tmp)
+                          if open(tmp,'rb').read(7)==b'Kaydara':  # Meshy sometimes hands back FBX under a .glb name
+                              if not os.path.exists('/tmp/fbx2gltf'):
+                                  urllib.request.urlretrieve('https://github.com/facebookincubator/FBX2glTF/releases/download/v0.9.7/FBX2glTF-linux-x64','/tmp/fbx2gltf');os.chmod('/tmp/fbx2gltf',0o755)
+                              os.replace(tmp,tmp[:-4]+'.fbx')
+                              r=subprocess.run(['/tmp/fbx2gltf','--binary','--pbr-metallic-roughness','-i',tmp[:-4]+'.fbx','-o',tmp[:-4]],capture_output=True,text=True)
+                              if r.returncode:raise Exception('fbx2gltf '+r.stdout[-300:]+r.stderr[-300:])
+                          r=subprocess.run(['python3','tools/glb2sh.py',tmp,it['glb'],'art'],capture_output=True,text=True)
+                          if r.returncode:raise Exception(r.stderr[-600:])
+                          os.replace('art/'+it['glb']+'.bin','art/'+it['glb']+'.wasm')
+                      else:
+                          os.makedirs(os.path.dirname(it['out']) or '.',exist_ok=True);urllib.request.urlretrieve(it['url'],it['out'])
+                      it['done']=1
+                  except Exception as e:
+                      it['err']=str(e)[-700:];print('FAIL',it,e)
+                  done.append(it)
+              json.dump(done,open(f,'w'),indent=1)
+          PY
+      - name: commit
+        run: |
+          git config user.name "asset-import"; git config user.email "actions@users.noreply.github.com"
+          git add -A art tools/import; git add -A tools/bosses tools/worlds 2>/dev/null || true
+          git commit -m "Import generated assets" || exit 0
+          git pull --rebase && git push

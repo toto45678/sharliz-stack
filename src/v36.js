@@ -63,4 +63,4 @@ function winBurst(){const card=document.getElementById('card');if(!card||!card.c
 
 /* --- v38: per-level cleanup: stale toasts; keep only this world's 3D boss in memory and start loading it early --- */
 {const _sl=startLevel;startLevel=function(...a){TOASTS.length=0;const r=_sl.apply(this,a);
-  try{if(typeof b3Drop==='function'&&B3.r){const z=zone().id;b3Drop([z]);if(mode==='levels')b3Load(z)}}catch(e){}return r}}
+  try{if(typeof b3Drop==='function'&&B3.r){const z=typeof bossArt==='function'?bossArt():zone().id;b3Drop([z]);if(mode==='levels')b3Load(z)}}catch(e){}return r}}

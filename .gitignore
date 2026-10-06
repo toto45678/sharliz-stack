@@ -7,3 +7,6 @@ app/www/
 app/android/
 app/ios/
 app/package-lock.json
+tools/worlds/*.png
+tools/bosses/*.png
+tools/bosses/*.bin

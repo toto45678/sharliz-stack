@@ -69,7 +69,8 @@ function b3Draw(b,bh,mod){const T=THREE,R=mod.R,t=ft,r=B3.r,d=Math.min(2,DPR||1)
     else if(z==='snow'){flap=A<.45?-1.4*(A/.45):1.6*(1-(A-.45)/.55);rx+=A<.45?-.16*(A/.45):.22*(1-(A-.45)/.55);yaw+=A<.45?.25*(A/.45):.25*(1-(A-.45)/.55)}
     else if(z==='ocean'){teK=5.5;y+=.07*s;sc+=.08*s;rz+=.08*Math.sin(A*18)}
     else if(z==='volcano'){y+=A<.4?.16*(A/.4):.16*Math.max(0,1-(A-.4)/.12);head=-.22*s;swK=3;if(A>.52&&A<.6)sq=1.12}
-    else if(z==='space'){yaw+=A*Math.PI*3;rz+=.28*Math.sin(A*Math.PI*2);y+=.06*s}}
+    else if(z==='space'){yaw+=A*Math.PI*3;rz+=.28*Math.sin(A*Math.PI*2);y+=.06*s}
+    else{const st=R.atk||'jump';if(st==='jump'){y+=.13*Math.abs(Math.sin(A*Math.PI*2));sq=1+.12*Math.cos(A*Math.PI*4)*(1-A)}else if(st==='spin'){yaw+=A*Math.PI*2;y+=.05*s}else if(st==='lunge'){rx+=.3*s;sc+=.14*s;head=-.2*s}else if(st==='shake'){rz+=.16*Math.sin(A*22)*s;sc+=.08*s}else if(st==='flap'){flap=Math.sin(A*30)*1.5;y+=.1*s}}}
   // phase change: a big roar pulse
   const pt=b.phAt?(time-b.phAt)/1.1:9;if(pt>=0&&pt<1&&!b.dead){const s=Math.sin(pt*Math.PI);sc+=.14*s;head-=.2*s;rz+=Math.sin(pt*50)*.04*s;flap=Math.sin(pt*28)*1.2;jgK=Math.max(jgK,4);teK=Math.max(teK,4);mod.roar=s}else mod.roar=0;
   // entrance: spins in and grows
