@@ -1,9 +1,9 @@
 /* ===== v40: starter pack — one-time offer: coins + boosters + the Star halo hat (only from this pack) ===== */
 Object.assign(I18N.en,{
-  stTitle:'Starter pack',stOnce:'One time only!',stBoost:'×2 of every booster',stBuy:'Buy',stLater:'Not now',stGot:'Starter pack — thank you!',
+  stTitle:'Starter pack',stBtn:'Offer',stOnce:'One time only!',stBoost:'×2 of every booster',stBuy:'Buy',stLater:'Not now',stGot:'Starter pack — thank you!',
   hp_halo:'+20% coins',hm_halo:'Falls a little faster',stOnlyPack:'Only in the starter pack'});
 Object.assign(I18N.he,{
-  stTitle:'חבילת פתיחה',stOnce:'פעם אחת בלבד!',stBoost:'2 מכל בוסטר',stBuy:'לקנות',stLater:'לא עכשיו',stGot:'חבילת הפתיחה אצלך, תודה!',
+  stTitle:'חבילת פתיחה',stBtn:'מבצע',stOnce:'פעם אחת בלבד!',stBoost:'2 מכל בוסטר',stBuy:'לקנות',stLater:'לא עכשיו',stGot:'חבילת הפתיחה אצלך, תודה!',
   hp_halo:'עוד 20% מטבעות',hm_halo:'נופל קצת מהר יותר',stOnlyPack:'רק בחבילת הפתיחה'});
 
 // the hat: lives in the wardrobe like the others, but can only be bought through the pack
@@ -52,8 +52,17 @@ function openStarter(){sfx.click();showOverlay(()=>({title:t('stTitle'),extra:ca
     if(starterOwned())return;card.appendChild(starterCard(()=>{hideOverlay();if(W3.on)renderWardrobe()}));const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');card.appendChild(n)},
   actions:[{label:t(starterOwned()?'close':'stLater'),fn:hideOverlay}]}),true)}
 
-// offered by itself once, when the player comes back to the lobby after finishing 5+ levels (never on top of the daily gift)
-function stMaybe(){if(progress.stOffer||starterOwned()||progress.unlocked<6||(typeof dlState==='function'&&!dlState().claimed))return;
+// lobby: a glowing "offer" button under Missions, there until the pack is bought
+const stBtn=document.createElement('button');stBtn.className='side-btn st-side';stBtn.id='lobStarter';stBtn.hidden=true;
+stBtn.innerHTML='<span class="sq"><img src="art/ic_gift.webp" alt=""></span><b></b><i class="st-shine">✨</i>';
+stBtn.onclick=()=>{audio();openStarter()};document.querySelector('#title .lob-side.l').appendChild(stBtn);
+function stBtnSync(){stBtn.hidden=starterOwned()||progress.unlocked<2;stBtn.querySelector('b').textContent=t('stBtn')}
+// offered by itself once: back in the lobby right after a won level, once the player has finished 5+ levels (never on top of the daily gift)
+let stWon=false;
+{const _w=win;win=function(){stWon=true;return _w.apply(this,arguments)}}
+function stMaybe(){if(!stWon||progress.stOffer||starterOwned()||progress.unlocked<6||(typeof dlState==='function'&&!dlState().claimed))return;
   setTimeout(()=>{if(progress.stOffer||state!=='title'||W3.on||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;
     progress.stOffer=Date.now();saveProgress();openStarter()},1200)}
-{const _ul=updateLobby;updateLobby=function(){_ul();stMaybe()}}
+{const _ul=updateLobby;updateLobby=function(){_ul();stBtnSync();stMaybe()}}
+{const _g2=IAP.grant;IAP.grant=function(sku){_g2(sku);stBtnSync()}}
+stBtnSync();
