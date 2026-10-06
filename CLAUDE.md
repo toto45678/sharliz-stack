@@ -30,6 +30,7 @@ src/v42.js/.css       seasons: 300 levels (ZONES expanded in build.py; z.sid sta
 src/v44.js            22 new mechanics/enemies (MECH, MECH_OF stage→mechanic) + the 22 new bosses' attacks (BOSS_ATK[sid])
 src/v43.js/.css        tester report: anonymous per-level stats on the device (localStorage 'sharliz-tester'), hidden Settings row
 src/v45.js            22 new bosses: names, bossArt() (stage's own model/picture when it exists), B3D_RIG + attack style per new boss, sticker book lists all 30
+src/v47.js            22 boss trophy hats (WHATX 'h_<sid>', procedural 3D in buildHat) with powers (TROPHY_FX: immunity to a mechanic + one bonus, no cost) + astronaut suit (WOUT.astro, IAP 'astro' ₪14.90): tower starts 5 floors up
 src/v46.js            own art per stage (ART_OWN injected by build.py from art/w3b_<sid>…): z.id becomes the sid, missing tables/pictures alias to z.base
 .github/workflows/import.yml  sessions can't reach the Higgsfield CDN: commit tools/import/<x>.json ([{url,out}|{url,glb}]) → CI downloads, converts GLB (and FBX via FBX2glTF) with glb2sh.py, commits back
 tools/worlds/make.py  generated world layers (tools/worlds/<id>_<layer>.png, not committed) → art/ sizes; night/storm alpha clipped to the day layer
@@ -102,5 +103,7 @@ Done Oct 6 (branch bosses, src/v45.js + v46.js, Higgsfield credits approved by T
 - NIGHT + STORM versions of all 8 classic worlds' in-game layers (+ caps); in-game tint skipped for them (z.ownArt), map keeps the tinted day panel.
 - hz.boss.z is now the BASE art world (z.base) so classic-attack fallbacks work; b.ak = art key for model/picture.
 Next ideas: own music for the 6 new worlds + night/storm, Hebrew/English intro names check, iPhone perf with 30 boss models (only one kept in GPU).
+
+Done Oct 6 (branch boss-rewards, src/v47.js): every new boss drops its own trophy hat when beaten (win() now grants 'h_'+zone().sid; the win card shows a live 3D thumbnail). Trophy hat powers = no cost: imm_<mechanic> (that mechanic never starts, also not as a boss attack), plus one of coins/boss/tol/wind/light(night holes)/lavaK/swayK(dunes+waves)/convK/noSlip/feverT/fall/perfPts/perfCoins/spd/hearts/aim. Astronaut suit (Tzach's son's idea): paid (test-mode IAP 'astro', NON_CONSUMABLE — must also be created in App Store/Play), white suit + glass helmet + jetpack on the hero; in level mode (not level 1, not checkpoint-continue) the tower starts with 5 extra floors that count toward the goal. Offer card in the shop coins tab + premium tile in the wardrobe outfits.
 
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.

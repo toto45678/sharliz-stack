@@ -26,3 +26,5 @@
 @keyframes stPulse{50%{transform:scale(1.07);box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 5px 0 var(--ink),0 0 18px rgba(255,220,80,.95)}}
 @keyframes stTw{50%{transform:scale(1.3) rotate(20deg)}}
 @media (max-height:740px){.lob-side{top:calc(env(safe-area-inset-top,0px) + 160px);gap:8px}.lob-side .side-btn .sq{width:54px;height:54px}}
+.st-pack.astro-pack{background:linear-gradient(160deg,#1e3a8a,#312e81 55%,#0f172a);}
+.st-pack.astro-pack .st-it.hat small{color:#7dd3fc}

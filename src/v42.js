@@ -37,7 +37,7 @@ function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonSt
     S_.flies=S_.flies.filter(f=>f.t<14&&f.x>-30&&f.x<W+30&&f.y>-30&&f.y<H+30);
     let c=S_.nc;const dpr=DPR||1;if(!c||c.width!==Math.round(W*dpr)||c.height!==Math.round(H*dpr)){c=S_.nc=document.createElement('canvas');c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)}
     const g=c.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.globalCompositeOperation='source-over';g.clearRect(0,0,W,H);
-    const dark=Math.min(.95,.6+lvInZone()*.02+nightExtra),lb=lightBoost>0?1.55:1;g.fillStyle=`rgba(4,6,26,${dark})`;g.fillRect(0,0,W,H);g.globalCompositeOperation='destination-out';
+    const dark=Math.min(.95,.6+lvInZone()*.02+nightExtra),lb=(lightBoost>0?1.55:1)*(typeof hatK==='function'?hatK('light'):1);g.fillStyle=`rgba(4,6,26,${dark})`;g.fillRect(0,0,W,H);g.globalCompositeOperation='destination-out';
     const flick=1+Math.sin(time*7)*.03+Math.sin(time*13)*.02;
     if(tower.length){const tp=topScreen();lightHole(g,tp.x,tp.y,S*3.1*flick*lb)}
     if(swinger)lightHole(g,xOf(swinger.xs),sy(swingY()),S*2.4*flick*lb);
