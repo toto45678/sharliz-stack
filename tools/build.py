@@ -168,13 +168,15 @@ rep("const TOTAL=ZONES.length*LPZ;",r"""{const B=ZONES.slice();for(const z of B)
   for(const s of [2,3])for(const z of B)ZONES.push(Object.assign({},z,{sid:z.id+(s===2?'N':'S'),season:s,key:z.key+(s===2?'N':'S'),sky:s===2?night(z.sky):storm(z.sky),cloud:z.cloud&&(s===2?mix(z.cloud,'#1a2050',.6):mix(z.cloud,'#4a5060',.5)),starsAt:s===2?-99:z.starsAt}));
   for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
 const etOf=zi=>zi<8?zi:4+(zi-8)*.18;
+// floors added by the level's place in its world: +1 per level, with a 'rest' level now and then (+0) (Tzach, Oct 6; was +2 per level)
+const lvStep=k=>[0,1,2,2,3,4,4,5,6][k]||0;
 const TOTAL=ZONES.length*LPZ;""")
-rep("6+2*zoneIdx(level)+2*lvInZone()","6+Math.round(2*etOf(zoneIdx(level)))+2*lvInZone()")
+rep("6+2*zoneIdx(level)+2*lvInZone()","6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone())")
 rep("(1.45+zoneIdx(level)*.14","(1.45+etOf(zoneIdx(level))*.14")
 rep("lv=.5+.5*(level-1)/(TOTAL-1)","lv=.5+.5*Math.min(1,(etOf(zoneIdx(level))*LPZ+lvInZone())/79)")
 rep("hp=3*(5+zi);","hp=3*(5+Math.round(etOf(zi)))+3*((ZONES[zi].season||1)-1);")
 rep("let p=Math.max(.09,sp*(55-zi*1.4)/2000),g=Math.max(.2,sp*(120-zi*3)/2000)","let p=Math.max(.09,sp*(55-etOf(zi)*1.4)/2000),g=Math.max(.2,sp*(120-etOf(zi)*3)/2000)")
-rep("g=6+2*zi+2*k;","g=6+Math.round(2*etOf(zi))+2*k;")
+rep("g=6+2*zi+2*k;","g=6+Math.round(2*etOf(zi))+lvStep(k);")
 rep("const bossReach=()=>4+Math.floor(zoneIdx(level)/2);","const bossReach=()=>4+Math.floor(etOf(zoneIdx(level))/2);")
 rep("BOSS_NAMES[zone().id]","(BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])",3)
 rep("lv.firstBoss=!progress.beat[zone().id];progress.beat[zone().id]=1;","lv.firstBoss=!progress.beat[zone().sid];progress.beat[zone().sid]=1;")
