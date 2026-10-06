@@ -580,6 +580,41 @@ canvas.wt{position:fixed;inset:0;width:100vw;height:100vh;z-index:98}
 [dir=rtl] .bk-page{transform-origin:right center;border-radius:14px 8px 8px 14px;box-shadow:inset -8px 0 14px -8px rgba(60,30,10,.35);padding:12px 14px 16px 10px}
 .shop-tabs button{font-size:.92rem;padding-inline:4px;min-width:0}
 
+/* v36 – level-end card */
+.tally.tally3{gap:7px;max-width:300px}
+.tally3 .tally-row{padding:5px 10px 6px 6px;border-radius:999px;background:linear-gradient(180deg,#5b3bd6 0,#4527b8 55%,#3a1f9e 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.28),0 4px 0 rgba(8,10,40,.6)}
+.tally3 .t-ic{width:30px;height:30px;object-fit:contain;flex:none;background:radial-gradient(circle at 40% 35%,#fff7cf,#ffd23f 60%,#e79a00);border:2.5px solid var(--ink);border-radius:50%;padding:3px;box-shadow:0 2px 0 var(--ink)}
+.tally3 .tally-row span{font-size:1.02rem}
+.tally3 .tally-row b{color:#ffe9a8;font-size:.9rem;letter-spacing:.5px}
+.tally3 .tally-row em{font-size:1.15rem}
+.tally3 .tally-total{border-radius:999px;justify-content:center;gap:10px;padding:5px 16px 7px}
+.tally3 .tally-total span{flex:none}
+/* stars one by one */
+.stars{position:relative;isolation:isolate}
+.stars.seq img{animation:none}
+.stars img.s-wait{opacity:0;transform:scale(.2)}
+.stars img.s-off{animation:sOff .35s ease-out both}
+.stars img.s-in{animation:sDrop .55s cubic-bezier(.2,1.7,.4,1) both}
+@keyframes sOff{from{opacity:0;transform:scale(.6)}to{opacity:.9;transform:none}}
+@keyframes sDrop{0%{opacity:0;transform:translateY(-70px) scale(2.3) rotate(-50deg)}55%{opacity:1;transform:translateY(5px) scale(.88) rotate(10deg)}78%{transform:translateY(-3px) scale(1.06)}100%{transform:none}}
+.star-spark{position:absolute;width:8px;height:8px;border-radius:50%;background:#ffe24d;box-shadow:0 0 8px #fff7b0;pointer-events:none;animation:sSpark .65s ease-out forwards;z-index:2}
+@keyframes sSpark{to{transform:translate(var(--dx),var(--dy)) scale(.15);opacity:0}}
+.stars.triple::before{content:'';position:absolute;left:50%;top:55%;width:300px;height:300px;margin:-150px 0 0 -150px;border-radius:50%;z-index:-1;pointer-events:none;
+  background:repeating-conic-gradient(rgba(255,226,77,.6) 0 9deg,rgba(255,255,255,0) 9deg 24deg);
+  -webkit-mask:radial-gradient(circle,#000 22%,transparent 68%);mask:radial-gradient(circle,#000 22%,transparent 68%);animation:raysSpin 7s linear infinite,raysIn .6s ease-out both}
+@keyframes raysSpin{to{transform:rotate(360deg)}}
+@keyframes raysIn{from{opacity:0;scale:.3}to{opacity:1;scale:1}}
+.stars.triple img{animation:tBounce 1s ease-in-out infinite;filter:drop-shadow(0 0 12px #ffe24d) drop-shadow(0 4px 0 rgba(10,8,40,.55))}
+.stars.triple img:nth-child(2){animation-delay:.12s}.stars.triple img:nth-child(3){animation-delay:.24s}
+@keyframes tBounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-9px) scale(1.07) rotate(-4deg)}}
+.triple-tag{margin:-6px auto 4px;width:max-content;padding:2px 18px 4px;border-radius:999px;font-family:var(--gf);font-size:1.35rem;color:#fff;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;
+  background:linear-gradient(180deg,#ff7ac3 0 48%,#ff3ea5 52%);border:3px solid var(--ink);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 4px 0 var(--ink);animation:tagPop .5s cubic-bezier(.2,1.8,.4,1) both,tagGlow 1.4s ease-in-out .5s infinite}
+@keyframes tagPop{from{transform:scale(0) rotate(-12deg)}to{transform:none}}
+@keyframes tagGlow{50%{transform:scale(1.06)}}
+#overlay .confetti{position:absolute;top:-14px;width:9px;height:14px;border-radius:2px;z-index:50;pointer-events:none;animation:cFall linear forwards}
+@keyframes cFall{to{transform:translate(var(--sx),105vh) rotate(var(--rot))}}
+@media (prefers-reduced-motion:reduce){.stars.triple img,.stars.triple::before,.triple-tag{animation:none}#overlay .confetti{display:none}}
+
 </style>
 
 <div id="app">
@@ -1054,15 +1089,15 @@ function drawSharliz0(s,x,y,rot=0,mood=null,look={x:0,y:0},sq=0){
     jigStep(s,x);
     const idx=mood&&FACE[mood]!==undefined?FACE[mood]:(blinking?1:0);
     const cell=spr.C.cells[idx],[sx,sy0,cw,ch,ax,ay,bh]=cell,k=h/bh,flip=s.asym<0?-1:1;
-    const Q=clamp(sq+s.jy,-.9,1.15),syk=1-Q*.27,sxa=1+Q*.36,bodyTop=ay-bh,N=18;
+    const Q=clamp(sq+s.jy,-.9,1.15),syk=1-Q*.27,sxa=1+Q*.36,bodyTop=ay-bh,N=28;ctx.imageSmoothingQuality='high';
     const off=t=>(s.kx*Math.pow(1-t,1.3)*h*.38+Math.sin(t*7-time*19)*clamp(s.jv,-6,6)*.006*w);
     const sim=spriteFor(s,spr);
     ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.translate(0,h/2);
     // soft shadow that spreads when squashed
     ctx.save();ctx.globalAlpha=.2;ctx.fillStyle=LINE;ctx.beginPath();ctx.ellipse(w*.06+off(.5)*.5,-h*.47*syk+h*.03,cell[7]*k*.5*sxa*(1+Q*.12),h*.5*syk,0,0,7);ctx.fill();ctx.restore();
     ctx.globalAlpha=sim.alpha;for(let i=0;i<N;i++){const r0=i*ch/N,r1=(i+1)*ch/N,t=clamp(((r0+r1)/2-bodyTop)/bh,0,1);
-      const wf=sxa*(1+Q*.56*(t-.5)),yd0=-(ay-r0)*k*syk,yd1=-(ay-r1)*k*syk,o=off(t);
-      ctx.save();ctx.translate(o,0);ctx.scale(flip,1);
+      const wf=sxa*(1+Q*.56*(t-.5)),yd0=-(ay-r0)*k*syk,yd1=-(ay-r1)*k*syk,o0=off(clamp((r0-bodyTop)/bh,0,1)),o1=off(clamp((r1-bodyTop)/bh,0,1)),sh=(o1-o0)/((yd1-yd0)||1);
+      ctx.save();ctx.transform(1,0,sh,1,o0-sh*yd0,0);ctx.scale(flip,1);
       ctx.drawImage(sim.im,sx,sy0+r0,cw,Math.min(ch-r0,(r1-r0)+.8),-ax*k*wf,yd0,cw*k*wf,(yd1-yd0)+.9);ctx.restore()}
     ctx.globalAlpha=1;
     if(progress.skin&&progress.skin!=='none'&&!s.noHat&&!spr.C.b3d){ctx.save();ctx.translate(off(0),-bh*k*syk+3);drawHat(cell[7]*k*sxa,0);ctx.restore()}
@@ -1712,7 +1747,7 @@ const POPPAL={perfect:['#fffbe0','#ffd23f','#ff8a00'],splendid:['#fffbe0','#ffd2
 function gameText(g,txt,x,y,size,pal,rot=0){g.save();g.translate(x,y);g.rotate(rot);g.font=`${Math.round(size)}px "Lilita One","Secular One",system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';g.lineJoin='round';
   g.lineWidth=Math.max(4,size*.24);g.strokeStyle='#120d2b';g.strokeText(txt,0,size*.09);g.strokeText(txt,0,0);
   const gr=g.createLinearGradient(0,-size*.42,0,size*.42);gr.addColorStop(0,pal[0]);gr.addColorStop(.48,pal[1]);gr.addColorStop(1,pal[2]);g.fillStyle=gr;g.fillText(txt,0,0);g.restore()}
-function popup(text,x,y,c,key,sub){const p={text,x,y,c,key,sub,life:key?1.25:1.1,max:key?1.25:1.1};popups.push(p);stackPopup(p)}
+function popup(text,x,y,c,key,sub){const p={text,x,y,c,key,sub,life:key?.95:1.1,max:key?.95:1.1};popups.push(p);stackPopup(p)}
 function swayOffset(i,n){
   if(n<2)return 0;const k=i/(n-1),lean=wind*S*.05*k;
   if(reduceMotion)return lean;
@@ -2524,12 +2559,13 @@ function render(){
   drawKaleido();
   for(const p of popups){
     const age=p.max-p.life;
-    if(p.key){const sc=age<.1?.4+age/.1*.85:age<.2?1.25-(age-.1)/.1*.25:1,size=Math.min(W*.14,62)*sc,px=clamp(p.x,W*.32,W*.68),py=Math.max(sy(p.y),140);
+    if(p.key){const sc=age<.1?.4+age/.1*.85:age<.2?1.25-(age-.1)/.1*.25:1,size=Math.min(W*.1,44)*sc,px=clamp(p.x+(p.x<W/2?1:-1)*S*1.8,W*.22,W*.78),py=Math.max(sy(p.y)+BH*.6,150);
       ctx.save();ctx.globalAlpha=clamp(p.life*2.2,0,1);gameText(ctx,p.key==='wow'?t('wow')||p.text:p.text,px,py,size,POPPAL[p.key]||POPPAL.perfect,-.07);
       if(p.sub)gameText(ctx,p.sub,px+size*1.4,py-size*.55,size*.55,POPPAL.wow,.12);ctx.restore();continue}
     ctx.save();ctx.globalAlpha=clamp(p.life*1.5,0,1);const px=clamp(p.x,S*1.5,W-S*1.5),py=Math.max(sy(p.y),150),c0=/^#[0-9a-f]{6}$/i.test(p.c)?p.c:'#ffffff';
     gameText(ctx,p.text,px,py,Math.round(S*.44),[mix(c0,'#ffffff',.6),c0,mix(c0,'#000000',.18)]);ctx.restore()}
   ctx.restore();
+  drawToasts();
 }
 function star(r){ctx.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,rr=i%2?r*.4:r;ctx.lineTo(Math.cos(a)*rr,Math.sin(a)*rr)}ctx.closePath();ctx.fill()}
 function drawGround(){
@@ -3928,6 +3964,58 @@ function b3Draw(b,bh,mod){const T=THREE,R=mod.R,t=ft,r=B3.r,d=Math.min(2,DPR||1)
   const S0=(R.sc||1)*sc;g.position.set(0,y,0);g.rotation.set(rx,yaw,rz);g.scale.set(S0/sq,S0*sq,S0/sq);
   if(hurt&&Math.floor(b.hurt*14)%2===0)em=Math.max(em,.55);const rr=mod.roar||0;mod.mat.emissive.setRGB(Math.max(em,.45*rr),em+.04*rr,em+.02*rr);
   r.render(B3.sc,B3.cam);ctx.drawImage(B3.cv,-.85*bh,bh/2-1.2*bh,1.7*bh,1.3*bh);return true}
+
+/* ===== v36: cleaner play screen (toast lane instead of popups over the action) + a nicer level-end card ===== */
+Object.assign(I18N.en,{cSkill:'Skill',cBonus:'Bonuses',perfect3:'PERFECT!'});
+Object.assign(I18N.he,{cSkill:'מיומנות',cBonus:'בונוסים',perfect3:'מושלם!'});
+
+/* --- popups: landing feedback stays next to the tower (small); every other message goes to a quiet toast lane under the HUD --- */
+const TOASTS=[],TOAST_SEEN={};
+function toast(text,c){text=String(text);const now=performance.now()/1000;if(TOAST_SEEN[text]&&now-TOAST_SEEN[text]<1.4)return;TOAST_SEEN[text]=now;
+  const live=TOASTS.find(q=>q.text===text&&q.t<q.life-.3);if(live){live.t=Math.min(live.t,.25);return}
+  TOASTS.push({text,c:/^#[0-9a-f]{6}$/i.test(c||'')?c:'#ffffff',t:0,life:1.9});while(TOASTS.length>3)TOASTS.shift()}
+{const _pp=popup;popup=function(text,x,y,c,key,sub){
+  if(text===t('nice'))return;                                   // too frequent – the sound is enough
+  if(key&&key!=='gust')return _pp(text,x,y,c,key,sub);           // perfect / great / wow next to the landed piece
+  if(/^[-+]\d/.test(String(text)))return _pp(text,x,y,c);        // boss damage numbers stay on the boss
+  toast(text,c)}}
+let _sab=null;const safeB=()=>{if(_sab===null){try{const d=document.createElement('div');d.style.cssText='position:fixed;bottom:0;height:0;padding-bottom:env(safe-area-inset-bottom)';document.body.appendChild(d);_sab=parseFloat(getComputedStyle(d).paddingBottom)||0;d.remove()}catch(e){_sab=0}}return _sab};
+function drawToasts(){if(!TOASTS.length)return;const dt=Math.min(.05,frameDt||.016);
+  const fs=Math.round(Math.max(13,Math.min(17,S*.24)));
+  ctx.save();ctx.font=`${fs}px "Rubik","Secular One",system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction=(typeof lang!=='undefined'&&lang==='he')?'rtl':'ltr';
+  let row=0;for(let i=TOASTS.length-1;i>=0;i--){const q=TOASTS[i];q.t+=dt;if(q.t>q.life){TOASTS.splice(i,1);continue}}
+  for(const q of TOASTS){const inA=Math.min(1,q.t/.18),outA=Math.min(1,(q.life-q.t)/.3),a=Math.min(inA,outA),w=Math.min(W*.86,ctx.measureText(q.text).width+fs*2.2),h=fs*1.9,
+      y=H-safeB()-h*3.3-row*(h+6)+(1-inA)*10,x=W/2;row++;
+    ctx.globalAlpha=a*.92;ctx.fillStyle='rgba(18,13,43,.78)';roundRect(x-w/2,y,w,h,h/2);ctx.fill();ctx.lineWidth=2;ctx.strokeStyle=q.c;ctx.globalAlpha=a*.7;ctx.stroke();
+    ctx.globalAlpha=a;ctx.fillStyle=q.c;ctx.beginPath();ctx.arc(x-w/2+h*.5,y+h/2,fs*.22,0,7);ctx.fill();ctx.fillStyle='#fff';ctx.fillText(q.text,x+fs*.25,y+h/2+1)}
+  ctx.restore()}
+
+/* --- level-end card: at most 3 coin rows (clear / skill / bonuses) with icons --- */
+{const _tr=tallyRows;tallyRows=function(won){const rows=_tr(won),C=[t('cClear'),t('cBoss'),t('cFirst3')],K=[t('cPerfect'),t('cGreat'),t('cCombo'),t('cTricks'),t('cFever')];
+  const g={clear:[won?(isBoss()&&lv.firstBoss?t('cBoss'):t('cClear')):t('cClear'),'',0,'trophy'],skill:[t('cSkill'),'',0,'star'],bonus:[t('cBonus'),'',0,'gift']};
+  for(const r of rows){const k=C.includes(r[0])?'clear':K.includes(r[0])?'skill':'bonus';g[k][2]+=r[2]}
+  const pf=lv.perfect||0;if(pf)g.skill[1]='★×'+pf;
+  if(won&&lv.first3)g.clear[1]='★★★';
+  return Object.values(g).filter(r=>r[2]>0)}}
+{const _tc=tallyCard;tallyCard=function(card,won){_tc(card,won);const box=card.querySelector('.tally');if(!box)return;box.classList.add('tally3');
+  const rows=tallyRows(won);box.querySelectorAll('.tally-row').forEach((d,i)=>{const r=rows[i];if(!r||!r[3])return;const im=document.createElement('img');im.className='t-ic';im.alt='';im.src='art/ic_'+r[3]+'.webp';d.prepend(im)})}}
+
+/* --- stars: one by one, then a special show for three --- */
+function animStars(st){if(st.dataset.anim)return;st.dataset.anim='1';const imgs=[...st.querySelectorAll('img')],n=imgs.filter(i=>!i.classList.contains('off')).length;
+  st.classList.add('seq');imgs.forEach((im,i)=>im.classList.add(i<n?'s-wait':'s-off'));
+  const T0=420,GAP=430;
+  imgs.slice(0,n).forEach((im,i)=>setTimeout(()=>{if(!im.isConnected)return;im.classList.remove('s-wait');im.classList.add('s-in');try{sfx.perfect(2+i*2)}catch(e){}vib(18);
+    for(let k=0;k<10;k++){const sp=document.createElement('i');sp.className='star-spark';const a=k/10*Math.PI*2+Math.random()*.4,r=38+Math.random()*26;sp.style.setProperty('--dx',Math.cos(a)*r+'px');sp.style.setProperty('--dy',Math.sin(a)*r+'px');
+      sp.style.left=(im.offsetLeft+im.offsetWidth/2-4)+'px';sp.style.top=(im.offsetTop+im.offsetHeight/2-4)+'px';st.appendChild(sp);setTimeout(()=>sp.remove(),700)}},T0+i*GAP));
+  if(n>=3)setTimeout(()=>{if(!st.isConnected)return;st.classList.add('triple');const tag=document.createElement('div');tag.className='triple-tag';tag.textContent=t('perfect3');st.after(tag);
+    try{sfx.flourish(3)}catch(e){}vib([30,40,60]);const ov=document.getElementById('overlay');
+    for(let k=0;k<46;k++){const c=document.createElement('i');c.className='confetti';c.style.left=Math.random()*100+'%';c.style.background=pick(['#ffd23f','#ff3ea5','#22d3ee','#a3e635','#ffffff','#c08bff']);
+      c.style.animationDelay=(Math.random()*.5)+'s';c.style.animationDuration=(1.6+Math.random()*1.2)+'s';c.style.setProperty('--sx',(Math.random()*160-80)+'px');c.style.setProperty('--rot',(Math.random()*720-360)+'deg');ov.appendChild(c);setTimeout(()=>c.remove(),3400)}},T0+n*GAP+120)}
+{const _so=showOverlay;showOverlay=function(build,dim){_so(build,dim);const st=document.querySelector('#card .stars');if(st)animStars(st);
+  const rr=rerenderOverlay;if(rr)rerenderOverlay=()=>{rr();const s2=document.querySelector('#card .stars');if(s2){s2.dataset.anim='1';const n=[...s2.querySelectorAll('img')].filter(i=>!i.classList.contains('off')).length;if(n>=3)s2.classList.add('triple')}}}}
+
+{const _so2=showOverlay;showOverlay=function(build,dim){_so2(build,dim);const ms=document.querySelector('#card .win-ms');if(!ms)return;
+  const miss=[...ms.children].filter(c=>!c.classList.contains('ok'));if(!miss.length)ms.remove();else ms.querySelectorAll('.ok').forEach(c=>c.remove())}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

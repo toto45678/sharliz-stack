@@ -83,11 +83,19 @@ rep("sfx.trombone();s.hidden=true;gag={name,filter,t:0,x:xOf(s.xs),wy:yOf(surviv
     "sfx.trombone();s.hidden=true;gag={name,filter,t:0,x:xOf(s.xs),wy:yOf(survivor),g3:useG3,col:s.color};\n    await wait((useG3?g3Len(name):animLen(name))*1000+150);")
 rep("if(animReady('dance')&&!reduceMotion){setTimeout(()=>{if(state!=='win')return;s0.hidden=true;gag={name:'dance',filter:'',t:0,x:xOf(s0.xs),wy:yOf(tower.length-1)}},250)}",
     "const dG3=!animReady('dance')&&!reduceMotion&&g3Init();if((animReady('dance')||dG3)&&!reduceMotion){setTimeout(()=>{if(state!=='win')return;s0.hidden=true;gag={name:'dance',filter:'',t:0,x:xOf(s0.xs),wy:yOf(tower.length-1),g3:dG3,col:s0.color}},250)}")
+# ---- v36: smooth character outline while swinging (continuous sheared strips instead of 18 stepped ones)
+rep("bodyTop=ay-bh,N=18;","bodyTop=ay-bh,N=28;ctx.imageSmoothingQuality='high';")
+rep(",yd1=-(ay-r1)*k*syk,o=off(t);",",yd1=-(ay-r1)*k*syk,o0=off(clamp((r0-bodyTop)/bh,0,1)),o1=off(clamp((r1-bodyTop)/bh,0,1)),sh=(o1-o0)/((yd1-yd0)||1);")
+rep("ctx.save();ctx.translate(o,0);ctx.scale(flip,1);","ctx.save();ctx.transform(1,0,sh,1,o0-sh*yd0,0);ctx.scale(flip,1);")
+# ---- v36: landing feedback smaller, beside the tower, shorter; toast lane drawn last
+rep("size=Math.min(W*.14,62)*sc,px=clamp(p.x,W*.32,W*.68),py=Math.max(sy(p.y),140);","size=Math.min(W*.1,44)*sc,px=clamp(p.x+(p.x<W/2?1:-1)*S*1.8,W*.22,W*.78),py=Math.max(sy(p.y)+BH*.6,150);")
+rep("life:key?1.25:1.1,max:key?1.25:1.1","life:key?.95:1.1,max:key?.95:1.1")
+rep("  ctx.restore();\n}\nfunction star(r){","  ctx.restore();\n  drawToasts();\n}\nfunction star(r){")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))
-css=rd('v28.css')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')
+css=rd('v28.css')+'\n'+rd('v36.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')

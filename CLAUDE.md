@@ -52,10 +52,11 @@ python3 -m http.server 8765       # manual look
 ## Status / open work (update when you finish something)
 Done recently: 3D bosses for all 8 worlds (Meshy multi-view), boss signature attacks, 3D gags, foreground caps (farm/ocean/volcano), PWA on GitHub Pages.
 
-In progress / requested by Tzach (Oct 6):
-1. **Jagged black outline** on characters while swinging. Cause: `drawSharliz0` draws 18 strips each shifted by `off(t)` → stair-steps when `kx` (swing velocity) ≠ 0. Fix plan: per-strip shear transform so offsets are continuous (`ctx.transform(1,0,sh,1,o0-sh*yd0,0)` with o0/o1 at strip top/bottom), N≈28, `ctx.imageSmoothingQuality='high'`.
-2. **Popups block the play area** (many fire around `swingY()`). Plan: info messages → small queued toast lane under the HUD/boss bar; landing feedback smaller, beside the tower, shorter; drop "nice".
-3. **End-of-level card**: max 3 coin rows (group: clear / skill / bonuses), nicer look, stars appear one by one with sound, special celebration for 3 stars.
-4. Then: full bug hunt across the game.
+Done Oct 6 (src/v36.js + v36.css + build.py patches):
+- Smooth character outline while swinging (sheared strips, N=28, high-quality smoothing) — was a stair-step from 18 shifted strips.
+- Popups: info messages go to a toast lane at the bottom (`toast()`, max 3, de-duplicated); landing feedback smaller, beside the tower; "nice" removed; boss damage numbers stay on the boss.
+- End card: coin rows grouped into ≤3 (clear / skill / bonuses) with icons, pill styling; stars drop in one by one with sound + sparks; 3 stars → rays, bouncing stars, "מושלם!" tag, confetti; mission checklist shows only missed missions.
+
+Next: full bug hunt across the game (Tzach asked for it).
 
 Backlog: 8 world music tracks (Suno — needs Tzach's OK), Tzach's own illustrations for the album "specials" page + how to earn them, store prep (DEV_OPEN=false, native wrapper, real IAP, privacy policy), check performance on iPhone.
