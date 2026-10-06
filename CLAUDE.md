@@ -72,6 +72,6 @@ Bug hunt Oct 6 (build.py "v38" patches + v33/v36/v31/sw.js): autoplay bot (all 8
 - iOS: 'interrupted' audio resumes; env lighting regenerated after WebGL context restore; bake no longer caches blank sprites if the context is lost.
 - 3D boss: textures load before showing (no black flash), shader precompiled, only current world's boss kept in GPU memory, render cached (re-renders only when the pose changes), 404 retry.
 - Card hero/stars/confetti stop when the card closes; victory card max-height; toasts cleared per level; share-sheet cancel; SW caches only OK pages.
-Not changed (design?): every level starts with a coin balloon.
+- Coin balloon no longer appears at the start of every level (first one after 12–22s).
 
 Backlog: 8 world music tracks (Suno — needs Tzach's OK), Tzach's own illustrations for the album "specials" page + how to earn them, store prep (DEV_OPEN=false, native wrapper, real IAP, privacy policy), check performance on iPhone.

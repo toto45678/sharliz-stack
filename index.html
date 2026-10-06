@@ -2282,7 +2282,8 @@ function drawGustArrow(){const g=hz.gust;if(!g)return;const warn=g.t<g.warn,k=wa
 /* ---------- coin balloon: a bonus you tap ---------- */
 function updateCoinBalloon(dt){
   if(mode==='duo')return;
-  if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>(hz.coinNext||0)){hz.coinNext=time+18+Math.random()*12;const side=Math.random()<.5?-1:1;hz.coinB={x:side<0?-40:W+40,vx:side<0?55:-55,y:H*(.22+Math.random()*.25),t:0}}
+  if(!hz.coinNext&&['aim','wait','drop'].includes(state))hz.coinNext=time+12+Math.random()*10;
+  if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>hz.coinNext){hz.coinNext=time+18+Math.random()*12;const side=Math.random()<.5?-1:1;hz.coinB={x:side<0?-40:W+40,vx:side<0?55:-55,y:H*(.22+Math.random()*.25),t:0}}
   const b=hz.coinB;if(b){b.t+=dt;b.x+=b.vx*dt;if(b.x<-60||b.x>W+60)hz.coinB=null}}
 function drawCoinBalloon(){const b=hz.coinB;if(!b)return;const y=b.y+Math.sin(b.t*3)*8,im=hzPic('ic_coins'),r=S*.42;
   ctx.save();ctx.strokeStyle=INK;ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(b.x,y+r);ctx.quadraticCurveTo(b.x+8,y+r*2,b.x,y+r*2.6);ctx.stroke();

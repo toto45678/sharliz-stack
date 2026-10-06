@@ -139,6 +139,8 @@ rep("(function loop(now){if(!c.isConnected)return;","(function loop(now){if(!c.i
 rep("function buildLogo(){bigText(document.getElementById('logo1'),t('name1'));bigText(document.getElementById('logo2'),t('name2'))}",
     "function buildLogo(){const l=document.querySelector('#title .logo');if(!l)return;l.classList.add('img');l.innerHTML=`<img src=\"art/logo_${lang==='he'?'he':'en'}.webp\" alt=\"${t('name1')} ${t('name2')}\" draggable=\"false\">`}")
 rep(".logo .l1{font-size:clamp(",".logo.img img{display:block;width:min(60vw,255px);height:auto;transform:rotate(-2deg);animation:logoIn .7s cubic-bezier(.3,1.7,.5,1) both}\n.logo .l1{font-size:clamp(")
+# coin balloon appeared at the start of every level (coinNext was unset -> due at once); first one now after 12-22s
+rep("if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>(hz.coinNext||0)){","if(!hz.coinNext&&['aim','wait','drop'].includes(state))hz.coinNext=time+12+Math.random()*10;\n  if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>hz.coinNext){")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
