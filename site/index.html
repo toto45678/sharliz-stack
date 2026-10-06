@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sharliz Tower – How high can you stack?</title>
-<meta name="description" content="Sharliz Tower is a colorful tower-stacking game. Drop wobbly Sharliz, build sky-high towers across 8 worlds and beat 8 epic bosses. Coming soon to iPhone and Android.">
+<meta name="description" content="Sharliz Tower is a colorful tower-stacking game. Drop wobbly Sharliz, build sky-high towers across 300 levels and beat 30 epic bosses. Coming soon to iPhone and Android.">
 <meta property="og:title" content="Sharliz Tower – How high can you stack?">
-<meta property="og:description" content="Stack wobbly Sharliz, explore 8 worlds and beat 8 epic bosses. Try the mini demo!">
+<meta property="og:description" content="Stack wobbly Sharliz, explore 14 worlds and beat 30 epic bosses. Try the mini demo!">
 <meta property="og:image" content="img/og.jpg">
 <meta name="theme-color" content="#2a0f5c">
 <link rel="icon" href="img/icon.png">
@@ -138,21 +138,50 @@ h2{font-size:clamp(32px,5vw,50px);line-height:1.1;text-align:center;margin:0 0 1
 .note{text-align:center;color:var(--soft);margin-top:26px;font-size:16px}
 
 .worlds{background:#3a1574}
-.rail{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.rail{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
 .rail figure{margin:0;border-radius:22px;overflow:hidden;position:relative;aspect-ratio:1;box-shadow:0 10px 24px rgba(0,0,0,.35)}
 .rail img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
 .rail figure:hover img{transform:scale(1.08)}
-.rail figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 10px 10px;font-family:"Titan One";font-size:19px;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.7))}
+.rail figcaption{position:absolute;left:0;right:0;bottom:0;padding:26px 8px 10px;font-family:"Titan One";font-size:16px;line-height:1.1;text-align:center;background:linear-gradient(transparent,rgba(0,0,0,.7))}
 .rail figcaption small{display:block;font-family:Nunito;font-size:12px;opacity:.85}
 
-.bosses{background:radial-gradient(ellipse at 50% 30%,#5b1a3e,#1a0638 70%)}
-.bosses h2{color:#ff6b6b;text-shadow:0 4px 0 #4a0b1f}
-.brail{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.boss{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:5/6;border:3px solid #ffb84d;box-shadow:0 12px 30px rgba(0,0,0,.5)}
-.boss img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.boss:hover img{transform:scale(1.08)}
-.boss .badge{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:13px;padding:3px 10px;white-space:nowrap}
-
+.bosses{overflow:hidden;background:
+  radial-gradient(ellipse 60% 40% at 50% 0%,rgba(255,107,107,.35),transparent 70%),
+  radial-gradient(1.5px 1.5px at 12% 18%,#fff8,transparent),radial-gradient(1.5px 1.5px at 78% 9%,#fff9,transparent),
+  radial-gradient(2px 2px at 33% 62%,#fff6,transparent),radial-gradient(1.5px 1.5px at 88% 54%,#fff8,transparent),
+  radial-gradient(2px 2px at 6% 80%,#fff5,transparent),radial-gradient(1.5px 1.5px at 60% 88%,#fff7,transparent),
+  linear-gradient(180deg,#2a0b4a,#1a0638 40%,#12042a)}
+.bosses::before{content:"";position:absolute;inset:-20% -10% auto;height:70%;pointer-events:none;opacity:.5;
+  background:conic-gradient(from 180deg at 50% 0%,transparent 0 150deg,rgba(255,210,63,.18) 158deg,transparent 166deg 172deg,rgba(255,124,192,.16) 180deg,transparent 188deg 194deg,rgba(255,210,63,.18) 202deg,transparent 210deg)}
+.bosses h2{color:#ff6b6b;text-shadow:0 4px 0 #4a0b1f,0 0 30px rgba(255,107,107,.45)}
+.bosses .count{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:-22px 0 34px}
+.season{position:relative;border-radius:30px;padding:16px 18px 18px;margin:0 0 22px;border:2px solid var(--edge);
+  background:var(--bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 18px 40px rgba(0,0,0,.35);overflow:hidden}
+.season::after{content:"";position:absolute;left:0;right:0;bottom:0;height:46px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(0,0,0,.28));border-top:2px solid rgba(255,255,255,.08)}
+.s-day{--edge:rgba(255,210,63,.55);--bg:radial-gradient(ellipse at 50% 120%,#ffb34d55,transparent 60%),linear-gradient(180deg,#ff9f6a40,#ffd27a26 60%,#5b2a8a40)}
+.s-night{--edge:rgba(140,170,255,.5);--bg:radial-gradient(circle at calc(100% - 30px) 26px,#fff6c8 0 10px,#fff6c822 11px,transparent 30px),
+  radial-gradient(1.5px 1.5px at 20% 25%,#fff,transparent),radial-gradient(1.5px 1.5px at 45% 12%,#fffb,transparent),radial-gradient(1.5px 1.5px at 66% 30%,#fff,transparent),
+  linear-gradient(180deg,#1c2a78,#121a52 70%,#0c1036)}
+.s-storm{--edge:rgba(170,190,220,.5);--bg:repeating-linear-gradient(105deg,transparent 0 22px,rgba(200,220,255,.07) 22px 24px),
+  radial-gradient(ellipse at 30% 0%,#8a90b866,transparent 60%),linear-gradient(180deg,#3d4170,#2a2a52 70%,#1b1736)}
+.s-new{--edge:rgba(120,240,190,.5);--bg:radial-gradient(ellipse at 20% 0%,#7ef0c044,transparent 55%),radial-gradient(ellipse at 85% 10%,#c48aff44,transparent 55%),
+  linear-gradient(180deg,#1f6a5c,#22445e 60%,#271a5a)}
+.s-head{display:flex;align-items:center;gap:10px;margin:0 0 10px;position:relative;z-index:2;min-height:36px}
+.s-night .s-head{padding-right:56px}
+.s-night .lineup{margin-top:14px}
+.s-head .pill{font-size:15px;padding:5px 14px;background:rgba(0,0,0,.35);border:2px solid var(--edge);color:#fff}
+.s-head small{color:var(--soft);font-size:14px;font-weight:700}
+.lineup{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px 6px;position:relative;z-index:2;list-style:none;margin:0;padding:0}
+.s-new .lineup{grid-template-columns:repeat(6,minmax(0,1fr));max-width:78%;margin:0 auto}
+.bz{text-align:center;cursor:default}
+.bz .fig{position:relative;height:clamp(84px,11vw,140px);display:flex;align-items:flex-end;justify-content:center}
+.bz .fig::after{content:"";position:absolute;bottom:-4px;left:18%;right:18%;height:12px;border-radius:50%;background:radial-gradient(rgba(0,0,0,.55),transparent 70%);z-index:-1}
+.bz img{max-height:100%;max-width:100%;width:auto;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.35));
+  transform-origin:50% 100%;animation:idle 3.2s ease-in-out infinite;animation-delay:calc(var(--i,0) * -.37s);transition:transform .25s cubic-bezier(.2,1.6,.4,1)}
+.bz:hover img{animation:none;transform:scale(1.16) rotate(-4deg)}
+.bz b{display:block;font-family:"Titan One";font-weight:400;font-size:clamp(12px,1.25vw,15px);line-height:1.15;margin-top:8px;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.55)}
+@keyframes idle{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-5px) scale(.98,1.03)}}
 .parents{background:#3a1574}
 .faq{max-width:760px;margin:0 auto;display:grid;gap:12px}
 .faq details{background:rgba(255,255,255,.08);border-radius:18px;padding:0 20px;border:2px solid rgba(255,255,255,.1)}
@@ -194,9 +223,13 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
   section{padding:60px 0}
   .feats{grid-template-columns:1fr 1fr}
   .feat{padding:14px}.feat h3{font-size:18px}.feat p{font-size:14px}.feat img{width:44px}
-  .rail,.brail{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:4px 16px 14px;scrollbar-width:none}
-  .rail::-webkit-scrollbar,.brail::-webkit-scrollbar{display:none}
-  .rail figure,.boss{flex:0 0 72%;scroll-snap-align:center}
+  .rail{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:0 -16px;padding:4px 16px 14px;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+  .rail figure{flex:0 0 72%;scroll-snap-align:center}
+  .lineup,.s-new .lineup{grid-template-columns:repeat(4,minmax(0,1fr));max-width:none;gap:10px 6px}
+  .s-new .lineup{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .season{padding:14px 10px 16px;border-radius:24px}
+  .bz .fig{height:92px}
   .brand span{display:none}
   .swipe{display:block!important}
 }
@@ -222,7 +255,7 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
     <div class="copy-a">
       <h1 style="margin:0"><img class="logo" src="img/logo.webp" alt="Sharliz Tower" width="900" height="564" fetchpriority="high"></h1>
       <p class="tagline">How high can you stack?</p>
-      <p class="sub">Drop wobbly Sharliz, build a tower to the sky and beat 8 epic bosses. <b>Try it right here!</b></p>
+      <p class="sub">Drop wobbly Sharliz, build a tower to the sky and beat 30 epic bosses. <b>Try it right here!</b></p>
     </div>
 
     <div class="phone">
@@ -235,7 +268,7 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
         <div class="over" id="over">
           <img src="img/ic_trophy.webp" alt="" width="80">
           <div class="title" id="overTitle">You stacked 0!</div>
-          <p id="overSub">The full game has 80 levels.</p>
+          <p id="overSub">The full game has 300 levels.</p>
           <button class="btn yellow" id="again" type="button">Play again</button>
           <button class="btn ghost" id="share" type="button">Challenge a friend</button>
           <a class="btn" href="#signup">Get the full game</a>
@@ -282,7 +315,7 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
         <p style="color:var(--soft);margin:0 0 22px;text-align:inherit">Easy to learn, impossible to put down. One tap is all it takes.</p>
         <div class="feats">
           <div class="feat"><img src="img/ic_star.webp" alt=""><h3>Perfect drops</h3><p>Land it just right for combos, sparkles and big points.</p></div>
-          <div class="feat"><img src="img/ic_map.webp" alt=""><h3>80 levels</h3><p>8 worlds to explore, each with its own music.</p></div>
+          <div class="feat"><img src="img/ic_map.webp" alt=""><h3>300 levels</h3><p>14 worlds across 4 seasons: day, night, storm and brand-new lands.</p></div>
           <div class="feat"><img src="img/ic_boss.webp" alt=""><h3>Boss battles</h3><p>Stack fast to knock out a giant boss in every world.</p></div>
           <div class="feat"><img src="img/ic_hats.webp" alt=""><h3>Silly hats</h3><p>Every hat gives your Sharliz a different power.</p></div>
         </div>
@@ -306,8 +339,8 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
 
   <section class="worlds">
     <div class="wrap">
-      <h2>8 colorful worlds</h2>
-      <p class="lead">From sunny farms to outer space. Every world has new weather, music and surprises.</p>
+      <h2>14 colorful worlds</h2>
+      <p class="lead">From sunny farms to outer space, then back again by night and in a storm. Every world has new tricks and surprises.</p>
       <div class="rail">
         <figure><img src="img/world_farm.webp" alt="" loading="lazy"><figcaption>Farm<small>World 1</small></figcaption></figure>
         <figure><img src="img/world_city.webp" alt="" loading="lazy"><figcaption>City<small>World 2</small></figcaption></figure>
@@ -317,26 +350,72 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
         <figure><img src="img/world_ocean.webp" alt="" loading="lazy"><figcaption>Ocean<small>World 6</small></figcaption></figure>
         <figure><img src="img/world_volcano.webp" alt="" loading="lazy"><figcaption>Volcano<small>World 7</small></figcaption></figure>
         <figure><img src="img/world_space.webp" alt="" loading="lazy"><figcaption>Space<small>World 8</small></figcaption></figure>
+        <figure><img src="img/world_jungle.webp" alt="" loading="lazy"><figcaption>Jungle<small>New world</small></figcaption></figure>
+        <figure><img src="img/world_castle.webp" alt="" loading="lazy"><figcaption>Haunted Castle<small>New world</small></figcaption></figure>
+        <figure><img src="img/world_clouds.webp" alt="" loading="lazy"><figcaption>Cloud Kingdom<small>New world</small></figcaption></figure>
+        <figure><img src="img/world_dino.webp" alt="" loading="lazy"><figcaption>Dino Land<small>New world</small></figcaption></figure>
+        <figure><img src="img/world_factory.webp" alt="" loading="lazy"><figcaption>Robot Factory<small>New world</small></figcaption></figure>
+        <figure><img src="img/world_crystal.webp" alt="" loading="lazy"><figcaption>Crystal Cave<small>New world</small></figcaption></figure>
       </div>
-      <p class="swipe">Swipe to see all 8 →</p>
+      <p class="swipe">Swipe to see all 14 →</p>
     </div>
   </section>
 
-  <section class="bosses">
+  <section class="bosses" id="bosses">
     <div class="wrap">
-      <h2>Beat 8 epic bosses</h2>
+      <h2>Beat 30 epic bosses</h2>
       <p class="lead">They're big, they're loud, and they really don't want your tower to grow.</p>
-      <div class="brail">
-        <figure class="boss"><img src="img/boss_farm.webp" alt="Count Crowley, the farm boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 1/8</span></figure>
-        <figure class="boss"><img src="img/boss_city.webp" alt="Pigeon Boomer, the city boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 2/8</span></figure>
-        <figure class="boss"><img src="img/boss_desert.webp" alt="Sultan Sandstorm, the desert boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 3/8</span></figure>
-        <figure class="boss"><img src="img/boss_candy.webp" alt="Queen Gumdrop, the candy boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 4/8</span></figure>
-        <figure class="boss"><img src="img/boss_snow.webp" alt="Yeti Freezy, the snow boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 5/8</span></figure>
-        <figure class="boss"><img src="img/boss_ocean.webp" alt="Kraken Inky, the ocean boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 6/8</span></figure>
-        <figure class="boss"><img src="img/boss_volcano.webp" alt="Magma Rex, the volcano boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 7/8</span></figure>
-        <figure class="boss"><img src="img/boss_space.webp" alt="Zorg the Shrinker, the space boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 8/8</span></figure>
+      <div class="count"><span class="pill">👑 30 bosses</span><span class="pill">🗺️ 4 seasons</span><span class="pill">🏆 a trophy hat from each</span></div>
+      <div class="season s-day">
+        <div class="s-head"><span class="pill">☀️ Season 1</span><small>Day</small></div>
+        <ul class="lineup">
+          <li class="bz" style="--i:0"><div class="fig"><img src="img/bosses/farm.webp" alt="" width="253" height="320" loading="lazy"></div><b>Count Crowley</b></li>
+          <li class="bz" style="--i:1"><div class="fig"><img src="img/bosses/city.webp" alt="" width="223" height="320" loading="lazy"></div><b>Pigeon Boomer</b></li>
+          <li class="bz" style="--i:2"><div class="fig"><img src="img/bosses/desert.webp" alt="" width="227" height="320" loading="lazy"></div><b>Sultan Sandstorm</b></li>
+          <li class="bz" style="--i:3"><div class="fig"><img src="img/bosses/candy.webp" alt="" width="279" height="320" loading="lazy"></div><b>Queen Gumdrop</b></li>
+          <li class="bz" style="--i:4"><div class="fig"><img src="img/bosses/snow.webp" alt="" width="300" height="320" loading="lazy"></div><b>Yeti Freezy</b></li>
+          <li class="bz" style="--i:5"><div class="fig"><img src="img/bosses/ocean.webp" alt="" width="263" height="320" loading="lazy"></div><b>Kraken Inky</b></li>
+          <li class="bz" style="--i:6"><div class="fig"><img src="img/bosses/volcano.webp" alt="" width="274" height="320" loading="lazy"></div><b>Magma Rex</b></li>
+          <li class="bz" style="--i:7"><div class="fig"><img src="img/bosses/space.webp" alt="" width="321" height="320" loading="lazy"></div><b>Zorg the Shrinker</b></li>
+        </ul>
       </div>
-      <p class="swipe">Swipe to see all 8 →</p>
+      <div class="season s-night">
+        <div class="s-head"><span class="pill">🌙 Season 2</span><small>Night</small></div>
+        <ul class="lineup">
+          <li class="bz" style="--i:8"><div class="fig"><img src="img/bosses/farmN.webp" alt="" width="245" height="320" loading="lazy"></div><b>Scarecrow King</b></li>
+          <li class="bz" style="--i:9"><div class="fig"><img src="img/bosses/cityN.webp" alt="" width="270" height="320" loading="lazy"></div><b>Alley Cat</b></li>
+          <li class="bz" style="--i:10"><div class="fig"><img src="img/bosses/desertN.webp" alt="" width="261" height="320" loading="lazy"></div><b>King Stinger</b></li>
+          <li class="bz" style="--i:11"><div class="fig"><img src="img/bosses/candyN.webp" alt="" width="243" height="320" loading="lazy"></div><b>Sugar Witch</b></li>
+          <li class="bz" style="--i:12"><div class="fig"><img src="img/bosses/snowN.webp" alt="" width="249" height="320" loading="lazy"></div><b>Frost Wolf</b></li>
+          <li class="bz" style="--i:13"><div class="fig"><img src="img/bosses/oceanN.webp" alt="" width="248" height="320" loading="lazy"></div><b>Lantern Fish</b></li>
+          <li class="bz" style="--i:14"><div class="fig"><img src="img/bosses/volcanoN.webp" alt="" width="257" height="320" loading="lazy"></div><b>Fire Imp</b></li>
+          <li class="bz" style="--i:15"><div class="fig"><img src="img/bosses/spaceN.webp" alt="" width="247" height="320" loading="lazy"></div><b>Moon Rabbit</b></li>
+        </ul>
+      </div>
+      <div class="season s-storm">
+        <div class="s-head"><span class="pill">⚡ Season 3</span><small>Storm</small></div>
+        <ul class="lineup">
+          <li class="bz" style="--i:16"><div class="fig"><img src="img/bosses/farmS.webp" alt="" width="246" height="320" loading="lazy"></div><b>Thunder Goat</b></li>
+          <li class="bz" style="--i:17"><div class="fig"><img src="img/bosses/cityS.webp" alt="" width="239" height="320" loading="lazy"></div><b>Rat King</b></li>
+          <li class="bz" style="--i:18"><div class="fig"><img src="img/bosses/desertS.webp" alt="" width="204" height="320" loading="lazy"></div><b>Sand Worm</b></li>
+          <li class="bz" style="--i:19"><div class="fig"><img src="img/bosses/candyS.webp" alt="" width="260" height="320" loading="lazy"></div><b>Gingerbread Giant</b></li>
+          <li class="bz" style="--i:20"><div class="fig"><img src="img/bosses/snowS.webp" alt="" width="237" height="320" loading="lazy"></div><b>Penguin General</b></li>
+          <li class="bz" style="--i:21"><div class="fig"><img src="img/bosses/oceanS.webp" alt="" width="262" height="320" loading="lazy"></div><b>Storm Shark</b></li>
+          <li class="bz" style="--i:22"><div class="fig"><img src="img/bosses/volcanoS.webp" alt="" width="257" height="320" loading="lazy"></div><b>Phoenix</b></li>
+          <li class="bz" style="--i:23"><div class="fig"><img src="img/bosses/spaceS.webp" alt="" width="310" height="320" loading="lazy"></div><b>Black Hole Eye</b></li>
+        </ul>
+      </div>
+      <div class="season s-new">
+        <div class="s-head"><span class="pill">🌍 Season 4</span><small>New worlds</small></div>
+        <ul class="lineup">
+          <li class="bz" style="--i:24"><div class="fig"><img src="img/bosses/jungle.webp" alt="" width="249" height="320" loading="lazy"></div><b>Gorilla King</b></li>
+          <li class="bz" style="--i:25"><div class="fig"><img src="img/bosses/castle.webp" alt="" width="261" height="320" loading="lazy"></div><b>Ghost King</b></li>
+          <li class="bz" style="--i:26"><div class="fig"><img src="img/bosses/clouds.webp" alt="" width="228" height="320" loading="lazy"></div><b>Angry Unicorn</b></li>
+          <li class="bz" style="--i:27"><div class="fig"><img src="img/bosses/dino.webp" alt="" width="233" height="320" loading="lazy"></div><b>Triceratops</b></li>
+          <li class="bz" style="--i:28"><div class="fig"><img src="img/bosses/factory.webp" alt="" width="250" height="320" loading="lazy"></div><b>Mega Robot</b></li>
+          <li class="bz" style="--i:29"><div class="fig"><img src="img/bosses/crystal.webp" alt="" width="274" height="320" loading="lazy"></div><b>Crystal Golem</b></li>
+        </ul>
+      </div>
     </div>
   </section>
 
