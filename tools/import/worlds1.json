@@ -116,6 +116,7 @@
  },
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_160202_d7a76521-aa8d-43c5-9b85-39b91f00096b.glb",
-  "glb": "b3d_oceanN"
+  "glb": "b3d_oceanN",
+  "err": "Traceback (most recent call last):\n  File \"/home/runner/work/sharliz-stack/sharliz-stack/tools/glb2sh.py\", line 95, in <module>\n    main(sys.argv[1], sys.argv[2], sys.argv[3])\n  File \"/home/runner/work/sharliz-stack/sharliz-stack/tools/glb2sh.py\", line 53, in main\n    js, bin_ = load(path)\n               ^^^^^^^^^^\n  File \"/home/runner/work/sharliz-stack/sharliz-stack/tools/glb2sh.py\", line 12, in load\n    magic, ver, ln = struct.unpack('<4sII', b[:12]); assert magic == b'glTF'\n                                                            ^^^^^^^^^^^^^^^^\nAssertionError\n"
  }
 ]
