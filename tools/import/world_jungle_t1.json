@@ -1,18 +1,22 @@
 [
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162150_9239c0d7-1134-40ca-95c5-0bd428c492bc.png",
-  "out": "tools/worlds/jungle_w3b.png"
+  "out": "tools/worlds/jungle_w3b.png",
+  "done": 1
  },
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162150_6e4e748f-4d04-4d90-b0dd-061378318cbf.png",
-  "out": "tools/worlds/jungle_w3m.png"
+  "out": "tools/worlds/jungle_w3m.png",
+  "done": 1
  },
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162150_4fdb1197-5e22-448a-944d-c1148036c274.png",
-  "out": "tools/worlds/jungle_w3f.png"
+  "out": "tools/worlds/jungle_w3f.png",
+  "done": 1
  },
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_162152_93aabe36-2588-4d40-b0d5-423a245056f7.png",
-  "out": "tools/worlds/jungle_mapn.png"
+  "out": "tools/worlds/jungle_mapn.png",
+  "done": 1
  }
 ]
