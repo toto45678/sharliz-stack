@@ -11,6 +11,8 @@
 <meta name="theme-color" content="#2a0f5c">
 <link rel="icon" href="img/icon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<link rel="preload" as="image" href="img/lobby.webp">
+<link rel="preload" as="image" href="img/logo.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
@@ -23,6 +25,7 @@ h1,h2,h3,.btn,.pill,.badge,.title{font-family:"Titan One",system-ui,sans-serif;f
 img,video,canvas{display:block;max-width:100%}
 a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
+[hidden]{display:none!important}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 
 /* buttons */
@@ -33,6 +36,8 @@ a{color:inherit}
 .btn:active{transform:translateY(4px);box-shadow:0 2px 0 #9c1a5b}
 .btn.yellow{background:linear-gradient(#ffe46b,#ffb800);color:#5a2a00;box-shadow:0 6px 0 #b27400,0 10px 20px rgba(0,0,0,.25);text-shadow:none}
 .btn.yellow:active{box-shadow:0 2px 0 #b27400}
+.btn.ghost{background:rgba(255,255,255,.16);box-shadow:inset 0 0 0 2px rgba(255,255,255,.4);text-shadow:none}
+.btn.ghost:active{transform:translateY(2px)}
 .btn:focus-visible,input:focus-visible,summary:focus-visible,canvas:focus-visible{outline:3px solid var(--yellow);outline-offset:3px}
 
 /* top bar */
@@ -60,7 +65,9 @@ a{color:inherit}
 .signup{background:linear-gradient(160deg,rgba(255,255,255,.2),rgba(255,255,255,.08));backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.3);
   border-radius:24px;padding:18px;max-width:500px;box-shadow:0 14px 40px rgba(0,0,0,.3)}
 .gift{display:flex;align-items:center;gap:12px;margin:0 0 12px}
-.gift img{width:48px;flex:none;animation:wiggle 2.6s ease-in-out infinite}
+.gift-art{position:relative;width:64px;height:56px;flex:none}
+.gift-art img{position:absolute;width:48px;left:0;top:0;animation:wiggle 2.6s ease-in-out infinite}
+.gift-art .coins{width:34px;left:30px;top:24px;animation:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
 .gift b{font-family:"Titan One";font-weight:400;font-size:19px;display:block;line-height:1.15;color:var(--yellow)}
 .gift span{font-size:14px;color:var(--soft)}
 .row{display:flex;gap:8px;flex-wrap:wrap}
@@ -82,6 +89,7 @@ a{color:inherit}
 .screen{position:relative;border-radius:30px;overflow:hidden;aspect-ratio:9/16;background:#ffd6ec}
 .screen canvas{width:100%;height:100%;touch-action:manipulation;cursor:pointer}
 .hud{position:absolute;inset:12px 12px auto;display:flex;justify-content:space-between;pointer-events:none}
+.snd{position:absolute;right:12px;bottom:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(35,11,79,.7);color:#fff;font-size:18px;cursor:pointer;display:grid;place-items:center}
 .hud span{background:rgba(35,11,79,.75);border-radius:999px;padding:4px 12px;font-family:"Titan One";font-size:15px}
 .hint{position:absolute;left:0;right:0;bottom:22px;text-align:center;font-family:"Titan One";font-size:22px;color:#fff;text-shadow:0 3px 0 #7a1d55,0 0 12px rgba(0,0,0,.4);
   pointer-events:none;animation:pulse 1.2s ease-in-out infinite}
@@ -129,10 +137,10 @@ h2{font-size:clamp(32px,5vw,50px);line-height:1.1;text-align:center;margin:0 0 1
 .bosses{background:radial-gradient(ellipse at 50% 30%,#5b1a3e,#1a0638 70%)}
 .bosses h2{color:#ff6b6b;text-shadow:0 4px 0 #4a0b1f}
 .brail{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.boss{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:1;border:3px solid #ffb84d;box-shadow:0 12px 30px rgba(0,0,0,.5)}
+.boss{position:relative;margin:0;border-radius:22px;overflow:hidden;aspect-ratio:5/6;border:3px solid #ffb84d;box-shadow:0 12px 30px rgba(0,0,0,.5)}
 .boss img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
 .boss:hover img{transform:scale(1.08)}
-.boss .badge{position:absolute;top:10px;left:10px;font-size:13px;padding:3px 10px}
+.boss .badge{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-size:13px;padding:3px 10px;white-space:nowrap}
 
 .parents{background:#3a1574}
 .faq{max-width:760px;margin:0 auto;display:grid;gap:12px}
@@ -194,29 +202,31 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
 <body>
 
 <header class="top" id="top">
-  <a class="brand" href="#"><img src="img/icon.png" alt=""><span>Sharliz Tower</span></a>
+  <a class="brand" href="#"><img src="img/icon.webp" alt="" width="40" height="40"><span>Sharliz Tower</span></a>
   <a class="btn" href="#signup">Notify me</a>
 </header>
 
 <div class="hero">
   <div class="wrap">
     <div class="copy-a">
-      <h1 style="margin:0"><img class="logo" src="img/logo.webp" alt="Sharliz Tower"></h1>
+      <h1 style="margin:0"><img class="logo" src="img/logo.webp" alt="Sharliz Tower" width="900" height="564" fetchpriority="high"></h1>
       <p class="tagline">How high can you stack?</p>
       <p class="sub">Drop wobbly Sharliz, build a tower to the sky and beat 8 epic bosses. <b>Try it right here!</b></p>
     </div>
 
     <div class="phone">
-      <div class="demo-label"><span class="badge">▶ Play the mini demo</span></div>
+      <div class="demo-label"><span class="badge" id="demoBadge">▶ Play the mini demo</span></div>
       <div class="screen">
         <canvas id="demo" aria-label="Mini demo: tap to drop a Sharliz and stack them as high as you can"></canvas>
         <div class="hud"><span id="score">0</span><span id="best">Best 0</span></div>
         <div class="hint" id="hint">Tap to drop!</div>
+        <button class="snd" id="snd" type="button" aria-label="Sound on" aria-pressed="true">🔊</button>
         <div class="over" id="over">
           <img src="img/ic_trophy.webp" alt="" width="80">
           <div class="title" id="overTitle">You stacked 0!</div>
           <p id="overSub">The full game has 80 levels.</p>
           <button class="btn yellow" id="again" type="button">Play again</button>
+          <button class="btn ghost" id="share" type="button">Challenge a friend</button>
           <a class="btn" href="#signup">Get the full game</a>
         </div>
       </div>
@@ -225,7 +235,7 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
     <div class="copy-b">
       <form class="signup" id="signup" novalidate>
         <div class="form-in">
-          <div class="gift"><img src="img/ic_gift.webp" alt=""><div><b>Join the waitlist, get a launch gift!</b><span>One email when the game is out, with a free coin bonus.</span></div></div>
+          <div class="gift"><div class="gift-art" aria-hidden="true"><img src="img/ic_gift.webp" alt=""><img class="coins" src="img/ic_coins.webp" alt=""></div><div><b>Join the waitlist, get a special launch gift!</b><span>One email on launch day, plus a surprise for early fans.</span></div></div>
           <div class="row">
             <label class="sr" for="em1">Email</label>
             <input id="em1" type="email" name="email" placeholder="Parent's email" required autocomplete="email">
@@ -245,7 +255,7 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
 <main>
   <section>
     <div class="wrap play">
-      <div class="phone"><div class="screen"><video src="img/clip.mp4" poster="img/clip_poster.jpg" autoplay muted loop playsinline aria-label="Gameplay clip"></video></div></div>
+      <div class="phone"><div class="screen"><video id="clip" data-src="img/clip.mp4" poster="img/clip_poster.jpg" preload="none" muted loop playsinline aria-label="Gameplay clip"></video></div></div>
       <div>
         <h2 style="text-align:left">Tap. Drop. Stack!</h2>
         <p style="color:var(--soft);margin:0 0 22px;text-align:inherit">Easy to learn, impossible to put down. One tap is all it takes.</p>
@@ -296,14 +306,14 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
       <h2>Beat 8 epic bosses</h2>
       <p class="lead">They're big, they're loud, and they really don't want your tower to grow.</p>
       <div class="brail">
-        <figure class="boss"><img src="img/boss_farm.webp" alt="Farm boss" loading="lazy"><span class="badge">BOSS 1/8</span></figure>
-        <figure class="boss"><img src="img/boss_city.webp" alt="City boss" loading="lazy"><span class="badge">BOSS 2/8</span></figure>
-        <figure class="boss"><img src="img/boss_desert.webp" alt="Desert boss" loading="lazy"><span class="badge">BOSS 3/8</span></figure>
-        <figure class="boss"><img src="img/boss_candy.webp" alt="Candy boss" loading="lazy"><span class="badge">BOSS 4/8</span></figure>
-        <figure class="boss"><img src="img/boss_snow.webp" alt="Snow boss" loading="lazy"><span class="badge">BOSS 5/8</span></figure>
-        <figure class="boss"><img src="img/boss_ocean.webp" alt="Ocean boss" loading="lazy"><span class="badge">BOSS 6/8</span></figure>
-        <figure class="boss"><img src="img/boss_volcano.webp" alt="Volcano boss" loading="lazy"><span class="badge">BOSS 7/8</span></figure>
-        <figure class="boss"><img src="img/boss_space.webp" alt="Space boss" loading="lazy"><span class="badge">BOSS 8/8</span></figure>
+        <figure class="boss"><img src="img/boss_farm.webp" alt="Count Crowley, the farm boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 1/8</span></figure>
+        <figure class="boss"><img src="img/boss_city.webp" alt="Pigeon Boomer, the city boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 2/8</span></figure>
+        <figure class="boss"><img src="img/boss_desert.webp" alt="Sultan Sandstorm, the desert boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 3/8</span></figure>
+        <figure class="boss"><img src="img/boss_candy.webp" alt="Queen Gumdrop, the candy boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 4/8</span></figure>
+        <figure class="boss"><img src="img/boss_snow.webp" alt="Yeti Freezy, the snow boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 5/8</span></figure>
+        <figure class="boss"><img src="img/boss_ocean.webp" alt="Kraken Inky, the ocean boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 6/8</span></figure>
+        <figure class="boss"><img src="img/boss_volcano.webp" alt="Magma Rex, the volcano boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 7/8</span></figure>
+        <figure class="boss"><img src="img/boss_space.webp" alt="Zorg the Shrinker, the space boss" width="520" height="624" loading="lazy"><span class="badge">BOSS 8/8</span></figure>
       </div>
       <p class="swipe">Swipe to see all 8 →</p>
     </div>
@@ -318,14 +328,14 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
         <details><summary>Is it free?</summary><p>Yes. Sharliz Tower is free to download and play. There are optional in-game purchases, and every purchase is behind a parent gate.</p></details>
         <details><summary>Does the game collect my child's data?</summary><p>No. There is no sign-up and no tracking. Game progress is saved only on your device.</p></details>
         <details><summary>Are there ads?</summary><p>No pop-up ads in the game. Everything can be earned just by playing.</p></details>
-        <details><summary>When does it come out?</summary><p>Soon, on iPhone and Android. Join the waitlist and we'll send you one email on launch day.</p></details>
+        <details><summary>When does it come out?</summary><p>Soon, on iPhone and Android. Join the waitlist and we'll send you one email on launch day, with a special gift for early fans.</p></details>
       </div>
     </div>
   </section>
 
   <section class="cta">
     <div class="wrap">
-      <img class="icon" src="img/icon.png" alt="Sharliz Tower app icon">
+      <img class="icon" src="img/icon.webp" width="128" height="128" alt="Sharliz Tower app icon">
       <h2>Be first to stack!</h2>
       <p class="lead">Coming soon, free on iPhone and Android.</p>
       <div id="join2"></div>
@@ -374,6 +384,10 @@ new IntersectionObserver(es => {
   sticky.classList.toggle('on', !formVisible && !finalVisible && !form1.classList.contains('done'));
 }).observe(form2);
 
+// ---------- gameplay clip loads only when scrolled near ----------
+const clip = document.getElementById('clip');
+new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { clip.src = clip.dataset.src; clip.play().catch(() => {}); o.disconnect(); } }, {rootMargin: '300px'}).observe(clip);
+
 // ---------- characters say hi ----------
 document.querySelectorAll('.char').forEach(c => c.addEventListener('click', () => {
   c.querySelector('.body').animate([{transform:'scale(1,1)'},{transform:'scale(1.25,.75)'},{transform:'translateY(-30px) scale(.85,1.2)'},{transform:'scale(1,1)'}], {duration:600, easing:'ease-out'});
@@ -409,6 +423,44 @@ function confetti() {
   bestEl.textContent = 'Best ' + best;
   let tower, cur, cam, camT, t, state, pops, shake, started = false;
 
+  // sounds are synthesized, so nothing extra to download
+  let ac = null, soundOn = true;
+  try { soundOn = localStorage.getItem('sharlizDemoSound') !== 'off'; } catch (_) {}
+  const sndBtn = document.getElementById('snd');
+  const showSnd = () => { sndBtn.textContent = soundOn ? '🔊' : '🔇'; sndBtn.setAttribute('aria-pressed', soundOn); sndBtn.setAttribute('aria-label', soundOn ? 'Sound on' : 'Sound off'); };
+  showSnd();
+  sndBtn.addEventListener('click', () => { soundOn = !soundOn; showSnd(); try { localStorage.setItem('sharlizDemoSound', soundOn ? 'on' : 'off'); } catch (_) {} });
+  function tone(f0, f1, dur, type, vol, delay) {
+    if (!soundOn) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      if (ac.state === 'suspended') ac.resume();
+      const o = ac.createOscillator(), v = ac.createGain(), t0 = ac.currentTime + (delay || 0);
+      o.type = type || 'sine'; o.frequency.setValueAtTime(f0, t0); o.frequency.exponentialRampToValueAtTime(f1, t0 + dur);
+      v.gain.setValueAtTime(vol || .25, t0); v.gain.exponentialRampToValueAtTime(.001, t0 + dur);
+      o.connect(v).connect(ac.destination); o.start(t0); o.stop(t0 + dur + .02);
+    } catch (_) {}
+  }
+  const sfx = {
+    drop: () => tone(520, 380, .12, 'triangle', .12),
+    land: n => tone(260 + n * 18, 140 + n * 10, .16, 'sine', .35),
+    perfect: () => { tone(880, 880, .1, 'square', .08); tone(1175, 1175, .14, 'square', .08, .09); tone(1568, 1568, .2, 'square', .08, .18); },
+    fail: () => tone(300, 70, .6, 'sawtooth', .12),
+  };
+
+  // a friend's score from a shared link: ?beat=14
+  const beat = Math.min(999, Math.max(0, parseInt(new URLSearchParams(location.search).get('beat'), 10) || 0));
+  if (beat) document.getElementById('demoBadge').textContent = '🏆 Beat your friend\'s ' + beat + '!';
+  const shareBtn = document.getElementById('share');
+  shareBtn.addEventListener('click', async () => {
+    const n = tower.length - 1, url = location.origin + location.pathname + '?beat=' + n;
+    const text = 'I stacked ' + n + ' Sharliz in Sharliz Tower. Can you beat me?';
+    try { if (navigator.share) { await navigator.share({title: 'Sharliz Tower', text, url}); return; } } catch (e) { if (e.name === 'AbortError') return; }
+    try { await navigator.clipboard.writeText(text + ' ' + url); shareBtn.textContent = '✅ Link copied!'; }
+    catch (_) { shareBtn.textContent = url; }
+    setTimeout(() => shareBtn.textContent = "Challenge a friend", 2500);
+  });
+
   function fit() { const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); cv.width = Math.max(1, r.width * d); cv.height = Math.max(1, r.height * d); }
   function newPiece() {
     const n = tower.length;
@@ -423,7 +475,7 @@ function confetti() {
   function drop() {
     if (state !== 'play' || cur.falling) return;
     if (!started) { started = true; hint.style.display = 'none'; }
-    cur.falling = true; cur.vy = 2;
+    cur.falling = true; cur.vy = 2; sfx.drop();
   }
   function land() {
     const topP = tower[tower.length - 1], off = cur.x - topP.x;
@@ -432,11 +484,12 @@ function confetti() {
       tower.push({x: perfect ? topP.x : cur.x, k: cur.k, hat: cur.hat, squash: 1});
       const n = tower.length - 1;
       hud.textContent = n;
+      perfect ? sfx.perfect() : sfx.land(n);
       pops.push({txt: perfect ? 'PERFECT!' : ['Nice!','Great!','Wow!'][Math.random()*3|0], x: W/2, y: landY() - 40, life: 1, col: perfect ? '#ffd23f' : '#fff'});
       camT = Math.max(0, (n - 3) * STEP);
       cur = newPiece();
     } else {
-      cur.fallOff = off > 0 ? 1 : -1; state = 'fail'; shake = 12;
+      cur.fallOff = off > 0 ? 1 : -1; state = 'fail'; shake = 12; sfx.fail();
       setTimeout(gameOver, 900);
     }
   }
@@ -445,7 +498,8 @@ function confetti() {
     if (n > best) { best = n; try { localStorage.setItem('sharlizDemoBest', best); } catch (_) {} }
     bestEl.textContent = 'Best ' + best;
     document.getElementById('overTitle').textContent = 'You stacked ' + n + '!';
-    document.getElementById('overSub').textContent = n >= 10 ? 'Amazing! Wait till you meet the bosses.' : 'The full game has 80 levels and 8 bosses!';
+    document.getElementById('overSub').textContent = beat && n > beat ? 'You beat your friend\'s ' + beat + '! 🎉' : beat ? 'Your friend stacked ' + beat + '. Try again!' : n >= 10 ? 'Amazing! Wait till you meet the bosses.' : 'The full game has 80 levels and 8 bosses!';
+    shareBtn.hidden = n < 1;
     state = 'over'; over.classList.add('show');
   }
   function drawPiece(p, x, y, sq) {
