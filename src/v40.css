@@ -28,3 +28,8 @@
 @media (max-height:740px){.lob-side{top:calc(env(safe-area-inset-top,0px) + 160px);gap:8px}.lob-side .side-btn .sq{width:54px;height:54px}}
 .st-pack.astro-pack{background:linear-gradient(160deg,#1e3a8a,#312e81 55%,#0f172a);}
 .st-pack.astro-pack .st-it.hat small{color:#7dd3fc}
+/* v41 credits screen */
+.credits{display:flex;flex-direction:column;gap:2px;width:100%;text-align:center;font-family:Rubik,system-ui,sans-serif}
+.credits b{font-family:var(--gf);font-size:1.05rem;margin-top:8px;color:#ffd23f;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill}
+.credits p{margin:0;font-size:.82rem;line-height:1.35;color:#fff;opacity:.92}
+.credits .credits-c{margin-top:12px;opacity:.7}
