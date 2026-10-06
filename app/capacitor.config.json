@@ -1,0 +1,8 @@
+{
+  "appId": "com.sharlizstack.tower",
+  "appName": "Sharliz Tower",
+  "webDir": "www",
+  "backgroundColor": "#3a1a8a",
+  "android": { "allowMixedContent": false, "backgroundColor": "#3a1a8a" },
+  "ios": { "contentInset": "never", "backgroundColor": "#3a1a8a", "scrollEnabled": false }
+}

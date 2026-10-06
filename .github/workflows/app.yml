@@ -1,0 +1,71 @@
+# Builds the native store apps from the same game code (no Mac needed).
+#  - Android: a test APK you can install on any Android phone + an AAB for Google Play
+#  - iOS: compiles the Xcode project (signing/TestFlight upload is added once the Apple account exists)
+# Output files are in the run's "Artifacts" box on GitHub (Actions tab -> this run).
+name: Build store apps
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['src/**', 'app/**', 'art/**', 'tools/build.py', '.github/workflows/app.yml']
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 21 }
+      - name: Store build of the game
+        run: python3 tools/build.py --store
+      - name: Create the Android project
+        working-directory: app
+        run: |
+          npm install
+          npx cap add android
+          npm run assets -- --android
+          # portrait only, Play's required target API 36
+          sed -i 's/android:name=".MainActivity"/android:name=".MainActivity" android:screenOrientation="portrait"/' android/app/src/main/AndroidManifest.xml
+          sed -i -E 's/(targetSdkVersion\s*=\s*)[0-9]+/\136/; s/(compileSdkVersion\s*=\s*)[0-9]+/\136/' android/variables.gradle
+          grep -E 'targetSdk|compileSdk|minSdk' android/variables.gradle
+          npx cap sync android
+      - name: Build APK (test) + AAB (store)
+        working-directory: app/android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug bundleRelease
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sharliz-android
+          path: |
+            app/android/app/build/outputs/apk/debug/*.apk
+            app/android/app/build/outputs/bundle/release/*.aab
+
+  ios:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - name: Store build of the game
+        run: python3 tools/build.py --store
+      - name: Create the iOS project
+        working-directory: app
+        run: |
+          npm install
+          npx cap add ios --packagemanager CocoaPods
+          npm run assets -- --ios
+          PL=ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Delete :UISupportedInterfaceOrientations" $PL || true
+          /usr/libexec/PlistBuddy -c "Add :UISupportedInterfaceOrientations array" -c "Add :UISupportedInterfaceOrientations:0 string UIInterfaceOrientationPortrait" $PL
+          /usr/libexec/PlistBuddy -c "Delete :UISupportedInterfaceOrientations~ipad" $PL || true
+          /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" $PL || true
+          /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Sharliz" $PL || /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string Sharliz" $PL
+          npx cap sync ios
+      - name: Compile (simulator, unsigned)
+        working-directory: app/ios/App
+        run: |
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -30

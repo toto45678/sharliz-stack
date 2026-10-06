@@ -55,6 +55,7 @@ rep("['back_'+zid,'mid_'+zid,'boss_'+zid,'boss_'+zid+'_hurt'].forEach(n=>{try{hz
 rep("  if(im){const w=bh*im.naturalWidth/im.naturalHeight;if(!b.dead){ctx.globalAlpha=.96;if(!(b.wind>0||b.hurt>0||b.stun>0))ctx.filter=scene&&scene.kit3?'brightness(.94)':'brightness(.8) saturate(.82)'}ctx.drawImage(im,-w/2,-bh/2,w,bh);ctx.filter='none'}",
     "  const bk=b.dead||b.stun>0||(b.hurt>0&&Math.floor(b.hurt*12)%2===0)?'hurt':'idle',m3=b3Ready(z),spd=m3?null:bspReady(z,bk);\n  if(m3||spd||im){if(!b.dead){ctx.globalAlpha=.96;if(!(b.wind>0||b.hurt>0||b.stun>0))ctx.filter=scene&&scene.kit3?'brightness(.94)':'brightness(.8) saturate(.82)'}if(m3)b3Draw(b,bh,m3);else if(spd)bspDraw(ctx,spd,bh,b.wind>0?ft*1.6:ft);else{const w=bh*im.naturalWidth/im.naturalHeight;ctx.drawImage(im,-w/2,-bh/2,w,bh)}ctx.filter='none'}")
 # ---- pre-release: all levels open (flip DEV_OPEN to false for the store build)
+STORE='--store' in sys.argv
 rep("const worldOpen=w=>progress.unlocked>(w-1)*LPZ;","const DEV_OPEN=true,openLv=()=>DEV_OPEN?TOTAL:progress.unlocked;\nconst worldOpen=w=>progress.unlocked>(w-1)*LPZ;")
 rep("function fogged(zi){return ","function fogged(zi){if(DEV_OPEN)return false;return ")
 rep("ZONES.forEach((z,zi)=>{if(zi*LPZ+1>progress.unlocked){","ZONES.forEach((z,zi)=>{if(zi*LPZ+1>openLv()){")
@@ -162,7 +163,7 @@ rep("const MUSF={map:['mus_lobby_a']};","const MUSF={map:['mus_lobby_a'],farm:['
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
@@ -193,3 +194,14 @@ open(P(ROOT,'index.html'),'w',encoding='utf-8').write(head+src+tail)
 sw=open(P(ROOT,'sw.js')).read();sw=re.sub(r"const V='[^']*';","const V='%s';"%V,sw,count=1);open(P(ROOT,'sw.js'),'w').write(sw)
 if '--preview' in sys.argv:open(P(ROOT,'preview.html'),'w',encoding='utf-8').write('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+src)
 print('built index.html',len(src),V)
+if STORE:
+    # native app build (Capacitor): levels locked, no service worker / home-screen hint, real purchases via src/native.js
+    import shutil
+    W=P(ROOT,'app','www');shutil.rmtree(W,ignore_errors=True);os.makedirs(W)
+    nat=open(P(SRC,'native.js'),encoding='utf-8').read()
+    assert src.count('const DEV_OPEN=true,')==1
+    ssrc=src.replace('const DEV_OPEN=true,','const DEV_OPEN=false,')
+    shead=head.replace('<link rel="manifest" href="manifest.webmanifest">','')
+    open(P(W,'index.html'),'w',encoding='utf-8').write(shead+'<script>'+nat+'</script>\n'+ssrc+'\n</body></html>')
+    for d in ('art','icons'):shutil.copytree(P(ROOT,d),P(W,d),ignore=shutil.ignore_patterns('bsp_*'))
+    print('store build ->',W)

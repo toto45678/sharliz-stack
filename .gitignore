@@ -2,3 +2,8 @@
 preview.html
 __pycache__/
 *.glb
+app/node_modules/
+app/www/
+app/android/
+app/ios/
+app/package-lock.json
