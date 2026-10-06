@@ -172,7 +172,7 @@ Object.assign(MECH,{
     demo(p,H_){const y=190-Math.min(1,p/1.4)*110;drawJellyfish(H_.cx+40,y,p*3);if(p>1&&p<1.8)H_.ring(H_.cx+40,y,22)}}),
   lava:ev('passive',{init(){return {lvl:-2.2}},
     update(dt,m,live){if(!live||state==='aim'&&swinger&&swinger.entering)return;const top=tower.length-1;m.lvl+=((.3+lvInZone()*.012)*(isBoss()?.7:1)+Math.max(0,top-4.5-m.lvl)*.6)*dt;
-      if(m.lvl>=top-.25&&top>0){m.lvl=Math.max(-2,top-3.2);loseHeart(t('m_burn'),W/2,yOf(top),false,'whoops');sfx.boom()}},
+      if(m.lvl>=top-.25&&top>0&&!dropping){m.lvl=Math.max(-2,top-3.2);loseHeart(t('m_burn'),W/2,yOf(top),false,'whoops');sfx.boom()}},
     landing(perfect,great,d,m){if(perfect){m.lvl=Math.max(-2.2,m.lvl-.8);popup(t('m_cooled'),W/2,swingY()-BH*.3,'#22d3ee')}},
     back(m){const wy=-.2*BH-(m.lvl+.5)*STEP,y=sy(wy);if(y>H+20)return;ctx.save();const g=ctx.createLinearGradient(0,y,0,H);g.addColorStop(0,'rgba(255,170,40,.95)');g.addColorStop(.15,'rgba(255,90,30,.9)');g.addColorStop(1,'rgba(140,20,20,.95)');
       ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(0,H+10);for(let x=0;x<=W+20;x+=20)ctx.lineTo(x,y+Math.sin(x*.05+time*3)*5);ctx.lineTo(W,H+10);ctx.closePath();ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#ffe24d';ctx.stroke();
@@ -291,7 +291,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
   if(swinger&&swinger.ghost>0)swinger.ghost-=dt}}
 {const _db=drawHazardsBack;drawHazardsBack=function(){_db();if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.back&&hz.m[k])M.back(hz.m[k])}}}
 {const _df=drawHazardsFront;drawHazardsFront=function(){if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.draw&&hz.m[k])M.draw(hz.m[k])}_df()}}
-{const _ht=hzTap;hzTap=function(px,py){if(cv.style.transform)px=W-px;if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.tap&&hz.m[k]&&M.tap(px,py,hz.m[k]))return true}
+{const _ht=hzTap;hzTap=function(px,py){if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.tap&&hz.m[k]&&M.tap(px,py,hz.m[k]))return true}
   if(curSeason()===2&&typeof SFX_S!=='undefined'){for(const f of SFX_S.flies)if(Math.hypot(px-f.x,py-f.y)<S*.8){f.t=99;lightBoost=7;pts(10);popup(t('m_light'),f.x,scrToW(f.y),'#ffe24d');sfx.pop();return true}}
   return _ht(px,py)}}
 {const _ol=hzOnLanding;hzOnLanding=function(perfect,great){const d=tower[tower.length-1];
@@ -300,7 +300,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
   if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.landing&&k!=='jelly'&&hz.m[k])M.landing(perfect,great,d,hz.m[k])}
   _ol(perfect,great)}}
 {const _ds=drawSharliz;drawSharliz=function(s,...a){if(s&&s.ghost>0&&s===swinger){ctx.save();ctx.globalAlpha=.1+.06*Math.sin(time*9);const r=_ds(s,...a);ctx.restore();return r}
-  const r=_ds(s,...a);if(s&&s.kind==='jelly'&&(s===swinger||s===dropping))jellyGlow(a[0],a[1]);if(s&&s.frozen>0){ctx.save();ctx.globalAlpha=.45;ctx.fillStyle='#bff3ff';ctx.fillRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.globalAlpha=1;ctx.strokeStyle='#e8fbff';ctx.lineWidth=3;ctx.strokeRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.restore()}return r}}
+  const r=_ds(s,...a);if(s&&s.kind==='jelly'&&(s===swinger||s===dropping))jellyGlow(a[0],a[1]);if(s&&s.frozen>0&&s===swinger){ctx.save();ctx.globalAlpha=.45;ctx.fillStyle='#bff3ff';ctx.fillRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.globalAlpha=1;ctx.strokeStyle='#e8fbff';ctx.lineWidth=3;ctx.strokeRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.restore()}return r}}
 
 /* intro cards: a season card the first time a season starts, then the mechanic card */
 {const _mi=maybeIntro;maybeIntro=function(){if(mode==='levels'){const s=curSeason();if(s>=2&&!seenKey('season_'+s)){markSeen('season_'+s);state='intro';

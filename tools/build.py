@@ -210,6 +210,22 @@ rep('h.innerHTML=`<img src="art/${hatPicId(lv.newHat)}.webp" alt=""><span></span
 # ---- v48: character-sheet style screen — hero sits higher (slots around it, power bars + drawer below)
 rep("b.onclick=()=>{if(k==='skins'){hideOverlay();if(state==='title')openWardrobe();","b.onclick=()=>{if(k==='skins'||k==='style'){if(k==='style')W3.cat='trail';hideOverlay();if(state==='title')openWardrobe();")
 rep("G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.47}):G0;","G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.385}):G0;")
+# ---- v50: bug hunt 2
+# a piece that lands after the last heart is gone (lava / hazard during the fall) used to pull the game out of 'over' -> played on with 0 hearts
+rep("function resolveLanding(){\n  const d=dropping;dropping=null;","function resolveLanding(){\n  const d=dropping;dropping=null;if(state==='over'){bodies.push({s:d,x:xOf(d.xs),y:yOf(tower.length),vx:0,vy:-BH,rot:0,vr:3,mood:'scared'});return}")
+# night / storm stages took the stage id as art id (v46), so the classic world's snow, sand, ocean current, space fall cap and ambience were lost
+rep("flakes=Array.from({length:z.id==='snow'?60:0}","flakes=Array.from({length:baseId(z)==='snow'?60:0}")
+rep("flakes=Array.from({length:z.id==='snow'?50:0}","flakes=Array.from({length:baseId(z)==='snow'?50:0}")
+rep("sand:zone().id==='desert'})}","sand:baseId(zone())==='desert'})}")
+rep("if(!dropping)return;const z=zone().id;","if(!dropping)return;const z=baseId(zone());")
+rep("if(!sfxOn||!actx||state==='paused')return;ambT-=dt;if(ambT>0)return;const z=zone().id;","if(!sfxOn||!actx||state==='paused')return;ambT-=dt;if(ambT>0)return;const z=baseId(zone());")
+rep("function worldTwist(dt){","function baseId(z){return (z.season===2||z.season===3)&&z.base?z.base:z.id}\nfunction worldTwist(dt){")
+# mirror mechanic: flip the tap once for everything (coin balloon, hazards), not only inside hzTap
+rep("const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;if(tapCoinBalloon","const r=cv.getBoundingClientRect(),py=e.clientY-r.top;let px=e.clientX-r.left;if(cv.style.transform)px=W-px;if(tapCoinBalloon")
+# ...and the mirrored canvas stayed flipped behind the pause menu / win card
+rep("if(state==='paused'||state==='intro'){if(lv)lv.t0+=dt;","if(state==='paused'||state==='intro'){if(cv.style.transform)cv.style.transform='';if(lv)lv.t0+=dt;")
+rep("function win(){\n  state='win';","function win(){\n  cv.style.transform='';state='win';")
+rep("if(hearts<=0){state='over';renderBoosterBar();","if(hearts<=0){state='over';cv.style.transform='';renderBoosterBar();")
 # ---- inject module + css
 import glob as _g
 B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT,'art','b3d_*.json')))}
