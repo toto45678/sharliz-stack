@@ -116,7 +116,6 @@
  },
  {
   "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3ImAgjckz0K3iiJRyK0295VXOcn/hf_20261006_160202_d7a76521-aa8d-43c5-9b85-39b91f00096b.glb",
-  "glb": "b3d_oceanN",
-  "err": "Command '['python3', 'tools/glb2sh.py', '/tmp/b3d_oceanN.glb', 'b3d_oceanN', 'art']' returned non-zero exit status 1."
+  "glb": "b3d_oceanN"
  }
 ]
