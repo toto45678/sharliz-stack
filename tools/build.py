@@ -91,6 +91,7 @@ rep("ctx.save();ctx.translate(o,0);ctx.scale(flip,1);","ctx.save();ctx.transform
 rep("size=Math.min(W*.14,62)*sc,px=clamp(p.x,W*.32,W*.68),py=Math.max(sy(p.y),140);","size=Math.min(W*.1,44)*sc,px=clamp(p.x+(p.x<W/2?1:-1)*S*1.8,W*.22,W*.78),py=Math.max(sy(p.y)+BH*.6,150);")
 rep("life:key?1.25:1.1,max:key?1.25:1.1","life:key?.95:1.1,max:key?.95:1.1")
 rep("  ctx.restore();\n}\nfunction star(r){","  ctx.restore();\n  drawToasts();\n}\nfunction star(r){")
+# ---- v37: bigger dancing hero on the victory popup
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()

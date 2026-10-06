@@ -49,3 +49,9 @@ function animStars(st){if(st.dataset.anim)return;st.dataset.anim='1';const imgs=
 
 {const _so2=showOverlay;showOverlay=function(build,dim){_so2(build,dim);const ms=document.querySelector('#card .win-ms');if(!ms)return;
   const miss=[...ms.children].filter(c=>!c.classList.contains('ok'));if(!miss.length)ms.remove();else ms.querySelectorAll('.ok').forEach(c=>c.remove())}}
+
+/* --- v37: "burst" victory popup (Brawl-Stars-like energy, kept as a card over the game) --- */
+function winBurst(){const card=document.getElementById('card');if(!card||!card.classList.contains('win')||!card.querySelector('.stars'))return;
+  card.classList.add('wb');const ov=document.getElementById('overlay');ov.classList.remove('rays','top');ov.classList.add('wb-ov','dim');
+  const tl=card.querySelector('.tally3');if(tl&&!tl.querySelector('.wb-coin')){const tot=tl.querySelector('.tally-total');if(tot)tot.classList.add('wb-coin')}}
+{const _so3=showOverlay;showOverlay=function(build,dim){document.getElementById('overlay').classList.remove('wb-ov');_so3(build,dim);winBurst();const rr=rerenderOverlay;if(rr)rerenderOverlay=()=>{rr();winBurst()}}}
