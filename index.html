@@ -4934,7 +4934,7 @@ function artAlias(n){if(!ART_RE||PIC_SET.has(n))return n;const m=n.match(ART_RE)
 
 /* ===== v47: boss trophies with powers + the astronaut suit =====
    - Every one of the 22 new bosses drops its own 3D trophy hat (WHATX 'h_<sid>', trophy:sid, legendary). Wearing it gives
-     one power with NO cost: immunity to that boss's mechanic (it never shows up again while you wear it).
+     powers with NO cost: immunity to that boss's mechanic (it never shows up again while you wear it) + one bonus.
    - Astronaut suit (outfit 'astro', real purchase 'astro'): your tower starts already 5 floors high. */
 const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Cat Ears','אוזני חתול רחוב'],desertN:['Scorpion Crown','כתר העקרב'],candyN:['Candy Witch Hat','כובע מכשפת הסוכר'],
   snowN:['Frost Wolf Hood','ברדס זאב הכפור'],oceanN:['Angler Lantern','פנס הדג'],volcanoN:['Imp Horns','קרני השד'],spaceN:['Moon Bunny Ears','אוזני ארנב הירח'],
@@ -4942,14 +4942,14 @@ const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Ca
   snowS:['General Bicorne','כובע הגנרל'],oceanS:['Shark Fin','סנפיר הכריש'],volcanoS:['Phoenix Crest','כרבולת עוף החול'],spaceS:['Cosmic Eye','העין הקוסמית'],
   jungle:['Leaf Crown','כתר העלים'],castle:['Ghost Crown','כתר הרוחות'],clouds:['Unicorn Horn','קרן חד-הקרן'],dino:['Dino Frill','צווארון הדינו'],
   factory:['Robot Antenna','אנטנת רובוט'],crystal:['Crystal Tiara','נזר הקריסטל']};
-// powers: only the boss's own mechanic — imm = it never appears while worn; lavaK/swayK/convK = it barely works.
-// Trophies are earned, so no cost — and no extra bonus either, so they never beat shop hats (Raz: "different, not stronger").
-const TROPHY_FX={farmN:{imm:'bats'},cityN:{imm:'blackout'},desertN:{imm:'scorpion'},candyN:{imm:'jelly'},
-  snowN:{imm:'icicle'},oceanN:{imm:'jellyfish'},volcanoN:{lavaK:.45},spaceN:{imm:'portal'},
-  farmS:{imm:'lightning'},cityS:{imm:'newspaper'},desertS:{swayK:.35},candyS:{imm:'hail'},
-  snowS:{imm:'freeze'},oceanS:{swayK:.35},volcanoS:{imm:'meteor'},spaceS:{imm:'gravity'},
-  jungle:{imm:'monkey'},castle:{imm:'ghost'},clouds:{imm:'cloud'},dino:{imm:'egg'},
-  factory:{convK:0},crystal:{imm:'mirror'}};
+// powers: imm = mechanic that never appears while worn, plus one bonus (HAT_FX keys from v39 + light, lavaK, swayK, convK, noSlip).
+// Trophies are a reward for beating the boss, so they have no cost (Raz, "משפטי ועסקי" thread, Oct 6). The v49 caps still apply.
+const TROPHY_FX={farmN:{imm:'bats',light:1.45},cityN:{imm:'blackout',coins:1.1},desertN:{imm:'scorpion',boss:1.25},candyN:{imm:'jelly',tol:1.1},
+  snowN:{imm:'icicle',wind:.7},oceanN:{imm:'jellyfish',light:1.6},volcanoN:{lavaK:.45,feverT:1.3},spaceN:{imm:'portal',fall:.85},
+  farmS:{imm:'lightning',perfPts:1.3},cityS:{imm:'newspaper',noSlip:1},desertS:{swayK:.35,coins:1.1},candyS:{imm:'hail',perfCoins:2},
+  snowS:{imm:'freeze',spd:.92},oceanS:{swayK:.35,boss:1.25},volcanoS:{imm:'meteor',hearts:1},spaceS:{imm:'gravity',aim:1},
+  jungle:{imm:'monkey',coins:1.15},castle:{imm:'ghost',tol:1.12},clouds:{imm:'cloud',fall:.8},dino:{imm:'egg',hearts:1},
+  factory:{convK:0,coins:1.2},crystal:{imm:'mirror',feverT:1.5}};
 const PW_TXT={en:{imm:'No {m}',coins:'+{p}% coins',boss:'Hits bosses harder',tol:'Wider landing zone',wind:'Wind pushes less',light:'More light at night',
     lavaK:'Lava rises slowly',feverT:'Frenzy lasts longer',fall:'Falls slowly',perfPts:'More points for PERFECT',noSlip:'Never slips in the rain',
     swayK:'Sand and waves barely move the tower',perfCoins:'+2 coins for every PERFECT',spd:'Slower swing, easier to aim',hearts:'An extra heart every level',aim:'Aiming line always on',convK:'Conveyors stop'},
