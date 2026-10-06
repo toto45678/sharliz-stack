@@ -190,7 +190,7 @@ rep("const nm=t(BOSS_NAMES[z]);","const nm=t(BOSS_NAMES[b.sid]||BOSS_NAMES[z]);"
 rep("hz.boss={z:zone().id,","hz.boss={z:zone().id,sid:zone().sid,")
 rep("ctx.save();if(shake>0)ctx.translate(","if(typeof seasonBg==='function')seasonBg();ctx.save();if(shake>0)ctx.translate(")
 rep("  drawKaleido();\n  for(const p of popups){","  if(typeof seasonFx==='function')seasonFx();drawKaleido();\n  for(const p of popups){")
-# ---- v43: 22 new mechanics / enemies for seasons 2-4 (src/v43.js). Hazard choice per stage comes from mechList()/mechPrimary().
+# ---- v44: 22 new mechanics / enemies for seasons 2-4 (src/v44.js). Hazard choice per stage comes from mechList()/mechPrimary().
 rep("const hzList=()=>HZ_ORDER.slice(0,Math.min(zoneIdx(level)+1,HZ_ORDER.length));","const hzList=()=>zoneIdx(level)>=8&&typeof mechList==='function'?mechList():HZ_ORDER.slice(0,Math.min(zoneIdx(level)+1,HZ_ORDER.length));")
 rep("const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level)%8,HZ_ORDER.length-1)];","const hzPrimary=()=>zoneIdx(level)>=8&&typeof mechPrimary==='function'?mechPrimary():HZ_ORDER[Math.min(zoneIdx(level)%8,HZ_ORDER.length-1)];")
 rep("swinger.xs+=swinger.dir*speed()*(swinger.entering?1.8:(1-.42*Math.min(1,(swinger.xs/r)**2)))*dt;","swinger.xs+=swinger.dir*speed()*(swinger.frozen>0?0:swinger.fast>0?1.35:1)*(swinger.entering?1.8:(1-.42*Math.min(1,(swinger.xs/r)**2)))*dt;")
@@ -201,7 +201,7 @@ rep("b.atkAt=time;BOSS_ATK[b.z](b);","b.atkAt=time;(BOSS_ATK[b.sid]||BOSS_ATK[b.
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v44.js')
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]

@@ -1,4 +1,4 @@
-/* ===== v43: 22 new mechanics & enemies for seasons 2-4 (+ storm lightning) =====
+/* ===== v44: 22 new mechanics & enemies for seasons 2-4 (+ storm lightning) =====
    Each mechanic belongs to one stage (MECH[k].sid) and becomes that stage's "primary" hazard (intro card, shows up often);
    later stages of the same season mix in the earlier ones. Types:
      event   – started by the hazard timer (startEvent), one at a time, ends by itself
