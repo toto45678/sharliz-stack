@@ -44,14 +44,15 @@ Object.assign(WOUT,{necklace:{p:120,n:['Pearls','שרשרת פנינים']},meda
   armor:{p:1800,n:['Knight armor','שריון אביר']},wings:{p:1600,n:['Fairy wings','כנפי פיה']},magnet:{p:1400,n:['Coin magnet','מגנט מטבעות']},ninja:{p:1500,n:['Ninja suit','חליפת נינג׳ה']}});
 Object.assign(WHATX,{bow:{p:90,w:1,n:['Big bow','סרט ענק']},cap:{p:100,w:1,n:['Cap','כובע מצחייה']},paper:{p:80,w:1,n:['Paper crown','כתר נייר']},
   antenna:{p:120,w:1,n:['Boppers','אנטנות']},headphones:{p:160,w:1,n:['Headphones','אוזניות']},flowerpin:{p:90,w:1,n:['Flower pin','סיכת פרח']},
-  hardhat:{p:1600,w:1,n:['Hard hat','קסדת בנייה']},royal:{p:2500,w:1,n:['Royal crown','כתר מלכותי']},cloudhat:{p:1400,w:1,n:['Cloud hat','כובע ענן']}});
+  hardhat:{p:1600,w:1,n:['Hard hat','קסדת בנייה']},royal:{p:3500,w:1,n:['Royal crown','כתר מלכותי']},cloudhat:{p:1400,w:1,n:['Cloud hat','כובע ענן']}});
 STYLE_SKINS.push({id:'t_sparkle',cat:'t',price:120,w:1},{id:'t_notes',cat:'t',price:150,w:1},{id:'t_leaves',cat:'t',price:120,w:1},{id:'t_rainbow',cat:'t',price:200,w:1},
   {id:'l_confetti',cat:'l',price:150,w:1},{id:'l_stars',cat:'l',price:120,w:1},{id:'l_bubbles',cat:'l',price:120,w:1},{id:'l_hearts',cat:'l',price:150,w:1});
 
 /* ---------------- powers from every slot ---------------- */
-const GEAR_FX={outfit:{armor:{hearts:1},wings:{fall:.75},magnet:{coins:1.2},ninja:{tol:1.12,wind:.7}},
-  glasses:{night:{light:1.5,wind:.85},scope:{aim:1,tol:1.05},lucky:{coins:1.12,perfPts:1.15}}};
-Object.assign(HAT_FX,{hardhat:{hearts:1},royal:{coins:1.3},cloudhat:{fall:.7}});
+// every upgrade = one advantage + one cost, like the shop hats in v39 (Raz: "different, not stronger")
+const GEAR_FX={outfit:{armor:{hearts:1,fall:1.15},wings:{fall:.75,wind:1.4},magnet:{coins:1.2,tol:.9},ninja:{tol:1.12,wind:1.25}},
+  glasses:{night:{light:1.5,pts:.9},scope:{aim:1,pts:.9},lucky:{coins:1.12,wind:1.25}}};
+Object.assign(HAT_FX,{hardhat:{hearts:1,pts:.8},royal:{coins:1.3,hearts:-1},cloudhat:{fall:.7,coins:.9}});
 const PET_FX={coins10:{coins:1.1},coins25:{coins:1.25},heart:{hearts:1},aim:{aim:1},sticky:{tol:1.12},fever:{feverT:1.5}};
 const FX_ADD=new Set(['hearts','perfCoins','aim','noSlip']);
 const gearOn=(c,id)=>id&&id!=='none'&&GEAR_FX[c]&&GEAR_FX[c][id]&&wOwned(c,id);
