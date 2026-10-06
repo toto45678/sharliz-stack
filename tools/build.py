@@ -160,11 +160,41 @@ rep("fever=perk('fever')?12:8;partyT=1.6;","fever=(perk('fever')?12:8)*hatK('fev
 rep("if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>(hz.coinNext||0)){","if(!hz.coinNext&&['aim','wait','drop'].includes(state))hz.coinNext=time+12+Math.random()*10;\n  if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>hz.coinNext){")
 # Suno world music (art/mus_<zone>.mp3, one track per world; lobby keeps mus_lobby_a)
 rep("const MUSF={map:['mus_lobby_a']};","const MUSF={map:['mus_lobby_a'],farm:['mus_farm'],city:['mus_city'],desert:['mus_desert'],snow:['mus_snow'],space:['mus_space'],candy:['mus_candy'],ocean:['mus_ocean'],volcano:['mus_volcano']};")
+# ---- v42: seasons — 300 levels (S1 day 1-80, S2 night 81-160, S3 storm 161-240, S4 six new worlds 241-300)
+# ZONES grows from 8 to 30 stages. z.id stays the ART id (so every art lookup keeps working); z.sid is the unique stage id,
+# z.season 1-4. Difficulty uses etOf(zi) (a smooth tier 0..~7.8) instead of the raw stage index.
+rep("const TOTAL=ZONES.length*LPZ;",r"""{const B=ZONES.slice();for(const z of B){z.sid=z.id;z.season=1}
+  const night=sk=>sk.map(([a,c])=>[a,mix(c,'#0b1030',.62)]),storm=sk=>sk.map(([a,c])=>[a,mix(c,'#3a4252',.55)]);
+  for(const s of [2,3])for(const z of B)ZONES.push(Object.assign({},z,{sid:z.id+(s===2?'N':'S'),season:s,key:z.key+(s===2?'N':'S'),sky:s===2?night(z.sky):storm(z.sky),cloud:z.cloud&&(s===2?mix(z.cloud,'#1a2050',.6):mix(z.cloud,'#4a5060',.5)),starsAt:s===2?-99:z.starsAt}));
+  for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
+const etOf=zi=>zi<8?zi:4+(zi-8)*.18;
+const TOTAL=ZONES.length*LPZ;""")
+rep("6+2*zoneIdx(level)+2*lvInZone()","6+Math.round(2*etOf(zoneIdx(level)))+2*lvInZone()")
+rep("(1.45+zoneIdx(level)*.14","(1.45+etOf(zoneIdx(level))*.14")
+rep("lv=.5+.5*(level-1)/(TOTAL-1)","lv=.5+.5*Math.min(1,(etOf(zoneIdx(level))*LPZ+lvInZone())/79)")
+rep("hp=3*(5+zi);","hp=3*(5+Math.round(etOf(zi)))+3*((ZONES[zi].season||1)-1);")
+rep("let p=Math.max(.09,sp*(55-zi*1.4)/2000),g=Math.max(.2,sp*(120-zi*3)/2000)","let p=Math.max(.09,sp*(55-etOf(zi)*1.4)/2000),g=Math.max(.2,sp*(120-etOf(zi)*3)/2000)")
+rep("g=6+2*zi+2*k;","g=6+Math.round(2*etOf(zi))+2*k;")
+rep("const bossReach=()=>4+Math.floor(zoneIdx(level)/2);","const bossReach=()=>4+Math.floor(etOf(zoneIdx(level))/2);")
+rep("BOSS_NAMES[zone().id]","(BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])",3)
+rep("lv.firstBoss=!progress.beat[zone().id];progress.beat[zone().id]=1;","lv.firstBoss=!progress.beat[zone().sid];progress.beat[zone().sid]=1;")
+rep("40+zi*6:15+zi*3","40+Math.round(etOf(zi)*6):15+Math.round(etOf(zi)*3)")
+rep("30+zi*6","30+Math.round(etOf(zi)*6)")
+rep("const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level),HZ_ORDER.length-1)];","const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level)%8,HZ_ORDER.length-1)];")
+# map: 30 stage panels — keep the canvas under iOS's area limit, tint night / storm panels
+rep("const dpr=Math.min(1.5,window.devicePixelRatio||1);mc.width=W*dpr;mc.height=mapH*dpr;","const dpr=Math.min(1.5,window.devicePixelRatio||1,Math.sqrt(12e6/(W*mapH)));mc.width=W*dpr;mc.height=mapH*dpr;")
+rep("if(lk)g.filter='blur(5px) saturate(.55) brightness(1.08)';g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';",
+    "{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.mapf||SEASON_MAPF[z.season]||'')).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}")
+# in-game season look: background tint + foreground (night darkness / storm rain) under the popups
+rep("const nm=t(BOSS_NAMES[z]);","const nm=t(BOSS_NAMES[b.sid]||BOSS_NAMES[z]);")
+rep("hz.boss={z:zone().id,","hz.boss={z:zone().id,sid:zone().sid,")
+rep("ctx.save();if(shake>0)ctx.translate(","if(typeof seasonBg==='function')seasonBg();ctx.save();if(shake>0)ctx.translate(")
+rep("  drawKaleido();\n  for(const p of popups){","  if(typeof seasonFx==='function')seasonFx();drawKaleido();\n  for(const p of popups){")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')
-css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')
+css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')

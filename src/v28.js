@@ -346,7 +346,7 @@ const SPECIALS=[];
 const STK_PAGES=[
   {id:'rare',items:()=>RARES.map(r=>({id:'rare:'+r.id,n:(progress.album||{})[r.id]||0,img:()=>rareImg(r),name:t('rr_'+r.id)}))},
   {id:'boss',items:()=>BOSS_HATS.map(z=>({id:'boss:'+z,n:(progress.beat||{})[z]?1:0,src:'art/boss_'+z+'.webp',name:t(BOSS_NAMES[z])}))},
-  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+z.id,n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.id])?1:0,src:'art/mapn_'+z.id+'.webp',round:true,name:t(z.key)}))},
+  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+(z.sid||z.id),n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.sid||z.id])?1:0,src:'art/mapn_'+z.id+'.webp',round:true,name:t(z.key)}))},
   {id:'buddy',items:()=>Object.keys(WPET).filter(k=>k!=='none').map(k=>({id:'buddy:'+k,n:wOwned('pet',k)?1:0,img:()=>wThumb('pet',k),name:wName('pet',k),prem:!!WPET[k].real}))},
   {id:'hat',items:()=>wItems('hat').filter(k=>k!=='none').map(k=>({id:'hat:'+k,n:wOwned('hat',k)?1:0,src:WHATX[k]?null:'art/'+hatPicId(k)+'.webp',img:WHATX[k]?()=>wThumb('hat',k):null,name:wName('hat',k)}))},
   {id:'special',items:()=>{const L=lang==='he'?1:0,a=SPECIALS.map(s=>({id:'sp:'+s.id,n:(progress.stk||{})[s.id]||0,src:s.src,name:s.name[L],hint:s.how&&s.how[L]}));while(a.length<6)a.push({id:'soon'+a.length,n:0,soon:true,name:'?'});return a}}];

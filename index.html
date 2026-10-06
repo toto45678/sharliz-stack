@@ -704,6 +704,19 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 @keyframes stTw{50%{transform:scale(1.3) rotate(20deg)}}
 @media (max-height:740px){.lob-side{top:calc(env(safe-area-inset-top,0px) + 160px);gap:8px}.lob-side .side-btn .sq{width:54px;height:54px}}
 
+/* v42 seasons: banner on the map where a new season starts */
+.season-banner{position:absolute;left:50%;transform:translate(-50%,-50%) rotate(-3deg);z-index:6;pointer-events:none;display:flex;flex-direction:column;align-items:center;
+  padding:8px 26px 10px;border-radius:18px;border:4px solid #120d2b;box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 6px 0 #120d2b,0 12px 26px rgba(0,0,0,.35);
+  font-family:"Lilita One","Secular One",system-ui,sans-serif;color:#fff;text-align:center;white-space:nowrap}
+.season-banner small{font-size:.95rem;opacity:.9;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.season-banner b{font-size:1.9rem;line-height:1.05;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill;font-weight:400}
+.season-banner.s2{background:linear-gradient(180deg,#3b3f9e,#1b1c5c)}
+.season-banner.s2 b{color:#ffe98a}
+.season-banner.s3{background:linear-gradient(180deg,#5d6b84,#2c3446)}
+.season-banner.s3 b{color:#bfe3ff}
+.season-banner.s4{background:linear-gradient(180deg,#2fbf71,#127a46)}
+.season-banner.s4 b{color:#fff6a8}
+
 </style>
 
 <div id="app">
@@ -1049,6 +1062,11 @@ const ZONES=[
    sky:[[0,'#2b2550'],[.6,'#17132e'],[1.3,'#0b0918']],
    ground:{top:'#b3ab9e',line:'#857e78',a:'#968e86',b:'#45404a',peb:'#7a736e'}}
 ];
+{const B=ZONES.slice();for(const z of B){z.sid=z.id;z.season=1}
+  const night=sk=>sk.map(([a,c])=>[a,mix(c,'#0b1030',.62)]),storm=sk=>sk.map(([a,c])=>[a,mix(c,'#3a4252',.55)]);
+  for(const s of [2,3])for(const z of B)ZONES.push(Object.assign({},z,{sid:z.id+(s===2?'N':'S'),season:s,key:z.key+(s===2?'N':'S'),sky:s===2?night(z.sky):storm(z.sky),cloud:z.cloud&&(s===2?mix(z.cloud,'#1a2050',.6):mix(z.cloud,'#4a5060',.5)),starsAt:s===2?-99:z.starsAt}));
+  for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
+const etOf=zi=>zi<8?zi:4+(zi-8)*.18;
 const TOTAL=ZONES.length*LPZ;
 const zoneIdx=lv=>modeZi!==null&&modeZi!==undefined?modeZi:Math.min(ZONES.length-1,Math.floor((lv-1)/LPZ));
 const zone=()=>ZONES[zoneIdx(level)];
@@ -1667,8 +1685,8 @@ let tower=[], swinger=null, dropping=null, bodies=[], particles=[], popups=[];
 let camY=0, time=0, ft=0, best=+(store('sharliz-best')||0), balance=0, swayK=0, shake=0, bump=0, freeze=0, spawnAt=0, firstDropDone=false, wind=0, windSeed=0, lastGustWarn=0;
 let collapsing=null, survivor=-1, busy=false;
 
-const goal=()=>mode==='daily'?endless.goal:mode!=='levels'?999:isBoss()?999:6+2*zoneIdx(level)+2*lvInZone();
-const speed=()=>(1.45+zoneIdx(level)*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
+const goal=()=>mode==='daily'?endless.goal:mode!=='levels'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+2*lvInZone();
+const speed=()=>(1.45+etOf(zoneIdx(level))*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
 const rangeXs=()=>Math.min((W/2-S*.75)/S,1.3);   // narrow sweep above the tower
 const xOf=xs=>W/2+xs*S;
 const yOf=i=>{let s=0;const n=Math.min(i,tower.length);for(let j=0;j<n;j++)s+=tower[j].sz||1;return -.2*BH-(s+Math.max(0,i-n))*STEP};
@@ -1681,7 +1699,7 @@ function camTarget(){
   if(state==='win'||state==='over') focus=yOf(Math.max(0,tower.length-1))-BH*.6;
   return Math.min(-H*.8,focus-H*(hz&&hz.boss&&!hz.boss.dead?.3:.26));
 }
-function windFor(n){const z=zone(),h=clamp((n-2)/10,0,1),lv=.5+.5*(level-1)/(TOTAL-1),gust=Math.sin(time*.33+windSeed)*.75+Math.sin(time*1.1+windSeed*2)*.25;return z.windK*h*lv*gust*1.3}
+function windFor(n){const z=zone(),h=clamp((n-2)/10,0,1),lv=.5+.5*Math.min(1,(etOf(zoneIdx(level))*LPZ+lvInZone())/79),gust=Math.sin(time*.33+windSeed)*.75+Math.sin(time*1.1+windSeed*2)*.25;return z.windK*h*lv*gust*1.3}
 
 function startLevel(lv){
   if(lv) level=lv;
@@ -1799,7 +1817,7 @@ function win(){
   const prevUnlocked=progress.unlocked;
   lv.starsNow=starsEarned();lv.first3=lv.starsNow>=3&&(progress.stars[level-1]||0)<3&&mode==='levels';progress.stars[level-1]=Math.max(progress.stars[level-1]||0,lv.starsNow);renderBoosterBar();track('wins');if(lv.starsNow>=3)track('stars3');
   progress.fails=progress.fails||{};progress.fails[level]=0;if(level===1)progress.tut=1;
-  if(isBoss()){progress.beat=progress.beat||{};lv.firstBoss=!progress.beat[zone().id];progress.beat[zone().id]=1;const hid='h_'+zone().id;if(!wallet().skins.includes(hid)){progress.skins.push(hid);lv.newHat=hid}}
+  if(isBoss()){progress.beat=progress.beat||{};lv.firstBoss=!progress.beat[zone().sid];progress.beat[zone().sid]=1;const hid='h_'+zone().id;if(!wallet().skins.includes(hid)){progress.skins.push(hid);lv.newHat=hid}}
   {const zi=zoneIdx(level);let all=true;for(let i=0;i<LPZ;i++)if((progress.stars[zi*LPZ+i]||0)<3)all=false;if(all&&!wallet().skins.includes('h_gold')){progress.skins.push('h_gold');lv.newHat='h_gold'}}
   {const s0=tower[tower.length-1];const dG3=!animReady('dance')&&!reduceMotion&&g3Init();if((animReady('dance')||dG3)&&!reduceMotion){setTimeout(()=>{if(state!=='win')return;s0.hidden=true;gag={name:'dance',filter:'',t:0,x:xOf(s0.xs),wy:yOf(tower.length-1),g3:dG3,col:s0.color}},250)}}
   if(!DEV_OPEN||level<=progress.unlocked)progress.unlocked=Math.min(TOTAL,Math.max(progress.unlocked,level+1));saveProgress();
@@ -1809,7 +1827,7 @@ function win(){
     const top=tower[tower.length-1],sx=xOf(top.xs),syy=sy(yOf(tower.length-1));
     await spotlight(sx,syy);
     const last=level>=TOTAL, st=lv.starsNow, title=last?t('allDone'):st>=3?t('splendid'):st===2?t('swell'):t('done');
-    showOverlay(()=>({title,anim:'dance',titleKey:last?null:st>=3?'splendid':st===2?'great':null,ribbon:'mustard',animSize:118,sub:last?t('allDoneSub',{s:score}):isBoss()?t('bossCleared',{n:t(BOSS_NAMES[zone().id]),s:score}):t('clearedSub',{n:level,c:tower.length-1,s:score}),stars:st,top:syy>H*.5,extra:card=>{const ml=document.createElement('div');ml.className='win-ms';starMissions().forEach(m=>{const d=document.createElement('span');d.className=missionDone(m)?'ok':'';d.textContent=(missionDone(m)?'✓ ':'✗ ')+missionText(m);ml.appendChild(d)});card.appendChild(ml);if(lv.newHat){const h=document.createElement('div');h.className='new-hat';h.innerHTML=`<img src="art/${hatPicId(lv.newHat)}.webp" alt=""><span></span>`;h.querySelector('span').textContent=t('newHat');card.appendChild(h)}tallyCard(card,true)},
+    showOverlay(()=>({title,anim:'dance',titleKey:last?null:st>=3?'splendid':st===2?'great':null,ribbon:'mustard',animSize:118,sub:last?t('allDoneSub',{s:score}):isBoss()?t('bossCleared',{n:t((BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])),s:score}):t('clearedSub',{n:level,c:tower.length-1,s:score}),stars:st,top:syy>H*.5,extra:card=>{const ml=document.createElement('div');ml.className='win-ms';starMissions().forEach(m=>{const d=document.createElement('span');d.className=missionDone(m)?'ok':'';d.textContent=(missionDone(m)?'✓ ':'✗ ')+missionText(m);ml.appendChild(d)});card.appendChild(ml);if(lv.newHat){const h=document.createElement('div');h.className='new-hat';h.innerHTML=`<img src="art/${hatPicId(lv.newHat)}.webp" alt=""><span></span>`;h.querySelector('span').textContent=t('newHat');card.appendChild(h)}tallyCard(card,true)},
       actions:last?[{label:t('mapShort'),icon:'map',primary:true,fn:()=>go(()=>openMap(prevUnlocked))}]
         :[{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();iris.r=-1;drawIris();if(isBoss()&&level<TOTAL)worldTransition(zoneIdx(level)+1,()=>{preloadWorld(ZONES[zoneIdx(level)+1].id);preLevel(level+1)});else preLevel(level+1)}},{label:t('replay'),icon:'restart',fn:()=>go(()=>{score=levelStartScore;startLevel()})},{label:t('mapShort'),icon:'map',fn:()=>go(()=>openMap(prevUnlocked))},{label:t('shareShort'),icon:'camera',color:'purple',fn:()=>shareTower()}]}));
   },1300);
@@ -1831,7 +1849,7 @@ async function failGag(){
   const sx=xOf(s.xs),syy=sy(yOf(survivor));
   await spotlight(sx,syy);gag=null;
   renderBoosterBar();
-  showOverlay(()=>({title:t('whoops'),titleKey:'whoops',anim:'reborn',animSize:96,sub:isBoss()?t('bossFail',{n:t(BOSS_NAMES[zone().id])}):t('failSub',{c:tower.length-1,g:goal()}),top:syy>H*.5,extra:card=>tallyCard(card,false),
+  showOverlay(()=>({title:t('whoops'),titleKey:'whoops',anim:'reborn',animSize:96,sub:isBoss()?t('bossFail',{n:t((BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id]))}):t('failSub',{c:tower.length-1,g:goal()}),top:syy>H*.5,extra:card=>tallyCard(card,false),
     actions:[...(tryRevive()?[{label:t('reviveBtn',{n:progress.inv.revive}),icon:'play',primary:true,fn:doRevive}]:[]),...((lv.cp||lv.cpBossHp)?[{label:lv.cp?t('cpBtn',{n:lv.cp}):t('cpBossBtn'),icon:'play',primary:!tryRevive(),fn:()=>go(continueCheckpoint)}]:[]),{label:t('retry'),icon:'restart',primary:true,fn:()=>go(()=>{score=levelStartScore;startLevel()})},{label:t('mapShort'),icon:'map',fn:()=>go(()=>{score=levelStartScore;openMap()})}]}));
 }
 const POPPAL={perfect:['#fffbe0','#ffd23f','#ff8a00'],splendid:['#fffbe0','#ffd23f','#ff8a00'],great:['#f4ffe8','#9bf25a','#2f9a12'],wow:['#fff0f6','#ff8cc6','#d61f6b'],whoops:['#fff0f0','#ff7a8a','#c4142e'],gust:['#f2fbff','#8fd8ff','#1f6ae0']};
@@ -1860,12 +1878,12 @@ let hz={};
 const lvInZone=()=>(level-1)%LPZ;
 const isBoss=()=>lvInZone()===LPZ-1;
 const hzList=()=>HZ_ORDER.slice(0,Math.min(zoneIdx(level)+1,HZ_ORDER.length));
-const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level),HZ_ORDER.length-1)];
+const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level)%8,HZ_ORDER.length-1)];
 const scrToW=y=>y+camY-bump;              // screen y -> world y (particles live in world space)
 function hzPick(list){const p=hzPrimary(),w=list.map(h=>h===p?3:1);let r=Math.random()*w.reduce((a,b)=>a+b,0);for(let i=0;i<list.length;i++){r-=w[i];if(r<=0)return list[i]}return list[0]}
 function resetHazards(){
   hz={crow:null,octo:null,ink:null,quake:null,gust:null,gustV:0,next:time+7+Math.random()*3,since:2,forceKind:null,firstDone:false,stars:[],boss:null};
-  if(isBoss()){const zi=zoneIdx(level),hp=3*(5+zi);hz.boss={z:zone().id,hp,max:hp,phase:1,stun:0,hurt:0,atk:time+6,wind:0,dead:0,x:W*.72,y:Math.max(H*.21,175),shown:0};hz.next=time+9}
+  if(isBoss()){const zi=zoneIdx(level),hp=3*(5+Math.round(etOf(zi)))+3*((ZONES[zi].season||1)-1);hz.boss={z:zone().id,sid:zone().sid,hp,max:hp,phase:1,stun:0,hurt:0,atk:time+6,wind:0,dead:0,x:W*.72,y:Math.max(H*.21,175),shown:0};hz.next=time+9}
 }
 function burst(x,wy,cols,n=14,sp=220){for(let i=0;i<n;i++)particles.push({x:x+rnd(-8,8),y:wy+rnd(-8,8),vx:rnd(-sp,sp),vy:rnd(-sp*1.3,-sp*.2),life:.9,c:pick(cols),sz:rnd(3,7)})}
 function knockTop(count,dir){
@@ -1887,7 +1905,7 @@ function hzSwinger(){
   else if(k==='ice')swinger.kind='ice';
   else if(k==='size'||k==='tiny'||k==='giant'){const g=k==='giant'||(k==='size'&&Math.random()<.5);swinger.kind=g?'giant':'tiny';swinger.sz=g?1.28:.74;swinger.wt=g?2:.5}
 }
-function landTol(d){const sp=speed()/hatSpd(),zi=zoneIdx(level);let p=Math.max(.09,sp*(55-zi*1.4)/2000),g=Math.max(.2,sp*(120-zi*3)/2000),m=.5;
+function landTol(d){const sp=speed()/hatSpd(),zi=zoneIdx(level);let p=Math.max(.09,sp*(55-etOf(zi)*1.4)/2000),g=Math.max(.2,sp*(120-etOf(zi)*3)/2000),m=.5;
   if(d.kind==='giant'){p*=1.45;g*=1.35;m=.6}else if(d.kind==='tiny'){p*=.6;g*=.65;m=.4}else if(d.kind==='sticky'){p*=1.3;g*=1.3;m=.8}
   const e=(settings.easy?1.25:1)*(perk('sticky')?1.12:1)*hatTol();return [p*e,g*e,m]}
 function defuse(){
@@ -1998,7 +2016,7 @@ function drawBoss(){
     ctx.save();roundRect(bx+2,by+2,bw-4,bh-4,(bh-4)/2);ctx.clip();ctx.fillStyle=gr;ctx.fillRect(bx+2,by+2,fw-4,bh-4);ctx.fillStyle='rgba(255,255,255,.35)';ctx.fillRect(bx+2,by+3,fw-4,(bh-4)*.35);ctx.restore();
     ctx.fillStyle='#120d2b';for(const f of [1/3,2/3])ctx.fillRect(bx+bw*f-1.5,by+2,3,bh-4);
     if(ic)ctx.drawImage(ic,bx-30,by-12,44,44);
-    const nm=t(BOSS_NAMES[z]);gameText(ctx,nm,W/2+12,by+bh+15,17,['#fffbe0','#ffd23f','#ff8a00']);
+    const nm=t(BOSS_NAMES[b.sid]||BOSS_NAMES[z]);gameText(ctx,nm,W/2+12,by+bh+15,17,['#fffbe0','#ffd23f','#ff8a00']);
     if(tower.length-1<bossReach())gameText(ctx,t('reachHint',{n:bossReach()-(tower.length-1)}),W/2,by+bh+40,15,['#f2fbff','#8fd8ff','#3aa4ff']);
     if(b.stun>0)gameText(ctx,t('dizzy'),bx+bw+30,by+bh/2,18,POPPAL.wow,Math.sin(time*8)*.1);
     ctx.restore()}
@@ -2066,7 +2084,7 @@ function maybeIntro(){
   const p=hzPrimary(),bk='boss_'+zone().id;let k=null;
   if(!seenKey(p))k=p;else if(isBoss()&&!seenKey(bk))k=bk;
   if(!k)return false;markSeen(k);state='intro';
-  const boss=k.startsWith('boss_'),name=boss?t(BOSS_NAMES[zone().id]):t('hz_'+k);
+  const boss=k.startsWith('boss_'),name=boss?t((BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])):t('hz_'+k);
   showOverlay(()=>({title:boss?t('bossTitle'):name,actions:[{label:t('gotIt'),icon:'play',primary:true,fn:()=>{hideOverlay();state='wait';spawnAt=time+.6;maybeIntro()}}],
     extra:card=>{const c=document.createElement('canvas');c.className='hz-demo';card.appendChild(c);const p2=document.createElement('p');p2.className='hz-cap';
       p2.innerHTML='';const b=document.createElement('b');b.textContent=boss?name:'';if(boss){p2.appendChild(b);p2.appendChild(document.createElement('br'))}p2.appendChild(document.createTextNode(boss?t('bossCap'):t('hzc_'+k)));card.appendChild(p2);demoLoop(c,boss?'boss':k)}}),true);
@@ -2116,8 +2134,8 @@ function resetStats(){lv={perfect:0,great:0,best:0,tricks:0,lost:0,t0:time}}
 function trick(){lv.tricks=(lv.tricks||0)+1}
 function tallyRows(won){
   const zi=zoneIdx(level),rows=[];
-  if(won)rows.push([isBoss()&&lv.firstBoss?t('cBoss'):t('cClear'),'',isBoss()&&lv.firstBoss?40+zi*6:15+zi*3]);
-  if(won&&lv.first3)rows.push([t('cFirst3'),'',30+zi*6]);
+  if(won)rows.push([isBoss()&&lv.firstBoss?t('cBoss'):t('cClear'),'',isBoss()&&lv.firstBoss?40+Math.round(etOf(zi)*6):15+Math.round(etOf(zi)*3)]);
+  if(won&&lv.first3)rows.push([t('cFirst3'),'',30+Math.round(etOf(zi)*6)]);
   if(lv.balloons)rows.push([t('cBalloons'),'×'+lv.balloons,lv.balloons*5]);
   if(lv.feverC)rows.push([t('cFever'),'×'+lv.feverC,lv.feverC*3]);
   if(lv.perfect)rows.push([t('cPerfect'),'×'+lv.perfect,lv.perfect*3]);
@@ -2235,7 +2253,7 @@ const easyK=()=>settings.easy?.8:1;
 
 /* ---------- missions for the three stars ---------- */
 function starMissions(lvN){
-  const L=lvN||level,zi=Math.min(ZONES.length-1,Math.floor((L-1)/LPZ)),k=(L-1)%LPZ,boss=k===LPZ-1,g=6+2*zi+2*k;
+  const L=lvN||level,zi=Math.min(ZONES.length-1,Math.floor((L-1)/LPZ)),k=(L-1)%LPZ,boss=k===LPZ-1,g=6+Math.round(2*etOf(zi))+2*k;
   const perf=boss?6:Math.max(3,Math.ceil(g*.3));
   const third=boss?{id:'noHit'}:[{id:'noHit'},{id:'combo',n:4},{id:'fast',n:Math.round(g*2.6+8)}][L%3];
   return [{id:'win'},{id:'perf',n:perf},third]}
@@ -2343,7 +2361,7 @@ const BOSS_ATK={
   ocean:b=>{if(!hz.octo&&!hz.ink){hz.inkK=b.phase>=2?1.35:1.1;startEvent('fog');if(b.phase>=3&&hz.octo)hz.octo.t=1.4}},
   volcano:b=>{if(!hz.quake){startEvent('quake');if(hz.quake)hz.quake.dur=3.4+b.phase}},
   space:b=>{hz.forceQueue=b.phase>=3?['tiny','tiny','tiny']:['tiny','tiny']}};
-const bossReach=()=>4+Math.floor(zoneIdx(level)/2);
+const bossReach=()=>4+Math.floor(etOf(zoneIdx(level))/2);
 
 /* ---------- skins beyond hats: colours, trails, landing effects ---------- */
 const STYLE_SKINS=[
@@ -2605,7 +2623,7 @@ function render(){
   if(scene.pop)drawWorldCached();
   else{drawSky();
   {let f0=0;for(const L of scene.layers){drawItemsBetween(f0,L.f);drawLayer(L);f0=L.f}drawItemsBetween(f0,1.01)}}
-  ctx.save();if(shake>0)ctx.translate(Math.round(rnd(-1,1)*shake*14),Math.round(rnd(-1,1)*shake*8));
+  if(typeof seasonBg==='function')seasonBg();ctx.save();if(shake>0)ctx.translate(Math.round(rnd(-1,1)*shake*14),Math.round(rnd(-1,1)*shake*8));
   const gy=sy(yOf(goal())+BH*.5);
   if(gy>-20&&gy<H+20){
     ctx.save();ctx.setLineDash([14,10]);ctx.lineCap='round';ctx.lineWidth=7;ctx.strokeStyle='rgba(18,13,43,.8)';ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();ctx.lineWidth=3.5;ctx.strokeStyle='#ffe24d';ctx.lineDashOffset=-time*20;ctx.beginPath();ctx.moveTo(0,gy);ctx.lineTo(W,gy);ctx.stroke();ctx.setLineDash([]);
@@ -2648,7 +2666,7 @@ function render(){
     else{ctx.globalAlpha=clamp(p.life,0,1);ctx.fillStyle=p.c;ctx.translate(p.x,sy(p.y));if(p.conf){ctx.rotate(p.rot);ctx.fillRect(-p.sz/2,-p.sz/4,p.sz,p.sz/2)}else if(p.flower){for(let k=0;k<5;k++){ctx.rotate(Math.PI*2/5);ctx.beginPath();ctx.ellipse(0,p.sz*.6,p.sz*.35,p.sz*.6,0,0,7);ctx.fill()}ctx.fillStyle='#ffd60a';ctx.beginPath();ctx.arc(0,0,p.sz*.3,0,7);ctx.fill()}else if(p.coin){const im=hzPic('ic_coin');if(im)ctx.drawImage(im,-p.sz,-p.sz,p.sz*2,p.sz*2)}else star(p.sz)}
     ctx.restore();
   }
-  drawKaleido();
+  if(typeof seasonFx==='function')seasonFx();drawKaleido();
   for(const p of popups){
     const age=p.max-p.life;
     if(p.key){const sc=age<.1?.4+age/.1*.85:age<.2?1.25-(age-.1)/.1*.25:1,size=Math.min(W*.1,44)*sc,px=clamp(p.x+(p.x<W/2?1:-1)*S*1.8,W*.22,W*.78),py=Math.max(sy(p.y)+BH*.6,150);
@@ -3152,13 +3170,13 @@ function buildMap2D(animateFrom){
   const panels=ZONES.every(z=>pic('map_'+z.id));
   const inner=document.getElementById('mapInner'),mc=document.getElementById('mapCanvas');
   inner.style.height=mapH+'px';inner.querySelectorAll('.pin,.pin-stars,.map-ribbon,.pin-gate,.map-chest,.fog-badge,.fog-lift').forEach(e=>e.remove());
-  const dpr=Math.min(1.5,window.devicePixelRatio||1);mc.width=W*dpr;mc.height=mapH*dpr;mc.style.width=W+'px';mc.style.height=mapH+'px';
+  const dpr=Math.min(1.5,window.devicePixelRatio||1,Math.sqrt(12e6/(W*mapH)));mc.width=W*dpr;mc.height=mapH*dpr;mc.style.width=W+'px';mc.style.height=mapH+'px';
   const g=mc.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);
   const pts=[{x:(mapNew()?MAPROAD.farm.path[0][0]*W:W/2-Math.min(W*.18,90)),y:mapH-110}];for(let i=0;i<TOTAL;i++)pts.push(pinPos(i));
   const bandTop=z=>z===ZONES.length-1?0:(pinPos(z*LPZ+LPZ-1).y+pinPos(z*LPZ+LPZ).y)/2;
   const bandBot=z=>z===0?mapH:(pinPos(z*LPZ-1).y+pinPos(z*LPZ).y)/2;
   const nw=mapNew();
-  if(nw){g.fillStyle='#7fd1ff';g.fillRect(0,0,W,mapH);ZONES.forEach((z,i)=>{const lk=fogged(i),y0=mapH-MAP_MARGIN-(i+1)*ph;if(lk)g.filter='blur(5px) saturate(.55) brightness(1.08)';g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';
+  if(nw){g.fillStyle='#7fd1ff';g.fillRect(0,0,W,mapH);ZONES.forEach((z,i)=>{const lk=fogged(i),y0=mapH-MAP_MARGIN-(i+1)*ph;{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.mapf||SEASON_MAPF[z.season]||'')).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}
       if(lk){// thick magical fog over worlds you have not reached yet
         const fg=g.createLinearGradient(0,y0,0,y0+ph);fg.addColorStop(0,'rgba(236,230,255,.8)');fg.addColorStop(.5,'rgba(226,218,252,.62)');fg.addColorStop(1,'rgba(240,236,255,.85)');g.fillStyle=fg;g.fillRect(0,y0,W,ph+1);
         const rr=mulberry(i*311+5);for(let k=0;k<26;k++){const cx=rr()*W,cy=y0+rr()*ph,r=W*(.12+rr()*.16),gr=g.createRadialGradient(cx,cy,r*.1,cx,cy,r);gr.addColorStop(0,'rgba(255,255,255,.85)');gr.addColorStop(.6,'rgba(246,242,255,.45)');gr.addColorStop(1,'rgba(246,242,255,0)');g.fillStyle=gr;g.beginPath();g.arc(cx,cy,r,0,7);g.fill()}}});
@@ -3806,7 +3824,7 @@ const SPECIALS=[];
 const STK_PAGES=[
   {id:'rare',items:()=>RARES.map(r=>({id:'rare:'+r.id,n:(progress.album||{})[r.id]||0,img:()=>rareImg(r),name:t('rr_'+r.id)}))},
   {id:'boss',items:()=>BOSS_HATS.map(z=>({id:'boss:'+z,n:(progress.beat||{})[z]?1:0,src:'art/boss_'+z+'.webp',name:t(BOSS_NAMES[z])}))},
-  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+z.id,n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.id])?1:0,src:'art/mapn_'+z.id+'.webp',round:true,name:t(z.key)}))},
+  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+(z.sid||z.id),n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.sid||z.id])?1:0,src:'art/mapn_'+z.id+'.webp',round:true,name:t(z.key)}))},
   {id:'buddy',items:()=>Object.keys(WPET).filter(k=>k!=='none').map(k=>({id:'buddy:'+k,n:wOwned('pet',k)?1:0,img:()=>wThumb('pet',k),name:wName('pet',k),prem:!!WPET[k].real}))},
   {id:'hat',items:()=>wItems('hat').filter(k=>k!=='none').map(k=>({id:'hat:'+k,n:wOwned('hat',k)?1:0,src:WHATX[k]?null:'art/'+hatPicId(k)+'.webp',img:WHATX[k]?()=>wThumb('hat',k):null,name:wName('hat',k)}))},
   {id:'special',items:()=>{const L=lang==='he'?1:0,a=SPECIALS.map(s=>({id:'sp:'+s.id,n:(progress.stk||{})[s.id]||0,src:s.src,name:s.name[L],hint:s.how&&s.how[L]}));while(a.length<6)a.push({id:'soon'+a.length,n:0,soon:true,name:'?'});return a}}];
@@ -4303,6 +4321,73 @@ const PRIVACY_URL='https://toto45678.github.io/sharliz-stack/privacy.html';
   const row=(label,btnText,fn)=>{const r=document.createElement('div');r.className='opt-row';const l=document.createElement('span');l.textContent=label;const b=document.createElement('button');b.className='buy';b.textContent=btnText;b.onclick=fn;r.appendChild(l);r.appendChild(b);card.appendChild(r)};
   row(t('restoreBuys'),t('restoreBtn'),()=>{sfx.click();Promise.resolve(window.SharlizPay.restore()).then(()=>popupToast(t('restored'))).catch(()=>popupToast(t('storeOff')))});
   row(t('privacy'),t('open'),()=>{sfx.click();window.open(PRIVACY_URL,'_blank')})}}
+
+/* ===== v42: seasons — 300 levels =====
+   S1 day (stages 0-7, levels 1-80) · S2 night (8-15, 81-160) · S3 storm (16-23, 161-240) · S4 new worlds (24-29, 241-300).
+   ZONES is expanded in a build.py patch (z.sid unique stage id, z.id = art id, z.season). This module adds the names,
+   the night/storm look in-game and on the map, and the season banners on the map. */
+Object.assign(I18N.en,{seasonN:'Season {n}',season1:'Daytime',season2:'Night',season3:'Storm',season4:'New Worlds',
+  zJungle:'Jungle',zCastle:'Haunted Castle',zClouds:'Cloud Kingdom',zDino:'Dino Land',zFactory:'Robot Factory',zCrystal:'Crystal Cave',
+  bFarmN:'Night Owl',bCityN:'Alley Cat',bDesertN:'Scorpion King',bCandyN:'Sugar Witch',bSnowN:'Frost Wolf',bOceanN:'Lantern Fish',bVolcanoN:'Lava Dragon',bSpaceN:'Mothership',
+  bFarmS:'Thunder Goat',bCityS:'Mega Crane',bDesertS:'Sand Worm',bCandyS:'Gingerbread Giant',bSnowS:'Ice Dragon',bOceanS:'Ghost Ship',bVolcanoS:'Phoenix',bSpaceS:'Black Hole Eye',
+  bJungle:'Gorilla King',bCastle:'Ghost King',bClouds:'Thunderbird',bDino:'T-Rex',bFactory:'Mega Robot',bCrystal:'Crystal Golem'});
+Object.assign(I18N.he,{seasonN:'עונה {n}',season1:'יום',season2:'לילה',season3:'סערה',season4:'עולמות חדשים',
+  zJungle:'הג׳ונגל',zCastle:'הטירה הרדופה',zClouds:'ממלכת העננים',zDino:'עולם הדינוזאורים',zFactory:'מפעל הרובוטים',zCrystal:'מערת הקריסטלים',
+  bFarmN:'ינשוף הלילה',bCityN:'חתול הסמטאות',bDesertN:'מלך העקרבים',bCandyN:'מכשפת הסוכר',bSnowN:'זאב הכפור',bOceanN:'דג הפנס',bVolcanoN:'דרקון הלבה',bSpaceN:'ספינת האם',
+  bFarmS:'תיש הרעם',bCityS:'מנוף הענק',bDesertS:'תולעת החול',bCandyS:'ענק הג׳ינג׳ר',bSnowS:'דרקון הקרח',bOceanS:'ספינת הרפאים',bVolcanoS:'עוף החול',bSpaceS:'עין החור השחור',
+  bJungle:'מלך הגורילות',bCastle:'מלך הרוחות',bClouds:'ציפור הרעם',bDino:'טי-רקס',bFactory:'מגה-רובוט',bCrystal:'גולם הקריסטל'});
+for(const L of ['en','he']){const D=I18N[L];for(const k of ['zFarm','zCity','zDesert','zCandy','zSnow','zOcean','zVolcano','zSpace']){
+  D[k+'N']=L==='he'?D[k]+' בלילה':D[k]+' by Night';D[k+'S']=L==='he'?D[k]+' בסערה':'Stormy '+D[k]}}
+for(const z of ZONES)if(z.sid&&z.sid!==z.id){const k='b'+z.sid[0].toUpperCase()+z.sid.slice(1);BOSS_NAMES[z.sid]=k}
+
+/* map look per season (canvas filter on the world panel); season-4 worlds borrow S1 art until their own art ships */
+const SEASON_MAPF={2:'brightness(.62) saturate(.8)',3:'brightness(.8) saturate(.55) contrast(1.08)'};
+const SEASON_TINT={2:'rgba(16,20,88,.5)',3:'rgba(52,62,80,.28)'};
+const S4_MAPF={jungle:'hue-rotate(-28deg) saturate(1.45)',castle:'hue-rotate(230deg) brightness(.72) saturate(.8)',clouds:'hue-rotate(170deg) brightness(1.12) saturate(.7)',
+  dino:'hue-rotate(55deg) saturate(1.25)',factory:'hue-rotate(150deg) saturate(.6) brightness(.9)',crystal:'hue-rotate(110deg) saturate(1.35)'};
+for(const z of ZONES)if(z.season===4)z.mapf=S4_MAPF[z.sid];
+const seasonOf=lvN=>ZONES[Math.min(ZONES.length-1,Math.floor((lvN-1)/LPZ))].season||1;
+
+/* ---------- in-game: night darkness with light holes, storm rain + lightning ---------- */
+const SFX_S={lvl:-1,flies:[],drops:[],flash:0,nextBolt:0,bolt:null,nc:null};
+function seasonState(){if(SFX_S.lvl!==level||SFX_S.mode!==mode){SFX_S.lvl=level;SFX_S.mode=mode;SFX_S.flies=[];SFX_S.drops=[];SFX_S.flash=0;SFX_S.bolt=null;SFX_S.nextBolt=time+4+Math.random()*4}return SFX_S}
+const curSeason=()=>(zone()&&zone().season)||1;
+function seasonBg(){const s=curSeason();if(s===2){ctx.fillStyle='rgba(8,12,48,.42)';ctx.fillRect(0,0,W,H)}else if(s===3){ctx.fillStyle='rgba(28,34,52,.3)';ctx.fillRect(0,0,W,H)}}
+function lightHole(g,x,y,r,k=1){const gr=g.createRadialGradient(x,y,r*.15,x,y,r);gr.addColorStop(0,`rgba(0,0,0,${k})`);gr.addColorStop(.55,`rgba(0,0,0,${.75*k})`);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,7);g.fill()}
+function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonState(),dt=Math.min(.05,frameDt||.016);
+  if(s===2){// night: the tower lantern and the swinging Sharliz light the way; fireflies glow
+    if(S_.flies.length<6&&Math.random()<dt*1.2)S_.flies.push({x:Math.random()*W,y:H*(.25+Math.random()*.6),vx:(Math.random()-.5)*30,vy:(Math.random()-.5)*20,t:0,ph:Math.random()*7});
+    for(const f of S_.flies){f.t+=dt;f.vx+=(Math.random()-.5)*60*dt;f.vy+=(Math.random()-.5)*60*dt;f.vx*=.98;f.vy*=.98;f.x+=f.vx*dt;f.y+=f.vy*dt}
+    S_.flies=S_.flies.filter(f=>f.t<14&&f.x>-30&&f.x<W+30&&f.y>-30&&f.y<H+30);
+    let c=S_.nc;const dpr=DPR||1;if(!c||c.width!==Math.round(W*dpr)||c.height!==Math.round(H*dpr)){c=S_.nc=document.createElement('canvas');c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)}
+    const g=c.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.globalCompositeOperation='source-over';g.clearRect(0,0,W,H);
+    const dark=Math.min(.8,.6+lvInZone()*.02);g.fillStyle=`rgba(4,6,26,${dark})`;g.fillRect(0,0,W,H);g.globalCompositeOperation='destination-out';
+    const flick=1+Math.sin(time*7)*.03+Math.sin(time*13)*.02;
+    if(tower.length){const tp=topScreen();lightHole(g,tp.x,tp.y,S*3.1*flick)}
+    if(swinger)lightHole(g,xOf(swinger.xs),sy(swingY()),S*2.4*flick);
+    if(dropping)lightHole(g,xOf(dropping.xs),sy(dropping.y),S*2.2);
+    {const gy=sy(0);if(gy<H+40)lightHole(g,W/2,gy,S*3.6,.8)}
+    for(const f of S_.flies)lightHole(g,f.x,f.y,S*(1+.25*Math.sin(f.t*5+f.ph)),.85);
+    if(hz.boss&&!hz.boss.dead)lightHole(g,hz.boss.x,hz.boss.y,S*3.4,.7);
+    g.globalCompositeOperation='source-over';ctx.drawImage(c,0,0,W,H);
+    for(const f of S_.flies){const a=.6+.4*Math.sin(f.t*6+f.ph);ctx.fillStyle=`rgba(255,240,140,${a})`;ctx.beginPath();ctx.arc(f.x,f.y,3.2,0,7);ctx.fill();ctx.fillStyle=`rgba(255,240,140,${a*.25})`;ctx.beginPath();ctx.arc(f.x,f.y,9,0,7);ctx.fill()}
+    if(tower.length){const tp=topScreen();ctx.save();ctx.globalAlpha=.9;ctx.fillStyle='#ffd36b';ctx.beginPath();ctx.arc(tp.x+S*.95,tp.y-BH*.15,4.5,0,7);ctx.fill();ctx.restore()}
+  } else {// storm: slanted rain and lightning flashes
+    const want=Math.round(70+lvInZone()*4);while(S_.drops.length<want)S_.drops.push({x:Math.random()*W*1.2,y:Math.random()*H,v:700+Math.random()*400,l:10+Math.random()*14});
+    const slant=(wind||0)*120+80;ctx.save();ctx.strokeStyle='rgba(200,215,240,.55)';ctx.lineWidth=1.4;ctx.beginPath();
+    for(const d of S_.drops){d.y+=d.v*dt;d.x+=slant*dt;if(d.y>H){d.y=-20;d.x=Math.random()*W*1.2-W*.1}ctx.moveTo(d.x,d.y);ctx.lineTo(d.x-slant*.03,d.y-d.l)}ctx.stroke();ctx.restore();
+    if(time>S_.nextBolt&&state!=='paused'){S_.nextBolt=time+5+Math.random()*7;S_.flash=1;const x0=W*(.15+Math.random()*.7),pts=[[x0,0]];let x=x0;for(let y=0;y<H*.55;y+=H*.06){x+=(Math.random()-.5)*W*.12;pts.push([x,y])}S_.bolt={pts,t:0};
+      try{if(sfxOn&&actx)noise({d:.9,v:.22,lp:420,delay:.15+Math.random()*.25})}catch(e){}}
+    if(S_.bolt){S_.bolt.t+=dt;if(S_.bolt.t<.22){ctx.save();ctx.strokeStyle='#fffbe0';ctx.lineWidth=3;ctx.shadowColor='#bfe3ff';ctx.shadowBlur=18;ctx.beginPath();S_.bolt.pts.forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.stroke();ctx.restore()}else S_.bolt=null}
+    if(S_.flash>0){ctx.fillStyle=`rgba(235,242,255,${S_.flash*.45})`;ctx.fillRect(0,0,W,H);S_.flash=Math.max(0,S_.flash-dt*3.2)}
+  }}
+
+/* ---------- map: season banners at the seams + season-4 placeholder tint ---------- */
+{const _b=buildMap2D;buildMap2D=function(a){const r=_b(a);try{seasonBanners()}catch(e){}return r}}
+function seasonBanners(){const inner=document.getElementById('mapInner');if(!inner||!mapGeo)return;inner.querySelectorAll('.season-banner').forEach(e=>e.remove());
+  for(let zi=1;zi<ZONES.length;zi++){const s=ZONES[zi].season||1;if(s===(ZONES[zi-1].season||1))continue;
+    const y=mapGeo.h-MAP_MARGIN-zi*mapGeo.ph,b=document.createElement('div');b.className='season-banner s'+s;b.style.top=y+'px';
+    b.innerHTML='<small></small><b></b>';b.querySelector('small').textContent=t('seasonN',{n:s});b.querySelector('b').textContent=t('season'+s);inner.appendChild(b)}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
