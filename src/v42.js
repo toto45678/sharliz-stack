@@ -28,7 +28,7 @@ const seasonOf=lvN=>ZONES[Math.min(ZONES.length-1,Math.floor((lvN-1)/LPZ))].seas
 const SFX_S={lvl:-1,flies:[],drops:[],flash:0,nextBolt:0,bolt:null,nc:null};
 function seasonState(){if(SFX_S.lvl!==level||SFX_S.mode!==mode){SFX_S.lvl=level;SFX_S.mode=mode;SFX_S.flies=[];SFX_S.drops=[];SFX_S.flash=0;SFX_S.bolt=null;SFX_S.nextBolt=time+4+Math.random()*4}return SFX_S}
 const curSeason=()=>(zone()&&zone().season)||1;
-function seasonBg(){const s=curSeason();if(s===2){ctx.fillStyle='rgba(8,12,48,.42)';ctx.fillRect(0,0,W,H)}else if(s===3){ctx.fillStyle='rgba(28,34,52,.3)';ctx.fillRect(0,0,W,H)}}
+function seasonBg(){const s=curSeason();if(zone()&&zone().ownArt)return;if(s===2){ctx.fillStyle='rgba(8,12,48,.42)';ctx.fillRect(0,0,W,H)}else if(s===3){ctx.fillStyle='rgba(28,34,52,.3)';ctx.fillRect(0,0,W,H)}}
 function lightHole(g,x,y,r,k=1){const gr=g.createRadialGradient(x,y,r*.15,x,y,r);gr.addColorStop(0,`rgba(0,0,0,${k})`);gr.addColorStop(.55,`rgba(0,0,0,${.75*k})`);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.beginPath();g.arc(x,y,r,0,7);g.fill()}
 function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonState(),dt=Math.min(.05,frameDt||.016);
   if(s===2){// night: the tower lantern and the swinging Sharliz light the way; fireflies glow
@@ -37,7 +37,7 @@ function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonSt
     S_.flies=S_.flies.filter(f=>f.t<14&&f.x>-30&&f.x<W+30&&f.y>-30&&f.y<H+30);
     let c=S_.nc;const dpr=DPR||1;if(!c||c.width!==Math.round(W*dpr)||c.height!==Math.round(H*dpr)){c=S_.nc=document.createElement('canvas');c.width=Math.round(W*dpr);c.height=Math.round(H*dpr)}
     const g=c.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);g.globalCompositeOperation='source-over';g.clearRect(0,0,W,H);
-    const dark=Math.min(.95,.6+lvInZone()*.02+nightExtra),lb=lightBoost>0?1.55:1;g.fillStyle=`rgba(4,6,26,${dark})`;g.fillRect(0,0,W,H);g.globalCompositeOperation='destination-out';
+    const dark=Math.min(.95,.6+lvInZone()*.02+nightExtra),lb=(lightBoost>0?1.55:1)*(typeof hatK==='function'?hatK('light'):1);g.fillStyle=`rgba(4,6,26,${dark})`;g.fillRect(0,0,W,H);g.globalCompositeOperation='destination-out';
     const flick=1+Math.sin(time*7)*.03+Math.sin(time*13)*.02;
     if(tower.length){const tp=topScreen();lightHole(g,tp.x,tp.y,S*3.1*flick*lb)}
     if(swinger)lightHole(g,xOf(swinger.xs),sy(swingY()),S*2.4*flick*lb);

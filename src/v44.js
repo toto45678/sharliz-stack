@@ -323,4 +323,4 @@ function bossMech(k,b){const M=MECH[k];if(!M)return false;
     if(k==='lava')m.lvl=Math.max(m.lvl,tower.length-1-2.2);else if(k==='conveyor'){m.moved=0;m.dir=-m.dir}else if(m.t!==undefined)m.t+=.6;
     return false}            // passive bosses also use their classic attack
   if(hz.m[k])return true;let ok=false;try{ok=!!M.start()}catch(e){}return ok}
-for(const [sid,k] of Object.entries(MECH_OF))BOSS_ATK[sid]=b=>{const art=b.z;const ok=bossMech(k,b);if(!ok||b.phase>=3)BOSS_ATK[art](b)};
+for(const [sid,k] of Object.entries(MECH_OF))BOSS_ATK[sid]=b=>{const art=BOSS_ATK[b.z]&&b.z!==sid?b.z:(ZONES.find(z=>z.sid===sid)||{}).base||'farm';const ok=bossMech(k,b);if(!ok||b.phase>=3)BOSS_ATK[art](b)};

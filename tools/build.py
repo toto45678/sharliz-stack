@@ -22,7 +22,7 @@ rep("const e=settings.easy?1.25:1;return [p*e,g*e,m]","const e=(settings.easy?1.
 rep("function track(id,amt=1){if(mode==='duo')return;","function track(id,amt=1){if(mode==='duo')return;trackW(id,amt);")
 rep("renderBoosterBar();track('wins');","renderBoosterBar();track('wins');if(lv.starsNow>=3)track('stars3');")
 # ---- bake: personality features per colour
-rep("const BAKE_V='b27';","const BAKE_V='b28';")
+rep("const BAKE_V='b27';","const BAKE_V='b29';")
 rep("if(col==='hero')applyLook(P,Object.assign({},L,{hat}));else applyLook(P,Object.assign({},LOOK0,{colorHex:col,color:'_',hat}));",
     "if(col==='hero'){applyLook(P,Object.assign({},L,{hat}));persBake(P,'hero')}else{applyLook(P,Object.assign({},LOOK0,{colorHex:col,color:'_',hat},PERS_LOOKX[PERS[col]]||{}));persBake(P,col)}")
 rep("for(let f=0;f<faces;f++){setFace3(P,f);r.render(scene,cam);","for(let f=0;f<faces;f++){setFace3(P,f);persFace(P,f);r.render(scene,cam);")
@@ -184,9 +184,10 @@ rep("const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level),HZ_ORDER.length-1)];",
 # map: 30 stage panels — keep the canvas under iOS's area limit, tint night / storm panels
 rep("const dpr=Math.min(1.5,window.devicePixelRatio||1);mc.width=W*dpr;mc.height=mapH*dpr;","const dpr=Math.min(1.5,window.devicePixelRatio||1,Math.sqrt(12e6/(W*mapH)));mc.width=W*dpr;mc.height=mapH*dpr;")
 rep("if(lk)g.filter='blur(5px) saturate(.55) brightness(1.08)';g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';",
-    "{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.mapf||SEASON_MAPF[z.season]||'')).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}")
+    "{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.ownMap?'':(z.mapf||SEASON_MAPF[z.season]||''))).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(!z.ownMap&&SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}")
 # in-game season look: background tint + foreground (night darkness / storm rain) under the popups
 rep("const nm=t(BOSS_NAMES[z]);","const nm=t(BOSS_NAMES[b.sid]||BOSS_NAMES[z]);")
+rep("const th=document.getElementById('wThumb');const src='art/mapn_'+z.id+'.webp'","const th=document.getElementById('wThumb');const src='art/'+artAlias('mapn_'+z.id)+'.webp'")
 rep("hz.boss={z:zone().id,","hz.boss={z:zone().id,sid:zone().sid,")
 rep("ctx.save();if(shake>0)ctx.translate(","if(typeof seasonBg==='function')seasonBg();ctx.save();if(shake>0)ctx.translate(")
 rep("  drawKaleido();\n  for(const p of popups){","  if(typeof seasonFx==='function')seasonFx();drawKaleido();\n  for(const p of popups){")
@@ -198,11 +199,23 @@ rep("if(!swinger.entering){if(swinger.xs<-r){swinger.xs=-r;swinger.dir=1}if(swin
 rep("*hatFall()*dt;","*hatFall()*(hz.gravK||1)*dt;")
 rep("const p=hzPrimary(),bk='boss_'+zone().id;","const p=hzPrimary(),bk='boss_'+zone().sid;")
 rep("b.atkAt=time;BOSS_ATK[b.z](b);","b.atkAt=time;(BOSS_ATK[b.sid]||BOSS_ATK[b.z])(b);")
+rep("hz.boss={z:zone().id,sid:zone().sid,","hz.boss={z:zone().base||zone().id,sid:zone().sid,ak:bossArt(),")
+rep("const b=hz.boss;if(!b)return;const z=b.z,im=hzPic(","const b=hz.boss;if(!b)return;const z=b.ak||b.z,im=hzPic(")
+rep("const im=hzPic('boss_'+zone().id),bx=210","const im=hzPic('boss_'+bossArt()),bx=210")
+# ---- v47: boss trophy hats for the new stages + astronaut suit
+rep("const hid='h_'+zone().id;","const hid='h_'+zone().sid;")
+rep('h.innerHTML=`<img src="art/${hatPicId(lv.newHat)}.webp" alt=""><span></span>`;','h.innerHTML=`<img src="${hatThumbSrc(lv.newHat)}" alt=""><span></span>`;')
+# ---- v48: character-sheet style screen — hero sits higher (slots around it, power bars + drawer below)
+rep("b.onclick=()=>{if(k==='skins'){hideOverlay();if(state==='title')openWardrobe();","b.onclick=()=>{if(k==='skins'||k==='style'){if(k==='style')W3.cat='trail';hideOverlay();if(state==='title')openWardrobe();")
+rep("G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.47}):G0;","G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.385}):G0;")
 # ---- inject module + css
-B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
+import glob as _g
+B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT,'art','b3d_*.json')))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')
-css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')
+ART_OWN=sorted({os.path.basename(f)[4:-5] for f in _g.glob(P(ROOT,'art','w3b_*.webp'))} - {'farm','city','desert','candy','snow','ocean','volcano','space'})
+ART_OWN=[i for i in ART_OWN if all(os.path.exists(P(ROOT,'art',f'{k}_{i}.webp')) for k in ('w3m','w3f'))]
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')
+css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')

@@ -272,7 +272,7 @@ function spinStep(dt){if(H3.state!=='ready'||W3.on){SPIN.v=0;SPIN.acc=0;SPIN.gre
   else{H3.yaw+=SPIN.v*dt;SPIN.v*=Math.exp(-dt*.75);if(Math.abs(SPIN.v)<.6){SPIN.v*=Math.exp(-dt*4);const tgt=Math.round(H3.yaw/(Math.PI*2))*Math.PI*2;H3.yaw+=(tgt-H3.yaw)*Math.min(1,dt*3)}}
   const sp=Math.abs(SPIN.v);if(sp>7)SPIN.acc+=sp*dt/(Math.PI*2);else SPIN.acc=Math.max(0,SPIN.acc-dt*.5);
   SPIN.green=clamp((SPIN.acc-1)/4,0,.45);if(SPIN.acc>4.6)startSick()}
-function startSick(){SPIN.dir=Math.random()<.5?-1:1;SPIN.phase='woozy';SPIN.t0=time;SPIN.kind=heroPers();SPIN.acc=0;SPIN.fx.length=0;SPIN.puddle=null;audio();
+function startSick(){SPIN.mouth=null;SPIN.dir=Math.random()<.5?-1:1;SPIN.phase='woozy';SPIN.t0=time;SPIN.kind=heroPers();SPIN.acc=0;SPIN.fx.length=0;SPIN.puddle=null;audio();
   if(sfx.ok()){tone({f:700,f2:180,d:1.3,type:'sine',v:.07,vib:5});tone({f:460,f2:140,d:1.2,type:'triangle',v:.04,vib:7,delay:.1})}vib([30,60,30])}
 const SICK={woozy:1.3,act:2.6,recover:1.1};
 function blargh(){if(!sfx.ok())return;tone({f:190,f2:85,d:.55,type:'sawtooth',v:.075,filter:520,vib:22});noise({d:.6,v:.11,lp:480})}
@@ -282,9 +282,10 @@ function sickPose(P,g,size,cw,ch,left,top){if(!SPIN.phase){sickTint(P,SPIN.green
   else if(SPIN.phase==='act'&&e>SICK.act){SPIN.phase='recover';SPIN.t0=time;e=0}
   else if(SPIN.phase==='recover'&&e>SICK.recover){SPIN.phase=null;sickTint(P,0);sickEyes(P,0);LOB.jump=time-.2;return}
   const ph=SPIN.phase;let green=ph==='woozy'?.45+.35*(e/SICK.woozy):ph==='act'?.8:.8*(1-e/SICK.recover);
-  // where the mouth is on screen
-  H3.scene.updateMatrixWorld(true);const v=new T.Vector3();P.mouths.smile.getWorldPosition(v);v.project(H3.cam);const mx=left+(v.x+1)/2*cw,my=top+(1-v.y)/2*ch;
-  const hv=new T.Vector3();P.hatSlot.getWorldPosition(hv);hv.project(H3.cam);const tx=left+(hv.x+1)/2*cw,ty=top+(1-hv.y)/2*ch;SPIN.mouth=[mx,my,tx,ty,size];
+  // where the mouth is on screen: measured AFTER this frame's lean/wobble (end of this function), used next frame
+  const sickProj=()=>{H3.scene.updateMatrixWorld(true);const v=new T.Vector3();P.mouths.smile.getWorldPosition(v);v.project(H3.cam);
+    const hv=new T.Vector3();P.hatSlot.getWorldPosition(hv);hv.project(H3.cam);SPIN.mouth=[left+(v.x+1)/2*cw,top+(1-v.y)/2*ch,left+(hv.x+1)/2*cw,top+(1-hv.y)/2*ch,size]};
+  if(!SPIN.mouth)sickProj();const [mx,my,tx,ty]=SPIN.mouth;
   if(ph==='woozy'){const w=Math.sin(e*7);g.rotation.z=w*.22;g.rotation.x+=Math.sin(e*5)*.12;g.position.x+=Math.sin(e*3.5)*size*.08;setFace3(P,7);sickEyes(P,1);
     if(e>SICK.woozy-.45){setFace3(P,4);const s=1+Math.sin(e*30)*.12;P.mouths.o.scale.setScalar(s)}}
   else if(ph==='act'){
@@ -303,7 +304,7 @@ function sickPose(P,g,size,cw,ch,left,top){if(!SPIN.phase){sickTint(P,SPIN.green
       if(K==='grumpy'&&e>1.9&&Math.random()<.35)sickFx('steam',tx,ty);if(K==='diva'&&e>1.9){green=.3;if(SPIN.n===1){SPIN.n=2;sfx.perfect(4)}if(Math.random()<.4)sickFx('spark',tx,ty+size*.6)}
       if(K==='goofy'&&e>1.9){g.rotation.y+=Math.sin(e*10)*.3;if(SPIN.n===1){SPIN.n=2;if(sfx.ok()){tone({f:660,f2:990,d:.12,type:'triangle',v:.06});tone({f:880,f2:1320,d:.14,type:'triangle',v:.06,delay:.14})}}}}}
   else{const u=e/SICK.recover;g.rotation.z=Math.sin(e*5)*.08*(1-u);setFace3(P,K==='grumpy'?7:2);sickEyes(P,0)}
-  sickTint(P,green)}
+  sickProj();sickTint(P,green)}
 function sickTint(P,k){const M=P.bodyMat;if(k<=.001){if(P._tinted){P._tinted=false;P.lookKey=null;applyLook(P,heroLook())}return}
   if(!P._tinted){P._tinted=true;P._base=M.color.clone();P._baseL=P.lidMat.color.clone()}const gr=new P.T.Color('#8fd14f');M.color.copy(P._base).lerp(gr,k);P.lidMat.color.copy(P._baseL).lerp(gr,k)}
 function spiralTex(){return canvasTex('spiral',256,256,(g,W,H)=>{g.clearRect(0,0,W,H);g.fillStyle='#ffffff';g.beginPath();g.arc(W/2,H/2,W/2,0,7);g.fill();g.strokeStyle='#120d2b';g.lineWidth=16;g.lineCap='round';g.beginPath();for(let a=0;a<Math.PI*7;a+=.08){const r=6+a*5.2;g.lineTo(W/2+Math.cos(a)*r,H/2+Math.sin(a)*r)}g.stroke()})}
@@ -345,8 +346,8 @@ function rareImg(r){const k='rare:'+r.id;if(STK_IMG[k])return STK_IMG[k];const s
 const SPECIALS=[];
 const STK_PAGES=[
   {id:'rare',items:()=>RARES.map(r=>({id:'rare:'+r.id,n:(progress.album||{})[r.id]||0,img:()=>rareImg(r),name:t('rr_'+r.id)}))},
-  {id:'boss',items:()=>BOSS_HATS.map(z=>({id:'boss:'+z,n:(progress.beat||{})[z]?1:0,src:'art/boss_'+z+'.webp',name:t(BOSS_NAMES[z])}))},
-  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+(z.sid||z.id),n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.sid||z.id])?1:0,src:'art/mapn_'+z.id+'.webp',round:true,name:t(z.key)}))},
+  {id:'boss',items:()=>(typeof bossAll==='function'?bossAll():BOSS_HATS).map(z=>({id:'boss:'+z,n:(progress.beat||{})[z]?1:0,src:'art/boss_'+z+'.webp',name:t(BOSS_NAMES[z])}))},
+  {id:'world',items:()=>ZONES.map((z,i)=>({id:'world:'+(z.sid||z.id),n:(progress.unlocked>(i+1)*LPZ||(progress.beat||{})[z.sid||z.id])?1:0,src:'art/'+(typeof artAlias==='function'?artAlias('mapn_'+z.id):'mapn_'+z.id)+'.webp',round:true,name:t(z.key)}))},
   {id:'buddy',items:()=>Object.keys(WPET).filter(k=>k!=='none').map(k=>({id:'buddy:'+k,n:wOwned('pet',k)?1:0,img:()=>wThumb('pet',k),name:wName('pet',k),prem:!!WPET[k].real}))},
   {id:'hat',items:()=>wItems('hat').filter(k=>k!=='none').map(k=>({id:'hat:'+k,n:wOwned('hat',k)?1:0,src:WHATX[k]?null:'art/'+hatPicId(k)+'.webp',img:WHATX[k]?()=>wThumb('hat',k):null,name:wName('hat',k)}))},
   {id:'special',items:()=>{const L=lang==='he'?1:0,a=SPECIALS.map(s=>({id:'sp:'+s.id,n:(progress.stk||{})[s.id]||0,src:s.src,name:s.name[L],hint:s.how&&s.how[L]}));while(a.length<6)a.push({id:'soon'+a.length,n:0,soon:true,name:'?'});return a}}];

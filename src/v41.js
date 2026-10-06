@@ -11,7 +11,8 @@ const PRIVACY_URL='https://toto45678.github.io/sharliz-stack/privacy.html';
 Object.assign(I18N.en,{credits:'Credits',creditsTitle:'Credits'});
 Object.assign(I18N.he,{credits:'קרדיטים',creditsTitle:'קרדיטים'});
 const CREDITS=[
-  ['3D boss models','מודלים בתלת מימד של הבוסים','Created with Meshy AI (meshy.ai) · CC BY 4.0 · creativecommons.org/licenses/by/4.0'],
+  ['3D boss models (season 1)','מודלים בתלת מימד של הבוסים (עונה 1)','Created with Meshy AI (meshy.ai) · CC BY 4.0 · creativecommons.org/licenses/by/4.0'],
+  ['More bosses & worlds','עוד בוסים ועולמות','Created with Higgsfield AI (higgsfield.ai)'],
   ['3D engine','מנוע תלת מימד','three.js · © 2010-2023 three.js authors · MIT License'],
   ['Fonts','פונטים','Lilita One (Juan Montoreano) · Rubik (Hubert & Fischer) · Secular One (Michal Sahar) · SIL Open Font License 1.1'],
   ['App','אפליקציה','Capacitor (Ionic) · cordova-plugin-purchase · MIT License']];
