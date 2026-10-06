@@ -155,6 +155,8 @@ rep("const dm=s.dmg*(b.stun>0?2:1);","const dm=Math.round(s.dmg*hatBoss())*(b.st
 rep("const guideAlpha=()=>boost.laser>0||perk('aim')?1:","const guideAlpha=()=>boost.laser>0||perk('aim')||hatK('aim',0)?1:")
 rep("if(combo>=5&&combo%5===0&&fever<=0","if(combo>=hatFevN()&&combo%hatFevN()===0&&fever<=0")
 rep("fever=perk('fever')?12:8;partyT=1.6;","fever=(perk('fever')?12:8)*hatK('feverT');partyT=1.6;")
+# coin balloon appeared at the start of every level (coinNext was unset -> due at once); first one now after 12-22s
+rep("if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>(hz.coinNext||0)){","if(!hz.coinNext&&['aim','wait','drop'].includes(state))hz.coinNext=time+12+Math.random()*10;\n  if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>hz.coinNext){")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
