@@ -23,6 +23,7 @@ html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--deep);color:var(--ink);font:700 17px/1.5 Nunito,system-ui,sans-serif;overflow-x:hidden}
 h1,h2,h3,.btn,.pill,.badge,.title{font-family:"Titan One",system-ui,sans-serif;font-weight:400;letter-spacing:.4px}
 img,video,canvas{display:block;max-width:100%}
+img{height:auto}
 a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto;padding:0 16px}
 [hidden]{display:none!important}
@@ -54,7 +55,7 @@ a{color:inherit}
   linear-gradient(180deg,rgba(35,11,79,.1),rgba(35,11,79,.35) 60%,var(--deep))}
 .hero .wrap{position:relative;display:grid;grid-template-columns:1.08fr .92fr;grid-template-areas:"a phone" "b phone";column-gap:40px;align-items:center}
 .copy-a{grid-area:a;align-self:end}.copy-b{grid-area:b;align-self:start}.hero .phone{grid-area:phone}
-.logo{width:min(480px,100%);filter:drop-shadow(0 12px 26px rgba(0,0,0,.4));animation:bob 4s ease-in-out infinite;margin:0 auto 0 0}
+.logo{width:min(480px,100%);height:auto;filter:drop-shadow(0 12px 26px rgba(0,0,0,.4));animation:bob 4s ease-in-out infinite;margin:0 auto 0 0}
 .tagline{font-family:"Titan One";font-size:clamp(28px,4.2vw,46px);line-height:1.1;margin:4px 0 8px;color:var(--yellow);
   text-shadow:0 4px 0 #b2346f,0 8px 20px rgba(0,0,0,.45);-webkit-text-stroke:1.5px #7a1d55}
 .sub{font-size:19px;margin:0 0 20px;max-width:480px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
