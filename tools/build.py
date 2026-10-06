@@ -139,13 +139,29 @@ rep("(function loop(now){if(!c.isConnected)return;","(function loop(now){if(!c.i
 rep("function buildLogo(){bigText(document.getElementById('logo1'),t('name1'));bigText(document.getElementById('logo2'),t('name2'))}",
     "function buildLogo(){const l=document.querySelector('#title .logo');if(!l)return;l.classList.add('img');l.innerHTML=`<img src=\"art/logo_${lang==='he'?'he':'en'}.webp\" alt=\"${t('name1')} ${t('name2')}\" draggable=\"false\">`}")
 rep(".logo .l1{font-size:clamp(",".logo.img img{display:block;width:min(60vw,255px);height:auto;transform:rotate(-2deg);animation:logoIn .7s cubic-bezier(.3,1.7,.5,1) both}\n.logo .l1{font-size:clamp(")
+# ---- v39: hats with an advantage and a cost (HAT_FX in v39.js)
+rep("*easyK()*(lvInZone()===4&&mode==='levels'?.9:1);","*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();")
+rep("function landTol(d){const sp=speed(),","function landTol(d){const sp=speed()/hatSpd(),")
+rep("const e=(settings.easy?1.25:1)*(perk('sticky')?1.12:1);return [p*e,g*e,m]","const e=(settings.easy?1.25:1)*(perk('sticky')?1.12:1)*hatTol();return [p*e,g*e,m]")
+rep("sinceGold=3;hearts=3;combo=0;","sinceGold=3;hearts=3+hatHearts();combo=0;")
+rep("fl%10===0&&hearts<3){","fl%10===0&&hearts<3+hatHearts()){")
+rep("if(id==='heart'){if(hearts>=4)","if(id==='heart'){if(hearts>=4+Math.max(0,hatHearts()))")
+rep("dropping.vy+=BH*30*zone().grav*(dropping.kind==='balloon'?.42:1)*dt;","dropping.vy+=BH*30*zone().grav*(dropping.kind==='balloon'?.42:1)*hatFall()*dt;")
+rep("dropping.y+=dropping.vy*dt;dropping.xs+=wind*dt;","dropping.y+=dropping.vy*dt;dropping.xs+=wind*hatWind()*dt;")
+rep("score+=25*combo;","score+=Math.round(25*combo*hatK('perfPts')*hatPts());")
+rep("{score+=15;lv.great++;","{score+=Math.round(15*hatPts());lv.great++;")
+rep("{combo=0;score+=10;","{combo=0;score+=Math.round(10*hatPts());")
+rep("const dm=s.dmg*(b.stun>0?2:1);","const dm=Math.round(s.dmg*hatBoss())*(b.stun>0?2:1);")
+rep("const guideAlpha=()=>boost.laser>0||perk('aim')?1:","const guideAlpha=()=>boost.laser>0||perk('aim')||hatK('aim',0)?1:")
+rep("if(combo>=5&&combo%5===0&&fever<=0","if(combo>=hatFevN()&&combo%hatFevN()===0&&fever<=0")
+rep("fever=perk('fever')?12:8;partyT=1.6;","fever=(perk('fever')?12:8)*hatK('feverT');partyT=1.6;")
 # coin balloon appeared at the start of every level (coinNext was unset -> due at once); first one now after 12-22s
 rep("if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>(hz.coinNext||0)){","if(!hz.coinNext&&['aim','wait','drop'].includes(state))hz.coinNext=time+12+Math.random()*10;\n  if(!hz.coinB&&['aim','wait','drop'].includes(state)&&time>hz.coinNext){")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')
-css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')
+css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')
