@@ -83,6 +83,10 @@ rep("sfx.trombone();s.hidden=true;gag={name,filter,t:0,x:xOf(s.xs),wy:yOf(surviv
     "sfx.trombone();s.hidden=true;gag={name,filter,t:0,x:xOf(s.xs),wy:yOf(survivor),g3:useG3,col:s.color};\n    await wait((useG3?g3Len(name):animLen(name))*1000+150);")
 rep("if(animReady('dance')&&!reduceMotion){setTimeout(()=>{if(state!=='win')return;s0.hidden=true;gag={name:'dance',filter:'',t:0,x:xOf(s0.xs),wy:yOf(tower.length-1)}},250)}",
     "const dG3=!animReady('dance')&&!reduceMotion&&g3Init();if((animReady('dance')||dG3)&&!reduceMotion){setTimeout(()=>{if(state!=='win')return;s0.hidden=true;gag={name:'dance',filter:'',t:0,x:xOf(s0.xs),wy:yOf(tower.length-1),g3:dG3,col:s0.color}},250)}")
+# ---- lobby logo: painted title art (art/logo_he|en.webp, made in tools/brand) instead of the CSS text
+rep("function buildLogo(){bigText(document.getElementById('logo1'),t('name1'));bigText(document.getElementById('logo2'),t('name2'))}",
+    "function buildLogo(){const l=document.querySelector('#title .logo');if(!l)return;l.classList.add('img');l.innerHTML=`<img src=\"art/logo_${lang==='he'?'he':'en'}.webp\" alt=\"${t('name1')} ${t('name2')}\" draggable=\"false\">`}")
+rep(".logo .l1{font-size:clamp(",".logo.img img{display:block;width:min(60vw,255px);height:auto;transform:rotate(-2deg);animation:logoIn .7s cubic-bezier(.3,1.7,.5,1) both}\n.logo .l1{font-size:clamp(")
 # ---- inject module + css
 B3D={z:json.load(open(P(ROOT,'art',f'b3d_{z}.json'))) for z in ['farm','city','desert','candy','snow','ocean','volcano','space'] if os.path.exists(P(ROOT,'art',f'b3d_{z}.json'))}
 rd=lambda n:open(P(SRC,n),encoding='utf-8').read()

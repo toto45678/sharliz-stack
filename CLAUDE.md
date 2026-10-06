@@ -50,7 +50,8 @@ python3 -m http.server 8765       # manual look
 - Prices/IAP are test-mode only (`IAP` in v28.js; real payments need a native wrapper later).
 
 ## Status / open work (update when you finish something)
-Done recently: 3D bosses for all 8 worlds (Meshy multi-view), boss signature attacks, 3D gags, foreground caps (farm/ocean/volcano), PWA on GitHub Pages.
+Done recently (branch `logo-icon`, Oct 6): new home-screen icon + lobby logo art made in Raz's ChatGPT (masters in `tools/brand/chatgpt/`, regenerate sizes with `python3 tools/brand/make_icons.py icon1|icon2`); lobby logo is now an image (`art/logo_he.webp` / `art/logo_en.webp`, English says SHARLIZ TOWER) via a build.py patch on `buildLogo`. Character look for any art: plain white oval eyes, NO pupils.
+Also done: 3D bosses for all 8 worlds (Meshy multi-view), boss signature attacks, 3D gags, foreground caps (farm/ocean/volcano), PWA on GitHub Pages.
 
 In progress / requested by Tzach (Oct 6):
 1. **Jagged black outline** on characters while swinging. Cause: `drawSharliz0` draws 18 strips each shifted by `off(t)` → stair-steps when `kx` (swing velocity) ≠ 0. Fix plan: per-strip shear transform so offsets are continuous (`ctx.transform(1,0,sh,1,o0-sh*yd0,0)` with o0/o1 at strip top/bottom), N≈28, `ctx.imageSmoothingQuality='high'`.

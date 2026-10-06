@@ -192,6 +192,7 @@ img{-webkit-user-drag:none}
 .lob-top .coin-pill{font-size:1.05rem}
 .plus{width:24px;height:24px;margin-inline-start:4px;border-radius:7px;border:2.5px solid var(--ink);background:linear-gradient(180deg,var(--g1) 0 48%,var(--g2) 52%);display:grid;place-items:center;font-size:1.05rem;line-height:1;color:#fff;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;padding:0;margin-inline-end:-6px}
 .logo{position:absolute;top:calc(env(safe-area-inset-top,0px) + 70px);left:50%;transform:translateX(-50%);z-index:2;text-align:center;pointer-events:none;display:flex;flex-direction:column;align-items:center;filter:drop-shadow(0 8px 10px rgba(0,0,0,.35))}
+.logo.img img{display:block;width:min(60vw,255px);height:auto;transform:rotate(-2deg);animation:logoIn .7s cubic-bezier(.3,1.7,.5,1) both}
 .logo .l1{font-size:clamp(3.2rem,16.5vw,4.6rem);transform:rotate(-3deg);animation:logoIn .7s cubic-bezier(.3,1.7,.5,1) both}
 .logo .l2{margin-top:-.25em;font-size:clamp(1.6rem,8vw,2.2rem);transform:rotate(-3deg);animation:logoIn .7s .12s cubic-bezier(.3,1.7,.5,1) both}
 @keyframes logoIn{from{transform:scale(.2) rotate(-12deg);opacity:0}}
@@ -772,7 +773,7 @@ function renderLangSwitch(el){
   Object.keys(I18N).forEach(code=>{const b=document.createElement('button');b.textContent=I18N[code]._label;b.setAttribute('aria-pressed',code===lang);b.onclick=()=>{lang=code;store('sharliz-lang',code);sfx.click();applyLang()};el.appendChild(b)});
 }
 function bigText(el,txt){el.innerHTML='';const b=document.createElement('span');b.className='bt-s';b.textContent=txt;const f=document.createElement('span');f.className='bt-f';f.textContent=txt;el.append(b,f);return el}
-function buildLogo(){bigText(document.getElementById('logo1'),t('name1'));bigText(document.getElementById('logo2'),t('name2'))}
+function buildLogo(){const l=document.querySelector('#title .logo');if(!l)return;l.classList.add('img');l.innerHTML=`<img src="art/logo_${lang==='he'?'he':'en'}.webp" alt="${t('name1')} ${t('name2')}" draggable="false">`}
 
 /* =========================================================
    SOUND — period-flavoured synth (no samples)
