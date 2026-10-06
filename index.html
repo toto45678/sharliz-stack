@@ -1146,6 +1146,8 @@ const ZONES=[
   for(const s of [2,3])for(const z of B)ZONES.push(Object.assign({},z,{sid:z.id+(s===2?'N':'S'),season:s,key:z.key+(s===2?'N':'S'),sky:s===2?night(z.sky):storm(z.sky),cloud:z.cloud&&(s===2?mix(z.cloud,'#1a2050',.6):mix(z.cloud,'#4a5060',.5)),starsAt:s===2?-99:z.starsAt}));
   for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
 const etOf=zi=>zi<8?zi:4+(zi-8)*.18;
+// floors added by the level's place in its world: +1 per level, with a 'rest' level now and then (+0) (Tzach, Oct 6; was +2 per level)
+const lvStep=k=>[0,1,2,2,3,4,4,5,6][k]||0;
 const TOTAL=ZONES.length*LPZ;
 const zoneIdx=lv=>modeZi!==null&&modeZi!==undefined?modeZi:Math.min(ZONES.length-1,Math.floor((lv-1)/LPZ));
 const zone=()=>ZONES[zoneIdx(level)];
@@ -1764,7 +1766,7 @@ let tower=[], swinger=null, dropping=null, bodies=[], particles=[], popups=[];
 let camY=0, time=0, ft=0, best=+(store('sharliz-best')||0), balance=0, swayK=0, shake=0, bump=0, freeze=0, spawnAt=0, firstDropDone=false, wind=0, windSeed=0, lastGustWarn=0;
 let collapsing=null, survivor=-1, busy=false;
 
-const goal=()=>mode==='daily'?endless.goal:mode!=='levels'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+2*lvInZone();
+const goal=()=>mode==='daily'?endless.goal:mode!=='levels'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone());
 const speed=()=>(1.45+etOf(zoneIdx(level))*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
 const rangeXs=()=>Math.min((W/2-S*.75)/S,1.3);   // narrow sweep above the tower
 const xOf=xs=>W/2+xs*S;
@@ -2332,7 +2334,7 @@ const easyK=()=>settings.easy?.8:1;
 
 /* ---------- missions for the three stars ---------- */
 function starMissions(lvN){
-  const L=lvN||level,zi=Math.min(ZONES.length-1,Math.floor((L-1)/LPZ)),k=(L-1)%LPZ,boss=k===LPZ-1,g=6+Math.round(2*etOf(zi))+2*k;
+  const L=lvN||level,zi=Math.min(ZONES.length-1,Math.floor((L-1)/LPZ)),k=(L-1)%LPZ,boss=k===LPZ-1,g=6+Math.round(2*etOf(zi))+lvStep(k);
   const perf=boss?6:Math.max(3,Math.ceil(g*.3));
   const third=boss?{id:'noHit'}:[{id:'noHit'},{id:'combo',n:4},{id:'fast',n:Math.round(g*2.6+8)}][L%3];
   return [{id:'win'},{id:'perf',n:perf},third]}
