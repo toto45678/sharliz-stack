@@ -48,7 +48,7 @@ const B={level:33,get floors(){calm();fast(true);build(4);return 4},dur:12,seed:
     if(M.dropT==null){
       if(swinger&&!swinger.entering&&state==='aim'){M.h.x+=(s.x-M.h.x)*Math.min(1,dt*7);M.h.y+=(s.y+8-M.h.y)*Math.min(1,dt*7);
         if(aimed(.025)||(bal.floatT<.9&&aimed(.12))){M.press=t;M.taps.push({x:s.x,y:s.y,t});drop();M.d=dropping;M.dropT=t;M.n0=tower.length}}
-      else{M.h.x+=(W*.6-M.h.x)*Math.min(1,dt*4);M.h.y+=(s.y+200-M.h.y)*Math.min(1,dt*4)}}
+      else{M.h.x+=(W*.8-M.h.x)*Math.min(1,dt*4);M.h.y+=(s.y+60-M.h.y)*Math.min(1,dt*4)}}   // wait up by the swing, away from the bubble
     else{M.h.x+=(W*.85-M.h.x)*Math.min(1,dt*3);M.h.y+=(s.y+480-M.h.y)*Math.min(1,dt*3)}
     if(M.dropT!=null&&M.landT==null&&dropping!==M.d){M.landT=t;M.ok=tower.length>M.n0&&!bal.floatT;this.dur=t+1.5}
     for(const q of M.taps){const p=(t-q.t)/.5;if(p<1)I.push({k:'ripple',x:q.x,y:q.y,p})}

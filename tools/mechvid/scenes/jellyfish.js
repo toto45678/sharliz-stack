@@ -32,10 +32,10 @@ const A={level:131,floors:4,seed:3,aim:.17,zapDir:1,dur:9,fadeOut:true,
       if(M.dropT==null){const ty=sy(swingY())+BH*1.4;if(j.y<ty+16&&dropAt(M,p=>p-AIM()))M.dropT=t}}
     if(M.dropT!=null&&M.zapT==null&&j&&j.pop){M.zapT=t;M.zp={x:jx(j),y:j.y};M.zx=dropping?xOf(dropping.xs):M.zp.x}
     if(M.zapT!=null){const k=t-M.zapT;if(k<1.1){I.push({k:'ring',x:M.zp.x,y:M.zp.y,r:46+Math.min(1,k/.3)*8,col:'#ef4444'});const d=Math.sign(M.zx-M.zp.x)||1;I.push({k:'arrow',x1:M.zp.x-d*10,y1:M.zp.y-52,x2:M.zx+d*58,y2:M.zp.y-52,col:'#ef4444',p:Math.min(1,k/.2)})}}
-    if(M.dropT!=null&&M.endT==null&&!dropping&&state!=='drop'){M.endT=t;M.miss=hearts<M.hearts;M.wy=yOf(tower.length-(M.miss?0:1));M.wx=xOf(M.piece.xs);this.dur=t+1.9}
+    if(M.dropT!=null&&M.endT==null&&!dropping&&state!=='drop'){M.endT=t;M.miss=hearts<M.hearts;M.wy=yOf(tower.length-(M.miss?0:1));const b0=bodies.find(b=>b.s===M.piece);M.wx=b0?b0.x:xOf(M.piece.xs);this.dur=t+1.9}
     if(M.endT!=null){const p=Math.min(1,(t-M.endT)/.45),b=bodies.find(b=>b.s===M.piece),d=Math.sign(M.wx-ts.x)||1;
       if(b&&t-M.endT<1.3)I.push({k:'ring',x:b.x,y:sy(b.y),r:52,col:'#ef4444'});else if(!b&&t-M.endT<1.3)I.push({k:'ring',x:M.wx,y:sy(M.wy),r:52,col:'#ef4444'});
-      I.push({k:'badge',x:Math.max(44,Math.min(W-44,ts.x-d*92)),y:sy(M.wy)-64,ok:false,p})}
+      I.push({k:'badge',x:Math.max(44,Math.min(W-44,ts.x+d*92)),y:sy(M.wy)-64,ok:false,p})}
     return I}};
 // scene B: tap both jellyfish -> they pop, then a perfect drop
 const B={level:131,floors:4,seed:3,aim:.17,dur:12,fadeIn:true,fadeOut:true,

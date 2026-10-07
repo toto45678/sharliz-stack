@@ -11,7 +11,7 @@ window.SC_setup=i=>{const s=SC.scenes[i];SC.i=i;SC.s=s;SC.t=0;SC.f=0;SC.allowHz=
   startLevel(s.level);
   for(let k=0;k<400;k++){SC_step();if(state==='intro'){const b=document.querySelector('#card .btn.primary,#card .btn');if(b)b.click()}if(state==='aim'&&swinger&&!swinger.entering)break}
   // build the tower fast with perfect drops (not recorded)
-  for(let k=0;k<6000&&!(tower.length-1>=s.floors&&state==='aim'&&swinger&&!swinger.entering&&!dropping);k++){if(tower.length-1<s.floors&&SC_aim())drop();SC_step()}
+  for(let k=0,w=0;k<6000&&!(tower.length-1>=s.floors&&state==='aim'&&swinger&&!swinger.entering&&!dropping);k++,w++){if(tower.length-1<s.floors&&SC_aim(w>240?.05:.02)){drop();w=0}SC_step()} // wider aim after 8 s: fixed 1/30 s steps can miss a .02 window forever
   kaleido=[];popups=[];particles=[];notes=[];combo=0;fever=0;partyT=0;try{cv.style.filter=""}catch(e){} // a perfect-combo party during setup leaves a hue-rotate filter on the canvas
   for(const id of (s.hide||['hud','gauge','boosterBar','hint','toast','windGizmo','wobbleGizmo','trGauge','trBadge']))try{const e=document.getElementById(id);if(e)e.style.visibility='hidden'}catch(e){}
   document.querySelectorAll('.toast,.toast-lane,#toastLane').forEach(e=>e.style.visibility='hidden');

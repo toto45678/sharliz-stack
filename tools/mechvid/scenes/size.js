@@ -20,8 +20,7 @@ function placeFor(T,o){const r=rangeXs(),sp=speed(),drift=predDx()-(swinger.xs-t
   for(let k=0;k<=160;k++){const x0=-r+2*r*k/160;for(const d0 of [1,-1]){let x=x0,d=d0,tt=0,prev=x;const dt=1/240;
     for(let i=0;i<240*4;i++){x+=d*sp*(1-.42*Math.min(1,(x/r)**2))*dt;if(x<-r){x=-r;d=1}if(x>r){x=r;d=-1}tt+=dt;
       if(tt>.15&&(prev-xT)*(x-xT)<=0&&(!best||Math.abs(tt-T)<Math.abs(best.e)))best={x0,d0,e:tt-T};prev=x}}}
-  if(best){swinger.xs=best.x0;swinger.dir=best.d0;SC.mem.after=time+T+best.e-.12}SC.mem.pf=best&&{x0:+best.x0.toFixed(3),d0:best.d0,e:+best.e.toFixed(3),xT:+xT.toFixed(3)};return best}
-SC._pd=()=>predDx();
+  if(best){swinger.xs=best.x0;swinger.dir=best.d0;SC.mem.after=time+T+best.e-.12}return best}
 // no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video (other keyed popups such as
 // 'Slipped!' are born dead, so they are never drawn; plain messages go to the toast lane below the crop)
 const keepPop=p=>p.key==='perfect'||p.key==='wow'||p.key==='great';
@@ -74,7 +73,6 @@ const B={level:73,floors:0,dur:12,seed:9,fadeIn:true,fadeOut:true,
     else{const q=t-M.land2,tp=topP();if(q<1.2)I.push({k:'ring',x:tp.x,y:tp.y,r:S*1.05,col:GOOD});I.push({k:'badge',x:M.bx2,y:sy(M.bwy2),ok:true,p:Math.min(1,q/.45)})}
     if(M.land2!=null&&t-M.land2>.6){M.h.x+=(W*.95-M.h.x)*.08;M.h.y+=(s.y+560-M.h.y)*.08}
     handTap(M,t,I);
-    SC.dbg={t:+t.toFixed(2),st:state,kind:swinger&&swinger.kind,off:M.off};
     return I}};
 SC.scenes=[A,B];
 })();

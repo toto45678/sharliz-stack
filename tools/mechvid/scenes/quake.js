@@ -6,7 +6,7 @@ const topP=()=>{const n=tower.length,s=tower[n-1];return {x:xOf(s.xs)+swayOffset
 // While rec.py waits after SC_setup the page's real-time loop runs frame() once, so the next frame gets a big negative dt
 // (shake/bump jump, timers run backwards). Every scene therefore sets itself up on its first video frame (not in start())
 // and re-syncs the game's frame clock (`last`) to the virtual one.
-function fresh(){last=__man.now();shake=0;bump=0;slowmoT=0;freeze=0;camY=camTarget();particles=[];popups=[];kaleido=[]}
+function fresh(){last=__man.now();partyT=0;try{cv.style.filter=''}catch(e){}shake=0;bump=0;slowmoT=0;freeze=0;camY=camTarget();particles=[];popups=[];kaleido=[]}
 // predicted landing offset (xs units) if the player tapped now: same fall as update() + worldTwist()
 const predDx=()=>{if(state!=='aim'||!swinger||swinger.entering)return null;const top=tower[tower.length-1],z=baseId(zone()),dt=1/240,ty=yOf(tower.length);let y=swingY(),vy=0,xs=swinger.xs,tt=time;
   const g=BH*30*zone().grav*(swinger.kind==='balloon'?.42:1)*hatFall()*(hz.gravK||1),wk=wind*hatWind();
@@ -20,8 +20,7 @@ function placeFor(T,o){const r=rangeXs(),sp=speed(),drift=predDx()-(swinger.xs-t
   for(let k=0;k<=160;k++){const x0=-r+2*r*k/160;for(const d0 of [1,-1]){let x=x0,d=d0,tt=0,prev=x;const dt=1/240;
     for(let i=0;i<240*4;i++){x+=d*sp*(1-.42*Math.min(1,(x/r)**2))*dt;if(x<-r){x=-r;d=1}if(x>r){x=r;d=-1}tt+=dt;
       if(tt>.15&&(prev-xT)*(x-xT)<=0&&(!best||Math.abs(tt-T)<Math.abs(best.e)))best={x0,d0,e:tt-T};prev=x}}}
-  if(best){swinger.xs=best.x0;swinger.dir=best.d0;SC.mem.after=time+T+best.e-.12}SC.mem.pf=best&&{x0:+best.x0.toFixed(3),d0:best.d0,e:+best.e.toFixed(3),xT:+xT.toFixed(3)};return best}
-SC._pd=()=>predDx();
+  if(best){swinger.xs=best.x0;swinger.dir=best.d0;SC.mem.after=time+T+best.e-.12}return best}
 // no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video (other keyed popups such as
 // 'Slipped!' are born dead, so they are never drawn; plain messages go to the toast lane below the crop)
 const keepPop=p=>p.key==='perfect'||p.key==='wow'||p.key==='great';
@@ -66,7 +65,6 @@ const B={level:63,floors:0,dur:9,seed:3,fadeIn:true,fadeOut:true,
     else{const tp=topP(),p=Math.min(1,(t-M.landT)/.45);if(t-M.landT<1.3)I.push({k:'ring',x:tp.x,y:tp.y,r:S*.8,col:GOOD});I.push({k:'badge',x:M.bx,y:sy(M.bwy),ok:true,p})}
     if(M.landT!=null&&t-M.landT>.7){M.h.x+=(W*.95-M.h.x)*.08;M.h.y+=(s.y+560-M.h.y)*.08}
     handTap(M,t,I);
-    SC.dbg={t:+t.toFixed(2),qt:q?+q.t.toFixed(2):null,calm:M.calm,st:state};
     return I}};
 SC.scenes=[A,B];
 })();

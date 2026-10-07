@@ -14,7 +14,7 @@ const dropAt=(M,f=p=>p)=>{const p=pred();if(p==null){M.pp=null;return false}cons
 const ice=()=>{const m=hz.m.icicle;return m&&!m.shard?m:null};
 // keep the game's frame clock on the virtual clock before every step (a stray real-time frame would give a negative dt)
 const clk=()=>{try{last=__man.now()}catch(e){}};
-function begin(){clk();try{cv.style.filter=''}catch(e){}const M=SC.mem;M.camTop=sw().y-104;startEvent('icicle');const m=hz.m.icicle;if(m){m.y=M.camTop+8;m.t=1.5;m.x=topScreen().x+S*.12}M.n0=tower.length;M.top=tower[tower.length-1]}
+function begin(){clk();try{cv.style.filter=''}catch(e){}const M=SC.mem;M.camTop=sw().y-104;startEvent('icicle');const m=hz.m.icicle;if(m){m.y=M.camTop+40;m.t=1.5;m.x=topScreen().x+S*.12}M.n0=tower.length;M.top=tower[tower.length-1]}
 // scene A: nobody taps it -> it falls and knocks the top Sharliz off
 const A={level:121,floors:4,seed:3,dur:9,fadeOut:true,
   start(){begin()},
