@@ -42,7 +42,7 @@ async def main():
                 t0=time.time();r=await pg.evaluate("SC_frame()")
                 if r is None:break
                 t1=time.time();clip=r['clip']
-                await pg.screenshot(path=f'{D}/{n:05d}.png',clip=clip,timeout=120000);n+=1
+                await pg.screenshot(path=f'{D}/{n:05d}.png',clip=clip,timeout=300000);n+=1
                 if n<6 or n%30==0:print('frame',n,round(t1-t0,2),round(time.time()-t1,2),flush=True)
         print('frames',n,'errors',errs[:5])
         await b.close()
