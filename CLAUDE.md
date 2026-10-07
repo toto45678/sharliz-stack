@@ -179,5 +179,5 @@ Bug hunt 4 Oct 7 (branch fix-bugs-4; v48/v51-v54/v56-v58 + native.js + build.py 
 
 Fix Oct 7 (branch fix-nest-grid, end of v56.css): nest 'My buddies' grid ran off both sides of the iPhone screen in English (Tzach's screenshot). A long nowrap lock label ('Golden egg only' / v61 'Hatches from an egg') set the 3rd column's min width; columns are now minmax(0,1fr), labels wrap, .ns-scroll never scrolls sideways. Checked he/en/de/ru at 393x852 + 375x667.
 
-Done Oct 7 (branch bonus-stickers, PR #26): bonus stage 45 s (Tzach's pick, gold chest reachable), album 'Open all' + golden packs (earned only) + slower story cards (see v50/v57/v58 lines), and the 11 new buddies' album cards (art/stk_p_<id>.webp from the graphics thread, approved by Tzach).
+Done Oct 7 (branch bonus-stickers, PR #26): bonus stage 45 s (Tzach's pick, gold chest reachable), album 'Open all' + golden packs (earned only) + slower story cards (see v50/v57/v58 lines), the 11 new buddies' album cards, and the whole album redrawn by the graphics thread (88 cards: stk_w_*, stk_b_*, stk_st01-18, the 10 old stk_p_*; every Sharliz a different face/colour, no pupils; source /mnt/project-files/graphics/stickers/album_cards/, approved by Tzach).
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.
