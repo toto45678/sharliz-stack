@@ -36,7 +36,7 @@ function pet3dBuild(T,id){const M=PET3D_META[id],buf=PET3D[id];const g=new T.Gro
   // blink
   if(t>u.blinkAt){const b=(t-u.blinkAt)/.16;const k=b<1?1-Math.sin(b*Math.PI)*.9:1;(R.eye||[]).forEach(e=>e.scale.y=k);if(b>=1)u.blinkAt=t+(Math.random()<.2?.25:2+Math.random()*2.5)}}}
 // the new dragon hops around you instead of flying (Tzach)
-if(typeof PETFLY!=='undefined')for(const id in PET3D_META)if(!PET3D_META[id].float)delete PETFLY[id];
+if(typeof PETFLY!=='undefined')for(const id in PET3D_META){if(PET3D_META[id].float)PETFLY[id]=1;else delete PETFLY[id]}
 // start fetching right away (small files); the worn buddy is first in line
 try{const w=petNow();if(w&&PET3D_META[w])pet3dLoad(w)}catch(e){}
 setTimeout(pet3dAll,1500);

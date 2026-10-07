@@ -740,7 +740,9 @@
   "bgNext": "Weiter",
   "bgBack": "Zurück",
   "bgGo": "Alles klar!",
-  "bgHelp": "Was sind Kumpel?"
+  "bgHelp": "Was sind Kumpel?",
+  "eggOnlyC": "Schlüpft aus einem Ei",
+  "eggOnlyR": "Nur aus seltenem Ei"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -989,7 +991,18 @@
   "Wizard": "Zauberer",
   "You did not see this sticker.": "Diesen Sticker hast du nie gesehen.",
   "Zebra": "Zebra",
-  "STORM NEWS": "STURM-NEWS"
+  "STORM NEWS": "STURM-NEWS",
+  "Penguin": "Pinguin",
+  "Firefly": "Glühwürmchen",
+  "Kitten": "Kätzchen",
+  "Octopus": "Kraken",
+  "Cloudy": "Wölkchen",
+  "Little monkey": "Äffchen",
+  "Crystal bunny": "Kristallhase",
+  "Baby phoenix": "Baby-Phönix",
+  "Robo puppy": "Robo-Welpe",
+  "Galaxy whale": "Galaxiewal",
+  "Thunder griffin": "Donnergreif"
  },
  "pw": {
   "imm": "Ohne {m}",

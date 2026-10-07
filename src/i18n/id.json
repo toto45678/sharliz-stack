@@ -740,7 +740,9 @@
   "bgNext": "Lanjut",
   "bgBack": "Kembali",
   "bgGo": "Paham!",
-  "bgHelp": "Apa itu sobat?"
+  "bgHelp": "Apa itu sobat?",
+  "eggOnlyC": "Menetas dari telur",
+  "eggOnlyR": "Hanya dari telur langka"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
@@ -989,7 +991,18 @@
   "Wizard": "Penyihir",
   "You did not see this sticker.": "Kamu tidak melihat stiker ini.",
   "Zebra": "Zebra",
-  "STORM NEWS": "BERITA BADAI"
+  "STORM NEWS": "BERITA BADAI",
+  "Penguin": "Penguin",
+  "Firefly": "Kunang-kunang",
+  "Kitten": "Anak kucing",
+  "Octopus": "Gurita kecil",
+  "Cloudy": "Awan kecil",
+  "Little monkey": "Monyet kecil",
+  "Crystal bunny": "Kelinci kristal",
+  "Baby phoenix": "Bayi phoenix",
+  "Robo puppy": "Anak anjing robot",
+  "Galaxy whale": "Paus galaksi",
+  "Thunder griffin": "Griffin petir"
  },
  "pw": {
   "imm": "Tanpa {m}",

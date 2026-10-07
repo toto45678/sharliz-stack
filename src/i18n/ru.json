@@ -740,7 +740,9 @@
   "bgNext": "Дальше",
   "bgBack": "Назад",
   "bgGo": "Понятно!",
-  "bgHelp": "Кто такие дружки?"
+  "bgHelp": "Кто такие дружки?",
+  "eggOnlyC": "Вылупляется из яйца",
+  "eggOnlyR": "Только из редкого яйца"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-модели боссов (сезон 1)",
@@ -989,7 +991,18 @@
   "Wizard": "Волшебник",
   "You did not see this sticker.": "Этой наклейки тут нет. Ясно?",
   "Zebra": "Зебра",
-  "STORM NEWS": "ШТОРМОВЫЕ НОВОСТИ"
+  "STORM NEWS": "ШТОРМОВЫЕ НОВОСТИ",
+  "Penguin": "Пингвин",
+  "Firefly": "Светлячок",
+  "Kitten": "Котёнок",
+  "Octopus": "Осьминожка",
+  "Cloudy": "Облачко",
+  "Little monkey": "Обезьянка",
+  "Crystal bunny": "Хрустальный зайка",
+  "Baby phoenix": "Малыш-феникс",
+  "Robo puppy": "Робощенок",
+  "Galaxy whale": "Галактический кит",
+  "Thunder griffin": "Громовой грифон"
  },
  "pw": {
   "imm": "Иммунитет: {m}",

@@ -740,7 +740,9 @@
   "bgNext": "Siguiente",
   "bgBack": "Atrás",
   "bgGo": "¡Entendido!",
-  "bgHelp": "¿Qué son las mascotas?"
+  "bgHelp": "¿Qué son las mascotas?",
+  "eggOnlyC": "Sale de un huevo",
+  "eggOnlyR": "Solo en huevo raro"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",
@@ -989,7 +991,18 @@
   "Wizard": "Mago",
   "You did not see this sticker.": "Tú no viste este sticker.",
   "Zebra": "Cebra",
-  "STORM NEWS": "NOTICIAS DE LA TORMENTA"
+  "STORM NEWS": "NOTICIAS DE LA TORMENTA",
+  "Penguin": "Pingüino",
+  "Firefly": "Luciérnaga",
+  "Kitten": "Gatito",
+  "Octopus": "Pulpito",
+  "Cloudy": "Nubecita",
+  "Little monkey": "Monito",
+  "Crystal bunny": "Conejito de cristal",
+  "Baby phoenix": "Fénix bebé",
+  "Robo puppy": "Perrito robot",
+  "Galaxy whale": "Ballena galáctica",
+  "Thunder griffin": "Grifo del trueno"
  },
  "pw": {
   "imm": "Sin {m}",

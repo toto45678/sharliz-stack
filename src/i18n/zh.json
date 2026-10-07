@@ -740,7 +740,9 @@
   "bgNext": "下一步",
   "bgBack": "返回",
   "bgGo": "知道啦！",
-  "bgHelp": "伙伴是什么？"
+  "bgHelp": "伙伴是什么？",
+  "eggOnlyC": "从蛋里孵出",
+  "eggOnlyR": "仅限稀有蛋"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",
@@ -989,7 +991,18 @@
   "Wizard": "巫师",
   "You did not see this sticker.": "你没看见这张贴纸。",
   "Zebra": "斑马",
-  "STORM NEWS": "风暴新闻"
+  "STORM NEWS": "风暴新闻",
+  "Penguin": "企鹅",
+  "Firefly": "萤火虫",
+  "Kitten": "小猫咪",
+  "Octopus": "小章鱼",
+  "Cloudy": "小云朵",
+  "Little monkey": "小猴子",
+  "Crystal bunny": "水晶兔",
+  "Baby phoenix": "凤凰宝宝",
+  "Robo puppy": "机器小狗",
+  "Galaxy whale": "银河鲸",
+  "Thunder griffin": "雷霆狮鹫"
  },
  "pw": {
   "imm": "无{m}",

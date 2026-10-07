@@ -740,7 +740,9 @@
   "bgNext": "つぎへ",
   "bgBack": "もどる",
   "bgGo": "わかった！",
-  "bgHelp": "バディってなに？"
+  "bgHelp": "バディってなに？",
+  "eggOnlyC": "たまごから生まれる",
+  "eggOnlyR": "レアたまご限定"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
@@ -989,7 +991,18 @@
   "Wizard": "まほうつかい",
   "You did not see this sticker.": "このシールは見なかったことに。",
   "Zebra": "シマウマ",
-  "STORM NEWS": "あらしニュース"
+  "STORM NEWS": "あらしニュース",
+  "Penguin": "ペンギン",
+  "Firefly": "ホタル",
+  "Kitten": "こねこ",
+  "Octopus": "ちびダコ",
+  "Cloudy": "くもちゃん",
+  "Little monkey": "こざる",
+  "Crystal bunny": "クリスタルうさぎ",
+  "Baby phoenix": "ベビーフェニックス",
+  "Robo puppy": "ロボこいぬ",
+  "Galaxy whale": "ギャラクシークジラ",
+  "Thunder griffin": "いかずちグリフィン"
  },
  "pw": {
   "imm": "{m}無効",
