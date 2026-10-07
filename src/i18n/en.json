@@ -726,7 +726,21 @@
   "ch_shz": "Sharliz",
   "sbPage": "Page {a}/{b}",
   "stkVs": "Sharliz vs {b}",
-  "storyGot": "New story sticker!"
+  "storyGot": "New story sticker!",
+  "bgT1": "Meet your buddy!",
+  "bgS1": "{b} flies next to you in every level and in the lobby.",
+  "bgT2": "Buddies have powers",
+  "bgS2": "The power works only while your buddy is with you. Every buddy has a different power!",
+  "bgPw": "Power of {b}",
+  "bgT3": "Switch buddies anytime",
+  "bgS3": "Tap “{a}” at the bottom, then the “{b}” slot, and pick a buddy.",
+  "bgT4": "Collect and grow",
+  "bgS4a": "Wins hatch the eggs in your nest. New buddies come out!",
+  "bgS4b": "Cookies grow your buddy up to 3 stars. Every star gives more coins.",
+  "bgNext": "Next",
+  "bgBack": "Back",
+  "bgGo": "Got it!",
+  "bgHelp": "What are buddies?"
  },
  "pairs": [
   "3D boss models (season 1)",

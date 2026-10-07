@@ -1,0 +1,34 @@
+/* ===== v59: buddy guide ===== */
+.bg-guide{z-index:45}
+.bg-c{position:relative;width:min(88vw,340px);padding:20px 18px 16px;border-radius:26px;border:4px solid #120d2b;background:linear-gradient(180deg,#9a6bff,#5b2bd6);box-shadow:inset 0 4px 0 rgba(255,255,255,.3),0 8px 0 #120d2b;display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif}
+.bg-c.in .bg-pic{animation:arcIn .45s cubic-bezier(.3,1.6,.5,1)}
+.bg-c .rays{top:26%}
+.bg-c h3{margin:0;font:1.8rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-align:center}
+.bg-pic{position:relative;height:190px;width:100%;display:grid;place-items:center}
+.bg-card{height:186px;border-radius:16px;border:4px solid #fff;box-shadow:0 5px 0 #120d2b;transform:rotate(-3deg)}
+.bg-th{width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(18,13,43,.45))}
+.bg-pw{position:relative}
+.bg-bolt{position:absolute;right:-8px;top:0;font-size:46px;filter:drop-shadow(0 3px 0 #120d2b);animation:bgPulse 1.1s ease-in-out infinite}
+[dir=rtl] .bg-bolt{right:auto;left:-8px}
+@keyframes bgPulse{50%{transform:scale(1.25) rotate(-8deg)}}
+.bg-txt{display:flex;flex-direction:column;align-items:center;gap:8px;min-height:78px}
+.bg-txt p{margin:0;font-weight:800;font-size:1.02rem;line-height:1.35;text-align:center}
+.bg-txt p.egg::before{content:'🥚 '}.bg-txt p.ck::before{content:'🍪 '}
+.bg-chip{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px;border-radius:14px;border:3px solid #120d2b;background:linear-gradient(180deg,#ffe24d,#ffb52e);color:#3a1d00;box-shadow:0 4px 0 #120d2b;text-align:center}
+.bg-chip small{font-weight:800;opacity:.75}.bg-chip b{font-size:1.05rem}
+.bg-steps{display:flex;align-items:center;gap:14px}
+.bg-tab,.bg-slot{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px;border-radius:18px;border:3px solid #120d2b;background:#2a1a6b;box-shadow:0 4px 0 #120d2b}
+.bg-tab img{width:70px;height:70px;object-fit:contain}.bg-slot img{width:80px;height:80px;object-fit:contain}
+.bg-tab small,.bg-slot small{font-weight:900}
+.bg-tab{animation:bgTap 1.6s ease-in-out infinite}.bg-slot{animation:bgTap 1.6s .8s ease-in-out infinite}
+@keyframes bgTap{0%,60%,100%{transform:none}30%{transform:scale(.9);box-shadow:0 1px 0 #120d2b,0 0 0 4px #ffe24d}}
+.bg-ar{font-size:34px;font-weight:900;color:#ffe24d;-webkit-text-stroke:2px #120d2b}
+.bg-grow{display:flex;gap:26px;align-items:center}
+.bg-grow span{position:relative;display:grid;place-items:center}
+.bg-grow img{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 5px 0 rgba(18,13,43,.45))}
+.bg-grow span:first-child img{animation:bgWob 1.4s ease-in-out infinite}
+@keyframes bgWob{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.bg-grow .sts{position:absolute;bottom:-14px;display:flex;gap:2px;font-style:normal;font-size:22px;color:#ffe24d;-webkit-text-stroke:2px #120d2b}
+.bg-dots{display:flex;gap:6px}.bg-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid #120d2b}.bg-dots i.on{background:#ffe24d;width:22px;border-radius:6px}
+.bg-bt{display:flex;gap:8px;width:100%}.bg-bt .btn{flex:1}
+.bg-help{margin-inline-start:8px;width:30px;height:30px;border-radius:50%;border:3px solid #120d2b;background:#ffe24d;color:#120d2b;font:900 1.1rem/1 Rubik,system-ui,sans-serif;box-shadow:0 3px 0 #120d2b;vertical-align:middle}

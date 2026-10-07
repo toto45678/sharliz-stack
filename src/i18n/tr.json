@@ -726,7 +726,21 @@
   "sbPage": "Sayfa {a}/{b}",
   "stkVs": "Sharliz vs {b}",
   "storyGot": "Yeni hikaye çıkartması!",
-  "tourTitle": "Haftalık Turnuva"
+  "tourTitle": "Haftalık Turnuva",
+  "bgT1": "İşte dostun!",
+  "bgS1": "{b} her bölümde ve ana ekranda yanında uçar.",
+  "bgT2": "Dostların güçleri var",
+  "bgS2": "Güç sadece dostun yanındayken çalışır. Her dostun gücü farklı!",
+  "bgPw": "{b} gücü",
+  "bgT3": "Dostunu istediğin zaman değiştir",
+  "bgS3": "Aşağıda “{a}” düğmesine, sonra “{b}” kutusuna dokun ve bir dost seç.",
+  "bgT4": "Topla ve büyüt",
+  "bgS4a": "Kazandıkça yuvandaki yumurtalar çatlar. Yeni dostlar çıkar!",
+  "bgS4b": "Kurabiyeler dostunu 3 yıldıza kadar büyütür. Her yıldız daha çok altın verir.",
+  "bgNext": "İleri",
+  "bgBack": "Geri",
+  "bgGo": "Anladım!",
+  "bgHelp": "Dostlar ne işe yarar?"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

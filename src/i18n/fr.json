@@ -726,7 +726,21 @@
   "sbPage": "Page {a}/{b}",
   "stkVs": "Sharliz contre {b}",
   "storyGot": "Nouveau sticker histoire !",
-  "tourTitle": "Tournoi de la semaine"
+  "tourTitle": "Tournoi de la semaine",
+  "bgT1": "Voici ton compagnon !",
+  "bgS1": "{b} vole à côté de toi dans chaque niveau et à l’accueil.",
+  "bgT2": "Les compagnons ont des pouvoirs",
+  "bgS2": "Le pouvoir marche seulement quand ton compagnon est avec toi. Chaque compagnon a un pouvoir différent !",
+  "bgPw": "Pouvoir de {b}",
+  "bgT3": "Change de compagnon quand tu veux",
+  "bgS3": "Touche « {a} » en bas, puis la case « {b} », et choisis un compagnon.",
+  "bgT4": "Collectionne et fais grandir",
+  "bgS4a": "Les victoires font éclore les œufs de ton nid. De nouveaux compagnons sortent !",
+  "bgS4b": "Les biscuits font grandir ton compagnon jusqu’à 3 étoiles. Chaque étoile donne plus de pièces.",
+  "bgNext": "Suivant",
+  "bgBack": "Retour",
+  "bgGo": "Compris !",
+  "bgHelp": "C’est quoi, un compagnon ?"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
