@@ -200,6 +200,7 @@ class Surface:
             for j in range(seg):
                 a = j / seg * math.tau; u, v = math.cos(a) * R[j] * f, math.sin(a) * R[j] * f
                 loc, nrm = self.hit(cx + u * sx, cz + v * sz, front)
+                if loc is None: raise ValueError('decal misses the surface at x=%.2f z=%.2f (centre %.2f,%.2f size %.2f,%.2f)' % (cx + u * sx, cz + v * sz, cx, cz, sx, sz))
                 dome = bulge * math.sqrt(max(0., 1 - f * f)) + lift
                 rowt.append(bm.verts.new(loc + nrm * dome))
                 rowb.append(bm.verts.new(loc - nrm * .006) if i < rings else rowt[-1])
@@ -747,6 +748,12 @@ PETS = {'dragon': (build_dragon, dict(height=.64, flt=0)),
         'cyborg': (build_cyborg, dict(height=.66, flt=0)),
         'unicorn': (build_unicorn, dict(height=.66, flt=0)),
         'dino': (build_dino, dict(height=.58, flt=0))}
+
+try:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # python -I drops the script dir
+    from pets_new import PETS_NEW; PETS.update(PETS_NEW)      # the 11 new buddies (tools/pets/pets_new.py)
+except ImportError as e:
+    print('pets_new not loaded:', e)
 
 if __name__ == '__main__':
     ids = sys.argv[1:] or list(PETS)

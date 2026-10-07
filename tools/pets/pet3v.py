@@ -12,6 +12,9 @@ JS="""async([id,old])=>{if(old){delete PET3D_META[id]}
   r.outputColorSpace=T.SRGBColorSpace;r.toneMapping=T.ACESFilmicToneMapping;r.toneMappingExposure=1.05;r.setClearColor('#efe9ff',1);
   const sc=new T.Scene();studioEnv(T,r,sc);const us=[];const angs=[0,-.7,-Math.PI/2,Math.PI];
   angs.forEach((a,i)=>{const u=buildPet(T,id);u.g.position.x=(i-1.5)*.95;u.g.rotation.y=a;sc.add(u.g);us.push(u)});
+  // painted parts: wait for their textures (the game refreshes the buddy when they arrive; here we must render once)
+  for(let i=0;i<60;i++){const pend=Object.values(typeof PET3TEX!=='undefined'?PET3TEX:{}).filter(t=>!(t.image&&(t.image.complete===undefined||t.image.complete)&&(t.image.naturalWidth||t.image.width)));if(!pend.length)break;await new Promise(r=>setTimeout(r,200))}
+  us.forEach(u=>u.g.traverse(o=>{if(o.material&&o.material.map)o.material.needsUpdate=true}));
   const cam=new T.OrthographicCamera(-1.95,1.95,.62,-.06,.1,50);cam.position.set(0,0,10);cam.lookAt(0,0,0);r.render(sc,cam);return cv.toDataURL('image/png')}"""
 async def main():
     srv=subprocess.Popen([sys.executable,'-m','http.server','8794'],cwd=ROOT,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);time.sleep(1)
