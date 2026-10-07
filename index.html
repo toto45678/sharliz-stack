@@ -1007,6 +1007,102 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .wh-hole .wh-ring{filter:brightness(.86) saturate(.85);transition:filter .15s}.wh-hole.up .wh-ring{filter:brightness(1.1) drop-shadow(0 0 6px rgba(255,255,255,.8))}
 .arc-card .tix em{margin-inline-start:3px;font:.8rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;color:#ffe24d;-webkit-text-stroke:2.5px #120d2b;paint-order:stroke fill;direction:ltr}
 
+/* ===== v52: holiday events (Halloween first) ===== */
+#evhub{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;overflow:hidden;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:radial-gradient(120% 70% at 50% 0%,#5b2a9e 0%,#2a1250 55%,#120826 100%)}
+#evhub[hidden]{display:none}
+#evhub.ev-halloween::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,18,80,.55),rgba(18,8,38,.35) 40%,rgba(18,8,38,.7)),url(art/w3b_farmN.webp) center bottom/cover no-repeat;pointer-events:none}
+#evhub>*{position:relative}
+#evhub .x-btn{position:static;width:44px;height:44px;flex:none}
+.ev-top{display:flex;align-items:center;gap:8px;padding:10px 12px 4px}
+.ev-title{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.ev-title b{font:1.9rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-shadow:0 0 16px rgba(255,140,30,.7),0 4px 0 #120d2b;white-space:nowrap}
+.ev-title small{padding:2px 10px;border-radius:999px;background:rgba(18,13,43,.75);border:2px solid #ff7a1a;font-weight:800;font-size:.78rem;white-space:nowrap}
+.ev-cur{flex:none;display:inline-flex;align-items:center;gap:4px;height:38px;padding:0 12px 0 4px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid #120d2b;box-shadow:0 3px 0 #120d2b;font:1.25rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.ev-cur img{width:32px;height:32px;object-fit:contain}
+.ev-tabs{display:flex;gap:6px;margin:6px 14px 0;padding:5px;border-radius:18px;background:rgba(18,13,43,.75)}
+.ev-tabs button{flex:1;height:42px;border-radius:14px;border:0;background:none;color:#c7b8ff;font:800 1.05rem var(--bf,Rubik),system-ui,sans-serif}
+.ev-tabs button.on{background:linear-gradient(180deg,#ffb347,#ff7a1a);color:#120d2b;border:3px solid #120d2b;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.ev-body{flex:1;min-height:0;display:flex;flex-direction:column}
+.ev-path{position:relative;flex:1;min-height:0;margin:8px 14px 0}
+.ev-road{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ev-road path{fill:none;stroke:rgba(255,179,71,.55);stroke-width:2.2;stroke-dasharray:3 3;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-width:6}
+.ev-node{position:absolute;translate:-50% -50%;width:62px;height:62px;padding:0;border:0;background:none;display:grid;place-items:center}
+.ev-node img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.6))}
+.ev-node i{position:absolute;bottom:-6px;left:50%;translate:-50% 0;min-width:24px;padding:0 6px;border-radius:999px;background:#120d2b;border:2px solid #ff7a1a;color:#fff;font:.85rem/1.4 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;white-space:nowrap}
+.ev-node.lock img{filter:grayscale(.6) brightness(.55) drop-shadow(0 3px 0 rgba(10,8,40,.6))}.ev-node.lock i{border-color:#55507a;color:#b9b0e0}
+.ev-node.done::after{content:'✓';position:absolute;top:-4px;inset-inline-end:-4px;width:22px;height:22px;border-radius:50%;background:#3db618;border:2px solid #120d2b;color:#fff;font:700 13px/18px system-ui;text-align:center}
+.ev-node.next{width:74px;height:74px;z-index:2}
+.ev-node.next img{animation:evGlow 1.2s ease-in-out infinite}
+@keyframes evGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,160,40,.8)) drop-shadow(0 3px 0 rgba(10,8,40,.6));transform:scale(1)}50%{filter:drop-shadow(0 0 18px rgba(255,160,40,1)) drop-shadow(0 3px 0 rgba(10,8,40,.6));transform:scale(1.08)}}
+.ev-node.boss{width:86px;height:86px}
+.ev-node.boss img{border-radius:50%;background:radial-gradient(circle,#ff9a3c,#7a2a9e);border:4px solid #120d2b;box-shadow:0 0 0 3px #ff7a1a,0 5px 0 #120d2b;object-fit:cover;object-position:top}
+.ev-node.boss.lock img{filter:grayscale(.7) brightness(.5)}
+.ev-node.boss.next img{animation:evGlow 1.2s ease-in-out infinite}
+.ev-foot{padding:10px 16px 14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.ev-foot p{margin:0;text-align:center;font-weight:800;font-size:.9rem;color:#ffd9a8}
+.ev-play{width:100%}
+.ev-shop{flex:1;min-height:0;overflow-y:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px;align-content:start}
+.ev-item{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px 12px;border-radius:20px;border:3.5px solid #120d2b;color:#fff;
+  background:linear-gradient(180deg,#7a3fd0,#3b1a7a);box-shadow:inset 0 3px 0 rgba(255,255,255,.22),0 5px 0 #120d2b;animation:arcIn .45s cubic-bezier(.3,1.5,.5,1) both}
+.ev-item:active{transform:translateY(3px)}
+.ev-item .th{width:100%;aspect-ratio:1.15;border-radius:14px;background:radial-gradient(circle at 50% 40%,#ffb347 0,#ff7a1a 35%,#5b2a9e 80%);display:grid;place-items:center;overflow:hidden}
+.ev-item .th img{width:100%;height:100%;object-fit:contain}
+.ev-item .th.sw::after{content:'';width:58%;aspect-ratio:1;border-radius:50%;border:4px solid #120d2b;background:var(--c,#ff7a1a);box-shadow:inset -8px -10px 0 rgba(0,0,0,.18),inset 6px 6px 0 rgba(255,255,255,.35)}
+.ev-item b{font:1.05rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill;text-align:center}
+.ev-item small{font-size:.7rem;font-weight:800;color:#ffd9a8;text-align:center}
+.ev-item .pr{display:inline-flex;align-items:center;gap:4px;margin-top:2px;padding:2px 12px 3px 4px;border-radius:999px;background:linear-gradient(180deg,#ffe24d,#ffad00);border:2.5px solid #120d2b;color:#120d2b;font:1.05rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr;box-shadow:0 3px 0 #120d2b}
+.ev-item .pr img{width:24px;height:24px;object-fit:contain}
+.ev-item .pr.poor{filter:saturate(.4) brightness(.9)}
+.ev-item .pr.got{padding:2px 12px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#fff;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.ev-item.own{background:linear-gradient(180deg,#3db618,#1d6b0c)}
+/* lobby banner */
+.ev-banner{position:absolute;z-index:3;left:50%;translate:-50% 0;top:calc(env(safe-area-inset-top,0px) + clamp(226px,29vh,262px));display:flex;align-items:center;gap:6px;max-width:216px;padding:6px 12px 6px 6px;border-radius:20px;border:3.5px solid #120d2b;
+  background:radial-gradient(120% 140% at 30% 20%,#7a3fd0,#2a1250);box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 4px 0 #120d2b,0 0 18px rgba(255,140,30,.75);color:#fff;white-space:nowrap;animation:evBan 1.8s ease-in-out infinite}
+.ev-banner[hidden]{display:none}
+.ev-banner img{width:54px;height:54px;margin-block:-12px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.5))}
+.ev-banner span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05}
+.ev-banner b{font:1.15rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill}
+.ev-banner small{display:inline-flex;align-items:center;gap:3px;margin-top:4px;padding:1px 8px 2px;border-radius:999px;background:#120d2b;font-weight:800;font-size:.64rem;color:#fff}.ev-banner small i{font-style:normal}
+@keyframes evBan{0%,100%{box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 4px 0 #120d2b,0 0 10px rgba(255,140,30,.5)}50%{box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 4px 0 #120d2b,0 0 24px rgba(255,140,30,.95)}}
+/* in-game */
+.ev-pop{position:fixed;z-index:6;pointer-events:none;display:inline-flex;align-items:center;gap:2px;font:1.4rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:4.5px #120d2b;paint-order:stroke fill;direction:ltr;transform:translate(-50%,-50%)}
+.ev-pop img{width:30px;height:30px;object-fit:contain}
+.ev-res .ev-rows{display:flex;flex-direction:column;gap:6px;width:100%;margin:4px 0 10px}
+.ev-row{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-radius:14px;background:rgba(18,13,43,.4);font-weight:800}
+.ev-row b{display:inline-flex;align-items:center;gap:4px;font:1.15rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill;direction:ltr}
+.ev-row b img,.ev-tot img{width:26px;height:26px;object-fit:contain}
+.ev-tot{margin:0 auto 6px}
+.ev-item small{position:absolute;top:-11px;left:50%;translate:-50% 0;padding:2px 10px;border-radius:999px;background:linear-gradient(180deg,#ff6b7d,#e01e45);border:2.5px solid #120d2b;color:#fff;white-space:nowrap;box-shadow:0 2px 0 #120d2b}
+.ev-item{margin-top:8px}
+.ev-shopnote{margin:4px 14px 14px;padding:10px;border-radius:16px;background:rgba(18,13,43,.7);border:2px solid #ff7a1a;text-align:center;font:1.15rem/1.15 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
+.ev-node i{bottom:auto;top:56%;translate:-50% -50%;background:none;border:0;font-size:1.15rem;color:#fff;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill}
+.ev-node.lock i{color:#c7c0e8}
+.ev-node.boss{width:96px;height:96px}.ev-node.boss img{border-radius:0;background:none;border:0;box-shadow:none;object-fit:contain}
+.ev-node.boss i{top:auto;bottom:-10px;translate:-50% 0;background:#120d2b;border:2px solid #ff7a1a;font-size:.85rem;padding:0 8px;-webkit-text-stroke:0}
+.ev-res .ev-hero{display:block;width:96px;height:96px;object-fit:contain;margin:-6px auto 2px;filter:drop-shadow(0 4px 0 rgba(10,8,40,.5));animation:arcIn .5s cubic-bezier(.3,1.6,.5,1) both}
+/* review round 1 */
+.ev-node.done{width:56px;height:56px}.ev-node.done img{filter:saturate(.65) brightness(.92) drop-shadow(0 3px 0 rgba(10,8,40,.6))}
+.ev-node.next{width:88px;height:88px}
+.ev-node.next::before{content:'';position:absolute;inset:-10px;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.55),transparent 65%);animation:evGlow 1.2s ease-in-out infinite;z-index:-1}
+.ev-node.boss{width:108px;height:108px}
+.ev-node.boss::before{content:'';position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle,rgba(160,80,255,.55),transparent 65%);z-index:-1}
+.ev-item.worn{outline:4px solid #5ee85a;outline-offset:2px}
+.ev-res .ev-row{opacity:.82;font-size:.88rem;padding:4px 12px}.ev-res .ev-row b{font-size:1rem}
+.ev-res .ev-tot{font-size:2.05rem;padding:6px 22px 8px}.ev-res .ev-tot img{width:34px;height:34px}
+.ev-almost{margin:2px 0 8px;text-align:center;font:1.2rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill}
+.ev-climax{margin:0 0 8px;text-align:center;font:1.5rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#d9b8ff;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill;animation:bnPulse .9s ease-in-out infinite}
+.ev-boss .ev-hero{width:136px;height:136px;margin-top:-30px;filter:drop-shadow(0 0 18px rgba(170,90,255,.9)) drop-shadow(0 4px 0 rgba(10,8,40,.5))}
+.ev-boss::before{content:'';position:absolute;left:50%;top:40px;width:260px;height:260px;translate:-50% -50%;background:repeating-conic-gradient(rgba(255,210,90,.15) 0 10deg,transparent 10deg 20deg);border-radius:50%;animation:evSpin 8s linear infinite;pointer-events:none;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%)}
+.card-body.ev-res{position:relative}
+@keyframes evSpin{to{rotate:360deg}}
+#evCnt{position:fixed;z-index:4;top:calc(env(safe-area-inset-top,0px) + 66px);inset-inline-start:10px;display:inline-flex;align-items:center;gap:3px;height:34px;padding:0 12px 0 4px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid #120d2b;box-shadow:0 3px 0 #120d2b;color:#ffb347;font:1.15rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr;pointer-events:none}
+#evCnt[hidden]{display:none}#evCnt img{width:30px;height:30px;object-fit:contain}#evCnt b{font-weight:400;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
+#evCnt.pulse{animation:arcBump .35s ease-out}
+.ev-item:not(.own) .pr:not(.poor){animation:evPr 1.6s ease-in-out infinite}.ev-item:active .pr{transform:scale(.94)}
+@keyframes evPr{0%,100%{box-shadow:0 3px 0 #120d2b}50%{box-shadow:0 3px 0 #120d2b,0 0 12px 3px rgba(255,226,77,.75)}}
+#evCnt{height:30px;font-size:1rem;opacity:.9}#evCnt img{width:26px;height:26px}
+
 </style>
 
 <div id="app">
@@ -1356,7 +1452,7 @@ const ZONES=[
   const night=sk=>sk.map(([a,c])=>[a,mix(c,'#0b1030',.62)]),storm=sk=>sk.map(([a,c])=>[a,mix(c,'#3a4252',.55)]);
   for(const s of [2,3])for(const z of B)ZONES.push(Object.assign({},z,{sid:z.id+(s===2?'N':'S'),season:s,key:z.key+(s===2?'N':'S'),sky:s===2?night(z.sky):storm(z.sky),cloud:z.cloud&&(s===2?mix(z.cloud,'#1a2050',.6):mix(z.cloud,'#4a5060',.5)),starsAt:s===2?-99:z.starsAt}));
   for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
-const etOf=zi=>zi<8?zi:4+(zi-8)*.18;
+const etOf=zi=>typeof mode!=='undefined'&&mode==='event'?1.5:zi<8?zi:4+(zi-8)*.18;
 // floors added by the level's place in its world: +1 per level, with a 'rest' level now and then (+0) (Tzach, Oct 6; was +2 per level)
 const lvStep=k=>[0,1,2,2,3,4,4,5,6][k]||0;
 const TOTAL=ZONES.length*LPZ;
@@ -1977,7 +2073,7 @@ let tower=[], swinger=null, dropping=null, bodies=[], particles=[], popups=[];
 let camY=0, time=0, ft=0, best=+(store('sharliz-best')||0), balance=0, swayK=0, shake=0, bump=0, freeze=0, spawnAt=0, firstDropDone=false, wind=0, windSeed=0, lastGustWarn=0;
 let collapsing=null, survivor=-1, busy=false;
 
-const goal=()=>mode==='daily'?endless.goal:mode!=='levels'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone());
+const goal=()=>mode==='daily'?endless.goal:mode!=='levels'&&mode!=='event'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone());
 const speed=()=>mode==='bonus'?bnSpeed():(1.45+etOf(zoneIdx(level))*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
 const rangeXs=()=>Math.min((W/2-S*.75)/S,1.3);   // narrow sweep above the tower
 const xOf=xs=>W/2+xs*S;
@@ -2615,7 +2711,7 @@ function drawDanger(){if(dangerI<1||balance<.7||state==='win')return;const a=.25
   for(let i=dangerI;i<tower.length;i++){const s=tower[i],x=xOf(s.xs)+swayOffset(i,tower.length),y=sy(yOf(i));ctx.save();ctx.globalAlpha=a;ctx.fillStyle='#ff2d55';ctx.beginPath();ctx.ellipse(x,y,S*.62,BH*.56,0,0,7);ctx.fill();ctx.restore()}}
 
 /* ---------- goal countdown ---------- */
-function drawCountdown(){if(isBoss()||mode!=='levels'||state!=='aim')return;const left=goal()-(tower.length-1);if(left>5||left<1)return;
+function drawCountdown(){if(isBoss()||(mode!=='levels'&&mode!=='event')||state!=='aim')return;const left=goal()-(tower.length-1);if(left>5||left<1)return;
   const p=1+.06*Math.sin(time*8);ctx.save();ctx.translate(W/2,hudBottom+44);ctx.scale(p,p);ctx.font=`${Math.round(S*.42)}px "Lilita One","Secular One",system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
   gameText(ctx,t('moreN',{n:left}),0,0,Math.round(S*.46),left<=2?POPPAL.wow:POPPAL.perfect);ctx.restore()}
 
@@ -5041,7 +5137,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
 
 /* ---------- hooks ---------- */
 {const _rh=resetHazards;resetHazards=function(){_rh();hz.m={};hz.gravK=1;hz.portal=null;nightExtra=0;lightBoost=0;try{cv.style.transform=''}catch(e){}
-  if(mode==='levels'||mode==='daily'){const pk=passiveNow();if(pk)hz.m[pk]=MECH[pk].init()}}}
+  if(mode==='levels'||mode==='daily'||mode==='event'){const pk=passiveNow();if(pk)hz.m[pk]=MECH[pk].init()}}}
 {const _se=startEvent;startEvent=function(k){if(MECH[k]){if(mBusy()&&MECH[k].type!=='swinger')return false;if(MECH[k].type!=='swinger'&&(tower.length<3&&!hz.boss))return false;let ok=false;try{ok=!!MECH[k].start()}catch(e){}if(!ok)hz.mRetry=1;return ok}return _se(k)}}
 {const _uh=updateHazards;updateHazards=function(dt){_uh(dt);if(hz.mRetry){hz.mRetry=0;hz.next=Math.min(hz.next,time+1.2)}const live=['aim','wait','drop'].includes(state);if(lightBoost>0)lightBoost-=dt;
   if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.update&&hz.m[k])M.update(dt,hz.m[k],live)}
@@ -5805,6 +5901,144 @@ ARCG.whack={dur:30,star:1,how:'arcHowWhack',hint:'gd_whack',coins:s=>Math.round(
 {const col=document.querySelector('.lob-side.r');if(col){const b=document.createElement('button');b.className='side-btn arcade';b.id='lobArcade';b.innerHTML='<span class="sq"><img src="art/ic_arcade.webp" alt=""></span><b data-i18n="arcShort"></b><i class="badge arc-badge" data-abadge hidden></i>';b.querySelector('b').textContent=t('arcShort');b.onclick=openArcade;col.insertBefore(b,col.children[1]||null)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const b=document.getElementById('lobArcade');if(b){b.querySelector('b').textContent=t('arcShort');const bd=b.querySelector('[data-abadge]');const n=['rain','mem','whack'].reduce((s,id)=>s+arcLeft(id),0);bd.hidden=!n||!progress.tut;bd.innerHTML='<img src="art/arc_ticket.webp" alt="">'+n;b.setAttribute('aria-label',t('arcShort')+' · '+t('arcLeftN',{n}))}return r}}
 {const _d=drawTitleArt;drawTitleArt=function(){if(ARCEL&&!ARCEL.hidden)return;return _d.apply(this,arguments)}}
+
+/* ===== v52: limited-time HOLIDAY EVENTS (US holidays, Tzach) — first one: HALLOWEEN =====
+   EVENTS = calendar; evNow() = the running event (DEV_OPEN shows the next one early, marked "test").
+   An event = 10 stages played in mode 'event' on one world (Halloween: the night farm, boss = Scarecrow King),
+   an event currency (candy) and an event shop with items you can only get during the event.
+   Design: ChatGPT mockup (design/halloween/). */
+const EVENTS=[
+  {id:'halloween',from:[10,15],to:[11,1],sid:'farmN',cur:'candy',deco:'halloween',
+   items:[{c:'hat',id:'pumpkin',p:120},{c:'hat',id:'witch',p:150},{c:'color',id:'pumpkin',p:60},{c:'trail',id:'t_bats',p:90}]}];
+Object.assign(I18N.en,{ev_halloween:'Halloween',evLeft:'{n} days left',evOn:'Wearing',evOwned:'Owned',evAlmost:'So close! Try again',evDoneAll:'Event complete!',evBossDown:'Boss defeated!',evLeft1:'Last day!',evSoon:'Starts in {n} days',evTest:'Test mode',evPath:'Path',evShop:'Shop',evPlay:'Play',
+  evStage:'Stage {n}',evBossStage:'Boss',evFinal:'Final boss',evOnly:'Only during {n}',evGot:'Yours!',evNeed:'Need more {n}',cur_candy:'Candy',evClear:'Stage clear!',evBossClear:'Boss beaten!',
+  evAgain:'Again',evBack:'Event',evDone:'All stages done! Replay for more candy',evFirst:'First clear bonus',evs_halloween:'Halloween',evExcl:'Exclusive items for a limited time!',evEnded:'This event has ended'});
+Object.assign(I18N.he,{ev_halloween:'ליל כל הקדושים',evLeft:'נותרו {n} ימים',evOn:'בשימוש',evOwned:'נרכש',evAlmost:'כמעט! נסו שוב',evDoneAll:'האירוע הושלם!',evBossDown:'הבוס הובס!',evLeft1:'יום אחרון!',evSoon:'מתחיל בעוד {n} ימים',evTest:'מצב בדיקה',evPath:'מסלול',evShop:'חנות',evPlay:'שחקו',
+  evStage:'שלב {n}',evBossStage:'בוס',evFinal:'בוס סופי',evOnly:'רק ב{n}',evGot:'שלך!',evNeed:'צריך עוד {n}',cur_candy:'ממתקים',evClear:'השלב עבר!',evBossClear:'ניצחתם את הבוס!',
+  evAgain:'שוב',evBack:'לאירוע',evDone:'סיימתם את כל השלבים! שחקו שוב בשביל עוד ממתקים',evFirst:'בונוס פעם ראשונה',evs_halloween:'האלווין',evExcl:'פריטים בלעדיים לזמן מוגבל!',evEnded:'האירוע נגמר'});
+// event-only catalogue (not buyable with coins; wGate/csInfo show "only during …")
+WHATX.pumpkin={p:120,w:1,ev:'halloween',n:['Pumpkin hat','כובע דלעת']};
+WHATX.witch={p:150,w:1,ev:'halloween',n:['Witch hat','כובע מכשפה']};
+WCOL.pumpkin={c:'#ff6200',p:60,ev:'halloween',n:['Pumpkin','דלעת']};
+STYLE_SKINS.push({id:'t_bats',cat:'t',price:90,ev:'halloween'});
+Object.assign(I18N.en,{sk_t_bats:'Bats'});Object.assign(I18N.he,{sk_t_bats:'עטלפים'});
+const evItem=(c,id)=>{for(const E of EVENTS)for(const it of E.items)if(it.c===c&&it.id===id)return [E,it];return null};
+// dates
+function evDate(md,yr){return new Date(yr,md[0]-1,md[1])}
+function evWindow(E,now=new Date()){let y=now.getFullYear();let a=evDate(E.from,y),b=evDate(E.to,y);b.setHours(23,59,59);if(b<a)b.setFullYear(y+1);
+  if(now>b){a.setFullYear(y+1);b.setFullYear(b.getFullYear()+1)}return {a,b}}
+function evNow(){const now=new Date();let best=null;for(const E of EVENTS){const w=evWindow(E,now);if(now>=w.a&&now<=w.b)return {E,live:true,w};if(!best||w.a<best.w.a)best={E,live:false,w}}
+  return typeof DEV_OPEN!=='undefined'&&DEV_OPEN&&best?best:null}
+const evDays=ms=>Math.max(0,Math.ceil(ms/864e5));
+function evData(id){progress.events=progress.events||{};const d=progress.events[id]=progress.events[id]||{cur:0,done:0,got:[]};return d}
+const evZi=E=>Math.max(0,ZONES.findIndex(z=>z.sid===E.sid));
+/* ---------- hub (path + shop) ---------- */
+let EVEL=null,EVS=null;
+function evRoot(){if(!EVEL){EVEL=document.createElement('div');EVEL.id='evhub';EVEL.hidden=true;document.body.appendChild(EVEL)}return EVEL}
+function openEvent(tab){const N=evNow();if(!N)return;audio();sfx.click();const r=evRoot();r.hidden=false;r.dataset.ev=N.E.id;evHub(N,tab||'path')}
+function closeEvent(){if(EVEL)EVEL.hidden=true;updateWalletUI();if(state==='title')updateLobby()}
+function evCountTxt(N){const now=new Date();if(!N.live)return t('evSoon',{n:evDays(N.w.a-now)})+' · '+t('evTest');const d=evDays(N.w.b-now);return d<=1?t('evLeft1'):t('evLeft',{n:d})}
+function evHub(N,tab){const E=N.E,D=evData(E.id),r=evRoot();r.className='ev-hub ev-'+E.id;
+  r.innerHTML=`<div class="ev-top"><button class="x-btn ev-x" aria-label="close"></button><div class="ev-title"><b></b><small></small></div><div class="ev-cur"><img src="art/ev_${E.cur}.webp" alt=""><span></span></div></div>
+    <div class="ev-tabs"><button data-t="path"></button><button data-t="shop"></button></div><div class="ev-body"></div>`;
+  r.querySelector('.ev-x').innerHTML=XSVG;r.querySelector('.ev-x').onclick=()=>{sfx.click();closeEvent()};
+  r.querySelector('.ev-title b').textContent=t('ev_'+E.id);r.querySelector('.ev-title small').textContent=evCountTxt(N);r.querySelector('.ev-cur span').textContent=D.cur;
+  r.querySelectorAll('.ev-tabs button').forEach(b=>{b.textContent=t(b.dataset.t==='path'?'evPath':'evShop');b.classList.toggle('on',b.dataset.t===tab);b.onclick=()=>{sfx.click();evHub(N,b.dataset.t)}});
+  const body=r.querySelector('.ev-body');if(tab==='shop')evShop(N,body);else evPath(N,body)}
+function evPath(N,body){const E=N.E,D=evData(E.id),nx=Math.min(9,D.done);
+  const wrap=document.createElement('div');wrap.className='ev-path';body.appendChild(wrap);
+  // winding path: 10 nodes, bottom (stage 1) to top (boss)
+  const pts=[];for(let i=0;i<10;i++){const y=5+i*8.9,x=50+Math.sin(i*1.25+.6)*28;pts.push([x,y])}
+  const svg=`<svg class="ev-road" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}"/></svg>`;wrap.innerHTML=svg;
+  pts.forEach(([x,y],i)=>{const b=document.createElement('button'),boss=i===9,st=i<D.done?'done':i===nx?'next':'lock';b.className='ev-node '+st+(boss?' boss':'');b.style.left=x+'%';b.style.top=y+'%';
+    b.innerHTML=boss?`<img src="art/ev_boss_${E.id}.webp" alt=""><i>${t('evFinal')}</i>`:`<img src="art/ev_node${st==='lock'?'_off':''}.webp" alt=""><i>${i+1}</i>`;
+    b.setAttribute('aria-label',boss?t('evBossStage'):t('evStage',{n:i+1}));
+    b.onclick=()=>{if(st==='lock'){sfx.locked();return}sfx.click();evStart(i)};wrap.appendChild(b)});
+  const foot=document.createElement('div');foot.className='ev-foot';
+  if(D.done>=10){const p=document.createElement('p');p.textContent=t('evDone');foot.appendChild(p)}
+  const pb=document.createElement('button');pb.className='btn primary ev-play';pb.innerHTML='<svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span>';pb.querySelector('span').textContent=t('evPlay')+' · '+(nx===9?t('evBossStage'):t('evStage',{n:nx+1}));
+  pb.onclick=()=>{sfx.click();evStart(nx)};foot.appendChild(pb);body.appendChild(foot)}
+function evThumb(c,id){if(c==='trail')return csStyleIcon(id);if(H3.state!=='ready'||typeof wThumb!=='function')return '';wThumb('hat','none');
+  const L=Object.assign({},LOOK0,lookNow(),{hat:progress.skin||'none',glasses:'none'});if(c==='hat')L.hat=id;else L[c]=id;const key='ev|'+JSON.stringify(L);if(W3.thumbCache[key])return W3.thumbCache[key];
+  const r=W3.thumbR,cam=W3.thumbCam,P=W3.thumbP;P.g.visible=true;applyLook(P,L);setFace3(P,2);cam.left=-1.05;cam.right=1.05;cam.top=c==='hat'?2.55:2.1;cam.bottom=c==='hat'?.35:-.05;cam.updateProjectionMatrix();r.render(W3.thumbS,cam);
+  const url=r.domElement.toDataURL('image/png');W3.thumbCache[key]=url;return url}
+function evShop(N,body){const E=N.E,D=evData(E.id);const g=document.createElement('div');g.className='ev-shop';body.appendChild(g);{const f=document.createElement('div');f.className='ev-shopnote';f.textContent=t('evExcl');body.appendChild(f)}
+  E.items.forEach(it=>{const own=evOwned(it),b=document.createElement('button');b.className='ev-item'+(own?' own':'');
+    b.innerHTML=`<span class="th"><img alt=""></span><b></b><small></small><span class="pr"></span>`;const src=evThumb(it.c,it.id);if(src)b.querySelector('.th img').src=src;else b.querySelector('.th').classList.add('sw');
+    if(it.c==='color')b.querySelector('.th').style.setProperty('--c',WCOL[it.id].c);
+    b.querySelector('b').textContent=it.c==='trail'?t('sk_'+it.id):wName(it.c,it.id);b.querySelector('small').textContent=t('evOnly',{n:t('evs_'+E.id)});
+    const pr=b.querySelector('.pr');if(own){const on=evWorn(it);pr.textContent=on?t('evOn'):'✓ '+t('evOwned');pr.classList.add('got');if(on)b.classList.add('worn')}else{pr.innerHTML=`<img src="art/ev_${E.cur}.webp" alt="">${it.p}`;if(D.cur<it.p)pr.classList.add('poor')}
+    b.onclick=()=>{if(own){sfx.click();evWear(it);evHub(N,'shop');return}if(D.cur<it.p){sfx.locked();popupToast(t('evNeed',{n:t('cur_'+E.cur)}));return}
+      D.cur-=it.p;evGive(it);saveProgress();sfx.coin(4);vib(20);evWear(it);evHub(N,'shop');popupToast(t('evGot'))};g.appendChild(b)})}
+function evWorn(it){if(it.c==='hat')return progress.skin===it.id;if(it.c==='trail')return progress.tskin===it.id;return lookNow()[it.c]===it.id}
+function evOwned(it){if(it.c==='hat')return wallet().skins.includes(it.id);if(it.c==='trail')return wallet().skins.includes(it.id);return (progress.owned[it.c]||[]).includes(it.id)}
+function evGive(it){if(it.c==='hat'||it.c==='trail'){if(!wallet().skins.includes(it.id))progress.skins.push(it.id)}else{progress.owned[it.c]=progress.owned[it.c]||[];if(!progress.owned[it.c].includes(it.id))progress.owned[it.c].push(it.id)}}
+function evWear(it){try{if(it.c==='trail')progress.tskin=it.id;else if(it.c==='hat')progress.skin=it.id;else lookNow()[it.c]=it.id;saveProgress();setHero3DSkin();rebakeIfNeeded()}catch(e){}}
+// event items: never sold for coins in "My hero"
+{const _g=wGate;wGate=function(cat,id){const e=evItem(cat==='hat'?'hat':cat,id);if(e&&!evOwned(e[1]))return t('evOnly',{n:t('ev_'+e[0].id)});return _g.apply(this,arguments)}}
+{const _ci=csInfo;csInfo=function(c,id){const I=_ci.apply(this,arguments);const e=evItem(c==='trail'?'trail':c,id);if(e&&!evOwned(e[1])){I.gate=t('evOnly',{n:t('ev_'+e[0].id)});I.rar='leg'}return I}}
+/* ---------- playing an event stage (mode 'event') ---------- */
+let EVP=null;
+function evStart(i){const N=evNow();if(!N)return;if(EVEL)EVEL.hidden=true;const E=N.E,zi=evZi(E);
+  EVP={E,i,from:level,perf:0};mode='event';modeZi=zi;go(()=>{startLevel(zi*LPZ+1+i);evDeco(true)})}
+function evStageCandy(won){const boss=EVP.i===9,D=evData(EVP.E.id),first=won&&EVP.i>=D.done;const base=won?(boss?25:8):2,perf=Math.min(12,lv.perfect||0);return {base,perf,first:first?10:0,total:base+perf+(first?10:0)}}
+function evFinish(won){const E=EVP.E,D=evData(E.id),R=evStageCandy(won);D.cur+=R.total;if(won&&EVP.i>=D.done)D.done=Math.min(10,EVP.i+1);saveProgress();
+  const boss=EVP.i===9;
+  showOverlay(()=>({title:won?(boss?t('evBossClear'):t('evClear')):t('whoops'),big:true,
+    extra:card=>{card.classList.add('ev-res');{const hi=document.createElement('img');hi.className='ev-hero';hi.src=won?(boss?'art/ev_boss_'+E.id+'.webp':'art/ev_icon_'+E.id+'.webp'):'art/ev_node_off.webp';hi.alt='';card.appendChild(hi)}const rows=document.createElement('div');rows.className='ev-rows';
+      const row=(lbl,n)=>{const d=document.createElement('div');d.className='ev-row';d.innerHTML=`<span></span><b><img src="art/ev_${E.cur}.webp" alt="">+${n}</b>`;d.querySelector('span').textContent=lbl;rows.appendChild(d)};
+      row(boss?t('evBossStage'):t('evStage',{n:EVP.i+1}),R.base);if(R.perf)row(t('perfect')||'PERFECT',R.perf);if(R.first)row(t('evFirst'),R.first);card.appendChild(rows);if(!won){const al=document.createElement('p');al.className='ev-almost';al.textContent=t('evAlmost');card.insertBefore(al,rows)}
+      if(won&&boss){card.classList.add('ev-boss');const bl=document.createElement('p');bl.className='ev-climax';bl.textContent=R.first?t('evDoneAll'):t('evBossDown');card.insertBefore(bl,rows)}
+      const tot=document.createElement('div');tot.className='bn-coins ev-tot';tot.innerHTML=`<img src="art/ev_${E.cur}.webp" alt=""><b>+${R.total}</b>`;card.appendChild(tot)},
+    actions:[...(won&&EVP.i<9?[{label:t('evPlay')+' · '+(EVP.i+1===9?t('evBossStage'):t('evStage',{n:EVP.i+2})),icon:'play',primary:true,fn:()=>{const n=EVP.i+1;hideOverlay();evStart(n)}}]:[]),
+      {label:won?t('evBack'):t('evAgain'),icon:won?'map':'restart',primary:!won||EVP.i>=9,fn:()=>{hideOverlay();if(won)evExit(true);else evStart(EVP.i)}},
+      ...(won?[]:[{label:t('evBack'),icon:'map',fn:()=>{hideOverlay();evExit(true)}}])]}));
+  sfx.coin(3)}
+function evExit(toHub){evDeco(false);const L=EVP?EVP.from:level;EVP=null;mode='levels';modeZi=null;level=L;go(()=>{toTitle();if(toHub)openEvent('path')})}
+// wiring: goals/passives/countdown behave like a normal level; win/lose go to the event card
+{const _ml=modeLanded;modeLanded=function(){if(mode==='event')return false;return _ml.apply(this,arguments)}}
+{const _w=win;win=function(){if(mode!=='event'||!EVP)return _w.apply(this,arguments);if(state==='win')return;state='win';balance=computeBalance().maxR;updateHud();freeze=.15;
+  sfx.flourish(3);for(let i=0;i<50;i++)particles.push({x:rnd(0,W),y:camY+rnd(-40,H*.25),vx:rnd(-60,60),vy:rnd(40,200),life:2,c:pick(['#ff7a1a','#8a4dff','#ffd23f','#2a2a2a']),sz:rnd(5,9),rot:rnd(0,6),vr:rnd(-8,8),conf:true});
+  setTimeout(()=>{if(mode==='event'&&EVP)evFinish(true)},1300)}}
+{const _mo=modeOver;modeOver=function(won){if(mode!=='event'||!EVP)return _mo.apply(this,arguments);evFinish(false)}}
+{const _sm=startMode;startMode=function(m){if(m==='event'&&EVP){evStart(EVP.i);return}return _sm.apply(this,arguments)}}
+{const _t=toTitle;toTitle=function(){if(mode==='event'&&!EVEL_KEEP){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _t.apply(this,arguments)}}
+let EVEL_KEEP=false;
+{const _o=openMap;openMap=function(){if(mode==='event'){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _o.apply(this,arguments)}}
+// candy pops on PERFECT landings
+let evCnt=null;
+function evCounter(on){if(!evCnt){evCnt=document.createElement('div');evCnt.id='evCnt';evCnt.innerHTML='<img alt=""><b>0</b>';document.body.appendChild(evCnt)}evCnt.hidden=!on;if(on&&EVP){evCnt.querySelector('img').src='art/ev_'+EVP.E.cur+'.webp';evCnt.querySelector('b').textContent=Math.min(12,lv.perfect||0)}}
+{const _p=popup;popup=function(txt,x,y,c,key,sub){const r=_p.apply(this,arguments);if(mode==='event'&&EVP&&(key==='perfect'||key==='wow')){evCounter(true);const d=document.createElement('div');d.className='ev-pop';d.innerHTML=`<img src="art/ev_${EVP.E.cur}.webp" alt="">+1`;const x0=Math.round(clamp(x+S*1.2,30,W-30)),y0=Math.round(sy(y));d.style.left=x0+'px';d.style.top=y0+'px';document.body.appendChild(d);
+  const tr=evCnt.getBoundingClientRect(),dx=tr.left+tr.width*.3-x0,dy=tr.top+tr.height/2-y0;
+  try{d.animate([{transform:'translate(-50%,-50%) scale(.6)',opacity:0},{transform:'translate(-50%,-80%) scale(1.15)',opacity:1,offset:.25},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.55)`,opacity:.9}],{duration:750,easing:'cubic-bezier(.5,0,.7,1)'}).onfinish=()=>{d.remove();evCounter(true);evCnt.classList.remove('pulse');void evCnt.offsetWidth;evCnt.classList.add('pulse')}}catch(e){setTimeout(()=>d.remove(),800)}}return r}}
+{const _sl=startLevel;startLevel=function(){const r=_sl.apply(this,arguments);evCounter(mode==='event');return r}}
+{const _hu=showHud;showHud=function(on){const r=_hu.apply(this,arguments);if(!on&&evCnt)evCnt.hidden=true;return r}}
+/* ---------- Halloween decoration on the event world ---------- */
+let EVD=null;
+function evDeco(on){EVD=on&&EVP?{k:EVP.E.deco,bats:Array.from({length:5},()=>({x:rnd(0,1),y:rnd(.08,.4),s:rnd(.6,1.1),p:rnd(0,6),v:rnd(.03,.07)*(Math.random()<.5?-1:1)}))}:null}
+{const _r=render;render=function(){_r.apply(this,arguments);if(!EVD||mode!=='event')return;const g=ctx;g.save();
+  const mo=hzPic('ev_moon');if(mo){const s=W*.34;g.globalAlpha=.95;g.drawImage(mo,W*.66-s/2,H*.12-s/2+(camY-camTarget())*.05,s,s)}g.globalAlpha=1;
+  const bat=hzPic('ev_bat');for(const b of EVD.bats){b.x+=b.v*frameDt;if(b.x<-.1)b.x=1.1;if(b.x>1.1)b.x=-.1;const fl=Math.sin(time*12+b.p);const s=S*.9*b.s,x=b.x*W,y=b.y*H+Math.sin(time*2+b.p)*10;
+    if(bat){g.save();g.translate(x,y);g.scale(b.v<0?-1:1,.75+.25*Math.abs(fl));g.drawImage(bat,-s/2,-s/2,s,s);g.restore()}}
+  const pk=hzPic('ev_pumpkin');if(pk){const gy=sy(yOf(0))+BH*.55,s=S*1.15;[[.08,1],[.92,.9],[.2,.75],[.8,.7]].forEach(([fx,k],j)=>{const yy=gy-(j>1?BH*.15:0);if(yy>H+s)return;g.save();g.globalAlpha=1;g.drawImage(pk,fx*W-s*k/2,yy-s*k,s*k,s*k);
+    g.globalCompositeOperation='lighter';g.globalAlpha=.25+.12*Math.sin(time*7+j);const rg=g.createRadialGradient(fx*W,yy-s*k*.45,2,fx*W,yy-s*k*.45,s*k*.9);rg.addColorStop(0,'#ffb347');rg.addColorStop(1,'rgba(255,120,0,0)');g.fillStyle=rg;g.fillRect(fx*W-s*k,yy-s*k*1.4,s*k*2,s*k*2);g.restore()})}
+  g.restore()}}
+/* ---------- 3D hats + bats trail ---------- */
+{const _bh=buildHat;buildHat=function(P,id){if(id!=='pumpkin'&&id!=='witch')return _bh(P,id);const T=P.T,s=P.hatSlot;
+  const add=(m,x=0,y=0,z=0,ink=1.05)=>{m.position.set(x,y,z);s.add(m);if(ink){const k=new T.Mesh(m.geometry,INKM());k.scale.setScalar(ink);m.add(k)}return m};
+  if(id==='pumpkin'){for(let i=0;i<8;i++){const a=i/8*Math.PI*2,l=add(wmesh(new T.SphereGeometry(.25,22,16),'#ff7a1a',{roughness:.45,clearcoat:.4}),Math.sin(a)*.2,.16,Math.cos(a)*.2);l.scale.set(.7,.95,.7)}
+    add(wmesh(new T.SphereGeometry(.3,22,16),'#ff8a2a',{roughness:.45}),0,.16,0,0);const st=add(wmesh(new T.CylinderGeometry(.045,.07,.2,10),'#3f7a2a',{roughness:.7}),0,.44,0);st.rotation.z=.25;
+    const lf=add(wmesh(new T.SphereGeometry(.1,12,8),'#4caf50',{roughness:.6}),.13,.42,0,0);lf.scale.set(1.3,.25,.7)}
+  else{add(wmesh(new T.CylinderGeometry(.6,.6,.04,40),'#3b2470',{roughness:.6}),0,-.01,0,1.03);const c=add(wmesh(new T.ConeGeometry(.33,.85,32),'#3b2470',{roughness:.6}),.06,.42,0);c.rotation.z=-.25;
+    add(wmesh(new T.CylinderGeometry(.335,.34,.09,32),'#ff7a1a',{roughness:.4}),0,.05,0,0);add(wmesh(new T.BoxGeometry(.12,.1,.04),'#ffd23f',{metalness:.6,roughness:.25}),0,.05,.33,0)}}}
+{const _tm=trailMark;trailMark=function(k,x,y,a){if(progress.tskin!=='t_bats')return _tm(k,x,y,a);ctx.save();ctx.globalAlpha=a;ctx.translate(x,y);ctx.rotate(Math.sin(k*1.7)*.3);
+  const w=S*.32,f=Math.sin(time*18+k)*.5+.5;ctx.fillStyle='#2a1640';ctx.beginPath();ctx.ellipse(0,0,w*.28,w*.22,0,0,7);ctx.fill();
+  for(const sx of[-1,1]){ctx.beginPath();ctx.moveTo(sx*w*.2,0);ctx.quadraticCurveTo(sx*w*.7,-w*(.35+.35*f),sx*w,-w*.05);ctx.quadraticCurveTo(sx*w*.75,w*.05,sx*w*.6,w*.18);ctx.quadraticCurveTo(sx*w*.45,w*.05,sx*w*.2,w*.1);ctx.fill()}
+  ctx.fillStyle='#ffb347';ctx.fillRect(-w*.12,-w*.06,w*.07,w*.05);ctx.fillRect(w*.05,-w*.06,w*.07,w*.05);ctx.restore();return true}}
+/* ---------- lobby banner ---------- */
+{const lb=document.createElement('button');lb.id='lobEvent';lb.className='ev-banner';lb.hidden=true;lb.innerHTML='<img src="art/ev_icon_halloween.webp" alt=""><span><b></b><small><i>⏱</i><em></em></small></span>';lb.onclick=()=>openEvent('path');
+  const sec=document.getElementById('title');const logo=sec&&sec.querySelector('.logo');if(logo)logo.after(lb);else if(sec)sec.appendChild(lb)}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const b=document.getElementById('lobEvent');if(b){const N=evNow();b.hidden=!N||!progress.tut;if(N){b.className='ev-banner ev-'+N.E.id;b.querySelector('img').src='art/ev_icon_'+N.E.id+'.webp';b.querySelector('b').textContent=t('ev_'+N.E.id);b.querySelector('small em').textContent=N.live?evCountTxt(N):t('evSoon',{n:evDays(N.w.a-new Date())})}}return r}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

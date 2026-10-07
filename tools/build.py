@@ -167,7 +167,7 @@ rep("const TOTAL=ZONES.length*LPZ;",r"""{const B=ZONES.slice();for(const z of B)
   const night=sk=>sk.map(([a,c])=>[a,mix(c,'#0b1030',.62)]),storm=sk=>sk.map(([a,c])=>[a,mix(c,'#3a4252',.55)]);
   for(const s of [2,3])for(const z of B)ZONES.push(Object.assign({},z,{sid:z.id+(s===2?'N':'S'),season:s,key:z.key+(s===2?'N':'S'),sky:s===2?night(z.sky):storm(z.sky),cloud:z.cloud&&(s===2?mix(z.cloud,'#1a2050',.6):mix(z.cloud,'#4a5060',.5)),starsAt:s===2?-99:z.starsAt}));
   for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
-const etOf=zi=>zi<8?zi:4+(zi-8)*.18;
+const etOf=zi=>typeof mode!=='undefined'&&mode==='event'?1.5:zi<8?zi:4+(zi-8)*.18;
 // floors added by the level's place in its world: +1 per level, with a 'rest' level now and then (+0) (Tzach, Oct 6; was +2 per level)
 const lvStep=k=>[0,1,2,2,3,4,4,5,6][k]||0;
 const TOTAL=ZONES.length*LPZ;""")
@@ -219,8 +219,11 @@ ART_OWN=[i for i in ART_OWN if all(os.path.exists(P(ROOT,'art',f'{k}_{i}.webp'))
 # ---- v50: bonus stage "Treasure in the Clouds" after a boss win (src/v50.js)
 rep("const speed=()=>(","const speed=()=>mode==='bonus'?bnSpeed():(")
 rep(":[{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();",":[...bnAct(),{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();")
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')+'\n'+rd('v51.js')
-css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')+'\n'+rd('v51.css')
+# ---- v52: holiday events (mode 'event' plays like a normal level: goal + countdown)
+rep("mode==='daily'?endless.goal:mode!=='levels'?999:","mode==='daily'?endless.goal:mode!=='levels'&&mode!=='event'?999:")
+rep("function drawCountdown(){if(isBoss()||mode!=='levels'||","function drawCountdown(){if(isBoss()||(mode!=='levels'&&mode!=='event')||")
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')+'\n'+rd('v51.js')+'\n'+rd('v52.js')
+css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')+'\n'+rd('v51.css')+'\n'+rd('v52.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')
