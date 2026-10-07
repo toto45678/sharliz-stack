@@ -8,6 +8,7 @@ function build(n){for(let k=0;k<3000&&!(tower.length-1>=n&&state==='aim'&&swinge
   // the game's last real animation frame can still fire after this (the virtual clock is far ahead of real time by now):
   // make that stray frame a normal .033 s step instead of a big negative one, and re-sync on the first recorded frame
   last=-1e12;
+  try{cv.style.filter=''}catch(e){}   // a perfect-combo party during the build can leave its hue-rotate filter on the canvas
   if(swinger&&(swinger.kind==='sticky'||swinger.kind==='magnet'))swinger.kind=null}   // a random sticky/magnet Sharliz would only distract here
 const RED='#ef4444',YEL='#facc15',GRN='#22c55e',CYA='#67e8f9',LEAN=.7;
 const mi=()=>hz.m.mirror;

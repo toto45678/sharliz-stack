@@ -23,7 +23,8 @@ const setup=()=>{swinger=null;state='wait';spawnAt=time;hz.forceKind='bomb'};
 const onScr=x=>x>20&&x<W-20;
 // scene A: the bomb is dropped onto the tower -> BOOM
 const A={level:13,get floors(){calm();fast(true);build(3);return 3},dur:9,seed:5,fadeOut:true,
-  start(){fast(false);setup();arm()},
+  start(){try{cv.style.filter=''}catch(e){}   // a party (3 Perfects in the setup) can leave the canvas hue-rotated
+    fast(false);setup();arm()},
   speed(t){const M=SC.mem;if(M.boomT!=null)return t-M.boomT<.6?.45:1;if(M.dropT!=null)return .45;if(M.seenT!=null&&t-M.seenT<.9)return .3;return 1},
   tick(t){clk();calm();const M=SC.mem,I=[],s=sw(),b=bombNow(),f=dropping&&dropping.kind==='bomb'?dropping:null;
     if(b){const x=xOf(b.xs),y=s.y+BC;if(onScr(x)){if(!b.entering)M.seenT=M.seenT??t;const sp=M.seenT==null?-1:t-M.seenT;if(sp>=0&&sp<.9)I.push({k:'spot',x,y,r:64,a:.55*Math.min(1,sp/.2)*Math.min(1,(.9-sp)/.25)});I.push({k:'ring',x,y,r:48,col:'#ef4444'})}
@@ -34,7 +35,8 @@ const A={level:13,get floors(){calm();fast(true);build(3);return 3},dur:9,seed:5
     return I}};
 // scene B: tap the bomb -> defused; the next Sharliz lands normally
 const B={level:13,get floors(){calm();fast(true);build(3);return 3},dur:12,seed:5,fadeIn:true,fadeOut:true,
-  start(){fast(false);setup();const s=sw();SC.mem.h={x:W*.72,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[];arm()},
+  start(){try{cv.style.filter=''}catch(e){}
+    fast(false);setup();const s=sw();SC.mem.h={x:W*.72,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[];arm()},
   speed(t){const M=SC.mem,b=bombNow();if(M.doneT==null)return b&&b.entering?1:.6;return !M.dropped&&t-M.doneT>.6&&(!swinger||swinger.entering)?1.6:1},
   tick(t){clk();calm();const M=SC.mem,I=[],dt=1/30,s=sw(),b=bombNow();
     if(M.doneT==null){

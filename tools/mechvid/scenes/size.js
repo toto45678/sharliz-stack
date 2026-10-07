@@ -6,7 +6,7 @@ const topP=()=>{const n=tower.length,s=tower[n-1];return {x:xOf(s.xs)+swayOffset
 // While rec.py waits after SC_setup the page's real-time loop runs frame() once, so the next frame gets a big negative dt
 // (shake/bump jump, timers run backwards). Every scene therefore sets itself up on its first video frame (not in start())
 // and re-syncs the game's frame clock (`last`) to the virtual one.
-function fresh(){last=__man.now();shake=0;bump=0;slowmoT=0;freeze=0;camY=camTarget();particles=[];popups=[];kaleido=[]}
+function fresh(){last=__man.now();partyT=0;try{cv.style.filter=''}catch(e){}shake=0;bump=0;slowmoT=0;freeze=0;camY=camTarget();particles=[];popups=[];kaleido=[]}
 // predicted landing offset (xs units) if the player tapped now: same fall as update() + worldTwist()
 const predDx=()=>{if(state!=='aim'||!swinger||swinger.entering)return null;const top=tower[tower.length-1],z=baseId(zone()),dt=1/240,ty=yOf(tower.length);let y=swingY(),vy=0,xs=swinger.xs,tt=time;
   const g=BH*30*zone().grav*(swinger.kind==='balloon'?.42:1)*hatFall()*(hz.gravK||1),wk=wind*hatWind();
@@ -22,8 +22,11 @@ function placeFor(T,o){const r=rangeXs(),sp=speed(),drift=predDx()-(swinger.xs-t
       if(tt>.15&&(prev-xT)*(x-xT)<=0&&(!best||Math.abs(tt-T)<Math.abs(best.e)))best={x0,d0,e:tt-T};prev=x}}}
   if(best){swinger.xs=best.x0;swinger.dir=best.d0;SC.mem.after=time+T+best.e-.12}SC.mem.pf=best&&{x0:+best.x0.toFixed(3),d0:best.d0,e:+best.e.toFixed(3),xT:+xT.toFixed(3)};return best}
 SC._pd=()=>predDx();
-// no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video
-const onlyLanding=()=>{popups=popups.filter(p=>p.key==='perfect'||p.key==='wow'||p.key==='great')};
+// no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video (other keyed popups such as
+// 'Slipped!' are born dead, so they are never drawn; plain messages go to the toast lane below the crop)
+const keepPop=p=>p.key==='perfect'||p.key==='wow'||p.key==='great';
+if(!window.__mvPop){window.__mvPop=1;const _sp=window.stackPopup;window.stackPopup=function(p){if(p&&!keepPop(p))p.life=-1;return _sp.apply(this,arguments)}}
+const onlyLanding=()=>{popups=popups.filter(keepPop)};
 // tower of 3 straight floors, built the way 'continue from checkpoint' does (SC_setup's perfect-drop build can loop forever when
 // the fixed-step swing never samples within 0.02 of the middle, e.g. level 53), then the same colours in both scenes
 function paint(kind){while(tower.length<4)tower.push(Object.assign(makeSharliz(),{xs:0}));balance=0;swayK=0;wind=windFor(tower.length);swinger.kind=kind||null;delete swinger.sz;swinger.wt=1;swinger.gold=false;swinger.rare=null;swinger.color=COLORS[0];const cs=[COLORS[1],COLORS[3],COLORS[2],COLORS[1]];tower.forEach((s,i)=>{if(i){s.color=cs[i%cs.length]}})}
@@ -63,9 +66,10 @@ const B={level:73,floors:0,dur:12,seed:9,fadeIn:true,fadeOut:true,
     else if(M.land2==null){const q=t-M.landT;
       if(q<1.2){const tp=topP();I.push({k:'ring',x:tp.x,y:tp.y+BH*.13,r:S*.65,col:GOOD})}
       if(q<1.5)I.push({k:'badge',x:M.bx,y:sy(M.bwy),ok:true,p:Math.min(1,q/.45)*Math.min(1,(1.5-q)/.2)});
+      if(swinger&&swinger.kind==='giant'&&!M.gcol){M.gcol=1;swinger.color=COLORS[2]}   // the giant in another colour than the tiny
       const gi=swinger&&swinger.kind==='giant'&&!swinger.entering;
       if(gi||M.drop2!=null){const p=predDx(),ok=M.drop2!=null||(p!=null&&Math.abs(p)<.3);I.push({k:'fn',f:(g,tt)=>target(g,ok?GOOD:TGT,tt,winRx('giant'))})}
-      if(M.drop2==null&&gi&&dropAt(M,[.22,-.22])){M.drop2=t;M.press=t}
+      if(M.drop2==null&&gi&&dropAt(M,.22)){M.drop2=t;M.press=t}
       if(M.drop2!=null&&!dropping){M.land2=t;M.bx2=xOf(tower[0].xs)+S*1.75;M.bwy2=yOf(tower.length-1)-BH*.8;this.dur=t+1.6}}
     else{const q=t-M.land2,tp=topP();if(q<1.2)I.push({k:'ring',x:tp.x,y:tp.y,r:S*1.05,col:GOOD});I.push({k:'badge',x:M.bx2,y:sy(M.bwy2),ok:true,p:Math.min(1,q/.45)})}
     if(M.land2!=null&&t-M.land2>.6){M.h.x+=(W*.95-M.h.x)*.08;M.h.y+=(s.y+560-M.h.y)*.08}

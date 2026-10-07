@@ -34,7 +34,8 @@ function windArrow(I,t,s){const g=hz.gust;if(!g)return;const D=g.dir,p=Math.min(
   I.push({k:'fn',f:(g2)=>{g2.globalAlpha=Math.min(1,Math.sin(ph*Math.PI)*1.8);SC_lib.arrow(g2,x0+sh,y,x1+sh,y,'#ef4444',p)}})}
 // scene A: dropped straight above the tower -> the gust blows it off
 const A={level:23,get floors(){calm();fast(true);build(4);return 4},dur:9,seed:3,fadeOut:true,
-  start(){fast(false);setup(tower[tower.length-1].xs);arm()},
+  start(){try{cv.style.filter=''}catch(e){}   // a party (3 Perfects in the setup) can leave the canvas hue-rotated
+    fast(false);setup(tower[tower.length-1].xs);arm()},
   speed(t){const M=SC.mem;if(M.missT!=null)return t-M.missT<.6?.45:1;if(M.dropT!=null)return .4;return 1},
   tick(t){clk();calm();const M=SC.mem,I=[],s=sw(),g=hz.gust;
     if(M.dropT==null){windArrow(I,t,s);
@@ -60,7 +61,12 @@ function choose(){const g=hz.gust,r=rangeXs();let best=null;
     const sc=Math.abs(Math.abs(p.d)-.95)*2+Math.abs(p.k*hB-1.4)*.6;if(!best||sc<best.sc)best={...p,g0,dir,sc}}if(best)break}
   return best}
 const B={level:23,get floors(){calm();fast(true);build(4);return 4},dur:12,seed:3,fadeIn:true,fadeOut:true,
-  start(){fast(false);const M=SC.mem;startEvent('wind');const g=hz.gust,p=choose();
+  start(){try{cv.style.filter=''}catch(e){}
+    fast(false);const M=SC.mem;
+    // the setup leaves the swing on either side (run to run); start it on the left, swinging right (mirror image, same speed),
+    // so the drop comes ~1.4 s in instead of a full extra swing later
+    if(swinger.xs>0){swinger.xs=-swinger.xs;swinger.dir=-swinger.dir}
+    startEvent('wind');const g=hz.gust,p=choose();
     if(p){g.dir=p.dir;g.t=p.g0;M.p=p;M.ax=xOf(p.xs)}else{g.dir=DIR;g.t=g.warn;M.ax=xOf(tower[tower.length-1].xs-drift(g.warn+.8))}
     const s=sw();M.h={x:W*.86,y:s.y+470};M.press=-9;M.taps=[];arm()},
   speed(t){const M=SC.mem;if(M.dropT!=null&&M.landT==null)return .45;if(M.landT!=null)return 1;return SPB},

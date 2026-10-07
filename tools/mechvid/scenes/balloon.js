@@ -27,7 +27,8 @@ function land(){toAim(.25);for(let k=0;k<90&&!aimed(.03);k++)SC_step();drop();co
 const bubble=s=>{const n=tower.indexOf(s),r=S*(.42+(s.inflate||0)*.42);return {x:xOf(s.xs)+swayOffset(n,tower.length),y:sy(yOf(n))-BH*.5-r*.75,r}};
 // scene A: nobody lands on it -> the bubble lifts it away
 const A={level:33,get floors(){calm();fast(true);build(4);return 4},dur:10,seed:9,fadeOut:true,
-  start(){SC.mem.bal=land();fast(false);arm()},
+  start(){try{cv.style.filter=''}catch(e){}   // a party (3 Perfects in the setup) can leave the canvas hue-rotated
+    SC.mem.bal=land();fast(false);arm()},
   speed(t){const M=SC.mem;if(M.upT!=null)return t-M.upT<.6?.45:1;if(M.bal&&M.bal.floatT<.45)return .5;return 1},
   tick(t){clk();calm();const M=SC.mem,I=[],s=sw();
     if(M.bal&&M.upT==null){if(tower.includes(M.bal)){const b=bubble(M.bal);M.last={x:xOf(M.bal.xs),y:sy(yOf(tower.indexOf(M.bal))),b};I.push({k:'ring',x:b.x,y:b.y,r:b.r+16,col:'#ef4444'})}
@@ -38,7 +39,8 @@ const A={level:33,get floors(){calm();fast(true);build(4);return 4},dur:10,seed:
     return I}};
 // scene B: the next Sharliz lands on the bubble -> pop, the tower keeps the floor
 const B={level:33,get floors(){calm();fast(true);build(4);return 4},dur:12,seed:9,fadeIn:true,fadeOut:true,
-  start(){SC.mem.bal=land();
+  start(){try{cv.style.filter=''}catch(e){}
+    SC.mem.bal=land();
     const s=sw();SC.mem.h={x:W*.8,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[];fast(false);arm()},
   speed(t){const M=SC.mem;if(M.dropT!=null&&M.landT==null)return .45;return M.landT==null?.75:1},
   tick(t){clk();calm();const M=SC.mem,I=[],dt=1/30,s=sw(),bal=M.bal;

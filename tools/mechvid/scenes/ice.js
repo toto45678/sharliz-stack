@@ -6,7 +6,7 @@ const topP=()=>{const n=tower.length,s=tower[n-1];return {x:xOf(s.xs)+swayOffset
 // While rec.py waits after SC_setup the page's real-time loop runs frame() once, so the next frame gets a big negative dt
 // (shake/bump jump, timers run backwards). Every scene therefore sets itself up on its first video frame (not in start())
 // and re-syncs the game's frame clock (`last`) to the virtual one.
-function fresh(){last=__man.now();shake=0;bump=0;slowmoT=0;freeze=0;camY=camTarget();particles=[];popups=[];kaleido=[]}
+function fresh(){last=__man.now();partyT=0;try{cv.style.filter=''}catch(e){}shake=0;bump=0;slowmoT=0;freeze=0;camY=camTarget();particles=[];popups=[];kaleido=[]}
 // predicted landing offset (xs units) if the player tapped now: same fall as update() + worldTwist()
 const predDx=()=>{if(state!=='aim'||!swinger||swinger.entering)return null;const top=tower[tower.length-1],z=baseId(zone()),dt=1/240,ty=yOf(tower.length);let y=swingY(),vy=0,xs=swinger.xs,tt=time;
   const g=BH*30*zone().grav*(swinger.kind==='balloon'?.42:1)*hatFall()*(hz.gravK||1),wk=wind*hatWind();
@@ -22,8 +22,11 @@ function placeFor(T,o){const r=rangeXs(),sp=speed(),drift=predDx()-(swinger.xs-t
       if(tt>.15&&(prev-xT)*(x-xT)<=0&&(!best||Math.abs(tt-T)<Math.abs(best.e)))best={x0,d0,e:tt-T};prev=x}}}
   if(best){swinger.xs=best.x0;swinger.dir=best.d0;SC.mem.after=time+T+best.e-.12}SC.mem.pf=best&&{x0:+best.x0.toFixed(3),d0:best.d0,e:+best.e.toFixed(3),xT:+xT.toFixed(3)};return best}
 SC._pd=()=>predDx();
-// no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video
-const onlyLanding=()=>{popups=popups.filter(p=>p.key==='perfect'||p.key==='wow'||p.key==='great')};
+// no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video (other keyed popups such as
+// 'Slipped!' are born dead, so they are never drawn; plain messages go to the toast lane below the crop)
+const keepPop=p=>p.key==='perfect'||p.key==='wow'||p.key==='great';
+if(!window.__mvPop){window.__mvPop=1;const _sp=window.stackPopup;window.stackPopup=function(p){if(p&&!keepPop(p))p.life=-1;return _sp.apply(this,arguments)}}
+const onlyLanding=()=>{popups=popups.filter(keepPop)};
 // tower of 3 straight floors, built the way 'continue from checkpoint' does (SC_setup's perfect-drop build can loop forever when
 // the fixed-step swing never samples within 0.02 of the middle, e.g. level 53), then the same colours in both scenes
 function paint(kind){while(tower.length<4)tower.push(Object.assign(makeSharliz(),{xs:0}));balance=0;swayK=0;wind=windFor(tower.length);swinger.kind=kind||null;delete swinger.sz;swinger.wt=1;swinger.gold=false;swinger.rare=null;swinger.color=COLORS[0];const cs=[COLORS[1],COLORS[3],COLORS[2],COLORS[1]];tower.forEach((s,i)=>{if(i){s.color=cs[i%cs.length]}})}
@@ -34,14 +37,14 @@ function target(g,col,t,rx,ry){const tp=topP(),y=tp.y-BH*.5,q=(t*1.6)%1;ry=ry||S
 const handTap=(M,t,I)=>{if(M.press>0&&t-M.press<.45)I.push({k:'ripple',x:M.h.x,y:M.h.y,p:(t-M.press)/.45});I.push({k:'hand',x:M.h.x,y:M.h.y,press:Math.max(0,1-(t-M.press)/.2)})};
 const iceRx=()=>S*landTol({kind:'ice'})[1]+4;        // target half-width = the real 'ice sticks' limit (Great window)
 function init(T,o){paint('ice');fresh();placeFor(T,o)}
-// scene A: the ice piece lands a bit off the middle (a normal piece would stay there) -> it slides off
+// scene A: the ice piece lands a bit off the middle (0.42; a normal piece stays up to 0.5) -> it slides off
 const A={level:43,floors:0,dur:9,seed:11,fadeOut:true,
   speed(t){const M=SC.mem;return M.dropT!=null&&M.landT==null?.5:1},
-  tick(t){const M=SC.mem,I=[];if(!M.init){M.init=1;init(1.05,.34)}onlyLanding();const s=sw();
+  tick(t){const M=SC.mem,I=[];if(!M.init){M.init=1;init(1.05,.42)}onlyLanding();const s=sw();
     if(M.landT==null)I.push({k:'fn',f:(g,tt)=>target(g,TGT,tt,iceRx())});
     if(M.dropT==null){
       if(swinger&&swinger.kind==='ice')I.push({k:'ring',x:s.x,y:s.y,r:S*.8,col:RED});
-      if(t>.5&&dropAt(M,.34))M.dropT=t}
+      if(t>.5&&dropAt(M,.42))M.dropT=t}
     else if(M.landT==null){
       if(dropping)I.push({k:'ring',x:xOf(dropping.xs),y:sy(dropping.y),r:S*.8,col:RED});
       else{M.landT=t;const b=bodies[bodies.length-1];M.dir=b&&b.vx?Math.sign(b.vx):Math.sign(M.off);M.lx=xOf(tower[tower.length-1].xs+M.off);M.lwy=yOf(tower.length);this.dur=t+2.2}}

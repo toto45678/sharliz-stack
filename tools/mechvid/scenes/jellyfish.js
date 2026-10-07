@@ -1,6 +1,9 @@
 (async()=>{
 // wait until the game has booted and baked its sprites (rec.py gives up after 60 s on a busy machine); evaluate() awaits this promise
 await new Promise(r=>{const t0=performance.now();let ok=0;const k=()=>{try{if(typeof H3!=='undefined'&&H3.state==='ready'&&H3.baked){if(!ok)ok=performance.now();if(performance.now()-ok>2500)return r()}}catch(e){}if(performance.now()-t0>400000)return r();setTimeout(k,250)};k()});
+// take over the game clock now and let the one real-time frame that is already queued run before SC_setup; on a busy machine it
+// otherwise lands after the fast setup with a negative dt (bump jumps ~250px down, hazard timers run backwards)
+try{__man.on();const l0=last;await new Promise(r=>{const t0=performance.now();const k=()=>{let ch=false;try{ch=last!==l0}catch(e){ch=true}if(ch||performance.now()-t0>8000)return setTimeout(r,300);setTimeout(k,50)};k()});last=__man.now()}catch(e){}
 // jellyfish (level 131): jellyfish float up; a Sharliz dropped through one gets zapped sideways. Tap them to pop them.
 const sw=()=>({x:xOf(swinger?swinger.xs:0),y:sy(swingY())});
 // predicted landing offset if we dropped now (SC_aim maths + the ocean current)
@@ -15,13 +18,15 @@ const dropAt=(M,f=p=>p)=>{const p=pred();if(p==null){M.pp=null;return false}cons
   const R=Math.random;let k=0;Math.random=()=>{k++;return k===1?(f<0?.25:.75):k===2?.85:R()};try{return u.call(this,dt,m,live)}finally{Math.random=R}};w.__sc=1;MECH.jellyfish.update=w}}
 const AIM=()=>SC.s.aim||0;
 const jx=j=>xOf(j.xs);
-function begin(){const M=SC.mem,s=sw();M.camTop=s.y-100;startEvent('jellyfish');const m=hz.m.jellyfish,top=tower[tower.length-1];
+// keep the game's frame clock on the virtual clock before every step (a stray real-time frame would give a negative dt)
+const clk=()=>{try{last=__man.now()}catch(e){}};
+function begin(){clk();try{cv.style.filter=''}catch(e){}const M=SC.mem,s=sw();M.camTop=s.y-100;startEvent('jellyfish');const m=hz.m.jellyfish,top=tower[tower.length-1];
   if(m){m.list[0].xs=top.xs+AIM();m.list[0].y=s.y+195;m.list[1].xs=top.xs+(AIM()>0?-1:1)*.95;m.list[1].y=s.y+262}M.n0=tower.length;M.hearts=hearts;M.piece=swinger}
 // scene A: drop through a jellyfish -> ZAP, pushed sideways, it misses the tower
 const A={level:131,floors:4,seed:3,aim:.17,zapDir:1,dur:9,fadeOut:true,
   start(){begin()},
   speed(t){const M=SC.mem;if(M.zapT!=null)return t-M.zapT<1.2?.35:1;if(M.dropT!=null)return .35;if(t<1.1)return .5;return 1},
-  tick(t){const M=SC.mem,I=[],m=hz.m.jellyfish,ts=topScreen();
+  tick(t){clk();const M=SC.mem,I=[],m=hz.m.jellyfish,ts=topScreen();
     const j=m&&m.list[0];
     if(M.zapT==null&&j&&!j.pop){const x=jx(j);if(t<1.1)I.push({k:'spot',x,y:j.y,r:62,a:.5*Math.min(1,t/.2)*Math.min(1,(1.1-t)/.25)});I.push({k:'ring',x,y:j.y,r:46,col:'#ef4444'});
       if(M.dropT==null){const ty=sy(swingY())+BH*1.4;if(j.y<ty+16&&dropAt(M,p=>p-AIM()))M.dropT=t}}
@@ -36,7 +41,7 @@ const A={level:131,floors:4,seed:3,aim:.17,zapDir:1,dur:9,fadeOut:true,
 const B={level:131,floors:4,seed:3,aim:.17,dur:12,fadeIn:true,fadeOut:true,
   start(){begin();const M=SC.mem;M.h={x:W*.95,y:M.camTop+560};M.press=-9;M.i=0;M.taps=[]},
   speed(t){const M=SC.mem;return M.doneT==null?.55:1},
-  tick(t){const M=SC.mem,I=[],dt=1/30,m=hz.m.jellyfish,ts=topScreen();
+  tick(t){clk();const M=SC.mem,I=[],dt=1/30,m=hz.m.jellyfish,ts=topScreen();
     if(M.doneT==null){const j=m&&m.list[M.i];
       if(j&&!j.pop){const x=jx(j),y=j.y-6;M.h.x+=(x-M.h.x)*Math.min(1,dt*8);M.h.y+=(y-M.h.y)*Math.min(1,dt*8);I.push({k:'ring',x,y:j.y,r:46,col:'#facc15'});
         if(t>.6&&t-M.press>.3&&Math.hypot(M.h.x-x,M.h.y-y)<10){SC_tap(x,j.y);M.press=t;M.taps.push({x,y:j.y,t});M.i++}}

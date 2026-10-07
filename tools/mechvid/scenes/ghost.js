@@ -7,6 +7,7 @@ function build(n){for(let k=0;k<3000&&!(tower.length-1>=n&&state==='aim'&&swinge
   // the game's last real animation frame can still fire after this (the virtual clock is far ahead of real time by now):
   // make that stray frame a normal .033 s step instead of a big negative one, and re-sync on the first recorded frame
   last=-1e12;
+  try{cv.style.filter=''}catch(e){}   // a perfect-combo party during the build can leave its hue-rotate filter on the canvas
   if(swinger&&(swinger.kind==='sticky'||swinger.kind==='magnet'))swinger.kind=null}   // a random sticky/magnet Sharliz would only distract here
 const sw=()=>({x:xOf(swinger?swinger.xs:0),y:sy(swingY())});
 const gh=()=>hz.m.ghost;
@@ -48,7 +49,7 @@ const B={level:251,floors:0,dur:12,seed:7,fadeIn:true,fadeOut:true,
     if(M.doneT==null){
       if(m&&!m.done){const p=gpos(m),e=m.t/m.dur;I.push({k:'ring',x:p.x,y:p.y,r:42,col:YEL});
         const k=Math.min(1,dt*(e>.25?11:5)),tx=Math.max(40,Math.min(W-40,p.x));M.h.x+=(tx-M.h.x)*k;M.h.y+=(p.y-M.h.y)*k;
-        if(e>.55&&Math.hypot(M.h.x-p.x,M.h.y-p.y)<14&&t-M.press>.25){SC_tap(p.x,p.y);M.press=t;M.taps.push({x:p.x,y:p.y,t})}}
+        if(e>.74&&(Math.hypot(M.h.x-p.x,M.h.y-p.y)<14||e>.84)&&t-M.press>.25){M.h.x=p.x;M.h.y=p.y;SC_tap(p.x,p.y);M.press=t;M.taps.push({x:p.x,y:p.y,t})}}
       if(m&&m.done&&M.taps.length)M.doneT=t;if(!m&&M.taps.length)M.doneT=M.doneT??t}
     else{M.h.x+=(W*.76-M.h.x)*Math.min(1,dt*4);M.h.y+=(s.y+470-M.h.y)*Math.min(1,dt*4)}
     for(const q of M.taps){const p=(t-q.t)/.45;if(p<1){I.push({k:'ripple',x:q.x,y:q.y,p});I.push({k:'ring',x:q.x,y:q.y,r:42+p*10,col:GRN})}}

@@ -1,6 +1,9 @@
 (async()=>{
 // wait until the game has booted and baked its sprites (rec.py gives up after 60 s on a busy machine); evaluate() awaits this promise
 await new Promise(r=>{const t0=performance.now();let ok=0;const k=()=>{try{if(typeof H3!=='undefined'&&H3.state==='ready'&&H3.baked){if(!ok)ok=performance.now();if(performance.now()-ok>2500)return r()}}catch(e){}if(performance.now()-t0>400000)return r();setTimeout(k,250)};k()});
+// take over the game clock now and let the one real-time frame that is already queued run before SC_setup; on a busy machine it
+// otherwise lands after the fast setup with a negative dt (bump jumps ~250px down, hazard timers run backwards)
+try{__man.on();const l0=last;await new Promise(r=>{const t0=performance.now();const k=()=>{let ch=false;try{ch=last!==l0}catch(e){ch=true}if(ch||performance.now()-t0>8000)return setTimeout(r,300);setTimeout(k,50)};k()});last=__man.now()}catch(e){}
 // blackout (level 91): the street lights go out; only a PERFECT landing brings the power back
 const sw=()=>({x:xOf(swinger?swinger.xs:0),y:sy(swingY())});
 // predicted landing offset if we dropped right now (same maths as SC_aim)
@@ -26,12 +29,14 @@ function bulb(g,x,y,on,t,pop){g.save();g.translate(x,y);const k=.9*(1+.3*Math.ma
   g.restore()}
 const bulbOn=()=>{const m=hz.m.blackout;if(!m)return 1;return m.t<m.warn?(nightExtra>0?.05:1):0};
 const BX=W=>W-44,BY=c=>c+44;
-function begin(){const M=SC.mem;M.camTop=sw().y-66;startEvent('blackout');const m=hz.m.blackout;if(m)m.t=.45}
+// keep the game's frame clock on the virtual clock before every step (a stray real-time frame would give a negative dt)
+const clk=()=>{try{last=__man.now()}catch(e){}};
+function begin(){clk();try{cv.style.filter=''}catch(e){}const M=SC.mem;M.camTop=sw().y-66;startEvent('blackout');const m=hz.m.blackout;if(m)m.t=.45}
 // scene A: ignore it -> an ordinary (not perfect) landing, the lights stay off
 const A={level:91,floors:4,seed:11,dur:9,fadeOut:true,
   start(){begin()},
   speed(t){const M=SC.mem,m=hz.m.blackout;if(M.landT!=null)return t-M.landT<.7?.45:1;if(M.dropT!=null)return .45;return m&&m.t>m.warn+.15?.5:1},
-  tick(t){const M=SC.mem,I=[],s=sw(),ts=topScreen(),bx=BX(W),by=BY(M.camTop),m=hz.m.blackout;
+  tick(t){clk();const M=SC.mem,I=[],s=sw(),ts=topScreen(),bx=BX(W),by=BY(M.camTop),m=hz.m.blackout;
     if(M.dropT==null&&dark())I.push(guide(ts,s,false));
     if(M.dropT==null&&dark()&&m.t>m.warn+.3&&dropAt(M,p=>Math.abs(p)-.36))M.dropT=t;
     if(M.dropT!=null&&M.landT==null&&!dropping){M.landT=t;this.dur=t+1.9}
@@ -45,7 +50,7 @@ const A={level:91,floors:4,seed:11,dur:9,fadeOut:true,
 const B={level:91,floors:4,seed:11,dur:9,fadeIn:true,fadeOut:true,
   start(){begin();const M=SC.mem;M.h={x:W*.9,y:M.camTop+560};M.press=-9},
   speed(t){const M=SC.mem;if(M.landT!=null)return t-M.landT<.8?.5:1;if(M.dropT!=null)return .5;return dark()?.55:1},
-  tick(t){const M=SC.mem,I=[],s=sw(),ts=topScreen(),bx=BX(W),by=BY(M.camTop),dt=1/30,m=hz.m.blackout;
+  tick(t){clk();const M=SC.mem,I=[],s=sw(),ts=topScreen(),bx=BX(W),by=BY(M.camTop),dt=1/30,m=hz.m.blackout;
     const hx=W*.8,hy=ts.y-30,gone=M.dropT!=null&&t-M.dropT>.35,tx=gone?W+70:hx,ty=gone?ts.y+260:hy;M.h.x+=(tx-M.h.x)*Math.min(1,dt*(gone?3:5));M.h.y+=(ty-M.h.y)*Math.min(1,dt*(gone?3:5));
     if(M.dropT==null&&dark()){const al=pred();
       if(m.t>m.warn+.3&&Math.hypot(M.h.x-hx,M.h.y-hy)<12&&dropAt(M)){M.dropT=t;M.press=t;M.tap={x:M.h.x,y:M.h.y,t}}

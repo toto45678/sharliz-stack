@@ -26,8 +26,10 @@ const noWords=()=>{popups=popups.filter(p=>p.key==='perfect'||p.key==='wow'||p.k
 function clockGuard(){try{const v=__man.now();if(last>v||last<v-1000)last=v}catch(e){}if(SC.f===0){bump=0;shake=0;if(Math.abs(camY-camTarget())>3)camY=camTarget()}}
 
 function setup(){const M=SC.mem;last=-1e9;
-  // same plain swinger in A and B (no random rare/gold variant)
-  Object.assign(swinger,{rare:null,kind:null,gold:false,color:COLORS[2%COLORS.length],mouth:MOUTHS[0],eyes:EYES[0]});M.h={x:W*.95,y:sw().y+BH*4.6};M.press=-9;M.taps=[];
+  // SC_setup zeroes partyT, but a perfect-combo party during the setup drops may have left its hue-rotate filter on the canvas
+  try{cv.style.filter=''}catch(e){}
+  // same plain yellow swinger in A and B (no random rare/gold variant; yellow stands out from the pink tower and the blue ice)
+  Object.assign(swinger,{rare:null,kind:null,gold:false,color:COLORS[0],mouth:MOUTHS[0],eyes:EYES[0]});for(let i=1;i<tower.length;i++)Object.assign(tower[i],{rare:null,kind:null,gold:false,color:COLORS[2],mouth:MOUTHS[0],eyes:EYES[0]});M.h={x:W*.95,y:sw().y+BH*4.6};M.press=-9;M.taps=[];
   // start at the left end of the swing, heading right: it passes over the tower, then freezes on the far side
   swinger.xs=-rangeXs()*.98;swinger.dir=1}
 // shared first half: swing over the tower, freeze once it would land well past it
@@ -67,7 +69,7 @@ const B={level:LEVEL,floors:4,seed:5,dur:20,fadeIn:true,fadeOut:true,
       if(M.thawT!=null&&t-M.thawT>.1&&bestNow(.065)){M.h0=hearts;M.p0=lv.perfect;M.n0=tower.length;M.rel=s;drop();M.dropT=t;M.press=t;M.taps.push({x:M.h.x,y:M.h.y,t})}}
     if(M.dropT!=null&&M.endT==null){if(dropping){const dx=xOf(dropping.xs),dy=sy(dropping.y);I.push({k:'fn',f:g=>dashed(g,M.rel.x,M.rel.y+BH*.55,tp.x,tp.y-BH*.5,GRN,.9)});I.push({k:'ring',x:dx,y:dy,r:BH*.62,col:GRN})}
       else{M.endT=t;M.ok=lv.perfect>M.p0;this.dur=t+1.6}}
-    if(M.endT!=null){const p=Math.min(1,(t-M.endT)/.45);I.push({k:'ring',x:tp.x,y:tp.y,r:BH*.62,col:GRN});I.push({k:'badge',x:tp.x+BH*1.15,y:tp.y-BH*.55,ok:true,p});handTo(W*.95,s.y+BH*4.6,3)}
+    if(M.endT!=null){const p=Math.min(1,(t-M.endT)/.45);I.push({k:'ring',x:tp.x,y:tp.y,r:BH*.62,col:GRN});I.push({k:'badge',x:tp.x+(tp.x<W/2?-1:1)*BH*1.15,y:tp.y-BH*.55,ok:true,p});handTo(W*.95,s.y+BH*4.6,3)}
     handAndRipples(t,I);return I}};
 // warm-up scene with no frames: starts the level once so its own storm art is loaded (and the game's last queued
 // real-time frame has fired) before scene A is set up

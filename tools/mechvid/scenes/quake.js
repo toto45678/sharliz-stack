@@ -22,8 +22,11 @@ function placeFor(T,o){const r=rangeXs(),sp=speed(),drift=predDx()-(swinger.xs-t
       if(tt>.15&&(prev-xT)*(x-xT)<=0&&(!best||Math.abs(tt-T)<Math.abs(best.e)))best={x0,d0,e:tt-T};prev=x}}}
   if(best){swinger.xs=best.x0;swinger.dir=best.d0;SC.mem.after=time+T+best.e-.12}SC.mem.pf=best&&{x0:+best.x0.toFixed(3),d0:best.d0,e:+best.e.toFixed(3),xT:+xT.toFixed(3)};return best}
 SC._pd=()=>predDx();
-// no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video
-const onlyLanding=()=>{popups=popups.filter(p=>p.key==='perfect'||p.key==='wow'||p.key==='great')};
+// no words in the video: keep only the landing feedback (Perfect / Great), as in the bats video (other keyed popups such as
+// 'Slipped!' are born dead, so they are never drawn; plain messages go to the toast lane below the crop)
+const keepPop=p=>p.key==='perfect'||p.key==='wow'||p.key==='great';
+if(!window.__mvPop){window.__mvPop=1;const _sp=window.stackPopup;window.stackPopup=function(p){if(p&&!keepPop(p))p.life=-1;return _sp.apply(this,arguments)}}
+const onlyLanding=()=>{popups=popups.filter(keepPop)};
 // tower of 3 straight floors, built the way 'continue from checkpoint' does (SC_setup's perfect-drop build can loop forever when
 // the fixed-step swing never samples within 0.02 of the middle, e.g. level 53), then the same colours in both scenes
 function paint(kind){while(tower.length<4)tower.push(Object.assign(makeSharliz(),{xs:0}));balance=0;swayK=0;wind=windFor(tower.length);swinger.kind=kind||null;delete swinger.sz;swinger.wt=1;swinger.gold=false;swinger.rare=null;swinger.color=COLORS[0];const cs=[COLORS[1],COLORS[3],COLORS[2],COLORS[1]];tower.forEach((s,i)=>{if(i){s.color=cs[i%cs.length]}})}

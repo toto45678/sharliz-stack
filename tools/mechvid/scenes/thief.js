@@ -28,7 +28,8 @@ function phase(T){const top=tower[tower.length-1],dist=Math.max(1,yOf(tower.leng
   swinger.xs=best.x0;swinger.dir=best.d0}
 // scene A: the crow steals the top Sharliz
 const A={level:5,get floors(){calm();fast(true);build(2);return 2},dur:9,seed:11,fadeOut:true,
-  start(){fast(false);setup();arm()},
+  start(){try{cv.style.filter=''}catch(e){}   // a party (3 Perfects in the setup) can leave the canvas hue-rotated
+    fast(false);setup();arm()},
   speed(t){const c=hz.crow,M=SC.mem;if(M.stoleT!=null)return t-M.stoleT<.6?.45:1;if(!c)return 1;if(M.seenT!=null&&t-M.seenT<.9)return .3;return c.phase==='come'&&c.t/c.dur>.9?.5:1},
   tick(t){clk();calm();const c=hz.crow,M=SC.mem,I=[];
     if(c&&c.phase==='come'&&M.stoleT==null){M.tp=topP();
@@ -42,7 +43,8 @@ const A={level:5,get floors(){calm();fast(true);build(2);return 2},dur:9,seed:11
     return I}};
 // scene B: tap the crow -> he flies away, the tower keeps its top
 const B={level:5,get floors(){calm();fast(true);build(2);return 2},dur:12,seed:11,fadeIn:true,fadeOut:true,
-  start(){fast(false);setup();phase(1.45);const s=sw();SC.mem.h={x:W*.72,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[];arm()},
+  start(){try{cv.style.filter=''}catch(e){}
+    fast(false);setup();phase(1.45);const s=sw();SC.mem.h={x:W*.72,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[];arm()},
   speed(t){const M=SC.mem;return M.doneT==null?.6:1},
   tick(t){clk();calm();const c=hz.crow,M=SC.mem,I=[],dt=1/30,s=sw();
     if(M.doneT==null){

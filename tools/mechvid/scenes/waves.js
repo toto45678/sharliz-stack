@@ -29,6 +29,8 @@ const C0=()=>xOf(tower[0].xs-(hz.m.waves?hz.m.waves.last:0));   // screen x of t
 const T1=1.25;   // the Sharliz passes over the tower ~1.25 s in
 
 function setup(){const M=SC.mem;last=-1e9;
+  // SC_setup zeroes partyT, but a perfect-combo party during the setup drops may have left its hue-rotate filter on the canvas
+  try{cv.style.filter=''}catch(e){}
   // same plain swinger in A and B (no random rare/gold variant)
   Object.assign(swinger,{rare:null,kind:null,gold:false,color:COLORS[3%COLORS.length],mouth:MOUTHS[0],eyes:EYES[0]});M.h={x:W*.95,y:sw().y+BH*4.2};M.press=-9;M.taps=[];M.trail=[];
   const m=hz.m.waves;
@@ -88,7 +90,7 @@ const B={level:LEVEL,floors:1,seed:4,dur:20,fadeIn:true,fadeOut:true,
       if(!dropping){M.endT=t;this.dur=t+1.9}}
     if(M.endT!=null){const n=tower.length,x=xOf(tower[n-1].xs),y=sy(yOf(n-1)),py=sy(yOf(n-2)),p=Math.min(1,(t-M.endT)/.45);
       I.push({k:'fn',f:g=>dashed(g,xOf(tower[n-2].xs),py-BH*.1,xOf(tower[n-2].xs),y-BH*.75,'#ffffff',.95)});
-      I.push({k:'ring',x,y,r:BH*.62,col:GRN});I.push({k:'badge',x:x-BH*1.1,y:y-BH*.35,ok:true,p});   // left: the game's Perfect! popup is on the right
+      I.push({k:'ring',x,y,r:BH*.62,col:GRN});I.push({k:'badge',x:x+(x<W/2?-1:1)*BH*1.1,y:y-BH*.35,ok:true,p});   // opposite the game's Perfect! popup (it goes right when x<W/2)
       M.h.x+=(W*1.05-M.h.x)*Math.min(1,dt*3);M.h.y+=(s.y+BH*4.4-M.h.y)*Math.min(1,dt*3)}
     for(const q of M.taps){const p=(t-q.t)/.45;if(p<1)I.push({k:'ripple',x:q.x,y:q.y,p})}
     I.push({k:'hand',x:M.h.x,y:M.h.y,press:Math.max(0,1-(t-M.press)/.18)});

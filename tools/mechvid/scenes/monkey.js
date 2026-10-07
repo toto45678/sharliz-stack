@@ -7,6 +7,7 @@ function build(n){for(let k=0;k<3000&&!(tower.length-1>=n&&state==='aim'&&swinge
   // the game's last real animation frame can still fire after this (the virtual clock is far ahead of real time by now):
   // make that stray frame a normal .033 s step instead of a big negative one, and re-sync on the first recorded frame
   last=-1e12;
+  try{cv.style.filter=''}catch(e){}   // a perfect-combo party during the build can leave its hue-rotate filter on the canvas
   if(swinger&&(swinger.kind==='sticky'||swinger.kind==='magnet'))swinger.kind=null}   // a random sticky/magnet Sharliz would only distract here
 const sw=()=>({x:xOf(swinger?swinger.xs:0),y:sy(swingY())});
 const mk=()=>hz.m.monkey;
@@ -30,14 +31,14 @@ const A={level:241,floors:0,dur:9,seed:7,fadeOut:true,camTop:20,   // the monkey
     return I}};
 // scene B: tap the monkey -> it runs away, the Sharliz stays, perfect landing
 const B={level:241,floors:0,dur:12,seed:7,fadeIn:true,fadeOut:true,
-  start(){build(4);begin(.5);const s=sw();SC.mem.h={x:W*.72,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[]},
+  start(){build(4);begin(.8);const s=sw();SC.mem.h={x:W*.72,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[]},
   speed(t){const M=SC.mem;return M.doneT==null?.6:1},
   tick(t){hz.since=-99;const m=mk(),M=SC.mem,I=[],dt=1/30,s=sw();
     if(M.cam1==null){M.cam1=s.y-100;M.cam=20}if(M.doneT!=null&&t-M.doneT>.3)M.cam+=(M.cam1-M.cam)*Math.min(1,dt*3);M.camTop=M.cam;
     if(M.doneT==null){
       if(m&&!m.scared){const p=mpos(m),e=m.t/m.dur;I.push({k:'ring',x:p.x,y:p.y,r:42,col:YEL});
         const k=Math.min(1,dt*(e>.3?11:5)),tx=Math.max(40,Math.min(W-40,p.x));M.h.x+=(tx-M.h.x)*k;M.h.y+=(p.y-M.h.y)*k;
-        if(e>.56&&Math.hypot(M.h.x-p.x,M.h.y-p.y)<14&&t-M.press>.25){const q=MECH.monkey.pos(m);SC_tap(q.x,q.y);M.press=t;M.taps.push({x:p.x,y:p.y,t})}}
+        if(e>.72&&(Math.hypot(M.h.x-p.x,M.h.y-p.y)<14||e>.8)&&t-M.press>.25){const q=MECH.monkey.pos(m);M.h.x=p.x;M.h.y=p.y;SC_tap(q.x,q.y);M.press=t;M.taps.push({x:p.x,y:p.y,t})}}
       if(m&&m.scared&&M.taps.length)M.doneT=t;if(!m&&M.taps.length)M.doneT=M.doneT??t}
     else{M.h.x+=(W*.76-M.h.x)*Math.min(1,dt*4);M.h.y+=(s.y+470-M.h.y)*Math.min(1,dt*4)}
     for(const q of M.taps){const p=(t-q.t)/.45;if(p<1){I.push({k:'ripple',x:q.x,y:q.y,p});I.push({k:'ring',x:q.x,y:q.y,r:42+p*10,col:GRN})}}

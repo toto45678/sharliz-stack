@@ -28,6 +28,8 @@ function windSign(g,y,dir,t){g.save();const cx=W/2,half=S*1.25,o=((t*1.4)%1)*S*.
   L.arrow(g,cx-dir*half,y,cx+dir*half,y,WINDC,1);g.restore()}
 const T_REL=1.05;   // the upwind release point is reached ~1.05 s in
 function setup(){const M=SC.mem;last=-1e9;
+  // SC_setup zeroes partyT, but a perfect-combo party during the setup drops may have left its hue-rotate filter on the canvas
+  try{cv.style.filter=''}catch(e){}
   // same plain swinger in A and B (no random rare/gold variant)
   Object.assign(swinger,{rare:null,kind:null,gold:false,color:COLORS[5%COLORS.length],mouth:MOUTHS[0],eyes:EYES[0]});
   // the same tower colours in A and B (setup pieces are random); the crowns from the 5+ perfect combo stay
@@ -75,7 +77,7 @@ const B={level:LEVEL,floors:11,seed:9,dur:20,fadeIn:true,fadeOut:true,
         if(bestNow(.06)){M.p0=lv.perfect;M.path=F.pts;drop();M.dropT=t;M.press=t;M.taps.push({x:M.h.x,y:M.h.y,t})}}}
     if(M.dropT!=null&&M.endT==null){I.push({k:'fn',f:g=>poly(g,M.path,GRN,.75)});if(dropping)I.push({k:'ring',x:xOf(dropping.xs),y:sy(dropping.y),r:BH*.62,col:GRN});
       if(!dropping){M.endT=t;this.dur=t+1.6}}
-    if(M.endT!=null){const p=Math.min(1,(t-M.endT)/.45);I.push({k:'ring',x:tp.x,y:tp.y,r:BH*.62,col:GRN});I.push({k:'badge',x:tp.x+wd*BH*1.15,y:tp.y-BH*.4,ok:true,p});handTo(W*.98,s.y+BH*4.6,3)}
+    if(M.endT!=null){const p=Math.min(1,(t-M.endT)/.45);I.push({k:'ring',x:tp.x,y:tp.y,r:BH*.62,col:GRN});I.push({k:'badge',x:tp.x+(tp.x<W/2?-1:1)*BH*1.15,y:tp.y-BH*.4,ok:true,p});   // opposite the game's Perfect! popuphandTo(W*.98,s.y+BH*4.6,3)}
     handAndRipples(t,I);return I}};
 // warm-up scene with no frames: starts the level once so its own storm art is loaded (and the game's last queued
 // real-time frame has fired) before scene A is set up
