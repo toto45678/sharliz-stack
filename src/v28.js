@@ -73,7 +73,7 @@ tallyRows=function(won){const rows=_tallyRows(won);if(mode==='duo')return rows;c
   if(perk('coins10'))add=Math.round(base*.1);else if(perk('coins25'))add=Math.round(base*.25);else if(perk('bee'))add=(lv.perfect||0)*2;else if(perk('combo')&&lv.best>=2)add=lv.best*2;
   if(!won)add=Math.ceil(add/2);if(add>0)rows.push([t('buddyBonus'),wName('pet',petNow()),add]);return rows};
 const _startLevel=startLevel;
-startLevel=function(l){_startLevel(l);lv.ghost=perk('ghost');if(perk('heart')){hearts=4;updateHud()}BUD.ev=null;BUD.perf=0;BUD.x=null;buddyEnsure()};
+startLevel=function(l){_startLevel(l);lv.ghost=perk('ghost');BUD.ev=null;BUD.perf=0;BUD.x=null;buddyEnsure()};
 const _loseHeart=loseHeart;
 loseHeart=function(msg,x,y,silent,key){if(lv.ghost&&hearts>0){lv.ghost=false;combo=0;popup(t('ghostSave'),x,y-BH*.6,'#e9e4ff');sfx.bloop();BUD.ev='save';BUD.evT=time;vib(20);state='wait';spawnAt=time+.9;updateHud();return}
   _loseHeart(msg,x,y,silent,key)};
