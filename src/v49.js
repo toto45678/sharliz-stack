@@ -1,9 +1,9 @@
-/* ===== v49: fair powers — "different, not stronger" (Raz) for everything that can be bought =====
+/* ===== v49: fair powers — "different, not stronger" (Tzach) for everything that can be bought =====
    - Premium buddies get a cost too (dragon falls faster, unicorn: more wind, cyborg: faster swing).
    - The dragon's extra heart is added through hatK('hearts') — it used to set hearts=4, which erased the king's −1 heart.
    - Astronaut suit: still starts 5 floors up, but with one heart less.
    - Stacking caps: all gear + buddy together give at most +1 heart and at most ×1.5 coins.
-   - Every worn item that has a power also slows the swing a little (×0.95 each, never below ×0.85) — Raz. */
+   - Every worn item that has a power also slows the swing a little (×0.95 each, never below ×0.85) — Tzach. */
 const PET_COST={heart:{fall:1.15},coins25:{wind:1.3},aim:{pts:.9}};
 for(const k in PET_COST)Object.assign(PET_FX[k],PET_COST[k]);
 const FAIR_MAX_HEARTS=1,FAIR_MAX_COINS=1.5;

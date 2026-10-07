@@ -5872,7 +5872,7 @@ const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Ca
   jungle:['Leaf Crown','כתר העלים'],castle:['Ghost Crown','כתר הרוחות'],clouds:['Unicorn Horn','קרן חד-הקרן'],dino:['Dino Frill','צווארון הדינו'],
   factory:['Robot Antenna','אנטנת רובוט'],crystal:['Crystal Tiara','נזר הקריסטל']};
 // powers: imm = mechanic that never appears while worn, plus one bonus (HAT_FX keys from v39 + light, lavaK, swayK, convK, noSlip).
-// Trophies are a reward for beating the boss, so they have no cost (Raz, "משפטי ועסקי" thread, Oct 6). The v49 caps still apply.
+// Trophies are a reward for beating the boss, so they have no cost (Tzach, "משפטי ועסקי" thread, Oct 6). The v49 caps still apply.
 const TROPHY_FX={farmN:{imm:'bats',light:1.45},cityN:{imm:'blackout',coins:1.1},desertN:{imm:'scorpion',boss:1.25},candyN:{imm:'jelly',tol:1.1},
   snowN:{imm:'icicle',wind:.7},oceanN:{imm:'jellyfish',light:1.6},volcanoN:{lavaK:.45,feverT:1.3},spaceN:{imm:'portal',fall:.85},
   farmS:{imm:'tornado',perfPts:1.3},cityS:{imm:'newspaper',noSlip:1},desertS:{swayK:.35,coins:1.1},candyS:{imm:'hail',perfCoins:2},
@@ -6056,7 +6056,7 @@ STYLE_SKINS.push({id:'t_sparkle',cat:'t',price:120,w:1},{id:'t_notes',cat:'t',pr
   {id:'l_confetti',cat:'l',price:150,w:1},{id:'l_stars',cat:'l',price:120,w:1},{id:'l_bubbles',cat:'l',price:120,w:1},{id:'l_hearts',cat:'l',price:150,w:1});
 
 /* ---------------- powers from every slot ---------------- */
-// every upgrade = one advantage + one cost, like the shop hats in v39 (Raz: "different, not stronger")
+// every upgrade = one advantage + one cost, like the shop hats in v39 (Tzach: "different, not stronger")
 const GEAR_FX={outfit:{armor:{hearts:1,fall:1.15},wings:{fall:.75,wind:1.4},magnet:{coins:1.2,tol:.9},ninja:{tol:1.12,wind:1.25}},
   glasses:{night:{light:1.5,pts:.9},scope:{aim:1,pts:.9},lucky:{coins:1.12,wind:1.25}}};
 Object.assign(HAT_FX,{hardhat:{hearts:1,pts:.8},royal:{coins:1.3,hearts:-1},cloudhat:{fall:.7,coins:.9}});
@@ -6281,12 +6281,12 @@ const PAT_SCALE=1.3;
   canvasTex=function(k,w,h,draw){return _ct(k+'_x'+PAT_SCALE,w,h,(g,W,H)=>{const c=document.createElement('canvas');c.width=Math.round(W/PAT_SCALE);c.height=Math.round(H/PAT_SCALE);draw(c.getContext('2d'),c.width,c.height);g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(c,0,0,W,H)})};
   try{return _pt(id,base)}finally{canvasTex=_ct}}}
 
-/* ===== v49: fair powers — "different, not stronger" (Raz) for everything that can be bought =====
+/* ===== v49: fair powers — "different, not stronger" (Tzach) for everything that can be bought =====
    - Premium buddies get a cost too (dragon falls faster, unicorn: more wind, cyborg: faster swing).
    - The dragon's extra heart is added through hatK('hearts') — it used to set hearts=4, which erased the king's −1 heart.
    - Astronaut suit: still starts 5 floors up, but with one heart less.
    - Stacking caps: all gear + buddy together give at most +1 heart and at most ×1.5 coins.
-   - Every worn item that has a power also slows the swing a little (×0.95 each, never below ×0.85) — Raz. */
+   - Every worn item that has a power also slows the swing a little (×0.95 each, never below ×0.85) — Tzach. */
 const PET_COST={heart:{fall:1.15},coins25:{wind:1.3},aim:{pts:.9}};
 for(const k in PET_COST)Object.assign(PET_FX[k],PET_COST[k]);
 const FAIR_MAX_HEARTS=1,FAIR_MAX_COINS=1.5;
