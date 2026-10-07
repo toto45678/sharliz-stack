@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007221800"><\/script>')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007225245"><\/script>')})();</script>
 </head><body>
 <title>Sharliz Stack</title>
 <style>
@@ -1863,6 +1863,52 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .bg-dots{display:flex;gap:6px}.bg-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid #120d2b}.bg-dots i.on{background:#ffe24d;width:22px;border-radius:6px}
 .bg-bt{display:flex;gap:8px;width:100%}.bg-bt .btn{flex:1}
 .bg-help{margin-inline-start:8px;width:30px;height:30px;border-radius:50%;border:3px solid #120d2b;background:#ffe24d;color:#120d2b;font:900 1.1rem/1 Rubik,system-ui,sans-serif;box-shadow:0 3px 0 #120d2b;vertical-align:middle}
+
+/* ===== v63: sticker shop ===== */
+.ss-pill{position:relative;flex:none;display:inline-flex;align-items:center;gap:3px;padding:2px 10px 2px 3px;border-radius:999px;border:3px solid #120d2b;background:linear-gradient(180deg,#8f6bff,#5a35c4);box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 3px 0 rgba(0,0,0,.35);color:#fff;font:1.05rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;direction:ltr}
+.ss-pill img{width:26px;height:26px;object-fit:contain}
+.ss-pill .dot{position:absolute;top:-5px;right:-5px;width:14px;height:14px;border-radius:50%;background:#ff3b5c;border:2.5px solid #120d2b}
+.sb-top .ss-pill{margin-inline-start:auto}.sb-top .ss-pill+.coin-pill{margin-inline-start:0}
+.ss-pill.big{font-size:1.25rem;padding-inline-end:12px}.ss-pill.big img{width:30px;height:30px}
+.ss{position:absolute;inset:0;z-index:15;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);overflow:hidden;
+  background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.12) 0 2px,transparent 3px) 0 0/60px 60px,radial-gradient(ellipse at 50% 20%,#7a45d8,#3a1a8a 60%,#1c0c50);animation:fadeIn .2s}
+.ss[hidden]{display:none}
+.ss .sb-ttl{color:#ffd23f;rotate:-2deg}
+.ss-body{flex:1;overflow-y:auto;padding:4px 14px 24px;-webkit-overflow-scrolling:touch}
+.ss-how{margin:0 0 10px;text-align:center;font-weight:800;font-size:.9rem;opacity:.9}
+.ss-sell{border-radius:20px;border:3.5px solid #120d2b;background:linear-gradient(180deg,#fff7d6,#ffe08a);color:#2a1a66;padding:10px 12px 12px;box-shadow:0 5px 0 #120d2b;display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.ss-sell.empty{background:linear-gradient(180deg,#efe9ff,#d8ccff)}
+.ss-sh b{font:1.2rem/1.1 "Lilita One","Secular One",system-ui,sans-serif}
+.ss-dups{display:flex;flex-wrap:wrap;gap:6px;min-height:0}
+.ss-dups span{position:relative;width:44px;height:44px;border-radius:10px;background:#fff;border:2.5px solid #120d2b;display:grid;place-items:center}
+.ss-dups span img{width:38px;height:38px;object-fit:contain}
+.ss-dups span i{position:absolute;bottom:-7px;inset-inline-end:-7px;font-style:normal;padding:0 5px;border-radius:999px;background:#2d86ee;border:2px solid #120d2b;color:#fff;font:.7rem/1.3 "Lilita One",system-ui,sans-serif;direction:ltr}
+.ss-dups span.r-r{background:linear-gradient(135deg,#ffd6f5,#c8f0ff 40%,#fff3b0)}.ss-dups span.r-h{background:linear-gradient(135deg,#ff8ad8,#7ee8ff 30%,#fff27a 55%,#b58cff)}
+.ss-dups .more{font:.9rem/1 "Lilita One",system-ui,sans-serif;color:#2a1a66}
+.ss-sellbtn{display:flex;align-items:center;justify-content:center;gap:4px}.ss-sellbtn img{width:28px;height:28px;margin-block:-6px}
+.ss-sellbtn[disabled]{filter:grayscale(.8);opacity:.6}
+.ss-h{margin:18px 2px 8px;font:1.25rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill}
+.ss-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px}
+.ss-it{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 20px;border-radius:16px;border:3px solid #120d2b;background:#fff;color:#2a1a66;box-shadow:0 4px 0 #120d2b}
+.ss-it.r-r{background:linear-gradient(135deg,#ffe6fa,#dcf6ff 40%,#fff8cc)}.ss-it.r-h{background:linear-gradient(135deg,#ffb3e6,#a8f0ff 30%,#fff59e 55%,#d0b8ff);background-size:200% 200%;animation:sbHolo 4s linear infinite}
+.ss-art{width:72px;height:72px;display:grid;place-items:center}.ss-art img,.ss-art canvas{width:100%;height:100%;object-fit:contain}
+.ss-it[data-id] .ss-art img{filter:brightness(.25) saturate(0);opacity:.75}
+.ss-it small{font-weight:800;font-size:.72rem;line-height:1.1;text-align:center}
+.ss-it em{position:absolute;bottom:-11px;left:50%;translate:-50% 0;display:inline-flex;align-items:center;gap:1px;padding:1px 8px 1px 6px;border-radius:999px;border:2.5px solid #120d2b;background:linear-gradient(180deg,#8f6bff,#5a35c4);color:#fff;font:.95rem/1.2 "Lilita One",system-ui,sans-serif;font-style:normal;-webkit-text-stroke:2.5px #120d2b;paint-order:stroke fill;white-space:nowrap;direction:ltr}
+.ss-it em img{width:20px;height:20px}
+.ss-it.sp{background:linear-gradient(180deg,#fff2a8,#ffcf3a)}.ss-it.sp.ss-own{background:linear-gradient(180deg,#d9ffd0,#8fe07a)}.ss-it.sp.ss-own em{background:#2fa512}
+.ss-all{grid-column:1/-1;text-align:center;font-weight:800;margin:4px 0}
+.ss-ask,.ss-win{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:rgba(10,6,30,.6);animation:fadeIn .15s;padding:20px}
+.ss-box{width:min(86vw,320px);border-radius:22px;border:4px solid #120d2b;background:#fff;color:#2a1a66;padding:18px 14px 14px;box-shadow:0 6px 0 #120d2b;text-align:center;animation:popIn .3s cubic-bezier(.3,1.6,.5,1)}
+.ss-box p{margin:0 0 14px;font:1.15rem/1.25 "Lilita One","Secular One",system-ui,sans-serif}
+.ss-box .row{display:flex;gap:10px}.ss-box .row .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:3px}.ss-box .row img{width:24px;height:24px;margin-block:-6px}
+.ss-wc{position:relative;width:min(80vw,300px);display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 16px 16px;border-radius:24px;border:4px solid #120d2b;background:linear-gradient(180deg,#6b3fd6,#3d1d93);box-shadow:0 6px 0 #120d2b;animation:popIn .4s cubic-bezier(.3,1.6,.5,1);overflow:hidden}
+.ss-wc .rays{position:absolute;left:50%;top:38%;width:520px;height:520px;translate:-50% -50%;background:repeating-conic-gradient(rgba(255,226,77,.22) 0 10deg,transparent 10deg 20deg);border-radius:50%;animation:evSpin 10s linear infinite;pointer-events:none}
+.ss-wc .art{position:relative;width:150px;height:150px;display:grid;place-items:center}.ss-wc .art img,.ss-wc .art canvas{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(10,8,40,.45))}
+.ss-wc b{position:relative;font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffd23f;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;rotate:-3deg}
+.ss-wc small{position:relative;font-weight:800;font-size:1rem}
+.ss-wc .btn{position:relative;width:100%;margin-top:6px}
+.sb-top:has(.ss-pill) .sb-ttl{font-size:1.2rem;-webkit-text-stroke-width:4px}
 
 </style>
 
@@ -7222,10 +7268,10 @@ nestRender=keepScroll(nestRender,()=>NEL,'.ns-scroll');achRender=keepScroll(achR
    Cover → chapter pages of 9 numbered slots (die-cut stickers, holo foil for rare/holo), tap a sticker → zoom with tilt + shine.
    New chapter "Sharliz": 24 illustrated stickers that only come from STICKER PACKS (3 stickers each; common/rare/holo).
    Packs: every 3 won levels, the first win over each boss, or 150 coins. Duplicates → coins. A full chapter → a big reward. */
-Object.assign(I18N.en,{sbOpen:'Open',sbBack:'Back',sbPacks:'Packs: {n}',sbNext:'Next pack {n}/3',sbHow:'Packs come from wins, bosses, the daily gift, weekly missions, level-ups, the tournament, the Pass and events',psPack:'Sticker pack',dlPack:'+ pack',sbOpenPack:'Opening a pack!',sbOpenSub:'Which stickers are inside?',sbTap:'Tap to continue',sbTapPack:'Tap the pack!',sbNew:'New!',sbDup:'Double +{n}',sbMore:'Open another ({n})',sbToBook:'To the album',sbAll:'Open all ({n})',sbOpenMany:'Opening {n} packs!',sbNewN:'{n} new stickers!',sbNoNew:'All doubles: coins!',sbGold:'Golden pack',sbGoldGot:'+1 golden sticker pack!',sbGoldOpen:'Golden pack!',sbGoldSub:'A holo sticker inside for sure!',sbHowG:'Golden packs: the gold chest in the bonus stage, a tournament gold medal and day 7 of the daily gift',
+Object.assign(I18N.en,{sbOpen:'Open',sbBack:'Back',sbPacks:'Packs: {n}',sbNext:'Next pack {n}/3',sbHow:'Packs come from wins, bosses, the daily gift, weekly missions, level-ups, the tournament, the Pass and events',psPack:'Sticker pack',dlPack:'+ pack',sbOpenPack:'Opening a pack!',sbOpenSub:'Which stickers are inside?',sbTap:'Tap to continue',sbTapPack:'Tap the pack!',sbNew:'New!',sbMore:'Open another ({n})',sbToBook:'To the album',sbAll:'Open all ({n})',sbOpenMany:'Opening {n} packs!',sbNewN:'{n} new stickers!',sbGold:'Golden pack',sbGoldGot:'+1 golden sticker pack!',sbGoldOpen:'Golden pack!',sbGoldSub:'A holo sticker inside for sure!',sbHowG:'Golden packs: the gold chest in the bonus stage, a tournament gold medal and day 7 of the daily gift',
   sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
   sbHow_shz:'Comes from sticker packs',sbCover:'Collect · Discover · Complete!',ch_shz:'Sharliz',sbPage:'Page {a}/{b}'});
-Object.assign(I18N.he,{sbOpen:'פתחו',sbBack:'חזרה',sbPacks:'שקיות: {n}',sbNext:'שקית הבאה {n}/3',sbHow:'שקיות מקבלים מניצחונות, בוסים, המתנה היומית, משימות שבועיות, עליית רמה, הטורניר, ה-Pass ואירועים',psPack:'שקית מדבקות',dlPack:'+ שקית',sbOpenPack:'פותחים שקית!',sbOpenSub:'איזה מדבקות מחכות בפנים?',sbTap:'הקישו להמשיך',sbTapPack:'הקישו על השקית!',sbNew:'חדש!',sbDup:'כפולה +{n}',sbMore:'פתחו עוד ({n})',sbToBook:'חזרה לאלבום',sbAll:'פתחו הכל ({n})',sbOpenMany:'פותחים {n} שקיות!',sbNewN:'{n} מדבקות חדשות!',sbNoNew:'הכל כפולות: מטבעות!',sbGold:'שקית זהב',sbGoldGot:'+1 שקית מדבקות זהב!',sbGoldOpen:'שקית זהב!',sbGoldSub:'בטוח יש בפנים מדבקת הולוגרמה!',sbHowG:'שקיות זהב: תיבת הזהב בשלב הבונוס, מדליית זהב בטורניר ויום 7 במתנה היומית',
+Object.assign(I18N.he,{sbOpen:'פתחו',sbBack:'חזרה',sbPacks:'שקיות: {n}',sbNext:'שקית הבאה {n}/3',sbHow:'שקיות מקבלים מניצחונות, בוסים, המתנה היומית, משימות שבועיות, עליית רמה, הטורניר, ה-Pass ואירועים',psPack:'שקית מדבקות',dlPack:'+ שקית',sbOpenPack:'פותחים שקית!',sbOpenSub:'איזה מדבקות מחכות בפנים?',sbTap:'הקישו להמשיך',sbTapPack:'הקישו על השקית!',sbNew:'חדש!',sbMore:'פתחו עוד ({n})',sbToBook:'חזרה לאלבום',sbAll:'פתחו הכל ({n})',sbOpenMany:'פותחים {n} שקיות!',sbNewN:'{n} מדבקות חדשות!',sbGold:'שקית זהב',sbGoldGot:'+1 שקית מדבקות זהב!',sbGoldOpen:'שקית זהב!',sbGoldSub:'בטוח יש בפנים מדבקת הולוגרמה!',sbHowG:'שקיות זהב: תיבת הזהב בשלב הבונוס, מדליית זהב בטורניר ויום 7 במתנה היומית',
   sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
   sbHow_shz:'מגיעה בשקיות מדבקות',sbCover:'אספו · גלו · השלימו!',ch_shz:'שארליז',sbPage:'עמוד {a}/{b}'});
 /* the 24 Sharliz stickers: id, rarity, names, a fun line */
@@ -7254,7 +7300,7 @@ const SHZ=[
  ['s22','h',T_('Golden Sharliz'),'שארליז הזהב',T_('Shines brighter than every coin.'),'נוצצת יותר מכל מטבע.'],
  ['s23','h',T_('Galaxy Sharliz'),'שארליז הגלקסיה',T_('Made of stars. Literally.'),'עשויה מכוכבים. ממש.'],
  ['s24','h',T_('Rainbow Sharliz'),'שארליז הקשת',T_('Every colour at once!'),'כל הצבעים ביחד!']];
-const SB_DUP={c:10,r:25,h:60},SB_REW={shz:[1500,120],rare:[500,60],boss:[2000,150],world:[1000,100],buddy:[800,80],hat:[1500,120],special:[500,60]};
+const SB_REW={shz:[1500,120],rare:[500,60],boss:[2000,150],world:[1000,100],buddy:[800,80],hat:[1500,120],special:[500,60]};
 function sbData(){const D=progress.stkp=progress.stkp||{};D.packs=D.packs||0;D.gpacks=D.gpacks||0;D.w=D.w||0;D.got=D.got||{};D.done=D.done||{};D.boss=D.boss||{};return D}
 STK_PAGES.unshift({id:'shz',items:()=>{const D=sbData(),L=lang==='he'?1:0;return SHZ.map(s=>({id:'shz:'+s[0],n:D.got[s[0]]||0,src:'art/stk_'+s[0]+'.webp',name:L?s[3]:s[2],line:L?s[5]:s[4],rar:s[1],hint:t('sbHow_shz'),shz:1}))}});
 {const sp=STK_PAGES.findIndex(P=>P.id==='special');if(sp>=0&&!SPECIALS.length)STK_PAGES.splice(sp,1)}
@@ -7364,14 +7410,14 @@ const SB_MAX=10; // most packs opened at once
 /* g = golden pack, many = open all of that kind (up to SB_MAX). Nothing is spent until the pack is torn open. */
 function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])return;const np=many?Math.min(SB_MAX,D[key]):1,art=g?'sb_gpack':'sb_pack';
   const got=[];for(let p=0;p<np;p++)for(let i=0;i<3;i++)got.push(sbRoll(g,i));const seen={};
-  const res=got.map(s=>{const had=(D.got[s[0]]||0)+(seen[s[0]]||0);seen[s[0]]=(seen[s[0]]||0)+1;return {s,dup:had>0}});const coins=res.reduce((a,R)=>a+(R.dup?SB_DUP[R.s[1]]:0),0);
+  const res=got.map(s=>{const had=(D.got[s[0]]||0)+(seen[s[0]]||0);seen[s[0]]=(seen[s[0]]||0)+1;return {s,dup:had>0}});const coins=0; // doubles no longer pay coins: they are sold for sticker stars in the sticker shop (v63)
   const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk'+(g?' gold':'')+(np>1?' many':'');document.getElementById('app').appendChild(m);
   m.innerHTML=`<div class="coin-pill pk-coins">${coinImg()}<span>${progress.coins}</span></div><div class="flash"></div><h3></h3><p></p><div class="pk-cards"></div><div class="pk-pack"><img class="pk-body" src="art/${art}.webp" alt=""><img class="pk-logo" src="art/logo_${lang==='he'?'he':'en'}.webp" alt=""><img class="pk-top" src="art/${art}_top.webp" alt="">${np>1?`<i class="pk-n">×${np}</i>`:''}</div><small class="pk-tap"></small><div class="pk-btns"></div>`;
   m.querySelector('h3').textContent=np>1?t('sbOpenMany',{n:np}):g?t('sbGoldOpen'):t('sbOpenPack');m.querySelector('p').textContent=g?t('sbGoldSub'):t('sbOpenSub');m.querySelector('.pk-tap').textContent=t('sbTapPack');
   const cards=m.querySelector('.pk-cards');if(np>1){const k=res.length;cards.style.setProperty('--cols',k<=9?3:k<=12?4:k<=15?5:6)}
   res.forEach((R,i)=>{const c=document.createElement('div');c.className='pk-card r-'+R.s[1]+(R.dup?' dup':' nw');c.style.setProperty('--i',i);
     c.innerHTML=`<div class="in"><div class="bk"><img src="art/${art}.webp" alt=""></div><div class="fr"><div class="foil"></div><img src="art/stk_${R.s[0]}.webp" alt=""><b></b></div></div><span class="tag ${R.dup?'dup':'nw'}"></span><span class="rc">${t('sbRar_'+R.s[1])}</span>`;
-    c.querySelector('.tag').textContent=np>1?(R.dup?'+'+SB_DUP[R.s[1]]:t('sbNew')):R.dup?t('sbDup',{n:SB_DUP[R.s[1]]}):t('sbNew');c.querySelector('b').textContent=L?R.s[3]:R.s[2];cards.appendChild(c)});
+    c.querySelector('.tag').textContent=R.dup?t('sbDouble'):t('sbNew');c.querySelector('b').textContent=L?R.s[3]:R.s[2];cards.appendChild(c)});
   // before tearing: 'open all' when there is more than one pack of this kind
   if(np===1&&D[key]>1){const all=document.createElement('button');all.className='btn';all.innerHTML='<span></span>';all.querySelector('span').textContent=t('sbAll',{n:Math.min(SB_MAX,D[key])});all.onclick=e=>{e.stopPropagation();sfx.click();m.remove();sbPack(g,true)};m.querySelector('.pk-btns').appendChild(all)}
   let stage=0;const step=()=>{if(stage!==0)return;stage=1;
@@ -7380,13 +7426,13 @@ function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])retur
       m.querySelector('.pk-btns').innerHTML='';m.classList.add('torn');setTimeout(()=>{const b=m.querySelector('.pk-body');if(b)b.src=`art/${art}_open.webp`},250);sfx.flourish(2);vib([20,30,20]);if(sfx.ok())noise({d:.25,v:.08,hp:2500});
       const cs=m.querySelector('.pk-coins span');let shown=progress.coins-coins;cs.textContent=shown;
       const fin=()=>{stage=2;m.querySelector('.pk-tap').textContent='';const bt=m.querySelector('.pk-btns');const D2=sbData(),left=D2[key];
-        if(np>1){const nw=res.filter(R=>!R.dup).length;m.querySelector('p').textContent=nw?t('sbNewN',{n:nw}):t('sbNoNew')}
+        {const nw=res.filter(R=>!R.dup).length;if(np>1)m.querySelector('p').textContent=nw?t('sbNewN',{n:nw}):t('sbDupHint');else if(nw<res.length)m.querySelector('p').textContent=t('sbDupHint')}
         if(left){const more=document.createElement('button');more.className='btn primary';more.innerHTML='<span></span>';more.querySelector('span').textContent=t('sbMore',{n:left});more.onclick=()=>{m.remove();sbPack(g)};bt.appendChild(more);
           if(left>1){const all=document.createElement('button');all.className='btn';all.innerHTML='<span></span>';all.querySelector('span').textContent=t('sbAll',{n:Math.min(SB_MAX,left)});all.onclick=()=>{sfx.click();m.remove();sbPack(g,true)};bt.appendChild(all)}}
         const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=0;sbPageView()};bt.appendChild(back)};
       if(np===1){res.forEach((R,i)=>{const T0=800+i*750,c=cards.children[i];setTimeout(()=>{c.classList.add('tease');if(sfx.ok()&&R.s[1]!=='c')tone({f:400,f2:R.s[1]==='h'?900:700,d:.3,type:'triangle',v:.05})},T0);
         setTimeout(()=>{c.classList.remove('tease');c.classList.add('flip');if(sfx.ok())tone({f:R.s[1]==='h'?1200:R.s[1]==='r'?900:700,f2:R.s[1]==='h'?1900:1300,d:.14,type:'sine',v:.07});vib(R.s[1]==='c'?8:[15,20,15]);
-          if(R.dup)setTimeout(()=>sbFlyCoins(c,m.querySelector('.pk-coins'),()=>{shown+=SB_DUP[R.s[1]];cs.textContent=shown}),500)},T0+(R.s[1]==='c'?250:600))});
+},T0+(R.s[1]==='c'?250:600))});
         setTimeout(fin,800+res.length*750+900)}
       else{// many packs: the cards deal into a grid and flip one after another, fast; doubles pay out at the end in one go
         const dt=Math.max(90,Math.min(160,2600/res.length));res.forEach((R,i)=>{const c=cards.children[i];setTimeout(()=>{c.classList.add('flip');if(sfx.ok())tone({f:R.s[1]==='h'?1200:R.s[1]==='r'?900:650+i*8,f2:R.s[1]==='h'?1900:1300,d:.1,type:'sine',v:R.s[1]==='c'?.04:.07});if(R.s[1]!=='c')vib([15,20,15])},700+i*dt)});
@@ -7580,6 +7626,85 @@ function eggGateTxt(id){const e=WPET[id]&&WPET[id].egg;return t(e==='c'?'eggOnly
 // album: cards for buddies that have their illustration, the round 3D picture for the rest (until ChatGPT draws them)
 {const P=STK_PAGES.find(p=>p.id==='buddy');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const id=it.id.slice(6);if(STK_BUD_ART.includes(id))return it;
   return Object.assign(it,{src:null,card:0,img:()=>wThumb('pet',id)})})}}
+
+/* ===== v63: STICKER SHOP (Tzach, Oct 7: "what do we do with all the extra stickers? sell them back to buy sticker things") =====
+   Doubles of the 24 Sharliz stickers stay in the album (×n) until you SELL them here for sticker stars (common 1, rare 3, holo 8).
+   Pack doubles no longer pay coins (v57) — they become stars when sold. Stars buy: a missing sticker of your choice,
+   a golden pack, and two shop-only looks (sticker-bomb pattern, sticker trail). Stars come ONLY from doubles: never sold for money
+   and never bought with coins, so nothing random can be bought with real money (App Store loot-box rule). */
+Object.assign(I18N.en,{ssTitle:'Sticker shop',ssStars:'Sticker stars',ssDoubles:'Your doubles: {n}',ssNoDup:'No doubles yet. Open packs to get some!',ssSell:'Sell all: +{n}',ssSold:'+{n} sticker stars!',
+  ssPick:'Pick a missing sticker',ssAllGot:'You have all 24 Sharliz stickers!',ssSpecial:'Special',ssBuyQ:'Buy “{x}” for {n} stars?',ssBuy:'Buy',ssCancel:'Cancel',ssNeed:'You need {n} more stars',
+  ssOwned:'Owned',ssGotIt:'It’s yours!',ssOnly:'Only in the sticker shop',ssWear:'Wear it in My hero',ssHow:'Sell doubles → stars → buy what you want!',sbDouble:'Double!',sbDupHint:'Sell doubles in the sticker shop for stars',sk_t_stk:'Stickers'});
+Object.assign(I18N.he,{ssTitle:'חנות המדבקות',ssStars:'כוכבי מדבקה',ssDoubles:'הכפולות שלך: {n}',ssNoDup:'עוד אין כפולות. פותחים שקיות ומקבלים!',ssSell:'מכרו הכל: +{n}',ssSold:'+{n} כוכבי מדבקה!',
+  ssPick:'בחרו מדבקה שחסרה לכם',ssAllGot:'יש לכם את כל 24 מדבקות השארליז!',ssSpecial:'מיוחדים',ssBuyQ:'לקנות את „{x}” ב-{n} כוכבים?',ssBuy:'קנו',ssCancel:'ביטול',ssNeed:'חסרים לכם עוד {n} כוכבים',
+  ssOwned:'שלכם',ssGotIt:'זה שלכם!',ssOnly:'רק בחנות המדבקות',ssWear:'לובשים את זה ב"הגיבור שלי"',ssHow:'מוכרים כפולות ← מקבלים כוכבים ← קונים מה שרוצים!',sbDouble:'כפולה!',sbDupHint:'את הכפולות מוכרים בחנות המדבקות תמורת כוכבים',sk_t_stk:'מדבקות'});
+const SS_SELL={c:1,r:3,h:8},SS_BUY={c:6,r:15,h:40};
+const SS_SPECIAL=[{k:'gold',p:25},{k:'pat',c:'pattern',id:'stkbomb',p:40},{k:'trail',c:'trail',id:'t_stk',p:30}];
+/* the two shop-only looks */
+WPAT.stkbomb={p:1,stk:1,n:[T_('Sticker bomb'),'מדבקות בכל מקום']};
+STYLE_SKINS.push({id:'t_stk',cat:'t',price:1,stk:1});
+const stkItem=(c,id)=>(c==='pattern'&&id==='stkbomb')||(c==='trail'&&id==='t_stk');
+const ssHas=(c,id)=>c==='trail'?wallet().skins.includes(id):wOwned(c,id); // trails live in progress.skins (wOwned has no 'trail' table)
+{const _g=wGate;wGate=function(cat,id){if(stkItem(cat,id)&&!ssHas(cat,id))return t('ssOnly');return _g.apply(this,arguments)}}
+{const _ci=csInfo;csInfo=function(c,id){const I=_ci.apply(this,arguments);if(stkItem(c,id)&&!I.owned){I.gate=t('ssOnly');I.rar='leg'}return I}}
+const SS_COL=['#ff5fa2','#ffd23f','#4ad8ff','#7ef05a','#b48cff','#ff8a3d'];
+function ssShape(g,k,r){g.beginPath();if(k===0){for(let i=0;i<10;i++){const q=i/10*Math.PI*2-Math.PI/2,rr=i%2?r*.45:r;i?g.lineTo(Math.cos(q)*rr,Math.sin(q)*rr):g.moveTo(Math.cos(q)*rr,Math.sin(q)*rr)}g.closePath()}
+  else if(k===1){g.moveTo(0,r*.8);g.bezierCurveTo(-r*1.3,-r*.1,-r*.6,-r*1.05,0,-r*.4);g.bezierCurveTo(r*.6,-r*1.05,r*1.3,-r*.1,0,r*.8)}
+  else if(k===2){g.arc(0,0,r*.8,0,Math.PI*2)}
+  else{g.moveTo(-r*.25,-r);g.lineTo(r*.55,-r);g.lineTo(r*.05,-r*.1);g.lineTo(r*.5,-r*.1);g.lineTo(-r*.45,r);g.lineTo(-r*.05,r*.05);g.lineTo(-r*.5,r*.05);g.closePath()}}
+function ssSticker(g,k,r,col){g.lineJoin='round';ssShape(g,k,r);g.lineWidth=r*.38;g.strokeStyle='#fff';g.stroke();g.lineWidth=r*.1;g.strokeStyle='rgba(18,13,43,.35)';g.stroke();g.fillStyle=col;g.fill();
+  g.save();g.clip();g.fillStyle='rgba(255,255,255,.35)';g.beginPath();g.ellipse(-r*.3,-r*.4,r*.45,r*.22,-.5,0,7);g.fill();g.restore()}
+function ssBomb(g,W,H,base){g.fillStyle=base;g.fillRect(0,0,W,H);const R=mulberry(4242);
+  for(let i=0;i<36;i++){const x=R()*W,y=R()*H,r=H*(.05+R()*.04),rot=(R()-.5)*1.4,col=SS_COL[i%6],k=i%4;
+    for(const dx of [-W,0,W]){g.save();g.translate(x+dx,y);g.rotate(rot);ssSticker(g,k,r,col);g.restore()}}}
+{const _pt=patternTex;patternTex=function(id,base){if(id!=='stkbomb')return _pt(id,base);return canvasTex('p_'+id+base,1024,512,(g,W,H)=>ssBomb(g,W,H,base))}}
+{const _tm=trailMark;trailMark=function(k,x,y,a){if(progress.tskin!=='t_stk')return _tm(k,x,y,a);ctx.save();ctx.globalAlpha=a;ctx.translate(x,y);ctx.rotate(((k*2.3)%6.28)-3.14);
+  ssSticker(ctx,k%4,S*(.09+.03*(k%3)),SS_COL[k%6]);ctx.restore();return true}}
+/* ---------- data ---------- */
+function ssStars(){return sbData().stars||0}
+function ssExtras(){const D=sbData();return SHZ.map(s=>[s,Math.max(0,(D.got[s[0]]||0)-1)]).filter(x=>x[1])}
+function ssOwnedSp(S){return S.k==='gold'?false:ssHas(S.c,S.id)}
+/* ---------- the shop screen ---------- */
+let SSEL=null;
+function openStkShop(){audio();sfx.click();if(!SSEL){SSEL=document.createElement('div');SSEL.className='ss';document.getElementById('app').appendChild(SSEL)}SSEL.hidden=false;ssRender(true)}
+function ssClose(){sfx.click();SSEL.hidden=true;if(SB.el&&!SB.el.hidden){SB.view==='cover'?sbCover():sbPageView()}}
+function ssRender(top){const D=sbData(),ex=ssExtras(),nEx=ex.reduce((a,x)=>a+x[1],0),val=ex.reduce((a,[s,n])=>a+n*SS_SELL[s[1]],0),L=lang==='he'?1:0,r=SSEL,y0=top?0:(r.querySelector('.ss-body')||{}).scrollTop||0;
+  const miss=SHZ.filter(s=>!D.got[s[0]]);
+  r.innerHTML=`<div class="sb-top"><button class="sb-rb sb-back" aria-label="back"></button><div class="sb-ttl"></div><div class="ss-pill big"><img src="art/ic_star.webp" alt=""><span>${ssStars()}</span></div></div>
+    <div class="ss-body"><p class="ss-how"></p>
+      <div class="ss-sell${nEx?'':' empty'}"><div class="ss-sh"><b></b></div><div class="ss-dups">${ex.slice(0,10).map(([s,n])=>`<span class="r-${s[1]}"><img src="art/stk_${s[0]}.webp" alt=""><i>×${n}</i></span>`).join('')}${ex.length>10?`<span class="more">+${ex.length-10}</span>`:''}</div>
+        <button class="btn primary ss-sellbtn"${nEx?'':' disabled'}><span></span><img src="art/ic_star.webp" alt=""></button></div>
+      <h4 class="ss-h"></h4><div class="ss-grid">${miss.length?miss.map(s=>`<button class="ss-it r-${s[1]}" data-id="${s[0]}"><span class="ss-art"><img src="art/stk_${s[0]}.webp" alt=""></span><small></small><em>${SS_BUY[s[1]]}<img src="art/ic_star.webp" alt=""></em></button>`).join(''):'<p class="ss-all"></p>'}</div>
+      <h4 class="ss-h sp"></h4><div class="ss-grid sp">${SS_SPECIAL.map((S,i)=>`<button class="ss-it sp k-${S.k}${ssOwnedSp(S)?' ss-own':''}" data-sp="${i}"><span class="ss-art"></span><small></small><em>${ssOwnedSp(S)?'✓':S.p+'<img src="art/ic_star.webp" alt="">'}</em></button>`).join('')}</div></div>`;
+  const bk=r.querySelector('.sb-back');bk.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';bk.onclick=ssClose;
+  r.querySelector('.sb-ttl').textContent=t('ssTitle');r.querySelector('.ss-how').textContent=t('ssHow');
+  r.querySelector('.ss-sh b').textContent=nEx?t('ssDoubles',{n:nEx}):t('ssNoDup');r.querySelector('.ss-sellbtn span').textContent=t('ssSell',{n:val});
+  r.querySelector('.ss-sellbtn').onclick=()=>ssSell();
+  r.querySelector('.ss-h').textContent=t('ssPick');r.querySelector('.ss-h.sp').textContent=t('ssSpecial');{const a=r.querySelector('.ss-all');if(a)a.textContent=t('ssAllGot')}
+  r.querySelectorAll('.ss-it[data-id]').forEach(b=>{const s=SHZ.find(x=>x[0]===b.dataset.id);b.querySelector('small').textContent=L?s[3]:s[2];b.onclick=()=>ssAsk(L?s[3]:s[2],SS_BUY[s[1]],()=>{D.got[s[0]]=1;ssPaid(SS_BUY[s[1]]);ssWin(`art/stk_${s[0]}.webp`,L?s[3]:s[2])})});
+  r.querySelectorAll('.ss-it[data-sp]').forEach(b=>{const S=SS_SPECIAL[+b.dataset.sp],art=b.querySelector('.ss-art'),nm=S.k==='gold'?t('sbGold'):S.k==='pat'?wName('pattern','stkbomb'):t('sk_t_stk');b.querySelector('small').textContent=nm;
+    if(S.k==='gold')art.innerHTML='<img src="art/sb_gpack.webp" alt="">';else{const c=document.createElement('canvas');c.width=c.height=120;const g=c.getContext('2d');
+      if(S.k==='pat'){g.save();g.beginPath();g.ellipse(60,64,40,52,0,0,7);g.clip();g.fillStyle='#4ad8ff';g.fillRect(0,0,120,120);const R=mulberry(77);for(let k=0;k<11;k++){g.save();g.translate(24+R()*72,18+R()*92);g.rotate((R()-.5)*1.4);ssSticker(g,k%4,9+R()*5,SS_COL[k%6]);g.restore()}g.restore();g.lineWidth=5;g.strokeStyle='#120d2b';g.beginPath();g.ellipse(60,64,40,52,0,0,7);g.stroke();
+        g.fillStyle='#fff';for(const ex of [46,74]){g.beginPath();g.ellipse(ex,54,8,11,0,0,7);g.fill();g.stroke()}}
+      else{for(let i=0;i<5;i++){g.save();g.translate(18+i*22,96-i*17+Math.sin(i)*6);g.rotate(i*.7);g.globalAlpha=.45+i*.13;ssSticker(g,i%4,9+i*1.6,SS_COL[i]);g.restore()}}art.appendChild(c)}
+    b.onclick=()=>{if(ssOwnedSp(S)){sfx.click();noteToast(t('ssWear'));return}ssAsk(nm,S.p,()=>{ssPaid(S.p);if(S.k==='gold'){D.gpacks=(D.gpacks||0)+1;ssWin('art/sb_gpack.webp',nm)}
+      else{if(S.c==='trail'){if(!wallet().skins.includes(S.id))progress.skins.push(S.id)}else{progress.owned[S.c]=progress.owned[S.c]||[];if(!progress.owned[S.c].includes(S.id))progress.owned[S.c].push(S.id)}ssWin(null,nm,art.firstChild)}})}});
+  const bd=r.querySelector('.ss-body');bd.scrollTop=y0}
+function ssPaid(n){const D=sbData();D.stars=Math.max(0,(D.stars||0)-n);saveProgress();try{stkBadge()}catch(e){}}
+function ssSell(){const D=sbData(),ex=ssExtras();if(!ex.length)return;let v=0;ex.forEach(([s,n])=>{v+=n*SS_SELL[s[1]];D.got[s[0]]=1});D.stars=(D.stars||0)+v;saveProgress();
+  const from=SSEL.querySelector('.ss-sellbtn'),to=SSEL.querySelector('.ss-pill');sfx.flourish(2);vib([20,30,20]);ssFly(from,to,()=>{ssRender();popupToast(t('ssSold',{n:v}))})}
+function ssFly(from,to,done){const a=from.getBoundingClientRect(),b=to.getBoundingClientRect();for(let k=0;k<6;k++){const im=document.createElement('img');im.src='art/ic_star.webp';im.className='fly-coin';const x0=a.left+a.width/2-13+(k-2.5)*10,y0=a.top+a.height/2-13;im.style.left=x0+'px';im.style.top=y0+'px';document.body.appendChild(im);
+  setTimeout(()=>{im.style.transform=`translate(${b.left+14-x0}px,${b.top+4-y0}px) scale(.8)`;im.style.opacity='0'},30+k*70);setTimeout(()=>{im.remove();if(sfx.ok())tone({f:900+k*80,d:.06,type:'sine',v:.05});if(k===5&&done)done()},800+k*70)}}
+function ssAsk(name,price,ok){sfx.click();const have=ssStars();if(have<price){sfx.locked();noteToast(t('ssNeed',{n:price-have}));return}
+  const m=document.createElement('div');m.className='ss-ask';m.innerHTML=`<div class="ss-box"><p></p><div class="row"><button class="btn ss-no"><span></span></button><button class="btn primary ss-yes"><span></span><img src="art/ic_star.webp" alt=""></button></div></div>`;
+  m.querySelector('p').textContent=t('ssBuyQ',{x:name,n:price});m.querySelector('.ss-no span').textContent=t('ssCancel');m.querySelector('.ss-yes span').textContent=t('ssBuy')+' '+price;
+  m.querySelector('.ss-no').onclick=()=>{sfx.click();m.remove()};m.onclick=e=>{if(e.target===m){sfx.click();m.remove()}};m.querySelector('.ss-yes').onclick=()=>{m.remove();ok()};SSEL.appendChild(m)}
+function ssWin(src,name,cv){sfx.flourish(3);vib([30,40,30]);const m=document.createElement('div');m.className='ss-win';m.innerHTML=`<div class="ss-wc"><div class="rays"></div><div class="art"></div><b></b><small></small><button class="btn primary"><span></span></button></div>`;
+  const art=m.querySelector('.art');if(src){const im=document.createElement('img');im.src=src;im.alt='';art.appendChild(im)}else if(cv){const c=document.createElement('canvas');c.width=c.height=120;c.getContext('2d').drawImage(cv,0,0);art.appendChild(c)}
+  m.querySelector('b').textContent=t('ssGotIt');m.querySelector('small').textContent=name;m.querySelector('.btn span').textContent='OK';m.querySelector('.btn').onclick=()=>{sfx.click();m.remove();ssRender()};SSEL.appendChild(m)}
+/* ---------- album: a star pill next to the coins opens the shop (red dot = doubles to sell) ---------- */
+{const _w=sbWireTop;sbWireTop=function(r){const x=_w.apply(this,arguments);try{const cp=r.querySelector('.sb-top .coin-pill');if(cp&&!r.querySelector('.ss-pill')){const b=document.createElement('button');b.className='ss-pill';b.setAttribute('aria-label',t('ssTitle'));
+  b.innerHTML=`<img src="art/ic_star.webp" alt=""><span>${ssStars()}</span>${ssExtras().length?'<i class="dot"></i>':''}`;b.onclick=openStkShop;cp.before(b)}}catch(e){}return x}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

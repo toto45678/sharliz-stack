@@ -1,0 +1,45 @@
+/* ===== v63: sticker shop ===== */
+.ss-pill{position:relative;flex:none;display:inline-flex;align-items:center;gap:3px;padding:2px 10px 2px 3px;border-radius:999px;border:3px solid #120d2b;background:linear-gradient(180deg,#8f6bff,#5a35c4);box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 3px 0 rgba(0,0,0,.35);color:#fff;font:1.05rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;direction:ltr}
+.ss-pill img{width:26px;height:26px;object-fit:contain}
+.ss-pill .dot{position:absolute;top:-5px;right:-5px;width:14px;height:14px;border-radius:50%;background:#ff3b5c;border:2.5px solid #120d2b}
+.sb-top .ss-pill{margin-inline-start:auto}.sb-top .ss-pill+.coin-pill{margin-inline-start:0}
+.ss-pill.big{font-size:1.25rem;padding-inline-end:12px}.ss-pill.big img{width:30px;height:30px}
+.ss{position:absolute;inset:0;z-index:15;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);overflow:hidden;
+  background:radial-gradient(circle at 20% 15%,rgba(255,255,255,.12) 0 2px,transparent 3px) 0 0/60px 60px,radial-gradient(ellipse at 50% 20%,#7a45d8,#3a1a8a 60%,#1c0c50);animation:fadeIn .2s}
+.ss[hidden]{display:none}
+.ss .sb-ttl{color:#ffd23f;rotate:-2deg}
+.ss-body{flex:1;overflow-y:auto;padding:4px 14px 24px;-webkit-overflow-scrolling:touch}
+.ss-how{margin:0 0 10px;text-align:center;font-weight:800;font-size:.9rem;opacity:.9}
+.ss-sell{border-radius:20px;border:3.5px solid #120d2b;background:linear-gradient(180deg,#fff7d6,#ffe08a);color:#2a1a66;padding:10px 12px 12px;box-shadow:0 5px 0 #120d2b;display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.ss-sell.empty{background:linear-gradient(180deg,#efe9ff,#d8ccff)}
+.ss-sh b{font:1.2rem/1.1 "Lilita One","Secular One",system-ui,sans-serif}
+.ss-dups{display:flex;flex-wrap:wrap;gap:6px;min-height:0}
+.ss-dups span{position:relative;width:44px;height:44px;border-radius:10px;background:#fff;border:2.5px solid #120d2b;display:grid;place-items:center}
+.ss-dups span img{width:38px;height:38px;object-fit:contain}
+.ss-dups span i{position:absolute;bottom:-7px;inset-inline-end:-7px;font-style:normal;padding:0 5px;border-radius:999px;background:#2d86ee;border:2px solid #120d2b;color:#fff;font:.7rem/1.3 "Lilita One",system-ui,sans-serif;direction:ltr}
+.ss-dups span.r-r{background:linear-gradient(135deg,#ffd6f5,#c8f0ff 40%,#fff3b0)}.ss-dups span.r-h{background:linear-gradient(135deg,#ff8ad8,#7ee8ff 30%,#fff27a 55%,#b58cff)}
+.ss-dups .more{font:.9rem/1 "Lilita One",system-ui,sans-serif;color:#2a1a66}
+.ss-sellbtn{display:flex;align-items:center;justify-content:center;gap:4px}.ss-sellbtn img{width:28px;height:28px;margin-block:-6px}
+.ss-sellbtn[disabled]{filter:grayscale(.8);opacity:.6}
+.ss-h{margin:18px 2px 8px;font:1.25rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill}
+.ss-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px}
+.ss-it{position:relative;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px 20px;border-radius:16px;border:3px solid #120d2b;background:#fff;color:#2a1a66;box-shadow:0 4px 0 #120d2b}
+.ss-it.r-r{background:linear-gradient(135deg,#ffe6fa,#dcf6ff 40%,#fff8cc)}.ss-it.r-h{background:linear-gradient(135deg,#ffb3e6,#a8f0ff 30%,#fff59e 55%,#d0b8ff);background-size:200% 200%;animation:sbHolo 4s linear infinite}
+.ss-art{width:72px;height:72px;display:grid;place-items:center}.ss-art img,.ss-art canvas{width:100%;height:100%;object-fit:contain}
+.ss-it[data-id] .ss-art img{filter:brightness(.25) saturate(0);opacity:.75}
+.ss-it small{font-weight:800;font-size:.72rem;line-height:1.1;text-align:center}
+.ss-it em{position:absolute;bottom:-11px;left:50%;translate:-50% 0;display:inline-flex;align-items:center;gap:1px;padding:1px 8px 1px 6px;border-radius:999px;border:2.5px solid #120d2b;background:linear-gradient(180deg,#8f6bff,#5a35c4);color:#fff;font:.95rem/1.2 "Lilita One",system-ui,sans-serif;font-style:normal;-webkit-text-stroke:2.5px #120d2b;paint-order:stroke fill;white-space:nowrap;direction:ltr}
+.ss-it em img{width:20px;height:20px}
+.ss-it.sp{background:linear-gradient(180deg,#fff2a8,#ffcf3a)}.ss-it.sp.ss-own{background:linear-gradient(180deg,#d9ffd0,#8fe07a)}.ss-it.sp.ss-own em{background:#2fa512}
+.ss-all{grid-column:1/-1;text-align:center;font-weight:800;margin:4px 0}
+.ss-ask,.ss-win{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:rgba(10,6,30,.6);animation:fadeIn .15s;padding:20px}
+.ss-box{width:min(86vw,320px);border-radius:22px;border:4px solid #120d2b;background:#fff;color:#2a1a66;padding:18px 14px 14px;box-shadow:0 6px 0 #120d2b;text-align:center;animation:popIn .3s cubic-bezier(.3,1.6,.5,1)}
+.ss-box p{margin:0 0 14px;font:1.15rem/1.25 "Lilita One","Secular One",system-ui,sans-serif}
+.ss-box .row{display:flex;gap:10px}.ss-box .row .btn{flex:1;display:flex;align-items:center;justify-content:center;gap:3px}.ss-box .row img{width:24px;height:24px;margin-block:-6px}
+.ss-wc{position:relative;width:min(80vw,300px);display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 16px 16px;border-radius:24px;border:4px solid #120d2b;background:linear-gradient(180deg,#6b3fd6,#3d1d93);box-shadow:0 6px 0 #120d2b;animation:popIn .4s cubic-bezier(.3,1.6,.5,1);overflow:hidden}
+.ss-wc .rays{position:absolute;left:50%;top:38%;width:520px;height:520px;translate:-50% -50%;background:repeating-conic-gradient(rgba(255,226,77,.22) 0 10deg,transparent 10deg 20deg);border-radius:50%;animation:evSpin 10s linear infinite;pointer-events:none}
+.ss-wc .art{position:relative;width:150px;height:150px;display:grid;place-items:center}.ss-wc .art img,.ss-wc .art canvas{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(10,8,40,.45))}
+.ss-wc b{position:relative;font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffd23f;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;rotate:-3deg}
+.ss-wc small{position:relative;font-weight:800;font-size:1rem}
+.ss-wc .btn{position:relative;width:100%;margin-top:6px}
+.sb-top:has(.ss-pill) .sb-ttl{font-size:1.2rem;-webkit-text-stroke-width:4px}
