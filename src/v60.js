@@ -15,11 +15,18 @@ const INK3={};
 function ink3(th){const k=th.toFixed(4);if(INK3[k])return INK3[k];const m=new THREE.MeshBasicMaterial({color:'#120d2b',side:THREE.BackSide});
   m.onBeforeCompile=sh=>{sh.vertexShader=sh.vertexShader.replace('#include <begin_vertex>','#include <begin_vertex>\ntransformed+=normalize(normal)*'+k+';')};
   m.customProgramCacheKey=()=>'ink3_'+k;return INK3[k]=m}
+const PET3TEX={};
+function pet3dTex(T,fn,srgb){if(PET3TEX[fn])return PET3TEX[fn];const t=new T.TextureLoader().load('art/'+fn,()=>{try{petRefresh(fn.split('_')[1])}catch(e){}});
+  if(srgb)t.colorSpace=T.SRGBColorSpace;t.wrapS=t.wrapT=T.RepeatWrapping;t.anisotropy=4;return PET3TEX[fn]=t}
 function pet3dBuild(T,id){const M=PET3D_META[id],buf=PET3D[id];const g=new T.Group(),u={g,id,t:Math.random()*5,p3:{},h:M.h,float:M.float||0};B3OPT=B3LOBBY;
   for(const q of M.parts){let o=q.off;const Q=new Int16Array(buf,o,q.v*3),P=new Float32Array(q.v*3);for(let i=0;i<P.length;i++){const k=i%3;P[i]=Q[i]*q.qs[k]+q.qo[k]}o+=Math.ceil(q.v*6/4)*4;const N=new Int8Array(buf,o,q.v*3);o+=Math.ceil(q.v*3/4)*4;
+    let UV=null;if(q.uv){UV=new Uint16Array(buf,o,q.v*2);o+=Math.ceil(q.v*4/4)*4}
     const I=q.i32?new Uint32Array(buf,o,q.i):new Uint16Array(buf,o,q.i);
     const geo=new T.BufferGeometry();geo.setAttribute('position',new T.BufferAttribute(P,3));geo.setAttribute('normal',new T.BufferAttribute(N,3,true));geo.setIndex(new T.BufferAttribute(I,1));
-    const opt={roughness:q.r,clearcoat:q.cc,metalness:q.m||0};if(q.e){opt.emissive=q.e;opt.emissiveIntensity=q.ei||.5}if(q.o<1){opt.transparent=true;opt.opacity=q.o;opt.depthWrite=false}
+    if(UV)geo.setAttribute('uv',new T.BufferAttribute(UV,2,true));
+    const opt={roughness:q.r,clearcoat:q.cc,metalness:q.m||0};
+    // painted parts: a colour map (bee stripes, galaxy...) and/or a normal map (scales, feathers, metal seams) from pets.py
+    if(q.tex)opt.map=pet3dTex(T,q.tex,1);if(q.nrm){opt.normalMap=pet3dTex(T,q.nrm,0);opt.normalScale=new T.Vector2(q.ns||1,q.ns||1)}if(q.e){opt.emissive=q.e;opt.emissiveIntensity=q.ei||.5}if(q.o<1){opt.transparent=true;opt.opacity=q.o;opt.depthWrite=false}
     const m=wmesh(geo,q.c,opt);m.position.set(q.p[0],q.p[1],q.p[2]);
     if(q.ink>0){const k=new T.Mesh(geo,ink3(q.ink));m.add(k)}
     g.add(m);(u.p3[q.role]=u.p3[q.role]||[]).push(m)}

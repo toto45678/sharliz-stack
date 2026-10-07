@@ -28,6 +28,16 @@ def bl_mat(name, m):
     b.inputs['Roughness'].default_value = m['r']; b.inputs['Metallic'].default_value = m['m'] or 0
     if 'Coat Weight' in b.inputs: b.inputs['Coat Weight'].default_value = m['cc']
     if m['o'] < 1: b.inputs['Alpha'].default_value = m['o']
+    for key, sock in (('tex', 'Base Color'), ('nrm', None)):
+        im = m.get(key)
+        if im is None: continue
+        path = os.path.join('/tmp', 'pet_%s_%s.png' % (name, key)); im.save(path)
+        t = mt.node_tree.nodes.new('ShaderNodeTexImage'); t.image = bpy.data.images.load(path)
+        if key == 'tex': mt.node_tree.links.new(t.outputs['Color'], b.inputs[sock])
+        else:
+            t.image.colorspace_settings.name = 'Non-Color'
+            nm = mt.node_tree.nodes.new('ShaderNodeNormalMap'); nm.inputs['Strength'].default_value = m.get('ns', 1)
+            mt.node_tree.links.new(t.outputs['Color'], nm.inputs['Color']); mt.node_tree.links.new(nm.outputs['Normal'], b.inputs['Normal'])
     return mt
 
 
@@ -42,8 +52,12 @@ def obj_from_bm(name, bm, mat):
     return ob
 
 
-def part(name, ob_or_bm, color, role='part', ink=.012, rough=.32, cc=.6, metal=0, emis=None, ei=0, opacity=1, pivot=(0, 0, 0)):
+def part(name, ob_or_bm, color, role='part', ink=.012, rough=.32, cc=.6, metal=0, emis=None, ei=0, opacity=1, pivot=(0, 0, 0), tex=None, nrm=None, ns=1.0):
+    """tex / nrm = PIL images (colour map / tangent-space normal map) mapped by the part's UV layer (see uv_equirect);
+    they are saved as art/pet_<id>_<part>.webp by export(); the game multiplies `color` into the map, so use '#ffffff' with tex"""
     m = dict(c=color, role=role, ink=ink, r=rough, cc=cc, m=metal, e=emis, ei=ei, o=opacity, p=list(pivot))
+    if tex is not None: m['tex'] = tex
+    if nrm is not None: m['nrm'] = nrm; m['ns'] = ns
     if isinstance(ob_or_bm, bmesh.types.BMesh):
         return obj_from_bm(name, ob_or_bm, m)
     ob_or_bm.name = name; META[name] = m
@@ -67,6 +81,18 @@ def egg_bm(w=.84, d=.8, h=1., taper=.2, flat=.06, seg=48, rings=26):
         zz = z if z > -.8 else -.8 + (z + .8) * .45               # flatten the bottom a little
         v.co = Vector((x * w / 2 * k, y * d / 2 * k, (zz + 1) / 2 * h))
     bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    return bm
+
+
+def uv_equirect(bm, z0=None, z1=None):
+    """UVs for a body: u goes around (0.5 = front, -Y), v = height from z0 (0) to z1 (1). Texture images are drawn in that space."""
+    zs = [v.co.z for v in bm.verts]; z0 = min(zs) if z0 is None else z0; z1 = max(zs) if z1 is None else z1
+    uv = bm.loops.layers.uv.verify()
+    for f in bm.faces:
+        us = [((math.atan2(l.vert.co.x, -l.vert.co.y) / math.tau) + .5) % 1. for l in f.loops]
+        if max(us) - min(us) > .5: us = [u + 1 if u < .5 else u for u in us]
+        for l, u in zip(f.loops, us):
+            l[uv].uv = (u, max(0., min(1., (l.vert.co.z - z0) / (z1 - z0))))
     return bm
 
 
@@ -234,12 +260,25 @@ def export(pid, height=.56, flt=1, extra=None):
         bm.verts.ensure_lookup_table(); bm.normal_update()
         M = META[o.name]; pv = Vector(M['p'])
         P, N, I = [], [], []
-        for v in bm.verts:
+        def push(v):
             c = (v.co - pv) * s
-            P += [c.x, c.z, -c.y]; n = v.normal
-            N += [max(-127, min(127, round(n.x * 127))), max(-127, min(127, round(n.z * 127))), max(-127, min(127, round(-n.y * 127)))]
-        for f in bm.faces: I += [v.index for v in f.verts]
-        nv, ni = len(bm.verts), len(I); bm.free()
+            P.extend((c.x, c.z, -c.y)); n = v.normal
+            N.extend((max(-127, min(127, round(n.x * 127))), max(-127, min(127, round(n.z * 127))), max(-127, min(127, round(-n.y * 127)))))
+        UV = None
+        if ('tex' in M or 'nrm' in M) and bm.loops.layers.uv:
+            # textured part: vertices are split where the UV differs (the seam at the back), one vertex per (vert, uv)
+            lay = bm.loops.layers.uv.active; UV = []; idx = {}
+            for f in bm.faces:
+                for l in f.loops:
+                    u, w = l[lay].uv.x, l[lay].uv.y; k = (l.vert.index, round(u, 4), round(w, 4))
+                    if k not in idx: idx[k] = len(idx); push(l.vert); UV.extend((u, w))
+                    I.append(idx[k])
+            nv = len(idx)
+        else:
+            for v in bm.verts: push(v)
+            for f in bm.faces: I += [v.index for v in f.verts]
+            nv = len(bm.verts)
+        ni = len(I); bm.free()
         if not nv: print('  empty part skipped:', o.name); continue
         off = len(blob)
         # positions as int16 in the part's box (half the size of float32, plenty for a small buddy)
@@ -248,9 +287,15 @@ def export(pid, height=.56, flt=1, extra=None):
         Q = [round((P[i] - lo[i % 3]) / sc[i % 3]) - 32767 for i in range(len(P))]
         blob += struct.pack('<%dh' % len(Q), *Q); blob += b'\0' * (-len(blob) % 4)
         nb = struct.pack('<%db' % len(N), *N); nb += b'\0' * (-len(nb) % 4); blob += nb
+        if UV is not None:   # u16 normalised, read with BufferAttribute(...,2,true)
+            ub = struct.pack('<%dH' % len(UV), *[max(0, min(65535, round(x * 65535))) for x in UV]); ub += b'\0' * (-len(ub) % 4); blob += ub
         big = nv > 65535
         ib = struct.pack(('<%dI' if big else '<%dH') % ni, *I); ib += b'\0' * (-len(ib) % 4); blob += ib
-        q = {k: v for k, v in M.items() if v is not None and k != 'p'}
+        q = {k: v for k, v in M.items() if v is not None and k not in ('p', 'tex', 'nrm')}
+        for key in ('tex', 'nrm'):
+            if key in M:
+                fn = 'pet_%s_%s_%s.webp' % (pid, o.name, key); M[key].save(os.path.join(ART, fn), quality=92, method=6); q[key] = fn
+        if UV is not None: q['uv'] = 1
         q.update(qs=[round(x, 9) for x in sc], qo=[round(lo[k] + 32767 * sc[k], 7) for k in range(3)], n=o.name, v=nv, i=ni, off=off, p=[round(pv.x * s, 4), round((pv.z - zmin) * s, 4), round(-pv.y * s, 4)], ink=round(M['ink'] * s, 4))
         if big: q['i32'] = 1
         # positions are relative to the pivot; the pivot itself is in "feet at y=0" space
@@ -536,32 +581,55 @@ def build_ghost():
 
 
 def build_bee():
-    Yb, Bk = '#ffd23a', '#1c1530'
-    body = egg_bm(.9, .86, .9, taper=.08)
+    """v2 (Fable, Oct 7): one egg body PAINTED by a texture (black heart-shaped head cap with a notch at the top, two stripes),
+    happy closed eyes, smile, blush, antennae, two see-through wings up at the back, small stinger. Tzach approved the look."""
+    from PIL import Image
+    Yb, Bk = '#ffd23f', '#1d1530'
+    W, D, H, TAP = .86, .82, .9, .12
+    body = egg_bm(W, D, H, taper=TAP); uv_equirect(body, 0, H)
     S = Surface(body)
-    part('body', body, Yb, role='body', ink=.014)
-    st = bmesh.new()
-    for z0, z1 in [(.14, .26), (.36, .46)]:
-        bm_merge(st, band_bm(S, z0, z1))
-    part('stripes', st, Bk, role='body', ink=0, rough=.25, cc=.8)
-    # glossy black face mask with white happy eyes and a smile
-    part('mask', S.decal(ELLIPSE, 0, .64, .3, .2, bulge=.01, lift=.002), Bk, role='body', ink=0, rough=.15, cc=1)
-    eb = bmesh.new()
-    for sx in (-1, 1):
-        bm_merge(eb, S.stroke(arc_pts(sx * .12, .66, .06, .045, up=True), r=.016, lift=.012))
-    part('eyesH', eb, '#ffffff', role='eyeH', ink=0, rough=.2, cc=.8, emis='#ffffff', ei=.4)
-    part('mouth', S.stroke(arc_pts(0, .58, .055, .035, up=False), r=.012, lift=.012), '#ff8fb0', role='mouth', ink=0, rough=.3, cc=.6)
+    def rad(zn):                                   # horizontal radius of egg_bm at normalised height zn (-1..1), roughly
+        k = 1 - TAP * max(0, zn) - .04 * max(0, -zn)
+        return W / 2 * k * math.sqrt(max(0., 1 - zn * zn))
+    def cap_line(u):
+        du = abs(u - .5); bump = math.cos(math.pi * du / .30) if du < .30 else 0.
+        return .63 - .17 * max(0., bump) ** 1.2
+    def col(u, v):
+        zn = 2 * v - 1; z = (zn + 1) / 2 * H; r = rad(zn)
+        x = r * math.sin((u - .5) * math.tau); y = -r * math.cos((u - .5) * math.tau)
+        if y < .05 and z > .62 and abs(x) < .015 + .6 * (z - .62): return Yb        # yellow V notch, top front
+        if v > cap_line(u): return Bk
+        if .31 < v < .375 or .14 < v < .20: return Bk
+        return Yb
+    TW, TH = 1024, 512; im = Image.new('RGB', (TW, TH)); px = im.load()
+    h2rgb = lambda h: tuple(int(h[i:i + 2], 16) for i in (1, 3, 5))
+    for j in range(TH):
+        v = 1 - (j + .5) / TH
+        for i in range(TW): px[i, j] = h2rgb(col((i + .5) / TW, v))
+    im = im.resize((512, 256), Image.LANCZOS)
+    part('body', body, '#ffffff', role='body', ink=.014, rough=.28, cc=.8, tex=im)
+    for sx, nm in ((-1, 'eyeL'), (1, 'eyeR')):
+        loc, _ = S.hit(sx * .145, .62)
+        part(nm, S.stroke(arc_pts(sx * .145, .62, .075, .055, up=True), r=.019, lift=.01), '#ffffff', role='eye', ink=0, rough=.2, cc=.8, emis='#ffffff', ei=.3, pivot=tuple(loc))
+    part('mouth', S.stroke(arc_pts(0, .52, .045, .03, up=False, n=7), r=.013, lift=.01), '#ffffff', role='mouth', ink=0, rough=.3, cc=.6, emis='#ffffff', ei=.2)
+    bl = bmesh.new()
+    for sx in (-1, 1): bm_merge(bl, S.decal(ELLIPSE, sx * .26, .53, .055, .04, bulge=.012, lift=.003))
+    part('blush', bl, '#ff8fb1', role='blush', ink=0, rough=.6, cc=.3, opacity=.85)
     ant = bmesh.new()
     for sx in (-1, 1):
-        bm_merge(ant, tube_bm([Vector((sx * .1, -.05, .86)), Vector((sx * .14, -.08, .98)), Vector((sx * .2, -.06, 1.05))], [.014, .012, .01], seg=8))
-        bm_merge(ant, ellipsoid_bm(.04, .04, .04, at=(sx * .21, -.06, 1.07)))
-    part('antennae', ant, Bk, role='horn', ink=.008)
+        base = Vector((sx * .11, -.04, H - .03))
+        pts = [base + Vector((sx * .22 * t * t, -.02 * t, .26 * t - .05 * t * t)) for t in (0, .25, .5, .75, 1)]
+        bm_merge(ant, tube_bm(pts, [.017] * 5, seg=8)); bm_merge(ant, ellipsoid_bm(.045, .045, .045, at=tuple(pts[-1]), seg=14, rings=10))
+    part('antennae', ant, Bk, role='horn', ink=.009, rough=.35, cc=.7)
     for sx in (-1, 1):
         sd = 'L' if sx < 0 else 'R'
-        w = ellipsoid_bm(.17, .02, .1, rot=Matrix.Rotation(sx * .45, 3, 'Y'))
-        piv = Vector((sx * .14, .3, .78)); bmesh.ops.translate(w, vec=piv + Vector((sx * .16, .04, .1)), verts=w.verts)
-        part('wing' + sd, w, '#eef9ff', role='wing' + sd, ink=.007, rough=.05, cc=1, opacity=.85, emis='#d6f1ff', ei=.6, pivot=tuple(piv))
-    part('stinger', spike_bm(Vector((0, .36, .3)), (0, 1, -.25), r=.05, h=.12), Bk, role='tail', ink=.008, pivot=(0, .36, .3))
+        # thin oval, long axis along ±X, facing the front; root at the pivot, tip up and out, swept a little back
+        w = ellipsoid_bm(.28, .012, .14, at=(sx * .27, 0, 0), seg=24, rings=12)
+        R = Matrix.Rotation(math.radians(sx * 22), 3, 'Z') @ Matrix.Rotation(math.radians(-42 * sx), 3, 'Y')
+        piv = Vector((sx * .13, .13, .62))
+        bmesh.ops.transform(w, matrix=Matrix.Translation(piv) @ R.to_4x4(), verts=w.verts)
+        part('wing' + sd, w, '#f4faff', role='wing' + sd, ink=.008, rough=.1, cc=1, opacity=.92, emis='#e4f4ff', ei=.8, pivot=tuple(piv))
+    part('stinger', spike_bm(Vector((0, .35, .16)), (0, .5, -.9), r=.04, h=.09, seg=10), Bk, role='tail', ink=.009, pivot=(0, .36, .17))
 
 
 def build_star():
@@ -673,7 +741,7 @@ PETS = {'dragon': (build_dragon, dict(height=.64, flt=0)),
         'chick': (build_chick, dict(height=.5, flt=0)),
         'slime': (build_slime, dict(height=.33, flt=0)),
         'ghost': (build_ghost, dict(height=.55, flt=1)),
-        'bee': (build_bee, dict(height=.5, flt=1, anim={'wing': [38, .5]})),
+        'bee': (build_bee, dict(height=.5, flt=1, anim={'wing': [30, .25]})),
         'star': (build_star, dict(height=.5, flt=1)),
         'mini': (build_mini, dict(height=.42, flt=0)),
         'cyborg': (build_cyborg, dict(height=.66, flt=0)),
