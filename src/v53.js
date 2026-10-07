@@ -10,7 +10,7 @@ Object.assign(I18N.he,{trTitle:'טורניר שבועי',trLeft:'נותרו {n} 
   trNew:'שיא חדש!',trMedal:'מדליה חדשה!',trNext:'עוד {n} קומות ל{m}',trAllMedals:'כל המדליות השבוע!',trTwist:'השבוע',
   tw_wind:'רוח חזקה',twd_wind:'הרוח דוחפת פי שניים',tw_fast:'שבוע מהיר',twd_fast:'הכל מתנדנד מהר יותר',tw_night:'מגדל לילה',twd_night:'בונים בחושך',tw_gold:'בהלת זהב',twd_gold:'הרבה שארליז מוזהבות',
   md_b:'ארד',md_s:'כסף',md_g:'זהב',trShare:'בניתי מגדל של {n} קומות בטורניר השבועי של שארליז! תצליחו לעבור אותי? 🏆',trModes:'שבועי',trGot:'נאסף',trClose:'כמעט שיא!',trNice:'סיבוב יפה!',trPrizes:'פרסי הטורניר',trReached:'הגעתם לפרס ה{m}!',trHow:'3 לבבות · כמה שיותר גבוה'});
-const TR_TWISTS=['wind','fast','night','gold'],TR_MEDALS=[{k:'b',f:10,c:100,bo:0},{k:'s',f:20,c:200,bo:1},{k:'g',f:35,c:400,bo:2}];
+const TR_TWISTS=['wind','fast','night','gold'],TR_MEDALS=[{k:'b',f:10,c:100,bo:0},{k:'s',f:20,c:200,bo:1,pk:1},{k:'g',f:35,c:400,bo:2,pk:1}];  // pk = sticker packs (v57)
 function trWeek(d=new Date()){const m=new Date(d);m.setHours(0,0,0,0);const dow=(m.getDay()+6)%7;m.setDate(m.getDate()-dow);return {id:Math.round(m/864e5/7),start:m,end:new Date(+m+7*864e5)}}
 function trNow(){const W=trWeek();let h=(W.id*2654435761)>>>0;const tw=TR_TWISTS[W.id%TR_TWISTS.length];h=(h^(h>>>13))>>>0;
   const pool=tw==='night'?ZONES.map((z,i)=>i).filter(i=>ZONES[i].season===2):ZONES.map((z,i)=>i).filter(i=>(ZONES[i].season||1)===1);const zi=pool[h%pool.length];return {W,tw,zi}}
@@ -22,7 +22,7 @@ function openTour(){audio();sfx.click();hideOverlay();const r=trRoot();r.hidden=
 function closeTour(){if(TREL)TREL.hidden=true;updateWalletUI();if(state==='title')updateLobby()}
 function trMedalRow(best){const nxk=(TR_MEDALS.find(m=>best<m.f)||{}).k;return `<div class="tr-prz"><div class="tr-meds">${TR_MEDALS.map(m=>`<div class="tr-md ${best>=m.f?'on':m.k===nxk?'nx':'far'} m-${m.k}" style="--x:${m.f/35*100}%"><b>${m.f}</b><img src="art/tr_medal_${m.k}.webp" alt=""></div>`).join('')}</div>
   <div class="bar"><i style="width:${Math.min(100,best/35*100)}%"></i>${best>0&&best<35?`<span class="pin" style="--x:${best/35*100}%"><em>${best}</em></span>`:''}</div>
-  <div class="tr-rws">${TR_MEDALS.map(m=>`<div class="tr-rw ${best>=m.f?'on':m.k===nxk?'nx':'far'}"><span>${coinImg()}<b>×${m.c}</b></span>${m.bo?`<span><img src="art/ic_gift.webp" alt=""><b>×${m.bo}</b></span>`:''}</div>`).join('')}</div></div>`}
+  <div class="tr-rws">${TR_MEDALS.map(m=>`<div class="tr-rw ${best>=m.f?'on':m.k===nxk?'nx':'far'}"><span>${coinImg()}<b>×${m.c}</b></span>${m.bo?`<span><img src="art/ic_gift.webp" alt=""><b>×${m.bo}</b></span>`:''}${m.pk?`<span><img src="art/sb_pack.webp" alt=""><b>×${m.pk}</b></span>`:''}</div>`).join('')}</div></div>`}
 function trScreen(){const N=trNow(),D=trData(),r=trRoot(),z=ZONES[N.zi],nx=TR_MEDALS.find(m=>D.best<m.f);
   r.className='tr-screen';
   r.innerHTML=`<div class="tr-top"><button class="x-btn tr-x" aria-label="close"></button><div class="tr-title"><img src="art/tr_trophy.webp" alt=""><b></b><small></small></div><div class="coin-pill">${coinImg()}<span></span></div></div>
@@ -61,7 +61,7 @@ function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge'
 {const _mo=modeOver;modeOver=function(won){if(mode!=='tour'||!TR)return _mo.apply(this,arguments);trEnd()}}
 {const _sm=startMode;startMode=function(m){if(m==='tour'){trStart();return}return _sm.apply(this,arguments)}}
 function trEnd(){const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.best=fl;const won=[];
-  for(const m of TR_MEDALS){if(D.best>=m.f&&!D.got[m.k]){D.got[m.k]=1;wallet();progress.coins+=m.c;for(let i=0;i<m.bo;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}won.push(m)}}
+  for(const m of TR_MEDALS){if(D.best>=m.f&&!D.got[m.k]){D.got[m.k]=1;wallet();progress.coins+=m.c;for(let i=0;i<m.bo;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}if(m.pk&&typeof sbGive==='function')sbGive(m.pk);won.push(m)}}
   saveProgress();trHud(false);const nx=TR_MEDALS.find(m=>D.best<m.f);
   showOverlay(()=>({title:nb?t('trNew'):fl>=D.best-3?t('trClose'):t('trNice'),big:true,
     extra:card=>{card.classList.add('tr-res');const big=document.createElement('div');big.className='tr-big';big.innerHTML=`<b>${fl}</b><span></span>`;big.querySelector('span').textContent=t('trFloorsN',{n:''}).trim();card.appendChild(big);
