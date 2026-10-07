@@ -726,7 +726,21 @@
   "sbPage": "Seite {a}/{b}",
   "stkVs": "Sharliz gegen {b}",
   "storyGot": "Neuer Story-Sticker!",
-  "tourTitle": "Wochenturnier"
+  "tourTitle": "Wochenturnier",
+  "bgT1": "Das ist dein Kumpel!",
+  "bgS1": "{b} fliegt in jedem Level und auf dem Startbildschirm neben dir.",
+  "bgT2": "Kumpel haben Kräfte",
+  "bgS2": "Die Kraft wirkt nur, wenn dein Kumpel bei dir ist. Jeder Kumpel hat eine andere Kraft!",
+  "bgPw": "Kraft von {b}",
+  "bgT3": "Wechsle deinen Kumpel jederzeit",
+  "bgS3": "Tippe unten auf „{a}“, dann auf das Feld „{b}“ und wähle einen Kumpel.",
+  "bgT4": "Sammeln und wachsen",
+  "bgS4a": "Siege lassen die Eier in deinem Nest schlüpfen. Neue Kumpel kommen heraus!",
+  "bgS4b": "Kekse lassen deinen Kumpel bis zu 3 Sterne wachsen. Jeder Stern bringt mehr Münzen.",
+  "bgNext": "Weiter",
+  "bgBack": "Zurück",
+  "bgGo": "Alles klar!",
+  "bgHelp": "Was sind Kumpel?"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

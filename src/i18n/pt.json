@@ -726,7 +726,21 @@
   "sbPage": "Página {a}/{b}",
   "stkVs": "Sharliz vs {b}",
   "storyGot": "Nova figurinha de história!",
-  "tourTitle": "Torneio Semanal"
+  "tourTitle": "Torneio Semanal",
+  "bgT1": "Conheça seu mascote!",
+  "bgS1": "{b} voa do seu lado em cada fase e no início.",
+  "bgT2": "Mascotes têm poderes",
+  "bgS2": "O poder só funciona quando o mascote está com você. Cada mascote tem um poder diferente!",
+  "bgPw": "Poder de {b}",
+  "bgT3": "Troque de mascote quando quiser",
+  "bgS3": "Toque em “{a}” embaixo, depois no espaço “{b}” e escolha um mascote.",
+  "bgT4": "Colecione e evolua",
+  "bgS4a": "Vitórias chocam os ovos do seu ninho. Saem mascotes novos!",
+  "bgS4b": "Biscoitos fazem seu mascote crescer até 3 estrelas. Cada estrela dá mais moedas.",
+  "bgNext": "Próximo",
+  "bgBack": "Voltar",
+  "bgGo": "Entendi!",
+  "bgHelp": "O que são mascotes?"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

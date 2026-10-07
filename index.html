@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007164037"><\/script>')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007165136"><\/script>')})();</script>
 </head><body>
 <title>Sharliz Stack</title>
 <style>
@@ -1771,6 +1771,41 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .sb-slot.card.got.r-h .stk img{border-radius:11px}
 @keyframes sbRing{0%{background-position:0% 50%}100%{background-position:300% 50%}}
 .sb-slot.card.got:not(.r-h) .stk img{box-shadow:0 3px 5px rgba(35,24,60,.18)}
+
+/* ===== v59: buddy guide ===== */
+.bg-guide{z-index:45}
+.bg-c{position:relative;width:min(88vw,340px);padding:20px 18px 16px;border-radius:26px;border:4px solid #120d2b;background:linear-gradient(180deg,#9a6bff,#5b2bd6);box-shadow:inset 0 4px 0 rgba(255,255,255,.3),0 8px 0 #120d2b;display:flex;flex-direction:column;align-items:center;gap:10px;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif}
+.bg-c.in .bg-pic{animation:arcIn .45s cubic-bezier(.3,1.6,.5,1)}
+.bg-c .rays{top:26%}
+.bg-c h3{margin:0;font:1.8rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-align:center}
+.bg-pic{position:relative;height:190px;width:100%;display:grid;place-items:center}
+.bg-card{height:186px;border-radius:16px;border:4px solid #fff;box-shadow:0 5px 0 #120d2b;transform:rotate(-3deg)}
+.bg-th{width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(18,13,43,.45))}
+.bg-pw{position:relative}
+.bg-bolt{position:absolute;right:-8px;top:0;font-size:46px;filter:drop-shadow(0 3px 0 #120d2b);animation:bgPulse 1.1s ease-in-out infinite}
+[dir=rtl] .bg-bolt{right:auto;left:-8px}
+@keyframes bgPulse{50%{transform:scale(1.25) rotate(-8deg)}}
+.bg-txt{display:flex;flex-direction:column;align-items:center;gap:8px;min-height:78px}
+.bg-txt p{margin:0;font-weight:800;font-size:1.02rem;line-height:1.35;text-align:center}
+.bg-txt p.egg::before{content:'🥚 '}.bg-txt p.ck::before{content:'🍪 '}
+.bg-chip{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 14px;border-radius:14px;border:3px solid #120d2b;background:linear-gradient(180deg,#ffe24d,#ffb52e);color:#3a1d00;box-shadow:0 4px 0 #120d2b;text-align:center}
+.bg-chip small{font-weight:800;opacity:.75}.bg-chip b{font-size:1.05rem}
+.bg-steps{display:flex;align-items:center;gap:14px}
+.bg-tab,.bg-slot{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px;border-radius:18px;border:3px solid #120d2b;background:#2a1a6b;box-shadow:0 4px 0 #120d2b}
+.bg-tab img{width:70px;height:70px;object-fit:contain}.bg-slot img{width:80px;height:80px;object-fit:contain}
+.bg-tab small,.bg-slot small{font-weight:900}
+.bg-tab{animation:bgTap 1.6s ease-in-out infinite}.bg-slot{animation:bgTap 1.6s .8s ease-in-out infinite}
+@keyframes bgTap{0%,60%,100%{transform:none}30%{transform:scale(.9);box-shadow:0 1px 0 #120d2b,0 0 0 4px #ffe24d}}
+.bg-ar{font-size:34px;font-weight:900;color:#ffe24d;-webkit-text-stroke:2px #120d2b}
+.bg-grow{display:flex;gap:26px;align-items:center}
+.bg-grow span{position:relative;display:grid;place-items:center}
+.bg-grow img{width:110px;height:110px;object-fit:contain;filter:drop-shadow(0 5px 0 rgba(18,13,43,.45))}
+.bg-grow span:first-child img{animation:bgWob 1.4s ease-in-out infinite}
+@keyframes bgWob{25%{transform:rotate(-8deg)}75%{transform:rotate(8deg)}}
+.bg-grow .sts{position:absolute;bottom:-14px;display:flex;gap:2px;font-style:normal;font-size:22px;color:#ffe24d;-webkit-text-stroke:2px #120d2b}
+.bg-dots{display:flex;gap:6px}.bg-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid #120d2b}.bg-dots i.on{background:#ffe24d;width:22px;border-radius:6px}
+.bg-bt{display:flex;gap:8px;width:100%}.bg-bt .btn{flex:1}
+.bg-help{margin-inline-start:8px;width:30px;height:30px;border-radius:50%;border:3px solid #120d2b;background:#ffe24d;color:#120d2b;font:900 1.1rem/1 Rubik,system-ui,sans-serif;box-shadow:0 3px 0 #120d2b;vertical-align:middle}
 
 </style>
 
@@ -7292,6 +7327,50 @@ function storySync(){try{const D=sbData();D.story=D.story||[];const al=progress.
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{if(storySync())stkBadge()}catch(e){}return r}}
 /* buddies: an illustrated scene of the buddy with Sharliz (paid buddies glow) */
 {const P=STK_PAGES.find(p=>p.id==='buddy');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const id=it.id.slice(6);return Object.assign(it,{src:'art/stk_p_'+id+'.webp',img:null,card:1,rar:WPET[id]&&WPET[id].real?'h':'c'})})}}
+
+/* ===== v59: BUDDY GUIDE — Tzach: kids of 9 who just started must understand buddies. When the player owns a buddy for the
+   first time (bought, hatched or paid; also once for players who already own one), a 4-page picture guide explains: your buddy
+   flies with you, it has a power that works only while it's with you, how to switch it (Style tab → Buddy slot), and that eggs
+   hatch new buddies and cookies evolve them. Reopen from the "?" in the nest and in My hero's buddy slot. progress.budGuide=1 */
+Object.assign(I18N.en,{bgT1:'Meet your buddy!',bgS1:'{b} flies next to you in every level and in the lobby.',bgT2:'Buddies have powers',bgS2:'The power works only while your buddy is with you. Every buddy has a different power!',
+  bgPw:'Power of {b}',bgT3:'Switch buddies anytime',bgS3:'Tap “{a}” at the bottom, then the “{b}” slot, and pick a buddy.',bgT4:'Collect and grow',
+  bgS4a:'Wins hatch the eggs in your nest. New buddies come out!',bgS4b:'Cookies grow your buddy up to 3 stars. Every star gives more coins.',bgNext:'Next',bgBack:'Back',bgGo:'Got it!',bgHelp:'What are buddies?'});
+Object.assign(I18N.he,{bgT1:'זה החבר שלך!',bgS1:'{b} עף לידך בכל שלב ובלובי.',bgT2:'לכל חבר יש כוח',bgS2:'הכוח עובד רק כשהחבר איתך. לכל חבר כוח אחר!',
+  bgPw:'הכוח של {b}',bgT3:'מחליפים חבר מתי שרוצים',bgS3:'לוחצים על "{a}" למטה, אחר כך על המשבצת "{b}", ובוחרים חבר.',bgT4:'אוספים ומגדלים',
+  bgS4a:'ניצחונות מבקיעים את הביצים בקן, ומהן יוצאים חברים חדשים!',bgS4b:'עוגיות מגדלות את החבר עד 3 כוכבים, וכל כוכב נותן עוד מטבעות.',bgNext:'הבא',bgBack:'חזרה',bgGo:'הבנתי!',bgHelp:'מה זה חברים?'});
+function budOwnedList(){return Object.keys(WPET).filter(k=>k!=='none'&&(WPET[k].p||WPET[k].real)&&wOwned('pet',k))}
+function budArt(id){return ['bee','chick','cyborg','dino','dragon','ghost','mini','slime','star','unicorn'].includes(id)||(typeof STK_BUD_ART!=='undefined'&&STK_BUD_ART.includes(id))?'art/stk_p_'+id+'.webp':null}
+function openBudGuide(id){if(document.querySelector('.bg-guide'))return;id=id||(lookNow().pet!=='none'&&wOwned('pet',lookNow().pet)?lookNow().pet:budOwnedList()[0]);
+  progress.budGuide=1;saveProgress();const name=id?wName('pet',id):'',pk=id&&PERKS[id];let pg=0;
+  const m=document.createElement('div');m.className='egg-pop bg-guide';m.innerHTML='<div class="bg-c"><div class="rays"></div><div class="bg-pic"></div><h3></h3><div class="bg-txt"></div><div class="bg-dots"></div><div class="bg-bt"></div></div>';
+  document.body.appendChild(m);sfx.click();
+  const pic=m.querySelector('.bg-pic'),h=m.querySelector('h3'),tx=m.querySelector('.bg-txt'),dots=m.querySelector('.bg-dots'),bt=m.querySelector('.bg-bt');
+  const P=[
+    ()=>{const a=id&&budArt(id);pic.innerHTML=a?`<img class="bg-card" src="${a}" alt="">`:'<img class="bg-th" alt="">';if(!a&&id)try{pic.querySelector('img').src=wThumb('pet',id)}catch(e){}
+      h.textContent=t('bgT1');tx.innerHTML='<p></p>';tx.querySelector('p').textContent=t('bgS1',{b:name})},
+    ()=>{pic.innerHTML='<div class="bg-pw"><img class="bg-th" alt=""><span class="bg-bolt">⚡</span></div>';try{pic.querySelector('img').src=wThumb('pet',id)}catch(e){}
+      h.textContent=t('bgT2');tx.innerHTML='<div class="bg-chip"><small></small><b></b></div><p></p>';tx.querySelector('small').textContent=t('bgPw',{b:name});tx.querySelector('b').textContent=pk?t('pk_'+pk):'';tx.querySelector('p').textContent=t('bgS2')},
+    ()=>{pic.innerHTML=`<div class="bg-steps"><span class="bg-tab"><img src="art/ic_hats.webp" alt=""><small></small></span><span class="bg-ar">${document.documentElement.dir==='rtl'?'←':'→'}</span><span class="bg-slot"><img alt=""><small></small></span></div>`;
+      pic.querySelector('.bg-tab small').textContent=t('wardrobeShort');pic.querySelector('.bg-slot small').textContent=t('sl_pet');try{pic.querySelector('.bg-slot img').src=wThumb('pet',id)}catch(e){}
+      h.textContent=t('bgT3');tx.innerHTML='<p></p>';tx.querySelector('p').textContent=t('bgS3',{a:t('wardrobeShort'),b:t('sl_pet')})},
+    ()=>{pic.innerHTML='<div class="bg-grow"><span><img src="art/egg_c.webp" alt=""></span><span><img src="art/ns_cookie.webp" alt=""><i class="sts"><em class="on">★</em><em class="on">★</em><em class="on">★</em></i></span></div>';
+      h.textContent=t('bgT4');tx.innerHTML='<p class="egg"></p><p class="ck"></p>';tx.querySelector('.egg').textContent=t('bgS4a');tx.querySelector('.ck').textContent=t('bgS4b')}];
+  const draw=()=>{P[pg]();m.querySelector('.bg-c').classList.remove('in');void m.offsetWidth;m.querySelector('.bg-c').classList.add('in');
+    dots.innerHTML=P.map((_,i)=>`<i class="${i===pg?'on':''}"></i>`).join('');bt.innerHTML='';
+    if(pg>0){const b=document.createElement('button');b.className='btn';b.innerHTML='<span></span>';b.querySelector('span').textContent=t('bgBack');b.onclick=()=>{sfx.click();pg--;draw()};bt.appendChild(b)}
+    const n=document.createElement('button');n.className='btn primary';n.innerHTML='<span></span>';n.querySelector('span').textContent=pg<P.length-1?t('bgNext'):t('bgGo');
+    n.onclick=()=>{sfx.click();if(pg<P.length-1){pg++;draw()}else m.remove()};bt.appendChild(n)};
+  draw()}
+// the daily gift goes first (it pops once a day when the lobby is idle); it also never pops over the guide
+const dlPending=()=>typeof dlState==='function'&&!dlState().claimed&&progress.unlocked>=2&&dlShownOn!==dlDate(0);
+{const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector('.bg-guide')||_lo()}}
+function budGuideMaybe(id){if(progress.budGuide||!budOwnedList().length)return;setTimeout(()=>{if(progress.budGuide||document.querySelector('.egg-pop,.bg-guide')||(!W3.on&&dlPending()))return;
+  const ov=document.getElementById('overlay');if(state!=='title'||(ov&&!ov.hidden&&!W3.on))return;openBudGuide(id)},1200)}
+/* triggers: back in the lobby, after buying/wearing in My hero, after a hatch (nest re-renders when the hatch popup closes) */
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);if(state==='title')budGuideMaybe();return r}}
+{const _nr=nestRender;nestRender=function(){const r=_nr.apply(this,arguments);try{const h=NEL.querySelector('.ns-h');if(h&&!h.querySelector('.bg-help')){const q=document.createElement('button');q.className='bg-help';q.textContent='?';q.setAttribute('aria-label',t('bgHelp'));q.onclick=()=>openBudGuide();h.appendChild(q)}}catch(e){}
+  budGuideMaybe();return r}}
+{const _rw=renderWardrobe;renderWardrobe=function(){const r=_rw.apply(this,arguments);try{if(W3.cat==='pet'||(W3.sel&&W3.sel.cat==='pet'))budGuideMaybe(W3.sel&&W3.sel.cat==='pet'&&wOwned('pet',W3.sel.id)?W3.sel.id:null)}catch(e){}return r}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
