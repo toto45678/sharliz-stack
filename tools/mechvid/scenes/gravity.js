@@ -8,9 +8,11 @@ const sw=()=>({x:xOf(swinger?swinger.xs:0),y:sy(swingY())});
 const gust=(tm,ws)=>Math.sin(tm*.33+ws)*.75+Math.sin(tm*1.1+ws*2)*.25;
 function simSw(xs,dir,T){const r=rangeXs(),sp=speed(),h=1/240;for(let q=0;q<T-1e-9;q+=h){xs+=dir*sp*(1-.42*Math.min(1,(xs/r)**2))*h;if(xs<-r){xs=-r;dir=1}if(xs>r){xs=r;dir=-1}}return {xs,dir}}
 // fall of a piece let go now from swinger xs (+lead s of swinging): returns the path (screen points), landing error and top
+// the game's wind at game time tm (windFor reads the global clock; it is put back right after)
+const windAt=tm=>{const t0=time;time=tm;try{return windFor(tower.length)+(hz.gustV||0)}finally{time=t0}};
 function fall(lead=0,path=false){if(!swinger)return null;const h=1/240,base=baseId(zone()),G0=BH*30*zone().grav*hatFall(),gm=hz.m.gravity;
-  let xs=simSw(swinger.xs,swinger.dir,lead).xs,y=swingY(),vy=0,gr=gm?gm.dur-gm.t-lead:-1,k=0;const yl=yOf(tower.length),top=tower[tower.length-1].xs,pts=[];
-  while(y<yl){vy+=G0*(gr>0?(hz.gravK||1):1)*h;if(base==='space')vy=Math.min(vy,BH*9);y+=vy*h;xs+=wind*hatWind()*h;gr-=h;if(path&&(k++%6===0))pts.push({x:xOf(xs),y:sy(Math.min(y,yl))})}
+  let xs=simSw(swinger.xs,swinger.dir,lead).xs,y=swingY(),vy=0,gr=gm?gm.dur-gm.t-lead:-1,k=0,tm=time+lead;const yl=yOf(tower.length),top=tower[tower.length-1].xs,pts=[];
+  while(y<yl){vy+=G0*(gr>0?(hz.gravK||1):1)*h;if(base==='space')vy=Math.min(vy,BH*9);y+=vy*h;xs+=windAt(tm)*hatWind()*h;tm+=h;gr-=h;if(path&&(k++%6===0))pts.push({x:xOf(xs),y:sy(Math.min(y,yl))})}
   if(path)pts.push({x:xOf(xs),y:sy(yl)});return {err:xs-top,xs,pts}}
 const dtN=()=>Math.min(.033,(SC.s.speed?SC.s.speed(SC.t+1/30):1)/30);
 const bestNow=tol=>{const a=fall(0),b=fall(dtN());return a&&Math.abs(a.err)<tol&&Math.abs(a.err)<=Math.abs(b.err)};
@@ -34,8 +36,8 @@ function setup(){const M=SC.mem;last=-1e9;
   Object.assign(swinger,{rare:null,kind:null,gold:false,color:COLORS[5%COLORS.length],mouth:MOUTHS[0],eyes:EYES[0]});
   // the same tower colours in A and B (setup pieces are random); the crowns from the 5+ perfect combo stay
   for(let i=1;i<tower.length;i++)Object.assign(tower[i],{rare:null,kind:null,gold:false,color:COLORS[i%COLORS.length],mouth:MOUTHS[0],eyes:EYES[0]});M.h={x:W*.95,y:sw().y+BH*4.6};M.press=-9;M.taps=[];M.trail=[];
-  // a steady wind gust for the next seconds (windSeed is the level's random wind phase)
-  let best=null;for(let i=0;i<628;i++){const ws=i/100;let mn=9;for(let q=.6;q<=3.2;q+=.1)mn=Math.min(mn,gust(time+q,ws));if(!best||mn>best.mn)best={mn,ws}}windSeed=best.ws;
+  // a steady, strong wind gust while the pieces fall (~1.0-2.4 s game time in); windSeed is the level's random wind phase
+  let best=null;for(let i=0;i<628;i++){const ws=i/100;let mn=9;for(let q=.95;q<=2.45;q+=.05)mn=Math.min(mn,gust(time+q,ws));if(!best||mn>best.mn)best={mn,ws}}windSeed=best.ws;M.gmin=best.mn;
   // swing start: at T_REL the Sharliz is at the upwind release point, heading downwind
   const wdir=1,drift=.62;let b2=null;for(let i=0;i<=200;i++){const xs0=-rangeXs()+2*rangeXs()*i/200;for(const d of [-1,1]){const p=simSw(xs0,d,T_REL);const e=Math.abs(p.xs-(tower[tower.length-1].xs-wdir*drift))+(p.dir===wdir?0:5);if(!b2||e<b2.e)b2={e,xs0,d}}}
   swinger.xs=b2.xs0;swinger.dir=b2.d}

@@ -10,7 +10,7 @@ const pred=()=>{if(state!=='aim'||!swinger||swinger.entering)return null;const t
 const dropNow=()=>{try{busy=false;tapBuf=-9}catch(e){}drop()};
 const dropAt=(M,f=p=>p)=>{const p=pred();if(p==null){M.pp=null;return false}const d=f(p),pd=M.pp;M.pp=d;if(pd==null)return false;const v=d-pd;
   if(Math.abs(d)<.01){dropNow();return state==='drop'}
-  if(v&&Math.sign(d+v)!==Math.sign(d)&&Math.abs(v)<.5){const sp=SC.s.speed?SC.s.speed(SC.t):1;SC_step(1,1000/30*sp*Math.min(1,Math.abs(d/v)));M.at={p,d,v,p2:pred(),xs:swinger&&swinger.xs};dropNow();return state==='drop'}return false};
+  if(v&&Math.sign(d+v)!==Math.sign(d)&&Math.abs(v)<.5){const sp=SC.s.speed?SC.s.speed(SC.t):1;SC_step(1,1000/30*sp*Math.min(1,Math.abs(d/v)));dropNow();return state==='drop'}return false};
 const guide=(ts,s,ok)=>({k:'fn',f:g=>{g.save();g.setLineDash([10,9]);g.lineCap='round';g.beginPath();g.moveTo(ts.x,ts.y-62);g.lineTo(ts.x,s.y+12);g.lineWidth=7;g.strokeStyle=SC_lib.INK;g.stroke();g.lineWidth=4;g.strokeStyle=ok?'#22c55e':'#facc15';g.stroke();g.restore()}});
 // red "boing" hop arrow: an arc from where it landed to where it bounced
 function hop(g,x1,x2,y,p){const dir=Math.sign(x2-x1)||1,a=x1,b=x2,h=46,mx=(a+b)/2;g.save();g.lineCap='round';g.lineJoin='round';
