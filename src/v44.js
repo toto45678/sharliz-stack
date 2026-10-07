@@ -284,7 +284,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
 
 /* ---------- hooks ---------- */
 {const _rh=resetHazards;resetHazards=function(){_rh();hz.m={};hz.gravK=1;hz.portal=null;nightExtra=0;lightBoost=0;try{cv.style.transform=''}catch(e){}
-  if(mode==='levels'||mode==='daily'){const pk=passiveNow();if(pk)hz.m[pk]=MECH[pk].init()}}}
+  if(mode==='levels'||mode==='daily'||mode==='event'){const pk=passiveNow();if(pk)hz.m[pk]=MECH[pk].init()}}}
 {const _se=startEvent;startEvent=function(k){if(MECH[k]){if(mBusy()&&MECH[k].type!=='swinger')return false;if(MECH[k].type!=='swinger'&&(tower.length<3&&!hz.boss))return false;let ok=false;try{ok=!!MECH[k].start()}catch(e){}if(!ok)hz.mRetry=1;return ok}return _se(k)}}
 {const _uh=updateHazards;updateHazards=function(dt){_uh(dt);if(hz.mRetry){hz.mRetry=0;hz.next=Math.min(hz.next,time+1.2)}const live=['aim','wait','drop'].includes(state);if(lightBoost>0)lightBoost-=dt;
   if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.update&&hz.m[k])M.update(dt,hz.m[k],live)}

@@ -798,6 +798,399 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 
 .cs-act{gap:8px}.cs-act .cs-buy{flex:1 1 0;min-width:0}.cs-act .cs-coinalt{--g1:#ffe066;--g2:#f5a300}
 
+/* ===== v50: bonus stage "Treasure in the Clouds" ===== */
+/* golden bonus button on the boss win card */
+.btn.bonus{--c1:#fff27a;--c2:#ff9f1a;font-size:1.45rem;min-height:56px;animation:bnGlow 1.4s ease-in-out infinite;color:#fff;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill}
+.card.wb .actions .btn.bonus{rotate:1.5deg;font-size:1.55rem;min-height:62px}
+.actions .btn.bonus+.btn.primary{--c1:var(--b1);--c2:var(--b2);font-size:1.15rem;min-height:46px;width:80%;margin-inline:auto;color:#fff}
+.card.wb .actions .btn.bonus+.btn.primary{font-size:1.15rem;rotate:0deg}
+.btn.bonus img.ico{width:1.7em;height:1.7em;margin-block:-.4em;filter:drop-shadow(0 2px 0 var(--ink))}
+.btn.bonus::after{content:var(--bn-new,'NEW');position:absolute;top:-13px;inset-inline-start:-10px;rotate:-14deg;background:linear-gradient(180deg,#ff6b7d,#e01e45);color:#fff;border:2.5px solid var(--ink);border-radius:10px;padding:2px 8px 3px;font-size:.78rem;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;box-shadow:0 3px 0 var(--ink);animation:bnTag 1.4s ease-in-out infinite}
+@keyframes bnGlow{0%,100%{box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.18),0 6px 0 var(--ink),0 0 0 0 rgba(255,214,60,.0)}50%{box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.18),0 6px 0 var(--ink),0 0 22px 6px rgba(255,214,60,.75)}}
+@keyframes bnTag{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+/* HUD */
+#bnHud{position:fixed;inset:0;pointer-events:none;z-index:3}
+#hud.bonus #hearts{display:none}
+.bn-timer{justify-self:start;display:flex;align-items:center;gap:4px;height:46px;padding:0 10px 0 2px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);color:#fff;font:1.45rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.bn-timer img{width:42px;height:42px;margin-block:-6px;filter:drop-shadow(0 2px 0 var(--ink))}
+.bn-timer b{min-width:2.2em;font-weight:400;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill}
+.bn-timer{background:linear-gradient(90deg,#c98a00 calc(var(--p,1)*100%),rgba(18,13,43,.9) 0)}
+.bn-timer.low{background:linear-gradient(90deg,#d9263f calc(var(--p,1)*100%),rgba(18,13,43,.9) 0)}
+.bn-timer.low{animation:bnPulse .5s ease-in-out infinite}
+.bn-timer.bn-hit{animation:bnHit .45s ease-out}
+@keyframes bnPulse{50%{transform:scale(1.08)}}
+@keyframes bnHit{0%{transform:translateX(0)}20%{transform:translateX(-8px);background:#c4253d}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}100%{transform:none}}
+.bn-track{position:absolute;inset-inline-end:10px;top:22%;height:50%;width:46px}
+.bn-track .tube{position:absolute;inset-inline-start:11px;top:0;bottom:0;width:26px;border:3px solid var(--ink);border-radius:999px;background:rgba(14,12,46,.7);overflow:hidden;box-shadow:0 3px 0 rgba(0,0,0,.35),inset 0 2px 4px rgba(0,0,0,.5)}
+.bn-track .fill{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#fff27a,#ffb000);transition:height .35s cubic-bezier(.3,1.5,.5,1)}
+.bn-stop{position:absolute;inset-inline-start:-2px;width:50px;transform:translateY(50%);display:flex;flex-direction:column;align-items:center}
+.bn-stop img{width:46px;height:42px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.6))}
+.bn-stop small{margin-top:-6px;padding:0 6px;border-radius:999px;background:var(--ink);color:#fff;font:.82rem/1.35 "Lilita One","Secular One",system-ui,sans-serif}
+.bn-stop img{opacity:.7;transition:transform .2s}.bn-stop.open img{width:50px;height:46px;opacity:1}
+.bn-stop.next img{opacity:1;transform:scale(1.25);filter:drop-shadow(0 0 8px rgba(255,226,77,.95)) drop-shadow(0 3px 0 rgba(10,8,40,.6));animation:bnNext 1s ease-in-out infinite}
+.bn-stop.next small{background:var(--y2);color:#fff;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill}
+.bn-stop.open::after{content:'✓';position:absolute;top:-4px;inset-inline-end:-6px;width:20px;height:20px;border-radius:50%;background:#3db618;border:2px solid var(--ink);color:#fff;font:700 12px/16px system-ui;text-align:center}
+@keyframes bnNext{50%{transform:scale(1.35) rotate(-5deg)}}
+.bn-stop.pop{animation:bnPop .7s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bnPop{0%{transform:translateY(50%) scale(.6)}60%{transform:translateY(50%) scale(1.35) rotate(-8deg)}100%{transform:translateY(50%) scale(1)}}
+.bn-fl{position:absolute;bottom:-34px;inset-inline-start:0;width:46px;text-align:center;color:#fff;font:1.2rem "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill}
+/* intro + result cards */
+.bn-chests{display:flex;justify-content:center;gap:10px;margin:6px 0 12px}
+.bn-ch{flex:1;max-width:96px;border-radius:16px;border:3px solid var(--ink);padding:4px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 4px 0 var(--ink);background:linear-gradient(180deg,#5a3fc0,#2a1a66)}
+.bn-ch img{width:100%;height:64px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.55))}
+.bn-ch b{font:1rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;white-space:nowrap}
+.bn-ch.bronze{background:linear-gradient(180deg,#f0a35a,#9c4f1c)}.bn-ch.silver{background:linear-gradient(180deg,#b9c8ff,#5a6fc0)}.bn-ch.gold{background:linear-gradient(180deg,#ffe27a,#e08a00)}
+.bn-res .bn-ch{animation:bnIn .5s cubic-bezier(.3,1.6,.5,1) both}
+.bn-res .bn-ch.locked{filter:saturate(.25) brightness(.75)}
+.bn-res .bn-ch.open b{color:var(--y1)}
+@keyframes bnIn{0%{transform:scale(.3) rotate(-10deg);opacity:0}100%{transform:none;opacity:1}}
+.bn-rules{align-self:stretch;width:100%;box-sizing:border-box;list-style:none;margin:6px 0 10px;padding:0;display:flex;flex-direction:column;gap:8px}
+.bn-rules li{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:14px;background:rgba(18,13,43,.35);font-weight:800;font-size:1.1rem;text-align:start}
+.bn-rules img,.bn-rules em{width:34px;height:34px;object-fit:contain;flex:none}
+.bn-rules em{display:grid;place-items:center;border-radius:50%;border:2.5px solid var(--ink);font:normal .95rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;direction:ltr}
+.bn-rules em.neg{background:#ff4d5e}.bn-rules em.pos{background:#3db618}
+.bn-reach{margin:2px auto 6px;padding:4px 14px;border-radius:999px;background:rgba(18,13,43,.6);color:#fff;font-weight:800;width:max-content;max-width:100%}
+.bn-rew{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:6px}
+.bn-bos{display:flex;justify-content:center;gap:14px}
+.bn-coins{display:inline-flex;align-items:center;gap:6px;padding:4px 18px 6px;border-radius:16px;border:3px solid var(--ink);background:linear-gradient(180deg,var(--y1) 0 48%,var(--y2) 52%);box-shadow:inset 0 3px 0 rgba(255,255,255,.55),0 5px 0 var(--ink);rotate:-2deg;font:1.7rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;direction:ltr}
+.bn-coins b{font-weight:400}.bn-coins .coin-i{width:30px;height:30px}
+.bn-bo{position:relative;width:52px;height:48px;border-radius:12px;border:3px solid var(--ink);background:#2a1a66;display:grid;place-items:center;box-shadow:0 3px 0 var(--ink);margin-bottom:14px}
+.bn-bo img{width:32px;height:32px}
+.bn-bo em{position:absolute;top:-9px;inset-inline-end:-9px;font-style:normal;padding:0 5px;border-radius:999px;background:#3db618;border:2px solid var(--ink);color:#fff;font:.75rem/1.3 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.bn-bo small{position:absolute;top:100%;margin-top:4px;left:50%;translate:-50% 0;white-space:nowrap;font-size:.68rem;font-weight:800;color:#fff}
+.bn-half{margin:2px 0 0;font-size:.85rem;opacity:.85}
+#hud.bonus #score{display:inline-flex;align-items:center;gap:4px;direction:ltr}
+#hud.bonus #score .coin-i{width:22px;height:22px}#hud.bonus #score b{font-weight:400}
+.bn-timer.bn-plus{animation:bnPlus .5s ease-out}
+@keyframes bnPlus{0%{transform:scale(1)}35%{transform:scale(1.15);background:#2f8a12}100%{transform:none}}
+.bn-chip{position:fixed;z-index:30;translate:-50% -60%;pointer-events:none;padding:2px 10px 4px;border-radius:999px;border:3px solid var(--ink);color:#fff;font:1.25rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;box-shadow:0 3px 0 var(--ink);direction:ltr;animation:bnChip .9s ease-out forwards}
+.bn-chip.pos{background:#3db618}.bn-chip.neg{background:#ff4d5e}
+@keyframes bnChip{0%{transform:translateY(-6px) scale(.6);opacity:0}20%{transform:translateY(0) scale(1.15);opacity:1}100%{transform:translateY(26px) scale(1);opacity:0}}
+.bn-banner{position:fixed;left:50%;top:38%;z-index:30;translate:-50% -50%;pointer-events:none;white-space:nowrap;font:3rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:var(--y1);-webkit-text-stroke:8px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--ink);animation:bnBan 1.3s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes bnBan{0%{transform:scale(.2) rotate(-12deg);opacity:0}25%{transform:scale(1.1) rotate(-4deg);opacity:1}80%{transform:scale(1) rotate(-4deg);opacity:1}100%{transform:scale(1.3) rotate(-4deg);opacity:0}}
+/* chest reached: big pop in the middle (instead of a toast over the tower) */
+.bn-pop{position:fixed;left:50%;top:21%;z-index:30;translate:-50% -50%;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:bnBan 1.2s cubic-bezier(.3,1.6,.5,1) forwards}
+.bn-pop img{width:104px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(10,8,40,.6))}
+.bn-pop b{margin-top:-12px;font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:var(--y1);-webkit-text-stroke:7px var(--ink);paint-order:stroke fill;direction:ltr}
+/* result: the chest you almost got */
+.bn-res .bn-ch{position:relative}
+.bn-res .bn-ch.near{filter:none;outline:3px solid var(--y1);outline-offset:2px;animation:bnIn .5s cubic-bezier(.3,1.6,.5,1) both,bnNear 1.1s ease-in-out .8s infinite}
+.bn-res .bn-ch.near img{filter:saturate(.5) brightness(.9) drop-shadow(0 3px 0 rgba(10,8,40,.55))}
+.bn-ch i{position:absolute;top:-14px;left:50%;translate:-50% 0;white-space:nowrap;font-style:normal;padding:2px 8px 3px;border-radius:999px;background:linear-gradient(180deg,#ff6b7d,#e01e45);border:2.5px solid var(--ink);color:#fff;font:.8rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;box-shadow:0 2px 0 var(--ink)}
+@keyframes bnNear{50%{transform:scale(1.06) rotate(-2deg)}}
+.btn.bn-wait{filter:saturate(.4) brightness(.9)}
+#hud.bonus #score{font-size:.9em}
+#card:has(.bn-res) .card-title{font-size:2.3rem}
+.card-body.bn-res{padding-top:10px}
+.bn-stop small{position:relative;z-index:1}.bn-stop.next small{margin-top:2px;font-size:.8rem;padding:1px 7px}
+
+/* ===== v51: mini-games arcade ===== */
+#arcade{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;
+  background:radial-gradient(120% 70% at 50% 0%,#6d3df0 0%,#3a1a8a 50%,#1b0f4a 100%);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overflow:hidden;touch-action:manipulation}
+#arcade[hidden]{display:none}
+#arcade .x-btn{position:static;width:44px;height:44px;flex:none}
+.arc-top{display:flex;align-items:center;gap:8px;padding:10px 12px 4px}
+.arc-top .coin-pill{flex:none}
+.arc-title{flex:1;text-align:center;font:2.3rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;
+  text-shadow:0 0 18px rgba(255,90,220,.9),0 0 34px rgba(140,90,255,.8),0 4px 0 #120d2b;animation:arcNeon 2.2s ease-in-out infinite}
+@keyframes arcNeon{0%,100%{filter:brightness(1)}50%{filter:brightness(1.25)}}
+.arc-list{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding:12px 14px}
+.arc-note{margin:0;padding:4px 16px 14px;text-align:center;font-weight:700;font-size:.85rem;color:#d9ceff}
+.arc-card{position:relative;display:flex;align-items:center;gap:12px;padding:10px;border-radius:22px;border:3.5px solid #120d2b;color:#fff;text-align:start;
+  background:linear-gradient(180deg,#5a3fc0,#2a1a66);box-shadow:inset 0 3px 0 rgba(255,255,255,.25),0 6px 0 #120d2b,0 0 0 3px rgba(255,210,63,.0);animation:arcIn .45s cubic-bezier(.3,1.5,.5,1) both}
+.arc-card::before{content:'';position:absolute;inset:4px;border-radius:17px;border:2px dashed rgba(255,226,77,.35);pointer-events:none}
+.arc-card:active{transform:translateY(4px);box-shadow:inset 0 3px 0 rgba(255,255,255,.25),0 2px 0 #120d2b}
+.arc-card.c-rain{background:linear-gradient(180deg,#3f8cf2,#2547b7)}.arc-card.c-mem{background:linear-gradient(180deg,#b06cff,#6b2fd6)}.arc-card.c-whack{background:linear-gradient(180deg,#ff7aa8,#d1306f)}
+@keyframes arcIn{0%{transform:translateY(30px) scale(.9);opacity:0}100%{transform:none;opacity:1}}
+.arc-card .th{flex:none;width:112px;height:112px;border-radius:16px;border:3px solid #120d2b;overflow:hidden;background:#1b0f4a;box-shadow:0 3px 0 #120d2b}
+.arc-card .th img{width:100%;height:100%;object-fit:cover}
+.arc-card .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.arc-card .tx b{font:1.45rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill;color:#fff}
+.arc-card .tx small{font-weight:700;font-size:.82rem;opacity:.95}
+.arc-card .meta{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:2px}
+.arc-card .best{display:inline-flex;align-items:center;gap:4px;padding:2px 8px 2px 4px;border-radius:999px;background:rgba(18,13,43,.55);font:1rem/1.3 "Lilita One","Secular One",system-ui,sans-serif}
+.arc-card .best img{width:22px;height:22px}
+.tix{display:inline-flex;gap:3px}
+.tix i{width:24px;height:16px;background:url(art/arc_ticket.webp) center/contain no-repeat;filter:grayscale(1) brightness(.55);opacity:.7}
+.tix i.on{filter:drop-shadow(0 1px 0 #120d2b);opacity:1}
+.arc-card .go{flex:none;width:52px;height:52px;border-radius:16px;border:3px solid #120d2b;display:grid;place-items:center;background:linear-gradient(180deg,var(--g1) 0 48%,var(--g2) 52%);box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 4px 0 #120d2b}
+.arc-card .go svg{width:26px;height:26px;fill:#fff;stroke:#120d2b;stroke-width:2.5;paint-order:stroke}
+
+/* game screen */
+.arc-bar{display:flex;align-items:center;gap:8px;padding:10px 12px 6px;position:relative;z-index:3}
+.arc-score{display:inline-flex;align-items:center;gap:5px;height:40px;padding:0 12px 0 6px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid #120d2b;box-shadow:0 4px 0 #120d2b;font:1.35rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.arc-score .coin-i{width:26px;height:26px}.arc-score b{font-weight:400;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill;min-width:1.6em}
+.arc-score.bump{animation:arcBump .3s ease-out}
+@keyframes arcBump{40%{transform:scale(1.15)}}
+.arc-sub{margin-inline:auto;display:inline-flex;align-items:center;gap:4px;height:34px;padding:0 12px 0 8px;border-radius:999px;background:rgba(18,13,43,.6);border:2.5px solid #120d2b;font:1.05rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#b9b0e0;white-space:nowrap;opacity:.75;transition:opacity .2s}
+.arc-sub[hidden]{display:none}.arc-sub .ic{font-size:1.1rem;filter:grayscale(1)}
+.arc-sub b{font-weight:400;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
+.arc-sub.on{opacity:1;color:#ffe24d;background:rgba(18,13,43,.86);box-shadow:0 3px 0 #120d2b}.arc-sub.on .ic{filter:none}
+.arc-sub.pop{animation:arcBump .35s ease-out}
+.g-mem .arc-sub.on{color:#fff}
+.arc-time{margin-inline-start:auto}
+.arc-stage{position:relative;flex:1;min-height:0;margin:0 10px 10px;border-radius:24px;border:3.5px solid #120d2b;overflow:hidden;box-shadow:0 6px 0 #120d2b;
+  background:linear-gradient(180deg,#7fd3ff 0%,#c9ecff 55%,#ffe7f6 100%)}
+.arc-stage canvas{display:block;touch-action:none}
+.g-rain .arc-stage{background:url(art/w3b_clouds.webp) center bottom/cover,linear-gradient(180deg,#7fd3ff,#ffe7f6)}
+.arc-cd{position:absolute;inset:0;z-index:5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(18,13,43,.45);pointer-events:none}
+.arc-cd b{font:5.5rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:10px #120d2b;paint-order:stroke fill;text-shadow:0 6px 0 #120d2b;animation:arcCd .7s cubic-bezier(.3,1.7,.5,1)}
+.arc-cd p{margin:0;padding:8px 16px;border-radius:999px;background:rgba(18,13,43,.85);border:2px solid #8b6cff;font-weight:800;font-size:1.05rem}
+@keyframes arcCd{0%{transform:scale(2.2);opacity:0}100%{transform:none;opacity:1}}
+.arc-fx{position:absolute;z-index:4;translate:-50% -50%;pointer-events:none;font:1.6rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill;direction:ltr;animation:arcFx .8s ease-out forwards}
+.arc-fx.neg{color:#ff6b7d}.arc-fx.gem{color:#ff8ad8;font-size:2rem}
+@keyframes arcFx{0%{transform:translateY(8px) scale(.6);opacity:0}25%{transform:translateY(0) scale(1.15);opacity:1}100%{transform:translateY(-40px) scale(1);opacity:0}}
+.arc-hint{position:absolute;left:50%;bottom:12px;translate:-50% 0;z-index:3;white-space:nowrap;padding:6px 14px;border-radius:999px;background:rgba(18,13,43,.82);border:2px solid #120d2b;font-weight:800;font-size:.9rem;pointer-events:none}
+.arc-arrows{position:absolute;inset-inline:10px;bottom:10px;display:flex;justify-content:space-between;z-index:3;pointer-events:none;direction:ltr}
+.arc-arrows button{pointer-events:auto;opacity:.72;width:58px;height:58px;border-radius:50%;border:3px solid #120d2b;background:rgba(18,13,43,.55);display:grid;place-items:center;box-shadow:0 4px 0 #120d2b}
+.arc-arrows button:active{transform:translateY(3px)}
+.arc-arrows svg{width:26px;height:26px;fill:#fff}
+/* memory */
+.mem-grid{position:absolute;inset:8px 8px 52px;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;align-content:center;max-width:420px;margin:auto}
+.mem-card{aspect-ratio:.74}
+.mem-card{position:relative;padding:0;border:0;background:none;perspective:600px;animation:arcIn .4s cubic-bezier(.3,1.5,.5,1) both}
+.mem-card>span{position:absolute;inset:0;border-radius:14px;border:3px solid #120d2b;backface-visibility:hidden;-webkit-backface-visibility:hidden;transition:transform .32s cubic-bezier(.4,1.4,.6,1);display:grid;place-items:center;overflow:hidden;box-shadow:0 4px 0 #120d2b}
+.mem-card .bk{background:#6b2fd6}.mem-card .bk img{width:100%;height:100%;object-fit:cover}
+.mem-card .fr{transform:rotateY(180deg);background:radial-gradient(circle at 50% 35%,#fff7e0,#ffd6f0)}
+.mem-card .fr img{width:92%;height:92%;object-fit:contain}
+.mem-card.up .bk{transform:rotateY(-180deg)}.mem-card.up .fr{transform:rotateY(0)}
+.mem-card.ok .fr{border-color:#2f8a12;box-shadow:0 0 0 3px #5ee85a,0 0 16px 4px rgba(94,232,90,.8),0 4px 0 #120d2b;animation:memOk .5s ease-out}
+.mem-card.no .fr{animation:memNo .4s ease-in-out}
+@keyframes memOk{40%{transform:scale(1.12)}}
+@keyframes memNo{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* whack */
+.g-whack .arc-stage{background:url(art/w3b_clouds.webp) center/cover,linear-gradient(180deg,#9fd8ff,#ffe7f6)}
+.wh-grid{position:absolute;inset:16px 10px 60px;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:6px}
+.wh-hole{position:relative;container-type:size}
+.wh-ring{position:absolute;left:4%;right:4%;bottom:2%;aspect-ratio:1.174;background:url(art/arc_hole.webp) center/contain no-repeat;pointer-events:none}
+.wh-ring.front{clip-path:inset(60% 0 0 0);z-index:2}
+.wh-in{position:absolute;left:8%;right:8%;top:0;bottom:calc(2cqh + 30cqw);overflow:hidden;z-index:1}
+.wh-pop{position:absolute;left:0;right:0;bottom:-90cqw;height:84cqw;padding:0;border:0;background:none;transition:bottom .16s cubic-bezier(.3,1.6,.5,1);touch-action:manipulation}
+.wh-pop img{width:100%;height:100%;object-fit:contain;object-position:bottom;filter:drop-shadow(0 3px 0 rgba(10,8,40,.45))}
+.wh-hole.up .wh-pop{bottom:-16cqw}
+.wh-hole.bonk .wh-pop img{transform:scale(1.1,.78);transform-origin:bottom;filter:brightness(1.2) drop-shadow(0 3px 0 rgba(10,8,40,.45))}
+.wh-hole.sad .wh-pop{animation:memNo .35s}
+.wh-pow{position:absolute;left:50%;top:6%;translate:-50% 0;z-index:3;width:84px;height:62px;display:grid;place-items:center;background:url(art/arc_pow.webp) center/contain no-repeat;font:1.1rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;color:#fff;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill;pointer-events:none;animation:arcCd .45s cubic-bezier(.3,1.7,.5,1)}
+.wh-ham{position:absolute;z-index:4;width:70px;height:70px;background:url(art/arc_hammer.webp) center/contain no-repeat;pointer-events:none;transform-origin:80% 80%;animation:whHam .28s ease-out forwards}
+@keyframes whHam{0%{transform:rotate(-55deg);opacity:1}55%{transform:rotate(18deg)}100%{transform:rotate(5deg);opacity:0}}
+/* result */
+.arc-end{position:absolute;inset:0;z-index:6;display:grid;place-items:center;padding:16px;background:rgba(18,13,43,.55);animation:arcFade .25s}
+@keyframes arcFade{from{opacity:0}}
+.arc-panel{width:min(100%,340px);border-radius:26px;border:4px solid #120d2b;background:linear-gradient(180deg,#3f75f2,#2547b7);box-shadow:inset 0 4px 0 rgba(255,255,255,.25),0 8px 0 #120d2b;padding:20px 16px 16px;display:flex;flex-direction:column;align-items:center;gap:16px;animation:arcIn .45s cubic-bezier(.3,1.5,.5,1)}
+.ar-title{font:2rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill;text-align:center}
+.ar-title.nb{color:#ffe24d;font-size:2.3rem;animation:bnPulse .8s ease-in-out infinite}
+.ar-score{display:flex;flex-direction:column;align-items:center}
+.ar-score small{font-weight:800;opacity:.9}
+.ar-score b{font:3.6rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-weight:400;-webkit-text-stroke:7px #120d2b;paint-order:stroke fill}
+.ar-best{display:inline-flex;align-items:center;gap:6px;padding:3px 12px 3px 6px;border-radius:999px;background:rgba(18,13,43,.6);font-weight:800}
+.ar-best img{width:24px;height:24px}
+.ar-rew{display:flex;align-items:center;gap:10px}
+.ar-rew.free{font-weight:800;font-size:.9rem;text-align:center;color:#ffe24d}
+.ar-acts{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:4px}
+.ar-acts .btn{width:100%}
+
+/* lobby button */
+.side-btn.arcade .sq img{animation:arcBob 2.4s ease-in-out infinite}
+@keyframes arcBob{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-2px)}}
+.arc-fx.big{font-size:2.3rem}
+.wh-hole.fr .wh-pop img{filter:drop-shadow(0 0 6px #7ff3ff) drop-shadow(0 0 12px rgba(127,243,255,.8)) drop-shadow(0 3px 0 rgba(10,8,40,.45))}
+.wh-hole.fr.up::after{content:'✨';position:absolute;left:62%;top:8%;z-index:3;font-size:1.3rem;animation:arcBob 1s ease-in-out infinite;pointer-events:none}
+.wh-hole.sad .wh-pop img{filter:grayscale(.3) brightness(.85) drop-shadow(0 0 10px #ff4d5e)}
+.wh-hole.sad::before{content:'';position:absolute;inset:10% 6% 0;border-radius:50%;background:radial-gradient(circle,rgba(255,77,94,.55),transparent 65%);z-index:0;animation:arcFade .5s reverse forwards}
+.arc-hand{font-style:normal;font-size:2.6rem;animation:arcSwipe 1.1s ease-in-out infinite}
+@keyframes arcSwipe{0%,100%{transform:translateX(-60px) rotate(-10deg)}50%{transform:translateX(60px) rotate(10deg)}}
+.ar-rew{position:relative}.ar-lbl{position:absolute;top:-16px;left:50%;translate:-50% 0;font-size:.78rem;font-weight:800;color:#ffe24d;white-space:nowrap}
+.arc-badge{background:linear-gradient(180deg,var(--g1),var(--g2))!important;display:inline-flex!important;align-items:center;gap:1px;width:auto!important;padding:0 5px 0 2px!important}
+.arc-badge img{width:16px;height:12px;object-fit:contain}
+.arc-badge[hidden]{display:none!important}
+.g-mem .arc-score{transform:scale(.88);opacity:.85}
+.wh-hole .wh-ring{filter:brightness(.86) saturate(.85);transition:filter .15s}.wh-hole.up .wh-ring{filter:brightness(1.1) drop-shadow(0 0 6px rgba(255,255,255,.8))}
+.arc-card .tix em{margin-inline-start:3px;font:.8rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;color:#ffe24d;-webkit-text-stroke:2.5px #120d2b;paint-order:stroke fill;direction:ltr}
+
+/* ===== v52: holiday events (Halloween first) ===== */
+#evhub{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;overflow:hidden;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:radial-gradient(120% 70% at 50% 0%,#5b2a9e 0%,#2a1250 55%,#120826 100%)}
+#evhub[hidden]{display:none}
+#evhub.ev-halloween::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(42,18,80,.55),rgba(18,8,38,.35) 40%,rgba(18,8,38,.7)),url(art/w3b_farmN.webp) center bottom/cover no-repeat;pointer-events:none}
+#evhub>*{position:relative}
+#evhub .x-btn{position:static;width:44px;height:44px;flex:none}
+.ev-top{display:flex;align-items:center;gap:8px;padding:10px 12px 4px}
+.ev-title{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.ev-title b{font:1.9rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-shadow:0 0 16px rgba(255,140,30,.7),0 4px 0 #120d2b;white-space:nowrap}
+.ev-title small{padding:2px 10px;border-radius:999px;background:rgba(18,13,43,.75);border:2px solid #ff7a1a;font-weight:800;font-size:.78rem;white-space:nowrap}
+.ev-cur{flex:none;display:inline-flex;align-items:center;gap:4px;height:38px;padding:0 12px 0 4px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid #120d2b;box-shadow:0 3px 0 #120d2b;font:1.25rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.ev-cur img{width:32px;height:32px;object-fit:contain}
+.ev-tabs{display:flex;gap:6px;margin:6px 14px 0;padding:5px;border-radius:18px;background:rgba(18,13,43,.75)}
+.ev-tabs button{flex:1;height:42px;border-radius:14px;border:0;background:none;color:#c7b8ff;font:800 1.05rem var(--bf,Rubik),system-ui,sans-serif}
+.ev-tabs button.on{background:linear-gradient(180deg,#ffb347,#ff7a1a);color:#120d2b;border:3px solid #120d2b;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.ev-body{flex:1;min-height:0;display:flex;flex-direction:column}
+.ev-path{position:relative;flex:1;min-height:0;margin:8px 14px 0}
+.ev-road{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ev-road path{fill:none;stroke:rgba(255,179,71,.55);stroke-width:2.2;stroke-dasharray:3 3;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-width:6}
+.ev-node{position:absolute;translate:-50% -50%;width:62px;height:62px;padding:0;border:0;background:none;display:grid;place-items:center}
+.ev-node img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.6))}
+.ev-node i{position:absolute;bottom:-6px;left:50%;translate:-50% 0;min-width:24px;padding:0 6px;border-radius:999px;background:#120d2b;border:2px solid #ff7a1a;color:#fff;font:.85rem/1.4 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;white-space:nowrap}
+.ev-node.lock img{filter:grayscale(.6) brightness(.55) drop-shadow(0 3px 0 rgba(10,8,40,.6))}.ev-node.lock i{border-color:#55507a;color:#b9b0e0}
+.ev-node.done::after{content:'✓';position:absolute;top:-4px;inset-inline-end:-4px;width:22px;height:22px;border-radius:50%;background:#3db618;border:2px solid #120d2b;color:#fff;font:700 13px/18px system-ui;text-align:center}
+.ev-node.next{width:74px;height:74px;z-index:2}
+.ev-node.next img{animation:evGlow 1.2s ease-in-out infinite}
+@keyframes evGlow{0%,100%{filter:drop-shadow(0 0 6px rgba(255,160,40,.8)) drop-shadow(0 3px 0 rgba(10,8,40,.6));transform:scale(1)}50%{filter:drop-shadow(0 0 18px rgba(255,160,40,1)) drop-shadow(0 3px 0 rgba(10,8,40,.6));transform:scale(1.08)}}
+.ev-node.boss{width:86px;height:86px}
+.ev-node.boss img{border-radius:50%;background:radial-gradient(circle,#ff9a3c,#7a2a9e);border:4px solid #120d2b;box-shadow:0 0 0 3px #ff7a1a,0 5px 0 #120d2b;object-fit:cover;object-position:top}
+.ev-node.boss.lock img{filter:grayscale(.7) brightness(.5)}
+.ev-node.boss.next img{animation:evGlow 1.2s ease-in-out infinite}
+.ev-foot{padding:10px 16px 14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.ev-foot p{margin:0;text-align:center;font-weight:800;font-size:.9rem;color:#ffd9a8}
+.ev-play{width:100%}
+.ev-shop{flex:1;min-height:0;overflow-y:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;padding:14px;align-content:start}
+.ev-item{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px 12px;border-radius:20px;border:3.5px solid #120d2b;color:#fff;
+  background:linear-gradient(180deg,#7a3fd0,#3b1a7a);box-shadow:inset 0 3px 0 rgba(255,255,255,.22),0 5px 0 #120d2b;animation:arcIn .45s cubic-bezier(.3,1.5,.5,1) both}
+.ev-item:active{transform:translateY(3px)}
+.ev-item .th{width:100%;aspect-ratio:1.15;border-radius:14px;background:radial-gradient(circle at 50% 40%,#ffb347 0,#ff7a1a 35%,#5b2a9e 80%);display:grid;place-items:center;overflow:hidden}
+.ev-item .th img{width:100%;height:100%;object-fit:contain}
+.ev-item .th.sw::after{content:'';width:58%;aspect-ratio:1;border-radius:50%;border:4px solid #120d2b;background:var(--c,#ff7a1a);box-shadow:inset -8px -10px 0 rgba(0,0,0,.18),inset 6px 6px 0 rgba(255,255,255,.35)}
+.ev-item b{font:1.05rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill;text-align:center}
+.ev-item small{font-size:.7rem;font-weight:800;color:#ffd9a8;text-align:center}
+.ev-item .pr{display:inline-flex;align-items:center;gap:4px;margin-top:2px;padding:2px 12px 3px 4px;border-radius:999px;background:linear-gradient(180deg,#ffe24d,#ffad00);border:2.5px solid #120d2b;color:#120d2b;font:1.05rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr;box-shadow:0 3px 0 #120d2b}
+.ev-item .pr img{width:24px;height:24px;object-fit:contain}
+.ev-item .pr.poor{filter:saturate(.4) brightness(.9)}
+.ev-item .pr.got{padding:2px 12px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#fff;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.ev-item.own{background:linear-gradient(180deg,#3db618,#1d6b0c)}
+/* lobby banner */
+.ev-banner{position:absolute;z-index:3;left:50%;translate:-50% 0;top:calc(env(safe-area-inset-top,0px) + clamp(226px,29vh,262px));display:flex;align-items:center;gap:6px;max-width:216px;padding:6px 12px 6px 6px;border-radius:20px;border:3.5px solid #120d2b;
+  background:radial-gradient(120% 140% at 30% 20%,#7a3fd0,#2a1250);box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 4px 0 #120d2b,0 0 18px rgba(255,140,30,.75);color:#fff;white-space:nowrap;animation:evBan 1.8s ease-in-out infinite}
+.ev-banner[hidden]{display:none}
+.ev-banner img{width:54px;height:54px;margin-block:-12px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.5))}
+.ev-banner span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05}
+.ev-banner b{font:1.15rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill}
+.ev-banner small{display:inline-flex;align-items:center;gap:3px;margin-top:4px;padding:1px 8px 2px;border-radius:999px;background:#120d2b;font-weight:800;font-size:.64rem;color:#fff}.ev-banner small i{font-style:normal}
+@keyframes evBan{0%,100%{box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 4px 0 #120d2b,0 0 10px rgba(255,140,30,.5)}50%{box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 4px 0 #120d2b,0 0 24px rgba(255,140,30,.95)}}
+/* in-game */
+.ev-pop{position:fixed;z-index:6;pointer-events:none;display:inline-flex;align-items:center;gap:2px;font:1.4rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:4.5px #120d2b;paint-order:stroke fill;direction:ltr;transform:translate(-50%,-50%)}
+.ev-pop img{width:30px;height:30px;object-fit:contain}
+.ev-res .ev-rows{display:flex;flex-direction:column;gap:6px;width:100%;margin:4px 0 10px}
+.ev-row{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-radius:14px;background:rgba(18,13,43,.4);font-weight:800}
+.ev-row b{display:inline-flex;align-items:center;gap:4px;font:1.15rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill;direction:ltr}
+.ev-row b img,.ev-tot img{width:26px;height:26px;object-fit:contain}
+.ev-tot{margin:0 auto 6px}
+.ev-item small{position:absolute;top:-11px;left:50%;translate:-50% 0;padding:2px 10px;border-radius:999px;background:linear-gradient(180deg,#ff6b7d,#e01e45);border:2.5px solid #120d2b;color:#fff;white-space:nowrap;box-shadow:0 2px 0 #120d2b}
+.ev-item{margin-top:8px}
+.ev-shopnote{margin:4px 14px 14px;padding:10px;border-radius:16px;background:rgba(18,13,43,.7);border:2px solid #ff7a1a;text-align:center;font:1.15rem/1.15 "Lilita One","Secular One",system-ui,sans-serif;color:#ffb347;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
+.ev-node i{bottom:auto;top:56%;translate:-50% -50%;background:none;border:0;font-size:1.15rem;color:#fff;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill}
+.ev-node.lock i{color:#c7c0e8}
+.ev-node.boss{width:96px;height:96px}.ev-node.boss img{border-radius:0;background:none;border:0;box-shadow:none;object-fit:contain}
+.ev-node.boss i{top:auto;bottom:-10px;translate:-50% 0;background:#120d2b;border:2px solid #ff7a1a;font-size:.85rem;padding:0 8px;-webkit-text-stroke:0}
+.ev-res .ev-hero{display:block;width:96px;height:96px;object-fit:contain;margin:-6px auto 2px;filter:drop-shadow(0 4px 0 rgba(10,8,40,.5));animation:arcIn .5s cubic-bezier(.3,1.6,.5,1) both}
+/* review round 1 */
+.ev-node.done{width:56px;height:56px}.ev-node.done img{filter:saturate(.65) brightness(.92) drop-shadow(0 3px 0 rgba(10,8,40,.6))}
+.ev-node.next{width:88px;height:88px}
+.ev-node.next::before{content:'';position:absolute;inset:-10px;border-radius:50%;background:radial-gradient(circle,rgba(255,170,60,.55),transparent 65%);animation:evGlow 1.2s ease-in-out infinite;z-index:-1}
+.ev-node.boss{width:108px;height:108px}
+.ev-node.boss::before{content:'';position:absolute;inset:-14px;border-radius:50%;background:radial-gradient(circle,rgba(160,80,255,.55),transparent 65%);z-index:-1}
+.ev-item.worn{outline:4px solid #5ee85a;outline-offset:2px}
+.ev-res .ev-row{opacity:.82;font-size:.88rem;padding:4px 12px}.ev-res .ev-row b{font-size:1rem}
+.ev-res .ev-tot{font-size:2.05rem;padding:6px 22px 8px}.ev-res .ev-tot img{width:34px;height:34px}
+.ev-almost{margin:2px 0 8px;text-align:center;font:1.2rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill}
+.ev-climax{margin:0 0 8px;text-align:center;font:1.5rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#d9b8ff;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill;animation:bnPulse .9s ease-in-out infinite}
+.ev-boss .ev-hero{width:136px;height:136px;margin-top:-30px;filter:drop-shadow(0 0 18px rgba(170,90,255,.9)) drop-shadow(0 4px 0 rgba(10,8,40,.5))}
+.ev-boss::before{content:'';position:absolute;left:50%;top:40px;width:260px;height:260px;translate:-50% -50%;background:repeating-conic-gradient(rgba(255,210,90,.15) 0 10deg,transparent 10deg 20deg);border-radius:50%;animation:evSpin 8s linear infinite;pointer-events:none;-webkit-mask:radial-gradient(circle,#000 30%,transparent 70%);mask:radial-gradient(circle,#000 30%,transparent 70%)}
+.card-body.ev-res{position:relative}
+@keyframes evSpin{to{rotate:360deg}}
+#evCnt{position:fixed;z-index:4;top:calc(env(safe-area-inset-top,0px) + 66px);inset-inline-start:10px;display:inline-flex;align-items:center;gap:3px;height:34px;padding:0 12px 0 4px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid #120d2b;box-shadow:0 3px 0 #120d2b;color:#ffb347;font:1.15rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr;pointer-events:none}
+#evCnt[hidden]{display:none}#evCnt img{width:30px;height:30px;object-fit:contain}#evCnt b{font-weight:400;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
+#evCnt.pulse{animation:arcBump .35s ease-out}
+.ev-item:not(.own) .pr:not(.poor){animation:evPr 1.6s ease-in-out infinite}.ev-item:active .pr{transform:scale(.94)}
+@keyframes evPr{0%,100%{box-shadow:0 3px 0 #120d2b}50%{box-shadow:0 3px 0 #120d2b,0 0 12px 3px rgba(255,226,77,.75)}}
+#evCnt{height:30px;font-size:1rem;opacity:.9}#evCnt img{width:26px;height:26px}
+
+/* ===== v53: weekly tournament ===== */
+#tour{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;overflow:hidden;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);background:radial-gradient(120% 70% at 50% 0%,#7a4df0 0%,#3a1a8a 50%,#1b0f4a 100%)}
+#tour[hidden]{display:none}
+#tour .x-btn{position:static;width:44px;height:44px;flex:none}
+.tr-top{display:flex;align-items:center;gap:8px;padding:10px 12px 0}
+.tr-title{flex:1;display:grid;grid-template-columns:auto auto;grid-template-rows:auto auto;justify-content:center;align-items:center;column-gap:4px;row-gap:2px;min-width:0}
+.tr-title img{grid-row:1/3;grid-column:2;width:58px;height:58px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.6));animation:arcBob 2.4s ease-in-out infinite}
+.tr-title b{font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-shadow:0 4px 0 #120d2b;white-space:nowrap}
+.tr-title b{grid-column:1}.tr-title small{grid-column:1;justify-self:center;padding:2px 12px;border-radius:999px;background:rgba(18,13,43,.8);border:2px solid #8b6cff;font-weight:800;font-size:.8rem}
+.tr-body{flex:1;min-height:0;overflow-y:auto;padding:10px 14px 0;display:flex;flex-direction:column;gap:10px}
+.tr-twist{position:relative;height:150px;border-radius:22px;border:3.5px solid #120d2b;overflow:hidden;box-shadow:0 5px 0 #120d2b;background:#7fd3ff}
+.tr-twist .w{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%}
+.tr-twist .tw{position:absolute;inset-inline-end:8px;top:8px;bottom:8px;width:56%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px;border-radius:16px;background:rgba(255,255,255,.82);color:#120d2b;text-align:center}
+.tr-twist .tw>div{display:flex;flex-direction:column;align-items:center}
+.tr-twist .tw img{width:54px;height:54px;object-fit:contain}
+.tr-twist small{font-weight:800;font-size:.72rem;color:#5a4a99}
+.tr-twist b{font:1.45rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;color:#2f6bff;-webkit-text-stroke:0}
+.tr-twist p{margin:2px 0 0;font-weight:700;font-size:.74rem}
+.tr-best{align-self:center;display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:999px;background:rgba(18,13,43,.8);border:2.5px solid #120d2b;font-weight:800}
+.tr-best b{font:1.3rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
+.tr-prizes{margin:2px 0 0;padding:8px 12px 10px;border-radius:22px;border:3.5px solid #120d2b;background:linear-gradient(180deg,#6b3fd0,#3b1a8a);box-shadow:inset 0 3px 0 rgba(255,255,255,.2),0 5px 0 #120d2b}
+.tr-prizes h4{margin:0 0 4px;text-align:center;font:1.1rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
+.tr-prz{direction:ltr}
+.tr-meds{position:relative;height:64px;margin:0 22px}
+.tr-md{position:absolute;bottom:0;left:var(--x);translate:-50% 0;display:flex;flex-direction:column;align-items:center}
+.tr-md b{font:1rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.tr-md img{width:40px;height:44px;object-fit:contain;filter:grayscale(.75) brightness(.8)}
+.tr-md.on img{filter:drop-shadow(0 0 8px rgba(255,226,77,.8))}
+.tr-prz .bar{position:relative;height:16px;margin:4px 22px 0;border-radius:999px;border:3px solid #120d2b;background:#241a5e}
+.tr-prz .bar>i{position:absolute;inset-block:0;left:0;border-radius:999px;background:linear-gradient(180deg,#ffe98a,#ffb000)}
+.tr-prz .pin{position:absolute;left:var(--x);top:50%;translate:-50% -50%;width:26px;height:26px;border-radius:50%;background:#ff4d8d;border:3px solid #120d2b;display:grid;place-items:center}
+.tr-prz .pin em{position:absolute;top:24px;font-style:normal;padding:0 6px;border-radius:999px;background:#120d2b;font:.8rem/1.4 "Lilita One","Secular One",system-ui,sans-serif;white-space:nowrap}
+.tr-rws{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:20px}
+.tr-rw{display:flex;justify-content:center;gap:6px;padding:6px 4px;border-radius:14px;background:rgba(18,13,43,.55);border:2px solid #120d2b}
+.tr-rw span{display:inline-flex;align-items:center;gap:2px}.tr-rw .coin-i,.tr-rw img{width:20px;height:20px}
+.tr-rw b{font:.9rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:2.5px #120d2b;paint-order:stroke fill}
+.tr-rw.on{background:rgba(61,182,24,.45)}
+.tr-nx{margin:8px 0 0;text-align:center;font-weight:800;font-size:.9rem;color:#ffe24d}
+.tr-acts{display:flex;flex-direction:column;gap:10px;padding:12px 14px 14px}
+.tr-acts .btn{width:100%}
+.tr-share span::before,.tr-res~.actions .btn.green span::before{content:'💬';margin-inline-end:6px}
+/* in-game */
+#trBadge{position:fixed;z-index:4;top:calc(env(safe-area-inset-top,0px) + 66px);inset-inline-start:10px;display:inline-flex;align-items:center;gap:4px;height:32px;padding:0 12px 0 4px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid #120d2b;box-shadow:0 3px 0 #120d2b;font:800 .85rem var(--bf,Rubik),system-ui,sans-serif;color:#fff;pointer-events:none}
+#trBadge[hidden]{display:none}#trBadge img{width:28px;height:28px;object-fit:contain}
+#trGauge{position:fixed;z-index:3;inset-inline-end:10px;top:22%;height:46%;width:46px;pointer-events:none}
+#trGauge[hidden]{display:none}
+#trGauge .top{position:absolute;top:-44px;left:50%;translate:-50% 0;width:40px;height:40px;object-fit:contain}
+#trGauge .tube{position:absolute;inset-inline-start:13px;top:0;bottom:0;width:20px;border:3px solid #120d2b;border-radius:999px;background:rgba(14,12,46,.7);overflow:hidden;box-shadow:0 3px 0 rgba(0,0,0,.35)}
+#trGauge .tube i{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#fff27a,#ffb000);transition:height .35s cubic-bezier(.3,1.5,.5,1)}
+#trGauge .mk{position:absolute;inset-inline-start:-6px;translate:0 50%;display:flex;align-items:center;gap:2px}
+#trGauge .mk img{width:30px;height:34px;object-fit:contain;filter:grayscale(.7) brightness(.8)}
+#trGauge .mk.on img{filter:drop-shadow(0 0 6px rgba(255,226,77,.9))}
+#trGauge .mk b{font:.85rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;color:#fff}
+#trGauge em{position:absolute;bottom:-30px;inset-inline-start:0;width:46px;text-align:center;font:1rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;color:#fff;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill;direction:ltr}
+.tr-pop{position:fixed;z-index:30;left:50%;top:32%;translate:-50% -50%;display:flex;flex-direction:column;align-items:center;pointer-events:none;animation:bnBan 1.4s cubic-bezier(.3,1.6,.5,1) forwards}
+.tr-pop img{width:110px;height:120px;object-fit:contain;filter:drop-shadow(0 0 18px rgba(255,226,77,.9))}
+.tr-pop b{margin-top:-6px;font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill}
+/* result */
+.tr-res .tr-big{display:flex;align-items:baseline;justify-content:center;gap:8px;margin:0 0 4px}
+.tr-res .tr-big b{font:3.4rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:7px #120d2b;paint-order:stroke fill}
+.tr-res .tr-big span{font:1.6rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill}
+.tr-res .tr-best{display:flex;width:max-content;margin:0 auto 8px;font-size:.9rem;padding:3px 12px}
+.tr-won{display:flex;flex-direction:column;align-items:center;gap:6px;margin:4px 0 10px;animation:arcIn .6s cubic-bezier(.3,1.6,.5,1) both .2s}
+.tr-won img{width:110px;height:120px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(255,226,77,.85))}
+.tr-won p{margin:0;padding:4px 14px;border-radius:999px;background:rgba(18,13,43,.7);font-weight:800}
+.tr-rew{display:flex;align-items:center;gap:10px}
+.tr-rew .bn-bo{position:relative;width:48px;height:48px;border-radius:12px;border:3px solid #120d2b;background:#2a1a66;display:grid;place-items:center}
+.tr-rew .bn-bo img{width:32px;height:32px}.tr-rew .bn-bo em{position:absolute;top:-9px;inset-inline-end:-9px;font-style:normal;padding:0 5px;border-radius:999px;background:#3db618;border:2px solid #120d2b;font:.75rem/1.3 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.tr-res-bar{display:flex;align-items:center;gap:6px;margin:4px 0 4px;direction:ltr}
+.tr-res-bar .bar{flex:1;height:16px;border-radius:999px;border:3px solid #120d2b;background:#241a5e;position:relative;overflow:hidden}
+.tr-res-bar .bar i{position:absolute;inset-block:0;left:0;background:linear-gradient(180deg,#ffe98a,#ffb000)}
+.tr-res-bar img{width:30px;height:34px;object-fit:contain}
+.tr-res-bar b{font:1rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;min-width:3.4em}
+.tr-res .tr-nx{margin-top:2px}
+/* modes card + lobby badge */
+.mode-btn.m-tour{background:linear-gradient(180deg,#ffe24d,#ffad00)!important;color:#120d2b}
+.mode-btn.m-tour img{animation:arcBob 2.4s ease-in-out infinite}
+.tr-bd{background:linear-gradient(180deg,#ffe24d,#ffad00)!important;padding:0!important;width:26px;height:26px}
+.tr-bd img{width:18px;height:18px;object-fit:contain}.tr-bd[hidden]{display:none!important}
+/* review round 1 */
+.tr-md.nx img{width:48px;height:52px;filter:drop-shadow(0 0 10px rgba(255,226,77,.9));animation:evGlow 1.3s ease-in-out infinite}
+.tr-md.far{opacity:.6}.tr-rw.far{opacity:.55}.tr-rw.nx{border-color:#ffe24d;box-shadow:0 0 0 2px rgba(255,226,77,.5)}
+#trGauge .mk:not(.nx):not(.on) img{width:24px;height:28px}
+#trGauge .mk.nx img{width:38px;height:42px;filter:drop-shadow(0 0 8px rgba(255,226,77,1));animation:evGlow 1.2s ease-in-out infinite}
+.tr-ok{font-style:normal;padding:2px 10px;border-radius:999px;background:#3db618;border:2.5px solid #120d2b;font-weight:800;font-size:.85rem;color:#fff;animation:arcIn .4s cubic-bezier(.3,1.6,.5,1) both 1s}
+.tr-bd.done{background:linear-gradient(180deg,var(--g1),var(--g2))!important;font-size:.9rem}
+
 </style>
 
 <div id="app">
@@ -1147,7 +1540,7 @@ const ZONES=[
   const night=sk=>sk.map(([a,c])=>[a,mix(c,'#0b1030',.62)]),storm=sk=>sk.map(([a,c])=>[a,mix(c,'#3a4252',.55)]);
   for(const s of [2,3])for(const z of B)ZONES.push(Object.assign({},z,{sid:z.id+(s===2?'N':'S'),season:s,key:z.key+(s===2?'N':'S'),sky:s===2?night(z.sky):storm(z.sky),cloud:z.cloud&&(s===2?mix(z.cloud,'#1a2050',.6):mix(z.cloud,'#4a5060',.5)),starsAt:s===2?-99:z.starsAt}));
   for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
-const etOf=zi=>zi<8?zi:4+(zi-8)*.18;
+const etOf=zi=>typeof mode!=='undefined'&&mode==='event'?1.5:zi<8?zi:4+(zi-8)*.18;
 // floors added by the level's place in its world: +1 per level, with a 'rest' level now and then (+0) (Tzach, Oct 6; was +2 per level)
 const lvStep=k=>[0,1,2,2,3,4,4,5,6][k]||0;
 const TOTAL=ZONES.length*LPZ;
@@ -1768,8 +2161,8 @@ let tower=[], swinger=null, dropping=null, bodies=[], particles=[], popups=[];
 let camY=0, time=0, ft=0, best=+(store('sharliz-best')||0), balance=0, swayK=0, shake=0, bump=0, freeze=0, spawnAt=0, firstDropDone=false, wind=0, windSeed=0, lastGustWarn=0;
 let collapsing=null, survivor=-1, busy=false;
 
-const goal=()=>mode==='daily'?endless.goal:mode!=='levels'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone());
-const speed=()=>(1.45+etOf(zoneIdx(level))*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
+const goal=()=>mode==='daily'?endless.goal:mode!=='levels'&&mode!=='event'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone());
+const speed=()=>mode==='bonus'?bnSpeed():(1.45+etOf(zoneIdx(level))*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
 const rangeXs=()=>Math.min((W/2-S*.75)/S,1.3);   // narrow sweep above the tower
 const xOf=xs=>W/2+xs*S;
 const yOf=i=>{let s=0;const n=Math.min(i,tower.length);for(let j=0;j<n;j++)s+=tower[j].sz||1;return -.2*BH-(s+Math.max(0,i-n))*STEP};
@@ -1912,7 +2305,7 @@ function win(){
     const last=level>=TOTAL, st=lv.starsNow, title=last?t('allDone'):st>=3?t('splendid'):st===2?t('swell'):t('done');
     showOverlay(()=>({title,anim:'dance',titleKey:last?null:st>=3?'splendid':st===2?'great':null,ribbon:'mustard',animSize:118,sub:last?t('allDoneSub',{s:score}):isBoss()?t('bossCleared',{n:t((BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])),s:score}):t('clearedSub',{n:level,c:tower.length-1,s:score}),stars:st,top:syy>H*.5,extra:card=>{const ml=document.createElement('div');ml.className='win-ms';starMissions().forEach(m=>{const d=document.createElement('span');d.className=missionDone(m)?'ok':'';d.textContent=(missionDone(m)?'✓ ':'✗ ')+missionText(m);ml.appendChild(d)});card.appendChild(ml);if(lv.newHat){const h=document.createElement('div');h.className='new-hat';h.innerHTML=`<img src="${hatThumbSrc(lv.newHat)}" alt=""><span></span>`;h.querySelector('span').textContent=t('newHat');card.appendChild(h)}tallyCard(card,true)},
       actions:last?[{label:t('mapShort'),icon:'map',primary:true,fn:()=>go(()=>openMap(prevUnlocked))}]
-        :[{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();iris.r=-1;drawIris();if(isBoss()&&level<TOTAL)worldTransition(zoneIdx(level)+1,()=>{preloadWorld(ZONES[zoneIdx(level)+1].id);preLevel(level+1)});else preLevel(level+1)}},{label:t('replay'),icon:'restart',fn:()=>go(()=>{score=levelStartScore;startLevel()})},{label:t('mapShort'),icon:'map',fn:()=>go(()=>openMap(prevUnlocked))},{label:t('shareShort'),icon:'camera',color:'purple',fn:()=>shareTower()}]}));
+        :[...bnAct(),{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();iris.r=-1;drawIris();if(isBoss()&&level<TOTAL)worldTransition(zoneIdx(level)+1,()=>{preloadWorld(ZONES[zoneIdx(level)+1].id);preLevel(level+1)});else preLevel(level+1)}},{label:t('replay'),icon:'restart',fn:()=>go(()=>{score=levelStartScore;startLevel()})},{label:t('mapShort'),icon:'map',fn:()=>go(()=>openMap(prevUnlocked))},{label:t('shareShort'),icon:'camera',color:'purple',fn:()=>shareTower()}]}));
   },1300);
 }
 async function failGag(){
@@ -2406,7 +2799,7 @@ function drawDanger(){if(dangerI<1||balance<.7||state==='win')return;const a=.25
   for(let i=dangerI;i<tower.length;i++){const s=tower[i],x=xOf(s.xs)+swayOffset(i,tower.length),y=sy(yOf(i));ctx.save();ctx.globalAlpha=a;ctx.fillStyle='#ff2d55';ctx.beginPath();ctx.ellipse(x,y,S*.62,BH*.56,0,0,7);ctx.fill();ctx.restore()}}
 
 /* ---------- goal countdown ---------- */
-function drawCountdown(){if(isBoss()||mode!=='levels'||state!=='aim')return;const left=goal()-(tower.length-1);if(left>5||left<1)return;
+function drawCountdown(){if(isBoss()||(mode!=='levels'&&mode!=='event')||state!=='aim')return;const left=goal()-(tower.length-1);if(left>5||left<1)return;
   const p=1+.06*Math.sin(time*8);ctx.save();ctx.translate(W/2,hudBottom+44);ctx.scale(p,p);ctx.font=`${Math.round(S*.42)}px "Lilita One","Secular One",system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';
   gameText(ctx,t('moreN',{n:left}),0,0,Math.round(S*.46),left<=2?POPPAL.wow:POPPAL.perfect);ctx.restore()}
 
@@ -4836,7 +5229,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
 
 /* ---------- hooks ---------- */
 {const _rh=resetHazards;resetHazards=function(){_rh();hz.m={};hz.gravK=1;hz.portal=null;nightExtra=0;lightBoost=0;try{cv.style.transform=''}catch(e){}
-  if(mode==='levels'||mode==='daily'){const pk=passiveNow();if(pk)hz.m[pk]=MECH[pk].init()}}}
+  if(mode==='levels'||mode==='daily'||mode==='event'){const pk=passiveNow();if(pk)hz.m[pk]=MECH[pk].init()}}}
 {const _se=startEvent;startEvent=function(k){if(MECH[k]){if(mBusy()&&MECH[k].type!=='swinger')return false;if(MECH[k].type!=='swinger'&&(tower.length<3&&!hz.boss))return false;let ok=false;try{ok=!!MECH[k].start()}catch(e){}if(!ok)hz.mRetry=1;return ok}return _se(k)}}
 {const _uh=updateHazards;updateHazards=function(dt){_uh(dt);if(hz.mRetry){hz.mRetry=0;hz.next=Math.min(hz.next,time+1.2)}const live=['aim','wait','drop'].includes(state);if(lightBoost>0)lightBoost-=dt;
   if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.update&&hz.m[k])M.update(dt,hz.m[k],live)}
@@ -4938,22 +5331,22 @@ function artAlias(n){if(!ART_RE||PIC_SET.has(n))return n;const m=n.match(ART_RE)
 
 /* ===== v47: boss trophies with powers + the astronaut suit =====
    - Every one of the 22 new bosses drops its own 3D trophy hat (WHATX 'h_<sid>', trophy:sid, legendary). Wearing it gives
-     one power with NO cost: immunity to that boss's mechanic (it never shows up again while you wear it).
+     powers with NO cost: immunity to that boss's mechanic (it never shows up again while you wear it) + one bonus.
    - Astronaut suit (outfit 'astro', real purchase 'astro'): your tower starts already 5 floors high. */
-const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Cat Ears','אוזני חתול רחוב'],desertN:['Scorpion Crown','כתר העקרב'],candyN:['Candy Witch Hat','כובע מכשפת הסוכר'],
+const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Cat Ears','אוזני חתול רחוב'],desertN:['Stinger Crown','כתר העוקץ'],candyN:['Candy Witch Hat','כובע מכשפת הסוכר'],
   snowN:['Frost Wolf Hood','ברדס זאב הכפור'],oceanN:['Angler Lantern','פנס הדג'],volcanoN:['Imp Horns','קרני השד'],spaceN:['Moon Bunny Ears','אוזני ארנב הירח'],
   farmS:['Thunder Horns','קרני הרעם'],cityS:['Rain Hat','כובע גשם'],desertS:['Sandworm Turban','טורבן התולעת'],candyS:['Gingerbread Crown','כתר הג׳ינג׳ר'],
   snowS:['General Bicorne','כובע הגנרל'],oceanS:['Shark Fin','סנפיר הכריש'],volcanoS:['Phoenix Crest','כרבולת עוף החול'],spaceS:['Cosmic Eye','העין הקוסמית'],
   jungle:['Leaf Crown','כתר העלים'],castle:['Ghost Crown','כתר הרוחות'],clouds:['Unicorn Horn','קרן חד-הקרן'],dino:['Dino Frill','צווארון הדינו'],
   factory:['Robot Antenna','אנטנת רובוט'],crystal:['Crystal Tiara','נזר הקריסטל']};
-// powers: only the boss's own mechanic — imm = it never appears while worn; lavaK/swayK/convK = it barely works.
-// Trophies are earned, so no cost — and no extra bonus either, so they never beat shop hats (Raz: "different, not stronger").
-const TROPHY_FX={farmN:{imm:'bats'},cityN:{imm:'blackout'},desertN:{imm:'scorpion'},candyN:{imm:'jelly'},
-  snowN:{imm:'icicle'},oceanN:{imm:'jellyfish'},volcanoN:{lavaK:.45},spaceN:{imm:'portal'},
-  farmS:{imm:'lightning'},cityS:{imm:'newspaper'},desertS:{swayK:.35},candyS:{imm:'hail'},
-  snowS:{imm:'freeze'},oceanS:{swayK:.35},volcanoS:{imm:'meteor'},spaceS:{imm:'gravity'},
-  jungle:{imm:'monkey'},castle:{imm:'ghost'},clouds:{imm:'cloud'},dino:{imm:'egg'},
-  factory:{convK:0},crystal:{imm:'mirror'}};
+// powers: imm = mechanic that never appears while worn, plus one bonus (HAT_FX keys from v39 + light, lavaK, swayK, convK, noSlip).
+// Trophies are a reward for beating the boss, so they have no cost (Raz, "משפטי ועסקי" thread, Oct 6). The v49 caps still apply.
+const TROPHY_FX={farmN:{imm:'bats',light:1.45},cityN:{imm:'blackout',coins:1.1},desertN:{imm:'scorpion',boss:1.25},candyN:{imm:'jelly',tol:1.1},
+  snowN:{imm:'icicle',wind:.7},oceanN:{imm:'jellyfish',light:1.6},volcanoN:{lavaK:.45,feverT:1.3},spaceN:{imm:'portal',fall:.85},
+  farmS:{imm:'tornado',perfPts:1.3},cityS:{imm:'newspaper',noSlip:1},desertS:{swayK:.35,coins:1.1},candyS:{imm:'hail',perfCoins:2},
+  snowS:{imm:'freeze',spd:.92},oceanS:{swayK:.35,boss:1.25},volcanoS:{imm:'meteor',hearts:1},spaceS:{imm:'gravity',aim:1},
+  jungle:{imm:'monkey',coins:1.15},castle:{imm:'ghost',tol:1.12},clouds:{imm:'cloud',fall:.8},dino:{imm:'egg',hearts:1},
+  factory:{convK:0,coins:1.2},crystal:{imm:'mirror',feverT:1.5}};
 const PW_TXT={en:{imm:'No {m}',coins:'+{p}% coins',boss:'Hits bosses harder',tol:'Wider landing zone',wind:'Wind pushes less',light:'More light at night',
     lavaK:'Lava rises slowly',feverT:'Frenzy lasts longer',fall:'Falls slowly',perfPts:'More points for PERFECT',noSlip:'Never slips in the rain',
     swayK:'Sand and waves barely move the tower',perfCoins:'+2 coins for every PERFECT',spd:'Slower swing, easier to aim',hearts:'An extra heart every level',aim:'Aiming line always on',convK:'Conveyors stop'},
@@ -5397,6 +5790,431 @@ function buyWithCoins(c,id){const p=coinAlt(c,id);if(!p||wOwned(c,id))return;if(
   const p=coinAlt(s.cat,s.id);if(!p||wOwned(s.cat,s.id))return;const act=el.querySelector('.cs-act');if(!act)return;
   const b=document.createElement('button');b.className='btn green cs-buy cs-coinalt'+(progress.coins<p?' poor':'');
   b.innerHTML='<span></span>'+coinImg()+p.toLocaleString();b.querySelector('span').textContent=t('orCoins')+' ';b.onclick=()=>buyWithCoins(s.cat,s.id);act.appendChild(b)}}
+
+/* ===== v50: bonus stage "Treasure in the Clouds" (after a boss win) =====
+   Design: ChatGPT mockup (design/bonus/mock_chatgpt.png) + ChatGPT chest/stopwatch sprites (art/bn_*.webp).
+   30 s on the clouds world, no hearts: a miss costs 3 s, a perfect landing gives +1 s.
+   Chests hang on the floor track at 8 / 16 / 24 floors. Rewards are collected on the result card. */
+Object.assign(I18N.en,{bnBtn:'Bonus stage!',bnNew:'NEW',bnTitle:'Treasure in the Clouds',bnIntro1:'30 seconds to build high',bnIntro2a:'Miss = 3 seconds less',bnIntro2b:'Perfect = 1 bonus second',bnIntro3:'Chests at 8, 16 and 24 floors',bnGo:"Let's go!",bnFloors:'{n} floors',bnReached:'You reached {n} floors!',bnCollect:'Collect & continue',bnMiss:'−3 s',bnPerf:'+1 s',bnChest:'Chest!',bnTime:"Time's up!",bnEnd:'End bonus',bnHalf:'Replay: half coins',bnLocked:'Locked',bnBonus:'Bonus stage',bnMore:'{n} more floors!',bnLeft:'{n} to go',bnOne:'Just 1 more floor!'});
+Object.assign(I18N.he,{bnBtn:'שלב בונוס!',bnNew:'חדש',bnTitle:'אוצר בעננים',bnIntro1:'30 שניות לבנות גבוה',bnIntro2a:'נפילה = 3 שניות פחות',bnIntro2b:'מושלם = שנייה בונוס',bnIntro3:'תיבות אוצר בקומות 8, 16 ו-24',bnGo:'יאללה!',bnFloors:'{n} קומות',bnReached:'הגעתם ל-{n} קומות!',bnCollect:'אוספים וממשיכים',bnMiss:'−3 שניות',bnPerf:'+1 שנייה',bnChest:'תיבה!',bnTime:'נגמר הזמן!',bnEnd:'סיום הבונוס',bnHalf:'שוב בונוס: חצי מטבעות',bnLocked:'נעול',bnBonus:'שלב בונוס',bnMore:'עוד {n} קומות!',bnLeft:'עוד {n}',bnOne:'עוד קומה אחת!'});
+ICONS.chest=IMGTAG('bn_chest_gold','ico');
+const BN_TIME=30,BN_CH=[{f:8,k:'bronze',c:50,b:0},{f:16,k:'silver',c:100,b:1},{f:24,k:'gold',c:200,b:2}];
+let BN=null;
+const bnZi=()=>Math.max(0,ZONES.findIndex(z=>z.sid==='clouds'));
+const bnSpeed=()=>(1.5+Math.min(tower.length-1,24)*.03)*(boost.slow>0?.6:1)*(fever>0?.8:1)*easyK();
+// the golden button on the boss win card
+function bnAct(){if(mode!=='levels'||!isBoss()||level>=TOTAL)return[];const from=level;document.documentElement.style.setProperty('--bn-new',JSON.stringify(t('bnNew')));
+  return[{label:t('bnBtn'),icon:'chest',primary:true,color:'bonus',fn:()=>go(()=>startBonus(from))}]}
+function startBonus(from){
+  const zi=bnZi(),sid=(ZONES[zoneIdx(from)]||{}).sid||'x';progress.bonus=progress.bonus||{};
+  BN={from,sid,t:BN_TIME,floors:0,coins:0,open:[],boost:[],first:!progress.bonus[sid],run:false,perf:0,shown:-1,ended:false};
+  mode='bonus';modeZi=zi;level=zi*LPZ+3;score=0;endless={floors:0,zoneAt:1e9,goal:0};duo=null;
+  startLevel(level);hearts=3;updateHud();document.getElementById('gauge').hidden=true;
+  const tb=document.getElementById('toast');tb.querySelector('small').textContent=t('bnBonus');tb.querySelector('strong').textContent=t('bnTitle');
+  bnHud(true);bnIntro()}
+function bnIntro(){state='intro';
+  showOverlay(()=>({title:t('bnTitle'),actions:[{label:t('bnGo'),icon:'play',primary:true,fn:()=>{hideOverlay();state='wait';spawnAt=time+.5;BN.run=true;sfx.flourish(1)}}],
+    extra:card=>{card.classList.add('bn-card');const row=document.createElement('div');row.className='bn-chests';
+      BN_CH.forEach(c=>{const d=document.createElement('div');d.className='bn-ch '+c.k;d.innerHTML=`<img src="art/bn_chest_${c.k}.webp" alt=""><b></b>`;d.querySelector('b').textContent=t('bnFloors',{n:c.f});row.appendChild(d)});card.appendChild(row);
+      const ul=document.createElement('ul');ul.className='bn-rules';[['<img src="art/bn_stopwatch.webp" alt="">','bnIntro1'],['<em class="neg">−3</em>','bnIntro2a'],['<em class="pos">+1</em>','bnIntro2b']].forEach(([ic,k])=>{const li=document.createElement('li');li.innerHTML=ic+'<span></span>';li.querySelector('span').textContent=t(k);ul.appendChild(li)});card.appendChild(ul);
+      if(!BN.first){const p=document.createElement('p');p.className='bn-half';p.textContent=t('bnHalf');card.appendChild(p)}}}),true)}
+// HUD: stopwatch pill (where the hearts are) + chest track (where the goal gauge is)
+let bnEl=null;
+function bnHud(on){
+  if(!bnEl){bnEl=document.createElement('div');bnEl.id='bnHud';bnEl.innerHTML=`<div class="bn-track"><div class="tube"><i class="fill"></i></div>${BN_CH.map((c,i)=>`<div class="bn-stop s${i}" style="bottom:${c.f/24*100}%"><img src="art/bn_chest_${c.k}.webp" alt=""><small>${c.f}</small></div>`).join('')}<b class="bn-fl">0</b></div>`;
+    document.getElementById('hud').appendChild(bnEl);
+    const tm=document.createElement('div');tm.className='bn-timer';tm.innerHTML='<img src="art/bn_stopwatch.webp" alt=""><b>0:30</b>';const hs=document.getElementById('hearts');hs.parentNode.insertBefore(tm,hs);bnEl.tm=tm}
+  bnEl.hidden=!on;bnEl.tm.hidden=!on;document.getElementById('hud').classList.toggle('bonus',!!on)}
+function bnHudTick(){if(!BN||!bnEl)return;const s=Math.max(0,Math.ceil(BN.t));
+  if(s!==BN.shown){BN.shown=s;bnEl.tm.querySelector('b').textContent='0:'+String(s).padStart(2,'0');bnEl.tm.classList.toggle('low',s<=5);if(s<=5&&s>0&&BN.run&&sfx.ok())tone({f:880,d:.06,type:'square',v:.04})}
+  bnEl.tm.style.setProperty('--p',clamp(BN.t/BN_TIME,0,1));
+  const fl=Math.max(0,tower.length-1);bnEl.querySelector('.bn-track .fill').style.height=Math.min(1,fl/24)*100+'%';bnEl.querySelector('.bn-fl').textContent=fl;
+  const nx=BN_CH.findIndex((c,i)=>!BN.open.includes(i));BN_CH.forEach((c,i)=>{const st=bnEl.querySelector('.bn-stop.s'+i),o=BN.open.includes(i);st.classList.toggle('next',i===nx);{const lb=i===nx?t('bnLeft',{n:c.f-fl}):String(c.f),sm=st.querySelector('small');if(sm.textContent!==lb)sm.textContent=lb}if(st.classList.contains('open')!==o){st.classList.toggle('open',o);st.querySelector('img').src=`art/bn_chest_${c.k}${o?'_open':''}.webp`}})}
+function bnChip(txt,cls){if(!bnEl||!bnEl.tm)return;const r=bnEl.tm.getBoundingClientRect(),d=document.createElement('div');d.className='bn-chip '+cls;d.textContent=txt;d.style.left=(r.left+r.width/2)+'px';d.style.top=(r.bottom+4)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),900);
+  bnEl.tm.classList.remove(cls==='pos'?'bn-plus':'bn-hit');void bnEl.tm.offsetWidth;bnEl.tm.classList.add(cls==='pos'?'bn-plus':'bn-hit')}
+function bnCelebrate(c){const d=document.createElement('div');d.className='bn-pop';d.innerHTML=`<img src="art/bn_chest_${c.k}_open.webp" alt=""><b>+${c.c}</b>`;document.body.appendChild(d);setTimeout(()=>d.remove(),950)}
+function bnLanded(){if(BN.ended)return true;
+  const fl=tower.length-1;BN.floors=Math.max(BN.floors,fl);BN.coins+=2;
+  if(combo>BN.perf){BN.t=Math.min(BN_TIME+15,BN.t+1);bnChip('+1','pos')}
+  BN.perf=combo;
+  BN_CH.forEach((c,i)=>{if(fl>=c.f&&!BN.open.includes(i)){BN.open.push(i);BN.coins+=c.c;for(let k=0;k<c.b;k++)BN.boost.push(pick(['slow','laser','shield','heart']));
+    sfx.flourish(i+1);vib([20,40,20]);bnCelebrate(c);const st=bnEl&&bnEl.querySelector('.bn-stop.s'+i);if(st){st.classList.remove('pop');void st.offsetWidth;st.classList.add('pop')}
+    const s=tower[tower.length-1];for(let q=0;q<26;q++)particles.push({x:xOf(s.xs)+rnd(-S,S),y:yOf(fl)+rnd(-BH,BH),vx:rnd(-220,220),vy:rnd(-420,-120),life:1.3,c:pick(['#ffd23f','#fff4b0','#ffb000','#ffffff']),sz:rnd(4,8)})}});
+  updateHud();bnHudTick();return false}
+function bnEnd(){if(!BN||BN.ended)return;BN.ended=true;BN.run=false;state='win';swinger=null;sfx.flourish(2);{const d=document.createElement('div');d.className='bn-banner';d.textContent=t('bnTime');document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
+  setTimeout(bnResult,1100)}
+function bnReward(){const k=BN.first?1:.5;return{coins:Math.round(BN.coins*k),boost:BN.first?BN.boost.slice():[]}}
+function bnResult(){const R=bnReward();
+  showOverlay(()=>({title:t('bnTitle'),big:true,actions:[{label:t('bnCollect'),icon:'play',primary:true,color:'green',fn:bnCollect}],
+    extra:card=>{card.classList.add('bn-card','bn-res');const nxI=BN_CH.findIndex((c,i)=>!BN.open.includes(i));const row=document.createElement('div');row.className='bn-chests';
+      BN_CH.forEach((c,i)=>{const o=BN.open.includes(i),d=document.createElement('div');d.className='bn-ch '+c.k+(o?' open':' locked');d.style.animationDelay=(.1+i*.15)+'s';
+        d.innerHTML=`<img src="art/bn_chest_${c.k}${o?'_open':''}.webp" alt=""><b></b>`;d.querySelector('b').textContent=o?'+'+c.c:t('bnFloors',{n:c.f});if(!o&&nxI===i&&c.f-BN.floors<=3){d.classList.add('near');const tg=document.createElement('i');tg.textContent=c.f-BN.floors===1?t('bnOne'):t('bnMore',{n:c.f-BN.floors});d.appendChild(tg)}row.appendChild(d)});card.appendChild(row);
+      const fl=document.createElement('div');fl.className='bn-reach';fl.textContent=t('bnReached',{n:BN.floors});card.appendChild(fl);
+      const rw=document.createElement('div');rw.className='bn-rew';rw.innerHTML=`<span class="bn-coins">${coinImg()}<b>+0</b></span>`+(R.boost.length?'<div class="bn-bos">':'')+Object.entries(R.boost.reduce((a,b)=>(a[b]=(a[b]||0)+1,a),{})).map(([b,n])=>`<span class="bn-bo"><img src="art/ic_${b}.webp" alt=""><em>×${n}</em><small>${t('b_'+b)}</small></span>`).join('')+(R.boost.length?'</div>':'');card.appendChild(rw);
+      if(!BN.first){const p=document.createElement('p');p.className='bn-half';p.textContent=t('bnHalf');card.appendChild(p)}}}));
+  BN.open.forEach((i,n)=>setTimeout(()=>sfx.coin(2),350+n*220));
+  {const btn=document.querySelector('#card .btn.primary');if(btn){btn.disabled=true;btn.classList.add('bn-wait')}const el=document.querySelector('#card .bn-coins b'),t0=performance.now(),D=900+Math.min(900,R.coins*3);
+   const step=now=>{if(!el.isConnected)return;const k=Math.min(1,(now-t0-500)/D);el.textContent='+'+Math.round(R.coins*Math.max(0,k)*(2-Math.max(0,k)));if(k<1)requestAnimationFrame(step);else{if(btn){btn.disabled=false;btn.classList.remove('bn-wait')}if(sfx.ok())tone({f:880,f2:1320,d:.12,type:'triangle',v:.05})}};requestAnimationFrame(step)}}
+function bnCollect(){if(!BN||BN.paid)return;BN.paid=true;const R=bnReward();wallet();progress.coins+=R.coins;R.boost.forEach(b=>progress.inv[b]=(progress.inv[b]||0)+1);progress.bonus[BN.sid]=1;saveProgress();sfx.coin(4);popupToast('+'+R.coins);
+  const L=BN.from;BN=null;bnHud(false);mode='levels';modeZi=null;level=L;
+  hideOverlay();iris.r=-1;drawIris();worldTransition(zoneIdx(L)+1,()=>{preloadWorld(ZONES[zoneIdx(L)+1].id);preLevel(L+1)})}
+// wiring
+{const _u=update;update=function(dt){_u(dt);if(mode!=='bonus'||!BN){if(bnEl&&!bnEl.hidden)bnHud(false);return}
+  if(BN.run&&['aim','drop','wait','collapse'].includes(state)){BN.t-=dt;if(BN.t<=0){BN.t=0;bnHudTick();bnEnd();return}}bnHudTick()}}
+{const _l=loseHeart;loseHeart=function(msg,x,y,silent,key){if(mode!=='bonus'||!BN)return _l.apply(this,arguments);
+  if(BN.ended)return;combo=0;BN.perf=0;BN.t=Math.max(0,BN.t-3);vib([40,30,40]);popup(msg,x,y-BH*.6,'#e8806e',key);bnChip('−3','neg');setTimeout(()=>sfx.heart(),200);
+  bnHudTick();if(BN.t<=0){bnEnd();return}state='wait';spawnAt=time+.6}}
+{const _m=modeLanded;modeLanded=function(){if(mode==='bonus'&&BN)return bnLanded();return _m.apply(this,arguments)}}
+{const _i=maybeIntro;maybeIntro=function(){if(mode==='bonus')return false;return _i.apply(this,arguments)}}
+{const _w=windFor;windFor=function(n){return mode==='bonus'?0:_w.apply(this,arguments)}}
+{const _h=updateHazards;updateHazards=function(dt){if(mode==='bonus')return;return _h.apply(this,arguments)}}
+{const _r=renderBoosterBar;renderBoosterBar=function(){const r=_r.apply(this,arguments);if(mode==='bonus'){const bb=document.getElementById('boosterBar');if(bb)bb.hidden=true}return r}}
+{const _p=pause;pause=function(){if(mode!=='bonus'||!BN)return _p.apply(this,arguments);if(!['aim','wait','drop'].includes(state)||busy)return;
+  stateBeforePause=state;state='paused';showOverlay(()=>({title:t('paused'),extra:settingsRows,actions:[{label:t('resume'),icon:'play',primary:true,fn:()=>{hideOverlay();state=stateBeforePause}},{label:t('bnEnd'),icon:'chest',fn:()=>{hideOverlay();state=stateBeforePause;BN.t=0;bnEnd()}}]}),true)}}
+{const _t=toTitle;toTitle=function(){if(mode==='bonus'){mode='levels';modeZi=null;BN=null}bnHud(false);return _t.apply(this,arguments)}}
+{const _o=openMap;openMap=function(){if(mode==='bonus'){mode='levels';modeZi=null;if(BN)level=BN.from;BN=null}bnHud(false);return _o.apply(this,arguments)}}
+{const _h=updateHud;updateHud=function(){_h.apply(this,arguments);if(mode==='bonus'&&BN)document.getElementById('score').innerHTML=coinImg()+'<b>'+BN.coins+'</b>'}}
+
+/* ===== v51: mini-games ARCADE (lobby button) =====
+   Design: ChatGPT mockup (design/arcade/). 3 games for now: coin rain, boss memory, whack-a-monster.
+   Each game gives coins for its first 3 plays of the day (tickets); after that you play for the high score. */
+Object.assign(I18N.en,{arcShort:'Arcade',arcTitle:'Arcade',arcNote:'3 coin plays per game every day',arcBest:'Best',arcPlay:'Play',arcFree:'No tickets left today: play for the high score!',arcNewBest:'New record!',arcScore:'Score',arcAgain:'Again',arcBack:'Arcade',arcGo:'GO!',arcTix:'Coin plays today',
+  g_rain:'Coin Rain',gd_rain:'Catch coins, dodge bombs',g_mem:'Boss Memory',gd_mem:'Find the boss pairs',g_whack:'Bonk the Monster',gd_whack:"Tap monsters, not Sharliz!",
+  arcMoves:'Moves {n}',arcCombo:'Combo ×{n}',arcHowRain:'Drag your Sharliz left and right',arcHowMem:'Flip two cards to find a pair',arcHowWhack:'Tap the monsters, never a Sharliz',arcOops:'Oops!',arcPrize:'Prize',arcLeftN:'{n} coin plays today'});
+Object.assign(I18N.he,{arcShort:'ארקייד',arcTitle:'ארקייד',arcNote:'3 משחקים עם מטבעות בכל יום לכל משחק',arcBest:'שיא',arcPlay:'שחקו',arcFree:'נגמרו הכרטיסים להיום: משחקים בשביל השיא!',arcNewBest:'שיא חדש!',arcScore:'ניקוד',arcAgain:'שוב',arcBack:'לארקייד',arcGo:'צאו!',arcTix:'משחקים עם מטבעות היום',
+  g_rain:'גשם מטבעות',gd_rain:'תפסו מטבעות, התחמקו מפצצות',g_mem:'זיכרון בוסים',gd_mem:'מצאו את הזוגות',g_whack:'הכו במפלצת',gd_whack:'רק מפלצות, לא שארליז!',
+  arcMoves:'מהלכים {n}',arcCombo:'קומבו ×{n}',arcHowRain:'גררו את השארליז ימינה ושמאלה',arcHowMem:'הפכו שני קלפים ומצאו זוג',arcHowWhack:'הכו במפלצות, אף פעם לא בשארליז',arcOops:'אופס!',arcPrize:'פרס',arcLeftN:'{n} משחקים עם מטבעות היום'});
+const ARC_TIX=3,ARC_MAX=40;
+const ARC_BOSSES='candy candyN candyS castle city cityN cityS clouds crystal desert desertN desertS dino factory farm farmN farmS jungle ocean oceanN oceanS snow snowN snowS space spaceN spaceS volcano volcanoN volcanoS'.split(' ');
+function arcData(){const a=progress.arcade=progress.arcade||{best:{},day:'',plays:{}};a.best=a.best||{};a.plays=a.plays||{};if(a.day!==today()){a.day=today();a.plays={}}return a}
+const arcLeft=id=>Math.max(0,ARC_TIX-(arcData().plays[id]||0));
+let ARCEL=null,AG=null;
+function arcRoot(){if(!ARCEL){ARCEL=document.createElement('div');ARCEL.id='arcade';ARCEL.hidden=true;document.body.appendChild(ARCEL)}return ARCEL}
+function arcHeroSprite(){const s=Object.assign(makeSharliz(),{color:CHARS.hero?'hero':'#06a2ba'});return s}
+function openArcade(){audio();try{startMusic()}catch(e){}sfx.click();const r=arcRoot();r.hidden=false;arcHub()}
+function closeArcade(){arcStop();if(ARCEL)ARCEL.hidden=true;updateWalletUI();if(state==='title')updateLobby()}
+function arcTix(id){const n=arcLeft(id);return Array.from({length:ARC_TIX},(_,i)=>`<i class="${i<n?'on':''}"></i>`).join('')}
+function arcHub(){const r=arcRoot(),a=arcData();r.className='arc-hub';
+  r.innerHTML=`<div class="arc-top"><button class="x-btn arc-x" aria-label="close"></button><div class="arc-title"></div><div class="coin-pill">${coinImg()}<span></span></div></div><div class="arc-list"></div><p class="arc-note"></p>`;
+  r.querySelector('.arc-title').textContent=t('arcTitle');r.querySelector('.coin-pill span').textContent=progress.coins;r.querySelector('.arc-note').textContent=t('arcNote');r.querySelector('.arc-x').innerHTML=XSVG;r.querySelector('.arc-x').onclick=()=>{sfx.click();closeArcade()};
+  const L=r.querySelector('.arc-list');
+  ['rain','mem','whack'].forEach((id,i)=>{const b=document.createElement('button');b.className='arc-card c-'+id;b.style.animationDelay=(i*.08)+'s';
+    b.innerHTML=`<span class="th"><img src="art/arc_${id}.webp" alt=""></span><span class="tx"><b></b><small></small><span class="meta"><span class="best"><img src="art/ic_trophy.webp" alt=""><em></em></span><span class="tix" aria-label=""></span></span></span><span class="go"><svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg></span>`;
+    b.querySelector('b').textContent=t('g_'+id);b.querySelector('small').textContent=t('gd_'+id);b.querySelector('.best em').textContent=a.best[id]||0;const tx=b.querySelector('.tix');tx.innerHTML=arcTix(id)+`<em>${arcLeft(id)}/${ARC_TIX}</em>`;tx.setAttribute('aria-label',t('arcTix')+': '+arcLeft(id));
+    b.onclick=()=>{sfx.click();arcStart(id)};L.appendChild(b)})}
+function arcStop(){if(AG){AG.dead=true;cancelAnimationFrame(AG.raf);if(AG.off)AG.off();AG=null}}
+const ARCG={};
+function arcStart(id){arcStop();const r=arcRoot(),D=ARCG[id];r.className='arc-game g-'+id;
+  r.innerHTML=`<div class="arc-bar"><button class="x-btn arc-x" aria-label="close"></button><div class="arc-score">${D.star?'<img class="coin-i" src="art/ic_star.webp" alt="">':coinImg()}<b>0</b></div><div class="arc-sub"><span class="ic"></span><b></b></div><div class="bn-timer arc-time"><img src="art/bn_stopwatch.webp" alt=""><b></b></div></div><div class="arc-stage"></div><div class="arc-cd" hidden></div>`;
+  r.querySelector('.arc-x').innerHTML=XSVG;r.querySelector('.arc-x').onclick=()=>{sfx.click();arcStop();arcHub()};
+  const G=AG={id,D,r,stage:r.querySelector('.arc-stage'),score:0,t:D.dur,dur:D.dur,run:false,dead:false,last:performance.now(),shown:-1,sub:''};
+  D.init(G);arcBar(G);if(D.hint){const h=document.createElement('div');h.className='arc-hint';h.textContent=t(D.hint);G.stage.appendChild(h)}
+  // 3-2-1 with a one-line "how to play"
+  const cd=r.querySelector('.arc-cd');cd.hidden=false;let n=3;
+  const how=document.createElement('p');how.textContent=t(D.how);
+  const hand=D.id==='rain'?Object.assign(document.createElement('i'),{className:'arc-hand',textContent:'👆'}):null;
+  const tick=()=>{if(G.dead)return;cd.innerHTML='';const b=document.createElement('b');b.textContent=n>0?n:t('arcGo');cd.appendChild(b);cd.appendChild(how);if(hand)cd.appendChild(hand);
+    if(sfx.ok())tone({f:n>0?520:880,d:.12,type:'triangle',v:.06});if(n<=0){setTimeout(()=>{if(G.dead)return;cd.hidden=true;G.run=true;G.last=performance.now()},450);return}n--;setTimeout(tick,700)};tick();
+  const loop=now=>{if(G.dead)return;const raw=(now-G.last)/1000,dt=Math.min(.05,raw);G.last=now;
+    {let rem=Math.min(.25,raw);if(document.hidden)rem=0;do{const d=Math.min(.05,rem);rem-=d;if(G.run){G.t-=d;if(G.t<=0){G.t=0;arcEnd(G)}}D.tick(G,G.run?d:0,d,rem<=1e-6)}while(rem>1e-6&&!G.over)}arcBar(G);if(!G.dead&&!G.over)G.raf=requestAnimationFrame(loop)};
+  G.raf=requestAnimationFrame(loop)}
+function arcBar(G){const r=G.r,s=Math.ceil(G.t);r.querySelector('.arc-score b').textContent=G.score;{const sb=r.querySelector('.arc-sub'),k=G.sub?G.sub.ic+'|'+G.sub.txt+'|'+G.sub.on:'';if(sb.dataset.k!==k){const was=sb.dataset.k;sb.dataset.k=k;sb.hidden=!G.sub;if(G.sub){sb.querySelector('.ic').textContent=G.sub.ic;sb.querySelector('b').textContent=G.sub.txt;sb.classList.toggle('on',!!G.sub.on);if(was&&G.sub.on){sb.classList.remove('pop');void sb.offsetWidth;sb.classList.add('pop')}}}}
+  const tm=r.querySelector('.arc-time');tm.style.setProperty('--p',clamp(G.t/G.dur,0,1));if(s!==G.shown){G.shown=s;tm.querySelector('b').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');tm.classList.toggle('low',s<=5&&G.run);if(s<=5&&s>0&&G.run&&sfx.ok())tone({f:880,d:.05,type:'square',v:.035})}}
+function arcAdd(G,n,x,y,cls){G.score=Math.max(0,G.score+n);if(x!==undefined){const d=document.createElement('div');d.className='arc-fx '+(cls||(n>=0?'pos':'neg'));d.textContent=(n>0?'+':'')+n;d.style.left=x+'px';d.style.top=y+'px';G.stage.appendChild(d);setTimeout(()=>d.remove(),800)}
+  if(n>0){const sc=G.r.querySelector('.arc-score');sc.classList.remove('bump');void sc.offsetWidth;sc.classList.add('bump')}}
+function arcEnd(G){if(G.over)return;G.over=true;G.run=false;if(G.D.end)G.D.end(G);
+  const a=arcData(),id=G.id,paid=arcLeft(id)>0,coins=paid?Math.min(ARC_MAX,G.D.coins(G.score)):0,nb=G.score>(a.best[id]||0)&&G.score>0;
+  if(paid)a.plays[id]=(a.plays[id]||0)+1;if(nb)a.best[id]=G.score;progress.coins+=coins;saveProgress();updateWalletUI();
+  sfx.flourish(nb?3:1);
+  setTimeout(()=>{if(G.dead)return;const p=document.createElement('div');p.className='arc-end';
+    p.innerHTML=`<div class="arc-panel"><div class="ar-title"></div><div class="ar-score"><small></small><b>0</b></div><div class="ar-best"><img src="art/ic_trophy.webp" alt=""><span></span></div><div class="ar-rew"></div><div class="ar-acts"><button class="btn primary ar-again"><svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span></button><button class="btn ar-back"><span></span></button></div></div>`;
+    p.querySelector('.ar-title').textContent=nb?t('arcNewBest'):t('g_'+id);if(nb)p.querySelector('.ar-title').classList.add('nb');
+    p.querySelector('.ar-score small').textContent=t('arcScore');p.querySelector('.ar-best span').textContent=t('arcBest')+' '+Math.max(G.score,a.best[id]||0);
+    const rw=p.querySelector('.ar-rew');if(paid){rw.innerHTML=`<span class="ar-lbl"></span><span class="bn-coins">${coinImg()}<b>+${coins}</b></span><span class="tix">${arcTix(id)}</span>`;rw.querySelector('.ar-lbl').textContent=t('arcPrize')}else{rw.className='ar-rew free';rw.textContent=t('arcFree')}
+    if(!arcLeft(id)){p.querySelector('.ar-again').classList.remove('primary');p.querySelector('.ar-back').classList.add('primary');p.querySelector('.ar-acts').prepend(p.querySelector('.ar-back'))}
+    p.querySelector('.ar-again span').textContent=t('arcAgain');p.querySelector('.ar-back span').textContent=t('arcBack');
+    p.querySelector('.ar-again').onclick=()=>{sfx.click();arcStart(id)};p.querySelector('.ar-back').onclick=()=>{sfx.click();arcStop();arcHub()};
+    G.r.appendChild(p);
+    const el=p.querySelector('.ar-score b'),t0=performance.now(),D=700;const st=now=>{if(!el.isConnected)return;const k=Math.min(1,(now-t0)/D);el.textContent=Math.round(G.score*k*(2-k));if(k<1)requestAnimationFrame(st)};requestAnimationFrame(st);
+    if(paid&&coins)setTimeout(()=>sfx.coin(3),500)},700)}
+/* ---------- game 1: coin rain (canvas) ---------- */
+ARCG.rain={id:'rain',dur:30,how:'arcHowRain',coins:s=>Math.round(s*.8),
+  init(G){const c=document.createElement('canvas');G.stage.appendChild(c);const d=Math.min(2,devicePixelRatio||1);G.cv=c;G.g=c.getContext('2d');
+    const fit=()=>{const r=G.stage.getBoundingClientRect();G.W=r.width;G.H=r.height;c.width=Math.round(r.width*d);c.height=Math.round(r.height*d);c.style.width=r.width+'px';c.style.height=r.height+'px';G.d=d};fit();
+    G.size=Math.min(56,G.W*.13);G.px=G.tx=G.W/2;G.hero=arcHeroSprite();G.items=[];G.spawn=.6;G.el=0;G.shake=0;G.tilt=0;G.mood=null;G.moodT=0;G.streak=0;
+    const mv=e=>{const r=c.getBoundingClientRect();G.tx=clamp(e.clientX-r.left,G.size*.7,G.W-G.size*.7)};c.addEventListener('pointerdown',e=>{mv(e);c.setPointerCapture&&c.setPointerCapture(e.pointerId)});c.addEventListener('pointermove',e=>{if(e.buttons||e.pointerType==='touch')mv(e)});
+    G.hold=0;const ar=document.createElement('div');ar.className='arc-arrows';ar.innerHTML='<button data-d="-1"><svg viewBox="0 0 24 24"><path d="M15 4 L7 12 L15 20Z"/></svg></button><button data-d="1"><svg viewBox="0 0 24 24"><path d="M9 4 L17 12 L9 20Z"/></svg></button>';
+    ar.querySelectorAll('button').forEach(b=>{const d=+b.dataset.d;b.addEventListener('pointerdown',e=>{e.preventDefault();G.hold=d});['pointerup','pointerleave','pointercancel'].forEach(ev=>b.addEventListener(ev,()=>{if(G.hold===d)G.hold=0}))});G.stage.appendChild(ar);
+    addEventListener('resize',fit);G.off=()=>removeEventListener('resize',fit)},
+  tick(G,dt,rdt,last){const g=G.g,W=G.W,H=G.H,sz=G.size,gy=H-sz*3.1;
+    if(dt>0){G.el+=dt;G.spawn-=dt;if(G.spawn<=0){G.spawn=Math.max(.2,.55-G.el*.012)*rnd(.7,1.2);const r=Math.random(),k=r<.07?'gem':r<.25+Math.min(.12,G.el*.004)?'bomb':'coin';G.items.push({k,x:rnd(sz*.6,W-sz*.6),y:-30,vy:rnd(150,210)+G.el*7,r:k==='gem'?22:k==='bomb'?27:20,rot:rnd(0,6)})}
+      if(G.hold)G.tx=clamp(G.tx+G.hold*G.W*1.1*dt,G.size*.7,G.W-G.size*.7);const ox=G.px;G.px+=(G.tx-G.px)*Math.min(1,dt*14);G.tilt+=(clamp((G.px-ox)/(dt*600),-.35,.35)-G.tilt)*Math.min(1,dt*10);
+      for(const it of G.items){it.y+=it.vy*dt;it.rot+=dt*3;if(!it.hit&&it.y>gy-sz*1.2&&it.y<gy+sz*.1&&Math.abs(it.x-G.px)<sz*1.05){it.hit=1;
+        if(it.k==='bomb'){arcAdd(G,-5,it.x,gy-sz*1.6);G.streak=0;G.shake=.35;G.mood='scared';G.moodT=.8;vib([40,30,40]);sfx.heart();burstFx(G,it.x,it.y,['#ff8a3d','#ffd23f','#555'])}
+        else{G.streak++;const v=it.k==='gem'?5:(G.streak>=10?2:1);arcAdd(G,v,it.x,gy-sz*1.6,it.k==='gem'?'gem':null);G.mood='happy';G.moodT=.4;if(it.k==='gem')sfx.perfect(3);else sfx.coin(1);burstFx(G,it.x,it.y,it.k==='gem'?['#ff6fc0','#fff','#c084fc']:['#ffd23f','#fff4b0'])}}}
+      G.items=G.items.filter(it=>!it.hit&&it.y<H+40);if(G.moodT>0){G.moodT-=dt;if(G.moodT<=0)G.mood=null}G.shake=Math.max(0,G.shake-dt)}
+    G.sub={ic:'🔥',txt:'×'+(G.streak>=10?2:1),on:G.streak>=10};
+    if(last===false)return;g.setTransform(G.d,0,0,G.d,0,0);g.clearRect(0,0,W,H);
+    const sx=G.shake>0?rnd(-6,6)*G.shake*3:0;g.save();g.translate(sx,0);
+    for(const it of G.items){const im=it.k==='coin'?hzPic('ic_coin'):it.k==='bomb'?hzPic('hz_bomb'):hzPic('arc_gem');g.save();g.translate(it.x,it.y);if(it.k!=='bomb')g.rotate(Math.sin(it.rot)*.3);
+      if(im&&im.complete&&im.naturalWidth)g.drawImage(im,-it.r*1.2,-it.r*1.2,it.r*2.4,it.r*2.4);else{g.fillStyle=it.k==='bomb'?'#333':it.k==='gem'?'#ff6fc0':'#ffd23f';g.strokeStyle=INK;g.lineWidth=3;g.beginPath();g.arc(0,0,it.r,0,7);g.fill();g.stroke()}g.restore()}
+    for(const p of (G.fx||[])){p.life-=rdt;p.x+=p.vx*rdt;p.y+=p.vy*rdt;p.vy+=500*rdt;g.globalAlpha=Math.max(0,p.life*2);g.fillStyle=p.c;g.beginPath();g.arc(p.x,p.y,p.s,0,7);g.fill()}g.globalAlpha=1;G.fx=(G.fx||[]).filter(p=>p.life>0);
+    g.fillStyle='rgba(18,13,43,.18)';g.beginPath();g.ellipse(G.px,gy+sz*.72,sz*.75,sz*.18,0,0,7);g.fill();
+    G.hero.blink+=rdt;withCtx(g,sz,()=>drawSharliz(G.hero,G.px,gy-sz*.45,G.tilt,G.mood||'happy',{x:G.tilt*.6,y:-.4},G.mood==='happy'?.15:0));{const bw=hzPic('arc_bowl');if(bw){const w=sz*2.3,h=w*bw.naturalHeight/bw.naturalWidth;g.save();g.translate(G.px,gy+sz*.55);g.rotate(G.tilt*.5);g.drawImage(bw,-w/2,-h*.45,w,h);g.restore()}}g.restore()}};
+function burstFx(G,x,y,cols){G.fx=G.fx||[];for(let i=0;i<10;i++)G.fx.push({x,y,vx:rnd(-160,160),vy:rnd(-260,-60),life:.5,c:pick(cols),s:rnd(2.5,5)})}
+/* ---------- game 2: boss memory (DOM) ---------- */
+ARCG.mem={dur:60,star:1,how:'arcHowMem',hint:'gd_mem',coins:s=>Math.round(s*.5),
+  init(G){const ks=ARC_BOSSES.slice().sort(()=>Math.random()-.5).slice(0,8),deck=ks.concat(ks).sort(()=>Math.random()-.5);G.moves=0;G.pairs=0;G.open=[];G.lock=false;
+    const grid=document.createElement('div');grid.className='mem-grid';G.stage.appendChild(grid);
+    deck.forEach((k,i)=>{const b=document.createElement('button');b.className='mem-card';b.style.animationDelay=(i*.03)+'s';b.innerHTML=`<span class="bk"><img src="art/arc_cardback.webp" alt=""></span><span class="fr"><img src="art/boss_${k}.webp" alt=""></span>`;b.dataset.k=k;
+      b.onclick=()=>{if(!G.run||G.lock||b.classList.contains('up'))return;b.classList.add('up');if(sfx.ok())tone({f:640,d:.05,type:'triangle',v:.04});G.open.push(b);
+        if(G.open.length===2){G.moves++;const [x,y]=G.open;G.open=[];
+          if(x.dataset.k===y.dataset.k){x.classList.add('ok');y.classList.add('ok');G.pairs++;const r=y.getBoundingClientRect(),s=G.stage.getBoundingClientRect();arcAdd(G,10,r.left-s.left+r.width/2,r.top-s.top);sfx.perfect(Math.min(4,1+G.pairs%4));
+            if(G.pairs===8){const bonus=Math.ceil(G.t)*2;setTimeout(()=>{arcAdd(G,bonus,s.width/2,s.height*.4,'gem');arcEnd(G)},500)}}
+          else{G.lock=true;x.classList.add('no');y.classList.add('no');setTimeout(()=>{x.classList.remove('up','no');y.classList.remove('up','no');G.lock=false},750)}}};grid.appendChild(b)})},
+  tick(G){G.sub={ic:'👆',txt:t('arcMoves',{n:G.moves}),on:true}}};
+/* ---------- game 3: bonk the monster (DOM) ---------- */
+ARCG.whack={dur:30,star:1,how:'arcHowWhack',hint:'gd_whack',coins:s=>Math.round(s/8),
+  init(G){const grid=document.createElement('div');grid.className='wh-grid';G.stage.appendChild(grid);G.holes=[];G.spawn=.5;G.el=0;G.combo=0;
+    // a little canvas portrait of your Sharliz for the "friend" pop-ups
+    const fc=document.createElement('canvas');fc.width=fc.height=160;withCtx(fc.getContext('2d'),74,()=>drawSharliz(arcHeroSprite(),80,102,0,'happy'));G.friend=fc.toDataURL();
+    for(let i=0;i<9;i++){const h=document.createElement('div');h.className='wh-hole';h.innerHTML='<span class="wh-ring"></span><div class="wh-in"><button class="wh-pop"><img alt=""></button></div><span class="wh-ring front"></span>';grid.appendChild(h);
+      const H={el:h,b:h.querySelector('.wh-pop'),img:h.querySelector('img'),up:0,k:null};G.holes.push(H);
+      H.b.addEventListener('pointerdown',e=>{e.preventDefault();if(!G.run||!H.k||H.hit)return;H.hit=1;const r=h.getBoundingClientRect(),s=G.stage.getBoundingClientRect(),x=r.left-s.left+r.width/2,y=r.top-s.top+r.height*.2;
+        if(H.k==='friend'){G.combo=0;arcAdd(G,-15,x,y,'neg big');h.classList.add('sad');vib([60,40,60]);if(sfx.ok()){tone({f:220,f2:110,d:.35,type:'sawtooth',v:.07,filter:600})}setTimeout(()=>h.classList.remove('sad'),500)}
+        else{G.combo++;const m=1+Math.floor(G.combo/5);arcAdd(G,10*m);h.classList.add('bonk');{const hm=document.createElement('i');hm.className='wh-ham';hm.style.left=(r.left-s.left+r.width*.42)+'px';hm.style.top=(r.top-s.top+r.height*.22)+'px';G.stage.appendChild(hm);setTimeout(()=>hm.remove(),300)}sfx.perfect(Math.min(4,m));vib(12);const pw=document.createElement('i');pw.className='wh-pow';pw.textContent='+'+10*m;h.appendChild(pw);setTimeout(()=>pw.remove(),450)}
+        H.up=Math.min(H.up,.25)})}},
+  tick(G,dt){if(dt>0){G.el+=dt;G.spawn-=dt;
+      if(G.spawn<=0){G.spawn=Math.max(.32,.62-G.el*.012)*rnd(.75,1.2);const free=G.holes.filter(h=>!h.k);if(free.length){const H=pick(free),fr=Math.random()<.22;H.k=fr?'friend':'arc_mon'+(1+Math.floor(Math.random()*4));H.hit=0;H.img.src=fr?G.friend:'art/'+H.k+'.webp';H.up=Math.max(.65,1.25-G.el*.02);H.el.classList.remove('bonk','sad');H.el.classList.add('up',fr?'fr':'mo');H.el.classList.toggle('fr',fr);H.el.classList.toggle('mo',!fr)}}
+      for(const H of G.holes)if(H.k){H.up-=dt;if(H.up<=0){if(H.k!=='friend'&&!H.hit)G.combo=0;H.k=null;H.el.classList.remove('up')}}}
+    G.sub={ic:'🔥',txt:'×'+(1+Math.floor(G.combo/5)),on:G.combo>=5}},
+  end(G){for(const H of G.holes){H.k=null;H.el.classList.remove('up')}}};
+/* lobby button (right column, first) */
+{const col=document.querySelector('.lob-side.r');if(col){const b=document.createElement('button');b.className='side-btn arcade';b.id='lobArcade';b.innerHTML='<span class="sq"><img src="art/ic_arcade.webp" alt=""></span><b data-i18n="arcShort"></b><i class="badge arc-badge" data-abadge hidden></i>';b.querySelector('b').textContent=t('arcShort');b.onclick=openArcade;col.insertBefore(b,col.children[1]||null)}}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const b=document.getElementById('lobArcade');if(b){b.querySelector('b').textContent=t('arcShort');const bd=b.querySelector('[data-abadge]');const n=['rain','mem','whack'].reduce((s,id)=>s+arcLeft(id),0);bd.hidden=!n||!progress.tut;bd.innerHTML='<img src="art/arc_ticket.webp" alt="">'+n;b.setAttribute('aria-label',t('arcShort')+' · '+t('arcLeftN',{n}))}return r}}
+{const _d=drawTitleArt;drawTitleArt=function(){if(ARCEL&&!ARCEL.hidden)return;return _d.apply(this,arguments)}}
+
+/* ===== v52: limited-time HOLIDAY EVENTS (US holidays, Tzach) — first one: HALLOWEEN =====
+   EVENTS = calendar; evNow() = the running event (DEV_OPEN shows the next one early, marked "test").
+   An event = 10 stages played in mode 'event' on one world (Halloween: the night farm, boss = Scarecrow King),
+   an event currency (candy) and an event shop with items you can only get during the event.
+   Design: ChatGPT mockup (design/halloween/). */
+const EVENTS=[
+  {id:'halloween',from:[10,15],to:[11,1],sid:'farmN',cur:'candy',deco:'halloween',
+   items:[{c:'hat',id:'pumpkin',p:120},{c:'hat',id:'witch',p:150},{c:'color',id:'pumpkin',p:60},{c:'trail',id:'t_bats',p:90}]}];
+Object.assign(I18N.en,{ev_halloween:'Halloween',evLeft:'{n} days left',evOn:'Wearing',evOwned:'Owned',evAlmost:'So close! Try again',evDoneAll:'Event complete!',evBossDown:'Boss defeated!',evLeft1:'Last day!',evSoon:'Starts in {n} days',evTest:'Test mode',evPath:'Path',evShop:'Shop',evPlay:'Play',
+  evStage:'Stage {n}',evBossStage:'Boss',evFinal:'Final boss',evOnly:'Only during {n}',evGot:'Yours!',evNeed:'Need more {n}',cur_candy:'Candy',evClear:'Stage clear!',evBossClear:'Boss beaten!',
+  evAgain:'Again',evBack:'Event',evDone:'All stages done! Replay for more candy',evFirst:'First clear bonus',evs_halloween:'Halloween',evExcl:'Exclusive items for a limited time!',evEnded:'This event has ended'});
+Object.assign(I18N.he,{ev_halloween:'ליל כל הקדושים',evLeft:'נותרו {n} ימים',evOn:'בשימוש',evOwned:'נרכש',evAlmost:'כמעט! נסו שוב',evDoneAll:'האירוע הושלם!',evBossDown:'הבוס הובס!',evLeft1:'יום אחרון!',evSoon:'מתחיל בעוד {n} ימים',evTest:'מצב בדיקה',evPath:'מסלול',evShop:'חנות',evPlay:'שחקו',
+  evStage:'שלב {n}',evBossStage:'בוס',evFinal:'בוס סופי',evOnly:'רק ב{n}',evGot:'שלך!',evNeed:'צריך עוד {n}',cur_candy:'ממתקים',evClear:'השלב עבר!',evBossClear:'ניצחתם את הבוס!',
+  evAgain:'שוב',evBack:'לאירוע',evDone:'סיימתם את כל השלבים! שחקו שוב בשביל עוד ממתקים',evFirst:'בונוס פעם ראשונה',evs_halloween:'האלווין',evExcl:'פריטים בלעדיים לזמן מוגבל!',evEnded:'האירוע נגמר'});
+// event-only catalogue (not buyable with coins; wGate/csInfo show "only during …")
+WHATX.pumpkin={p:120,w:1,ev:'halloween',n:['Pumpkin hat','כובע דלעת']};
+WHATX.witch={p:150,w:1,ev:'halloween',n:['Witch hat','כובע מכשפה']};
+WCOL.pumpkin={c:'#ff6200',p:60,ev:'halloween',n:['Pumpkin','דלעת']};
+STYLE_SKINS.push({id:'t_bats',cat:'t',price:90,ev:'halloween'});
+Object.assign(I18N.en,{sk_t_bats:'Bats'});Object.assign(I18N.he,{sk_t_bats:'עטלפים'});
+const evItem=(c,id)=>{for(const E of EVENTS)for(const it of E.items)if(it.c===c&&it.id===id)return [E,it];return null};
+// dates
+function evDate(md,yr){return new Date(yr,md[0]-1,md[1])}
+function evWindow(E,now=new Date()){let y=now.getFullYear();let a=evDate(E.from,y),b=evDate(E.to,y);b.setHours(23,59,59);if(b<a)b.setFullYear(y+1);
+  if(now>b){a.setFullYear(y+1);b.setFullYear(b.getFullYear()+1)}return {a,b}}
+function evNow(){const now=new Date();let best=null;for(const E of EVENTS){const w=evWindow(E,now);if(now>=w.a&&now<=w.b)return {E,live:true,w};if(!best||w.a<best.w.a)best={E,live:false,w}}
+  return typeof DEV_OPEN!=='undefined'&&DEV_OPEN&&best?best:null}
+const evDays=ms=>Math.max(0,Math.ceil(ms/864e5));
+function evData(id){progress.events=progress.events||{};const d=progress.events[id]=progress.events[id]||{cur:0,done:0,got:[]};return d}
+const evZi=E=>Math.max(0,ZONES.findIndex(z=>z.sid===E.sid));
+/* ---------- hub (path + shop) ---------- */
+let EVEL=null,EVS=null;
+function evRoot(){if(!EVEL){EVEL=document.createElement('div');EVEL.id='evhub';EVEL.hidden=true;document.body.appendChild(EVEL)}return EVEL}
+function openEvent(tab){const N=evNow();if(!N)return;audio();sfx.click();const r=evRoot();r.hidden=false;r.dataset.ev=N.E.id;evHub(N,tab||'path')}
+function closeEvent(){if(EVEL)EVEL.hidden=true;updateWalletUI();if(state==='title')updateLobby()}
+function evCountTxt(N){const now=new Date();if(!N.live)return t('evSoon',{n:evDays(N.w.a-now)})+' · '+t('evTest');const d=evDays(N.w.b-now);return d<=1?t('evLeft1'):t('evLeft',{n:d})}
+function evHub(N,tab){const E=N.E,D=evData(E.id),r=evRoot();r.className='ev-hub ev-'+E.id;
+  r.innerHTML=`<div class="ev-top"><button class="x-btn ev-x" aria-label="close"></button><div class="ev-title"><b></b><small></small></div><div class="ev-cur"><img src="art/ev_${E.cur}.webp" alt=""><span></span></div></div>
+    <div class="ev-tabs"><button data-t="path"></button><button data-t="shop"></button></div><div class="ev-body"></div>`;
+  r.querySelector('.ev-x').innerHTML=XSVG;r.querySelector('.ev-x').onclick=()=>{sfx.click();closeEvent()};
+  r.querySelector('.ev-title b').textContent=t('ev_'+E.id);r.querySelector('.ev-title small').textContent=evCountTxt(N);r.querySelector('.ev-cur span').textContent=D.cur;
+  r.querySelectorAll('.ev-tabs button').forEach(b=>{b.textContent=t(b.dataset.t==='path'?'evPath':'evShop');b.classList.toggle('on',b.dataset.t===tab);b.onclick=()=>{sfx.click();evHub(N,b.dataset.t)}});
+  const body=r.querySelector('.ev-body');if(tab==='shop')evShop(N,body);else evPath(N,body)}
+function evPath(N,body){const E=N.E,D=evData(E.id),nx=Math.min(9,D.done);
+  const wrap=document.createElement('div');wrap.className='ev-path';body.appendChild(wrap);
+  // winding path: 10 nodes, bottom (stage 1) to top (boss)
+  const pts=[];for(let i=0;i<10;i++){const y=5+i*8.9,x=50+Math.sin(i*1.25+.6)*28;pts.push([x,y])}
+  const svg=`<svg class="ev-road" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}"/></svg>`;wrap.innerHTML=svg;
+  pts.forEach(([x,y],i)=>{const b=document.createElement('button'),boss=i===9,st=i<D.done?'done':i===nx?'next':'lock';b.className='ev-node '+st+(boss?' boss':'');b.style.left=x+'%';b.style.top=y+'%';
+    b.innerHTML=boss?`<img src="art/ev_boss_${E.id}.webp" alt=""><i>${t('evFinal')}</i>`:`<img src="art/ev_node${st==='lock'?'_off':''}.webp" alt=""><i>${i+1}</i>`;
+    b.setAttribute('aria-label',boss?t('evBossStage'):t('evStage',{n:i+1}));
+    b.onclick=()=>{if(st==='lock'){sfx.locked();return}sfx.click();evStart(i)};wrap.appendChild(b)});
+  const foot=document.createElement('div');foot.className='ev-foot';
+  if(D.done>=10){const p=document.createElement('p');p.textContent=t('evDone');foot.appendChild(p)}
+  const pb=document.createElement('button');pb.className='btn primary ev-play';pb.innerHTML='<svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span>';pb.querySelector('span').textContent=t('evPlay')+' · '+(nx===9?t('evBossStage'):t('evStage',{n:nx+1}));
+  pb.onclick=()=>{sfx.click();evStart(nx)};foot.appendChild(pb);body.appendChild(foot)}
+function evThumb(c,id){if(c==='trail')return csStyleIcon(id);if(H3.state!=='ready'||typeof wThumb!=='function')return '';wThumb('hat','none');
+  const L=Object.assign({},LOOK0,lookNow(),{hat:progress.skin||'none',glasses:'none'});if(c==='hat')L.hat=id;else L[c]=id;const key='ev|'+JSON.stringify(L);if(W3.thumbCache[key])return W3.thumbCache[key];
+  const r=W3.thumbR,cam=W3.thumbCam,P=W3.thumbP;P.g.visible=true;applyLook(P,L);setFace3(P,2);cam.left=-1.05;cam.right=1.05;cam.top=c==='hat'?2.55:2.1;cam.bottom=c==='hat'?.35:-.05;cam.updateProjectionMatrix();r.render(W3.thumbS,cam);
+  const url=r.domElement.toDataURL('image/png');W3.thumbCache[key]=url;return url}
+function evShop(N,body){const E=N.E,D=evData(E.id);const g=document.createElement('div');g.className='ev-shop';body.appendChild(g);{const f=document.createElement('div');f.className='ev-shopnote';f.textContent=t('evExcl');body.appendChild(f)}
+  E.items.forEach(it=>{const own=evOwned(it),b=document.createElement('button');b.className='ev-item'+(own?' own':'');
+    b.innerHTML=`<span class="th"><img alt=""></span><b></b><small></small><span class="pr"></span>`;const src=evThumb(it.c,it.id);if(src)b.querySelector('.th img').src=src;else b.querySelector('.th').classList.add('sw');
+    if(it.c==='color')b.querySelector('.th').style.setProperty('--c',WCOL[it.id].c);
+    b.querySelector('b').textContent=it.c==='trail'?t('sk_'+it.id):wName(it.c,it.id);b.querySelector('small').textContent=t('evOnly',{n:t('evs_'+E.id)});
+    const pr=b.querySelector('.pr');if(own){const on=evWorn(it);pr.textContent=on?t('evOn'):'✓ '+t('evOwned');pr.classList.add('got');if(on)b.classList.add('worn')}else{pr.innerHTML=`<img src="art/ev_${E.cur}.webp" alt="">${it.p}`;if(D.cur<it.p)pr.classList.add('poor')}
+    b.onclick=()=>{if(own){sfx.click();evWear(it);evHub(N,'shop');return}if(D.cur<it.p){sfx.locked();popupToast(t('evNeed',{n:t('cur_'+E.cur)}));return}
+      D.cur-=it.p;evGive(it);saveProgress();sfx.coin(4);vib(20);evWear(it);evHub(N,'shop');popupToast(t('evGot'))};g.appendChild(b)})}
+function evWorn(it){if(it.c==='hat')return progress.skin===it.id;if(it.c==='trail')return progress.tskin===it.id;return lookNow()[it.c]===it.id}
+function evOwned(it){if(it.c==='hat')return wallet().skins.includes(it.id);if(it.c==='trail')return wallet().skins.includes(it.id);return (progress.owned[it.c]||[]).includes(it.id)}
+function evGive(it){if(it.c==='hat'||it.c==='trail'){if(!wallet().skins.includes(it.id))progress.skins.push(it.id)}else{progress.owned[it.c]=progress.owned[it.c]||[];if(!progress.owned[it.c].includes(it.id))progress.owned[it.c].push(it.id)}}
+function evWear(it){try{if(it.c==='trail')progress.tskin=it.id;else if(it.c==='hat')progress.skin=it.id;else lookNow()[it.c]=it.id;saveProgress();setHero3DSkin();rebakeIfNeeded()}catch(e){}}
+// event items: never sold for coins in "My hero"
+{const _g=wGate;wGate=function(cat,id){const e=evItem(cat==='hat'?'hat':cat,id);if(e&&!evOwned(e[1]))return t('evOnly',{n:t('ev_'+e[0].id)});return _g.apply(this,arguments)}}
+{const _ci=csInfo;csInfo=function(c,id){const I=_ci.apply(this,arguments);const e=evItem(c==='trail'?'trail':c,id);if(e&&!evOwned(e[1])){I.gate=t('evOnly',{n:t('ev_'+e[0].id)});I.rar='leg'}return I}}
+/* ---------- playing an event stage (mode 'event') ---------- */
+let EVP=null;
+function evStart(i){const N=evNow();if(!N)return;if(EVEL)EVEL.hidden=true;const E=N.E,zi=evZi(E);
+  EVP={E,i,from:level,perf:0};mode='event';modeZi=zi;go(()=>{startLevel(zi*LPZ+1+i);evDeco(true)})}
+function evStageCandy(won){const boss=EVP.i===9,D=evData(EVP.E.id),first=won&&EVP.i>=D.done;const base=won?(boss?25:8):2,perf=Math.min(12,lv.perfect||0);return {base,perf,first:first?10:0,total:base+perf+(first?10:0)}}
+function evFinish(won){const E=EVP.E,D=evData(E.id),R=evStageCandy(won);D.cur+=R.total;if(won&&EVP.i>=D.done)D.done=Math.min(10,EVP.i+1);saveProgress();
+  const boss=EVP.i===9;
+  showOverlay(()=>({title:won?(boss?t('evBossClear'):t('evClear')):t('whoops'),big:true,
+    extra:card=>{card.classList.add('ev-res');{const hi=document.createElement('img');hi.className='ev-hero';hi.src=won?(boss?'art/ev_boss_'+E.id+'.webp':'art/ev_icon_'+E.id+'.webp'):'art/ev_node_off.webp';hi.alt='';card.appendChild(hi)}const rows=document.createElement('div');rows.className='ev-rows';
+      const row=(lbl,n)=>{const d=document.createElement('div');d.className='ev-row';d.innerHTML=`<span></span><b><img src="art/ev_${E.cur}.webp" alt="">+${n}</b>`;d.querySelector('span').textContent=lbl;rows.appendChild(d)};
+      row(boss?t('evBossStage'):t('evStage',{n:EVP.i+1}),R.base);if(R.perf)row(t('perfect')||'PERFECT',R.perf);if(R.first)row(t('evFirst'),R.first);card.appendChild(rows);if(!won){const al=document.createElement('p');al.className='ev-almost';al.textContent=t('evAlmost');card.insertBefore(al,rows)}
+      if(won&&boss){card.classList.add('ev-boss');const bl=document.createElement('p');bl.className='ev-climax';bl.textContent=R.first?t('evDoneAll'):t('evBossDown');card.insertBefore(bl,rows)}
+      const tot=document.createElement('div');tot.className='bn-coins ev-tot';tot.innerHTML=`<img src="art/ev_${E.cur}.webp" alt=""><b>+${R.total}</b>`;card.appendChild(tot)},
+    actions:[...(won&&EVP.i<9?[{label:t('evPlay')+' · '+(EVP.i+1===9?t('evBossStage'):t('evStage',{n:EVP.i+2})),icon:'play',primary:true,fn:()=>{const n=EVP.i+1;hideOverlay();evStart(n)}}]:[]),
+      {label:won?t('evBack'):t('evAgain'),icon:won?'map':'restart',primary:!won||EVP.i>=9,fn:()=>{hideOverlay();if(won)evExit(true);else evStart(EVP.i)}},
+      ...(won?[]:[{label:t('evBack'),icon:'map',fn:()=>{hideOverlay();evExit(true)}}])]}));
+  sfx.coin(3)}
+function evExit(toHub){evDeco(false);const L=EVP?EVP.from:level;EVP=null;mode='levels';modeZi=null;level=L;go(()=>{toTitle();if(toHub)openEvent('path')})}
+// wiring: goals/passives/countdown behave like a normal level; win/lose go to the event card
+{const _ml=modeLanded;modeLanded=function(){if(mode==='event')return false;return _ml.apply(this,arguments)}}
+{const _w=win;win=function(){if(mode!=='event'||!EVP)return _w.apply(this,arguments);if(state==='win')return;state='win';balance=computeBalance().maxR;updateHud();freeze=.15;
+  sfx.flourish(3);for(let i=0;i<50;i++)particles.push({x:rnd(0,W),y:camY+rnd(-40,H*.25),vx:rnd(-60,60),vy:rnd(40,200),life:2,c:pick(['#ff7a1a','#8a4dff','#ffd23f','#2a2a2a']),sz:rnd(5,9),rot:rnd(0,6),vr:rnd(-8,8),conf:true});
+  setTimeout(()=>{if(mode==='event'&&EVP)evFinish(true)},1300)}}
+{const _mo=modeOver;modeOver=function(won){if(mode!=='event'||!EVP)return _mo.apply(this,arguments);evFinish(false)}}
+{const _sm=startMode;startMode=function(m){if(m==='event'&&EVP){evStart(EVP.i);return}return _sm.apply(this,arguments)}}
+{const _t=toTitle;toTitle=function(){if(mode==='event'&&!EVEL_KEEP){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _t.apply(this,arguments)}}
+let EVEL_KEEP=false;
+{const _o=openMap;openMap=function(){if(mode==='event'){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _o.apply(this,arguments)}}
+// candy pops on PERFECT landings
+let evCnt=null;
+function evCounter(on){if(!evCnt){evCnt=document.createElement('div');evCnt.id='evCnt';evCnt.innerHTML='<img alt=""><b>0</b>';document.body.appendChild(evCnt)}evCnt.hidden=!on;if(on&&EVP){evCnt.querySelector('img').src='art/ev_'+EVP.E.cur+'.webp';evCnt.querySelector('b').textContent=Math.min(12,lv.perfect||0)}}
+{const _p=popup;popup=function(txt,x,y,c,key,sub){const r=_p.apply(this,arguments);if(mode==='event'&&EVP&&(key==='perfect'||key==='wow')){evCounter(true);const d=document.createElement('div');d.className='ev-pop';d.innerHTML=`<img src="art/ev_${EVP.E.cur}.webp" alt="">+1`;const x0=Math.round(clamp(x+S*1.2,30,W-30)),y0=Math.round(sy(y));d.style.left=x0+'px';d.style.top=y0+'px';document.body.appendChild(d);
+  const tr=evCnt.getBoundingClientRect(),dx=tr.left+tr.width*.3-x0,dy=tr.top+tr.height/2-y0;
+  try{d.animate([{transform:'translate(-50%,-50%) scale(.6)',opacity:0},{transform:'translate(-50%,-80%) scale(1.15)',opacity:1,offset:.25},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.55)`,opacity:.9}],{duration:750,easing:'cubic-bezier(.5,0,.7,1)'}).onfinish=()=>{d.remove();evCounter(true);evCnt.classList.remove('pulse');void evCnt.offsetWidth;evCnt.classList.add('pulse')}}catch(e){setTimeout(()=>d.remove(),800)}}return r}}
+{const _sl=startLevel;startLevel=function(){const r=_sl.apply(this,arguments);evCounter(mode==='event');return r}}
+{const _hu=showHud;showHud=function(on){const r=_hu.apply(this,arguments);if(!on&&evCnt)evCnt.hidden=true;return r}}
+/* ---------- Halloween decoration on the event world ---------- */
+let EVD=null;
+function evDeco(on){EVD=on&&EVP?{k:EVP.E.deco,bats:Array.from({length:5},()=>({x:rnd(0,1),y:rnd(.08,.4),s:rnd(.6,1.1),p:rnd(0,6),v:rnd(.03,.07)*(Math.random()<.5?-1:1)}))}:null}
+{const _r=render;render=function(){_r.apply(this,arguments);if(!EVD||mode!=='event')return;const g=ctx;g.save();
+  const mo=hzPic('ev_moon');if(mo){const s=W*.34;g.globalAlpha=.95;g.drawImage(mo,W*.66-s/2,H*.12-s/2+(camY-camTarget())*.05,s,s)}g.globalAlpha=1;
+  const bat=hzPic('ev_bat');for(const b of EVD.bats){b.x+=b.v*frameDt;if(b.x<-.1)b.x=1.1;if(b.x>1.1)b.x=-.1;const fl=Math.sin(time*12+b.p);const s=S*.9*b.s,x=b.x*W,y=b.y*H+Math.sin(time*2+b.p)*10;
+    if(bat){g.save();g.translate(x,y);g.scale(b.v<0?-1:1,.75+.25*Math.abs(fl));g.drawImage(bat,-s/2,-s/2,s,s);g.restore()}}
+  const pk=hzPic('ev_pumpkin');if(pk){const gy=sy(yOf(0))+BH*.55,s=S*1.15;[[.08,1],[.92,.9],[.2,.75],[.8,.7]].forEach(([fx,k],j)=>{const yy=gy-(j>1?BH*.15:0);if(yy>H+s)return;g.save();g.globalAlpha=1;g.drawImage(pk,fx*W-s*k/2,yy-s*k,s*k,s*k);
+    g.globalCompositeOperation='lighter';g.globalAlpha=.25+.12*Math.sin(time*7+j);const rg=g.createRadialGradient(fx*W,yy-s*k*.45,2,fx*W,yy-s*k*.45,s*k*.9);rg.addColorStop(0,'#ffb347');rg.addColorStop(1,'rgba(255,120,0,0)');g.fillStyle=rg;g.fillRect(fx*W-s*k,yy-s*k*1.4,s*k*2,s*k*2);g.restore()})}
+  g.restore()}}
+/* ---------- 3D hats + bats trail ---------- */
+{const _bh=buildHat;buildHat=function(P,id){if(id!=='pumpkin'&&id!=='witch')return _bh(P,id);const T=P.T,s=P.hatSlot;
+  const add=(m,x=0,y=0,z=0,ink=1.05)=>{m.position.set(x,y,z);s.add(m);if(ink){const k=new T.Mesh(m.geometry,INKM());k.scale.setScalar(ink);m.add(k)}return m};
+  if(id==='pumpkin'){for(let i=0;i<8;i++){const a=i/8*Math.PI*2,l=add(wmesh(new T.SphereGeometry(.25,22,16),'#ff7a1a',{roughness:.45,clearcoat:.4}),Math.sin(a)*.2,.16,Math.cos(a)*.2);l.scale.set(.7,.95,.7)}
+    add(wmesh(new T.SphereGeometry(.3,22,16),'#ff8a2a',{roughness:.45}),0,.16,0,0);const st=add(wmesh(new T.CylinderGeometry(.045,.07,.2,10),'#3f7a2a',{roughness:.7}),0,.44,0);st.rotation.z=.25;
+    const lf=add(wmesh(new T.SphereGeometry(.1,12,8),'#4caf50',{roughness:.6}),.13,.42,0,0);lf.scale.set(1.3,.25,.7)}
+  else{add(wmesh(new T.CylinderGeometry(.6,.6,.04,40),'#3b2470',{roughness:.6}),0,-.01,0,1.03);const c=add(wmesh(new T.ConeGeometry(.33,.85,32),'#3b2470',{roughness:.6}),.06,.42,0);c.rotation.z=-.25;
+    add(wmesh(new T.CylinderGeometry(.335,.34,.09,32),'#ff7a1a',{roughness:.4}),0,.05,0,0);add(wmesh(new T.BoxGeometry(.12,.1,.04),'#ffd23f',{metalness:.6,roughness:.25}),0,.05,.33,0)}}}
+{const _tm=trailMark;trailMark=function(k,x,y,a){if(progress.tskin!=='t_bats')return _tm(k,x,y,a);ctx.save();ctx.globalAlpha=a;ctx.translate(x,y);ctx.rotate(Math.sin(k*1.7)*.3);
+  const w=S*.32,f=Math.sin(time*18+k)*.5+.5;ctx.fillStyle='#2a1640';ctx.beginPath();ctx.ellipse(0,0,w*.28,w*.22,0,0,7);ctx.fill();
+  for(const sx of[-1,1]){ctx.beginPath();ctx.moveTo(sx*w*.2,0);ctx.quadraticCurveTo(sx*w*.7,-w*(.35+.35*f),sx*w,-w*.05);ctx.quadraticCurveTo(sx*w*.75,w*.05,sx*w*.6,w*.18);ctx.quadraticCurveTo(sx*w*.45,w*.05,sx*w*.2,w*.1);ctx.fill()}
+  ctx.fillStyle='#ffb347';ctx.fillRect(-w*.12,-w*.06,w*.07,w*.05);ctx.fillRect(w*.05,-w*.06,w*.07,w*.05);ctx.restore();return true}}
+/* ---------- lobby banner ---------- */
+{const lb=document.createElement('button');lb.id='lobEvent';lb.className='ev-banner';lb.hidden=true;lb.innerHTML='<img src="art/ev_icon_halloween.webp" alt=""><span><b></b><small><i>⏱</i><em></em></small></span>';lb.onclick=()=>openEvent('path');
+  const sec=document.getElementById('title');const logo=sec&&sec.querySelector('.logo');if(logo)logo.after(lb);else if(sec)sec.appendChild(lb)}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const b=document.getElementById('lobEvent');if(b){const N=evNow();b.hidden=!N||!progress.tut;if(N){b.className='ev-banner ev-'+N.E.id;b.querySelector('img').src='art/ev_icon_'+N.E.id+'.webp';b.querySelector('b').textContent=t('ev_'+N.E.id);b.querySelector('small em').textContent=N.live?evCountTxt(N):t('evSoon',{n:evDays(N.w.a-new Date())})}}return r}}
+
+/* ===== v53: WEEKLY TOURNAMENT =====
+   Same challenge for everyone each week (seeded by the week number): one world + one twist (wind / fast / night / gold rush).
+   3 hearts, build as high as you can, unlimited tries, best of the week counts. Medals at 10 / 20 / 35 floors pay coins + boosters
+   once per week. No server yet → "challenge a friend" shares your best to WhatsApp. Design: ChatGPT (design/tournament/). */
+Object.assign(I18N.en,{trTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
+  trNew:'New record!',trMedal:'Medal unlocked!',trNext:'{n} more to {m}',trAllMedals:'All medals this week!',trTwist:'This week',
+  tw_wind:'Strong wind',twd_wind:'The wind pushes twice as hard',tw_fast:'Speed week',twd_fast:'Everything swings faster',tw_night:'Night tower',twd_night:'Build in the dark',tw_gold:'Golden rush',twd_gold:'Lots of golden Sharliz',
+  md_b:'Bronze',md_s:'Silver',md_g:'Gold',trShare:'I built {n} floors in the Sharliz weekly tournament! Can you beat me? 🏆',trModes:'Weekly',trGot:'Collected',trClose:'So close to your record!',trNice:'Nice run!',trPrizes:'Tournament prizes',trReached:'You reached the {m} prize!',trHow:'3 hearts · as high as you can'});
+Object.assign(I18N.he,{trTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
+  trNew:'שיא חדש!',trMedal:'מדליה חדשה!',trNext:'עוד {n} קומות ל{m}',trAllMedals:'כל המדליות השבוע!',trTwist:'השבוע',
+  tw_wind:'רוח חזקה',twd_wind:'הרוח דוחפת פי שניים',tw_fast:'שבוע מהיר',twd_fast:'הכל מתנדנד מהר יותר',tw_night:'מגדל לילה',twd_night:'בונים בחושך',tw_gold:'בהלת זהב',twd_gold:'הרבה שארליז מוזהבות',
+  md_b:'ארד',md_s:'כסף',md_g:'זהב',trShare:'בניתי מגדל של {n} קומות בטורניר השבועי של שארליז! תצליחו לעבור אותי? 🏆',trModes:'שבועי',trGot:'נאסף',trClose:'כמעט שיא!',trNice:'סיבוב יפה!',trPrizes:'פרסי הטורניר',trReached:'הגעתם לפרס ה{m}!',trHow:'3 לבבות · כמה שיותר גבוה'});
+const TR_TWISTS=['wind','fast','night','gold'],TR_MEDALS=[{k:'b',f:10,c:100,bo:0},{k:'s',f:20,c:200,bo:1},{k:'g',f:35,c:400,bo:2}];
+function trWeek(d=new Date()){const m=new Date(d);m.setHours(0,0,0,0);const dow=(m.getDay()+6)%7;m.setDate(m.getDate()-dow);return {id:Math.round(m/864e5/7),start:m,end:new Date(+m+7*864e5)}}
+function trNow(){const W=trWeek();let h=(W.id*2654435761)>>>0;const tw=TR_TWISTS[W.id%TR_TWISTS.length];h=(h^(h>>>13))>>>0;
+  const pool=tw==='night'?ZONES.map((z,i)=>i).filter(i=>ZONES[i].season===2):ZONES.map((z,i)=>i).filter(i=>(ZONES[i].season||1)===1);const zi=pool[h%pool.length];return {W,tw,zi}}
+function trData(){const N=trNow(),d=progress.tour=progress.tour||{};if(d.wk!==N.W.id){d.wk=N.W.id;d.best=0;d.got={};d.tries=0}d.got=d.got||{};return d}
+const trDays=()=>Math.max(1,Math.ceil((trNow().W.end-new Date())/864e5));
+let TREL=null,TR=null;
+function trRoot(){if(!TREL){TREL=document.createElement('div');TREL.id='tour';TREL.hidden=true;document.body.appendChild(TREL)}return TREL}
+function openTour(){audio();sfx.click();hideOverlay();const r=trRoot();r.hidden=false;trScreen()}
+function closeTour(){if(TREL)TREL.hidden=true;updateWalletUI();if(state==='title')updateLobby()}
+function trMedalRow(best){const nxk=(TR_MEDALS.find(m=>best<m.f)||{}).k;return `<div class="tr-prz"><div class="tr-meds">${TR_MEDALS.map(m=>`<div class="tr-md ${best>=m.f?'on':m.k===nxk?'nx':'far'} m-${m.k}" style="--x:${m.f/35*100}%"><b>${m.f}</b><img src="art/tr_medal_${m.k}.webp" alt=""></div>`).join('')}</div>
+  <div class="bar"><i style="width:${Math.min(100,best/35*100)}%"></i>${best>0&&best<35?`<span class="pin" style="--x:${best/35*100}%"><em>${best}</em></span>`:''}</div>
+  <div class="tr-rws">${TR_MEDALS.map(m=>`<div class="tr-rw ${best>=m.f?'on':m.k===nxk?'nx':'far'}"><span>${coinImg()}<b>×${m.c}</b></span>${m.bo?`<span><img src="art/ic_gift.webp" alt=""><b>×${m.bo}</b></span>`:''}</div>`).join('')}</div></div>`}
+function trScreen(){const N=trNow(),D=trData(),r=trRoot(),z=ZONES[N.zi],nx=TR_MEDALS.find(m=>D.best<m.f);
+  r.className='tr-screen';
+  r.innerHTML=`<div class="tr-top"><button class="x-btn tr-x" aria-label="close"></button><div class="tr-title"><img src="art/tr_trophy.webp" alt=""><b></b><small></small></div><div class="coin-pill">${coinImg()}<span></span></div></div>
+    <div class="tr-body"><div class="tr-twist"><img class="w" alt=""><div class="tw"><img src="art/tr_tw_${N.tw}.webp" alt=""><div><small></small><b></b><p></p></div></div></div>
+    <div class="tr-best"><span></span><b></b></div><div class="tr-prizes"><h4></h4>${trMedalRow(D.best)}<p class="tr-nx"></p></div></div>
+    <div class="tr-acts"><button class="btn primary tr-play"><svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span></button><button class="btn green tr-share"><span></span></button></div>`;
+  r.querySelector('.tr-x').innerHTML=XSVG;r.querySelector('.tr-x').onclick=()=>{sfx.click();closeTour()};
+  r.querySelector('.tr-title b').textContent=t('trTitle');r.querySelector('.tr-title small').textContent=trDays()<=1?t('trLeft1'):t('trLeft',{n:trDays()});r.querySelector('.coin-pill span').textContent=progress.coins;
+  const th=r.querySelector('.tr-twist .w');th.src='art/'+(typeof artAlias==='function'?artAlias('w3b_'+z.id):'w3b_'+z.id)+'.webp';th.onerror=()=>{th.src='art/w3b_'+(z.base||z.id)+'.webp'};
+  r.querySelector('.tr-twist small').textContent=t('trTwist')+' · '+t(z.key);r.querySelector('.tr-twist b').textContent=t('tw_'+N.tw);r.querySelector('.tr-twist p').textContent=t('twd_'+N.tw)+' · '+t('trHow');
+  r.querySelector('.tr-best span').textContent=t('trBest');r.querySelector('.tr-best b').textContent=t('trFloorsN',{n:D.best});
+  r.querySelector('.tr-prizes h4').textContent=t('trPrizes');
+  r.querySelector('.tr-nx').textContent=nx?t('trNext',{n:nx.f-D.best,m:t('md_'+nx.k)}):t('trAllMedals');
+  r.querySelector('.tr-play span').textContent=t('trPlay');r.querySelector('.tr-play').onclick=()=>{sfx.click();trStart()};
+  r.querySelector('.tr-share span').textContent=D.best?t('trChallenge')+' · '+t('trFloorsN',{n:D.best}):t('trChallenge');r.querySelector('.tr-share').onclick=()=>{sfx.click();trShare(D.best)}}
+function trShare(n){const url=location.origin+location.pathname,txt=t('trShare',{n});
+  if(navigator.share){navigator.share({text:txt,url}).catch(()=>{});return}
+  try{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')}catch(e){}}
+/* ---------- playing (mode 'tour') ---------- */
+function trStart(){const N=trNow(),D=trData();D.tries++;saveProgress();if(TREL)TREL.hidden=true;
+  TR={N,from:level,floors:0,newMd:[]};mode='tour';modeZi=N.zi;level=N.zi*LPZ+4;score=0;endless={floors:0,zoneAt:1e9,goal:0};duo=null;
+  go(()=>{startLevel(level);hearts=3;trHud(true);updateHud();
+    const tb=document.getElementById('toast');tb.querySelector('small').textContent=t('trTitle');tb.querySelector('strong').textContent=t('tw_'+N.tw);setTimeout(()=>{if(mode==='tour'&&typeof toast==='function')toast(t('twd_'+N.tw))},900)})}
+let trBadge=null;
+function trHud(on){if(!on&&trG)trG.hidden=true;if(!trBadge){trBadge=document.createElement('div');trBadge.id='trBadge';trBadge.innerHTML='<img alt=""><b></b>';document.body.appendChild(trBadge)}trBadge.hidden=!on;if(on&&TR){trBadge.querySelector('img').src='art/tr_tw_'+TR.N.tw+'.webp';trBadge.querySelector('b').textContent=t('tw_'+TR.N.tw)}}
+let trG=null;
+function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge';trG.innerHTML=`<img class="top" src="art/tr_trophy.webp" alt=""><div class="tube"><i></i></div>${TR_MEDALS.map(m=>`<div class="mk m-${m.k}" style="bottom:${m.f/35*100}%"><img src="art/tr_medal_${m.k}.webp" alt=""><b>${m.f}</b></div>`).join('')}<em></em>`;document.body.appendChild(trG)}trG.hidden=!on}
+{const _u=updateHud;updateHud=function(){_u.apply(this,arguments);if(mode!=='tour'||!TR){if(trG&&!trG.hidden)trG.hidden=true;return}trGauge(true);document.getElementById('gauge').hidden=true;const fl=Math.max(0,tower.length-1);
+  trG.querySelector('.tube i').style.height=Math.min(1,fl/35)*100+'%';trG.querySelector('em').textContent=fl+'/35';{const nk=(TR_MEDALS.find(m=>fl<m.f)||{}).k;TR_MEDALS.forEach(m=>{const e=trG.querySelector('.m-'+m.k);e.classList.toggle('on',fl>=m.f);e.classList.toggle('nx',m.k===nk)})}}}
+{const _ml=modeLanded;modeLanded=function(){if(mode!=='tour'||!TR)return _ml.apply(this,arguments);const fl=tower.length-1;TR.floors=Math.max(TR.floors,fl);endless.floors=TR.floors;
+  const m=TR_MEDALS.find(m=>m.f===fl);if(m&&!TR.newMd.includes(m.k)){const D=trData();if(!D.got[m.k]){TR.newMd.push(m.k)}const d=document.createElement('div');d.className='tr-pop';d.innerHTML=`<img src="art/tr_medal_${m.k}.webp" alt=""><b>${t('md_'+m.k)}!</b>`;document.body.appendChild(d);setTimeout(()=>d.remove(),1400);sfx.flourish(2);vib([20,40,20])}
+  updateHud();return false}}
+// twists
+{const _hk=hatK;hatK=function(k,d=1){const v=_hk.apply(this,arguments);if(mode!=='tour'||!TR)return v;if(TR.N.tw==='fast'&&k==='spd')return v*1.25;if(TR.N.tw==='wind'&&k==='wind')return v*2;return v}}
+{const _ss=spawnSwinger;spawnSwinger=function(){_ss.apply(this,arguments);if(mode==='tour'&&TR&&TR.N.tw==='gold'&&swinger&&!swinger.gold&&!swinger.kind&&tower.length>=2&&Math.random()<.22){swinger.color=GOLDC;swinger.gold=true}}}
+{const _mo=modeOver;modeOver=function(won){if(mode!=='tour'||!TR)return _mo.apply(this,arguments);trEnd()}}
+{const _sm=startMode;startMode=function(m){if(m==='tour'){trStart();return}return _sm.apply(this,arguments)}}
+function trEnd(){const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.best=fl;const won=[];
+  for(const m of TR_MEDALS){if(D.best>=m.f&&!D.got[m.k]){D.got[m.k]=1;wallet();progress.coins+=m.c;for(let i=0;i<m.bo;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}won.push(m)}}
+  saveProgress();trHud(false);const nx=TR_MEDALS.find(m=>D.best<m.f);
+  showOverlay(()=>({title:nb?t('trNew'):fl>=D.best-3?t('trClose'):t('trNice'),big:true,
+    extra:card=>{card.classList.add('tr-res');const big=document.createElement('div');big.className='tr-big';big.innerHTML=`<b>${fl}</b><span></span>`;big.querySelector('span').textContent=t('trFloorsN',{n:''}).trim();card.appendChild(big);
+      const bs=document.createElement('div');bs.className='tr-best';bs.innerHTML='<span></span><b></b>';bs.querySelector('span').textContent=t('trBest');bs.querySelector('b').textContent=t('trFloorsN',{n:D.best});card.appendChild(bs);
+      if(won.length){const m=won[won.length-1],w=document.createElement('div');w.className='tr-won';w.innerHTML=`<img src="art/tr_medal_${m.k}.webp" alt=""><p></p><div class="tr-rew"></div>`;w.querySelector('p').textContent=t('trReached',{m:t('md_'+m.k)});
+        const rw=w.querySelector('.tr-rew');const c=won.reduce((a,m)=>a+m.c,0),bo=won.reduce((a,m)=>a+m.bo,0);rw.innerHTML=`<span class="bn-coins">${coinImg()}<b>+${c}</b></span>`+`<i class="tr-ok">✓ ${t('trGot')}</i>`+(bo?`<span class="bn-bo"><img src="art/ic_gift.webp" alt=""><em>×${bo}</em></span>`:'');card.appendChild(w)}
+      const tk=document.createElement('div');tk.className='tr-res-bar';tk.innerHTML=`<div class="bar"><i style="width:${Math.min(100,D.best/35*100)}%"></i></div><img src="art/tr_medal_${(nx||TR_MEDALS[2]).k}.webp" alt=""><b>${D.best}/${(nx||TR_MEDALS[2]).f}</b>`;card.appendChild(tk);
+      const p=document.createElement('p');p.className='tr-nx';p.textContent=nx?t('trNext',{n:nx.f-D.best,m:t('md_'+nx.k)}):t('trAllMedals');card.appendChild(p)},
+    actions:[{label:t('trAgain'),icon:'restart',primary:true,fn:()=>{hideOverlay();trStart()}},{label:t('trChallenge'),color:'green',fn:()=>trShare(D.best)},{label:t('trBack'),icon:'map',fn:()=>{hideOverlay();trExit()}}]}));
+  if(won.length)setTimeout(()=>sfx.coin(4),500)}
+function trExit(){const L=TR?TR.from:level;TR=null;mode='levels';modeZi=null;level=L;trHud(false);go(()=>{toTitle();openTour()})}
+{const _t=toTitle;toTitle=function(){if(mode==='tour'){mode='levels';modeZi=null;if(TR)level=TR.from;TR=null;trHud(false)}return _t.apply(this,arguments)}}
+{const _o=openMap;openMap=function(){if(mode==='tour'){mode='levels';modeZi=null;if(TR)level=TR.from;TR=null;trHud(false)}return _o.apply(this,arguments)}}
+{const _hu=showHud;showHud=function(on){const r=_hu.apply(this,arguments);if(!on)trHud(false);return r}}
+/* entry points: top of the Modes card + a badge on the Modes button */
+{const _om=openModes;openModes=function(){_om.apply(this,arguments);const box=document.querySelector('#card .modes');if(!box)return;const D=trData(),N=trNow();
+  const b=document.createElement('button');b.className='mode-btn m-tour';b.innerHTML=`<img src="art/tr_trophy.webp" alt=""><span class="mt"><b></b><small></small></span>`;b.querySelector('b').textContent=t('trTitle');
+  b.querySelector('small').textContent=t('tw_'+N.tw)+' · '+t('trBest')+' '+D.best;b.onclick=openTour;box.prepend(b)}}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const mb=document.getElementById('modesTitleBtn');if(mb){let bd=mb.querySelector('.tr-bd');if(!bd){bd=document.createElement('i');bd.className='badge tr-bd';bd.innerHTML='<img src="art/tr_trophy.webp" alt="">';mb.appendChild(bd)}const D=trData();bd.hidden=!progress.tut;bd.classList.toggle('done',!!D.got.g);bd.innerHTML=D.got.g?'✓':'<img src="art/tr_trophy.webp" alt="">'}return r}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
