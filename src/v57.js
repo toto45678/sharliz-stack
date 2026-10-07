@@ -89,7 +89,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
   pn.querySelector('.sb-pp').onclick=()=>sbTurn(-1);pn.querySelector('.sb-pn').onclick=()=>sbTurn(1);
   const grid=r.querySelector('.sb-grid'),fresh=[];
   all.slice(SB.pg*9,SB.pg*9+9).forEach((it,k)=>{const idx=SB.pg*9+k,num=base+idx+1,rar=sbRar(P,it),s=document.createElement('button'),rot=((strHash(it.id)%9)-4)*.8;
-    s.className='sb-slot'+(it.n?' got r-'+rar:'')+(it.round?' round':'')+(P.id==='shz'?' art':'');s.style.setProperty('--r',rot+'deg');
+    s.className='sb-slot'+(it.n?' got r-'+rar:'')+(it.round?' round':'')+(it.card?' card':'')+(P.id==='shz'?' art':'');s.style.setProperty('--r',rot+'deg');
     s.innerHTML=`<span class="num">#${String(num).padStart(2,'0')}</span><span class="stk"><img alt=""></span>`+(it.n>1?`<i class="cnt">×${it.n}</i>`:'');
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
@@ -104,7 +104,7 @@ function sbZoom(P,all,idx){const owned=all.map((it,i)=>[it,i]).filter(([it])=>it
   const m=document.createElement('div');m.className='sb-zoom';document.getElementById('app').appendChild(m);
   const draw=()=>{const [it,i]=owned[k],rar=sbRar(P,it);m.className='sb-zoom z-'+rar;
     m.innerHTML=`<div class="sb-top"><button class="sb-rb sb-back" aria-label="back"></button><div class="sb-ttl"></div><span></span></div><div class="zc"><button class="za zp" aria-label="prev"></button>
-      <div class="zcard${it.round?' round':''}"><div class="foil"></div><img alt=""><div class="shine"></div></div><button class="za zn" aria-label="next"></button><span class="zr"></span></div>
+      <div class="zcard${it.round?' round':''}${it.card?' card':''}"><div class="foil"></div><img alt=""><div class="shine"></div></div><button class="za zn" aria-label="next"></button><span class="zr"></span></div>
       <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p><div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
     const bk=m.querySelector('.sb-back');bk.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     m.querySelector('.sb-ttl').textContent=rar==='h'?t('sbRar_h')+'!':rar==='r'?t('sbRar_r')+'!':(P.id==='shz'?t('ch_shz'):t('pg_'+P.id));

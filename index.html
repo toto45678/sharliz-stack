@@ -1744,6 +1744,23 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .pk-cards{min-height:46%}
 .sb-etab span{white-space:normal;text-align:center;line-height:1;max-width:46px;font-size:.55rem}
 
+/* ===== v58: card stickers (story / boss / world) ===== */
+.sb-slot.card .stk{aspect-ratio:3/4;width:74%;height:auto;margin-bottom:12px}
+.sb-slot.card .stk img{width:100%;height:100%;object-fit:contain}
+.sb-slot.card.got .stk{background:none!important;padding:0!important;box-shadow:none!important;animation:none!important;border-radius:12px}
+.sb-slot.card.got .stk img{filter:drop-shadow(0 3px 2px rgba(40,20,80,.35))!important;border-radius:10px}
+.sb-slot.card.got.r-h .stk::after{inset:4%;border-radius:9px}
+.sb-slot.card.got.r-h{filter:drop-shadow(0 0 7px rgba(255,214,110,.95)) drop-shadow(0 0 2px rgba(255,255,255,.9))}
+.sb-slot.card.got.r-h .stk::before{content:'';position:absolute;inset:4%;border-radius:9px;background:linear-gradient(135deg,rgba(255,138,216,.0),rgba(126,232,255,.28),rgba(255,242,122,.0) 60%,rgba(181,140,255,.28));background-size:240% 240%;animation:sbHolo 3s linear infinite;mix-blend-mode:screen;z-index:1;pointer-events:none}
+.sb-slot.card:not(.got) .stk{border-radius:10px;background:rgba(120,90,200,.08)}
+.sb-slot.card:not(.got) .stk img{filter:brightness(0) opacity(.18);border-radius:10px}
+.sb-slot.card.got:not(.r-h) .stk img{border:3px solid #fff;box-sizing:border-box;border-radius:12px;object-fit:cover}
+.zcard.card{aspect-ratio:3/4;background:none;border:none;box-shadow:none;overflow:visible}
+.zcard.card .foil{display:none}
+.zcard.card img{width:100%;height:100%;border-radius:18px;filter:drop-shadow(0 8px 0 #120d2b) drop-shadow(0 16px 30px rgba(0,0,0,.45))}
+.z-h .zcard.card img{filter:drop-shadow(0 0 14px rgba(255,214,110,.95)) drop-shadow(0 8px 0 #120d2b)}
+.zcard.card .shine{border-radius:18px;inset:3%}
+
 </style>
 
 <div id="app">
@@ -7156,7 +7173,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
   pn.querySelector('.sb-pp').onclick=()=>sbTurn(-1);pn.querySelector('.sb-pn').onclick=()=>sbTurn(1);
   const grid=r.querySelector('.sb-grid'),fresh=[];
   all.slice(SB.pg*9,SB.pg*9+9).forEach((it,k)=>{const idx=SB.pg*9+k,num=base+idx+1,rar=sbRar(P,it),s=document.createElement('button'),rot=((strHash(it.id)%9)-4)*.8;
-    s.className='sb-slot'+(it.n?' got r-'+rar:'')+(it.round?' round':'')+(P.id==='shz'?' art':'');s.style.setProperty('--r',rot+'deg');
+    s.className='sb-slot'+(it.n?' got r-'+rar:'')+(it.round?' round':'')+(it.card?' card':'')+(P.id==='shz'?' art':'');s.style.setProperty('--r',rot+'deg');
     s.innerHTML=`<span class="num">#${String(num).padStart(2,'0')}</span><span class="stk"><img alt=""></span>`+(it.n>1?`<i class="cnt">×${it.n}</i>`:'');
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
@@ -7171,7 +7188,7 @@ function sbZoom(P,all,idx){const owned=all.map((it,i)=>[it,i]).filter(([it])=>it
   const m=document.createElement('div');m.className='sb-zoom';document.getElementById('app').appendChild(m);
   const draw=()=>{const [it,i]=owned[k],rar=sbRar(P,it);m.className='sb-zoom z-'+rar;
     m.innerHTML=`<div class="sb-top"><button class="sb-rb sb-back" aria-label="back"></button><div class="sb-ttl"></div><span></span></div><div class="zc"><button class="za zp" aria-label="prev"></button>
-      <div class="zcard${it.round?' round':''}"><div class="foil"></div><img alt=""><div class="shine"></div></div><button class="za zn" aria-label="next"></button><span class="zr"></span></div>
+      <div class="zcard${it.round?' round':''}${it.card?' card':''}"><div class="foil"></div><img alt=""><div class="shine"></div></div><button class="za zn" aria-label="next"></button><span class="zr"></span></div>
       <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p><div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
     const bk=m.querySelector('.sb-back');bk.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     m.querySelector('.sb-ttl').textContent=rar==='h'?t('sbRar_h')+'!':rar==='r'?t('sbRar_r')+'!':(P.id==='shz'?t('ch_shz'):t('pg_'+P.id));
@@ -7204,6 +7221,47 @@ function sbPack(){const D=sbData();if(!D.packs)return;D.packs--;const got=[sbRol
   m.querySelector('.pk-pack').onclick=step;m.onclick=e=>{if(stage===0&&!e.target.closest('.pk-btns'))step()};sfx.click()}
 function sbFlyCoins(from,to,done){const a=from.getBoundingClientRect(),b=to.getBoundingClientRect();for(let k=0;k<5;k++){const im=document.createElement('img');im.src='art/ic_coin.webp';im.className='fly-coin';im.style.left=(a.left+a.width/2-13+(k-2)*8)+'px';im.style.top=(a.top+a.height/2-13)+'px';document.body.appendChild(im);
   setTimeout(()=>{im.style.transform=`translate(${b.left+14-(a.left+a.width/2-13+(k-2)*8)}px,${b.top+4-(a.top+a.height/2-13)}px) scale(.8)`;im.style.opacity='0'},30+k*70);setTimeout(()=>{im.remove();if(k===4){if(sfx.ok())sfx.coin(2);done&&done()}},800+k*70)}}
+
+/* ===== v58: illustrated sticker chapters (Tzach) =====
+   Rare chapter = 18 STORY stickers (illustrated scenes, holo glow), earned by catching rare Sharliz on the rope.
+   Boss chapter = 30 illustrated battle scenes (Sharliz vs that boss), holo glow. Worlds = full-bleed world art. */
+Object.assign(I18N.en,{pg_rare:'Sharliz stories',hint_rare:'Catch a rare Sharliz on the rope',stkVs:'Sharliz vs {b}',storyGot:'New story sticker!'});
+Object.assign(I18N.he,{pg_rare:'סיפורי שארליז',hint_rare:'תפסו שארליז נדיר על החבל',stkVs:'שארליז נגד {b}',storyGot:'מדבקת סיפור חדשה!'});
+const STORY=[
+ ['st01','Flower picnic','פיקניק בפרחים','Sandwiches taste better with friends.','כריכים טעימים יותר עם חברים.'],
+ ['st02','Sandcastle tower','מגדל חול','The tallest sandcastle on the beach!','ארמון החול הכי גבוה בחוף!'],
+ ['st03','To the moon','עד הירח','Stack high enough and you reach the moon.','אם בונים מספיק גבוה — מגיעים לירח.'],
+ ['st04','Balloon ride','טיסה בכדור פורח','The view from up here is the best.','הנוף מכאן הכי יפה.'],
+ ['st05','Birthday party','מסיבת יום הולדת','Make a wish!','תבקשו משאלה!'],
+ ['st06','Snowball fight','מלחמת כדורי שלג','Nobody is safe in the snow village.','אף אחד לא מוגן בכפר השלג.'],
+ ['st07','Under the sea','מתחת לים','Blub blub — hello fishies!','בלוב בלוב — שלום דגים!'],
+ ['st08','Campfire night','מדורה בלילה','Stories under a million stars.','סיפורים מתחת למיליון כוכבים.'],
+ ['st09','Lift-off!','המראה!','3… 2… 1… Sharliz in space!','3… 2… 1… שארליז בחלל!'],
+ ['st10','Roller coaster','רכבת הרים','Hold on tight! (with what?)','תחזיקו חזק! (במה?)'],
+ ['st11','Rainbow slide','מגלשת קשת','The fastest way down a rainbow.','הדרך הכי מהירה לרדת מקשת.'],
+ ['st12','Sunset fishing','דייג בשקיעה','Something is pulling the line…','משהו מושך בחכה…'],
+ ['st13','Jungle river','נהר בג׳ונגל','A leaf boat adventure.','הרפתקה בסירת עלה.'],
+ ['st14','Rock concert','הופעת רוק','The crowd sings every word!','הקהל שר כל מילה!'],
+ ['st15','Rainy day','יום גשום','Puddles are for jumping.','שלוליות זה בשביל לקפוץ.'],
+ ['st16','Family photo','תמונה משפחתית','Everybody say “Sharliz!”','כולם להגיד „שארליז!”'],
+ ['st17','Dragon flight','מעוף הדרקון','Over the castle and far away.','מעל הטירה והרחק משם.'],
+ ['st18','Treasure cave','מערת האוצר','It glows… it\'s ours!','זה זוהר… זה שלנו!']];
+function storySync(){try{const D=sbData();D.story=D.story||[];const al=progress.album||{};const caught=Object.values(al).reduce((a,v)=>a+(+v||0),0);const target=Math.min(STORY.length,caught);let added=0;
+  while(D.story.length<target){const left=STORY.map(s=>s[0]).filter(id=>!D.story.includes(id));if(!left.length)break;D.story.push(pick(left));added++}if(added)saveProgress();return added}catch(e){return 0}}
+{const P=STK_PAGES.find(p=>p.id==='rare');if(P)P.items=()=>{const D=sbData(),L=lang==='he'?1:0,own=D.story||[];return STORY.map(s=>({id:'story:'+s[0],n:own.includes(s[0])?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1}))}}
+{const P=STK_PAGES.find(p=>p.id==='boss');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const z=it.id.slice(5);return Object.assign(it,{src:'art/stk_b_'+z+'.webp',rar:'h',card:1,name:t('stkVs',{b:it.name})})})}}
+/* worlds: the world's own layers + sky, cut to the card */
+const WSTK={};
+function worldStk(z,cb){const k=z.sid||z.id;if(WSTK[k]&&WSTK[k]!=='…')return WSTK[k];if(WSTK[k]==='…')return '';WSTK[k]='…';
+  const ids=['w3b','w3m','w3f'].map(L=>{const a=typeof artAlias==='function'?artAlias(L+'_'+k):L+'_'+k;return 'art/'+a+'.webp'});
+  const c=document.createElement('canvas');c.width=300;c.height=400;const g=c.getContext('2d');const sky=z.sky||[[0,'#9cc8d2'],[1,'#35558e']];
+  const gr=g.createLinearGradient(0,400,0,0);sky.forEach(([tt,col])=>gr.addColorStop(Math.min(1,tt/1.1),col));g.fillStyle=gr;g.fillRect(0,0,300,400);
+  let n=0;const ims=ids.map(src=>{const im=new Image();im.onload=im.onerror=()=>{if(++n===ids.length){ims.forEach(i=>{if(i.naturalWidth){const sw=i.naturalWidth,sh=i.naturalHeight,cw=sw*.86,ch=cw*4/3;g.drawImage(i,(sw-cw)/2,sh-ch,cw,ch,0,0,300,400)}});try{WSTK[k]=c.toDataURL('image/webp',.85)}catch(e){WSTK[k]=''}cb&&cb()}};im.src=src;return im});return ''}
+{const P=STK_PAGES.find(p=>p.id==='world');if(P){const _it=P.items;P.items=()=>{const it=_it();return it.map((x,i)=>{const z=ZONES[i];return Object.assign(x,{src:null,round:false,card:1,img:()=>worldStk(z,()=>{if(typeof SB!=='undefined'&&SB.view==='page'&&sbChapters()[SB.ch]&&sbChapters()[SB.ch].id==='world'){clearTimeout(WSTK._t);WSTK._t=setTimeout(()=>sbPageView(),60)}})})})}}}
+{const _o=openAlbum;openAlbum=function(){storySync();return _o.apply(this,arguments)}}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{if(storySync())stkBadge()}catch(e){}return r}}
+/* buddies: an illustrated scene of the buddy with Sharliz (paid buddies glow) */
+{const P=STK_PAGES.find(p=>p.id==='buddy');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const id=it.id.slice(6);return Object.assign(it,{src:'art/stk_p_'+id+'.webp',img:null,card:1,rar:WPET[id]&&WPET[id].real?'h':'c'})})}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

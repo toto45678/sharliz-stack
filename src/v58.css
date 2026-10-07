@@ -1,0 +1,16 @@
+/* ===== v58: card stickers (story / boss / world) ===== */
+.sb-slot.card .stk{aspect-ratio:3/4;width:74%;height:auto;margin-bottom:12px}
+.sb-slot.card .stk img{width:100%;height:100%;object-fit:contain}
+.sb-slot.card.got .stk{background:none!important;padding:0!important;box-shadow:none!important;animation:none!important;border-radius:12px}
+.sb-slot.card.got .stk img{filter:drop-shadow(0 3px 2px rgba(40,20,80,.35))!important;border-radius:10px}
+.sb-slot.card.got.r-h .stk::after{inset:4%;border-radius:9px}
+.sb-slot.card.got.r-h{filter:drop-shadow(0 0 7px rgba(255,214,110,.95)) drop-shadow(0 0 2px rgba(255,255,255,.9))}
+.sb-slot.card.got.r-h .stk::before{content:'';position:absolute;inset:4%;border-radius:9px;background:linear-gradient(135deg,rgba(255,138,216,.0),rgba(126,232,255,.28),rgba(255,242,122,.0) 60%,rgba(181,140,255,.28));background-size:240% 240%;animation:sbHolo 3s linear infinite;mix-blend-mode:screen;z-index:1;pointer-events:none}
+.sb-slot.card:not(.got) .stk{border-radius:10px;background:rgba(120,90,200,.08)}
+.sb-slot.card:not(.got) .stk img{filter:brightness(0) opacity(.18);border-radius:10px}
+.sb-slot.card.got:not(.r-h) .stk img{border:3px solid #fff;box-sizing:border-box;border-radius:12px;object-fit:cover}
+.zcard.card{aspect-ratio:3/4;background:none;border:none;box-shadow:none;overflow:visible}
+.zcard.card .foil{display:none}
+.zcard.card img{width:100%;height:100%;border-radius:18px;filter:drop-shadow(0 8px 0 #120d2b) drop-shadow(0 16px 30px rgba(0,0,0,.45))}
+.z-h .zcard.card img{filter:drop-shadow(0 0 14px rgba(255,214,110,.95)) drop-shadow(0 8px 0 #120d2b)}
+.zcard.card .shine{border-radius:18px;inset:3%}
