@@ -355,6 +355,9 @@ function stkTotals(){let a=0,b=0;for(const P of STK_PAGES)for(const it of P.item
 function stkNew(){const seen=progress.stkSeen||[];let n=0;for(const P of STK_PAGES)for(const it of P.items())if(it.n&&!seen.includes(it.id))n++;return n}
 function stkBadge(){const n=stkNew();document.querySelectorAll('[data-sbadge]').forEach(b=>{b.hidden=!n;b.textContent=n})}
 let BOOK={page:0,el:null};
+// iOS Safari also scrolls overflow:hidden ancestors (#app) sideways, which left a dark strip and pushed the close button away
+function unShift(){for(const e of[document.getElementById('app'),BOOK.el,document.scrollingElement])if(e&&e.scrollLeft)e.scrollLeft=0}
+(function(){const a=document.getElementById('app');if(a)a.addEventListener('scroll',()=>{if(a.scrollLeft||a.scrollTop){a.scrollLeft=0;a.scrollTop=0}})})();
 openAlbum=function(){sfx.click();if(!BOOK.el){const el=document.createElement('div');el.id='book';el.hidden=true;
     el.innerHTML=`<div class="bk-top"><button class="x-btn bk-x" aria-label="Close">${XSVG}</button><div class="bk-title"></div><div class="bk-count"><img src="art/ic_album.webp" alt=""><span></span></div></div>
       <div class="bk-tabs"></div><div class="bk-stage"><div class="bk-book"><div class="bk-rings"></div><div class="bk-page"></div></div></div>
@@ -372,7 +375,7 @@ function renderBook(dir){const el=BOOK.el,P=STK_PAGES[BOOK.page],items=P.items()
   const tabs=el.querySelector('.bk-tabs');tabs.innerHTML='';STK_PAGES.forEach((Q,i)=>{const it=Q.items(),got=it.filter(x=>x.n).length,tot=it.filter(x=>!x.soon).length,nw=it.some(x=>x.n&&!seen.includes(x.id));
     const bt=document.createElement('button');bt.className='bk-tab t-'+Q.id+(i===BOOK.page?' on':'');bt.innerHTML=`<span></span><small>${tot?got+'/'+tot:'…'}</small>${nw?'<i class="dot"></i>':''}`;bt.querySelector('span').textContent=t('pg_'+Q.id);
     bt.onclick=()=>{if(i===BOOK.page)return;const d=i>BOOK.page?1:-1;BOOK.page=i;sfx.click();renderBook(d)};tabs.appendChild(bt)});
-  const on=tabs.querySelector('.on');if(on)on.scrollIntoView({inline:'center',block:'nearest'});
+  const on=tabs.querySelector('.on');if(on){const a=on.getBoundingClientRect(),c=tabs.getBoundingClientRect();tabs.scrollLeft+=a.left+a.width/2-(c.left+c.width/2)}unShift();
   const page=el.querySelector('.bk-page');page.className='bk-page pg-'+P.id+(dir>0?' flip-n':dir<0?' flip-p':'');void page.offsetWidth;
   page.innerHTML=`<div class="pg-head"><b></b><span class="pg-no">${BOOK.page+1}</span></div><div class="pg-grid"></div>`;page.querySelector('.pg-head b').textContent=t('pg_'+P.id);
   const grid=page.querySelector('.pg-grid'),fresh=[];

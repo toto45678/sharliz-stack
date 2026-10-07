@@ -1863,7 +1863,7 @@ function buildScene(){
                                  :[makeLayer(H*.55,a.far2,seed+1),makeLayer(H*.45,a.far,seed+2),makeLayer(H*.42,a.mid,seed+3)]};
   const r=mulberry(seed+9);
   stars=Array.from({length:110},()=>({x:r()*W,y:r()*H,s:r()*1.6+.6,tw:r()*6}));
-  flakes=Array.from({length:z.id==='snow'?60:0},()=>({x:r()*W,y:r()*H,s:r()*2+1,v:30+r()*40}));
+  flakes=Array.from({length:baseId(z)==='snow'?60:0},()=>({x:r()*W,y:r()*H,s:r()*2+1,v:30+r()*40}));
   moonImg=z.id==='space'?makeMoon():null;
   const maxAlt=goal()*STEP/BH+10;skyItems=[];
   const add=(type,n,a0,a1,f0,f1,extra={})=>{for(let i=0;i<n;i++)skyItems.push(Object.assign({type,alt:a0+r()*(a1-a0),f:f0+r()*(f1-f0),x:r()*W,vx:(r()<.5?-1:1)*(8+r()*14),s:.7+r()*.6,ph:r()*6},extra))};
@@ -1958,7 +1958,7 @@ function buildPopScene(z){
   });
   skyItems.sort((a,b)=>a.f-b.f);
   stars=Array.from({length:120},()=>({x:r()*W,y:r()*H,s:r()*2+.6,tw:r()*6}));
-  flakes=Array.from({length:z.id==='snow'?50:0},()=>({x:r()*W,y:r()*H,s:r()*2.2+1,v:30+r()*40}));
+  flakes=Array.from({length:baseId(z)==='snow'?50:0},()=>({x:r()*W,y:r()*H,s:r()*2.2+1,v:30+r()*40}));
   nextWhistle=time+2+r()*2;
 }
 function animXform(anim,b,h,it){
@@ -2224,7 +2224,7 @@ function alignAll(){
   popup(t('aligned'),xOf(base),yOf(k)-BH*2.3,'#22d3ee');score+=60;sfx.perfect(4);
 }
 function resolveLanding(){
-  const d=dropping;dropping=null;
+  const d=dropping;dropping=null;if(state==='over'){bodies.push({s:d,x:xOf(d.xs),y:yOf(tower.length),vx:0,vy:-BH,rot:0,vr:3,mood:'scared'});return}
   const top=tower[tower.length-1],dx=d.xs-top.xs,x=xOf(d.xs),y=yOf(tower.length);
   if(d.kind==='bomb'){if(Math.abs(dx)<=.5)bombBoom(x,y,2);else{bodies.push({s:d,x,y,vx:Math.sign(dx)*S*2.5,vy:-BH*.8,rot:0,vr:Math.sign(dx)*5});popup(t('phew'),x,y-BH*.6,'#a3e635');score+=10;state='wait';spawnAt=time+.5;updateHud()}return}
   if(Math.abs(dx)>landTol(d)[2]){
@@ -2285,10 +2285,10 @@ function collapseRot(i){if(!collapsing||i<collapsing.k)return 0;const e=Math.pow
 function loseHeart(msg,x,y,silent,key){if(hz.boss&&hz.boss.dead)return;
   hearts--;combo=0;lv.lost=(lv.lost||0)+1;vib([50,40,50]);popup(msg,x,y-BH*.6,'#e8806e',key);updateHud();
   if(!silent) setTimeout(()=>sfx.heart(),250); else setTimeout(()=>sfx.heart(),500);
-  if(hearts<=0){state='over';renderBoosterBar();setTimeout(failGag,900)} else {state='wait';spawnAt=time+.9}
+  if(hearts<=0){state='over';cv.style.transform='';renderBoosterBar();setTimeout(failGag,900)} else {state='wait';spawnAt=time+.9}
 }
 function win(){
-  state='win';balance=computeBalance().maxR;updateHud();freeze=.15;
+  cv.style.transform='';state='win';balance=computeBalance().maxR;updateHud();freeze=.15;
   if(score>best){best=score;store('sharliz-best',best)}
   const prevUnlocked=progress.unlocked;
   lv.starsNow=starsEarned();lv.first3=lv.starsNow>=3&&(progress.stars[level-1]||0)<3&&mode==='levels';progress.stars[level-1]=Math.max(progress.stars[level-1]||0,lv.starsNow);renderBoosterBar();track('wins');if(lv.starsNow>=3)track('stars3');
@@ -2428,7 +2428,7 @@ function updateHazards(dt){
   const g=hz.gust;hz.gustV=0;
   if(g){g.t+=dt;if(g.t<g.warn){if(Math.random()<dt*20)windStreaks.push({x:g.dir>0?-80:W+80,y:rnd(H*.1,H*.8),len:rnd(30,70),life:1.2})}
     else{const k=Math.sin(Math.PI*clamp((g.t-g.warn)/g.dur,0,1));hz.gustV=g.dir*2.1*k*(hz.gustK||1);
-      if(Math.random()<dt*40)windStreaks.push({x:g.dir>0?-80:W+80,y:rnd(H*.05,H*.9),len:rnd(60,140),life:1.6,sand:zone().id==='desert'})}
+      if(Math.random()<dt*40)windStreaks.push({x:g.dir>0?-80:W+80,y:rnd(H*.05,H*.9),len:rnd(60,140),life:1.6,sand:baseId(zone())==='desert'})}
     if(g.t>g.warn+g.dur){hz.gust=null;hz.gustK=1}}
   if(dropping&&dropping.kind==='bomb'&&hz.crow&&hz.crow.phase==='come'){const c=hz.crow;if(Math.hypot(xOf(dropping.xs)-c.x,sy(dropping.y)-c.y)<S*1.3){hz.crow=null;dropping=null;trail=[];bombBoom(c.x,scrToW(c.y),0);trick();trick();score+=60;popup(t('bullseye'),c.x,scrToW(c.y)-BH,'#a3e635');updateHud()}}
   // octopus -> ink
@@ -2966,15 +2966,16 @@ function shareTower(){
     const u=URL.createObjectURL(blob),ov=document.createElement('div');ov.className='photo-ov';ov.innerHTML=`<img src="${u}" alt=""><p></p>`;ov.querySelector('p').textContent=t('photoHint');ov.onclick=()=>{ov.remove();URL.revokeObjectURL(u)};document.body.appendChild(ov)},'image/png')}
 
 /* ---------- world twists ---------- */
+function baseId(z){return (z.season===2||z.season===3)&&z.base?z.base:z.id}
 function worldTwist(dt){
-  if(!dropping)return;const z=zone().id;
+  if(!dropping)return;const z=baseId(zone());
   if(z==='ocean')dropping.xs+=Math.sin(time*.9)*.28*dt;
   if(z==='space')dropping.vy=Math.min(dropping.vy,BH*9);
   if(dropping.kind==='magnet'){const top=tower[tower.length-1];dropping.xs+=(top.xs-dropping.xs)*Math.min(1,dt*3.2)}}
 
 /* ---------- ambience ---------- */
 let ambT=0;
-function ambience(dt){if(!sfxOn||!actx||state==='paused')return;ambT-=dt;if(ambT>0)return;const z=zone().id;ambT=.5+Math.random()*1.4;
+function ambience(dt){if(!sfxOn||!actx||state==='paused')return;ambT-=dt;if(ambT>0)return;const z=baseId(zone());ambT=.5+Math.random()*1.4;
   try{if(z==='desert')noise({d:1.2,v:.012,lp:500});else if(z==='ocean')tone({f:300+Math.random()*500,f2:700+Math.random()*400,d:.08,type:'sine',v:.02});
   else if(z==='volcano')noise({d:1,v:.02,lp:160});else if(z==='space')tone({f:1800+Math.random()*1200,d:.4,type:'sine',v:.008});
   else if(z==='snow')noise({d:.9,v:.008,hp:3000});else if(z==='city'&&Math.random()<.4)tone({f:420,f2:380,d:.2,type:'square',v:.006,filter:900});
@@ -2994,7 +2995,7 @@ function frame(now){
   requestAnimationFrame(frame);
 }
 function update(dt){
-  if(state==='paused'||state==='intro'){if(lv)lv.t0+=dt;if(hz){if(hz.next)hz.next+=dt;if(hz.coinNext)hz.coinNext+=dt;if(hz.boss)hz.boss.atk+=dt}if(spawnAt)spawnAt+=dt;return}
+  if(state==='paused'||state==='intro'){if(cv.style.transform)cv.style.transform='';if(lv)lv.t0+=dt;if(hz){if(hz.next)hz.next+=dt;if(hz.coinNext)hz.coinNext+=dt;if(hz.boss)hz.boss.atk+=dt}if(spawnAt)spawnAt+=dt;return}
   if(freeze>0){freeze-=dt;return}
   if(spawnAt&&time>=spawnAt&&state==='wait'){spawnAt=0;spawnSwinger()}
   const n=tower.length;wind=(state==='win'||state==='over')?wind*.95:windFor(n)+(hz.gustV||0);
@@ -3923,7 +3924,7 @@ function toTitle(){
 }
 
 /* input */
-cv.addEventListener('pointerdown',e=>{e.preventDefault();audio();const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;if(tapCoinBalloon(px,py)||hzTap(px,py))return;if(hzNear(px,py))return;drop()});
+cv.addEventListener('pointerdown',e=>{e.preventDefault();audio();const r=cv.getBoundingClientRect(),py=e.clientY-r.top;let px=e.clientX-r.left;if(cv.style.transform)px=W-px;if(tapCoinBalloon(px,py)||hzTap(px,py))return;if(hzNear(px,py))return;drop()});
 addEventListener('keydown',e=>{if(e.code==='Space'||e.code==='Enter'){if(state==='aim'){e.preventDefault();drop()}}if(e.code==='Escape'||e.code==='KeyP')pause()});
 document.getElementById('playBtn').onclick=()=>{audio();startMusic();sfx.click();preLevel(Math.min(TOTAL,progress.unlocked))};
 document.getElementById('worldCard').onclick=()=>{audio();startMusic();sfx.click();go(()=>openMap())};
@@ -4309,6 +4310,9 @@ function stkTotals(){let a=0,b=0;for(const P of STK_PAGES)for(const it of P.item
 function stkNew(){const seen=progress.stkSeen||[];let n=0;for(const P of STK_PAGES)for(const it of P.items())if(it.n&&!seen.includes(it.id))n++;return n}
 function stkBadge(){const n=stkNew();document.querySelectorAll('[data-sbadge]').forEach(b=>{b.hidden=!n;b.textContent=n})}
 let BOOK={page:0,el:null};
+// iOS Safari also scrolls overflow:hidden ancestors (#app) sideways, which left a dark strip and pushed the close button away
+function unShift(){for(const e of[document.getElementById('app'),BOOK.el,document.scrollingElement])if(e&&e.scrollLeft)e.scrollLeft=0}
+(function(){const a=document.getElementById('app');if(a)a.addEventListener('scroll',()=>{if(a.scrollLeft||a.scrollTop){a.scrollLeft=0;a.scrollTop=0}})})();
 openAlbum=function(){sfx.click();if(!BOOK.el){const el=document.createElement('div');el.id='book';el.hidden=true;
     el.innerHTML=`<div class="bk-top"><button class="x-btn bk-x" aria-label="Close">${XSVG}</button><div class="bk-title"></div><div class="bk-count"><img src="art/ic_album.webp" alt=""><span></span></div></div>
       <div class="bk-tabs"></div><div class="bk-stage"><div class="bk-book"><div class="bk-rings"></div><div class="bk-page"></div></div></div>
@@ -4326,7 +4330,7 @@ function renderBook(dir){const el=BOOK.el,P=STK_PAGES[BOOK.page],items=P.items()
   const tabs=el.querySelector('.bk-tabs');tabs.innerHTML='';STK_PAGES.forEach((Q,i)=>{const it=Q.items(),got=it.filter(x=>x.n).length,tot=it.filter(x=>!x.soon).length,nw=it.some(x=>x.n&&!seen.includes(x.id));
     const bt=document.createElement('button');bt.className='bk-tab t-'+Q.id+(i===BOOK.page?' on':'');bt.innerHTML=`<span></span><small>${tot?got+'/'+tot:'…'}</small>${nw?'<i class="dot"></i>':''}`;bt.querySelector('span').textContent=t('pg_'+Q.id);
     bt.onclick=()=>{if(i===BOOK.page)return;const d=i>BOOK.page?1:-1;BOOK.page=i;sfx.click();renderBook(d)};tabs.appendChild(bt)});
-  const on=tabs.querySelector('.on');if(on)on.scrollIntoView({inline:'center',block:'nearest'});
+  const on=tabs.querySelector('.on');if(on){const a=on.getBoundingClientRect(),c=tabs.getBoundingClientRect();tabs.scrollLeft+=a.left+a.width/2-(c.left+c.width/2)}unShift();
   const page=el.querySelector('.bk-page');page.className='bk-page pg-'+P.id+(dir>0?' flip-n':dir<0?' flip-p':'');void page.offsetWidth;
   page.innerHTML=`<div class="pg-head"><b></b><span class="pg-no">${BOOK.page+1}</span></div><div class="pg-grid"></div>`;page.querySelector('.pg-head b').textContent=t('pg_'+P.id);
   const grid=page.querySelector('.pg-grid'),fresh=[];
@@ -5113,7 +5117,7 @@ Object.assign(MECH,{
     demo(p,H_){const y=190-Math.min(1,p/1.4)*110;drawJellyfish(H_.cx+40,y,p*3);if(p>1&&p<1.8)H_.ring(H_.cx+40,y,22)}}),
   lava:ev('passive',{init(){return {lvl:-2.2}},
     update(dt,m,live){if(!live||state==='aim'&&swinger&&swinger.entering)return;const top=tower.length-1;m.lvl+=((.3+lvInZone()*.012)*(isBoss()?.7:1)+Math.max(0,top-4.5-m.lvl)*.6)*dt;
-      if(m.lvl>=top-.25&&top>0){m.lvl=Math.max(-2,top-3.2);loseHeart(t('m_burn'),W/2,yOf(top),false,'whoops');sfx.boom()}},
+      if(m.lvl>=top-.25&&top>0&&!dropping){m.lvl=Math.max(-2,top-3.2);loseHeart(t('m_burn'),W/2,yOf(top),false,'whoops');sfx.boom()}},
     landing(perfect,great,d,m){if(perfect){m.lvl=Math.max(-2.2,m.lvl-.8);popup(t('m_cooled'),W/2,swingY()-BH*.3,'#22d3ee')}},
     back(m){const wy=-.2*BH-(m.lvl+.5)*STEP,y=sy(wy);if(y>H+20)return;ctx.save();const g=ctx.createLinearGradient(0,y,0,H);g.addColorStop(0,'rgba(255,170,40,.95)');g.addColorStop(.15,'rgba(255,90,30,.9)');g.addColorStop(1,'rgba(140,20,20,.95)');
       ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(0,H+10);for(let x=0;x<=W+20;x+=20)ctx.lineTo(x,y+Math.sin(x*.05+time*3)*5);ctx.lineTo(W,H+10);ctx.closePath();ctx.fill();ctx.lineWidth=3;ctx.strokeStyle='#ffe24d';ctx.stroke();
@@ -5232,7 +5236,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
   if(swinger&&swinger.ghost>0)swinger.ghost-=dt}}
 {const _db=drawHazardsBack;drawHazardsBack=function(){_db();if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.back&&hz.m[k])M.back(hz.m[k])}}}
 {const _df=drawHazardsFront;drawHazardsFront=function(){if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.draw&&hz.m[k])M.draw(hz.m[k])}_df()}}
-{const _ht=hzTap;hzTap=function(px,py){if(cv.style.transform)px=W-px;if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.tap&&hz.m[k]&&M.tap(px,py,hz.m[k]))return true}
+{const _ht=hzTap;hzTap=function(px,py){if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.tap&&hz.m[k]&&M.tap(px,py,hz.m[k]))return true}
   if(curSeason()===2&&typeof SFX_S!=='undefined'){for(const f of SFX_S.flies)if(Math.hypot(px-f.x,py-f.y)<S*.8){f.t=99;lightBoost=7;pts(10);popup(t('m_light'),f.x,scrToW(f.y),'#ffe24d');sfx.pop();return true}}
   return _ht(px,py)}}
 {const _ol=hzOnLanding;hzOnLanding=function(perfect,great){const d=tower[tower.length-1];
@@ -5241,7 +5245,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
   if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.landing&&k!=='jelly'&&hz.m[k])M.landing(perfect,great,d,hz.m[k])}
   _ol(perfect,great)}}
 {const _ds=drawSharliz;drawSharliz=function(s,...a){if(s&&s.ghost>0&&s===swinger){ctx.save();ctx.globalAlpha=.1+.06*Math.sin(time*9);const r=_ds(s,...a);ctx.restore();return r}
-  const r=_ds(s,...a);if(s&&s.kind==='jelly'&&(s===swinger||s===dropping))jellyGlow(a[0],a[1]);if(s&&s.frozen>0){ctx.save();ctx.globalAlpha=.45;ctx.fillStyle='#bff3ff';ctx.fillRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.globalAlpha=1;ctx.strokeStyle='#e8fbff';ctx.lineWidth=3;ctx.strokeRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.restore()}return r}}
+  const r=_ds(s,...a);if(s&&s.kind==='jelly'&&(s===swinger||s===dropping))jellyGlow(a[0],a[1]);if(s&&s.frozen>0&&s===swinger){ctx.save();ctx.globalAlpha=.45;ctx.fillStyle='#bff3ff';ctx.fillRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.globalAlpha=1;ctx.strokeStyle='#e8fbff';ctx.lineWidth=3;ctx.strokeRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.restore()}return r}}
 
 /* intro cards: a season card the first time a season starts, then the mechanic card */
 {const _mi=maybeIntro;maybeIntro=function(){if(mode==='levels'){const s=curSeason();if(s>=2&&!seenKey('season_'+s)){markSeen('season_'+s);state='intro';
@@ -5298,7 +5302,7 @@ Object.assign(B3D_RIG,{
 // preload the stage's own boss with its world
 {const _pw=preloadWorld;preloadWorld=function(zid){_pw(zid);try{const z=zone();if(z&&z.id===zid&&z.sid!==zid&&B3D_META[z.sid]){hzPic('boss_'+z.sid);hzPic('boss_'+z.sid+'_hurt');b3Load(z.sid)}}catch(e){}}}
 // sticker book: all 30 bosses (the 8 classic ones + the stages that have their own boss picture)
-const bossAll=()=>BOSS_HATS.concat(ZONES.filter(z=>z.sid!==z.id).map(z=>z.sid));
+const bossAll=()=>[...new Set(BOSS_HATS.concat(ZONES.map(z=>z.sid||z.id)))];
 
 /* ===== v46: own art for stages that used to borrow another world's art =====
    build.py injects ART_OWN = stage ids that have art/w3b_,w3m_,w3f_,mapn_<sid>.webp (season-4 worlds first, later night/storm sets).
@@ -5339,7 +5343,7 @@ const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Ca
 // Trophies are a reward for beating the boss, so they have no cost (Raz, "משפטי ועסקי" thread, Oct 6). The v49 caps still apply.
 const TROPHY_FX={farmN:{imm:'bats',light:1.45},cityN:{imm:'blackout',coins:1.1},desertN:{imm:'scorpion',boss:1.25},candyN:{imm:'jelly',tol:1.1},
   snowN:{imm:'icicle',wind:.7},oceanN:{imm:'jellyfish',light:1.6},volcanoN:{lavaK:.45,feverT:1.3},spaceN:{imm:'portal',fall:.85},
-  farmS:{imm:'lightning',perfPts:1.3},cityS:{imm:'newspaper',noSlip:1},desertS:{swayK:.35,coins:1.1},candyS:{imm:'hail',perfCoins:2},
+  farmS:{imm:'tornado',perfPts:1.3},cityS:{imm:'newspaper',noSlip:1},desertS:{swayK:.35,coins:1.1},candyS:{imm:'hail',perfCoins:2},
   snowS:{imm:'freeze',spd:.92},oceanS:{swayK:.35,boss:1.25},volcanoS:{imm:'meteor',hearts:1},spaceS:{imm:'gravity',aim:1},
   jungle:{imm:'monkey',coins:1.15},castle:{imm:'ghost',tol:1.12},clouds:{imm:'cloud',fall:.8},dino:{imm:'egg',hearts:1},
   factory:{convK:0,coins:1.2},crystal:{imm:'mirror',feverT:1.5}};
@@ -5706,7 +5710,7 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
   const extra=mk('div','cs-extra');for(const [c,key] of [['deal','csDeals'],['sets','csLooks']]){const b=mk('button','cs-sub small'+(cat===c?' on':''),t(key));if(c==='deal'&&wNewIn('deal'))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();W3.cat=cat===c?slot.cats[0]:c;renderWardrobe()};extra.appendChild(b)}
   hd.append(subs,extra);dr.appendChild(hd);
   if(cat==='sets'){const g=mk('div','cs-sets');wSets().forEach((S,i)=>{const c=mk('div','wd-set'+(S?'':' empty'));const im=mk('img');im.alt='';if(S){const u=wThumb('set',i);if(u)im.src=u}c.appendChild(im);c.appendChild(mk('b','',t('lookN',{n:i+1})));
-      const w=mk('button','wear',t('wear'));w.disabled=!S;w.onclick=()=>{wWearSet(i)};const sv=mk('button','save',t('save'));sv.onclick=()=>wSaveSet(i);c.append(w,sv);g.appendChild(c)});dr.appendChild(g)}
+      const w=mk('button','wear',t('wear'));w.disabled=!S;w.onclick=()=>{wWearSet(i)};const sv=mk('button','save',t('saveLook'));sv.onclick=()=>wSaveSet(i);c.append(w,sv);g.appendChild(c)});dr.appendChild(g)}
   else{const fl=mk('div','cs-filter');const powCat=c=>c==='hat'||c==='outfit'||c==='glasses'||c==='pet';
     if(cat!=='deal'&&powCat(cat))for(const [f,key] of [['all','csAll'],['pow','csPow'],['skin','csSkin']]){const b=mk('button','cs-f'+(CS.filter===f?' on':''),t(key));b.onclick=()=>{CS.filter=f;renderWardrobe()};fl.appendChild(b)}
     if(fl.childNodes.length)dr.appendChild(fl);
