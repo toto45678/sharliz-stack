@@ -99,10 +99,10 @@ function nestRender(){const N=nest(),r=NEL,C=N.cur,E=C&&EGG[C.t],ready=eggReady(
     if(own&&st<3){const cost=EVO_COST[st],bt=document.createElement('button');bt.className='ns-evo'+(N.treats>=cost?' can':'');bt.innerHTML=`<span></span><em><img src="art/ns_cookie.webp" alt="">${cost}</em>`;bt.querySelector('span').textContent=t('nestEvolve');
       bt.onclick=()=>{if(budEvolve(id)){sfx.flourish(3);vib([30,40,30]);evoPop(id)}else{sfx.locked();bt.classList.remove('nope');void bt.offsetWidth;bt.classList.add('nope')}};c.appendChild(bt)}
     else if(own){const s=document.createElement('span');s.className='ns-max';s.textContent=t('nestMax');c.appendChild(s)}
-    else{const s=document.createElement('span');s.className='ns-lock';s.textContent=WPET[id].egg?t('eggOnly'):'🔒';c.appendChild(s)}
+    else{const s=document.createElement('span');s.className='ns-lock';s.textContent=WPET[id].egg?(typeof eggGateTxt==='function'?eggGateTxt(id):t('eggOnly')):'🔒';c.appendChild(s)}
     g.appendChild(c)})}
 function hatch(){const N=nest(),C=N.cur;if(!C||!eggReady())return;const E=EGG[C.t];let pool=E.pool.filter(id=>!wOwned('pet',id));
-  if(C.t==='g'&&!wOwned('pet','dino'))pool=['dino'];const got=pool.length?pick(pool):null;N.hatched++;N.treats+=2;
+  if(C.t==='g'){const eg=['dino','phoenix'].filter(id=>WPET[id]&&!wOwned('pet',id));if(eg.length)pool=eg}const got=pool.length?pick(pool):null;N.hatched++;N.treats+=2;
   if(got){progress.owned.pet=progress.owned.pet||[];if(!progress.owned.pet.includes(got))progress.owned.pet.push(got)}else N.treats+=E.dup;
   const tp=C.t;N.cur=N.q.length?{t:N.q.shift(),w:0}:null;saveProgress();hatchShow(tp,got,got?null:pick(E.pool))}
 function hatchShow(tp,got,dupId){const m=document.createElement('div');m.className='egg-pop hatch';

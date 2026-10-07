@@ -741,6 +741,8 @@
   "bgBack": "Geri",
   "bgGo": "Anladım!",
   "bgHelp": "Dostlar ne işe yarar?",
+  "eggOnlyC": "Yumurtadan çıkar",
+  "eggOnlyR": "Sadece nadir yumurtadan",
   "ps_egg": "Yumurtalar ×2 büyür",
   "nestFull": "Yuva dolu! Yerine +5 kurabiye",
   "sbAll": "Hepsini aç ({n})",
@@ -1002,7 +1004,18 @@
   "Wizard": "Büyücü",
   "You did not see this sticker.": "Bu çıkartmayı görmedin.",
   "Zebra": "Zebra",
-  "STORM NEWS": "FIRTINA HABERLERİ"
+  "STORM NEWS": "FIRTINA HABERLERİ",
+  "Penguin": "Penguen",
+  "Firefly": "Ateş böceği",
+  "Kitten": "Yavru kedi",
+  "Octopus": "Ahtapotçuk",
+  "Cloudy": "Bulutçuk",
+  "Little monkey": "Küçük maymun",
+  "Crystal bunny": "Kristal tavşan",
+  "Baby phoenix": "Bebek anka",
+  "Robo puppy": "Robot köpek",
+  "Galaxy whale": "Galaksi balinası",
+  "Thunder griffin": "Gök gürültüsü grifonu"
  },
  "pw": {
   "imm": "{m} yok",

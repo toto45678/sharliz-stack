@@ -22,7 +22,7 @@ const petPerk=()=>mode!=='duo'&&typeof PERKS!=='undefined'&&wOwned('pet',petNow(
   return v}}
 // coins: buddy row (v28) × hat (v39) × gear (v48) multiply — scale the whole card down if they add up to more than ×1.5
 {const _tr=tallyRows;tallyRows=function(won){const rows=_tr(won);if(mode==='duo')return rows;const pk=petPerk();
-  const m=(pk==='coins10'?1.1:pk==='coins25'?1.25:1)*hatK('coins');if(m<=FAIR_MAX_COINS)return rows;const f=FAIR_MAX_COINS/m;
+  const m=(pk==='coins10'?1.1:pk==='coins25'?1.25:pk&&pk.startsWith('x_')&&PET_FX[pk].coins||1)*hatK('coins');if(m<=FAIR_MAX_COINS)return rows;const f=FAIR_MAX_COINS/m;
   return rows.map(r=>{const q=r.slice();q[2]=Math.round(q[2]*f);return q}).filter(r=>r[2]>0)}}
 // power bars in "My hero": show the same capped numbers + the astronaut's cost
 {const _fc=fxCombine;fxCombine=function(look,hat){const R=_fc(look,hat);if(look.outfit==='astro')R.hearts=(R.hearts||0)-1;

@@ -741,6 +741,8 @@
   "bgBack": "뒤로",
   "bgGo": "알겠어!",
   "bgHelp": "단짝이 뭐야?",
+  "eggOnlyC": "알에서 태어나요",
+  "eggOnlyR": "희귀 알 전용",
   "ps_egg": "알 성장 ×2",
   "nestFull": "둥지가 꽉 찼어! 대신 쿠키 +5",
   "sbAll": "모두 열기 ({n})",
@@ -1002,7 +1004,18 @@
   "Wizard": "마법사",
   "You did not see this sticker.": "넌 이 스티커를 못 본 거야.",
   "Zebra": "얼룩말",
-  "STORM NEWS": "폭풍 뉴스"
+  "STORM NEWS": "폭풍 뉴스",
+  "Penguin": "펭귄",
+  "Firefly": "반딧불이",
+  "Kitten": "아기 고양이",
+  "Octopus": "꼬마 문어",
+  "Cloudy": "구름이",
+  "Little monkey": "꼬마 원숭이",
+  "Crystal bunny": "크리스털 토끼",
+  "Baby phoenix": "아기 불사조",
+  "Robo puppy": "로봇 강아지",
+  "Galaxy whale": "은하 고래",
+  "Thunder griffin": "천둥 그리핀"
  },
  "pw": {
   "imm": "{m} 무효",
