@@ -300,13 +300,13 @@ def build_monkey():
 
 
 def build_bunny():
-    ICE, DEEP = '#bfe6ff', '#7cc8ff'
+    ICE, DEEP = '#9cd4ff', '#5fb8ff'
     fr = TP.profile('bunny', 'front', skip=[(.14, .36, 'lr'), (.62, 1.1)], add=[(.16, -.255, .255), (.22, -.265, .265), (.28, -.26, .26)], top=.66, bottom=.07)
     sd = TP.profile('bunny', 'side', skip=[(.16, .30, 'l'), (.42, .56, 'l'), (.26, .55, 'r'), (.62, 1.1)],
                     add=[(.23, -.21, None), (.49, -.185, None), (.33, None, .235), (.42, None, .235)], top=.66, bottom=.07)
     L = TP.Loft(fr, sd); body = TP.loft_bm(L, seg=128)
     S = Surface(body)
-    part('body', body, ICE, role='body', ink=.013, rough=.05, cc=1, emis='#9fd8ff', ei=.08, nrm=tile_nrm('crystal', 1.2), ns=.45)
+    part('body', body, ICE, role='body', ink=.013, rough=.05, cc=1, nrm=tile_nrm('crystal', 1.2), ns=.45)
     eyes_open(S, .12, .385, .105, .15, rim=.014, tilt=.15)
     mouth_open(S, 0, .345, .04, .028)
     blush(S, .185, .32, .04, .03, col='#ffb3d9', op=.7)
@@ -316,13 +316,13 @@ def build_bunny():
         g = gem_bm(.095, .45, 6, prof=EARP)
         M = Matrix.Translation((sx * .172, -.05, .60)) @ Matrix.Rotation(-.48, 4, 'X') @ Matrix.Diagonal((1, 1.2, 1, 1))
         bmesh.ops.transform(g, matrix=M, verts=g.verts); bm_merge(ears, g)
-    part('ears', ears, DEEP, role='horn', ink=.011, rough=.04, cc=1, emis='#8fd6ff', ei=.3)
+    part('ears', ears, DEEP, role='horn', ink=.011, rough=.04, cc=1)
     paws = bmesh.new(); feet = bmesh.new()
     for sx in (-1, 1):
         a, cx, b, cy = L.at(.27); bm_merge(paws, ellipsoid_bm(.065, .06, .10, at=(sx * .225, cy - b + .03, .25), seg=20, rings=14))
         bm_merge(feet, ellipsoid_bm(.075, .13, .05, at=(sx * .155, -.02, .048), seg=18, rings=12))
-    part('paws', paws, ICE, role='arms', ink=.011, rough=.05, cc=1, emis='#9fd8ff', ei=.06)
-    part('feet', feet, ICE, role='feet', ink=.01, rough=.05, cc=1, emis='#9fd8ff', ei=.06)
+    part('paws', paws, ICE, role='arms', ink=.011, rough=.05, cc=1)
+    part('feet', feet, ICE, role='feet', ink=.01, rough=.05, cc=1)
     a, cx, b, cy = L.at(.24)
     part('tailBall', ellipsoid_bm(.06, .06, .062, at=(0, cy + b - .005, .24), seg=20, rings=14), ICE, role='tail', ink=.01, rough=.05, cc=1, emis='#bfe8ff', ei=.12, pivot=(0, cy + b - .03, .24))
     sh = bmesh.new()
@@ -330,7 +330,7 @@ def build_bunny():
         a, cx, b, cy = L.at(z); g = gem_bm(r, h, 6)
         M = Matrix.Translation((x, cy + b - .03, z)) @ Matrix.Rotation(-.35, 4, 'X') @ Matrix.Rotation(x * 1.5, 4, 'Y')
         bmesh.ops.transform(g, matrix=M, verts=g.verts); bm_merge(sh, g)
-    part('shards', sh, DEEP, role='horn', ink=.009, rough=.04, cc=1, emis='#8fd6ff', ei=.25)
+    part('shards', sh, DEEP, role='horn', ink=.009, rough=.04, cc=1)
 
 
 def build_phoenix():
@@ -453,8 +453,8 @@ def build_griffin():
     YL, CR, BL, BR = '#ffd93d', '#fff1c4', '#1e6fff', '#c98a2e'
     fr = TP.profile('griffin', 'front', skip=[(.33, .80, 'lr'), (.78, 1.1)],
                     add=[(.40, -.335, .335), (.48, -.325, .325), (.56, -.30, .30), (.64, -.26, .26), (.70, -.21, .21), (.74, -.15, .15)] + ROUND0_F, top=.77, bottom=0.)
-    sd = TP.profile('griffin', 'side', skip=[(.06, .36, 'l'), (.36, .46, 'r'), (.78, 1.1)],
-                    add=[(.12, -.215, None), (.20, -.23, None), (.28, -.24, None), (.41, None, .345), (0, .034, .036), (.01, -.07, .14), (.02, -.10, .17), (.035, -.115, .19)], top=.77, bottom=0.)
+    sd = TP.profile('griffin', 'side', skip=[(.06, .78, 'l'), (.36, .46, 'r'), (.78, 1.1)],
+                    add=[(.12, -.215, None), (.20, -.23, None), (.28, -.24, None), (.36, -.25, None), (.45, -.26, None), (.55, -.25, None), (.65, -.23, None), (.72, -.19, None), (.41, None, .345), (0, .034, .036), (.01, -.07, .14), (.02, -.10, .17), (.035, -.115, .19)], top=.77, bottom=0.)
     L = TP.Loft(fr, sd); body = TP.loft_bm(L, seg=128)
     S = Surface(body)
     part('body', body, YL, role='body', ink=.014, rough=.3, cc=.7)

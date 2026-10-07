@@ -740,7 +740,7 @@ def build_bee():
         v = 1 - (j + .5) / TH
         for i in range(TW): px[i, j] = h2rgb(col((i + .5) / TW, v))
     im = im.resize((512, 256), Image.LANCZOS)
-    part('body', body, '#ffffff', role='body', ink=.014, rough=.28, cc=.8, tex=im)
+    part('body', body, '#ffffff', role='body', ink=.014, rough=.28, cc=.8, tex=im, nrm=tile_nrm('fuzz', 1.0), ns=.25)
     for sx, nm in ((-1, 'eyeL'), (1, 'eyeR')):
         loc, _ = S.hit(sx * .145, .62)
         part(nm, S.stroke(arc_pts(sx * .145, .62, .075, .055, up=True), r=.019, lift=.01), '#ffffff', role='eye', ink=0, rough=.2, cc=.8, emis='#ffffff', ei=.3, pivot=tuple(loc))
@@ -864,8 +864,8 @@ def build_dino():
     head = ellipsoid_bm(.27, .22, .23, at=(0, 0, 0), seg=72, rings=40, rot=Matrix.Rotation(-.22, 3, 'X'))
     bmesh.ops.translate(head, vec=(.012, -.07, .66), verts=head.verts)
     bm_merge(head, ellipsoid_bm(.17, .13, .11, at=(.01, -.19, .58), seg=40, rings=24))
-    uv_equirect(head); S = Surface(head)
-    part('head', head, G, role='body', ink=.013, nrm=tile_nrm('fuzz', 1.0), ns=.3)
+    S = Surface(head)
+    part('head', head, G, role='body', ink=.013)
     for sx in (-1, 1):
         sd_ = 'L' if sx < 0 else 'R'
         part('eye' + sd_, S.decal(ELLIPSE, sx * .125, .72, .05, .06, bulge=.025), '#ffffff', role='eye', ink=0, rough=.15, cc=1, pivot=(sx * .125, -.3, .72))
