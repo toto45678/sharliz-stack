@@ -123,8 +123,8 @@ function sbPack(){const D=sbData();if(!D.packs)return;D.packs--;const got=[sbRol
   const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk';document.getElementById('app').appendChild(m);
   m.innerHTML=`<div class="coin-pill pk-coins">${coinImg()}<span>${progress.coins-coins}</span></div><div class="flash"></div><h3></h3><p></p><div class="pk-cards"></div><div class="pk-pack"><img class="pk-body" src="art/sb_pack.webp" alt=""><img class="pk-logo" src="art/logo_${lang==='he'?'he':'en'}.webp" alt=""><img class="pk-top" src="art/sb_pack_top.webp" alt=""></div><small class="pk-tap"></small><div class="pk-btns"></div>`;
   m.querySelector('h3').textContent=t('sbOpenPack');m.querySelector('p').textContent=t('sbOpenSub');m.querySelector('.pk-tap').textContent=t('sbTapPack');
-  const cards=m.querySelector('.pk-cards');res.forEach((R,i)=>{const c=document.createElement('div');c.className='pk-card r-'+R.s[1];c.style.setProperty('--i',i);
-    c.innerHTML=`<div class="in"><div class="bk"><img src="art/sb_pack.webp" alt=""></div><div class="fr"><div class="foil"></div><img src="art/stk_${R.s[0]}.webp" alt=""><b></b></div></div><span class="tag ${R.dup?'dup':'nw'}"></span>`;
+  const cards=m.querySelector('.pk-cards');res.forEach((R,i)=>{const c=document.createElement('div');c.className='pk-card r-'+R.s[1]+(R.dup?' dup':' nw');c.style.setProperty('--i',i);
+    c.innerHTML=`<div class="in"><div class="bk"><img src="art/sb_pack.webp" alt=""></div><div class="fr"><div class="foil"></div><img src="art/stk_${R.s[0]}.webp" alt=""><b></b></div></div><span class="tag ${R.dup?'dup':'nw'}"></span><span class="rc">${t('sbRar_'+R.s[1])}</span>`;
     c.querySelector('.tag').textContent=R.dup?t('sbDup',{n:SB_DUP[R.s[1]]}):t('sbNew');c.querySelector('b').textContent=L?R.s[3]:R.s[2];cards.appendChild(c)});
   let stage=0;const step=()=>{if(stage===0){stage=1;m.classList.add('torn');setTimeout(()=>{const b=m.querySelector('.pk-body');if(b)b.src='art/sb_pack_open.webp'},250);sfx.flourish(2);vib([20,30,20]);if(sfx.ok())noise({d:.25,v:.08,hp:2500});
       const cs=m.querySelector('.pk-coins span');let shown=progress.coins-coins;
