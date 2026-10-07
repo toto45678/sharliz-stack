@@ -365,7 +365,7 @@
   "bDino": "트리케라톱스",
   "bFactory": "메가 로봇",
   "bCrystal": "크리스탈 골렘",
-  "trTitle": "주간 토너먼트",
+  "trTitle": "테스터 리포트",
   "trRow": "테스터 리포트",
   "trOpen": "열기",
   "trOn": "테스터 모드 켜짐",
@@ -725,7 +725,8 @@
   "ch_shz": "Sharliz",
   "sbPage": "페이지 {a}/{b}",
   "stkVs": "Sharliz vs {b}",
-  "storyGot": "새 이야기 스티커!"
+  "storyGot": "새 이야기 스티커!",
+  "tourTitle": "주간 토너먼트"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

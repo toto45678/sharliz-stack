@@ -365,7 +365,7 @@
   "bDino": "三角龙",
   "bFactory": "超级机器人",
   "bCrystal": "水晶魔像",
-  "trTitle": "每周锦标赛",
+  "trTitle": "测试报告",
   "trRow": "测试报告",
   "trOpen": "打开",
   "trOn": "测试模式已开启",
@@ -725,7 +725,8 @@
   "ch_shz": "Sharliz",
   "sbPage": "第{a}/{b}页",
   "stkVs": "Sharliz对决{b}",
-  "storyGot": "新故事贴纸！"
+  "storyGot": "新故事贴纸！",
+  "tourTitle": "每周锦标赛"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

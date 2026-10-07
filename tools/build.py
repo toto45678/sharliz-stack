@@ -226,6 +226,9 @@ rep("const r=cv.getBoundingClientRect(),px=e.clientX-r.left,py=e.clientY-r.top;i
 rep("if(state==='paused'||state==='intro'){if(lv)lv.t0+=dt;","if(state==='paused'||state==='intro'){if(cv.style.transform)cv.style.transform='';if(lv)lv.t0+=dt;")
 rep("function win(){\n  state='win';","function win(){\n  cv.style.transform='';state='win';")
 rep("if(hearts<=0){state='over';renderBoosterBar();","if(hearts<=0){state='over';cv.style.transform='';renderBoosterBar();")
+# ---- bug hunt 3: the pre-level card still used the old goal / hazard formulas (level 5 said 14 floors, real goal 9; level 81+ listed the classic hazards)
+rep("const hz2=HZ_ORDER.slice(0,zi+1).map(h=>t('hz_'+h)).join(' · ');","const hz2=(()=>{const L0=level;level=lvN;try{return hzList()}finally{level=L0}})().map(h=>t('hz_'+h)).join(' · ');")
+rep("t('preBossTxt',{n:4+Math.floor(zi/2)}):t('floorsN',{n:6+2*zi+2*k})","t('preBossTxt',{n:4+Math.floor(etOf(zi)/2)}):t('floorsN',{n:6+Math.round(2*etOf(zi))+lvStep(k)})")
 # ---- inject module + css
 import glob as _g
 B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT,'art','b3d_*.json')))}

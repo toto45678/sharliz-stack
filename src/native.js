@@ -21,7 +21,7 @@
           .approved(tx=>{
             for(const p of tx.products){const sku=p.id;
               if(pending[sku]){const r=pending[sku];delete pending[sku];r(true)}          // IAP.buy grants it
-              else if(!CONSUMABLE(sku)&&!owned(sku)){try{IAP.grant(sku);popupToast(t('thanks'))}catch(e){}} // restore / delayed approval
+              else if(CONSUMABLE(sku)||!owned(sku)){try{IAP.grant(sku);popupToast(t('thanks'))}catch(e){}} // restore / delayed approval
             }
             tx.finish()})
           .productUpdated(p=>{const P=IAP.products[p.id];if(P&&p.pricing&&p.pricing.price)P.price=p.pricing.price});
@@ -35,6 +35,6 @@
     buy(sku){return init().then(ok=>{if(!ok)return false;const {store}=window.CdvPurchase,prod=store.get(sku,platform),offer=prod&&prod.getOffer();
       if(!offer){try{popupToast(t('storeOff'))}catch(e){}return false}
       return new Promise(res=>{pending[sku]=res;store.order(offer).then(err=>{if(err&&pending[sku]){delete pending[sku];res(false)}})})})},
-    restore(){return init().then(ok=>{if(ok)return window.CdvPurchase.store.restorePurchases()})}};
+    restore(){return init().then(ok=>{if(!ok)return false;return Promise.resolve(window.CdvPurchase.store.restorePurchases()).then(()=>true)})}};
   addEventListener('load',()=>setTimeout(init,1500));
 })();

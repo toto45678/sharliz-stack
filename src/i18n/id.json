@@ -365,7 +365,7 @@
   "bDino": "Triceratops",
   "bFactory": "Robot Raksasa",
   "bCrystal": "Golem Kristal",
-  "trTitle": "Turnamen Mingguan",
+  "trTitle": "Laporan penguji",
   "trRow": "Laporan penguji",
   "trOpen": "Buka",
   "trOn": "Mode penguji aktif",
@@ -725,7 +725,8 @@
   "ch_shz": "Sharliz",
   "sbPage": "Halaman {a}/{b}",
   "stkVs": "Sharliz vs {b}",
-  "storyGot": "Stiker kisah baru!"
+  "storyGot": "Stiker kisah baru!",
+  "tourTitle": "Turnamen Mingguan"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

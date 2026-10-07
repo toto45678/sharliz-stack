@@ -365,7 +365,7 @@
   "bDino": "トリケラトプス",
   "bFactory": "メガロボ",
   "bCrystal": "クリスタルゴーレム",
-  "trTitle": "ウィークリートーナメント",
+  "trTitle": "テスターレポート",
   "trRow": "テスターレポート",
   "trOpen": "開く",
   "trOn": "テスターモード オン",
@@ -725,7 +725,8 @@
   "ch_shz": "Sharliz",
   "sbPage": "ページ{a}/{b}",
   "stkVs": "Sharliz vs {b}",
-  "storyGot": "新しいストーリーシール!"
+  "storyGot": "新しいストーリーシール!",
+  "tourTitle": "ウィークリートーナメント"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",

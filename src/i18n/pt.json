@@ -365,7 +365,7 @@
   "bDino": "Tricerátops",
   "bFactory": "Mega Robô",
   "bCrystal": "Golem de Cristal",
-  "trTitle": "Torneio Semanal",
+  "trTitle": "Relatório de teste",
   "trRow": "Relatório de teste",
   "trOpen": "Abrir",
   "trOn": "Modo testador ligado",
@@ -725,7 +725,8 @@
   "ch_shz": "Sharliz",
   "sbPage": "Página {a}/{b}",
   "stkVs": "Sharliz vs {b}",
-  "storyGot": "Nova figurinha de história!"
+  "storyGot": "Nova figurinha de história!",
+  "tourTitle": "Torneio Semanal"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

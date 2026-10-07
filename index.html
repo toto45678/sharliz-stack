@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007163909"><\/script>')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007164037"><\/script>')})();</script>
 </head><body>
 <title>Sharliz Stack</title>
 <style>
@@ -471,7 +471,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 /* ===== v28 ===== */
 #lobFx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
 /* test-mode payment sheet */
-.pay-modal{position:absolute;inset:0;z-index:30;background:rgba(8,6,30,.62);display:flex;align-items:center;justify-content:center;padding:18px;animation:fadeIn .18s ease-out}
+.pay-modal{position:fixed;inset:0;z-index:60;background:rgba(8,6,30,.62);display:flex;align-items:center;justify-content:center;padding:18px;animation:fadeIn .18s ease-out}
 .pay-modal.out{opacity:0;transition:opacity .2s}
 .pay-card{position:relative;width:min(340px,100%);border-radius:22px;border:4px solid var(--ink);background:linear-gradient(180deg,#fdfbff,#e9e4ff);box-shadow:0 8px 0 var(--ink),0 18px 40px rgba(0,0,0,.45);padding:22px 16px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;animation:payIn .32s cubic-bezier(.2,1.6,.4,1)}
 .pay-tag{position:absolute;top:-15px;font-family:var(--gf);font-size:.9rem;letter-spacing:.06em;color:#fff;background:linear-gradient(180deg,var(--o1),var(--o2));border:3px solid var(--ink);border-radius:10px;padding:2px 12px 4px;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill}
@@ -3471,9 +3471,9 @@ function preLevel(lvN){
   pendingBoost={};const fails=(progress.fails||{})[lvN]||0,gift=fails>=2&&!(progress.gifted||{})[lvN];
   showOverlay(()=>({title:boss?t(BOSS_NAMES[z.id]):t('level')+' '+lvN,extra:card=>{
     const info=document.createElement('div');info.className='pre';
-    const hz2=HZ_ORDER.slice(0,zi+1).map(h=>t('hz_'+h)).join(' · ');
+    const hz2=(()=>{const L0=level;level=lvN;try{return hzList()}finally{level=L0}})().map(h=>t('hz_'+h)).join(' · ');
     info.innerHTML=`<div class="pre-row"><b></b><span></span></div><div class="pre-row"><b></b><span></span></div><div class="pre-ms"></div><div class="pre-boost"></div>`;
-    const rows=info.querySelectorAll('.pre-row');rows[0].querySelector('b').textContent=boss?t('preBoss'):t('preGoal');rows[0].querySelector('span').textContent=boss?t('preBossTxt',{n:4+Math.floor(zi/2)}):t('floorsN',{n:6+2*zi+2*k});
+    const rows=info.querySelectorAll('.pre-row');rows[0].querySelector('b').textContent=boss?t('preBoss'):t('preGoal');rows[0].querySelector('span').textContent=boss?t('preBossTxt',{n:4+Math.floor(etOf(zi)/2)}):t('floorsN',{n:6+Math.round(2*etOf(zi))+lvStep(k)});
     rows[1].querySelector('b').textContent=t('preHz');rows[1].querySelector('span').textContent=hz2;
     const ms=info.querySelector('.pre-ms'),have=progress.stars[lvN-1]||0;starMissions(lvN).forEach((m,i)=>{const d=document.createElement('div');d.className='pre-m'+(i<have?' ok':'');d.innerHTML=starSvg(i<have)+'<span></span>';d.querySelector('span').textContent=missionText(m);ms.appendChild(d)});
     const bb=info.querySelector('.pre-boost');
@@ -4570,14 +4570,14 @@ const IAP={products:{
     if(P.coins){wallet().coins+=P.coins;coinShower(P.coins)}
     if(P.pet){progress.owned=progress.owned||{};progress.owned.pet=progress.owned.pet||[];if(!progress.owned.pet.includes(P.pet))progress.owned.pet.push(P.pet);lookNow().pet=P.pet}
     saveProgress();updateWalletUI()}};
-function payModal(sku,label){return new Promise(res=>{const P=IAP.products[sku];sfx.click();
+function payModal(sku,label){return new Promise(res=>{if(document.querySelector('.pay-modal:not(.out)'))return res(false);const P=IAP.products[sku];sfx.click();
   const m=document.createElement('div');m.className='pay-modal';
   m.innerHTML=`<div class="pay-card"><div class="pay-tag"></div><b class="pay-t"></b><div class="pay-item"></div><div class="pay-price"></div><small class="pay-note"></small><button class="btn green pay-ok"><span></span></button><button class="btn pay-no"><span></span></button></div>`;
   m.querySelector('.pay-tag').textContent=t('payTest');m.querySelector('.pay-t').textContent=t('payTitle');m.querySelector('.pay-item').textContent=label;m.querySelector('.pay-price').textContent=P.price;
   m.querySelector('.pay-note').textContent=t('testMode');m.querySelector('.pay-ok span').textContent=t('payBtn',{p:P.price});m.querySelector('.pay-no span').textContent=t('cancel');
   const done=ok=>{m.classList.add('out');setTimeout(()=>m.remove(),220);res(ok)};
   m.querySelector('.pay-ok').onclick=()=>{sfx.flourish(2);vib([20,40,20]);done(true)};m.querySelector('.pay-no').onclick=()=>{sfx.click();done(false)};
-  m.onclick=e=>{if(e.target===m)done(false)};document.getElementById('app').appendChild(m)})}
+  m.onclick=e=>{if(e.target===m)done(false)};document.body.appendChild(m)})}
 function coinShower(n){const app=document.getElementById('app'),k=Math.min(26,8+Math.round(n/400));for(let i=0;i<k;i++){const c=document.createElement('img');c.src='art/ic_coin.webp';c.className='coin-rain';
     c.style.left=(10+Math.random()*80)+'%';c.style.animationDelay=(i*.045)+'s';c.style.setProperty('--dx',(Math.random()*80-40)+'px');app.appendChild(c);setTimeout(()=>c.remove(),1800+i*45)}
   for(let i=0;i<6;i++)setTimeout(()=>sfx.coin(i),i*90);popupToast('+'+n)}
@@ -4592,7 +4592,7 @@ shopBody=function(card){const tab=shopTab;if(tab==='coins')shopTab='boost';_shop
     r.innerHTML=(P.tag?`<i class="pk-tag"></i>`:'')+`<span class="pk-pile">${'<img src="art/ic_coin.webp" alt="">'.repeat(i+2)}</span><b>${P.coins.toLocaleString()}</b><em>${P.price}</em>`;
     if(P.tag)r.querySelector('.pk-tag').textContent=t(P.tag);
     r.onclick=()=>IAP.buy(sku,P.coins.toLocaleString()+' '+t('coins')).then(ok=>{if(ok&&rerenderOverlay)rerenderOverlay()});list.appendChild(r)});
-  const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');list.appendChild(n)};
+  const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');if(!IAP.live())list.appendChild(n)};
 
 /* ---------- buddies: every buddy helps, three premium ones ---------- */
 Object.assign(WPET,{cyborg:{p:0,real:'buddy_cyborg',n:[T_('Cyborg Sharliz'),'שארליז סייבורג']},unicorn:{p:0,real:'buddy_unicorn',n:[T_('Unicorn'),'חד־קרן']},dragon:{p:0,real:'buddy_dragon',n:[T_('Baby dragon'),'דרקונצ׳יק']}});
@@ -5241,8 +5241,10 @@ function openDailyGift(){showOverlay(()=>{const s0=dlState();return {title:t('dl
   actions:s0.claimed?[{label:t('close'),primary:true,fn:hideOverlay}]:[{label:t('dlClaim'),primary:true,fn:()=>{dlClaim();rerenderOverlay();setTimeout(()=>{if(document.querySelector('.dl-grid'))hideOverlay()},1300)}}]}},true)}
 // show it by itself once per day, the first time the lobby is idle (not on the very first launch, before any level)
 let dlShownOn=null;
+// full-screen layers that sit over the lobby (arcade, tournament, event hub, pass, nest, trophies): no surprise pop-ups on top of them
+function lobbyLayerOpen(){return ['arcade','tour','evhub','passScr','nestScr','achScr'].some(id=>{const e=document.getElementById(id);return e&&!e.hidden})}
 function dlMaybe(){const td=dlDate(0);if(dlShownOn===td||dlState().claimed||progress.unlocked<2)return;
-  setTimeout(()=>{if(dlShownOn===td||state!=='title'||W3.on||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;dlShownOn=td;openDailyGift()},700)}
+  setTimeout(()=>{if(dlShownOn===td||state!=='title'||W3.on||lobbyLayerOpen()||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;dlShownOn=td;openDailyGift()},700)}
 {const _ul=updateLobby;updateLobby=function(){_ul();dlMaybe()}}
 dlMaybe();   // modules load after the boot toTitle(), so check once now too
 
@@ -5358,7 +5360,7 @@ function starterCard(onBuy){const P=IAP.products.starter,d=document.createElemen
 {const _sb=shopBody;shopBody=function(card){_sb(card);if(shopTab!=='coins'||starterOwned())return;const list=card.querySelector('.shop-list.packs');if(list)list.prepend(starterCard(()=>rerenderOverlay&&rerenderOverlay()))}}
 
 function openStarter(){sfx.click();showOverlay(()=>({title:t('stTitle'),extra:card=>{(card.closest('.card')||card).classList.add('st-card');
-    if(starterOwned())return;card.appendChild(starterCard(()=>{hideOverlay();if(W3.on)renderWardrobe()}));const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');card.appendChild(n)},
+    if(starterOwned())return;card.appendChild(starterCard(()=>{hideOverlay();if(W3.on)renderWardrobe()}));const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');if(!IAP.live())card.appendChild(n)},
   actions:[{label:t(starterOwned()?'close':'stLater'),fn:hideOverlay}]}),true)}
 
 // lobby: a glowing "offer" button under Missions, there until the pack is bought
@@ -5370,7 +5372,7 @@ function stBtnSync(){stBtn.hidden=starterOwned()||progress.unlocked<2;stBtn.quer
 let stWon=false;
 {const _w=win;win=function(){stWon=true;return _w.apply(this,arguments)}}
 function stMaybe(){if(!stWon||progress.stOffer||starterOwned()||progress.unlocked<6||(typeof dlState==='function'&&!dlState().claimed))return;
-  setTimeout(()=>{if(progress.stOffer||state!=='title'||W3.on||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;
+  setTimeout(()=>{if(progress.stOffer||state!=='title'||W3.on||lobbyLayerOpen()||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;
     progress.stOffer=Date.now();saveProgress();openStarter()},1200)}
 {const _ul=updateLobby;updateLobby=function(){_ul();stBtnSync();stMaybe()}}
 {const _g2=IAP.grant;IAP.grant=function(sku){_g2(sku);stBtnSync()}}
@@ -5383,7 +5385,7 @@ const PRIVACY_URL='https://toto45678.github.io/sharliz-stack/privacy.html';
 {const _sr=settingsRows;settingsRows=function(card){_sr(card);
   if(!(window.SharlizPay&&window.SharlizPay.native))return;
   const row=(label,btnText,fn)=>{const r=document.createElement('div');r.className='opt-row';const l=document.createElement('span');l.textContent=label;const b=document.createElement('button');b.className='buy';b.textContent=btnText;b.onclick=fn;r.appendChild(l);r.appendChild(b);card.appendChild(r)};
-  row(t('restoreBuys'),t('restoreBtn'),()=>{sfx.click();Promise.resolve(window.SharlizPay.restore()).then(()=>popupToast(t('restored'))).catch(()=>popupToast(t('storeOff')))});
+  row(t('restoreBuys'),t('restoreBtn'),()=>{sfx.click();Promise.resolve(window.SharlizPay.restore()).then(ok=>popupToast(ok===false?t('storeOff'):t('restored'))).catch(()=>popupToast(t('storeOff')))});
   row(t('privacy'),t('open'),()=>{sfx.click();window.open(PRIVACY_URL,'_blank')})}}
 /* credits screen (Settings → Credits): attribution for Meshy CC BY 4.0 boss models, three.js (MIT), OFL fonts, native libs */
 Object.assign(I18N.en,{credits:'Credits',creditsTitle:'Credits'});
@@ -6350,7 +6352,7 @@ function gearSlow(){const L=lookNow(),h=progress.skin||'none',own=Object.assign(
   return Math.max(GEAR_SLOW_MIN,Math.pow(GEAR_SLOW,poweredCount(own,hatNow()?h:null)))}
 const petPerk=()=>mode!=='duo'&&typeof PERKS!=='undefined'&&wOwned('pet',petNow())?PERKS[petNow()]:null;
 {const _hk=hatK;hatK=function(k,d=1){let v=_hk(k,d);if(mode==='duo')return v;const pk=petPerk(),C=pk&&PET_COST[pk];
-  if(k==='hearts'){if(pk==='heart')v+=1;if(astroOn()&&level>1)v-=1;return Math.min(FAIR_MAX_HEARTS,v)}
+  if(k==='hearts'){if(pk==='heart')v+=1;if(astroOn()&&level>1&&!astroSkip)v-=1;return Math.min(FAIR_MAX_HEARTS,v)}
   if(C&&C[k]!==undefined)v*=C[k];
   if(k==='spd')v*=gearSlow();
   return v}}
@@ -6384,7 +6386,7 @@ ICONS.chest=IMGTAG('bn_chest_gold','ico');
 const BN_TIME=30,BN_CH=[{f:8,k:'bronze',c:50,b:0},{f:16,k:'silver',c:100,b:1},{f:24,k:'gold',c:200,b:2}];
 let BN=null;
 const bnZi=()=>Math.max(0,ZONES.findIndex(z=>z.sid==='clouds'));
-const bnSpeed=()=>(1.5+Math.min(tower.length-1,24)*.03)*(boost.slow>0?.6:1)*(fever>0?.8:1)*easyK();
+const bnSpeed=()=>(1.5+Math.min(tower.length-1,24)*.03)*(boost.slow>0?.6:1)*(fever>0?.8:1)*easyK()*hatSpd();
 // the golden button on the boss win card
 function bnAct(){if(mode!=='levels'||!isBoss()||level>=TOTAL)return[];const from=level;document.documentElement.style.setProperty('--bn-new',JSON.stringify(t('bnNew')));
   return[{label:t('bnBtn'),icon:'chest',primary:true,color:'bonus',fn:()=>go(()=>startBonus(from))}]}
@@ -6553,7 +6555,7 @@ ARCG.mem={dur:60,star:1,how:'arcHowMem',hint:'gd_mem',coins:s=>Math.round(s*.5),
       b.onclick=()=>{if(!G.run||G.lock||b.classList.contains('up'))return;b.classList.add('up');if(sfx.ok())tone({f:640,d:.05,type:'triangle',v:.04});G.open.push(b);
         if(G.open.length===2){G.moves++;const [x,y]=G.open;G.open=[];
           if(x.dataset.k===y.dataset.k){x.classList.add('ok');y.classList.add('ok');G.pairs++;const r=y.getBoundingClientRect(),s=G.stage.getBoundingClientRect();arcAdd(G,10,r.left-s.left+r.width/2,r.top-s.top);sfx.perfect(Math.min(4,1+G.pairs%4));
-            if(G.pairs===8){const bonus=Math.ceil(G.t)*2;setTimeout(()=>{arcAdd(G,bonus,s.width/2,s.height*.4,'gem');arcEnd(G)},500)}}
+            if(G.pairs===8){const bonus=Math.ceil(G.t)*2;G.run=false;setTimeout(()=>{arcAdd(G,bonus,s.width/2,s.height*.4,'gem');arcEnd(G)},500)}}
           else{G.lock=true;x.classList.add('no');y.classList.add('no');setTimeout(()=>{x.classList.remove('up','no');y.classList.remove('up','no');G.lock=false},750)}}};grid.appendChild(b)})},
   tick(G){G.sub={ic:'👆',txt:t('arcMoves',{n:G.moves}),on:true}}};
 /* ---------- game 3: bonk the monster (DOM) ---------- */
@@ -6600,8 +6602,9 @@ Object.assign(I18N.en,{sk_t_bats:'Bats'});Object.assign(I18N.he,{sk_t_bats:'עט
 const evItem=(c,id)=>{for(const E of EVENTS)for(const it of E.items)if(it.c===c&&it.id===id)return [E,it];return null};
 // dates
 function evDate(md,yr){return new Date(yr,md[0]-1,md[1])}
-function evWindow(E,now=new Date()){let y=now.getFullYear();let a=evDate(E.from,y),b=evDate(E.to,y);b.setHours(23,59,59);if(b<a)b.setFullYear(y+1);
-  if(now>b){a.setFullYear(y+1);b.setFullYear(b.getFullYear()+1)}return {a,b}}
+// the first window (starting last year, this year or next) that has not ended yet, so Dec 27 – Jan 2 is live on Jan 1 too
+function evWindow(E,now=new Date()){const y0=now.getFullYear();for(const y of[y0-1,y0,y0+1]){const a=evDate(E.from,y),b=evDate(E.to,y);b.setHours(23,59,59);if(b<a)b.setFullYear(y+1);if(now<=b)return {a,b}}
+  const a=evDate(E.from,y0+1),b=evDate(E.to,y0+1);b.setHours(23,59,59);if(b<a)b.setFullYear(y0+2);return {a,b}}
 function evNow(){const now=new Date();let best=null;for(const E of EVENTS){const w=evWindow(E,now);if(now>=w.a&&now<=w.b)return {E,live:true,w};if(!best||w.a<best.w.a)best={E,live:false,w}}
   return typeof DEV_OPEN!=='undefined'&&DEV_OPEN&&best?best:null}
 const evDays=ms=>Math.max(0,Math.ceil(ms/864e5));
@@ -6654,10 +6657,11 @@ function evWear(it){try{if(it.c==='trail')progress.tskin=it.id;else if(it.c==='h
 {const _ci=csInfo;csInfo=function(c,id){const I=_ci.apply(this,arguments);const e=evItem(c==='trail'?'trail':c,id);if(e&&!evOwned(e[1])){I.gate=t('evOnly',{n:t('ev_'+e[0].id)});I.rar='leg'}return I}}
 /* ---------- playing an event stage (mode 'event') ---------- */
 let EVP=null;
-function evStart(i){const N=evNow();if(!N)return;if(EVEL)EVEL.hidden=true;const E=N.E,zi=evZi(E);
-  EVP={E,i,from:level,perf:0};mode='event';modeZi=zi;go(()=>{startLevel(zi*LPZ+1+i);evDeco(true)})}
+// direct=true when already inside go() (pause → restart): go() ignores nested calls while busy
+function evStart(i,direct){if(!direct&&busy)return;const N=evNow();if(!N){if(EVP)evExit(false);return}if(EVEL)EVEL.hidden=true;const E=N.E,zi=evZi(E);
+  EVP={E,i,from:EVP?EVP.from:level,perf:0};mode='event';modeZi=zi;score=0;const run=()=>{startLevel(zi*LPZ+1+i);evDeco(true)};if(direct)run();else go(run)}
 function evStageCandy(won){const boss=EVP.i===9,D=evData(EVP.E.id),first=won&&EVP.i>=D.done;const base=won?(boss?25:8):2,perf=Math.min(12,lv.perfect||0);return {base,perf,first:first?10:0,total:base+perf+(first?10:0)}}
-function evFinish(won){const E=EVP.E,D=evData(E.id),R=evStageCandy(won);D.cur+=R.total;if(won&&EVP.i>=D.done)D.done=Math.min(10,EVP.i+1);saveProgress();
+function evFinish(won){if(evCnt)evCnt.hidden=true;const E=EVP.E,D=evData(E.id),R=evStageCandy(won);D.cur+=R.total;if(won&&EVP.i>=D.done)D.done=Math.min(10,EVP.i+1);saveProgress();
   const boss=EVP.i===9;
   showOverlay(()=>({title:won?(boss?t('evBossClear'):t('evClear')):t('whoops'),big:true,
     extra:card=>{card.classList.add('ev-res');{const hi=document.createElement('img');hi.className='ev-hero';hi.src=won?(boss?'art/ev_boss_'+E.id+'.webp':'art/ev_icon_'+E.id+'.webp'):'art/ev_node_off.webp';hi.alt='';card.appendChild(hi)}const rows=document.createElement('div');rows.className='ev-rows';
@@ -6676,13 +6680,13 @@ function evExit(toHub){evDeco(false);const L=EVP?EVP.from:level;EVP=null;mode='l
   sfx.flourish(3);for(let i=0;i<50;i++)particles.push({x:rnd(0,W),y:camY+rnd(-40,H*.25),vx:rnd(-60,60),vy:rnd(40,200),life:2,c:pick(['#ff7a1a','#8a4dff','#ffd23f','#2a2a2a']),sz:rnd(5,9),rot:rnd(0,6),vr:rnd(-8,8),conf:true});
   setTimeout(()=>{if(mode==='event'&&EVP)evFinish(true)},1300)}}
 {const _mo=modeOver;modeOver=function(won){if(mode!=='event'||!EVP)return _mo.apply(this,arguments);evFinish(false)}}
-{const _sm=startMode;startMode=function(m){if(m==='event'&&EVP){evStart(EVP.i);return}return _sm.apply(this,arguments)}}
+{const _sm=startMode;startMode=function(m){if(m==='event'&&EVP){evStart(EVP.i,true);return}return _sm.apply(this,arguments)}}
 {const _t=toTitle;toTitle=function(){if(mode==='event'&&!EVEL_KEEP){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _t.apply(this,arguments)}}
 let EVEL_KEEP=false;
 {const _o=openMap;openMap=function(){if(mode==='event'){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _o.apply(this,arguments)}}
 // candy pops on PERFECT landings
 let evCnt=null;
-function evCounter(on){if(!evCnt){evCnt=document.createElement('div');evCnt.id='evCnt';evCnt.innerHTML='<img alt=""><b>0</b>';document.body.appendChild(evCnt)}evCnt.hidden=!on;if(on&&EVP){evCnt.querySelector('img').src='art/ev_'+EVP.E.cur+'.webp';evCnt.querySelector('b').textContent=Math.min(12,lv.perfect||0)}}
+function evCounter(on){if(!evCnt){evCnt=document.createElement('div');evCnt.id='evCnt';evCnt.innerHTML='<img alt=""><b>0</b>';(document.getElementById('hud')||document.body).appendChild(evCnt)}evCnt.hidden=!on;if(on&&EVP){evCnt.querySelector('img').src='art/ev_'+EVP.E.cur+'.webp';evCnt.querySelector('b').textContent=Math.min(12,lv.perfect||0)}}
 {const _p=popup;popup=function(txt,x,y,c,key,sub){const r=_p.apply(this,arguments);if(mode==='event'&&EVP&&(key==='perfect'||key==='wow')){evCounter(true);const d=document.createElement('div');d.className='ev-pop';d.innerHTML=`<img src="art/ev_${EVP.E.cur}.webp" alt="">+1`;const x0=Math.round(clamp(x+S*1.2,30,W-30)),y0=Math.round(sy(y));d.style.left=x0+'px';d.style.top=y0+'px';document.body.appendChild(d);
   const tr=evCnt.getBoundingClientRect(),dx=tr.left+tr.width*.3-x0,dy=tr.top+tr.height/2-y0;
   try{d.animate([{transform:'translate(-50%,-50%) scale(.6)',opacity:0},{transform:'translate(-50%,-80%) scale(1.15)',opacity:1,offset:.25},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.55)`,opacity:.9}],{duration:750,easing:'cubic-bezier(.5,0,.7,1)'}).onfinish=()=>{d.remove();evCounter(true);evCnt.classList.remove('pulse');void evCnt.offsetWidth;evCnt.classList.add('pulse')}}catch(e){setTimeout(()=>d.remove(),800)}}return r}}
@@ -6719,11 +6723,11 @@ function evDeco(on){EVD=on&&EVP?{k:EVP.E.deco,bats:Array.from({length:5},()=>({x
    Same challenge for everyone each week (seeded by the week number): one world + one twist (wind / fast / night / gold rush).
    3 hearts, build as high as you can, unlimited tries, best of the week counts. Medals at 10 / 20 / 35 floors pay coins + boosters
    once per week. No server yet → "challenge a friend" shares your best to WhatsApp. Design: ChatGPT (design/tournament/). */
-Object.assign(I18N.en,{trTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
+Object.assign(I18N.en,{tourTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
   trNew:'New record!',trMedal:'Medal unlocked!',trNext:'{n} more to {m}',trAllMedals:'All medals this week!',trTwist:'This week',
   tw_wind:'Strong wind',twd_wind:'The wind pushes twice as hard',tw_fast:'Speed week',twd_fast:'Everything swings faster',tw_night:'Night tower',twd_night:'Build in the dark',tw_gold:'Golden rush',twd_gold:'Lots of golden Sharliz',
   md_b:'Bronze',md_s:'Silver',md_g:'Gold',trShare:'I built {n} floors in the Sharliz weekly tournament! Can you beat me? 🏆',trModes:'Weekly',trGot:'Collected',trClose:'So close to your record!',trNice:'Nice run!',trPrizes:'Tournament prizes',trReached:'You reached the {m} prize!',trHow:'3 hearts · as high as you can'});
-Object.assign(I18N.he,{trTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
+Object.assign(I18N.he,{tourTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
   trNew:'שיא חדש!',trMedal:'מדליה חדשה!',trNext:'עוד {n} קומות ל{m}',trAllMedals:'כל המדליות השבוע!',trTwist:'השבוע',
   tw_wind:'רוח חזקה',twd_wind:'הרוח דוחפת פי שניים',tw_fast:'שבוע מהיר',twd_fast:'הכל מתנדנד מהר יותר',tw_night:'מגדל לילה',twd_night:'בונים בחושך',tw_gold:'בהלת זהב',twd_gold:'הרבה שארליז מוזהבות',
   md_b:'ארד',md_s:'כסף',md_g:'זהב',trShare:'בניתי מגדל של {n} קומות בטורניר השבועי של שארליז! תצליחו לעבור אותי? 🏆',trModes:'שבועי',trGot:'נאסף',trClose:'כמעט שיא!',trNice:'סיבוב יפה!',trPrizes:'פרסי הטורניר',trReached:'הגעתם לפרס ה{m}!',trHow:'3 לבבות · כמה שיותר גבוה'});
@@ -6747,7 +6751,7 @@ function trScreen(){const N=trNow(),D=trData(),r=trRoot(),z=ZONES[N.zi],nx=TR_ME
     <div class="tr-best"><span></span><b></b></div><div class="tr-prizes"><h4></h4>${trMedalRow(D.best)}<p class="tr-nx"></p></div></div>
     <div class="tr-acts"><button class="btn primary tr-play"><svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span></button><button class="btn green tr-share"><span></span></button></div>`;
   r.querySelector('.tr-x').innerHTML=XSVG;r.querySelector('.tr-x').onclick=()=>{sfx.click();closeTour()};
-  r.querySelector('.tr-title b').textContent=t('trTitle');r.querySelector('.tr-title small').textContent=trDays()<=1?t('trLeft1'):t('trLeft',{n:trDays()});r.querySelector('.coin-pill span').textContent=progress.coins;
+  r.querySelector('.tr-title b').textContent=t('tourTitle');r.querySelector('.tr-title small').textContent=trDays()<=1?t('trLeft1'):t('trLeft',{n:trDays()});r.querySelector('.coin-pill span').textContent=progress.coins;
   const th=r.querySelector('.tr-twist .w');th.src='art/'+(typeof artAlias==='function'?artAlias('w3b_'+z.id):'w3b_'+z.id)+'.webp';th.onerror=()=>{th.src='art/w3b_'+(z.base||z.id)+'.webp'};
   r.querySelector('.tr-twist small').textContent=t('trTwist')+' · '+t(z.key);r.querySelector('.tr-twist b').textContent=t('tw_'+N.tw);r.querySelector('.tr-twist p').textContent=t('twd_'+N.tw)+' · '+t('trHow');
   r.querySelector('.tr-best span').textContent=t('trBest');r.querySelector('.tr-best b').textContent=t('trFloorsN',{n:D.best});
@@ -6759,14 +6763,14 @@ function trShare(n){const url=location.origin+location.pathname,txt=t('trShare',
   if(navigator.share){navigator.share({text:txt,url}).catch(()=>{});return}
   try{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')}catch(e){}}
 /* ---------- playing (mode 'tour') ---------- */
-function trStart(){const N=trNow(),D=trData();D.tries++;saveProgress();if(TREL)TREL.hidden=true;
-  TR={N,from:level,floors:0,newMd:[]};mode='tour';modeZi=N.zi;level=N.zi*LPZ+4;score=0;endless={floors:0,zoneAt:1e9,goal:0};duo=null;
-  go(()=>{startLevel(level);hearts=3;trHud(true);updateHud();
-    const tb=document.getElementById('toast');tb.querySelector('small').textContent=t('trTitle');tb.querySelector('strong').textContent=t('tw_'+N.tw);setTimeout(()=>{if(mode==='tour'&&typeof toast==='function')toast(t('twd_'+N.tw))},900)})}
+function trStart(direct){if(!direct&&busy)return;const N=trNow(),D=trData();D.tries++;saveProgress();if(TREL)TREL.hidden=true;
+  TR={N,from:TR?TR.from:level,floors:0,newMd:[]};mode='tour';modeZi=N.zi;level=N.zi*LPZ+4;score=0;endless={floors:0,zoneAt:1e9,goal:0};duo=null;
+  const run=()=>{startLevel(level);hearts=3;trHud(true);updateHud();
+    const tb=document.getElementById('toast');tb.querySelector('small').textContent=t('tourTitle');tb.querySelector('strong').textContent=t('tw_'+N.tw);setTimeout(()=>{if(mode==='tour'&&typeof toast==='function')toast(t('twd_'+N.tw))},900)};if(direct)run();else go(run)}
 let trBadge=null;
-function trHud(on){if(!on&&trG)trG.hidden=true;if(!trBadge){trBadge=document.createElement('div');trBadge.id='trBadge';trBadge.innerHTML='<img alt=""><b></b>';document.body.appendChild(trBadge)}trBadge.hidden=!on;if(on&&TR){trBadge.querySelector('img').src='art/tr_tw_'+TR.N.tw+'.webp';trBadge.querySelector('b').textContent=t('tw_'+TR.N.tw)}}
+function trHud(on){if(!on&&trG)trG.hidden=true;if(!trBadge){trBadge=document.createElement('div');trBadge.id='trBadge';trBadge.innerHTML='<img alt=""><b></b>';(document.getElementById('hud')||document.body).appendChild(trBadge)}trBadge.hidden=!on;if(on&&TR){trBadge.querySelector('img').src='art/tr_tw_'+TR.N.tw+'.webp';trBadge.querySelector('b').textContent=t('tw_'+TR.N.tw)}}
 let trG=null;
-function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge';trG.innerHTML=`<img class="top" src="art/tr_trophy.webp" alt=""><div class="tube"><i></i></div>${TR_MEDALS.map(m=>`<div class="mk m-${m.k}" style="bottom:${m.f/35*100}%"><img src="art/tr_medal_${m.k}.webp" alt=""><b>${m.f}</b></div>`).join('')}<em></em>`;document.body.appendChild(trG)}trG.hidden=!on}
+function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge';trG.innerHTML=`<img class="top" src="art/tr_trophy.webp" alt=""><div class="tube"><i></i></div>${TR_MEDALS.map(m=>`<div class="mk m-${m.k}" style="bottom:${m.f/35*100}%"><img src="art/tr_medal_${m.k}.webp" alt=""><b>${m.f}</b></div>`).join('')}<em></em>`;(document.getElementById('hud')||document.body).appendChild(trG)}trG.hidden=!on}
 {const _u=updateHud;updateHud=function(){_u.apply(this,arguments);if(mode!=='tour'||!TR){if(trG&&!trG.hidden)trG.hidden=true;return}trGauge(true);document.getElementById('gauge').hidden=true;const fl=Math.max(0,tower.length-1);
   trG.querySelector('.tube i').style.height=Math.min(1,fl/35)*100+'%';trG.querySelector('em').textContent=fl+'/35';{const nk=(TR_MEDALS.find(m=>fl<m.f)||{}).k;TR_MEDALS.forEach(m=>{const e=trG.querySelector('.m-'+m.k);e.classList.toggle('on',fl>=m.f);e.classList.toggle('nx',m.k===nk)})}}}
 {const _ml=modeLanded;modeLanded=function(){if(mode!=='tour'||!TR)return _ml.apply(this,arguments);const fl=tower.length-1;TR.floors=Math.max(TR.floors,fl);endless.floors=TR.floors;
@@ -6776,7 +6780,7 @@ function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge'
 {const _hk=hatK;hatK=function(k,d=1){const v=_hk.apply(this,arguments);if(mode!=='tour'||!TR)return v;if(TR.N.tw==='fast'&&k==='spd')return v*1.25;if(TR.N.tw==='wind'&&k==='wind')return v*2;return v}}
 {const _ss=spawnSwinger;spawnSwinger=function(){_ss.apply(this,arguments);if(mode==='tour'&&TR&&TR.N.tw==='gold'&&swinger&&!swinger.gold&&!swinger.kind&&tower.length>=2&&Math.random()<.22){swinger.color=GOLDC;swinger.gold=true}}}
 {const _mo=modeOver;modeOver=function(won){if(mode!=='tour'||!TR)return _mo.apply(this,arguments);trEnd()}}
-{const _sm=startMode;startMode=function(m){if(m==='tour'){trStart();return}return _sm.apply(this,arguments)}}
+{const _sm=startMode;startMode=function(m){if(m==='tour'){trStart(true);return}return _sm.apply(this,arguments)}}
 function trEnd(){const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.best=fl;const won=[];
   for(const m of TR_MEDALS){if(D.best>=m.f&&!D.got[m.k]){D.got[m.k]=1;wallet();progress.coins+=m.c;for(let i=0;i<m.bo;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}if(m.pk&&typeof sbGive==='function')sbGive(m.pk);won.push(m)}}
   saveProgress();trHud(false);const nx=TR_MEDALS.find(m=>D.best<m.f);
@@ -6795,7 +6799,7 @@ function trExit(){const L=TR?TR.from:level;TR=null;mode='levels';modeZi=null;lev
 {const _hu=showHud;showHud=function(on){const r=_hu.apply(this,arguments);if(!on)trHud(false);return r}}
 /* entry points: top of the Modes card + a badge on the Modes button */
 {const _om=openModes;openModes=function(){_om.apply(this,arguments);const box=document.querySelector('#card .modes');if(!box)return;const D=trData(),N=trNow();
-  const b=document.createElement('button');b.className='mode-btn m-tour';b.innerHTML=`<img src="art/tr_trophy.webp" alt=""><span class="mt"><b></b><small></small></span>`;b.querySelector('b').textContent=t('trTitle');
+  const b=document.createElement('button');b.className='mode-btn m-tour';b.innerHTML=`<img src="art/tr_trophy.webp" alt=""><span class="mt"><b></b><small></small></span>`;b.querySelector('b').textContent=t('tourTitle');
   b.querySelector('small').textContent=t('tw_'+N.tw)+' · '+t('trBest')+' '+D.best;b.onclick=openTour;box.prepend(b)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const mb=document.getElementById('modesTitleBtn');if(mb){let bd=mb.querySelector('.tr-bd');if(!bd){bd=document.createElement('i');bd.className='badge tr-bd';bd.innerHTML='<img src="art/tr_trophy.webp" alt="">';mb.appendChild(bd)}const D=trData();bd.hidden=!progress.tut;bd.classList.toggle('done',!!D.got.g);bd.innerHTML=D.got.g?'✓':'<img src="art/tr_trophy.webp" alt="">'}return r}}
 
@@ -6833,24 +6837,27 @@ function addXP(n){if(!n||mode==='duo')return;const before=xpLevel(progress.xp||0
 function xpStrip(Q){const body=document.querySelector('#card .card-body');if(!body)return;const d=document.createElement('div');d.className='xp-strip';
   d.innerHTML=`<span class="lv"><i></i></span><div class="bar"><i></i></div><b></b>`;d.querySelector('.lv i').textContent=Q.before.lv;d.querySelector('b').textContent=t('xpGain',{n:Q.n});body.appendChild(d);
   const fill=d.querySelector('.bar i'),from=Q.before.into/Q.before.need;fill.style.width=from*100+'%';
-  setTimeout(()=>{if(Q.after.lv>Q.before.lv){fill.style.width='100%';setTimeout(()=>{d.querySelector('.lv i').textContent=Q.after.lv;d.classList.add('up');fill.style.transition='none';fill.style.width='0%';void fill.offsetWidth;fill.style.transition='';fill.style.width=Q.after.into/Q.after.need*100+'%';setTimeout(()=>lvUpPop(Q.after.lv),380)},650)}
-    else fill.style.width=Q.after.into/Q.after.need*100+'%'},500)}
+  setTimeout(()=>{if(Q.after.lv>Q.before.lv){fill.style.width='100%';setTimeout(()=>{d.querySelector('.lv i').textContent=Q.after.lv;d.classList.add('up');fill.style.transition='none';fill.style.width='0%';void fill.offsetWidth;fill.style.transition='';fill.style.width=Q.after.into/Q.after.need*100+'%';setTimeout(()=>{if(d.isConnected)lvUpPop(Q.after.lv)},380)},650)}
+    else{fill.style.width=Q.after.into/Q.after.need*100+'%';if(progress.lvRew)setTimeout(()=>{if(d.isConnected)lvUpLater()},700)}},500)}
+// a level-up that had no result card to show on (trophy room, album chest, bonus, arcade, or the player left the card early) pays out here
+function lvUpLater(){if(progress.lvRew&&!document.querySelector('.lvup'))lvUpPop(xpLevel(progress.xp||0).lv)}
+function xpDrop(){XPQ=null}
 function lvUpPop(lv){if(!progress.lvRew)return;const n=progress.lvRew;progress.lvRew=0;const coins=50*n;wallet().coins+=coins;saveProgress();updateWalletUI();sfx.flourish(3);vib([30,40,30]);
   const m=document.createElement('div');m.className='lvup';m.innerHTML=`<div class="lvup-c"><div class="rays"></div><div class="badge"><img src="art/xp_star.webp" alt=""><b>${lv}</b></div><span class="tag"></span><h3></h3><p></p><div class="lv-rw"><img src="art/ps_coins.webp" alt=""><span><b>+${coins}</b><small></small></span></div><button class="btn primary"><span></span></button></div>`;
   m.querySelector('.tag').textContent=t('lvUpTag');m.querySelector('h3').textContent=t('lvUp',{n:lv});m.querySelector('p').textContent=t('lvSub');m.querySelector('.lv-rw small').textContent=t('psCoins');m.querySelector('.btn span').textContent=t('lvOk');m.querySelector('.btn').onclick=()=>{sfx.click();m.remove()};document.body.appendChild(m)}
 /* ---------- XP sources ---------- */
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if(mode==='levels'&&was!=='win'&&state==='win')addXP(20+5*(lv.starsNow||0)+(isBoss()?40:0));return r}}
-if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){addXP(10);return _b.apply(this,arguments)}}
-if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over;const r=_a.apply(this,arguments);if(!was)addXP(5);return r}}
+if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){if(BN&&!BN.paid){addXP(10);xpDrop()}return _b.apply(this,arguments)}}
+if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over,paid=!was&&arcLeft(G.id)>0;const r=_a.apply(this,arguments);if(paid){addXP(5);xpDrop();popupToast(t('xpGain',{n:5}))}return r}}
 if(typeof evFinish==='function'){const _e=evFinish;evFinish=function(won){if(won)addXP(EVP&&EVP.i===9?40:15);return _e.apply(this,arguments)}}
-if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));return r}}
+if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));if(XPQ&&document.querySelector('#card .card-body')){const Q=XPQ;XPQ=null;setTimeout(()=>xpStrip(Q),60)}return r}}
 /* ---------- lobby: level badge on the avatar + Pass button ---------- */
 function lobbyXP(){const pr=document.querySelector('#title .profile');if(!pr)return;let b=pr.querySelector('.av-lv');if(!b){const bar=document.createElement('span');bar.className='pf-xp';bar.innerHTML='<i class="av-lv"></i><span class="tr"><i></i></span>';pr.querySelector('.pf').appendChild(bar);b=bar.querySelector('.av-lv')}
   const L=xpLevel(progress.xp||0);b.textContent=L.lv;pr.querySelector('.pf-xp .tr i').style.width=L.into/L.need*100+'%';
   const pb=document.getElementById('lobPass');if(pb){const P=psData(),n=psReady();pb.querySelector('em span').textContent=t('psLeft',{n:psDays()});pb.querySelector('.dot').hidden=!n;const ev=document.getElementById('lobEvent');pb.parentNode.classList.toggle('two',!!ev&&!ev.hidden)}}
 {const sec=document.getElementById('title'),logo=sec&&sec.querySelector('.logo');if(sec){const row=document.createElement('div');row.className='lob-pills';const b=document.createElement('button');b.id='lobPass';b.className='pass-btn';b.innerHTML='<img src="art/pass_icon.webp" alt=""><span><b></b><em><i>⏱</i><span></span></em></span><i class="dot" hidden>!</i>';b.querySelector('b').textContent=t('psTitle');b.onclick=()=>openPass();
   row.appendChild(b);const ev=document.getElementById('lobEvent');if(ev)row.appendChild(ev);if(logo)logo.after(row);else sec.appendChild(row)}}
-{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{lobbyXP();const b=document.getElementById('lobPass');if(b){b.hidden=!progress.tut;b.querySelector('b').textContent=t('psTitle')}}catch(e){}return r}}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{lobbyXP();if(state==='title')setTimeout(()=>{if(state==='title')lvUpLater()},400);const b=document.getElementById('lobPass');if(b){b.hidden=!progress.tut;b.querySelector('b').textContent=t('psTitle')}}catch(e){}return r}}
 /* ---------- Pass screen ---------- */
 let PSEL=null;
 function openPass(){audio();sfx.click();if(!PSEL){PSEL=document.createElement('div');PSEL.id='passScr';document.body.appendChild(PSEL)}PSEL.hidden=false;psRender(true)}
@@ -6985,7 +6992,7 @@ function eggWin(){const N=nest();if(N.cur&&!eggReady())N.cur.w=Math.min(EGG[N.cu
 if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),had=!!(D.got&&D.got.g),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const D2=trData();
   progress.stat=progress.stat||{};progress.stat.medals=(progress.stat.medals||0)+Math.max(0,Object.keys(D2.got||{}).length-g0);if(!had&&D2.got&&D2.got.g)eggGive('g','T'+D2.wk);saveProgress();return r}}
 // every 5th player level → a rare egg
-if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const r=_l.apply(this,arguments);if(lv%5===0)eggGive('r','P'+lv);return r}}
+if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const n=progress.lvRew||0;const r=_l.apply(this,arguments);for(let L=lv-n+1;L<=lv;L++)if(L%5===0)eggGive('r','P'+L);return r}}
 // perfect drops counter for the trophy room
 {const _s=showOverlay;showOverlay=function(){if((state==='win'||state==='over')&&lv&&!lv._pc){lv._pc=1;progress.stat=progress.stat||{};progress.stat.perf=(progress.stat.perf||0)+(lv.perfect||0)}return _s.apply(this,arguments)}}
 // Pass: free tiers 5 = an egg, 15/25 = a golden egg; premium 15/25 = 12 cookies (a fixed reward: nothing random is ever
@@ -7084,8 +7091,8 @@ function achRender(){const r=ACEL;r.innerHTML=`<div class="ps-top"><button class
       b.onclick=()=>{achClaim(A,g);saveProgress();sfx.coin(4);vib(15);achRender()};row.querySelector('.ac-ln').appendChild(b)}
     L.appendChild(row)});
   const n=achReady();if(n>1){const f=document.createElement('div');f.className='ac-foot';const b=document.createElement('button');b.className='btn green';b.innerHTML='<span></span>';b.querySelector('span').textContent=t('psAll')+' ('+n+')';
-    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();sfx.coin(5);popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
-function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;popupToast('+'+c+' 🪙  +'+x+' XP')}return [c,x]}
+    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();lvUpLater();sfx.coin(5);popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
+function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;lvUpLater();popupToast('+'+c+' 🪙  +'+x+' XP')}return [c,x]}
 // profile pill → trophy room, with a red dot when a cup is waiting
 {const pr=document.querySelector('#title .profile');if(pr){pr.style.cursor='pointer';pr.addEventListener('click',()=>openTrophy());const d=document.createElement('i');d.className='badge ac-dot';d.hidden=true;d.textContent='!';pr.appendChild(d)}}
 /* ---------- lobby: nest icon in the mini column ---------- */
@@ -7206,7 +7213,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
     s.onclick=()=>{if(it.n){sfx.click();sbZoom(P,all,idx)}else{sfx.locked();popupToast((it.hint||t('hint_'+P.id)))}};grid.appendChild(s)});
-  const ch=r.querySelector('.sb-chest');ch.onclick=()=>{if(done&&!claimed){const [c,x]=SB_REW[P.id]||[500,60];D.done[P.id]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+(SB_REW[P.id]||[500])[0]+' 🪙')}};
+  const ch=r.querySelector('.sb-chest');ch.onclick=()=>{if(done&&!claimed){const [c,x]=SB_REW[P.id]||[500,60];D.done[P.id]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+(SB_REW[P.id]||[500])[0]+' 🪙')}};
   const pb=r.querySelector('.sb-packbtn');pb.querySelector('span').textContent=D.packs?t('sbPacks',{n:D.packs}):t('sbNext',{n:D.w%3});
   // packs are earned only (no buying with coins): random items for purchase would be a loot box (Apple odds disclosure, AU 16+)
   pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();popupToast(t('sbHow'))}};

@@ -365,7 +365,7 @@
   "bDino": "Tricératops",
   "bFactory": "Méga Robot",
   "bCrystal": "Golem de cristal",
-  "trTitle": "Tournoi de la semaine",
+  "trTitle": "Rapport testeur",
   "trRow": "Rapport testeur",
   "trOpen": "Ouvrir",
   "trOn": "Mode testeur activé",
@@ -725,7 +725,8 @@
   "ch_shz": "Sharliz",
   "sbPage": "Page {a}/{b}",
   "stkVs": "Sharliz contre {b}",
-  "storyGot": "Nouveau sticker histoire !"
+  "storyGot": "Nouveau sticker histoire !",
+  "tourTitle": "Tournoi de la semaine"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",

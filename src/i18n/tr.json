@@ -365,7 +365,7 @@
   "bDino": "Triseratops",
   "bFactory": "Mega Robot",
   "bCrystal": "Kristal Golem",
-  "trTitle": "Haftalık Turnuva",
+  "trTitle": "Test raporu",
   "trRow": "Test raporu",
   "trOpen": "Aç",
   "trOn": "Test modu açık",
@@ -725,7 +725,8 @@
   "ch_shz": "Sharliz",
   "sbPage": "Sayfa {a}/{b}",
   "stkVs": "Sharliz vs {b}",
-  "storyGot": "Yeni hikaye çıkartması!"
+  "storyGot": "Yeni hikaye çıkartması!",
+  "tourTitle": "Haftalık Turnuva"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

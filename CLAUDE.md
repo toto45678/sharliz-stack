@@ -153,6 +153,13 @@ Bug hunt 2 Oct 6 (branch fix-bugs, build.py "v50" patches + v28/v44/v45/v48): bo
 - Saved-look button used the missing key `save` (now `saveLook`).
 - Thunder Goat trophy (TROPHY_FX.farmS) gave `imm:'lightning'` (all of season 3). It is now `imm:'tornado'`, its own stage's mechanic (Tzach approved).
 
+Bug hunt 3 Oct 7 (branch fix-bugs-3, build.py "bug hunt 3" patches + v28/v38/v40/v41/v49-v54/v56/v57/native.js): 3 code reviews (core menus, v50-53, v54-58) + headless menu probes + bot. Fixed:
+- Premium Pass could not be bought: the test pay window opened inside #app, hidden behind the Pass screen (body layer). payModal now goes on body (fixed, z 60) and never stacks.
+- Level-ups from the trophy room / album chests / bonus / arcade skipped the level-up popup (coins + level-5 egg). lvUpLater() pays pending levels in the lobby or on the next result card; the egg checks every level gained. Popup no longer fires over the next level if the card closed. Tournament XP strip now shows on its own card; arcade XP only on paid plays; bonus XP only once.
+- Event/tournament: start ignored while a transition runs, restart keeps the original return level, event window across New Year, gauge/badge attached to #hud, tournament title id.
+- Bonus stage swing respects fever/easy/hat speed; memory game bonus once. preLevel hazard list/goal text match the actual level. Astronaut −1 heart not on level 1/checkpoint.
+- Daily gift / starter offer no longer pop over the arcade/tournament/event/Pass/nest/trophy layers. Restore purchases says when the store is off; 'test mode' notes hidden in the store build; native grants non-consumables once.
+Open: a save code from the free web version (test purchases) imported into the store app unlocks paid items — needs Tzach's decision.
 Done Oct 7 (branch languages): 12 languages + device-language detection (see the src/i18n line in Layout). Translated by Claude (726 keys + 247 pairs each), checked on screen in all 12 (lobby, settings, shop, My hero, album, modes, pass, map, level intro). Known: the shop tab row is tight in Japanese; prices still show ₪ (real store prices come from the stores).
 
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.
