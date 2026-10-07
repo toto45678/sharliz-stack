@@ -1,4 +1,4 @@
-const V='sharliz-20261007064348';
+const V='sharliz-20261007070341';
 const CORE=['./','index.html','manifest.webmanifest','art/three.min.js','art/fonts/lilita.woff','art/fonts/secular.woff','art/fonts/rubik.woff','icons/icon-192.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==V).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});

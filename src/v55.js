@@ -1,8 +1,8 @@
 /* ===== v55: calm lobby — bottom TAB BAR + one row of small time-limited icons (Tzach chose concept C, design/lobby/) =====
    The old side columns stay in the DOM (hidden) so every module that updates their badges keeps working;
    the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby. */
-Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today'});
-Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים עם מטבעות היום'});
+Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
+Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
 const LT={tabs:[],mini:[]};
 function ltVisible(el,root){for(let e=el;e&&e!==root;e=e.parentElement)if(e.hidden)return false;return true}
 function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e.remove());if(!orig||orig.hidden)return;

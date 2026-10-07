@@ -1343,6 +1343,31 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
   #title.lt-on .logo{scale:.64;top:calc(env(safe-area-inset-top,0px) + 56px)}
   .lob-mini{top:calc(env(safe-area-inset-top,0px) + 172px);scale:.9;transform-origin:50% 0}
 }
+/* modes card: whole row reads as one big button */
+.modes .mode-btn{position:relative;min-height:74px;padding-inline-end:44px}
+.modes .mode-btn img{width:72px;height:72px}
+.modes .mode-btn .mt{flex:1}
+.modes .mode-btn small{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:.8rem;line-height:1.2}
+.modes .mode-btn::after{content:'';position:absolute;inset-inline-end:10px;top:50%;width:28px;height:28px;margin-top:-14px;border-radius:50%;background:rgba(18,13,43,.35) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat}
+[dir=rtl] .modes .mode-btn::after{transform:scaleX(-1)}
+.modes .mode-btn:active{transform:translateY(4px);box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 0 0 rgba(8,10,40,.55);filter:brightness(.95)}
+.modes .mode-btn.m-tour{min-height:84px;box-shadow:inset 0 3px 0 rgba(255,255,255,.55),inset 0 0 0 2px #fff3b0,0 4px 0 rgba(8,10,40,.55),0 0 18px rgba(255,200,40,.55)}
+.modes .mode-btn.m-tour b{font-size:1.45rem;color:#fff}
+.modes .mode-btn.m-tour small{color:#3a2400;text-shadow:none}
+.modes .mode-btn.m-tour img{width:80px;height:80px}
+/* quieter inactive tabs, smaller mini icons */
+.lt-tab:not(.home) .lt-ic>img{filter:drop-shadow(0 3px 0 rgba(10,8,40,.55)) brightness(.88) saturate(.9)}
+.lt-tab:not(.home) b{color:#e4dcff}
+.lt-mini .lt-ic{width:50px;height:50px}
+.lt-mini{width:56px}
+@media (max-height:700px){
+  #title.lt-on .logo{scale:.6}
+  .lob-mini{top:calc(env(safe-area-inset-top,0px) + 162px)}
+}
+.lt-mini b{background:rgba(18,13,43,.62);box-shadow:none}
+.modes .mode-btn.m-tour{overflow:hidden}
+.modes .mode-btn.m-tour::before{content:'';position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:ltShine 3.2s ease-in-out infinite;pointer-events:none}
+@keyframes ltShine{0%,55%{left:-60%}100%{left:130%}}
 
 </style>
 
@@ -6468,8 +6493,8 @@ const psItem=(c,id)=>PS_REW.some(r=>r[1].it&&r[1].it[0]===c&&r[1].it[1]===id);
 /* ===== v55: calm lobby — bottom TAB BAR + one row of small time-limited icons (Tzach chose concept C, design/lobby/) =====
    The old side columns stay in the DOM (hidden) so every module that updates their badges keeps working;
    the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby. */
-Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today'});
-Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים עם מטבעות היום'});
+Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
+Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
 const LT={tabs:[],mini:[]};
 function ltVisible(el,root){for(let e=el;e&&e!==root;e=e.parentElement)if(e.hidden)return false;return true}
 function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e.remove());if(!orig||orig.hidden)return;
