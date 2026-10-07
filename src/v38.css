@@ -13,3 +13,5 @@
 .dl-day em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-style:normal;font-size:2.2rem;color:#7cff5a;text-shadow:0 2px 0 var(--ink),0 0 3px var(--ink)}
 .dl-sub{width:100%;text-align:center;font-size:.85rem;margin:4px 0 0}
 @keyframes dlBob{50%{transform:translateY(-3px) scale(1.04)}}
+.dl-day .dl-pk{position:absolute;top:-9px;right:-7px;width:24px;height:30px;rotate:12deg;filter:drop-shadow(0 2px 0 rgba(10,8,40,.45));pointer-events:none}
+.dl-day .dl-pk img{width:100%;height:100%;object-fit:contain}

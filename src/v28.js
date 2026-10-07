@@ -193,8 +193,8 @@ openMissions=function(){sfx.click();showOverlay(()=>({title:t('missions'),extra:
     w.ms.forEach(m=>box.appendChild(missionRow(m,150,t('d_'+m.id,{n:m.n}),()=>{m.claimed=true;progress.coins+=150;saveProgress();sfx.coin(4);coinShower(150);rerenderOverlay();updateWalletUI()})));
     const ready=w.ms.every(m=>m.claimed),c=document.createElement('div');c.className='mission chest mega'+(w.chest?' done':ready?' ready':'');
     c.innerHTML=`<img src="art/${w.chest?'ic_chest_open':'ic_chest'}.webp" alt=""><div class="m-txt"><b></b><small class="sub"></small></div><button class="buy"${!w.chest&&ready?'':' disabled'}>${w.chest?'✓':t('open')}</button>`;
-    c.querySelector('b').textContent=t('weeklyChest');c.querySelector('.sub').textContent=w.chest?'':ready?'500 + 2× '+t('boosters'):t('weeklyChestSub');
-    c.querySelector('button').onclick=()=>{if(w.chest||!ready)return;w.chest=true;progress.coins+=500;const inv=wallet().inv;for(let i=0;i<2;i++){const b=pick(['slow','laser','shield','heart']);inv[b]=(inv[b]||0)+1}saveProgress();sfx.flourish(3);coinShower(500);rerenderOverlay();updateWalletUI()};box.appendChild(c)}
+    c.querySelector('b').textContent=t('weeklyChest');c.querySelector('.sub').textContent=w.chest?'':ready?'500 + 2× '+t('boosters')+(typeof sbGive==='function'?' + 2× '+t('psPack'):''):t('weeklyChestSub');
+    c.querySelector('button').onclick=()=>{if(w.chest||!ready)return;w.chest=true;progress.coins+=500;const inv=wallet().inv;for(let i=0;i<2;i++){const b=pick(['slow','laser','shield','heart']);inv[b]=(inv[b]||0)+1}saveProgress();if(typeof sbGive==='function')sbGive(2);sfx.flourish(3);coinShower(500);rerenderOverlay();updateWalletUI()};box.appendChild(c)}
   card.appendChild(box)},actions:[{label:t('close'),primary:true,fn:()=>{hideOverlay();updateWalletUI()}}]}),true)};
 const _missionBadge=missionBadge;
 missionBadge=function(){let n=0;try{const d=daily();n=d.ms.filter(m=>m.p>=m.n&&!m.claimed).length+(d.chest?0:1)+weeklyClaimable()}catch(e){}document.querySelectorAll('[data-badge]').forEach(b=>{b.hidden=!n;b.textContent=n})};
