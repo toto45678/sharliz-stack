@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007175235"><\/script>')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261007193443"><\/script>')})();</script>
 </head><body>
 <title>Sharliz Stack</title>
 <style>
@@ -1823,6 +1823,16 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .bg-dots{display:flex;gap:6px}.bg-dots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid #120d2b}.bg-dots i.on{background:#ffe24d;width:22px;border-radius:6px}
 .bg-bt{display:flex;gap:8px;width:100%}.bg-bt .btn{flex:1}
 .bg-help{margin-inline-start:8px;width:30px;height:30px;border-radius:50%;border:3px solid #120d2b;background:#ffe24d;color:#120d2b;font:900 1.1rem/1 Rubik,system-ui,sans-serif;box-shadow:0 3px 0 #120d2b;vertical-align:middle}
+
+/* v62 mechanic videos */
+.hz-vbox{width:min(250px,62vw,calc((100dvh - 330px)*.8));aspect-ratio:4/5;margin:2px auto 8px;border-radius:20px;border:4px solid var(--ink);overflow:hidden;background:#141030;box-shadow:0 5px 0 var(--ink),0 10px 22px rgba(0,0,0,.35)}
+.hz-vid{display:block;width:100%;height:100%;object-fit:cover}
+.hz-two{display:flex;flex-direction:column;gap:6px;max-width:300px;margin:0 auto 4px;padding:0 4px}
+.hz-row{display:flex;align-items:center;gap:9px;text-align:start;font-weight:800;font-size:1.02rem;line-height:1.25;padding:6px 10px 6px 6px;border-radius:14px;border:2.5px solid var(--ink);background:rgba(255,255,255,.92);color:var(--ink)}
+.hz-row i{flex:none;width:30px;height:30px;border-radius:50%;border:2.5px solid var(--ink);display:grid;place-items:center}
+.hz-row i svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.hz-row.no i{background:#ef4444}.hz-row.ok i{background:#22c55e}
+.hz-row.ok{background:#eaffef}
 
 </style>
 
@@ -7415,6 +7425,29 @@ function budGuideMaybe(id){if(progress.budGuide||!budOwnedList().length)return;s
 {const _nr=nestRender;nestRender=function(){const r=_nr.apply(this,arguments);try{const h=NEL.querySelector('.ns-h');if(h&&!h.querySelector('.bg-help')){const q=document.createElement('button');q.className='bg-help';q.textContent='?';q.setAttribute('aria-label',t('bgHelp'));q.onclick=()=>openBudGuide();h.appendChild(q)}}catch(e){}
   budGuideMaybe();return r}}
 {const _rw=renderWardrobe;renderWardrobe=function(){const r=_rw.apply(this,arguments);try{if(W3.cat==='pet'||(W3.sel&&W3.sel.cat==='pet'))budGuideMaybe(W3.sel&&W3.sel.cat==='pet'&&wOwned('pet',W3.sel.id)?W3.sel.id:null)}catch(e){}return r}}
+
+/* ===== v62: MECHANIC VIDEOS (Tzach Oct 7: every new mechanic needs a clear gameplay video, kids 9+) =====
+   art/mv_<key>.mp4 = real gameplay recorded by tools/mechvid/rec.py (virtual clock + a scripted scene): first what goes wrong (red ✗),
+   then what to do (hand taps, green ✓), with rings and arrows. No words in the video; the two lines under it are translated
+   (hzx_<key> = what happens, hzo_<key> = what to do; the old caption hzc_<key> when they are missing).
+   The intro card plays it instead of the small drawn demo; the drawn demo stays as the fallback. The file is loaded as a blob
+   (iOS can't play a video the service worker answers without byte ranges). */
+const MV_LIST=["bats"],MV={url:null};
+Object.assign(I18N.en,{hzx_bats:'Bats bump your Sharliz off its swing',hzo_bats:'Tap the bats to scare them away!'});
+Object.assign(I18N.he,{hzx_bats:'עטלפים דוחפים את השארליז מהנדנוד',hzo_bats:'הקישו על העטלפים כדי להבריח אותם!'});
+{const _dl=demoLoop;demoLoop=function(c,k){if(!MV_LIST.includes(k))return _dl(c,k);
+  const box=document.createElement('div');box.className='hz-vbox';const v=document.createElement('video');v.className='hz-vid';
+  v.muted=true;v.defaultMuted=true;v.loop=true;v.autoplay=true;v.playsInline=true;for(const a of ['muted','playsinline','autoplay','loop'])v.setAttribute(a,'');v.setAttribute('aria-hidden','true');
+  box.appendChild(v);c.replaceWith(box);let fell=false;const fall=()=>{if(fell||!box.isConnected)return;fell=true;box.replaceWith(c);_dl(c,k)};
+  fetch('art/mv_'+k+'.mp4').then(r=>{if(!r.ok)throw 0;return r.blob()}).then(b=>{if(!box.isConnected)return;if(MV.url)URL.revokeObjectURL(MV.url);MV.url=URL.createObjectURL(b);v.src=MV.url;
+    const p=v.play();if(p&&p.catch)p.catch(()=>{})}).catch(fall);
+  v.addEventListener('error',fall,{once:true});
+  // the two lines: ✗ what happens, ✓ what to do (old one-line caption when a mechanic doesn't have them yet)
+  const cap=box.parentNode&&box.parentNode.querySelector('p.hz-cap'),L=I18N[lang]||I18N.en,X=L['hzx_'+k]||I18N.en['hzx_'+k],O=L['hzo_'+k]||I18N.en['hzo_'+k];
+  if(cap&&X&&O){const two=document.createElement('div');two.className='hz-two';
+    for(const [ok,txt] of [[0,X],[1,O]]){const r=document.createElement('div');r.className='hz-row '+(ok?'ok':'no');const i=document.createElement('i');i.innerHTML=ok?'<svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>':'<svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg>';
+      const s=document.createElement('span');s.textContent=txt;r.append(i,s);two.appendChild(r)}
+    cap.replaceWith(two)}}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
