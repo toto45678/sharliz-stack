@@ -518,7 +518,7 @@
   "bnBtn": "奖励关！",
   "bnNew": "NEW",
   "bnTitle": "云中宝藏",
-  "bnIntro1": "30秒内尽量叠高",
+  "bnIntro1": "45秒内尽量叠高",
   "bnIntro2a": "失误 = 少3秒",
   "bnIntro2b": "完美 = 多1秒",
   "bnIntro3": "8、16、24层有宝箱",
@@ -742,7 +742,18 @@
   "bgGo": "知道啦！",
   "bgHelp": "伙伴是什么？",
   "ps_egg": "蛋成长×2",
-  "nestFull": "巢满了！改为获得5块饼干"
+  "nestFull": "巢满了！改为获得5块饼干",
+  "sbAll": "全部打开（{n}）",
+  "sbOpenMany": "打开{n}包！",
+  "sbNewN": "{n}张新贴纸！",
+  "sbNoNew": "全是重复：换金币！",
+  "sbGold": "金色卡包",
+  "sbGoldGot": "+1金色贴纸包！",
+  "sbGoldOpen": "金色卡包！",
+  "sbGoldSub": "里面一定有一张闪卡！",
+  "sbHowG": "金色卡包：奖励关的金宝箱、锦标赛金牌和每日礼物第7天",
+  "storyProg": "故事贴纸 {a}/{b}",
+  "storyNext": "下一个故事 {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

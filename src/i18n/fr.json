@@ -518,7 +518,7 @@
   "bnBtn": "Niveau bonus !",
   "bnNew": "NOUVEAU",
   "bnTitle": "Trésor dans les nuages",
-  "bnIntro1": "30 secondes pour monter haut",
+  "bnIntro1": "45 secondes pour monter haut",
   "bnIntro2a": "Raté = 3 secondes en moins",
   "bnIntro2b": "Parfait = 1 seconde bonus",
   "bnIntro3": "Coffres à 8, 16 et 24 étages",
@@ -742,7 +742,18 @@
   "bgGo": "Compris !",
   "bgHelp": "C’est quoi, un compagnon ?",
   "ps_egg": "Œufs 2× plus vite",
-  "nestFull": "Le nid est plein ! +5 cookies à la place"
+  "nestFull": "Le nid est plein ! +5 cookies à la place",
+  "sbAll": "Tout ouvrir ({n})",
+  "sbOpenMany": "On ouvre {n} pochettes !",
+  "sbNewN": "{n} nouveaux autocollants !",
+  "sbNoNew": "Que des doubles : des pièces !",
+  "sbGold": "Pochette dorée",
+  "sbGoldGot": "+1 pochette dorée !",
+  "sbGoldOpen": "Pochette dorée !",
+  "sbGoldSub": "Un autocollant holo à coup sûr !",
+  "sbHowG": "Pochettes dorées : le coffre en or de l’étape bonus, la médaille d’or du tournoi et le jour 7 du cadeau du jour",
+  "storyProg": "Autocollant histoire {a}/{b}",
+  "storyNext": "Prochaine histoire {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",

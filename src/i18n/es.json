@@ -518,7 +518,7 @@
   "bnBtn": "¡Etapa bonus!",
   "bnNew": "NUEVO",
   "bnTitle": "Tesoro en las Nubes",
-  "bnIntro1": "30 segundos para construir alto",
+  "bnIntro1": "45 segundos para construir alto",
   "bnIntro2a": "Fallo = 3 segundos menos",
   "bnIntro2b": "Perfecto = 1 segundo extra",
   "bnIntro3": "Cofres en los pisos 8, 16 y 24",
@@ -742,7 +742,18 @@
   "bgGo": "¡Entendido!",
   "bgHelp": "¿Qué son las mascotas?",
   "ps_egg": "Huevos crecen ×2",
-  "nestFull": "¡El nido está lleno! +5 galletas en su lugar"
+  "nestFull": "¡El nido está lleno! +5 galletas en su lugar",
+  "sbAll": "Abrir todos ({n})",
+  "sbOpenMany": "¡Abriendo {n} sobres!",
+  "sbNewN": "¡{n} cromos nuevos!",
+  "sbNoNew": "Todos repetidos: ¡monedas!",
+  "sbGold": "Sobre dorado",
+  "sbGoldGot": "¡+1 sobre de cromos dorado!",
+  "sbGoldOpen": "¡Sobre dorado!",
+  "sbGoldSub": "¡Seguro que trae un cromo holo!",
+  "sbHowG": "Sobres dorados: el cofre de oro de la fase bonus, la medalla de oro del torneo y el día 7 del regalo diario",
+  "storyProg": "Cromo de historia {a}/{b}",
+  "storyNext": "Próxima historia {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

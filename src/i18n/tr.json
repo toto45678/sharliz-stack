@@ -518,7 +518,7 @@
   "bnBtn": "Bonus bölüm!",
   "bnNew": "YENİ",
   "bnTitle": "Bulutlardaki Hazine",
-  "bnIntro1": "Yükseğe dizmek için 30 saniye",
+  "bnIntro1": "Yükseğe dizmek için 45 saniye",
   "bnIntro2a": "Iska = 3 saniye eksik",
   "bnIntro2b": "Mükemmel = 1 bonus saniye",
   "bnIntro3": "8, 16 ve 24. katta sandık",
@@ -742,7 +742,18 @@
   "bgGo": "Anladım!",
   "bgHelp": "Dostlar ne işe yarar?",
   "ps_egg": "Yumurtalar ×2 büyür",
-  "nestFull": "Yuva dolu! Yerine +5 kurabiye"
+  "nestFull": "Yuva dolu! Yerine +5 kurabiye",
+  "sbAll": "Hepsini aç ({n})",
+  "sbOpenMany": "{n} paket açılıyor!",
+  "sbNewN": "{n} yeni çıkartma!",
+  "sbNoNew": "Hepsi tekrar: altın!",
+  "sbGold": "Altın paket",
+  "sbGoldGot": "+1 altın çıkartma paketi!",
+  "sbGoldOpen": "Altın paket!",
+  "sbGoldSub": "İçinde kesin bir holo çıkartma var!",
+  "sbHowG": "Altın paketler: bonus bölümdeki altın sandık, turnuvada altın madalya ve günlük hediyenin 7. günü",
+  "storyProg": "Hikâye çıkartması {a}/{b}",
+  "storyNext": "Sonraki hikâye {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

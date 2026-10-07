@@ -518,7 +518,7 @@
   "bnBtn": "Tahap bonus!",
   "bnNew": "BARU",
   "bnTitle": "Harta di Awan",
-  "bnIntro1": "30 detik untuk membangun tinggi",
+  "bnIntro1": "45 detik untuk membangun tinggi",
   "bnIntro2a": "Meleset = kurang 3 detik",
   "bnIntro2b": "Sempurna = bonus 1 detik",
   "bnIntro3": "Peti di lantai 8, 16, dan 24",
@@ -742,7 +742,18 @@
   "bgGo": "Paham!",
   "bgHelp": "Apa itu sobat?",
   "ps_egg": "Telur tumbuh ×2",
-  "nestFull": "Sarang penuh! Dapat +5 kue sebagai gantinya"
+  "nestFull": "Sarang penuh! Dapat +5 kue sebagai gantinya",
+  "sbAll": "Buka semua ({n})",
+  "sbOpenMany": "Membuka {n} bungkus!",
+  "sbNewN": "{n} stiker baru!",
+  "sbNoNew": "Semua dobel: koin!",
+  "sbGold": "Bungkus emas",
+  "sbGoldGot": "+1 bungkus stiker emas!",
+  "sbGoldOpen": "Bungkus emas!",
+  "sbGoldSub": "Pasti ada stiker holo di dalamnya!",
+  "sbHowG": "Bungkus emas: peti emas di tahap bonus, medali emas turnamen, dan hari ke-7 hadiah harian",
+  "storyProg": "Stiker cerita {a}/{b}",
+  "storyNext": "Cerita berikutnya {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

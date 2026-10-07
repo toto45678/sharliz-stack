@@ -518,7 +518,7 @@
   "bnBtn": "Bonusrunde!",
   "bnNew": "NEU",
   "bnTitle": "Schatz in den Wolken",
-  "bnIntro1": "30 Sekunden, um hoch zu bauen",
+  "bnIntro1": "45 Sekunden, um hoch zu bauen",
   "bnIntro2a": "Daneben = 3 Sekunden weniger",
   "bnIntro2b": "Perfekt = 1 Bonussekunde",
   "bnIntro3": "Truhen bei 8, 16 und 24 Stockwerken",
@@ -742,7 +742,18 @@
   "bgGo": "Alles klar!",
   "bgHelp": "Was sind Kumpel?",
   "ps_egg": "Eier wachsen ×2",
-  "nestFull": "Nest ist voll! Stattdessen +5 Kekse"
+  "nestFull": "Nest ist voll! Stattdessen +5 Kekse",
+  "sbAll": "Alle öffnen ({n})",
+  "sbOpenMany": "{n} Tüten werden geöffnet!",
+  "sbNewN": "{n} neue Sticker!",
+  "sbNoNew": "Alles doppelt: Münzen!",
+  "sbGold": "Goldene Tüte",
+  "sbGoldGot": "+1 goldene Stickertüte!",
+  "sbGoldOpen": "Goldene Tüte!",
+  "sbGoldSub": "Ganz sicher ein Holo-Sticker drin!",
+  "sbHowG": "Goldene Tüten: die Goldtruhe im Bonuslevel, Gold im Turnier und Tag 7 beim täglichen Geschenk",
+  "storyProg": "Geschichten-Sticker {a}/{b}",
+  "storyNext": "Nächste Geschichte {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

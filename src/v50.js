@@ -1,11 +1,11 @@
 /* ===== v50: bonus stage "Treasure in the Clouds" (after a boss win) =====
    Design: ChatGPT mockup (design/bonus/mock_chatgpt.png) + ChatGPT chest/stopwatch sprites (art/bn_*.webp).
-   30 s on the clouds world, no hearts: a miss costs 3 s, a perfect landing gives +1 s.
+   45 s on the clouds world, no hearts: a miss costs 3 s, a perfect landing gives +1 s.
    Chests hang on the floor track at 8 / 16 / 24 floors. Rewards are collected on the result card. */
-Object.assign(I18N.en,{bnBtn:'Bonus stage!',bnNew:'NEW',bnTitle:'Treasure in the Clouds',bnIntro1:'30 seconds to build high',bnIntro2a:'Miss = 3 seconds less',bnIntro2b:'Perfect = 1 bonus second',bnIntro3:'Chests at 8, 16 and 24 floors',bnGo:"Let's go!",bnFloors:'{n} floors',bnReached:'You reached {n} floors!',bnCollect:'Collect & continue',bnMiss:'−3 s',bnPerf:'+1 s',bnChest:'Chest!',bnTime:"Time's up!",bnEnd:'End bonus',bnHalf:'Replay: half coins',bnLocked:'Locked',bnBonus:'Bonus stage',bnMore:'{n} more floors!',bnLeft:'{n} to go',bnOne:'Just 1 more floor!'});
-Object.assign(I18N.he,{bnBtn:'שלב בונוס!',bnNew:'חדש',bnTitle:'אוצר בעננים',bnIntro1:'30 שניות לבנות גבוה',bnIntro2a:'נפילה = 3 שניות פחות',bnIntro2b:'מושלם = שנייה בונוס',bnIntro3:'תיבות אוצר בקומות 8, 16 ו-24',bnGo:'יאללה!',bnFloors:'{n} קומות',bnReached:'הגעתם ל-{n} קומות!',bnCollect:'אוספים וממשיכים',bnMiss:'−3 שניות',bnPerf:'+1 שנייה',bnChest:'תיבה!',bnTime:'נגמר הזמן!',bnEnd:'סיום הבונוס',bnHalf:'שוב בונוס: חצי מטבעות',bnLocked:'נעול',bnBonus:'שלב בונוס',bnMore:'עוד {n} קומות!',bnLeft:'עוד {n}',bnOne:'עוד קומה אחת!'});
+Object.assign(I18N.en,{bnBtn:'Bonus stage!',bnNew:'NEW',bnTitle:'Treasure in the Clouds',bnIntro1:'45 seconds to build high',bnIntro2a:'Miss = 3 seconds less',bnIntro2b:'Perfect = 1 bonus second',bnIntro3:'Chests at 8, 16 and 24 floors',bnGo:"Let's go!",bnFloors:'{n} floors',bnReached:'You reached {n} floors!',bnCollect:'Collect & continue',bnMiss:'−3 s',bnPerf:'+1 s',bnChest:'Chest!',bnTime:"Time's up!",bnEnd:'End bonus',bnHalf:'Replay: half coins',bnLocked:'Locked',bnBonus:'Bonus stage',bnMore:'{n} more floors!',bnLeft:'{n} to go',bnOne:'Just 1 more floor!'});
+Object.assign(I18N.he,{bnBtn:'שלב בונוס!',bnNew:'חדש',bnTitle:'אוצר בעננים',bnIntro1:'45 שניות לבנות גבוה',bnIntro2a:'נפילה = 3 שניות פחות',bnIntro2b:'מושלם = שנייה בונוס',bnIntro3:'תיבות אוצר בקומות 8, 16 ו-24',bnGo:'יאללה!',bnFloors:'{n} קומות',bnReached:'הגעתם ל-{n} קומות!',bnCollect:'אוספים וממשיכים',bnMiss:'−3 שניות',bnPerf:'+1 שנייה',bnChest:'תיבה!',bnTime:'נגמר הזמן!',bnEnd:'סיום הבונוס',bnHalf:'שוב בונוס: חצי מטבעות',bnLocked:'נעול',bnBonus:'שלב בונוס',bnMore:'עוד {n} קומות!',bnLeft:'עוד {n}',bnOne:'עוד קומה אחת!'});
 ICONS.chest=IMGTAG('bn_chest_gold','ico');
-const BN_TIME=30,BN_CH=[{f:8,k:'bronze',c:50,b:0},{f:16,k:'silver',c:100,b:1},{f:24,k:'gold',c:200,b:2}];
+const BN_TIME=45,BN_CH=[{f:8,k:'bronze',c:50,b:0},{f:16,k:'silver',c:100,b:1},{f:24,k:'gold',c:200,b:2}];
 let BN=null;
 const bnZi=()=>Math.max(0,ZONES.findIndex(z=>z.sid==='clouds'));
 const bnSpeed=()=>(1.5+Math.min(tower.length-1,24)*.03)*(boost.slow>0?.6:1)*(fever>0?.8:1)*easyK()*hatSpd();
@@ -33,7 +33,7 @@ function bnHud(on){
     const tm=document.createElement('div');tm.className='bn-timer';tm.innerHTML='<img src="art/bn_stopwatch.webp" alt=""><b>0:30</b>';const hs=document.getElementById('hearts');hs.parentNode.insertBefore(tm,hs);bnEl.tm=tm}
   bnEl.hidden=!on;bnEl.tm.hidden=!on;document.getElementById('hud').classList.toggle('bonus',!!on)}
 function bnHudTick(){if(!BN||!bnEl)return;const s=Math.max(0,Math.ceil(BN.t));
-  if(s!==BN.shown){BN.shown=s;bnEl.tm.querySelector('b').textContent='0:'+String(s).padStart(2,'0');bnEl.tm.classList.toggle('low',s<=5);if(s<=5&&s>0&&BN.run&&sfx.ok())tone({f:880,d:.06,type:'square',v:.04})}
+  if(s!==BN.shown){BN.shown=s;bnEl.tm.querySelector('b').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');bnEl.tm.classList.toggle('low',s<=5);if(s<=5&&s>0&&BN.run&&sfx.ok())tone({f:880,d:.06,type:'square',v:.04})}
   bnEl.tm.style.setProperty('--p',clamp(BN.t/BN_TIME,0,1));
   const fl=Math.max(0,tower.length-1);bnEl.querySelector('.bn-track .fill').style.height=Math.min(1,fl/24)*100+'%';bnEl.querySelector('.bn-fl').textContent=fl;
   const nx=BN_CH.findIndex((c,i)=>!BN.open.includes(i));BN_CH.forEach((c,i)=>{const st=bnEl.querySelector('.bn-stop.s'+i),o=BN.open.includes(i);st.classList.toggle('next',i===nx);{const lb=i===nx?t('bnLeft',{n:c.f-fl}):String(c.f),sm=st.querySelector('small');if(sm.textContent!==lb)sm.textContent=lb}if(st.classList.contains('open')!==o){st.classList.toggle('open',o);st.querySelector('img').src=`art/bn_chest_${c.k}${o?'_open':''}.webp`}})}

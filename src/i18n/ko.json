@@ -518,7 +518,7 @@
   "bnBtn": "보너스 스테이지!",
   "bnNew": "NEW",
   "bnTitle": "구름 속 보물",
-  "bnIntro1": "30초 동안 높이 쌓아",
+  "bnIntro1": "45초 동안 높이 쌓아",
   "bnIntro2a": "실수 = 3초 감소",
   "bnIntro2b": "퍼펙트 = 보너스 1초",
   "bnIntro3": "8, 16, 24층에 상자",
@@ -742,7 +742,18 @@
   "bgGo": "알겠어!",
   "bgHelp": "단짝이 뭐야?",
   "ps_egg": "알 성장 ×2",
-  "nestFull": "둥지가 꽉 찼어! 대신 쿠키 +5"
+  "nestFull": "둥지가 꽉 찼어! 대신 쿠키 +5",
+  "sbAll": "모두 열기 ({n})",
+  "sbOpenMany": "{n}팩 여는 중!",
+  "sbNewN": "새 스티커 {n}장!",
+  "sbNoNew": "모두 중복: 코인으로!",
+  "sbGold": "황금 팩",
+  "sbGoldGot": "황금 스티커 팩 +1!",
+  "sbGoldOpen": "황금 팩!",
+  "sbGoldSub": "홀로 스티커가 꼭 들어 있어요!",
+  "sbHowG": "황금 팩: 보너스 스테이지 황금 상자, 토너먼트 금메달, 매일 선물 7일째",
+  "storyProg": "스토리 스티커 {a}/{b}",
+  "storyNext": "다음 스토리 {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

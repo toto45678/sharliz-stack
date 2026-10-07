@@ -1,8 +1,8 @@
 /* ===== v58: illustrated sticker chapters (Tzach) =====
    Rare chapter = 18 STORY stickers (illustrated scenes, holo glow), earned by catching rare Sharliz on the rope.
    Boss chapter = 30 illustrated battle scenes (Sharliz vs that boss), holo glow. Worlds = illustrated postcard of each world. */
-Object.assign(I18N.en,{pg_rare:'Sharliz stories',hint_rare:'Catch a rare Sharliz on the rope',stkVs:'Sharliz vs {b}',storyGot:'New story sticker!'});
-Object.assign(I18N.he,{pg_rare:'סיפורי שארליז',hint_rare:'תפסו שארליז נדיר על החבל',stkVs:'שארליז נגד {b}',storyGot:'מדבקת סיפור חדשה!'});
+Object.assign(I18N.en,{pg_rare:'Sharliz stories',hint_rare:'Catch a rare Sharliz on the rope',stkVs:'Sharliz vs {b}',storyGot:'New story sticker!',storyProg:'Story sticker {a}/{b}',storyNext:'Next story {a}/{b}'});
+Object.assign(I18N.he,{pg_rare:'סיפורי שארליז',hint_rare:'תפסו שארליז נדיר על החבל',stkVs:'שארליז נגד {b}',storyGot:'מדבקת סיפור חדשה!',storyProg:'מדבקת סיפור {a}/{b}',storyNext:'לסיפור הבא {a}/{b}'});
 const STORY=[
  ['st01','Flower picnic','פיקניק בפרחים','Sandwiches taste better with friends.','כריכים טעימים יותר עם חברים.'],
  ['st02','Sandcastle tower','מגדל חול','The tallest sandcastle on the beach!','ארמון החול הכי גבוה בחוף!'],
@@ -22,13 +22,25 @@ const STORY=[
  ['st16','Family photo','תמונה משפחתית','Everybody say “Sharliz!”','כולם להגיד „שארליז!”'],
  ['st17','Dragon flight','מעוף הדרקון','Over the castle and far away.','מעל הטירה והרחק משם.'],
  ['st18','Treasure cave','מערת האוצר','It glows… it\'s ours!','זה זוהר… זה שלנו!']];
-function storySync(){try{const D=sbData();D.story=D.story||[];const al=progress.album||{};const caught=Object.values(al).reduce((a,v)=>a+(+v||0),0);const target=Math.min(STORY.length,caught);let added=0;
-  while(D.story.length<target){const left=STORY.map(s=>s[0]).filter(id=>!D.story.includes(id));if(!left.length)break;D.story.push(pick(left));added++}if(added)saveProgress();return added}catch(e){return 0}}
-{const P=STK_PAGES.find(p=>p.id==='rare');if(P)P.items=()=>{const D=sbData(),L=lang==='he'?1:0,own=D.story||[];return STORY.map(s=>({id:'story:'+s[0],n:own.includes(s[0])?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1}))}}
+/* story cards (Tzach, Oct 7: 'too fast, I got them all in a few hours'): the first comes with the first rare Sharliz you catch,
+   then each next card needs more rare catches: 3, 4, 5 … up to 12 (all 18 ≈ 160 rare catches instead of 18).
+   D.sc = rare catches already counted, D.sp = catches toward the next card. Cards earned under the old pace are kept. */
+const storyNeed=i=>i?Math.min(2+i,12):1;
+function rareCaught(){const al=progress.album||{};return Object.values(al).reduce((a,v)=>a+(+v||0),0)}
+function storySync(){try{const D=sbData();D.story=D.story||[];const caught=rareCaught();let added=0;const add=()=>{const left=STORY.map(s=>s[0]).filter(id=>!D.story.includes(id));if(!left.length)return false;D.story.push(pick(left));added++;return true};
+  if(D.sc==null){const target=Math.min(STORY.length,caught);while(D.story.length<target&&add());D.sc=caught;D.sp=0;saveProgress();return added} // old saves: finish the old pace once, then switch
+  let ch=false;if(caught>D.sc){D.sp=(D.sp||0)+caught-D.sc;D.sc=caught;ch=true}
+  while(D.story.length<STORY.length&&D.sp>=storyNeed(D.story.length)){D.sp-=storyNeed(D.story.length);add()}
+  if(D.story.length>=STORY.length&&D.sp){D.sp=0;ch=true}if(ch||added)saveProgress();return added}catch(e){return 0}}
+/* right after a rare Sharliz lands (build.py patch in the landing code): progress toast, or the new card */
+function storyHit(){try{const D=sbData();D.story=D.story||[];if(D.story.length>=STORY.length)return;if(storySync()){toast(t('storyGot'));try{stkBadge()}catch(e){}}else toast(t('storyProg',{a:D.sp,b:storyNeed(D.story.length)}))}catch(e){}}
+function storyLeft(){const D=sbData(),own=(D.story||[]).length;return own>=STORY.length?null:{a:D.sp||0,b:storyNeed(own)}}
+{const P=STK_PAGES.find(p=>p.id==='rare');if(P)P.items=()=>{const D=sbData(),L=lang==='he'?1:0,own=D.story||[];return STORY.map(s=>({id:'story:'+s[0],n:own.includes(s[0])?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1,hint:(q=>q?t('hint_rare')+' · '+t('storyNext',q):'')(storyLeft())}))}}
 {const P=STK_PAGES.find(p=>p.id==='boss');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const z=it.id.slice(5);return Object.assign(it,{src:'art/stk_b_'+z+'.webp',rar:'h',card:1,name:t('stkVs',{b:it.name})})})}}
 /* worlds: an illustrated postcard of each world (art/stk_w_<sid>.webp) */
 {const P=STK_PAGES.find(p=>p.id==='world');if(P){const _it=P.items;P.items=()=>{const it=_it();return it.map((x,i)=>{const z=ZONES[i];return Object.assign(x,{src:'art/stk_w_'+(z.sid||z.id)+'.webp',img:null,round:false,card:1})})}}}
 {const _o=openAlbum;openAlbum=function(){storySync();return _o.apply(this,arguments)}}
+{const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const P=sbChapters()[SB.ch],q=storyLeft();if(P.id==='rare'&&q){const sm=SB.el.querySelector('.sb-head small');sm.textContent=t('storyNext',q);sm.classList.add('sb-snext')}}catch(e){}return r}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{if(storySync())stkBadge()}catch(e){}return r}}
 /* buddies: an illustrated scene of the buddy with Sharliz (paid buddies glow) */
 {const P=STK_PAGES.find(p=>p.id==='buddy');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const id=it.id.slice(6);return Object.assign(it,{src:'art/stk_p_'+id+'.webp',img:null,card:1,rar:WPET[id]&&WPET[id].real?'h':'c'})})}}

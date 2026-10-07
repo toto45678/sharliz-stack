@@ -518,7 +518,7 @@
   "bnBtn": "Fase bônus!",
   "bnNew": "NOVO",
   "bnTitle": "Tesouro nas Nuvens",
-  "bnIntro1": "30 segundos para construir alto",
+  "bnIntro1": "45 segundos para construir alto",
   "bnIntro2a": "Errou = 3 segundos a menos",
   "bnIntro2b": "Perfeito = 1 segundo bônus",
   "bnIntro3": "Baús em 8, 16 e 24 andares",
@@ -742,7 +742,18 @@
   "bgGo": "Entendi!",
   "bgHelp": "O que são mascotes?",
   "ps_egg": "Ovos crescem ×2",
-  "nestFull": "O ninho está cheio! +5 biscoitos no lugar"
+  "nestFull": "O ninho está cheio! +5 biscoitos no lugar",
+  "sbAll": "Abrir todos ({n})",
+  "sbOpenMany": "Abrindo {n} pacotes!",
+  "sbNewN": "{n} figurinhas novas!",
+  "sbNoNew": "Todas repetidas: moedas!",
+  "sbGold": "Pacote dourado",
+  "sbGoldGot": "+1 pacote de figurinhas dourado!",
+  "sbGoldOpen": "Pacote dourado!",
+  "sbGoldSub": "Com certeza tem uma figurinha holo!",
+  "sbHowG": "Pacotes dourados: o baú de ouro da fase bônus, a medalha de ouro do torneio e o dia 7 do presente diário",
+  "storyProg": "Figurinha de história {a}/{b}",
+  "storyNext": "Próxima história {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

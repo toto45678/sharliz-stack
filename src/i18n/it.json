@@ -518,7 +518,7 @@
   "bnBtn": "Livello bonus!",
   "bnNew": "NUOVO",
   "bnTitle": "Tesoro tra le nuvole",
-  "bnIntro1": "30 secondi per costruire in alto",
+  "bnIntro1": "45 secondi per costruire in alto",
   "bnIntro2a": "Errore = 3 secondi in meno",
   "bnIntro2b": "Perfetto = 1 secondo bonus",
   "bnIntro3": "Forzieri a 8, 16 e 24 piani",
@@ -742,7 +742,18 @@
   "bgGo": "Ho capito!",
   "bgHelp": "Cosa sono gli amichetti?",
   "ps_egg": "Uova crescono ×2",
-  "nestFull": "Il nido è pieno! +5 biscotti al suo posto"
+  "nestFull": "Il nido è pieno! +5 biscotti al suo posto",
+  "sbAll": "Apri tutte ({n})",
+  "sbOpenMany": "Apriamo {n} bustine!",
+  "sbNewN": "{n} figurine nuove!",
+  "sbNoNew": "Tutte doppie: monete!",
+  "sbGold": "Bustina d’oro",
+  "sbGoldGot": "+1 bustina d’oro!",
+  "sbGoldOpen": "Bustina d’oro!",
+  "sbGoldSub": "Dentro c’è di sicuro una figurina olo!",
+  "sbHowG": "Bustine d’oro: lo scrigno d’oro del livello bonus, l’oro nel torneo e il giorno 7 del regalo giornaliero",
+  "storyProg": "Figurina storia {a}/{b}",
+  "storyNext": "Prossima storia {a}/{b}"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

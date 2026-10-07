@@ -222,3 +222,34 @@
 .pk-card.nw.flip .fr{box-shadow:0 5px 0 #120d2b,0 0 0 3px #7ef05a}
 .pk-cards{min-height:46%}
 .sb-etab span{white-space:normal;text-align:center;line-height:1;max-width:46px;font-size:.55rem}
+/* golden packs + open several packs at once (Oct 7) */
+.sb-gpackbtn{position:relative;flex:none;width:46px;height:48px;padding:0;border-radius:14px;border:3px solid #120d2b;background:linear-gradient(180deg,#fff2a8,#e0a800);box-shadow:inset 0 3px 0 rgba(255,255,255,.55),0 4px 0 #120d2b;display:grid;place-items:center}
+.sb-gpackbtn img{width:40px;height:52px;margin-block:-10px;object-fit:contain;rotate:8deg;filter:drop-shadow(0 3px 0 rgba(10,8,40,.4))}
+.sb-gpackbtn:not(.has){background:linear-gradient(180deg,#e9e2ff,#b9a8ee)}.sb-gpackbtn:not(.has) img{filter:grayscale(.7) brightness(.95);opacity:.75}
+.sb-gpackbtn.has{animation:playPulse 1.4s ease-in-out infinite;box-shadow:inset 0 3px 0 rgba(255,255,255,.55),0 4px 0 #120d2b,0 0 14px 3px rgba(255,214,80,.8)}
+.sb-gpackbtn .badge{top:-9px;right:-7px}
+.sb-foot .sb-packbtn{padding-inline-end:10px}
+.sb-strip.gold{border-color:#fff2a8;background:linear-gradient(180deg,#f5b800,#b86e00)}.sb-strip.gold b{color:#fff6c8}
+.sb-pk.gold::before{background:repeating-conic-gradient(rgba(255,214,60,.32) 0 10deg,transparent 10deg 20deg)}
+.sb-pk.gold h3{color:#ffe98a}
+.sb-pk.gold .pk-card .bk{background:linear-gradient(160deg,#ffd84a,#c47a00)}
+.pk-pack .pk-n{position:absolute;top:6%;inset-inline-end:-6%;z-index:2;padding:2px 10px;border-radius:999px;border:3px solid #120d2b;background:linear-gradient(180deg,#ff6a5a,#d62f2f);font:1.4rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;color:#fff;rotate:10deg;box-shadow:0 3px 0 #120d2b;direction:ltr}
+.sb-pk.many .pk-pack::before,.sb-pk.many .pk-pack .pk-body{position:relative}
+.sb-pk.many .pk-pack::before{content:'';position:absolute;inset:0;background:url(art/sb_pack.webp) center/contain no-repeat;translate:9% -4%;rotate:7deg;filter:brightness(.8) drop-shadow(0 6px 0 rgba(10,8,40,.4))}
+.sb-pk.many.gold .pk-pack::before{background-image:url(art/sb_gpack.webp)}
+.sb-pk.many .pk-cards{display:grid;grid-template-columns:repeat(var(--cols,4),1fr);gap:16px 6px;align-content:center;padding:14px 4px 6px;overflow-y:auto;max-height:100%}
+.sb-pk.many .pk-card{position:relative;left:auto;top:auto;translate:none;width:auto;max-width:none;opacity:0;scale:.4;transition:opacity .25s,scale .35s cubic-bezier(.3,1.5,.5,1);transition-delay:calc(var(--i) * 25ms)}
+.sb-pk.many.torn .pk-card{opacity:1;scale:1;left:auto;top:auto}
+[dir=rtl] .sb-pk.many.torn .pk-card{left:auto}
+.sb-pk.many .pk-card .rc,.sb-pk.many .pk-card .fr b{display:none}
+.sb-pk.many .pk-card .fr img{height:84%;width:90%}
+.sb-pk.many .pk-card .tag{top:-11px;font-size:.62rem;padding:1px 5px;border-width:2px}
+.sb-pk.many .pk-card .bk,.sb-pk.many .pk-card .fr{border-radius:9px;border-width:2.5px;box-shadow:0 3px 0 #120d2b}
+.sb-pk.many .pk-card.flip.r-r .fr{box-shadow:0 3px 0 #120d2b,0 0 12px 3px rgba(190,140,255,.9)}
+.sb-pk.many .pk-card.flip.r-h .fr{box-shadow:0 3px 0 #120d2b,0 0 14px 4px rgba(255,230,120,.95)}
+.sb-pk.many .pk-btns{margin-top:8px}
+.sb-pk.many p{font-size:1.05rem}
+.sb-head small.sb-snext{position:static;opacity:1;padding:2px 8px;border-radius:999px;background:#2a1a66;color:#fff;font-size:.72rem;white-space:nowrap}
+.bn-ch .bn-gpk{position:absolute;top:-10px;inset-inline-end:-8px;width:30px;height:38px;object-fit:contain;rotate:12deg;filter:drop-shadow(0 2px 0 rgba(10,8,40,.5))}
+.bn-ch{position:relative}
+.bn-bo.bn-gpk img{width:30px;height:38px;object-fit:contain}
