@@ -401,9 +401,10 @@ def build_dragon():
 INK_C = '#120d2b'
 
 
-def eyes_open(S, ex, ez, ew, eh, rim=.02, bulge=.03, off=.2, tilt=0.):
+def eyes_open(S, ex, ez, ew, eh, rim=.02, bulge=.03, off=.2, tilt=0., up=-.1):
     """Sharliz eyes: big white ovals, NO pupils, thin black border (a little thicker on the outer-bottom side); they blink.
-    tilt (radians): the tops of the ovals lean outward, like the ChatGPT turnarounds"""
+    tilt (radians): the tops of the ovals lean outward, like the ChatGPT turnarounds. off/up: the rim's centre is shifted by rim*off
+    outward and rim*up upward (thick on that side, thin opposite; the kitten has a thick top-outer 'eyeliner')"""
     for sx in (-1, 1):
         sd = 'L' if sx < 0 else 'R'; t = -sx * tilt; R = max(ew, eh) + rim * 1.5
         def shp(w, h):
@@ -412,7 +413,7 @@ def eyes_open(S, ex, ez, ew, eh, rim=.02, bulge=.03, off=.2, tilt=0.):
                 return (xr / w) ** 2 + (zr / h) ** 2 <= 1
             return f
         part('eye' + sd, S.decal(shp(ew, eh), sx * ex, ez, R, R, bulge=bulge), '#ffffff', role='eye', ink=0, rough=.15, cc=1, emis='#ffffff', ei=.35, pivot=(sx * ex, -.3, ez))
-        part('eyeRim' + sd, S.decal(shp(ew + rim * .75, eh + rim * .7), sx * (ex + rim * off), ez - rim * .1, R, R, bulge=bulge * .55, lift=.001), INK_C, role='eye', ink=0, rough=.4, cc=.3, pivot=(sx * ex, -.3, ez))
+        part('eyeRim' + sd, S.decal(shp(ew + rim * .75, eh + rim * .7), sx * (ex + rim * off), ez + rim * up, R, R, bulge=bulge * .55, lift=.001), INK_C, role='eye', ink=0, rough=.4, cc=.3, pivot=(sx * ex, -.3, ez))
 
 
 def eyes_happy(S, ex, ez, ew, eh, r=.017, lashes=False, lash=.6):

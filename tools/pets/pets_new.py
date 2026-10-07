@@ -164,9 +164,20 @@ def build_firefly():
     part('arms', arms, DB, role='arms', ink=.009)
 
 
+def _ccw(pts):
+    area = sum(pts[i][0] * pts[(i + 1) % len(pts)][1] - pts[(i + 1) % len(pts)][0] * pts[i][1] for i in range(len(pts)))
+    return pts if area > 0 else list(reversed(pts))
+
+
+KIT_EAR = [(-.04, .76), (-.14, .88), (-.222, .955), (-.243, .985), (-.263, 1.0), (-.287, .998), (-.305, .985), (-.316, .965),
+           (-.33, .92), (-.337, .86), (-.332, .80), (-.32, .74), (-.30, .68)]                       # left ear, from the turnaround (x, z)
+KIT_EAR_IN = [(-.09, .78), (-.165, .87), (-.225, .945), (-.255, .965), (-.275, .962), (-.29, .945), (-.295, .90), (-.295, .84), (-.288, .78), (-.27, .73)]
+
+
 def build_kitten():
-    """turn_kitten.png: orange cat egg lofted from the silhouette, cream muzzle + belly PAINTED in the texture, huge white eyes, pink nose,
-    whiskers, pointy ears with pink inside, paws on the belly, feet, curly tail with a cream tip"""
+    """turn_kitten.png: orange cat egg lofted from the silhouette. Cream mask (around the eyes + muzzle) and belly PAINTED in the
+    texture, huge white eyes with a thick top-outer 'eyeliner', pink nose, open happy mouth, long whiskers past the cheeks,
+    big FLAT triangular ears with pink inside, paws low on the belly (z .27), feet, thick curly tail with a cream tip"""
     OR, CR, PK = '#ff9d2e', '#fff0cf', '#ff86b0'
     fr = TP.profile('kitten', 'front', skip=[(.74, 1.1)], top=.93, bottom=.05)
     sd = TP.profile('kitten', 'side', skip=[(.05, .16, 'r'), (.36, .52, 'r'), (.14, .50, 'l')], add=[(.30, -.285, .35), (.20, -.255, .33)], top=.93, bottom=.05)
@@ -174,35 +185,42 @@ def build_kitten():
     S = Surface(body)
     def tex(X, Y, Z, F):
         img = TP.fill(X.shape, OR)
-        m = (F > .15) & (TP.ell(X, Z, 0, .55, .26, .16) | TP.ell(X, Z, 0, .29, .30, .27) | TP.ell(X, Z, 0, .42, .24, .2))
+        m = (F > .3) & (TP.ell(X, Z, 0, .52, .31, .19) | TP.ell(X, Z, 0, .58, .22, .12) | TP.ell(X, Z, 0, .20, .235, .19))
         return TP.put(img, m, CR)
     part('body', body, '#ffffff', role='body', ink=.014, tex=TP.paint(L, tex))
-    eyes_open(S, .145, .60, .095, .13, rim=.018, tilt=.12)
-    part('nose', S.decal(lambda u, v: u * u + v * v <= 1 and v > -.9, 0, .53, .03, .02, bulge=.012, lift=.02), PK, role='mouth', ink=0, rough=.3, cc=.6)
-    mouth_small(S, 0, .455, .03, .024, lift=.02)
+    eyes_open(S, .145, .60, .095, .13, rim=.03, tilt=.1, off=.6, up=.5)
+    part('nose', S.decal(lambda u, v: abs(u) <= .6 * (v + 1.05) and v <= .75, 0, .535, .035, .025, bulge=.012, lift=.015), PK, role='mouth', ink=0, rough=.3, cc=.6)
+    mouth_open(S, 0, .475, .05, .032)
     wh = bmesh.new()
     for sx in (-1, 1):
-        for dz, tilt in ((.04, .03), (0, 0), (-.035, -.035)):
-            loc, nrm = S.hit(sx * .25, .475 + dz)
-            if loc is None: continue
-            bm_merge(wh, tube_bm([loc + nrm * .006, loc + Vector((sx * .11, -.01, tilt * 2.2)) + nrm * .03], [.009, .005], seg=6))
+        for z0, dz in ((.505, .035), (.47, 0), (.44, -.04)):
+            P = []
+            for f, x in ((0, .13), (.4, .21), (.75, .275)):
+                loc, nrm = S.hit(sx * x, z0 + dz * f)
+                if loc is None: continue
+                P.append(loc + nrm * (.008 + .012 * f))
+            if len(P) < 2: continue
+            P.append(Vector((sx * .37, P[-1].y - .01, z0 + dz)))
+            bm_merge(wh, tube_bm(smooth_path(P, 4), radii(.0085, .005, len(smooth_path(P, 4))), seg=6))
     part('whiskers', wh, '#2a2440', role='part', ink=0, rough=.5)
     ears = bmesh.new(); inner = bmesh.new()
     for sx in (-1, 1):
-        bm_merge(ears, spike_bm(Vector((sx * .235, -.06, .74)), (sx * .2, -.22, 1), r=.105, h=.28, seg=16))
-        bm_merge(inner, spike_bm(Vector((sx * .24, -.10, .76)), (sx * .2, -.28, 1), r=.06, h=.19, seg=12))
+        e = slab_bm(_ccw([(sx * -x, z) for x, z in KIT_EAR]), thick=.075, bevel=.02, cuts=4)
+        bmesh.ops.translate(e, vec=(0, -.03, 0), verts=e.verts); bm_merge(ears, e)
+        i = slab_bm(_ccw([(sx * -x, z) for x, z in KIT_EAR_IN]), thick=.02, bevel=.006, cuts=3)
+        bmesh.ops.translate(i, vec=(0, -.0625, 0), verts=i.verts); bm_merge(inner, i)
     part('ears', ears, OR, role='horn', ink=.011)
-    part('earsIn', inner, PK, role='horn', ink=0)
+    part('earsIn', inner, PK, role='horn', ink=0, rough=.4)
     paws = bmesh.new()
-    for sx in (-1, 1): bm_merge(paws, ellipsoid_bm(.07, .06, .065, at=(sx * .20, L.at(.43)[3] - L.at(.43)[2] + .02, .43), seg=18, rings=12))
-    part('paws', paws, OR, role='arms', ink=.01)
+    for sx in (-1, 1):
+        a, cx, b, cy = L.at(.27); bm_merge(paws, ellipsoid_bm(.085, .075, .08, at=(sx * .21, cy - b * .92, .27), seg=20, rings=14))
+    part('paws', paws, OR, role='arms', ink=.011)
     feet = bmesh.new()
-    for sx in (-1, 1): bm_merge(feet, ellipsoid_bm(.09, .10, .045, at=(sx * .15, L.at(.08)[3] - L.at(.08)[2] * .5, .045), seg=18, rings=12))
+    for sx in (-1, 1): bm_merge(feet, ellipsoid_bm(.085, .10, .045, at=(sx * .165, L.at(.08)[3] - L.at(.08)[2] * .5, .045), seg=18, rings=12))
     part('feet', feet, OR, role='feet', ink=.01)
-    yb = L.at(.25)[3] + L.at(.25)[2]
-    pts = smooth_path([Vector((0, yb - .04, .17)), Vector((.02, yb + .04, .19)), Vector((.02, yb + .07, .31)), Vector((0, yb + .04, .43)), Vector((-.02, yb - .04, .45))], 5)
-    part('tail', tube_bm(pts, radii(.06, .04, len(pts)), seg=12), OR, role='tail', ink=.011, pivot=(0, yb - .04, .18))
-    part('tailTip', ellipsoid_bm(.05, .05, .05, at=tuple(pts[-1]), seg=16, rings=12), CR, role='tail', ink=.01, pivot=(0, yb - .04, .18))
+    pts = smooth_path([Vector((-.03, .17, .19)), Vector((-.06, .28, .20)), Vector((-.07, .345, .27)), Vector((-.065, .345, .34)), Vector((-.06, .31, .39))], 5)
+    part('tail', tube_bm(pts, radii(.065, .05, len(pts)), seg=14), OR, role='tail', ink=.011, pivot=(-.03, .17, .19))
+    part('tailTip', ellipsoid_bm(.062, .062, .062, at=tuple(pts[-1]), seg=18, rings=14), CR, role='tail', ink=.01, pivot=(-.03, .17, .19))
 
 
 def build_octopus():
