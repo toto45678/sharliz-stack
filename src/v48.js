@@ -13,7 +13,7 @@ Object.assign(I18N.en,{csTitle:'My hero',csTry:'Tap an item to try it on',csWorn
   ct_trail:'Trail',ct_land:'Landing',ct_cfilt:'Tint',
   st_tol:'Landing zone',st_coins:'Coins',st_hearts:'Hearts',st_spd:'Swing',st_boss:'Boss hits',st_feverT:'Frenzy',
   ng_fall:'Falls faster',ng_wind:'Wind pushes more',ng_pts:'Fewer points',ng_perfPts:'Fewer points for PERFECT',ng_clear:'Less coins for clearing',ng_feverN:'Frenzy needs 7 PERFECTs',
-  ps_astro:'Start 5 floors up',ps_ghost:'Ghost buddy',ps_combo:'Combo helper',ps_bee:'Bee buddy',
+  ps_astro:'Start 5 floors up',ps_ghost:'Saves 1st lost heart',ps_combo:'Combo coins ×2',ps_egg:'Eggs grow ×2',ps_bee:'+2 coins per perfect',
   sk_t_sparkle:'Sparkles',sk_t_notes:'Music notes',sk_t_leaves:'Leaves',sk_t_rainbow:'Rainbow',
   sk_l_confetti:'Confetti',sk_l_stars:'Star burst',sk_l_bubbles:'Bubbles',sk_l_hearts:'Hearts'});
 Object.assign(I18N.he,{csTitle:'הגיבור שלי',csTry:'הקישו על פריט כדי למדוד',csWorn:'לבוש עכשיו',csPowers:'הכוחות שלי',csPreview:'מודדים',
@@ -22,7 +22,7 @@ Object.assign(I18N.he,{csTitle:'הגיבור שלי',csTry:'הקישו על פר
   ct_trail:'שובל',ct_land:'נחיתה',ct_cfilt:'גוון',
   st_tol:'אזור נחיתה',st_coins:'מטבעות',st_hearts:'לבבות',st_spd:'נדנוד',st_boss:'מכה לבוס',st_feverT:'טירוף',
   ng_fall:'נופל מהר יותר',ng_wind:'הרוח מזיזה יותר',ng_pts:'פחות נקודות',ng_perfPts:'פחות נקודות על "מושלם"',ng_clear:'פחות מטבעות על סיום',ng_feverN:'טירוף רק אחרי 7 "מושלם"',
-  ps_astro:'מתחילים מקומה 5',ps_ghost:'חבר רוח',ps_combo:'עוזר קומבו',ps_bee:'חבר דבורה',
+  ps_astro:'מתחילים מקומה 5',ps_ghost:'מציל לב ראשון',ps_combo:'מטבעות קומבו ×2',ps_egg:'ביצים גדלות פי 2',ps_bee:'+2 מטבעות למושלם',
   sk_t_sparkle:'נצנצים',sk_t_notes:'תווים',sk_t_leaves:'עלים',sk_t_rainbow:'קשת',
   sk_l_confetti:'קונפטי',sk_l_stars:'פיצוץ כוכבים',sk_l_bubbles:'בועות',sk_l_hearts:'לבבות'});
 
@@ -72,7 +72,7 @@ function fxCombine(look,hat){const parts=[];if(hat&&HAT_FX[hat])parts.push(HAT_F
   for(const c of ['outfit','glasses']){const F=GEAR_FX[c]&&GEAR_FX[c][look[c]];if(F)parts.push(F)}
   const pk=typeof PERKS!=='undefined'&&PET_FX[PERKS[look.pet]];if(pk)parts.push(pk);
   const R={};for(const F of parts)for(const k in F){if(FX_ADD.has(k)||k.startsWith('imm_')||k==='imm')R[k]=k==='imm'?F[k]:(R[k]||0)+F[k];else if(k==='feverN')R[k]=F[k];else R[k]=(R[k]===undefined?1:R[k])*F[k]}
-  if(look.outfit==='astro')R.astro=1;const pp=typeof PERKS!=='undefined'&&PERKS[look.pet];if(pp==='ghost'||pp==='combo'||pp==='bee')R['pet_'+pp]=1;return R}
+  if(look.outfit==='astro')R.astro=1;const pp=typeof PERKS!=='undefined'&&PERKS[look.pet];if(pp==='ghost'||pp==='combo'||pp==='bee'||pp==='egg')R['pet_'+pp]=1;return R}
 function itemFX(c,id){if(c==='hat')return HAT_FX[id]||null;if(c==='outfit'&&id==='astro')return {astro:1};if(c==='pet')return typeof PERKS!=='undefined'&&PERKS[id]?{perk:1}:null;return GEAR_FX[c]&&GEAR_FX[c][id]||null}
 
 /* ---------------- new 3D builds ---------------- */
@@ -214,7 +214,7 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
     const c0=s.cats[0],id=s.k==='fx'?(progress.tskin||progress.lskin||progress.cskin||'none'):csPrevId(c0),th=mk('img');th.alt='';const sw=mk('i','sw');sw.hidden=true;
     const pw=s.cats.some(c=>c!=='fx'&&itemFX(c,csPrevId(c)));if(pw)b.classList.add('pow');
     if(s.k==='fx')csThumb(progress.tskin?'trail':progress.lskin?'land':'cfilt',id,th,sw);else if(id&&id!=='none')csThumb(c0,id,th,sw);else th.src=csStyleIcon('none');
-    b.append(th,sw,mk('span','',t('sl_'+s.k)));b.onclick=()=>{sfx.click();CS.slot=s.k;W3.cat=s.cats[0];CS.filter='all';renderWardrobe()};st.appendChild(b)}
+    b.append(th,sw,mk('span','',t('sl_'+s.k)));b.onclick=()=>{sfx.click();if(CS.slot!==s.k)W3.sel=null;CS.slot=s.k;W3.cat=s.cats[0];CS.filter='all';renderWardrobe()};st.appendChild(b)}
   el.appendChild(st);
   // power bars: what you wear vs what you are trying on
   const prevL=heroLook(),eqL=Object.assign({},lookNow(),{hat:progress.skin||'none'});const FP=fxCombine(prevL,prevL.hat),FE=fxCombine(eqL,eqL.hat);
@@ -232,10 +232,10 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
   if(scats.length>1)for(const c of scats){const b=mk('button','cs-sub'+(c===cat?' on':''),STYLE_CAT[c]?t('ct_'+c):(WCATS.find(w=>w[0]===c)||[0,[c,c]])[1][lang==='he'?1:0]);
     if(c!==cat&&!STYLE_CAT[c]&&wNewIn(c))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();W3.cat=c;renderWardrobe()};subs.appendChild(b)}
   else subs.appendChild(mk('b','cs-sl',cat==='deal'?t('csDeals'):cat==='sets'?t('csLooks'):t('sl_'+slot.k)));
-  const extra=mk('div','cs-extra');for(const [c,key] of [['deal','csDeals'],['sets','csLooks']]){const b=mk('button','cs-sub small'+(cat===c?' on':''),t(key));if(c==='deal'&&wNewIn('deal'))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();W3.cat=cat===c?slot.cats[0]:c;renderWardrobe()};extra.appendChild(b)}
+  const extra=mk('div','cs-extra');for(const [c,key] of [['deal','csDeals'],['sets','csLooks']]){const b=mk('button','cs-sub small'+(cat===c?' on':''),t(key));if(c==='deal'&&cat!=='deal'&&wNewIn('deal'))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();W3.cat=cat===c?slot.cats[0]:c;renderWardrobe()};extra.appendChild(b)}
   hd.append(subs,extra);dr.appendChild(hd);
-  if(cat==='sets'){const g=mk('div','cs-sets');wSets().forEach((S,i)=>{const c=mk('div','wd-set'+(S?'':' empty'));const im=mk('img');im.alt='';if(S){const u=wThumb('set',i);if(u)im.src=u}c.appendChild(im);c.appendChild(mk('b','',t('lookN',{n:i+1})));
-      const w=mk('button','wear',t('wear'));w.disabled=!S;w.onclick=()=>{wWearSet(i)};const sv=mk('button','save',t('saveLook'));sv.onclick=()=>wSaveSet(i);c.append(w,sv);g.appendChild(c)});dr.appendChild(g)}
+  if(cat==='sets'){const g=mk('div','cs-sets');wSets().forEach((S,i)=>{const c=mk('div','wd-set'+(S?'':' empty'));const th=mk('div','wd-th'),im=mk('img');im.alt='';if(S){const u=wThumb('set',i);if(u)im.src=u}th.appendChild(im);c.appendChild(th);const col=mk('div','col');col.appendChild(mk('b','',t('lookN',{n:i+1})));c.appendChild(col);
+      const w=mk('button','wear',t('wear'));w.disabled=!S;w.onclick=()=>{wWearSet(i)};const sv=mk('button','save',t('saveLook'));sv.onclick=()=>wSaveSet(i);col.append(w,sv);g.appendChild(c)});dr.appendChild(g)}
   else{const fl=mk('div','cs-filter');const powCat=c=>c==='hat'||c==='outfit'||c==='glasses'||c==='pet';
     if(cat!=='deal'&&powCat(cat))for(const [f,key] of [['all','csAll'],['pow','csPow'],['skin','csSkin']]){const b=mk('button','cs-f'+(CS.filter===f?' on':''),t(key));b.onclick=()=>{CS.filter=f;renderWardrobe()};fl.appendChild(b)}
     if(fl.childNodes.length)dr.appendChild(fl);
@@ -260,16 +260,20 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
     else act.appendChild(mk('div','cs-hint',(I.worn?'✓ '+t('csWorn')+': ':'')+I.name))}
   else act.appendChild(mk('div','cs-hint',t('csTry')));
   dr.appendChild(act);el.appendChild(dr);
-  if(cat!=='sets'&&cat!=='deal'&&!STYLE_CAT[cat])wMarkSeen(cat);saveProgress();wBadge()};
+  if(cat!=='sets'&&!STYLE_CAT[cat])wMarkSeen(cat);saveProgress();wBadge()};
 function csTap(c,id,I){if(I.gate&&!I.owned){sfx.locked();popupToast(I.gate);return}sfx.click();
   if(STYLE_CAT[c]){const key=STYLE_CAT[c]+'skin';if(I.owned){progress[key]=id==='none'?null:id;W3.sel=null}else W3.sel={cat:c,id};saveProgress();renderWardrobe();return}
   wSelect(c,id)}
 function csBuy(c,id){if(STYLE_CAT[c]){const q=STYLE_SKINS.find(q=>q.id===id);if(!q||wallet().skins.includes(id))return;if(progress.coins<q.price){sfx.locked();popupToast(t('needCoins'));return}
     progress.coins-=q.price;progress.skins.push(id);progress[q.cat+'skin']=id;W3.sel=null;sfx.flourish&&sfx.flourish(2);saveProgress();updateWalletUI();renderWardrobe();return}
   wBuy()}
-{const _ow=openWardrobe;openWardrobe=function(...a){const r=_ow(...a);CS.slot=csSlotOf(W3.cat)||'look';return r}}
+{const _ow=openWardrobe;openWardrobe=function(...a){CS.slot=csSlotOf(W3.cat)||CS.slot||'look';return _ow(...a)}}
 // every pattern drawn 30% bigger (Tzach): paint at 1/1.3 size, then stretch to the full texture — periodic patterns stay seamless
 const PAT_SCALE=1.3;
 {const _pt=patternTex;patternTex=function(id,base){const _ct=canvasTex;
   canvasTex=function(k,w,h,draw){return _ct(k+'_x'+PAT_SCALE,w,h,(g,W,H)=>{const c=document.createElement('canvas');c.width=Math.round(W/PAT_SCALE);c.height=Math.round(H/PAT_SCALE);draw(c.getContext('2d'),c.width,c.height);g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(c,0,0,W,H)})};
   try{return _pt(id,base)}finally{canvasTex=_ct}}}
+// bug hunt 4: a try-on or buy re-renders the drawer; keep the grid's scroll when the slot/category/filter didn't change
+{const _rw=renderWardrobe;renderWardrobe=function(){const key=()=>CS.slot+'/'+W3.cat+'/'+CS.filter,g=document.querySelector('#wardrobe .cs-grid'),y=g&&g.dataset.k===key()?g.scrollTop:0;
+  const r=_rw.apply(this,arguments);const n=document.querySelector('#wardrobe .cs-grid');if(n){n.dataset.k=key();if(y)n.scrollTop=y}return r}}
+I18N.en.style='Effects';I18N.he.style='אפקטים'; // the shop had two tabs called 'Style'; this one opens the Effects slot

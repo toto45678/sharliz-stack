@@ -153,7 +153,7 @@
   "photoHint": "Tieni premuto sulla foto per salvarla. Tocca per chiudere.",
   "newHat": "Nuovo cappello trofeo!",
   "hats": "Cappelli",
-  "style": "Stile",
+  "style": "Effetti",
   "cat_c": "Colori",
   "cat_t": "Scie",
   "cat_l": "Effetti atterraggio",
@@ -503,9 +503,9 @@
   "ng_clear": "Meno monete per livello",
   "ng_feverN": "Frenesia con 7 PERFETTI",
   "ps_astro": "Parti da 5 piani",
-  "ps_ghost": "Amichetto fantasma",
-  "ps_combo": "Aiuto combo",
-  "ps_bee": "Amichetto ape",
+  "ps_ghost": "Salva il 1° cuore perso",
+  "ps_combo": "Monete combo ×2",
+  "ps_bee": "+2 monete per ogni perfetto",
   "sk_t_sparkle": "Scintille",
   "sk_t_notes": "Note musicali",
   "sk_t_leaves": "Foglie",
@@ -740,7 +740,9 @@
   "bgNext": "Avanti",
   "bgBack": "Indietro",
   "bgGo": "Ho capito!",
-  "bgHelp": "Cosa sono gli amichetti?"
+  "bgHelp": "Cosa sono gli amichetti?",
+  "ps_egg": "Uova crescono ×2",
+  "nestFull": "Il nido è pieno! +5 biscotti al suo posto"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

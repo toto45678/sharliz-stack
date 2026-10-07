@@ -38,7 +38,7 @@ function trScreen(){const N=trNow(),D=trData(),r=trRoot(),z=ZONES[N.zi],nx=TR_ME
   r.querySelector('.tr-nx').textContent=nx?t('trNext',{n:nx.f-D.best,m:t('md_'+nx.k)}):t('trAllMedals');
   r.querySelector('.tr-play span').textContent=t('trPlay');r.querySelector('.tr-play').onclick=()=>{sfx.click();trStart()};
   r.querySelector('.tr-share span').textContent=D.best?t('trChallenge')+' · '+t('trFloorsN',{n:D.best}):t('trChallenge');r.querySelector('.tr-share').onclick=()=>{sfx.click();trShare(D.best)}}
-function trShare(n){const url=location.origin+location.pathname,txt=t('trShare',{n});
+function trShare(n){const url='https://sharliztower.com',txt=t('trShare',{n}); // the store app runs on localhost, and the Pages copy has every level open
   if(navigator.share){navigator.share({text:txt,url}).catch(()=>{});return}
   try{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')}catch(e){}}
 /* ---------- playing (mode 'tour') ---------- */
@@ -60,9 +60,10 @@ function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge'
 {const _ss=spawnSwinger;spawnSwinger=function(){_ss.apply(this,arguments);if(mode==='tour'&&TR&&TR.N.tw==='gold'&&swinger&&!swinger.gold&&!swinger.kind&&tower.length>=2&&Math.random()<.22){swinger.color=GOLDC;swinger.gold=true}}}
 {const _mo=modeOver;modeOver=function(won){if(mode!=='tour'||!TR)return _mo.apply(this,arguments);trEnd()}}
 {const _sm=startMode;startMode=function(m){if(m==='tour'){trStart(true);return}return _sm.apply(this,arguments)}}
-function trEnd(){const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.best=fl;const won=[];
+function trEnd(){TR.banked=1;const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.best=fl;const won=[];
   for(const m of TR_MEDALS){if(D.best>=m.f&&!D.got[m.k]){D.got[m.k]=1;wallet();progress.coins+=m.c;for(let i=0;i<m.bo;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}if(m.pk&&typeof sbGive==='function')sbGive(m.pk);won.push(m)}}
   saveProgress();trHud(false);const nx=TR_MEDALS.find(m=>D.best<m.f);
+  if(TRQUIET){if(won.length){popupToast('+'+won.reduce((a,m)=>a+m.c,0));setTimeout(()=>sfx.coin(4),300)}return}
   showOverlay(()=>({title:nb?t('trNew'):fl>=D.best-3?t('trClose'):t('trNice'),big:true,
     extra:card=>{card.classList.add('tr-res');const big=document.createElement('div');big.className='tr-big';big.innerHTML=`<b>${fl}</b><span></span>`;big.querySelector('span').textContent=t('trFloorsN',{n:''}).trim();card.appendChild(big);
       const bs=document.createElement('div');bs.className='tr-best';bs.innerHTML='<span></span><b></b>';bs.querySelector('span').textContent=t('trBest');bs.querySelector('b').textContent=t('trFloorsN',{n:D.best});card.appendChild(bs);
@@ -81,3 +82,12 @@ function trExit(){const L=TR?TR.from:level;TR=null;mode='levels';modeZi=null;lev
   const b=document.createElement('button');b.className='mode-btn m-tour';b.innerHTML=`<img src="art/tr_trophy.webp" alt=""><span class="mt"><b></b><small></small></span>`;b.querySelector('b').textContent=t('tourTitle');
   b.querySelector('small').textContent=t('tw_'+N.tw)+' · '+t('trBest')+' '+D.best;b.onclick=openTour;box.prepend(b)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const mb=document.getElementById('modesTitleBtn');if(mb){let bd=mb.querySelector('.tr-bd');if(!bd){bd=document.createElement('i');bd.className='badge tr-bd';bd.innerHTML='<img src="art/tr_trophy.webp" alt="">';mb.appendChild(bd)}const D=trData();bd.hidden=!progress.tut;bd.classList.toggle('done',!!D.got.g);bd.innerHTML=D.got.g?'✓':'<img src="art/tr_trophy.webp" alt="">'}return r}}
+// bug hunt 4: Pause → Map / Restart threw the run away (the medal popup had already said 'Bronze!'). Bank the best + medals
+// quietly first (no result card); Sky Tower keeps its best (no coins, those stay for finishing a run).
+let TRQUIET=false;
+function runBank(){try{
+  if(mode==='tour'&&TR&&!TR.banked&&TR.floors>0&&state!=='over'){TRQUIET=true;try{trEnd()}finally{TRQUIET=false}}
+  else if(mode==='endless'&&endless&&state!=='over'&&(endless.floors||0)>(progress.bestEndless||0)){progress.bestEndless=endless.floors;saveProgress()}}catch(e){}}
+{const _o=openMap;openMap=function(){runBank();return _o.apply(this,arguments)}}
+{const _t=toTitle;toTitle=function(){runBank();return _t.apply(this,arguments)}}
+{const _s=startMode;startMode=function(m){if(m===mode)runBank();return _s.apply(this,arguments)}}

@@ -65,7 +65,7 @@ function evShop(N,body){const E=N.E,D=evData(E.id);const g=document.createElemen
     if(it.c==='color')b.querySelector('.th').style.setProperty('--c',WCOL[it.id].c);
     b.querySelector('b').textContent=it.c==='trail'?t('sk_'+it.id):wName(it.c,it.id);b.querySelector('small').textContent=t('evOnly',{n:t('evs_'+E.id)});
     const pr=b.querySelector('.pr');if(own){const on=evWorn(it);pr.textContent=on?t('evOn'):'✓ '+t('evOwned');pr.classList.add('got');if(on)b.classList.add('worn')}else{pr.innerHTML=`<img src="art/ev_${E.cur}.webp" alt="">${it.p}`;if(D.cur<it.p)pr.classList.add('poor')}
-    b.onclick=()=>{if(own){sfx.click();evWear(it);evHub(N,'shop');return}if(D.cur<it.p){sfx.locked();popupToast(t('evNeed',{n:t('cur_'+E.cur)}));return}
+    b.onclick=()=>{if(own){sfx.click();evWear(it);evHub(N,'shop');return}if(D.cur<it.p){sfx.locked();noteToast(t('evNeed',{n:t('cur_'+E.cur)}));return}
       D.cur-=it.p;evGive(it);saveProgress();sfx.coin(4);vib(20);evWear(it);evHub(N,'shop');popupToast(t('evGot'))};g.appendChild(b)})}
 function evWorn(it){if(it.c==='hat')return progress.skin===it.id;if(it.c==='trail')return progress.tskin===it.id;return lookNow()[it.c]===it.id}
 function evOwned(it){if(it.c==='hat')return wallet().skins.includes(it.id);if(it.c==='trail')return wallet().skins.includes(it.id);return (progress.owned[it.c]||[]).includes(it.id)}

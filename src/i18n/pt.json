@@ -153,7 +153,7 @@
   "photoHint": "Toque e segure a foto para salvar. Toque para fechar.",
   "newHat": "Novo chapéu-troféu!",
   "hats": "Chapéus",
-  "style": "Estilo",
+  "style": "Efeitos",
   "cat_c": "Cores",
   "cat_t": "Rastros",
   "cat_l": "Efeitos de pouso",
@@ -503,9 +503,9 @@
   "ng_clear": "Menos moedas ao concluir",
   "ng_feverN": "Frenesi pede 7 PERFEITOS",
   "ps_astro": "Comece 5 andares acima",
-  "ps_ghost": "Mascote fantasma",
-  "ps_combo": "Ajudante de combo",
-  "ps_bee": "Mascote abelha",
+  "ps_ghost": "Salva o 1º coração perdido",
+  "ps_combo": "Moedas de combo ×2",
+  "ps_bee": "+2 moedas a cada perfeito",
   "sk_t_sparkle": "Brilhos",
   "sk_t_notes": "Notas musicais",
   "sk_t_leaves": "Folhas",
@@ -740,7 +740,9 @@
   "bgNext": "Próximo",
   "bgBack": "Voltar",
   "bgGo": "Entendi!",
-  "bgHelp": "O que são mascotes?"
+  "bgHelp": "O que são mascotes?",
+  "ps_egg": "Ovos crescem ×2",
+  "nestFull": "O ninho está cheio! +5 biscoitos no lugar"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",
