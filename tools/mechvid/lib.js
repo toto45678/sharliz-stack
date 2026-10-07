@@ -37,9 +37,11 @@ function ripple(g,x,y,p){g.save();g.globalAlpha=Math.max(0,1-p);g.lineWidth=5;g.
 function spot(g,x,y,r,a){g.save();g.fillStyle=`rgba(10,6,24,${a})`;g.beginPath();g.rect(0,0,innerWidth,innerHeight);g.arc(x,y,r,0,7,true);g.fill('evenodd');g.restore()}
 function arrow(g,x1,y1,x2,y2,col,p=1){const dx=x2-x1,dy=y2-y1,L=Math.hypot(dx,dy),ux=dx/L,uy=dy/L,ex=x1+dx*p,ey=y1+dy*p;g.save();g.lineCap='round';g.lineJoin='round';
   for(const [w,c] of [[16,INKC],[9,col]]){g.lineWidth=w;g.strokeStyle=c;g.fillStyle=c;g.beginPath();g.moveTo(x1,y1);g.lineTo(ex-ux*8,ey-uy*8);g.stroke();const hx=ex,hy=ey,s=w===16?22:16;g.beginPath();g.moveTo(hx+ux*(w===16?5:0),hy+uy*(w===16?5:0));g.lineTo(hx-ux*s-uy*s*.8,hy-uy*s+ux*s*.8);g.lineTo(hx-ux*s+uy*s*.8,hy-uy*s-ux*s*.8);g.closePath();g.fill()}g.restore()}
+window.SC_lib={hand,badge,ring,ripple,spot,arrow,INK:INKC};
 window.SC_draw=items=>{const d=2;oc.width=innerWidth*d;oc.height=innerHeight*d;og.setTransform(d,0,0,d,0,0);og.clearRect(0,0,innerWidth,innerHeight);const r=cv.getBoundingClientRect();og.translate(r.left,r.top);
   for(const it of items){if(it.k==='spot')spot(og,it.x,it.y,it.r,it.a??.45)}
   for(const it of items){if(it.k==='ring')ring(og,it.x,it.y,it.r,it.col,SC.t);else if(it.k==='arrow')arrow(og,it.x1,it.y1,it.x2,it.y2,it.col,it.p);else if(it.k==='ripple')ripple(og,it.x,it.y,it.p)}
+  for(const it of items){if(it.k==='fn')try{og.save();it.f(og,SC.t);og.restore()}catch(e){console.error(e)}}
   for(const it of items){if(it.k==='badge')badge(og,it.x,it.y,it.ok,it.p)}
   for(const it of items){if(it.k==='hand')hand(og,it.x,it.y,it.press||0)}
   for(const it of items){if(it.k==='fade'){og.fillStyle=`rgba(255,255,255,${it.a})`;og.fillRect(-r.left,-r.top,innerWidth,innerHeight)}}};
