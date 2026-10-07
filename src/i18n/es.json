@@ -726,7 +726,21 @@
   "sbPage": "Página {a}/{b}",
   "stkVs": "Sharliz vs {b}",
   "storyGot": "¡Nuevo sticker de historia!",
-  "tourTitle": "Torneo Semanal"
+  "tourTitle": "Torneo Semanal",
+  "bgT1": "¡Conoce a tu mascota!",
+  "bgS1": "{b} vuela a tu lado en cada nivel y en el inicio.",
+  "bgT2": "Las mascotas tienen poderes",
+  "bgS2": "El poder solo funciona cuando tu mascota está contigo. ¡Cada mascota tiene un poder distinto!",
+  "bgPw": "Poder de {b}",
+  "bgT3": "Cambia de mascota cuando quieras",
+  "bgS3": "Toca “{a}” abajo, luego la casilla “{b}” y elige una mascota.",
+  "bgT4": "Colecciona y crece",
+  "bgS4a": "Ganar hace eclosionar los huevos de tu nido. ¡Salen mascotas nuevas!",
+  "bgS4b": "Las galletas hacen crecer a tu mascota hasta 3 estrellas. Cada estrella da más monedas.",
+  "bgNext": "Siguiente",
+  "bgBack": "Atrás",
+  "bgGo": "¡Entendido!",
+  "bgHelp": "¿Qué son las mascotas?"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",
