@@ -5,7 +5,7 @@
 (function(){
   const isNative=()=>!!(window.Capacitor&&window.Capacitor.isNativePlatform&&window.Capacitor.isNativePlatform());
   if(!isNative())return;
-  const CONSUMABLE=sku=>/^coins_/.test(sku);
+  const CONSUMABLE=sku=>/^(coins_|pass)/.test(sku); // the Pass is bought again every season
   const pending={};let ready=null,platform=null;
   const owned=sku=>{try{return (progress.purchases||[]).some(p=>p.sku===sku&&!p.test)}catch(e){return false}};
   function init(){
