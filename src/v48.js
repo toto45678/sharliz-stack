@@ -49,7 +49,7 @@ STYLE_SKINS.push({id:'t_sparkle',cat:'t',price:120,w:1},{id:'t_notes',cat:'t',pr
   {id:'l_confetti',cat:'l',price:150,w:1},{id:'l_stars',cat:'l',price:120,w:1},{id:'l_bubbles',cat:'l',price:120,w:1},{id:'l_hearts',cat:'l',price:150,w:1});
 
 /* ---------------- powers from every slot ---------------- */
-// every upgrade = one advantage + one cost, like the shop hats in v39 (Raz: "different, not stronger")
+// every upgrade = one advantage + one cost, like the shop hats in v39 (Tzach: "different, not stronger")
 const GEAR_FX={outfit:{armor:{hearts:1,fall:1.15},wings:{fall:.75,wind:1.4},magnet:{coins:1.2,tol:.9},ninja:{tol:1.12,wind:1.25}},
   glasses:{night:{light:1.5,pts:.9},scope:{aim:1,pts:.9},lucky:{coins:1.12,wind:1.25}}};
 Object.assign(HAT_FX,{hardhat:{hearts:1,pts:.8},royal:{coins:1.3,hearts:-1},cloudhat:{fall:.7,coins:.9}});
