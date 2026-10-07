@@ -798,6 +798,92 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 
 .cs-act{gap:8px}.cs-act .cs-buy{flex:1 1 0;min-width:0}.cs-act .cs-coinalt{--g1:#ffe066;--g2:#f5a300}
 
+/* ===== v50: bonus stage "Treasure in the Clouds" ===== */
+/* golden bonus button on the boss win card */
+.btn.bonus{--c1:#fff27a;--c2:#ff9f1a;font-size:1.45rem;min-height:56px;animation:bnGlow 1.4s ease-in-out infinite;color:#fff;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill}
+.card.wb .actions .btn.bonus{rotate:1.5deg;font-size:1.55rem;min-height:62px}
+.actions .btn.bonus+.btn.primary{--c1:var(--b1);--c2:var(--b2);font-size:1.15rem;min-height:46px;width:80%;margin-inline:auto;color:#fff}
+.card.wb .actions .btn.bonus+.btn.primary{font-size:1.15rem;rotate:0deg}
+.btn.bonus img.ico{width:1.7em;height:1.7em;margin-block:-.4em;filter:drop-shadow(0 2px 0 var(--ink))}
+.btn.bonus::after{content:var(--bn-new,'NEW');position:absolute;top:-13px;inset-inline-start:-10px;rotate:-14deg;background:linear-gradient(180deg,#ff6b7d,#e01e45);color:#fff;border:2.5px solid var(--ink);border-radius:10px;padding:2px 8px 3px;font-size:.78rem;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;box-shadow:0 3px 0 var(--ink);animation:bnTag 1.4s ease-in-out infinite}
+@keyframes bnGlow{0%,100%{box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.18),0 6px 0 var(--ink),0 0 0 0 rgba(255,214,60,.0)}50%{box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -5px 0 rgba(0,0,0,.18),0 6px 0 var(--ink),0 0 22px 6px rgba(255,214,60,.75)}}
+@keyframes bnTag{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+/* HUD */
+#bnHud{position:fixed;inset:0;pointer-events:none;z-index:3}
+#hud.bonus #hearts{display:none}
+.bn-timer{justify-self:start;display:flex;align-items:center;gap:4px;height:46px;padding:0 10px 0 2px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid var(--ink);box-shadow:0 4px 0 var(--ink);color:#fff;font:1.45rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.bn-timer img{width:42px;height:42px;margin-block:-6px;filter:drop-shadow(0 2px 0 var(--ink))}
+.bn-timer b{min-width:2.2em;font-weight:400;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill}
+.bn-timer{background:linear-gradient(90deg,#c98a00 calc(var(--p,1)*100%),rgba(18,13,43,.9) 0)}
+.bn-timer.low{background:linear-gradient(90deg,#d9263f calc(var(--p,1)*100%),rgba(18,13,43,.9) 0)}
+.bn-timer.low{animation:bnPulse .5s ease-in-out infinite}
+.bn-timer.bn-hit{animation:bnHit .45s ease-out}
+@keyframes bnPulse{50%{transform:scale(1.08)}}
+@keyframes bnHit{0%{transform:translateX(0)}20%{transform:translateX(-8px);background:#c4253d}40%{transform:translateX(7px)}60%{transform:translateX(-5px)}100%{transform:none}}
+.bn-track{position:absolute;inset-inline-end:10px;top:22%;height:50%;width:46px}
+.bn-track .tube{position:absolute;inset-inline-start:11px;top:0;bottom:0;width:26px;border:3px solid var(--ink);border-radius:999px;background:rgba(14,12,46,.7);overflow:hidden;box-shadow:0 3px 0 rgba(0,0,0,.35),inset 0 2px 4px rgba(0,0,0,.5)}
+.bn-track .fill{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(180deg,#fff27a,#ffb000);transition:height .35s cubic-bezier(.3,1.5,.5,1)}
+.bn-stop{position:absolute;inset-inline-start:-2px;width:50px;transform:translateY(50%);display:flex;flex-direction:column;align-items:center}
+.bn-stop img{width:46px;height:42px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.6))}
+.bn-stop small{margin-top:-6px;padding:0 6px;border-radius:999px;background:var(--ink);color:#fff;font:.82rem/1.35 "Lilita One","Secular One",system-ui,sans-serif}
+.bn-stop img{opacity:.7;transition:transform .2s}.bn-stop.open img{width:50px;height:46px;opacity:1}
+.bn-stop.next img{opacity:1;transform:scale(1.25);filter:drop-shadow(0 0 8px rgba(255,226,77,.95)) drop-shadow(0 3px 0 rgba(10,8,40,.6));animation:bnNext 1s ease-in-out infinite}
+.bn-stop.next small{background:var(--y2);color:#fff;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill}
+.bn-stop.open::after{content:'✓';position:absolute;top:-4px;inset-inline-end:-6px;width:20px;height:20px;border-radius:50%;background:#3db618;border:2px solid var(--ink);color:#fff;font:700 12px/16px system-ui;text-align:center}
+@keyframes bnNext{50%{transform:scale(1.35) rotate(-5deg)}}
+.bn-stop.pop{animation:bnPop .7s cubic-bezier(.3,1.8,.5,1)}
+@keyframes bnPop{0%{transform:translateY(50%) scale(.6)}60%{transform:translateY(50%) scale(1.35) rotate(-8deg)}100%{transform:translateY(50%) scale(1)}}
+.bn-fl{position:absolute;bottom:-34px;inset-inline-start:0;width:46px;text-align:center;color:#fff;font:1.2rem "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill}
+/* intro + result cards */
+.bn-chests{display:flex;justify-content:center;gap:10px;margin:6px 0 12px}
+.bn-ch{flex:1;max-width:96px;border-radius:16px;border:3px solid var(--ink);padding:4px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;box-shadow:0 4px 0 var(--ink);background:linear-gradient(180deg,#5a3fc0,#2a1a66)}
+.bn-ch img{width:100%;height:64px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.55))}
+.bn-ch b{font:1rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;white-space:nowrap}
+.bn-ch.bronze{background:linear-gradient(180deg,#f0a35a,#9c4f1c)}.bn-ch.silver{background:linear-gradient(180deg,#b9c8ff,#5a6fc0)}.bn-ch.gold{background:linear-gradient(180deg,#ffe27a,#e08a00)}
+.bn-res .bn-ch{animation:bnIn .5s cubic-bezier(.3,1.6,.5,1) both}
+.bn-res .bn-ch.locked{filter:saturate(.25) brightness(.75)}
+.bn-res .bn-ch.open b{color:var(--y1)}
+@keyframes bnIn{0%{transform:scale(.3) rotate(-10deg);opacity:0}100%{transform:none;opacity:1}}
+.bn-rules{align-self:stretch;width:100%;box-sizing:border-box;list-style:none;margin:6px 0 10px;padding:0;display:flex;flex-direction:column;gap:8px}
+.bn-rules li{display:flex;align-items:center;gap:12px;padding:8px 12px;border-radius:14px;background:rgba(18,13,43,.35);font-weight:800;font-size:1.1rem;text-align:start}
+.bn-rules img,.bn-rules em{width:34px;height:34px;object-fit:contain;flex:none}
+.bn-rules em{display:grid;place-items:center;border-radius:50%;border:2.5px solid var(--ink);font:normal .95rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;direction:ltr}
+.bn-rules em.neg{background:#ff4d5e}.bn-rules em.pos{background:#3db618}
+.bn-reach{margin:2px auto 6px;padding:4px 14px;border-radius:999px;background:rgba(18,13,43,.6);color:#fff;font-weight:800;width:max-content;max-width:100%}
+.bn-rew{display:flex;flex-direction:column;align-items:center;gap:12px;margin-bottom:6px}
+.bn-bos{display:flex;justify-content:center;gap:14px}
+.bn-coins{display:inline-flex;align-items:center;gap:6px;padding:4px 18px 6px;border-radius:16px;border:3px solid var(--ink);background:linear-gradient(180deg,var(--y1) 0 48%,var(--y2) 52%);box-shadow:inset 0 3px 0 rgba(255,255,255,.55),0 5px 0 var(--ink);rotate:-2deg;font:1.7rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:4px var(--ink);paint-order:stroke fill;direction:ltr}
+.bn-coins b{font-weight:400}.bn-coins .coin-i{width:30px;height:30px}
+.bn-bo{position:relative;width:52px;height:48px;border-radius:12px;border:3px solid var(--ink);background:#2a1a66;display:grid;place-items:center;box-shadow:0 3px 0 var(--ink);margin-bottom:14px}
+.bn-bo img{width:32px;height:32px}
+.bn-bo em{position:absolute;top:-9px;inset-inline-end:-9px;font-style:normal;padding:0 5px;border-radius:999px;background:#3db618;border:2px solid var(--ink);color:#fff;font:.75rem/1.3 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr}
+.bn-bo small{position:absolute;top:100%;margin-top:4px;left:50%;translate:-50% 0;white-space:nowrap;font-size:.68rem;font-weight:800;color:#fff}
+.bn-half{margin:2px 0 0;font-size:.85rem;opacity:.85}
+#hud.bonus #score{display:inline-flex;align-items:center;gap:4px;direction:ltr}
+#hud.bonus #score .coin-i{width:22px;height:22px}#hud.bonus #score b{font-weight:400}
+.bn-timer.bn-plus{animation:bnPlus .5s ease-out}
+@keyframes bnPlus{0%{transform:scale(1)}35%{transform:scale(1.15);background:#2f8a12}100%{transform:none}}
+.bn-chip{position:fixed;z-index:30;translate:-50% -60%;pointer-events:none;padding:2px 10px 4px;border-radius:999px;border:3px solid var(--ink);color:#fff;font:1.25rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;box-shadow:0 3px 0 var(--ink);direction:ltr;animation:bnChip .9s ease-out forwards}
+.bn-chip.pos{background:#3db618}.bn-chip.neg{background:#ff4d5e}
+@keyframes bnChip{0%{transform:translateY(-6px) scale(.6);opacity:0}20%{transform:translateY(0) scale(1.15);opacity:1}100%{transform:translateY(26px) scale(1);opacity:0}}
+.bn-banner{position:fixed;left:50%;top:38%;z-index:30;translate:-50% -50%;pointer-events:none;white-space:nowrap;font:3rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:var(--y1);-webkit-text-stroke:8px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--ink);animation:bnBan 1.3s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes bnBan{0%{transform:scale(.2) rotate(-12deg);opacity:0}25%{transform:scale(1.1) rotate(-4deg);opacity:1}80%{transform:scale(1) rotate(-4deg);opacity:1}100%{transform:scale(1.3) rotate(-4deg);opacity:0}}
+/* chest reached: big pop in the middle (instead of a toast over the tower) */
+.bn-pop{position:fixed;left:50%;top:21%;z-index:30;translate:-50% -50%;pointer-events:none;display:flex;flex-direction:column;align-items:center;animation:bnBan 1.2s cubic-bezier(.3,1.6,.5,1) forwards}
+.bn-pop img{width:104px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 0 rgba(10,8,40,.6))}
+.bn-pop b{margin-top:-12px;font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:var(--y1);-webkit-text-stroke:7px var(--ink);paint-order:stroke fill;direction:ltr}
+/* result: the chest you almost got */
+.bn-res .bn-ch{position:relative}
+.bn-res .bn-ch.near{filter:none;outline:3px solid var(--y1);outline-offset:2px;animation:bnIn .5s cubic-bezier(.3,1.6,.5,1) both,bnNear 1.1s ease-in-out .8s infinite}
+.bn-res .bn-ch.near img{filter:saturate(.5) brightness(.9) drop-shadow(0 3px 0 rgba(10,8,40,.55))}
+.bn-ch i{position:absolute;top:-14px;left:50%;translate:-50% 0;white-space:nowrap;font-style:normal;padding:2px 8px 3px;border-radius:999px;background:linear-gradient(180deg,#ff6b7d,#e01e45);border:2.5px solid var(--ink);color:#fff;font:.8rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;box-shadow:0 2px 0 var(--ink)}
+@keyframes bnNear{50%{transform:scale(1.06) rotate(-2deg)}}
+.btn.bn-wait{filter:saturate(.4) brightness(.9)}
+#hud.bonus #score{font-size:.9em}
+#card:has(.bn-res) .card-title{font-size:2.3rem}
+.card-body.bn-res{padding-top:10px}
+.bn-stop small{position:relative;z-index:1}.bn-stop.next small{margin-top:2px;font-size:.8rem;padding:1px 7px}
+
 </style>
 
 <div id="app">
@@ -1769,7 +1855,7 @@ let camY=0, time=0, ft=0, best=+(store('sharliz-best')||0), balance=0, swayK=0, 
 let collapsing=null, survivor=-1, busy=false;
 
 const goal=()=>mode==='daily'?endless.goal:mode!=='levels'?999:isBoss()?999:6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone());
-const speed=()=>(1.45+etOf(zoneIdx(level))*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
+const speed=()=>mode==='bonus'?bnSpeed():(1.45+etOf(zoneIdx(level))*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)*(boost.slow>0?.6:1)*(fever>0?.78:1)*easyK()*(lvInZone()===4&&mode==='levels'?.9:1)*hatSpd();
 const rangeXs=()=>Math.min((W/2-S*.75)/S,1.3);   // narrow sweep above the tower
 const xOf=xs=>W/2+xs*S;
 const yOf=i=>{let s=0;const n=Math.min(i,tower.length);for(let j=0;j<n;j++)s+=tower[j].sz||1;return -.2*BH-(s+Math.max(0,i-n))*STEP};
@@ -1912,7 +1998,7 @@ function win(){
     const last=level>=TOTAL, st=lv.starsNow, title=last?t('allDone'):st>=3?t('splendid'):st===2?t('swell'):t('done');
     showOverlay(()=>({title,anim:'dance',titleKey:last?null:st>=3?'splendid':st===2?'great':null,ribbon:'mustard',animSize:118,sub:last?t('allDoneSub',{s:score}):isBoss()?t('bossCleared',{n:t((BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])),s:score}):t('clearedSub',{n:level,c:tower.length-1,s:score}),stars:st,top:syy>H*.5,extra:card=>{const ml=document.createElement('div');ml.className='win-ms';starMissions().forEach(m=>{const d=document.createElement('span');d.className=missionDone(m)?'ok':'';d.textContent=(missionDone(m)?'✓ ':'✗ ')+missionText(m);ml.appendChild(d)});card.appendChild(ml);if(lv.newHat){const h=document.createElement('div');h.className='new-hat';h.innerHTML=`<img src="${hatThumbSrc(lv.newHat)}" alt=""><span></span>`;h.querySelector('span').textContent=t('newHat');card.appendChild(h)}tallyCard(card,true)},
       actions:last?[{label:t('mapShort'),icon:'map',primary:true,fn:()=>go(()=>openMap(prevUnlocked))}]
-        :[{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();iris.r=-1;drawIris();if(isBoss()&&level<TOTAL)worldTransition(zoneIdx(level)+1,()=>{preloadWorld(ZONES[zoneIdx(level)+1].id);preLevel(level+1)});else preLevel(level+1)}},{label:t('replay'),icon:'restart',fn:()=>go(()=>{score=levelStartScore;startLevel()})},{label:t('mapShort'),icon:'map',fn:()=>go(()=>openMap(prevUnlocked))},{label:t('shareShort'),icon:'camera',color:'purple',fn:()=>shareTower()}]}));
+        :[...bnAct(),{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();iris.r=-1;drawIris();if(isBoss()&&level<TOTAL)worldTransition(zoneIdx(level)+1,()=>{preloadWorld(ZONES[zoneIdx(level)+1].id);preLevel(level+1)});else preLevel(level+1)}},{label:t('replay'),icon:'restart',fn:()=>go(()=>{score=levelStartScore;startLevel()})},{label:t('mapShort'),icon:'map',fn:()=>go(()=>openMap(prevUnlocked))},{label:t('shareShort'),icon:'camera',color:'purple',fn:()=>shareTower()}]}));
   },1300);
 }
 async function failGag(){
@@ -4936,7 +5022,7 @@ function artAlias(n){if(!ART_RE||PIC_SET.has(n))return n;const m=n.match(ART_RE)
    - Every one of the 22 new bosses drops its own 3D trophy hat (WHATX 'h_<sid>', trophy:sid, legendary). Wearing it gives
      powers with NO cost: immunity to that boss's mechanic (it never shows up again while you wear it) + one bonus.
    - Astronaut suit (outfit 'astro', real purchase 'astro'): your tower starts already 5 floors high. */
-const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Cat Ears','אוזני חתול רחוב'],desertN:['Scorpion Crown','כתר העקרב'],candyN:['Candy Witch Hat','כובע מכשפת הסוכר'],
+const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Cat Ears','אוזני חתול רחוב'],desertN:['Stinger Crown','כתר העוקץ'],candyN:['Candy Witch Hat','כובע מכשפת הסוכר'],
   snowN:['Frost Wolf Hood','ברדס זאב הכפור'],oceanN:['Angler Lantern','פנס הדג'],volcanoN:['Imp Horns','קרני השד'],spaceN:['Moon Bunny Ears','אוזני ארנב הירח'],
   farmS:['Thunder Horns','קרני הרעם'],cityS:['Rain Hat','כובע גשם'],desertS:['Sandworm Turban','טורבן התולעת'],candyS:['Gingerbread Crown','כתר הג׳ינג׳ר'],
   snowS:['General Bicorne','כובע הגנרל'],oceanS:['Shark Fin','סנפיר הכריש'],volcanoS:['Phoenix Crest','כרבולת עוף החול'],spaceS:['Cosmic Eye','העין הקוסמית'],
@@ -5393,6 +5479,90 @@ function buyWithCoins(c,id){const p=coinAlt(c,id);if(!p||wOwned(c,id))return;if(
   const p=coinAlt(s.cat,s.id);if(!p||wOwned(s.cat,s.id))return;const act=el.querySelector('.cs-act');if(!act)return;
   const b=document.createElement('button');b.className='btn green cs-buy cs-coinalt'+(progress.coins<p?' poor':'');
   b.innerHTML='<span></span>'+coinImg()+p.toLocaleString();b.querySelector('span').textContent=t('orCoins')+' ';b.onclick=()=>buyWithCoins(s.cat,s.id);act.appendChild(b)}}
+
+/* ===== v50: bonus stage "Treasure in the Clouds" (after a boss win) =====
+   Design: ChatGPT mockup (design/bonus/mock_chatgpt.png) + ChatGPT chest/stopwatch sprites (art/bn_*.webp).
+   30 s on the clouds world, no hearts: a miss costs 3 s, a perfect landing gives +1 s.
+   Chests hang on the floor track at 8 / 16 / 24 floors. Rewards are collected on the result card. */
+Object.assign(I18N.en,{bnBtn:'Bonus stage!',bnNew:'NEW',bnTitle:'Treasure in the Clouds',bnIntro1:'30 seconds to build high',bnIntro2a:'Miss = 3 seconds less',bnIntro2b:'Perfect = 1 bonus second',bnIntro3:'Chests at 8, 16 and 24 floors',bnGo:"Let's go!",bnFloors:'{n} floors',bnReached:'You reached {n} floors!',bnCollect:'Collect & continue',bnMiss:'−3 s',bnPerf:'+1 s',bnChest:'Chest!',bnTime:"Time's up!",bnEnd:'End bonus',bnHalf:'Replay: half coins',bnLocked:'Locked',bnBonus:'Bonus stage',bnMore:'{n} more floors!',bnLeft:'{n} to go',bnOne:'Just 1 more floor!'});
+Object.assign(I18N.he,{bnBtn:'שלב בונוס!',bnNew:'חדש',bnTitle:'אוצר בעננים',bnIntro1:'30 שניות לבנות גבוה',bnIntro2a:'נפילה = 3 שניות פחות',bnIntro2b:'מושלם = שנייה בונוס',bnIntro3:'תיבות אוצר בקומות 8, 16 ו-24',bnGo:'יאללה!',bnFloors:'{n} קומות',bnReached:'הגעתם ל-{n} קומות!',bnCollect:'אוספים וממשיכים',bnMiss:'−3 שניות',bnPerf:'+1 שנייה',bnChest:'תיבה!',bnTime:'נגמר הזמן!',bnEnd:'סיום הבונוס',bnHalf:'שוב בונוס: חצי מטבעות',bnLocked:'נעול',bnBonus:'שלב בונוס',bnMore:'עוד {n} קומות!',bnLeft:'עוד {n}',bnOne:'עוד קומה אחת!'});
+ICONS.chest=IMGTAG('bn_chest_gold','ico');
+const BN_TIME=30,BN_CH=[{f:8,k:'bronze',c:50,b:0},{f:16,k:'silver',c:100,b:1},{f:24,k:'gold',c:200,b:2}];
+let BN=null;
+const bnZi=()=>Math.max(0,ZONES.findIndex(z=>z.sid==='clouds'));
+const bnSpeed=()=>(1.5+Math.min(tower.length-1,24)*.03)*(boost.slow>0?.6:1)*(fever>0?.8:1)*easyK();
+// the golden button on the boss win card
+function bnAct(){if(mode!=='levels'||!isBoss()||level>=TOTAL)return[];const from=level;document.documentElement.style.setProperty('--bn-new',JSON.stringify(t('bnNew')));
+  return[{label:t('bnBtn'),icon:'chest',primary:true,color:'bonus',fn:()=>go(()=>startBonus(from))}]}
+function startBonus(from){
+  const zi=bnZi(),sid=(ZONES[zoneIdx(from)]||{}).sid||'x';progress.bonus=progress.bonus||{};
+  BN={from,sid,t:BN_TIME,floors:0,coins:0,open:[],boost:[],first:!progress.bonus[sid],run:false,perf:0,shown:-1,ended:false};
+  mode='bonus';modeZi=zi;level=zi*LPZ+3;score=0;endless={floors:0,zoneAt:1e9,goal:0};duo=null;
+  startLevel(level);hearts=3;updateHud();document.getElementById('gauge').hidden=true;
+  const tb=document.getElementById('toast');tb.querySelector('small').textContent=t('bnBonus');tb.querySelector('strong').textContent=t('bnTitle');
+  bnHud(true);bnIntro()}
+function bnIntro(){state='intro';
+  showOverlay(()=>({title:t('bnTitle'),actions:[{label:t('bnGo'),icon:'play',primary:true,fn:()=>{hideOverlay();state='wait';spawnAt=time+.5;BN.run=true;sfx.flourish(1)}}],
+    extra:card=>{card.classList.add('bn-card');const row=document.createElement('div');row.className='bn-chests';
+      BN_CH.forEach(c=>{const d=document.createElement('div');d.className='bn-ch '+c.k;d.innerHTML=`<img src="art/bn_chest_${c.k}.webp" alt=""><b></b>`;d.querySelector('b').textContent=t('bnFloors',{n:c.f});row.appendChild(d)});card.appendChild(row);
+      const ul=document.createElement('ul');ul.className='bn-rules';[['<img src="art/bn_stopwatch.webp" alt="">','bnIntro1'],['<em class="neg">−3</em>','bnIntro2a'],['<em class="pos">+1</em>','bnIntro2b']].forEach(([ic,k])=>{const li=document.createElement('li');li.innerHTML=ic+'<span></span>';li.querySelector('span').textContent=t(k);ul.appendChild(li)});card.appendChild(ul);
+      if(!BN.first){const p=document.createElement('p');p.className='bn-half';p.textContent=t('bnHalf');card.appendChild(p)}}}),true)}
+// HUD: stopwatch pill (where the hearts are) + chest track (where the goal gauge is)
+let bnEl=null;
+function bnHud(on){
+  if(!bnEl){bnEl=document.createElement('div');bnEl.id='bnHud';bnEl.innerHTML=`<div class="bn-track"><div class="tube"><i class="fill"></i></div>${BN_CH.map((c,i)=>`<div class="bn-stop s${i}" style="bottom:${c.f/24*100}%"><img src="art/bn_chest_${c.k}.webp" alt=""><small>${c.f}</small></div>`).join('')}<b class="bn-fl">0</b></div>`;
+    document.getElementById('hud').appendChild(bnEl);
+    const tm=document.createElement('div');tm.className='bn-timer';tm.innerHTML='<img src="art/bn_stopwatch.webp" alt=""><b>0:30</b>';const hs=document.getElementById('hearts');hs.parentNode.insertBefore(tm,hs);bnEl.tm=tm}
+  bnEl.hidden=!on;bnEl.tm.hidden=!on;document.getElementById('hud').classList.toggle('bonus',!!on)}
+function bnHudTick(){if(!BN||!bnEl)return;const s=Math.max(0,Math.ceil(BN.t));
+  if(s!==BN.shown){BN.shown=s;bnEl.tm.querySelector('b').textContent='0:'+String(s).padStart(2,'0');bnEl.tm.classList.toggle('low',s<=5);if(s<=5&&s>0&&BN.run&&sfx.ok())tone({f:880,d:.06,type:'square',v:.04})}
+  bnEl.tm.style.setProperty('--p',clamp(BN.t/BN_TIME,0,1));
+  const fl=Math.max(0,tower.length-1);bnEl.querySelector('.bn-track .fill').style.height=Math.min(1,fl/24)*100+'%';bnEl.querySelector('.bn-fl').textContent=fl;
+  const nx=BN_CH.findIndex((c,i)=>!BN.open.includes(i));BN_CH.forEach((c,i)=>{const st=bnEl.querySelector('.bn-stop.s'+i),o=BN.open.includes(i);st.classList.toggle('next',i===nx);{const lb=i===nx?t('bnLeft',{n:c.f-fl}):String(c.f),sm=st.querySelector('small');if(sm.textContent!==lb)sm.textContent=lb}if(st.classList.contains('open')!==o){st.classList.toggle('open',o);st.querySelector('img').src=`art/bn_chest_${c.k}${o?'_open':''}.webp`}})}
+function bnChip(txt,cls){if(!bnEl||!bnEl.tm)return;const r=bnEl.tm.getBoundingClientRect(),d=document.createElement('div');d.className='bn-chip '+cls;d.textContent=txt;d.style.left=(r.left+r.width/2)+'px';d.style.top=(r.bottom+4)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),900);
+  bnEl.tm.classList.remove(cls==='pos'?'bn-plus':'bn-hit');void bnEl.tm.offsetWidth;bnEl.tm.classList.add(cls==='pos'?'bn-plus':'bn-hit')}
+function bnCelebrate(c){const d=document.createElement('div');d.className='bn-pop';d.innerHTML=`<img src="art/bn_chest_${c.k}_open.webp" alt=""><b>+${c.c}</b>`;document.body.appendChild(d);setTimeout(()=>d.remove(),950)}
+function bnLanded(){if(BN.ended)return true;
+  const fl=tower.length-1;BN.floors=Math.max(BN.floors,fl);BN.coins+=2;
+  if(combo>BN.perf){BN.t=Math.min(BN_TIME+15,BN.t+1);bnChip('+1','pos')}
+  BN.perf=combo;
+  BN_CH.forEach((c,i)=>{if(fl>=c.f&&!BN.open.includes(i)){BN.open.push(i);BN.coins+=c.c;for(let k=0;k<c.b;k++)BN.boost.push(pick(['slow','laser','shield','heart']));
+    sfx.flourish(i+1);vib([20,40,20]);bnCelebrate(c);const st=bnEl&&bnEl.querySelector('.bn-stop.s'+i);if(st){st.classList.remove('pop');void st.offsetWidth;st.classList.add('pop')}
+    const s=tower[tower.length-1];for(let q=0;q<26;q++)particles.push({x:xOf(s.xs)+rnd(-S,S),y:yOf(fl)+rnd(-BH,BH),vx:rnd(-220,220),vy:rnd(-420,-120),life:1.3,c:pick(['#ffd23f','#fff4b0','#ffb000','#ffffff']),sz:rnd(4,8)})}});
+  updateHud();bnHudTick();return false}
+function bnEnd(){if(!BN||BN.ended)return;BN.ended=true;BN.run=false;state='win';swinger=null;sfx.flourish(2);{const d=document.createElement('div');d.className='bn-banner';d.textContent=t('bnTime');document.body.appendChild(d);setTimeout(()=>d.remove(),1300)}
+  setTimeout(bnResult,1100)}
+function bnReward(){const k=BN.first?1:.5;return{coins:Math.round(BN.coins*k),boost:BN.first?BN.boost.slice():[]}}
+function bnResult(){const R=bnReward();
+  showOverlay(()=>({title:t('bnTitle'),big:true,actions:[{label:t('bnCollect'),icon:'play',primary:true,color:'green',fn:bnCollect}],
+    extra:card=>{card.classList.add('bn-card','bn-res');const nxI=BN_CH.findIndex((c,i)=>!BN.open.includes(i));const row=document.createElement('div');row.className='bn-chests';
+      BN_CH.forEach((c,i)=>{const o=BN.open.includes(i),d=document.createElement('div');d.className='bn-ch '+c.k+(o?' open':' locked');d.style.animationDelay=(.1+i*.15)+'s';
+        d.innerHTML=`<img src="art/bn_chest_${c.k}${o?'_open':''}.webp" alt=""><b></b>`;d.querySelector('b').textContent=o?'+'+c.c:t('bnFloors',{n:c.f});if(!o&&nxI===i&&c.f-BN.floors<=3){d.classList.add('near');const tg=document.createElement('i');tg.textContent=c.f-BN.floors===1?t('bnOne'):t('bnMore',{n:c.f-BN.floors});d.appendChild(tg)}row.appendChild(d)});card.appendChild(row);
+      const fl=document.createElement('div');fl.className='bn-reach';fl.textContent=t('bnReached',{n:BN.floors});card.appendChild(fl);
+      const rw=document.createElement('div');rw.className='bn-rew';rw.innerHTML=`<span class="bn-coins">${coinImg()}<b>+0</b></span>`+(R.boost.length?'<div class="bn-bos">':'')+Object.entries(R.boost.reduce((a,b)=>(a[b]=(a[b]||0)+1,a),{})).map(([b,n])=>`<span class="bn-bo"><img src="art/ic_${b}.webp" alt=""><em>×${n}</em><small>${t('b_'+b)}</small></span>`).join('')+(R.boost.length?'</div>':'');card.appendChild(rw);
+      if(!BN.first){const p=document.createElement('p');p.className='bn-half';p.textContent=t('bnHalf');card.appendChild(p)}}}));
+  BN.open.forEach((i,n)=>setTimeout(()=>sfx.coin(2),350+n*220));
+  {const btn=document.querySelector('#card .btn.primary');if(btn){btn.disabled=true;btn.classList.add('bn-wait')}const el=document.querySelector('#card .bn-coins b'),t0=performance.now(),D=900+Math.min(900,R.coins*3);
+   const step=now=>{if(!el.isConnected)return;const k=Math.min(1,(now-t0-500)/D);el.textContent='+'+Math.round(R.coins*Math.max(0,k)*(2-Math.max(0,k)));if(k<1)requestAnimationFrame(step);else{if(btn){btn.disabled=false;btn.classList.remove('bn-wait')}if(sfx.ok())tone({f:880,f2:1320,d:.12,type:'triangle',v:.05})}};requestAnimationFrame(step)}}
+function bnCollect(){if(!BN||BN.paid)return;BN.paid=true;const R=bnReward();wallet();progress.coins+=R.coins;R.boost.forEach(b=>progress.inv[b]=(progress.inv[b]||0)+1);progress.bonus[BN.sid]=1;saveProgress();sfx.coin(4);popupToast('+'+R.coins);
+  const L=BN.from;BN=null;bnHud(false);mode='levels';modeZi=null;level=L;
+  hideOverlay();iris.r=-1;drawIris();worldTransition(zoneIdx(L)+1,()=>{preloadWorld(ZONES[zoneIdx(L)+1].id);preLevel(L+1)})}
+// wiring
+{const _u=update;update=function(dt){_u(dt);if(mode!=='bonus'||!BN){if(bnEl&&!bnEl.hidden)bnHud(false);return}
+  if(BN.run&&['aim','drop','wait','collapse'].includes(state)){BN.t-=dt;if(BN.t<=0){BN.t=0;bnHudTick();bnEnd();return}}bnHudTick()}}
+{const _l=loseHeart;loseHeart=function(msg,x,y,silent,key){if(mode!=='bonus'||!BN)return _l.apply(this,arguments);
+  if(BN.ended)return;combo=0;BN.perf=0;BN.t=Math.max(0,BN.t-3);vib([40,30,40]);popup(msg,x,y-BH*.6,'#e8806e',key);bnChip('−3','neg');setTimeout(()=>sfx.heart(),200);
+  bnHudTick();if(BN.t<=0){bnEnd();return}state='wait';spawnAt=time+.6}}
+{const _m=modeLanded;modeLanded=function(){if(mode==='bonus'&&BN)return bnLanded();return _m.apply(this,arguments)}}
+{const _i=maybeIntro;maybeIntro=function(){if(mode==='bonus')return false;return _i.apply(this,arguments)}}
+{const _w=windFor;windFor=function(n){return mode==='bonus'?0:_w.apply(this,arguments)}}
+{const _h=updateHazards;updateHazards=function(dt){if(mode==='bonus')return;return _h.apply(this,arguments)}}
+{const _r=renderBoosterBar;renderBoosterBar=function(){const r=_r.apply(this,arguments);if(mode==='bonus'){const bb=document.getElementById('boosterBar');if(bb)bb.hidden=true}return r}}
+{const _p=pause;pause=function(){if(mode!=='bonus'||!BN)return _p.apply(this,arguments);if(!['aim','wait','drop'].includes(state)||busy)return;
+  stateBeforePause=state;state='paused';showOverlay(()=>({title:t('paused'),extra:settingsRows,actions:[{label:t('resume'),icon:'play',primary:true,fn:()=>{hideOverlay();state=stateBeforePause}},{label:t('bnEnd'),icon:'chest',fn:()=>{hideOverlay();state=stateBeforePause;BN.t=0;bnEnd()}}]}),true)}}
+{const _t=toTitle;toTitle=function(){if(mode==='bonus'){mode='levels';modeZi=null;BN=null}bnHud(false);return _t.apply(this,arguments)}}
+{const _o=openMap;openMap=function(){if(mode==='bonus'){mode='levels';modeZi=null;if(BN)level=BN.from;BN=null}bnHud(false);return _o.apply(this,arguments)}}
+{const _h=updateHud;updateHud=function(){_h.apply(this,arguments);if(mode==='bonus'&&BN)document.getElementById('score').innerHTML=coinImg()+'<b>'+BN.coins+'</b>'}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
