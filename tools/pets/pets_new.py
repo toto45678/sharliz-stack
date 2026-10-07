@@ -95,160 +95,189 @@ def galaxy_texture(w=512, h=256, seed=7):
 
 # ---------------- the buddies ----------------
 def build_penguin():
-    """turn_penguin.png: navy egg, one white face+belly patch with two lobes around the eyes, glossy black eyes, orange beak + 3-toed feet,
-    flippers hanging at the sides, 3 head feathers, a little tail bump at the back"""
+    """turn_penguin.png: navy egg lofted from the silhouette, white face+belly patch PAINTED (two lobes around the eyes, navy hood between),
+    glossy black eyes, short orange beak + big 3-toed feet, flippers hanging at the sides, 3 head feathers, tail bump"""
     NAVY, W, OR = '#2f4a86', '#f8f9ff', '#ff9a2e'
-    body = egg_bm(.84, .8, .96, taper=.1, flat=.08)
+    fr = TP.profile('penguin', 'front', skip=[(.18, .46), (.94, 1.1)], top=.96, bottom=.07)
+    sd = TP.profile('penguin', 'side', skip=[(.07, .12, 'r'), (.44, .60, 'r'), (.94, 1.1)], top=.96, bottom=.07)
+    L = TP.Loft(fr, sd); body = TP.loft_bm(L, seg=128)
     S = Surface(body)
-    part('body', body, NAVY, role='body', ink=.014, rough=.3, cc=.7)
-    def patch(u, v):   # in the box centre (0,.47) half size (.3,.37): belly + two lobes around the eyes, navy point between them
-        return (u * u / .9 + (v + .22) ** 2 / .62 <= 1) or ((u - .52) ** 2 + (v - .45) ** 2 <= .26) or ((u + .52) ** 2 + (v - .45) ** 2 <= .26)
-    part('patch', S.decal(patch, 0, .47, .3, .37, bulge=.01, lift=.003, n=24, rings=9), W, role='body', ink=0, rough=.35, cc=.5)
-    eyes_dot(S, .14, .64, .052, .068)
-    blush(S, .27, .54, .05, .028)
-    part('beak', beak_bm((0, -.4, .57), up=.0, size=.85, gap=.03), OR, role='beak', ink=.01)
-    part('tuft', tuft_bm((0, .0, .95), n=3, h=.12, r=.03, spread=.6), NAVY, role='horn', ink=.009)
+    def tex(X, Y, Z, F):
+        img = TP.fill(X.shape, NAVY)
+        m = (F > .1) & (TP.ell(X, Z, 0, .34, .27, .26) | TP.ell(X, Z, -.145, .59, .155, .17) | TP.ell(X, Z, .145, .59, .155, .17))
+        m &= ~((Z > .60) & (np.abs(X) < (Z - .60) * .9 + .01))
+        return TP.put(img, m, W)
+    part('body', body, '#ffffff', role='body', ink=.014, rough=.3, cc=.7, tex=TP.paint(L, tex))
+    eyes_dot(S, .15, .56, .05, .07)
+    blush(S, .26, .47, .045, .028)
+    yf = L.at(.51)[3] - L.at(.51)[2]
+    beak = spike_bm(Vector((0, yf + .03, .525)), (0, -1, .15), r=.065, h=.095, seg=16)          # short wide beak, open a little
+    bm_merge(beak, spike_bm(Vector((0, yf + .03, .49)), (0, -1, -.3), r=.055, h=.08, seg=16))
+    part('beak', beak, OR, role='beak', ink=.01)
+    part('tuft', tuft_bm((0, .0, .95), n=3, h=.06, r=.022, spread=.6), NAVY, role='horn', ink=.009)
     for sx in (-1, 1):
-        sd = 'L' if sx < 0 else 'R'
-        piv = Vector((sx * .39, .0, .58))
-        w = ellipsoid_bm(.06, .1, .2, at=(0, 0, -.16), seg=18, rings=12)
-        bmesh.ops.transform(w, matrix=Matrix.Translation(piv) @ Matrix.Rotation(sx * -.3, 4, 'Y'), verts=w.verts)
-        part('wing' + sd, w, NAVY, role='wing' + sd, ink=.011, pivot=tuple(piv))
+        sd_ = 'L' if sx < 0 else 'R'
+        piv = Vector((sx * .33, .0, .46))
+        w = ellipsoid_bm(.05, .09, .12, at=(0, 0, -.11), seg=20, rings=14)
+        bmesh.ops.transform(w, matrix=Matrix.Translation(piv) @ Matrix.Rotation(sx * -.22, 4, 'Y'), verts=w.verts)
+        part('wing' + sd_, w, NAVY, role='wing' + sd_, ink=.011, pivot=tuple(piv))
     feet = bmesh.new()
-    for sx in (-1, 1): bm_merge(feet, foot_bm((sx * .17, -.2, .035), sx, s=1.25))
+    for sx in (-1, 1): bm_merge(feet, foot_bm((sx * .17, .07, .035), sx, s=1.15))
     part('feet', feet, OR, role='feet', ink=.01)
-    part('tailBump', ellipsoid_bm(.06, .08, .05, at=(0, .37, .12), seg=14, rings=10), NAVY, role='tail', ink=.009, pivot=(0, .34, .12))
+    part('tailBump', ellipsoid_bm(.045, .06, .035, at=(0, L.at(.15)[3] + L.at(.15)[2] - .02, .15), seg=16, rings=12), NAVY, role='tail', ink=.009, pivot=(0, .3, .15))
 
 
 def build_firefly():
-    """turn_firefly.png: navy ball head over a glowing yellow-green belly ball, huge white eyes, curly antennae, see-through wings, stub arms"""
+    """turn_firefly.png: navy ball head over a glowing yellow-green belly ball (sizes from the silhouette), huge white eyes, open mouth, blush,
+    curly antennae leaning forward, two oval see-through wings standing up behind, stub arms"""
     DB, GL = '#2e3c7a', '#e2ff4a'
-    head = ellipsoid_bm(.31, .3, .3, at=(0, -.02, .7), seg=72, rings=40)
+    fr = TP.profile('firefly', 'front', skip=[(0, .39), (.39, 1.1)], add=[(.12, 0, 0), (.18, -.17, .17), (.25, -.27, .27), (.32, -.33, .33), (.40, -.37, .37), (.50, -.36, .36), (.60, -.33, .33), (.70, -.26, .26)], top=.78, bottom=.12)
+    sd = TP.profile('firefly', 'side', skip=[(0, .25), (.78, 1.1), (.43, .78, 'l')], add=[(.12, 0, 0), (.18, -.15, .16), (.50, -.27, None), (.60, -.26, None), (.70, -.21, None)], top=.78, bottom=.12)
+    head = TP.loft_bm(fr, sd, seg=128)
     S = Surface(head)
     part('head', head, DB, role='body', ink=.013)
-    bulb = ellipsoid_bm(.29, .31, .28, at=(0, .05, .3), seg=64, rings=36)
+    bulb = ellipsoid_bm(.29, .25, .22, at=(0, .0, .22), seg=80, rings=44)
     part('bulb', bulb, GL, role='glow', ink=.012, rough=.15, cc=1, emis='#d8ff2a', ei=1.0)
-    eyes_open(S, .125, .72, .11, .13, rim=.017)
-    mouth_small(S, 0, .56, .035, .03)
-    blush(S, .24, .63, .045, .025)
+    eyes_open(S, .145, .51, .105, .135, rim=.017, tilt=.2)
+    mouth_open(S, 0, .41, .05, .04)
+    blush(S, .24, .385, .035, .025)
     ant = bmesh.new()
     for sx in (-1, 1):
-        base = Vector((sx * .1, -.03, .98))
-        stem = [base, base + Vector((sx * .05, 0, .09)), base + Vector((sx * .11, 0, .17)), base + Vector((sx * .17, 0, .22))]
-        curl = curl_pts(stem[-1], Vector((sx, 0, 0)), 1., .055, .025, turns=1.0, n=14)
+        base = Vector((sx * .05, -.03, .765))
+        stem = [base, base + Vector((sx * .04, -.03, .05)), base + Vector((sx * .10, -.07, .09)), base + Vector((sx * .165, -.10, .10))]
+        curl = curl_pts(stem[-1], Vector((sx, 0, 0)), 1., .075, .035, turns=1.0, n=16)
         pts = smooth_path(stem, 4)[:-1] + curl
-        bm_merge(ant, tube_bm(pts, radii(.017, .011, len(pts)), seg=8))
+        bm_merge(ant, tube_bm(pts, radii(.016, .011, len(pts)), seg=8))
     part('antennae', ant, DB, role='horn', ink=.008)
     for sx in (-1, 1):
-        sd = 'L' if sx < 0 else 'R'
-        w = ellipsoid_bm(.27, .012, .14, at=(sx * .26, 0, 0), seg=24, rings=12)
-        R = Matrix.Rotation(math.radians(sx * 12), 3, 'Z') @ Matrix.Rotation(math.radians(-48 * sx), 3, 'Y')
-        piv = Vector((sx * .2, .1, .74))
-        bmesh.ops.transform(w, matrix=Matrix.Translation(piv) @ R.to_4x4(), verts=w.verts)
-        part('wing' + sd, w, '#f4faff', role='wing' + sd, ink=.008, rough=.1, cc=1, opacity=.9, emis='#dff0ff', ei=.7, pivot=tuple(piv))
+        sd_ = 'L' if sx < 0 else 'R'
+        # long oval wing rising up-back-out from the head's side (turnaround side view: the wing points to the top-back corner).
+        # orientation found by matching the wing's bounding boxes in the front + side views (d = long axis, wv = width axis)
+        d = Vector((sx * .423, .582, .695)); wv = Vector((sx * -.543, -.451, .708)); n = d.cross(wv)
+        M = Matrix((d, wv, n)).transposed().to_4x4()
+        w = ellipsoid_bm(.22, .11, .012, seg=28, rings=16)
+        piv = Vector((sx * .28, .12, .44))
+        bmesh.ops.transform(w, matrix=Matrix.Translation(piv + d * .22) @ M, verts=w.verts)
+        part('wing' + sd_, w, '#f4faff', role='wing' + sd_, ink=.008, rough=.1, cc=1, opacity=.9, emis='#dff0ff', ei=.7, pivot=tuple(piv))
     arms = bmesh.new()
-    for sx in (-1, 1): bm_merge(arms, ellipsoid_bm(.05, .045, .07, at=(sx * .33, -.06, .47), seg=14, rings=10, rot=Matrix.Rotation(sx * -.4, 3, 'Y')))
+    for sx in (-1, 1): bm_merge(arms, ellipsoid_bm(.055, .05, .065, at=(sx * .35, -.05, .31), seg=16, rings=12, rot=Matrix.Rotation(sx * -.4, 3, 'Y')))
     part('arms', arms, DB, role='arms', ink=.009)
 
 
 def build_kitten():
-    """turn_kitten.png: orange egg cat, cream muzzle+belly patch, huge white eyes, pink nose, whiskers, pointy ears with pink inside,
-    little paws on the belly, feet, curly tail with a cream tip"""
+    """turn_kitten.png: orange cat egg lofted from the silhouette, cream muzzle + belly PAINTED in the texture, huge white eyes, pink nose,
+    whiskers, pointy ears with pink inside, paws on the belly, feet, curly tail with a cream tip"""
     OR, CR, PK = '#ff9d2e', '#fff0cf', '#ff86b0'
-    body = egg_bm(.86, .82, .92, taper=.12)
+    fr = TP.profile('kitten', 'front', skip=[(.74, 1.1)], top=.93, bottom=.05)
+    sd = TP.profile('kitten', 'side', skip=[(.05, .16, 'r'), (.36, .52, 'r'), (.14, .50, 'l')], add=[(.30, -.285, .35), (.20, -.255, .33)], top=.93, bottom=.05)
+    L = TP.Loft(fr, sd); body = TP.loft_bm(L, seg=128)
     S = Surface(body)
-    part('body', body, OR, role='body', ink=.014)
-    def patch(u, v):   # box centre (0,.37) half (.31,.36): muzzle ellipse + belly ellipse + a bridge
-        x, z = u * .31, .37 + v * .36
-        return ((x / .27) ** 2 + ((z - .52) / .13) ** 2 <= 1) or ((x / .25) ** 2 + ((z - .23) / .16) ** 2 <= 1) or ((x / .22) ** 2 + ((z - .38) / .17) ** 2 <= 1)
-    part('patch', S.decal(patch, 0, .37, .31, .36, bulge=.012, lift=.003, n=24, rings=9), CR, role='body', ink=0, rough=.4, cc=.4)
-    eyes_open(S, .155, .62, .12, .15, rim=.018)
-    part('nose', S.decal(lambda u, v: u * u + v * v <= 1 and v > -.9, 0, .505, .03, .022, bulge=.012, lift=.02), PK, role='mouth', ink=0, rough=.3, cc=.6)
-    mouth_small(S, 0, .455, .035, .03, lift=.02)
+    def tex(X, Y, Z, F):
+        img = TP.fill(X.shape, OR)
+        m = (F > .15) & (TP.ell(X, Z, 0, .55, .26, .16) | TP.ell(X, Z, 0, .29, .30, .27) | TP.ell(X, Z, 0, .42, .24, .2))
+        return TP.put(img, m, CR)
+    part('body', body, '#ffffff', role='body', ink=.014, tex=TP.paint(L, tex))
+    eyes_open(S, .145, .60, .095, .13, rim=.018, tilt=.12)
+    part('nose', S.decal(lambda u, v: u * u + v * v <= 1 and v > -.9, 0, .53, .03, .02, bulge=.012, lift=.02), PK, role='mouth', ink=0, rough=.3, cc=.6)
+    mouth_small(S, 0, .455, .03, .024, lift=.02)
     wh = bmesh.new()
     for sx in (-1, 1):
-        for dz, tilt in ((.035, .035), (0, 0), (-.035, -.035)):
-            loc, nrm = S.hit(sx * .2, .47 + dz)
+        for dz, tilt in ((.04, .03), (0, 0), (-.035, -.035)):
+            loc, nrm = S.hit(sx * .25, .475 + dz)
             if loc is None: continue
-            bm_merge(wh, tube_bm([loc + nrm * .006, loc + Vector((sx * .19, -.02, tilt * 2.4)) + nrm * .03], [.011, .006], seg=6))
+            bm_merge(wh, tube_bm([loc + nrm * .006, loc + Vector((sx * .11, -.01, tilt * 2.2)) + nrm * .03], [.009, .005], seg=6))
     part('whiskers', wh, '#2a2440', role='part', ink=0, rough=.5)
     ears = bmesh.new(); inner = bmesh.new()
     for sx in (-1, 1):
-        bm_merge(ears, spike_bm(Vector((sx * .24, .0, .8)), (sx * .42, .05, 1), r=.115, h=.27, seg=14))
-        bm_merge(inner, spike_bm(Vector((sx * .25, -.045, .82)), (sx * .42, -.08, 1), r=.062, h=.18, seg=12))
+        bm_merge(ears, spike_bm(Vector((sx * .235, -.06, .74)), (sx * .2, -.22, 1), r=.105, h=.28, seg=16))
+        bm_merge(inner, spike_bm(Vector((sx * .24, -.10, .76)), (sx * .2, -.28, 1), r=.06, h=.19, seg=12))
     part('ears', ears, OR, role='horn', ink=.011)
     part('earsIn', inner, PK, role='horn', ink=0)
     paws = bmesh.new()
-    for sx in (-1, 1): bm_merge(paws, ellipsoid_bm(.075, .07, .065, at=(sx * .25, -.34, .34), seg=16, rings=10))
+    for sx in (-1, 1): bm_merge(paws, ellipsoid_bm(.07, .06, .065, at=(sx * .20, L.at(.43)[3] - L.at(.43)[2] + .02, .43), seg=18, rings=12))
     part('paws', paws, OR, role='arms', ink=.01)
     feet = bmesh.new()
-    for sx in (-1, 1): bm_merge(feet, ellipsoid_bm(.095, .1, .05, at=(sx * .17, -.2, .04), seg=16, rings=10))
+    for sx in (-1, 1): bm_merge(feet, ellipsoid_bm(.09, .10, .045, at=(sx * .15, L.at(.08)[3] - L.at(.08)[2] * .5, .045), seg=18, rings=12))
     part('feet', feet, OR, role='feet', ink=.01)
-    pts = smooth_path([Vector((0, .36, .22)), Vector((.15, .52, .26)), Vector((.24, .6, .42)), Vector((.13, .62, .57)), Vector((-.03, .56, .58))], 5)
-    part('tail', tube_bm(pts, radii(.065, .04, len(pts)), seg=10), OR, role='tail', ink=.011, pivot=(0, .36, .22))
-    part('tailTip', ellipsoid_bm(.05, .05, .05, at=tuple(pts[-1]), seg=14, rings=10), CR, role='tail', ink=.01, pivot=(0, .36, .22))
+    yb = L.at(.25)[3] + L.at(.25)[2]
+    pts = smooth_path([Vector((0, yb - .04, .17)), Vector((.02, yb + .04, .19)), Vector((.02, yb + .07, .31)), Vector((0, yb + .04, .43)), Vector((-.02, yb - .04, .45))], 5)
+    part('tail', tube_bm(pts, radii(.06, .04, len(pts)), seg=12), OR, role='tail', ink=.011, pivot=(0, yb - .04, .18))
+    part('tailTip', ellipsoid_bm(.05, .05, .05, at=tuple(pts[-1]), seg=16, rings=12), CR, role='tail', ink=.01, pivot=(0, yb - .04, .18))
 
 
 def build_octopus():
-    """turn_octopus.png: pink-magenta ball head, huge white eyes, tiny open mouth, blush, seven chunky tentacles curling up at the tips"""
+    """turn_octopus.png: pink-magenta head lofted from the silhouette, huge white eyes, small open mouth, deep-pink blush,
+    8 chunky tentacles going down then curling up and out"""
     PP = '#d95fd8'
-    head = ellipsoid_bm(.4, .39, .37, at=(0, 0, .5), seg=80, rings=44)
-    for v in head.verts:
-        if v.co.z < .5: v.co.z = .5 + (v.co.z - .5) * .75
+    fr = TP.profile('octopus', 'front', skip=[(0, .38)], add=[(.30, -.30, .30), (.24, -.21, .21), (.20, 0, 0)], bottom=.20)
+    sd = TP.profile('octopus', 'side', skip=[(0, .38)], add=[(.30, -.28, .29), (.24, -.19, .20), (.20, 0, 0)], bottom=.20)
+    head = TP.loft_bm(fr, sd, seg=128)
     S = Surface(head)
     part('head', head, PP, role='body', ink=.014)
-    eyes_open(S, .15, .53, .125, .145, rim=.018)
-    mouth_small(S, 0, .38, .035, .03)
-    blush(S, .3, .44, .05, .03)
+    eyes_open(S, .17, .605, .105, .14, rim=.018, tilt=.15)
+    mouth_open(S, 0, .49, .05, .04)
+    blush(S, .25, .46, .035, .035, col='#ff5fa6', op=.8)
     tent = bmesh.new()
-    for k in range(7):
-        a = (k + .5) / 7 * math.tau; d = Vector((math.sin(a), math.cos(a), 0))
-        ctrl = [(.14, .3), (.28, .18), (.4, .09), (.47, .045), (.49, .1), (.45, .16), (.4, .14)]
+    for k in range(8):
+        a = (k + .5) / 8 * math.tau; d = Vector((math.sin(a), math.cos(a), 0))
+        ctrl = [(.17, .34), (.19, .18), (.20, .08), (.23, .02), (.30, .03), (.39, .10), (.45, .20), (.44, .29), (.38, .31), (.34, .27)]
         pts = smooth_path([d * r + Vector((0, 0, z)) for r, z in ctrl], 8)
-        bm_merge(tent, tube_bm(pts, radii(.085, .04, len(pts)), seg=18))
+        bm_merge(tent, tube_bm(pts, radii(.10, .04, len(pts)), seg=24))
+    for v in tent.verts: v.co.y = v.co.y * .85 - .04                                   # the side view is a little flatter
     part('tentacles', tent, PP, role='part', ink=.012)
 
 
 def build_cloudy():
-    """turn_cloudy.png: a cloud of round white puffs, huge white eyes, tiny open mouth, blush"""
+    """turn_cloudy.png: a cloud of round white puffs placed to match the silhouette (big puff on top, two wide ones at the sides,
+    a flat bottom), huge white eyes on the face puff, small open mouth, blush"""
     W = '#fcfcff'
-    cl = ellipsoid_bm(.33, .3, .31, at=(0, -.03, .38), seg=64, rings=36)
-    for x, y, z, r in [(-.03, .08, .55, .27), (-.36, .02, .3, .24), (.36, .02, .3, .24), (0, .24, .36, .26), (-.2, -.12, .22, .18), (.2, -.12, .22, .18), (-.22, .2, .52, .17), (.24, .2, .5, .17)]:
-        bm_merge(cl, ellipsoid_bm(r, r * .95, r * .92, at=(x, y, z), seg=48, rings=28))
+    cl = bmesh.new()
+    for x, y, z, r, ry, rz in [(0, -.08, .45, .33, .30, .26), (0, .06, .74, .27, .22, .27), (-.32, .0, .37, .235, .25, .235), (.32, .0, .37, .235, .25, .235), (-.29, -.03, .58, .19, .17, .19), (.29, -.03, .58, .19, .17, .19),
+                               (0, .14, .36, .25, .25, .25), (0, .16, .58, .20, .18, .20), (-.21, .12, .50, .19, .18, .19), (.21, .12, .50, .19, .18, .19), (0, 0, .18, .25, .24, .19)]:
+        bm_merge(cl, ellipsoid_bm(r, ry, rz, at=(x, y, z), seg=56, rings=32))
+    for v in cl.verts:
+        if v.co.z < .04: v.co.z = .04 + (v.co.z - .04) * .1
     S = Surface(cl)
     part('body', cl, W, role='body', ink=.013, rough=.45, cc=.35, emis='#ffffff', ei=.1)
-    eyes_open(S, .14, .43, .105, .125, rim=.016)
-    mouth_small(S, 0, .28, .035, .03)
-    blush(S, .28, .35, .05, .028)
+    eyes_open(S, .265, .58, .11, .10, rim=.016, tilt=.12)
+    mouth_open(S, 0, .39, .06, .045)
+    blush(S, .40, .44, .05, .03)
 
 
 def build_monkey():
-    """turn_monkey.png: brown egg, wide tan face patch and belly, huge white eyes, big round ears with tan inside, 3 hairs, stub arms, feet, curly tail"""
+    """turn_monkey.png: brown pear body lofted from the silhouette (muzzle bulges forward), tan face + belly PAINTED, huge white eyes,
+    big round ears tilted forward with tan inside, 3 hairs, stub arms, feet, curly tail at the back"""
     BR, TAN = '#9a5b2e', '#f3cd98'
-    body = egg_bm(.84, .8, .92, taper=.12)
+    fr = TP.profile('monkey', 'front', skip=[(.22, .40), (.54, .92)], add=[(.70, -.30, .30), (.80, -.23, .23)], top=.90, bottom=.05)
+    sd = TP.profile('monkey', 'side', skip=[(.05, .16, 'r'), (.05, .40, 'l'), (.86, 1.1)], add=[(.20, -.27, .31)], top=.90, bottom=.05)
+    L = TP.Loft(fr, sd); body = TP.loft_bm(L, seg=128)
     S = Surface(body)
-    part('body', body, BR, role='body', ink=.014)
-    def facep(u, v):   # box centre (0,.57) half (.3,.19): two round cheeks + a lower lip ellipse, dip between the brows
-        return ((u - .42) ** 2 + (v - .12) ** 2 <= .62) or ((u + .42) ** 2 + (v - .12) ** 2 <= .62) or (u * u / .55 + (v + .45) ** 2 / .32 <= 1)
-    part('face', S.decal(facep, 0, .57, .3, .19, bulge=.012, lift=.003, n=24, rings=8), TAN, role='body', ink=0, rough=.45, cc=.4)
-    part('belly', S.decal(ELLIPSE, 0, .24, .2, .17, bulge=.008, lift=.002), TAN, role='body', ink=0, rough=.45, cc=.4)
-    eyes_open(S, .14, .62, .115, .135, rim=.018)
-    mouth_small(S, 0, .47, .035, .03, lift=.02)
+    def tex(X, Y, Z, F):
+        img = TP.fill(X.shape, BR)
+        face = (F > .2) & (TP.ell(X, Z, -.16, .61, .17, .16) | TP.ell(X, Z, .16, .61, .17, .16) | TP.ell(X, Z, 0, .48, .24, .12))
+        belly = (F > .3) & TP.ell(X, Z, 0, .24, .195, .145)
+        return TP.put(img, face | belly, TAN)
+    part('body', body, '#ffffff', role='body', ink=.014, tex=TP.paint(L, tex))
+    eyes_open(S, .145, .57, .10, .12, rim=.018, tilt=.1)
+    mouth_open(S, 0, .49, .045, .045)
     ears = bmesh.new(); inner = bmesh.new()
     for sx in (-1, 1):
-        bm_merge(ears, ellipsoid_bm(.14, .07, .15, at=(sx * .46, .03, .6), seg=20, rings=12))
-        bm_merge(inner, ellipsoid_bm(.085, .045, .095, at=(sx * .47, -.025, .6), seg=16, rings=10))
+        R = Matrix.Rotation(sx * -.45, 3, 'Z')
+        bm_merge(ears, ellipsoid_bm(.135, .06, .135, at=(sx * .37, .02, .695), seg=28, rings=18, rot=R))
+        bm_merge(inner, ellipsoid_bm(.09, .04, .10, at=(sx * .37 - sx * .02, -.03, .695), seg=20, rings=12, rot=R))
     part('ears', ears, BR, role='horn', ink=.011)
     part('earsIn', inner, TAN, role='horn', ink=0)
-    part('tuft', tuft_bm((0, -.01, .9), n=3, h=.13, r=.03, spread=.5), BR, role='horn', ink=.009)
+    tf = tuft_bm((.02, -.08, .89), n=3, h=.10, r=.028, spread=.6, back=-.14)
+    part('tuft', tf, BR, role='horn', ink=.009)
     arms = bmesh.new()
-    for sx in (-1, 1): bm_merge(arms, ellipsoid_bm(.06, .06, .11, at=(sx * .42, -.03, .36), seg=14, rings=10, rot=Matrix.Rotation(sx * -.25, 3, 'Y')))
+    for sx in (-1, 1): bm_merge(arms, ellipsoid_bm(.05, .055, .07, at=(sx * .375, -.02, .31), seg=16, rings=12, rot=Matrix.Rotation(sx * -.25, 3, 'Y')))
     part('arms', arms, BR, role='arms', ink=.01)
     feet = bmesh.new()
-    for sx in (-1, 1): bm_merge(feet, ellipsoid_bm(.09, .1, .05, at=(sx * .17, -.2, .04), seg=16, rings=10))
+    for sx in (-1, 1): bm_merge(feet, ellipsoid_bm(.09, .12, .045, at=(sx * .14, L.at(.08)[3] - L.at(.08)[2] * .55, .045), seg=18, rings=12))
     part('feet', feet, BR, role='feet', ink=.01)
-    pts = smooth_path([Vector((0, .36, .2)), Vector((.12, .52, .24)), Vector((.16, .6, .4)), Vector((.04, .62, .54)), Vector((-.1, .55, .5)), Vector((-.08, .5, .4))], 5)
-    part('tail', tube_bm(pts, radii(.05, .03, len(pts)), seg=10), BR, role='tail', ink=.01, pivot=(0, .36, .2))
+    yb = L.at(.25)[3] + L.at(.25)[2]
+    pts = smooth_path([Vector((0, yb - .03, .18)), Vector((.0, yb + .05, .20)), Vector((.0, yb + .09, .30)), Vector((0, yb + .04, .38)), Vector((0, yb - .02, .33))], 5)
+    part('tail', tube_bm(pts, radii(.045, .03, len(pts)), seg=12), BR, role='tail', ink=.01, pivot=(0, yb - .03, .18))
 
 
 def build_bunny():

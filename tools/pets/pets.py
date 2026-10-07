@@ -8,6 +8,10 @@ import sys, os, json, math, struct
 import bpy, bmesh
 from mathutils import Vector, Matrix
 from mathutils.bvhtree import BVHTree
+import numpy as np
+from PIL import Image
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))   # python -I drops the script dir
+import turn_profile as TP        # bodies lofted from the turnaround silhouettes + texture painting (tools/pets/turn_profile.py)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 ART = os.path.join(ROOT, 'art')
@@ -225,6 +229,7 @@ def _stroke(self, pts, r=.016, lift=.0, front=-1, seg=10, sink=.35):
         loc, nrm = self.hit(x, z, front)
         if loc is None: continue
         P.append(loc + nrm * (r * (1 - sink) + lift))
+    if len(P) < 2: return bmesh.new()                       # off the surface: nothing to draw
     return tube_bm(P, [r] * len(P), seg=seg)
 
 
@@ -396,25 +401,32 @@ def build_dragon():
 INK_C = '#120d2b'
 
 
-def eyes_open(S, ex, ez, ew, eh, rim=.02, bulge=.03, off=.2):
-    """Sharliz eyes: big white ovals, NO pupils, thin black border (a little thicker on the outer-bottom side); they blink"""
+def eyes_open(S, ex, ez, ew, eh, rim=.02, bulge=.03, off=.2, tilt=0.):
+    """Sharliz eyes: big white ovals, NO pupils, thin black border (a little thicker on the outer-bottom side); they blink.
+    tilt (radians): the tops of the ovals lean outward, like the ChatGPT turnarounds"""
     for sx in (-1, 1):
-        sd = 'L' if sx < 0 else 'R'
-        part('eye' + sd, S.decal(ELLIPSE, sx * ex, ez, ew, eh, bulge=bulge), '#ffffff', role='eye', ink=0, rough=.15, cc=1, emis='#ffffff', ei=.35, pivot=(sx * ex, -.3, ez))
-        part('eyeRim' + sd, S.decal(ELLIPSE, sx * (ex + rim * off), ez - rim * .1, ew + rim * .75, eh + rim * .7, bulge=bulge * .55, lift=.001), INK_C, role='eye', ink=0, rough=.4, cc=.3, pivot=(sx * ex, -.3, ez))
+        sd = 'L' if sx < 0 else 'R'; t = -sx * tilt; R = max(ew, eh) + rim * 1.5
+        def shp(w, h):
+            def f(u, v):
+                x, z = u * R, v * R; xr, zr = x * math.cos(t) + z * math.sin(t), -x * math.sin(t) + z * math.cos(t)
+                return (xr / w) ** 2 + (zr / h) ** 2 <= 1
+            return f
+        part('eye' + sd, S.decal(shp(ew, eh), sx * ex, ez, R, R, bulge=bulge), '#ffffff', role='eye', ink=0, rough=.15, cc=1, emis='#ffffff', ei=.35, pivot=(sx * ex, -.3, ez))
+        part('eyeRim' + sd, S.decal(shp(ew + rim * .75, eh + rim * .7), sx * (ex + rim * off), ez - rim * .1, R, R, bulge=bulge * .55, lift=.001), INK_C, role='eye', ink=0, rough=.4, cc=.3, pivot=(sx * ex, -.3, ez))
 
 
-def eyes_happy(S, ex, ez, ew, eh, r=.017, lashes=False):
-    """closed happy eyes ∩ as raised dark lines"""
+def eyes_happy(S, ex, ez, ew, eh, r=.017, lashes=False, lash=.6):
+    """closed happy eyes ∩ as raised dark lines; lashes = 3 short strokes fanning up-outward from the outer end of each arc"""
     bm = bmesh.new()
     for sx in (-1, 1):
         bm_merge(bm, S.stroke(arc_pts(sx * ex, ez, ew, eh, up=True), r=r))
         if lashes:
+            a = math.pi * .12 if sx > 0 else math.pi * .88           # outer end of the arc
+            px, pz = sx * ex - math.cos(a) * ew, ez + math.sin(a) * eh
             for k in range(3):
-                a = math.pi * (.88 - .14 * k) if sx > 0 else math.pi * (.12 + .14 * k)     # arc parameter near the outer end
-                px, pz = sx * ex - math.cos(a) * ew * (1 if sx > 0 else 1), ez + math.sin(a) * eh
-                nx, nz = -math.cos(a) / ew, math.sin(a) / eh; ln = math.hypot(nx, nz); nx, nz = nx / ln, nz / ln
-                bm_merge(bm, S.stroke([(px, pz), (px + nx * eh * .55 * (1 if sx > 0 else 1), pz + nz * eh * .55)], r=r * .75, seg=6))
+                ang = math.radians(100 - 32 * k)                       # 100°, 68°, 36° from the horizontal, pointing outward
+                dx, dz = sx * math.cos(ang), math.sin(ang); ln = eh * lash
+                bm_merge(bm, S.stroke([(px + dx * ln * f, pz + dz * ln * f) for f in (0, .5, 1)], r=r * .6, seg=6))
     part('eyesH', bm, INK_C, role='eyeH', ink=0, rough=.3, cc=.6)
 
 
@@ -476,34 +488,45 @@ def star_outline(n=5, r1=.55, r2=.3, p=1.6, N=120):
     return pts
 
 
-def pillow_bm(outline, H=.12, cuts=5, power=.5):
-    """inflated flat shape (a balloon/cushion): outline in the XZ plane, both faces bulge by H*(d/dmax)^power,
-    d = distance to the outline. Good for stars, cookies, flat wings."""
-    bm = bmesh.new()
-    vs = [bm.verts.new((u, 0, v)) for u, v in outline]
-    for a_, b_ in zip(vs, vs[1:] + vs[:1]): bm.edges.new((a_, b_))
-    bmesh.ops.triangle_fill(bm, use_beauty=True, use_dissolve=False, edges=bm.edges[:])
-    for _ in range(cuts):
-        inner = [e for e in bm.edges if len(e.link_faces) == 2]
-        bmesh.ops.subdivide_edges(bm, edges=inner, cuts=1, use_grid_fill=False)
-        bmesh.ops.triangulate(bm, faces=bm.faces[:])
-    bmesh.ops.beautify_fill(bm, faces=bm.faces[:], edges=bm.edges[:])
-    seg = [(Vector((outline[i][0], outline[i][1])), Vector((outline[(i + 1) % len(outline)][0], outline[(i + 1) % len(outline)][1]))) for i in range(len(outline))]
-    def dist(p):
-        best = 9
+def pillow_bm(outline, H=.12, cuts=5, power=.5, step=None):
+    """inflated flat shape (a balloon/cushion): outline in the XZ plane (counter-clockwise), both faces bulge by H*(d/dmax)^power,
+    d = distance to the outline. Even interior mesh: hex-grid points inside the polygon + Delaunay (no shading streaks)."""
+    from scipy.spatial import Delaunay
+    P = np.array(outline, float); n = len(P)
+    per = sum(math.dist(P[i], P[(i + 1) % n]) for i in range(n)); step = step or per / n * 1.25
+    xs, zs = P[:, 0], P[:, 1]
+    def inside(x, z):   # even-odd rule
+        c = False
+        for i in range(n):
+            x1, z1 = P[i]; x2, z2 = P[(i + 1) % n]
+            if (z1 > z) != (z2 > z) and x < (x2 - x1) * (z - z1) / (z2 - z1 + 1e-12) + x1: c = not c
+        return c
+    seg = [(Vector((P[i][0], P[i][1])), Vector((P[(i + 1) % n][0], P[(i + 1) % n][1]))) for i in range(n)]
+    def dist(x, z):
+        p = Vector((x, z)); best = 9
         for a_, b_ in seg:
             ab = b_ - a_; t = max(0, min(1, (p - a_).dot(ab) / max(1e-9, ab.length_squared)))
             best = min(best, (p - (a_ + ab * t)).length)
         return best
-    ds = {v: dist(Vector((v.co.x, v.co.z))) for v in bm.verts}
-    dm = max(ds.values()) or 1
+    pts = [tuple(p) for p in P]; row = 0; z = zs.min() + step * .5
+    while z < zs.max():
+        x = xs.min() + (step * .5 if row % 2 else 0.)
+        while x < xs.max():
+            if inside(x, z) and dist(x, z) > step * .45: pts.append((x, z))
+            x += step
+        z += step * .87; row += 1
+    tri = Delaunay(np.array(pts))
+    bm = bmesh.new(); vs = [bm.verts.new((x, 0, z)) for x, z in pts]
+    for a, b, c in tri.simplices:
+        cx = (pts[a][0] + pts[b][0] + pts[c][0]) / 3; cz = (pts[a][1] + pts[b][1] + pts[c][1]) / 3
+        if inside(cx, cz): bm.faces.new((vs[a], vs[b], vs[c]))
+    bm.normal_update()
     for f in bm.faces:
         if f.normal.y > 0: f.normal_flip()
-    # back copy
+    ds = {v: dist(v.co.x, v.co.z) for v in bm.verts}; dm = max(ds.values()) or 1
     back = bm.copy()
     for v in bm.verts: v.co.y = -H * (ds[v] / dm) ** power
-    bvs = list(back.verts)
-    for v, fv in zip(bvs, list(bm.verts)): v.co.y = -fv.co.y
+    for v, fv in zip(list(back.verts), list(bm.verts)): v.co.y = -fv.co.y
     for f in back.faces: f.normal_flip()
     tmp = bpy.data.meshes.new('t'); back.to_mesh(tmp); back.free(); bm.from_mesh(tmp); bpy.data.meshes.remove(tmp)
     bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-6)
@@ -610,67 +633,68 @@ def nubs(S, x, z, r=.06, y=None, name='arms', col='#000000', ink=.01, out=.0, do
 
 # ---------------- the nine existing buddies (designs from their album stickers art/stk_p_<id>) ----------------
 def build_chick():
-    """turnaround design/buddies/turn/turn_chick.png: two yellow balls (head on body), 3 head feathers, happy closed eyes, blush,
-    open orange beak, wings up like cheering, orange 3-toed feet"""
+    """turn_chick.png: two yellow balls (lofted from the silhouette, crease at the neck), 3 head feathers leaning left-back, happy closed eyes,
+    blush, open orange beak, wings up like cheering, big orange 3-toed feet"""
     Y, Y2, OR = '#ffd84a', '#ffc632', '#ff9a2e'
-    body = snowman_bm(.36, .36, .32, .78, k=9, wx=1.04, wy=1.)
+    # two balls (sizes from the silhouette: body r .33 at z .29, head r .30 at z .62), smooth neck, bottom flattened by the feet
+    body = snowman_bm(.33, .29, .30, .62, seg=128, rows=110, k=8, wx=1.0, wy=.97)
+    for v in body.verts:
+        if v.co.z < .06: v.co.z = .06 + (v.co.z - .06) * .25
+        if v.co.z < .30 and v.co.y < 0: v.co.y *= 1. + .12 * (1 - v.co.z / .30)      # the chest bulges forward a little
     S = Surface(body)
     part('body', body, Y, role='body', ink=.014, rough=.3, cc=.7)
-    eyes_happy(S, .13, .83, .09, .06, r=.022)
-    blush(S, .23, .74, .06, .032)
-    part('beak', beak_bm((0, -.28, .74), up=.15, size=1.15, gap=.06), OR, role='beak', ink=.01)
-    part('mouthIn', ellipsoid_bm(.04, .06, .02, at=(0, -.3, .74), seg=12, rings=8), '#b3233f', role='mouth', ink=0, rough=.5, cc=.2)
-    part('tuft', tuft_bm((0, -.01, 1.07), n=3, h=.15, r=.035, spread=.55), Y, role='horn', ink=.01)
+    eyes_happy(S, .14, .60, .08, .06, r=.026)
+    blush(S, .20, .54, .055, .04)
+    part('beak', beak_bm((0, -.24, .57), up=.12, size=1.05, gap=.05), OR, role='beak', ink=.01)
+    part('mouthIn', ellipsoid_bm(.035, .05, .02, at=(0, -.26, .565), seg=12, rings=8), '#b3233f', role='mouth', ink=0, rough=.5, cc=.2)
+    tf = tuft_bm((-.02, .02, .91), n=3, h=.085, r=.028, spread=.55, back=.04)
+    bmesh.ops.transform(tf, matrix=Matrix.Translation((-.02, .02, .91)) @ Matrix.Rotation(-.7, 4, 'Y') @ Matrix.Rotation(.35, 4, 'X') @ Matrix.Translation((.02, -.02, -.91)), verts=tf.verts)
+    part('tuft', tf, Y, role='horn', ink=.01)
     for sx in (-1, 1):
-        sd = 'L' if sx < 0 else 'R'
-        piv = Vector((sx * .32, .02, .5))
-        w = ellipsoid_bm(.075, .055, .21, at=(0, 0, .17), seg=18, rings=12)
-        bmesh.ops.transform(w, matrix=Matrix.Translation(piv) @ Matrix.Rotation(sx * .8, 4, 'Y'), verts=w.verts)
-        part('wing' + sd, w, Y2, role='wing' + sd, ink=.011, pivot=tuple(piv))
+        sd_ = 'L' if sx < 0 else 'R'
+        piv = Vector((sx * .29, .0, .30))
+        w = ellipsoid_bm(.07, .05, .19, at=(0, 0, .12), seg=20, rings=14)
+        bmesh.ops.transform(w, matrix=Matrix.Translation(piv) @ Matrix.Rotation(sx * .5, 4, 'Y'), verts=w.verts)
+        part('wing' + sd_, w, Y2, role='wing' + sd_, ink=.011, pivot=tuple(piv))
     feet = bmesh.new()
-    for sx in (-1, 1): bm_merge(feet, foot_bm((sx * .16, -.24, .035), sx, s=1.2))
+    for sx in (-1, 1): bm_merge(feet, foot_bm((sx * .20, -.06, .05), sx, s=1.3))
     part('feet', feet, OR, role='feet', ink=.01)
 
 
 def build_slime():
-    """turn_slime.png: green glossy dome whose base spreads into round lobes, huge white Sharliz eyes, tiny open mouth, a drip at the back"""
+    """turn_slime.png: green glossy dome lofted from the silhouette (leans forward), round lobes carved around the base,
+    huge white Sharliz eyes, tiny mouth, light blush, a small drop on top"""
     G = '#7be24a'
-    prof = [(.30, 0.)]                                     # one smooth curve: rounded under-rim, wide skirt, dome
-    for i in range(52):
-        a = -.75 + (math.pi / 2 + .75) * i / 51
-        r = .40 * math.cos(a) ** .6; z = .10 + (.40 * math.sin(a) ** 1.1 if a >= 0 else .085 * math.sin(a))
-        prof.append((max(.003, r), z))
-    def wav(a, z):   # round lobes around the base: a bell in z (peak just above the floor), 7 bumps around
-        k = math.exp(-((z - .055) / .075) ** 2); lobe = max(0., math.cos(a * 7)) ** 1.2
-        return (.085 * k * (.15 + .85 * lobe), 0)
-    body = lathe_bm(prof, seg=120, wav=wav)
+    fr = TP.profile('slime', 'front'); sd = TP.profile('slime', 'side')
+    def wav(a, z):   # valleys between 7 round lobes near the floor
+        k = math.exp(-((z - .09) / .09) ** 2); valley = 1 - max(0., math.cos(a * 7 + .3)) ** 1.4
+        return (-.09 * k * valley, 0)
+    body = TP.loft_bm(fr, sd, seg=160, wav=wav)
     S = Surface(body)
     part('body', body, G, role='body', ink=.014, rough=.06, cc=1)
-    eyes_open(S, .155, .3, .125, .155, rim=.017)
-    mouth_small(S, 0, .145, .04, .035, tongue=False)
-    blush(S, .3, .2, .045, .025, op=.45)
-    drip = spike_bm(Vector((0, .3, .1)), (0, .25, 1), r=.055, h=.2, seg=12)
-    bm_merge(drip, ellipsoid_bm(.055, .055, .06, at=(0, .3, .1), seg=14, rings=10))
-    part('drip', drip, G, role='drops', ink=.009, rough=.06, cc=1)
+    eyes_open(S, .215, .53, .15, .20, rim=.018, tilt=.25)
+    mouth_small(S, 0, .33, .045, .035, tongue=False)
+    blush(S, .31, .34, .05, .025, op=.4)
+    loc, nrm = S.hit(.23, .93)
+    part('drop', ellipsoid_bm(.03, .03, .035, at=tuple(loc + nrm * .01), seg=16, rings=10), G, role='drops', ink=.008, rough=.06, cc=1)
 
 
 def build_ghost():
-    """turn_ghost.png: white sheet ghost, wavy hem, two black oval eyes, little stub arms, no mouth"""
+    """turn_ghost.png: white sheet ghost lofted from the silhouette (hem swings forward), 6-wave hem, two black oval eyes, stub arms"""
     W = '#f8f6ff'
-    prof = [(.36, 0.0), (.365, .08), (.36, .25), (.35, .45), (.33, .6), (.29, .72), (.22, .82), (.13, .89), (.003, .92)]
-    hem = lambda a, z: (.012 * math.sin(a * 6) * max(0, 1 - z / .14), .05 * math.sin(a * 6) * max(0, 1 - z / .14))
-    body = lathe_bm(prof, seg=96, wav=hem)
+    fr = TP.profile('ghost', 'front', skip=[(.29, .48)], bottom=.07)
+    sd = TP.profile('ghost', 'side', bottom=.07)
+    hem = lambda a, z: (0., -.07 * (1 + math.cos(a * 6)) / 2 * max(0., 1 - (z - .07) / .16) * (.75 + .25 * math.cos(a)))
+    body = TP.loft_bm(fr, sd, seg=144, wav=hem)
     S = Surface(body)
     part('body', body, W, role='body', ink=.014, rough=.3, cc=.5)
-    inner = lathe_bm([(.33, .02), (.003, .05)], seg=96, wav=lambda a, z: (0, .05 * math.sin(a * 6)))
-    part('hollow', inner, '#d9d2ee', role='body', ink=0, rough=.6, cc=0)
     for sx in (-1, 1):
-        sd = 'L' if sx < 0 else 'R'
-        part('eye' + sd, S.decal(ELLIPSE, sx * .12, .61, .06, .092, bulge=.02), INK_C, role='eye', ink=0, rough=.12, cc=1, pivot=(sx * .12, -.3, .61))
-        part('glint' + sd, S.decal(ELLIPSE, sx * .12 - .014, .64, .016, .02, bulge=.003, lift=.022), '#ffffff', role='eye', ink=0, rough=.1, cc=1, emis='#ffffff', ei=.5, pivot=(sx * .12, -.3, .61))
+        sd_ = 'L' if sx < 0 else 'R'
+        part('eye' + sd_, S.decal(ELLIPSE, sx * .115, .66, .055, .105, bulge=.02), INK_C, role='eye', ink=0, rough=.12, cc=1, pivot=(sx * .115, -.3, .66))
+        part('glint' + sd_, S.decal(ELLIPSE, sx * .115 - .012, .70, .015, .02, bulge=.003, lift=.022), '#ffffff', role='eye', ink=0, rough=.1, cc=1, emis='#ffffff', ei=.5, pivot=(sx * .115, -.3, .66))
     arms = bmesh.new()
     for sx in (-1, 1):
-        bm_merge(arms, ellipsoid_bm(.085, .05, .045, at=(sx * .36, -.03, .39), seg=16, rings=10, rot=Matrix.Rotation(sx * -.35, 3, 'Y')))
+        bm_merge(arms, ellipsoid_bm(.08, .05, .075, at=(sx * .35, -.02, .41), seg=18, rings=12, rot=Matrix.Rotation(sx * -.35, 3, 'Y')))
     part('arms', arms, W, role='arms', ink=.008, rough=.3, cc=.5)
 
 
@@ -727,118 +751,138 @@ def build_bee():
 
 
 def build_star():
-    """turn_star.png: puffy golden star, happy closed eyes, blush, open mouth with tongue"""
+    """turn_star.png: puffy golden star — the outline is traced from the turnaround, inflated to the side view's thickness;
+    happy closed eyes, blush, open mouth with tongue"""
     Y = '#ffd12e'
-    out = star_outline(5, .55, .33, p=1.35, N=120)
-    st = pillow_bm(out, H=.21, cuts=3, power=.5)
-    bmesh.ops.translate(st, vec=(0, 0, .5), verts=st.verts)
+    out = TP.polar_outline('star', 'front', n=200)
+    st = pillow_bm(out, H=.31, power=.5, step=.025)
+    for v in st.verts: v.co.y *= 1.14 - .3 * v.co.z            # the turnaround star is fatter low, thinner at the top point
     S = Surface(st)
     part('body', st, Y, role='body', ink=.014, emis='#ffb000', ei=.4, rough=.25, cc=.7)
-    eyes_happy(S, .115, .55, .062, .05, r=.017)
-    mouth_open(S, 0, .455, .05, .045)
-    blush(S, .21, .48, .045, .026)
+    eyes_happy(S, .18, .53, .09, .06, r=.019)
+    mouth_open(S, 0, .42, .075, .055)
+    blush(S, .245, .435, .07, .045, col='#ffa347', op=.6)
 
 
 def build_mini():
-    """turn_mini.png: a plain teal Sharliz egg, huge white eyes, tiny pink open mouth"""
-    body = egg_bm(.78, .74, 1., taper=.22)
+    """turn_mini.png: a plain teal Sharliz egg, huge white eyes, tiny pink open mouth. Body lofted from the silhouette (exact)."""
+    body = TP.loft_bm(TP.profile('mini', 'front'), TP.profile('mini', 'side'), seg=128)
     S = Surface(body)
     part('body', body, '#44d2dc', role='body', ink=.016)
-    eyes_open(S, .165, .59, .15, .19, rim=.02)
-    mouth_small(S, 0, .385, .05, .045)
+    eyes_open(S, .16, .56, .12, .18, rim=.02, tilt=.3)
+    mouth_small(S, 0, .39, .03, .03)
 
 
 def build_cyborg():
-    """turn_cyborg.png: silver metal egg, big white eyes, glowing pink screen mouth, red antenna ball on top, a seam around the head cap,
-    glowing purple discs on the sides"""
+    """turn_cyborg.png: silver metal egg (lofted), big white eyes, glowing pink screen, red antenna ball, seam painted in the texture,
+    glowing purple discs in dark rings on the sides"""
     M, DK = '#c9ccd8', '#454a5e'
-    body = egg_bm(.8, .76, 1., taper=.22)
+    fr = TP.profile('cyborg', 'front', skip=[(.43, .59), (.77, 1.1)], top=.82)
+    sd = TP.profile('cyborg', 'side', skip=[(.77, 1.1)], top=.82)
+    L = TP.Loft(fr, sd); body = TP.loft_bm(L, seg=128)
     S = Surface(body)
-    part('body', body, M, role='body', ink=.014, metal=.4, rough=.28, cc=.8)
-    zn = 2 * .86 - 1; kk = 1 - .22 * zn; rx, ry = .4 * kk * math.sqrt(1 - zn * zn), .38 * kk * math.sqrt(1 - zn * zn)
-    ring = tube_bm([Vector((math.sin(a) * rx, -math.cos(a) * ry, .86)) for a in [i / 48 * math.tau for i in range(49)]], [.007] * 49, seg=8)
-    bm_merge(ring, S.stroke([(0, .87), (0, .95)], r=.007, lift=.0, sink=.2))
-    part('seam', ring, '#6f7488', role='body', ink=0, metal=.6, rough=.3)
-    eyes_open(S, .17, .6, .13, .165, rim=.02)
-    part('screen', S.decal(lambda u, v: abs(u) ** 8 + abs(v) ** 8 <= 1, 0, .40, .08, .042, bulge=.006, lift=.004), '#ff7fc4', role='glow', ink=.006, emis='#ff3fa0', ei=1.0, rough=.2)
-    ant = tube_bm([Vector((0, 0, .97)), Vector((0, 0, 1.05)), Vector((0, 0, 1.13))], [.02, .019, .018], seg=10)
-    part('antenna', ant, DK, role='horn', ink=.007, metal=.5, rough=.3)
-    part('bulb', ellipsoid_bm(.075, .075, .075, at=(0, 0, 1.2)), '#ff2a3a', role='glow', ink=.009, emis='#ff0a20', ei=.9, rough=.15, cc=1)
+    def tex(X, Y, Z, F):
+        img = TP.fill(X.shape, M)
+        TP.put(img, (np.abs(Z - .72) < .005), '#7a7f93')                                   # seam around the head
+        TP.put(img, (F > .95) & (np.abs(X) < .005) & (Z > .72) & (Z < .79), '#7a7f93')     # short vertical seam, front top
+        TP.put(img, (Z > .72) & (Z < .80), '#d4d7e2')                                      # the cap a touch lighter
+        TP.put(img, (np.abs(Z - .72) < .005), '#7a7f93')
+        return img
+    part('body', body, '#ffffff', role='body', ink=.014, metal=.4, rough=.28, cc=.8, tex=TP.paint(L, tex))
+    eyes_open(S, .145, .44, .105, .15, rim=.02, tilt=.22)
+    part('screen', S.decal(lambda u, v: abs(u) ** 8 + abs(v) ** 8 <= 1, 0, .25, .065, .045, bulge=.006, lift=.004), '#ff7fc4', role='glow', ink=.006, emis='#ff3fa0', ei=1.0, rough=.2)
+    ant = tube_bm([Vector((0, 0, .80)), Vector((0, 0, .86)), Vector((0, 0, .92))], [.013, .012, .011], seg=12)
+    part('antenna', ant, DK, role='horn', ink=.006, metal=.5, rough=.3)
+    part('bulb', ellipsoid_bm(.052, .052, .05, at=(0, -.01, .95)), '#ff2a3a', role='glow', ink=.009, emis='#ff0a20', ei=.9, rough=.15, cc=1)
+    a, cx, b, cy = L.at(.51)
     for sx in (-1, 1):
-        sd = 'L' if sx < 0 else 'R'
-        ring = bmesh.new(); bmesh.ops.create_cone(ring, cap_ends=True, segments=28, radius1=.11, radius2=.11, depth=.05)
-        bmesh.ops.transform(ring, matrix=Matrix.Translation((sx * .395, .02, .6)) @ Matrix.Rotation(math.pi / 2, 4, 'Y'), verts=ring.verts)
-        part('earRing' + sd, ring, DK, role='part', ink=.009, metal=.5, rough=.3)
-        core = bmesh.new(); bmesh.ops.create_cone(core, cap_ends=True, segments=24, radius1=.078, radius2=.078, depth=.07)
-        bmesh.ops.transform(core, matrix=Matrix.Translation((sx * .4, .02, .6)) @ Matrix.Rotation(math.pi / 2, 4, 'Y'), verts=core.verts)
-        part('ear' + sd, core, '#8a5cff', role='glow', ink=0, emis='#9a4dff', ei=.9, rough=.2, cc=1)
+        sd_ = 'L' if sx < 0 else 'R'
+        ring = bmesh.new(); bmesh.ops.create_cone(ring, cap_ends=True, segments=36, radius1=.075, radius2=.075, depth=.05)
+        bmesh.ops.transform(ring, matrix=Matrix.Translation((sx * (a - .03), cy + .10, .51)) @ Matrix.Rotation(math.pi / 2, 4, 'Y'), verts=ring.verts)
+        part('earRing' + sd_, ring, DK, role='part', ink=.009, metal=.5, rough=.3)
+        core = bmesh.new(); bmesh.ops.create_cone(core, cap_ends=True, segments=32, radius1=.055, radius2=.055, depth=.064)
+        bmesh.ops.transform(core, matrix=Matrix.Translation((sx * (a - .025), cy + .10, .51)) @ Matrix.Rotation(math.pi / 2, 4, 'Y'), verts=core.verts)
+        part('ear' + sd_, core, '#8a5cff', role='glow', ink=0, emis='#9a4dff', ei=.9, rough=.2, cc=1)
 
 
 def build_unicorn():
-    """turn_unicorn.png: white egg, ringed golden horn, happy closed eyes with lashes, blush, open mouth (no ears, no mane)"""
+    """turn_unicorn.png: white egg (lofted), ringed golden horn tilted forward, happy closed eyes with lashes, blush, open mouth"""
     W = '#fdfbff'
-    body = egg_bm(.8, .76, .96, taper=.2)
+    fr = TP.profile('unicorn', 'front', skip=[(.80, 1.1)], top=.85)
+    sd = TP.profile('unicorn', 'side', skip=[(.80, 1.1)], top=.85)
+    body = TP.loft_bm(fr, sd, seg=128)
     S = Surface(body)
     part('body', body, W, role='body', ink=.014, rough=.22, cc=.9)
-    eyes_happy(S, .165, .58, .095, .085, r=.019, lashes=True)
-    mouth_open(S, 0, .435, .06, .055)
-    blush(S, .3, .49, .06, .03)
-    horn = ridged_cone_bm(.09, .27, ridges=4, amp=.011)
-    bmesh.ops.transform(horn, matrix=Matrix.Translation((0, -.05, .9)) @ Matrix.Rotation(.2, 4, 'X'), verts=horn.verts)
+    eyes_happy(S, .20, .56, .11, .09, r=.02, lashes=True, lash=.7)
+    mouth_open(S, 0, .455, .05, .06)
+    blush(S, .235, .39, .045, .035)
+    horn = ridged_cone_bm(.07, .225, ridges=4, amp=.009)
+    bmesh.ops.transform(horn, matrix=Matrix.Translation((0, -.06, .78)) @ Matrix.Rotation(.36, 4, 'X'), verts=horn.verts)
     part('horn', horn, '#f5b73a', role='horn', ink=.01, metal=.5, rough=.25, emis='#c8860f', ei=.15)
 
 
 def build_dino():
-    """turn_dino.png: green baby dino hatching: bottom shell with a zigzag rim, green spots + cracks, shell cap on its head,
-    glossy black eyes, snout with nostrils, open smile, arms on the rim, bumps down the back, tail out the back"""
-    G, G2, SH, SP = '#5fc95c', '#8fdc6c', '#f3e9d2', '#8fd16a'
-    # bottom shell
-    prof = []
-    for i in range(26):
-        f = i / 25; a = -math.pi / 2 + f * math.pi * .55
-        prof.append((max(.003, .43 * math.cos(a)), .43 + .43 * math.sin(a)))
-    zig = lambda a, z: (0, (.035 * (2 * abs(((a / math.tau * 11) % 1) - .5) * 2 - 1)) * max(0., (z - .33) / .12))
-    shell = lathe_bm(prof, seg=110, wav=zig)
+    """turn_dino.png: baby dino hatching. Bottom shell lofted from the silhouette with a zigzag rim; spots + cracks PAINTED (colour map +
+    normal-map grooves, not geometry); head + snout, white eyes with black pupils, open smile, shell cap on the head, arms on the rim,
+    spine bumps down the back"""
+    G, G2, SH, SP, CR = '#5fc95c', '#8fdc6c', '#f3e9d2', '#8fd16a', '#b8a98a'
+    fr = TP.profile('dino', 'front', top=.37); sd = TP.profile('dino', 'side', top=.37)
+    fr = [p for p in fr if p[0] <= .365] + [(.365, fr[-1][1] * 0 - .303, .303)]
+    sd = [p for p in sd if p[0] <= .365] + [(.365, -.30, .29)]
+    tooth = lambda a: 2 * abs(((a / math.tau * 11) % 1) - .5)                  # 0..1 zigzag, 11 teeth
+    zig = lambda a, z: (0., .07 * tooth(a) * max(0., (z - .28) / .085))
+    L = TP.Loft(fr, sd); shell = TP.loft_bm(L, seg=132, wav=zig)
     SS = Surface(shell)
-    part('shell', shell, SH, role='shell', ink=.013, rough=.45, cc=.3)
-    # the baby dino: head + snout in one surface
-    head = ellipsoid_bm(.34, .32, .32, at=(0, -.02, .66), seg=36, rings=20)
-    bm_merge(head, ellipsoid_bm(.19, .16, .12, at=(0, -.28, .56), seg=24, rings=12))
+    def tex(X, Y, Z, F):
+        img = TP.fill(X.shape, SH)
+        th = np.arctan2(X, -Y)
+        for a, z, r in [(.6, .21, .07), (-.65, .23, .07), (-.25, .10, .05), (.3, .08, .04), (2.2, .22, .07), (1.7, .11, .055), (-2.4, .12, .07), (-1.9, .24, .06), (3.0, .17, .06), (-2.9, .09, .04)]:
+            d = np.abs(((th - a + math.pi) % math.tau) - math.pi)
+            TP.put(img, (d * .30 < r) & (np.abs(Z - z) < r * .9) & (((d * .30 / r) ** 2 + ((Z - z) / (r * .9)) ** 2) <= 1), SP)
+        return img
+    H_, W_ = 512, 1024
+    cracks = TP.draw_strokes((H_, W_), [[(560, 60), (585, 150), (560, 230), (590, 300)], [(300, 90), (280, 170), (310, 240)], [(820, 120), (845, 210)]], 5)
+    nrm = TP.height_to_normal(1 - cracks * .8, strength=3.0, blur=1.2)
+    img = TP.paint(L, tex)
+    arr = np.asarray(img).copy(); arr[cracks > .5] = TP.rgb(CR); img = Image.fromarray(arr)
+    part('shell', shell, '#ffffff', role='shell', ink=.013, rough=.45, cc=.3, tex=img, nrm=nrm, ns=1.0)
+    head = ellipsoid_bm(.27, .22, .23, at=(0, 0, 0), seg=72, rings=40, rot=Matrix.Rotation(-.22, 3, 'X'))
+    bmesh.ops.translate(head, vec=(.012, -.07, .66), verts=head.verts)
+    bm_merge(head, ellipsoid_bm(.17, .13, .11, at=(.01, -.19, .58), seg=40, rings=24))
     S = Surface(head)
     part('head', head, G, role='body', ink=.013)
-    eyes_dot(S, .14, .73, .058, .075)
-    blush(S, .25, .63, .055, .03)
-    mouth_open(S, 0, .485, .095, .05)
+    for sx in (-1, 1):
+        sd_ = 'L' if sx < 0 else 'R'
+        part('eye' + sd_, S.decal(ELLIPSE, sx * .125, .72, .05, .06, bulge=.025), '#ffffff', role='eye', ink=0, rough=.15, cc=1, pivot=(sx * .125, -.3, .72))
+        part('pupil' + sd_, S.decal(ELLIPSE, sx * .11, .70, .035, .04, bulge=.004, lift=.028), INK_C, role='eye', ink=0, rough=.1, cc=1, pivot=(sx * .125, -.3, .72))
+        part('glint' + sd_, S.decal(ELLIPSE, sx * .10, .715, .012, .014, bulge=.002, lift=.034), '#ffffff', role='eye', ink=0, rough=.1, cc=1, emis='#ffffff', ei=.6, pivot=(sx * .125, -.3, .72))
+    blush(S, .19, .62, .045, .028)
+    mouth_open(S, 0, .53, .085, .05)
     nos = bmesh.new()
-    for sx in (-1, 1): bm_merge(nos, ellipsoid_bm(.015, .015, .012, at=(sx * .055, -.37, .665), seg=10, rings=6))
+    for sx in (-1, 1): bm_merge(nos, ellipsoid_bm(.013, .013, .011, at=(sx * .05, -.33, .625), seg=10, rings=6))
     part('nostrils', nos, '#2b6b2e', role='part', ink=0)
-    # shell cap on the head
-    cprof = [(max(.003, .40 * math.sqrt(max(0., 1 - (z / .36) ** 2))), z) for z in [i / 20 * .32 for i in range(21)]]
-    czig = lambda a, z: (0, (.03 * (2 * abs(((a / math.tau * 9) % 1) - .5) * 2 - 1)) * max(0., 1 - z / .08))
-    cap = lathe_bm(cprof, seg=90, wav=czig)
-    bmesh.ops.transform(cap, matrix=Matrix.Translation((0.02, -.01, .8)) @ Matrix.Rotation(.1, 4, 'Y') @ Matrix.Rotation(-.08, 4, 'X'), verts=cap.verts)
-    CS = Surface(cap)
-    part('cap', cap, SH, role='shell', ink=.013, rough=.45, cc=.3)
-    # spots on cap + shell, cracks on the shell
-    spots = bmesh.new()
-    for x, z, r, SURF, fr in [(.1, .9, .05, CS, 1), (-.15, .86, .04, CS, 1), (.2, .82, .035, CS, -1), (-.05, .95, .035, CS, -1),
-                               (.2, .2, .055, SS, -1), (-.22, .28, .045, SS, -1), (.02, .1, .04, SS, -1), (-.1, .32, .03, SS, -1), (.15, .25, .05, SS, 1), (-.2, .15, .04, SS, 1)]:
-        loc, nrm = SURF.hit(x, z, front=fr)
-        if loc is not None: bm_merge(spots, ellipsoid_bm(r, r, r * .3, at=tuple(loc), rot=Vector((0, 0, 1)).rotation_difference(nrm).to_matrix()))
-    part('spots', spots, SP, role='shell', ink=0, rough=.45, cc=.3)
-    cr = bmesh.new()
-    for pts in [[(.1, .38), (.14, .3), (.1, .24), (.15, .17)], [(-.2, .36), (-.24, .3), (-.21, .25)]]:
-        bm_merge(cr, SS.stroke(pts, r=.006, lift=0, sink=.5, seg=6))
-    part('cracks', cr, '#b8a98a', role='shell', ink=0, rough=.6)
+    cprof = [(max(.003, .235 * math.sqrt(max(0., 1 - (z / .226) ** 2))), z) for z in [i / 24 * .226 for i in range(25)]]
+    ctooth = lambda a: 2 * abs(((a / math.tau * 9) % 1) - .5)
+    czig = lambda a, z: (0, -.05 * ctooth(a) * max(0., 1 - z / .06))
+    cap = lathe_bm(cprof, seg=100, wav=czig)
+    bmesh.ops.transform(cap, matrix=Matrix.Translation((0.04, -.02, .78)) @ Matrix.Rotation(.12, 4, 'Y') @ Matrix.Rotation(-.1, 4, 'X'), verts=cap.verts)
+    uv_equirect(cap, 0, .226)
+    CL = TP.Loft([(z, -r, r) for r, z in cprof], [(z, -r, r) for r, z in cprof])
+    def ctex(X, Y, Z, F):
+        img = TP.fill(X.shape, SH); th = np.arctan2(X, -Y)
+        for a, z, r in [(.4, .12, .06), (-.9, .08, .05), (2.0, .10, .055), (-2.3, .14, .05), (3.0, .06, .04), (1.2, .19, .035)]:
+            d = np.abs(((th - a + math.pi) % math.tau) - math.pi)
+            TP.put(img, (((d * .20 / r) ** 2 + ((Z - z) / (r * .9)) ** 2) <= 1), SP)
+        return img
+    part('cap', cap, '#ffffff', role='shell', ink=.013, rough=.45, cc=.3, tex=TP.paint(CL, ctex))
     arms = bmesh.new()
-    for sx in (-1, 1): bm_merge(arms, ellipsoid_bm(.065, .1, .05, at=(sx * .21, -.35, .5), rot=Matrix.Rotation(sx * .3, 3, 'Z')))
+    for sx in (-1, 1): bm_merge(arms, ellipsoid_bm(.055, .09, .05, at=(sx * .18, -.24, .41), rot=Matrix.Rotation(sx * .3, 3, 'Z')))
     part('arms', arms, G, role='arms', ink=.01)
     spk = bmesh.new()
-    for y, z, r in [(.27, .84, .04), (.3, .73, .045), (.28, .62, .045)]:
-        bm_merge(spk, ellipsoid_bm(r, r * .8, r * 1.2, at=(0, y + .02, z), seg=14, rings=10))
+    for z in (.50, .58, .66, .74):
+        loc, nrm = S.hit(0, z, front=1)                                        # on the back of the head
+        if loc is not None: bm_merge(spk, ellipsoid_bm(.035, .03, .04, at=tuple(loc + nrm * .012), seg=16, rings=12))
     part('spikes', spk, G2, role='horn', ink=.009)
-    pts = smooth_path([Vector((.1, .33, .42)), Vector((.16, .48, .34)), Vector((.14, .56, .2)), Vector((.08, .58, .07))], 5)
-    part('tail', tube_bm(pts, radii(.075, .03, len(pts)), seg=10), G, role='tail', ink=.011, pivot=(.1, .33, .42))
 
 
 PETS = {'dragon': (build_dragon, dict(height=.64, flt=0)),
@@ -859,7 +903,11 @@ except ImportError as e:
     print('pets_new not loaded:', e)
 
 if __name__ == '__main__':
-    ids = sys.argv[1:] or list(PETS)
+    ids = [a for a in sys.argv[1:] if not a.startswith('--')] or list(PETS)
     for pid in ids:
-        reset(); fn, kw = PETS[pid]; fn(); export(pid, kw.get('height', .56), kw.get('flt', 1), {'anim': kw['anim']} if 'anim' in kw else None)
-        bpy.ops.wm.save_as_mainfile(filepath=os.path.join('/tmp', 'pet_%s.blend' % pid))
+        reset(); fn, kw = PETS[pid]; fn()
+        if '--fit' in sys.argv:          # silhouette check against the ChatGPT turnaround (tools/pets/pet_fit.py)
+            import pet_fit; pet_fit.fit(pid)
+        if '--nosave' not in sys.argv:
+            export(pid, kw.get('height', .56), kw.get('flt', 1), {'anim': kw['anim']} if 'anim' in kw else None)
+            bpy.ops.wm.save_as_mainfile(filepath=os.path.join('/tmp', 'pet_%s.blend' % pid))
