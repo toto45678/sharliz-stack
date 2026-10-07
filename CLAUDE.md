@@ -163,4 +163,6 @@ Bug hunt 3 Oct 7 (branch fix-bugs-3, build.py "bug hunt 3" patches + v28/v38/v40
 Open: a save code from the free web version (test purchases) imported into the store app unlocks paid items — needs Tzach's decision.
 Done Oct 7 (branch languages): 12 languages + device-language detection (see the src/i18n line in Layout). Translated by Claude (726 keys + 247 pairs each), checked on screen in all 12 (lobby, settings, shop, My hero, album, modes, pass, map, level intro). Known: the shop tab row is tight in Japanese; prices still show ₪ (real store prices come from the stores).
 
+Done Oct 7 (branch guide-stickers): buddy guide for kids (v59) + the 24 Sharliz album stickers redrawn as tall EGGS (ChatGPT sheets design/stickers/sheet1_eggs.png + sheet2_eggs.png cut into art/stk_s01..24.webp, same names/rarities). Buddy 3D models (Blender, src/v60.js, tools/pets/) and the 11 new buddies (src/v61.js) live on branch `buddies`, owned by the "Buddies in 3D" thread (handoff: /mnt/project-files/game/buddies/3d-handoff.md); not on main yet.
+
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.
