@@ -6960,10 +6960,12 @@ if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),h
 if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const r=_l.apply(this,arguments);if(lv%5===0)eggGive('r','P'+lv);return r}}
 // perfect drops counter for the trophy room
 {const _s=showOverlay;showOverlay=function(){if((state==='win'||state==='over')&&lv&&!lv._pc){lv._pc=1;progress.stat=progress.stat||{};progress.stat.perf=(progress.stat.perf||0)+(lv.perfect||0)}return _s.apply(this,arguments)}}
-// Pass: free tiers 5/15/25 = an egg, premium 15/25 = a golden egg
-if(typeof PS_REW!=='undefined'){[4,14,24].forEach(i=>{PS_REW[i][0]={egg:'c'}});[14,24].forEach(i=>{PS_REW[i][1]={egg:'g'}})
-  const _rh=psRewHTML;psRewHTML=function(R){if(!R.egg)return _rh.apply(this,arguments);return `<span class="rw it"><img src="art/egg_${R.egg}.webp" alt=""></span><small class="lab">${t('egg_'+R.egg)}</small>`};
-  const _pg=psGive;psGive=function(R){if(R.egg){eggGive(R.egg);return}return _pg.apply(this,arguments)}}
+// Pass: free tiers 5 = an egg, 15/25 = a golden egg; premium 15/25 = 12 cookies (a fixed reward: nothing random is ever
+// sold, or Apple counts it as a loot box → odds disclosure + 16+ in Australia)
+if(typeof PS_REW!=='undefined'){PS_REW[4][0]={egg:'c'};[14,24].forEach(i=>{PS_REW[i][0]={egg:'g'};PS_REW[i][1]={ck:12}})
+  const _rh=psRewHTML;psRewHTML=function(R){if(R.ck)return `<span class="rw it"><img src="art/ns_cookie.webp" alt=""></span><small class="lab">${R.ck} ${t('nestTreats')}</small>`;
+    if(!R.egg)return _rh.apply(this,arguments);return `<span class="rw it"><img src="art/egg_${R.egg}.webp" alt=""></span><small class="lab">${t('egg_'+R.egg)}</small>`};
+  const _pg=psGive;psGive=function(R){if(R.ck){nest().treats+=R.ck;saveProgress();return}if(R.egg){eggGive(R.egg);return}return _pg.apply(this,arguments)}}
 // "you found an egg": a strip on the open result card, or a small pop-up in the lobby
 function eggNotify(){if(!EGGQ.length)return;if(document.querySelector('.lvup')){setTimeout(eggNotify,500);return}const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
   if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){while(EGGQ.length){const tp=EGGQ.shift(),d=document.createElement('div');d.className='egg-strip pulse';d.innerHTML=`<img src="art/egg_${tp}.webp" alt=""><span><b></b><small></small></span>`;
