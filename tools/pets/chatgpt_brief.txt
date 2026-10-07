@@ -1,4 +1,4 @@
-You are the game-dev thread's PC session (Tzach talks Hebrew). Use Tzach's ChatGPT in Chrome (Claude in Chrome, chatgpt.com, open YOUR OWN NEW TAB; never touch other tabs such as App Store Connect, TikTok or Instagram). Do not use Higgsfield or any paid credits. Attach reference images by loading them from GitHub Pages as crossOrigin Image -> canvas -> blob -> File -> the chat's input[type=file] (fetch is CSP-blocked on chatgpt.com). Download each final image with an <a download> click, then copy it from Tzach's Downloads folder into SHARLIZ GAME\game_art\chatgpt_out\turn (create it) with the given file name. Send a short cross-session message after every 5 saved images (file names), so the cloud thread can start modelling while you continue.
+You are the buddies-3D thread's PC session (Tzach talks Hebrew). Use Tzach's ChatGPT in Chrome (Claude in Chrome, chatgpt.com, open YOUR OWN NEW TAB; never touch other tabs such as App Store Connect, TikTok or Instagram). Do not use Higgsfield or any paid credits. Attach reference images by loading them from GitHub Pages as crossOrigin Image -> canvas -> blob -> File -> the chat's input[type=file] (fetch is CSP-blocked on chatgpt.com). Download each final image with an <a download> click, then copy it from Tzach's Downloads folder into SHARLIZ GAME\game_art\chatgpt_out\turn (create it; normal-map tiles go to ...\chatgpt_out\nrm) with the given file name. Send a short cross-session message after every 5 saved images (file names), so the cloud thread can start modelling while you continue.
 
 STYLE REFERENCE for every image: https://toto45678.github.io/sharliz-stack/design/buddies/dragon_turnaround.png (approved: glossy 3D vinyl toy, three views FRONT / SIDE facing right / BACK, same size, white background).
 
@@ -10,7 +10,7 @@ PART A — the 9 existing buddies. <BUDDY> = "the buddy from the attached sticke
  1 chick   — the small yellow chick sitting on top (round, little raised wings, orange beak, tuft of 3 feathers, orange feet). Save turn_chick.png
  2 slime   — the green jelly puddle with a face (wide low dome, drips around the base). Save turn_slime.png
  3 ghost   — the small white sheet ghost peeking from the box (two black oval eyes, wavy bottom hem). Save turn_ghost.png
- 4 bee     — the round bee with the honey (black glossy head, yellow and black striped body, see-through wings, antennae). Save turn_bee.png
+ 4 bee     — SKIP, already done (bee v2 approved by Tzach).
  5 star    — the glowing yellow star with a happy face (puffy rounded points). Save turn_star.png
  6 mini    — the small teal Sharliz on top (a tall glossy EGG, big empty white oval eyes with NO pupils, NO arms, NO legs). Save turn_mini.png
  7 cyborg  — the silver robot Sharliz (egg-shaped metal body, big white eyes with NO pupils, antenna with a red ball, purple round light on the side, pink screen mouth, NO arms/legs). Save turn_cyborg.png
@@ -29,6 +29,23 @@ PART B — 11 NEW buddies (no sticker, describe them; all small and cute, chunky
 18 robodog — "a robot puppy buddy: white and light-grey rounded robot dog, floppy metal ears, glowing cyan screen eyes, small antenna, springy tail". Save turn_robodog.png
 19 whale   — "a galaxy whale buddy: chubby round whale, deep purple-blue body full of tiny stars and a galaxy swirl, small fins, tail fluke, glowing". Save turn_whale.png
 20 griffin — "a baby thunder griffin buddy: round golden-yellow body, eagle beak, feathered wings with blue lightning-bolt marks, lion tail with a tuft, a small lightning-bolt crest". Save turn_griffin.png
+
+PART D — SURFACE DETAIL TILES for normal maps (new chat; do this before Part C). Tzach wants normal maps where they add something.
+Each tile is a SEAMLESS, TILEABLE, square, top-down close-up of a surface, flat even lighting, no object, no edges, no text,
+clean cartoon style (big simple shapes, not photo-real). Ask for the GRAYSCALE HEIGHT version (white = raised, black = sunken),
+we turn it into a normal map ourselves. Prompt: "A seamless tileable texture tile of <SURFACE>, drawn as a grayscale height map:
+white = raised, black = sunken, soft gradients, big simple cartoon shapes, perfectly seamless on all four edges, flat lighting,
+no perspective, square image." Save as nrm_<name>.png:
+ D1 scales   — "chunky round dragon scales, overlapping like roof tiles" (dragon, dino)            -> nrm_scales.png
+ D2 feathers — "small soft rounded feathers overlapping downward" (chick, phoenix, griffin wings, penguin belly) -> nrm_feathers.png
+ D3 fur      — "short soft fur tufts" (kitten, monkey)                                               -> nrm_fur.png
+ D4 panels   — "rounded robot armour panels with thin seams and a few round rivets" (cyborg, robodog) -> nrm_panels.png
+ D5 crystal  — "big flat crystal facets, like a cut gem" (crystal bunny)                             -> nrm_crystal.png
+ D6 bumps    — "soft round jelly bumps" (slime)                                                      -> nrm_bumps.png
+ D7 fuzz     — "fine fuzzy velvet" (bee head, no need if it looks too busy)                          -> nrm_fuzz.png
+ D8 puffs    — "big soft cloud puffs" (cloudy)                                                       -> nrm_puffs.png
+Also ONE colour texture tile (not a height map): "a seamless tileable cartoon galaxy: deep purple-blue space with tiny white
+stars, a soft pink-blue nebula swirl, square" -> tex_galaxy.png (galaxy whale).
 
 PART C — album sticker cards for the 11 new buddies (do this after A and B, new chat). Attach https://toto45678.github.io/sharliz-stack/design/stickers/buddies1.png (the approved card style) + the new buddies' turnarounds you made. Make 2 sheets in the same style as buddies1: illustrated cards (portrait 3:4, rounded corners, white border) each showing ONE new buddy playing with one or two Sharliz in a matching scene, 6 cards per sheet in a 3x2 grid (sheet 2 has 5 cards). Sharliz rules: tall glossy egg, NO arms, NO legs, big empty white oval eyes with NO pupils. Sheet 1: penguin (snowy ice), firefly (night meadow), kitten (cozy room with yarn), octopus (under the sea), cloudy (sky), monkey (jungle). Sheet 2: crystal bunny (crystal cave), phoenix (sunset volcano), robo puppy (robot lab), galaxy whale (space), thunder griffin (stormy sky). Save stk_new1.png and stk_new2.png.
 
