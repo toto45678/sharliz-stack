@@ -1,6 +1,6 @@
 /* ===== v58: illustrated sticker chapters (Tzach) =====
    Rare chapter = 18 STORY stickers (illustrated scenes, holo glow), earned by catching rare Sharliz on the rope.
-   Boss chapter = 30 illustrated battle scenes (Sharliz vs that boss), holo glow. Worlds = full-bleed world art. */
+   Boss chapter = 30 illustrated battle scenes (Sharliz vs that boss), holo glow. Worlds = illustrated postcard of each world. */
 Object.assign(I18N.en,{pg_rare:'Sharliz stories',hint_rare:'Catch a rare Sharliz on the rope',stkVs:'Sharliz vs {b}',storyGot:'New story sticker!'});
 Object.assign(I18N.he,{pg_rare:'סיפורי שארליז',hint_rare:'תפסו שארליז נדיר על החבל',stkVs:'שארליז נגד {b}',storyGot:'מדבקת סיפור חדשה!'});
 const STORY=[
@@ -26,14 +26,8 @@ function storySync(){try{const D=sbData();D.story=D.story||[];const al=progress.
   while(D.story.length<target){const left=STORY.map(s=>s[0]).filter(id=>!D.story.includes(id));if(!left.length)break;D.story.push(pick(left));added++}if(added)saveProgress();return added}catch(e){return 0}}
 {const P=STK_PAGES.find(p=>p.id==='rare');if(P)P.items=()=>{const D=sbData(),L=lang==='he'?1:0,own=D.story||[];return STORY.map(s=>({id:'story:'+s[0],n:own.includes(s[0])?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1}))}}
 {const P=STK_PAGES.find(p=>p.id==='boss');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const z=it.id.slice(5);return Object.assign(it,{src:'art/stk_b_'+z+'.webp',rar:'h',card:1,name:t('stkVs',{b:it.name})})})}}
-/* worlds: the world's own layers + sky, cut to the card */
-const WSTK={};
-function worldStk(z,cb){const k=z.sid||z.id;if(WSTK[k]&&WSTK[k]!=='…')return WSTK[k];if(WSTK[k]==='…')return '';WSTK[k]='…';
-  const ids=['w3b','w3m','w3f'].map(L=>{const a=typeof artAlias==='function'?artAlias(L+'_'+k):L+'_'+k;return 'art/'+a+'.webp'});
-  const c=document.createElement('canvas');c.width=300;c.height=400;const g=c.getContext('2d');const sky=z.sky||[[0,'#9cc8d2'],[1,'#35558e']];
-  const gr=g.createLinearGradient(0,400,0,0);sky.forEach(([tt,col])=>gr.addColorStop(Math.min(1,tt/1.1),col));g.fillStyle=gr;g.fillRect(0,0,300,400);
-  let n=0;const ims=ids.map(src=>{const im=new Image();im.onload=im.onerror=()=>{if(++n===ids.length){ims.forEach(i=>{if(i.naturalWidth){const sw=i.naturalWidth,sh=i.naturalHeight,cw=sw*.86,ch=cw*4/3;g.drawImage(i,(sw-cw)/2,sh-ch,cw,ch,0,0,300,400)}});try{WSTK[k]=c.toDataURL('image/webp',.85)}catch(e){WSTK[k]=''}cb&&cb()}};im.src=src;return im});return ''}
-{const P=STK_PAGES.find(p=>p.id==='world');if(P){const _it=P.items;P.items=()=>{const it=_it();return it.map((x,i)=>{const z=ZONES[i];return Object.assign(x,{src:null,round:false,card:1,img:()=>worldStk(z,()=>{if(typeof SB!=='undefined'&&SB.view==='page'&&sbChapters()[SB.ch]&&sbChapters()[SB.ch].id==='world'){clearTimeout(WSTK._t);WSTK._t=setTimeout(()=>sbPageView(),60)}})})})}}}
+/* worlds: an illustrated postcard of each world (art/stk_w_<sid>.webp) */
+{const P=STK_PAGES.find(p=>p.id==='world');if(P){const _it=P.items;P.items=()=>{const it=_it();return it.map((x,i)=>{const z=ZONES[i];return Object.assign(x,{src:'art/stk_w_'+(z.sid||z.id)+'.webp',img:null,round:false,card:1})})}}}
 {const _o=openAlbum;openAlbum=function(){storySync();return _o.apply(this,arguments)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{if(storySync())stkBadge()}catch(e){}return r}}
 /* buddies: an illustrated scene of the buddy with Sharliz (paid buddies glow) */
