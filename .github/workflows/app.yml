@@ -69,3 +69,78 @@ jobs:
         run: |
           xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphonesimulator \
             -destination 'generic/platform=iOS Simulator' -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -30
+
+  # Signs and uploads the iOS app to TestFlight. Needs four repo secrets
+  # (Settings -> Secrets and variables -> Actions): ASC_KEY_ID, ASC_ISSUER_ID,
+  # ASC_KEY_P8 (full text of the .p8 file, App Store Connect API key with Admin role)
+  # and APPLE_TEAM_ID. Signing is automatic (Apple-managed certificates), no Mac needed.
+  # Skipped until the secrets exist. Build number = this workflow's run number.
+  testflight:
+    needs: ios
+    runs-on: macos-15
+    env:
+      HAS_KEY: ${{ secrets.ASC_KEY_P8 != '' }}
+    steps:
+      - name: Check for the App Store Connect key
+        if: env.HAS_KEY != 'true'
+        run: echo "::notice::No ASC_KEY_P8 secret yet, skipping TestFlight upload"
+      - uses: actions/checkout@v4
+        if: env.HAS_KEY == 'true'
+      - uses: actions/setup-node@v4
+        if: env.HAS_KEY == 'true'
+        with: { node-version: 22 }
+      - name: Store build of the game
+        if: env.HAS_KEY == 'true'
+        run: python3 tools/build.py --store
+      - name: Create the iOS project
+        if: env.HAS_KEY == 'true'
+        working-directory: app
+        run: |
+          npm install
+          npx cap add ios --packagemanager CocoaPods
+          npm run assets -- --ios
+          PL=ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Delete :UISupportedInterfaceOrientations" $PL || true
+          /usr/libexec/PlistBuddy -c "Add :UISupportedInterfaceOrientations array" -c "Add :UISupportedInterfaceOrientations:0 string UIInterfaceOrientationPortrait" $PL
+          /usr/libexec/PlistBuddy -c "Delete :UISupportedInterfaceOrientations~ipad" $PL || true
+          /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" $PL || true
+          /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Sharliz" $PL || /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string Sharliz" $PL
+          npx cap sync ios
+      - name: Archive (signed)
+        if: env.HAS_KEY == 'true'
+        working-directory: app/ios/App
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+        run: |
+          mkdir -p ~/asc && printf '%s\n' "$ASC_KEY_P8" > ~/asc/key.p8
+          xcodebuild -workspace App.xcworkspace -scheme App -configuration Release -sdk iphoneos \
+            -destination 'generic/platform=iOS' -archivePath $RUNNER_TEMP/App.xcarchive \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath ~/asc/key.p8 \
+            -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}" \
+            DEVELOPMENT_TEAM="${{ secrets.APPLE_TEAM_ID }}" CODE_SIGN_STYLE=Automatic \
+            MARKETING_VERSION=1.0 CURRENT_PROJECT_VERSION=${{ github.run_number }} \
+            archive | tail -40
+      - name: Upload to TestFlight
+        if: env.HAS_KEY == 'true'
+        run: |
+          cat > $RUNNER_TEMP/export.plist <<PLIST
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>destination</key><string>upload</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>teamID</key><string>${{ secrets.APPLE_TEAM_ID }}</string>
+          </dict></plist>
+          PLIST
+          xcodebuild -exportArchive -archivePath $RUNNER_TEMP/App.xcarchive \
+            -exportOptionsPlist $RUNNER_TEMP/export.plist -exportPath $RUNNER_TEMP/export \
+            -allowProvisioningUpdates \
+            -authenticationKeyPath ~/asc/key.p8 \
+            -authenticationKeyID "${{ secrets.ASC_KEY_ID }}" \
+            -authenticationKeyIssuerID "${{ secrets.ASC_ISSUER_ID }}" | tail -40
+      - name: Remove the key file
+        if: always()
+        run: rm -rf ~/asc
