@@ -88,6 +88,20 @@ def egg_bm(w=.84, d=.8, h=1., taper=.2, flat=.06, seg=80, rings=44):
     return bm
 
 
+NRM_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..', 'design', 'buddies', 'nrm')   # seamless height tiles from the graphics department (ChatGPT)
+
+
+def tile_nrm(name, strength=1.5, size=512, reps=(3, 1)):
+    """tangent-space normal map from design/buddies/nrm/nrm_<name>.png (fur, scales, feathers, panels, crystal, bumps, puffs, fuzz),
+    repeated reps times across u / v (a loft body is ~3x wider around than tall, so (3, 1) keeps the tile square-ish). Keep ns low: the turnarounds are smooth toys."""
+    h = Image.open(os.path.join(NRM_DIR, 'nrm_%s.png' % name)).convert('L').resize((size, size), Image.LANCZOS)
+    n = TP.height_to_normal(h, strength=strength, blur=1.0)
+    out = Image.new('RGB', (size * reps[0], size * reps[1]))
+    for i in range(reps[0]):
+        for j in range(reps[1]): out.paste(n, (i * size, j * size))
+    return out
+
+
 def uv_equirect(bm, z0=None, z1=None):
     """UVs for a body: u goes around (0.5 = front, -Y), v = height from z0 (0) to z1 (1). Texture images are drawn in that space."""
     zs = [v.co.z for v in bm.verts]; z0 = min(zs) if z0 is None else z0; z1 = max(zs) if z1 is None else z1
@@ -372,9 +386,9 @@ def build_dragon():
     """ChatGPT turnaround (design/buddies/dragon_turnaround.png): minty green egg, 3 dark green spikes on top,
     small bat wings (dark green bones, light membrane) on the sides, short spike tail, blush, open smile"""
     G, DG, MEM = '#8be04e', '#2f9a32', '#a6e25a'
-    body = egg_bm(.84, .8, 1.)
+    body = egg_bm(.84, .8, 1.); uv_equirect(body)
     S = Surface(body)
-    part('body', body, G, role='body', ink=.014)
+    part('body', body, G, role='body', ink=.014, nrm=tile_nrm('scales', 1.0), ns=.3)
     face(S, eyes=(.19, .59, .145, .18), mouth=(.0, .395, .075, .07), blush=(.31, .46, .06, .032), rim=.02)
     sp = bmesh.new()
     for x, z, r, h, tilt in [(0, .96, .1, .23, 0), (-.16, .9, .08, .17, -.5), (.16, .9, .08, .17, .5)]:
@@ -642,8 +656,8 @@ def build_chick():
     for v in body.verts:
         if v.co.z < .06: v.co.z = .06 + (v.co.z - .06) * .25
         if v.co.z < .30 and v.co.y < 0: v.co.y *= 1. + .12 * (1 - v.co.z / .30)      # the chest bulges forward a little
-    S = Surface(body)
-    part('body', body, Y, role='body', ink=.014, rough=.3, cc=.7)
+    uv_equirect(body); S = Surface(body)
+    part('body', body, Y, role='body', ink=.014, rough=.3, cc=.7, nrm=tile_nrm('feathers', 1.0), ns=.25)
     eyes_happy(S, .14, .60, .08, .06, r=.026)
     blush(S, .20, .54, .055, .04)
     part('beak', beak_bm((0, -.24, .57), up=.12, size=1.05, gap=.05), OR, role='beak', ink=.01)
@@ -672,7 +686,7 @@ def build_slime():
         return (-.09 * k * valley, 0)
     body = TP.loft_bm(fr, sd, seg=160, wav=wav)
     S = Surface(body)
-    part('body', body, G, role='body', ink=.014, rough=.06, cc=1)
+    part('body', body, G, role='body', ink=.014, rough=.06, cc=1, nrm=tile_nrm('bumps', 1.0), ns=.3)
     eyes_open(S, .215, .53, .15, .20, rim=.018, tilt=.25)
     mouth_small(S, 0, .33, .045, .035, tongue=False)
     blush(S, .31, .34, .05, .025, op=.4)
@@ -789,7 +803,7 @@ def build_cyborg():
         TP.put(img, (Z > .72) & (Z < .80), '#d4d7e2')                                      # the cap a touch lighter
         TP.put(img, (np.abs(Z - .72) < .005), '#7a7f93')
         return img
-    part('body', body, '#ffffff', role='body', ink=.014, metal=.4, rough=.28, cc=.8, tex=TP.paint(L, tex))
+    part('body', body, '#ffffff', role='body', ink=.014, metal=.4, rough=.28, cc=.8, tex=TP.paint(L, tex), nrm=tile_nrm('panels', 1.0), ns=.3)
     eyes_open(S, .145, .44, .105, .15, rim=.02, tilt=.22)
     part('screen', S.decal(lambda u, v: abs(u) ** 8 + abs(v) ** 8 <= 1, 0, .25, .065, .045, bulge=.006, lift=.004), '#ff7fc4', role='glow', ink=.006, emis='#ff3fa0', ei=1.0, rough=.2)
     ant = tube_bm([Vector((0, 0, .80)), Vector((0, 0, .86)), Vector((0, 0, .92))], [.013, .012, .011], seg=12)
@@ -850,8 +864,8 @@ def build_dino():
     head = ellipsoid_bm(.27, .22, .23, at=(0, 0, 0), seg=72, rings=40, rot=Matrix.Rotation(-.22, 3, 'X'))
     bmesh.ops.translate(head, vec=(.012, -.07, .66), verts=head.verts)
     bm_merge(head, ellipsoid_bm(.17, .13, .11, at=(.01, -.19, .58), seg=40, rings=24))
-    S = Surface(head)
-    part('head', head, G, role='body', ink=.013)
+    uv_equirect(head); S = Surface(head)
+    part('head', head, G, role='body', ink=.013, nrm=tile_nrm('fuzz', 1.0), ns=.3)
     for sx in (-1, 1):
         sd_ = 'L' if sx < 0 else 'R'
         part('eye' + sd_, S.decal(ELLIPSE, sx * .125, .72, .05, .06, bulge=.025), '#ffffff', role='eye', ink=0, rough=.15, cc=1, pivot=(sx * .125, -.3, .72))
