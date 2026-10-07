@@ -1304,7 +1304,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 /* ===== v55: calm lobby (tab bar + mini icons) ===== */
 #title.lt-on .lob-side,#title.lt-on .lob-pills,#title.lt-on .lob-tip{display:none!important}
 #title.wardrobe-on .lob-tabs,#title.wardrobe-on .lob-mini{display:none}
-#title.lt-on .logo{scale:.72;transform-origin:50% 0;top:calc(env(safe-area-inset-top,0px) + 64px)}
+#title.lt-on .logo{transform:translateX(-50%) scale(.8);transform-origin:50% 0;top:calc(env(safe-area-inset-top,0px) + 70px)}
 #title.lt-on .lob-bottom{bottom:calc(env(safe-area-inset-bottom,0px) + 96px)}
 /* tab bar */
 .lob-tabs{position:absolute;z-index:4;left:0;right:0;bottom:0;display:grid;grid-template-columns:repeat(5,1fr);align-items:end;direction:ltr;
@@ -1319,7 +1319,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .lt-tab.home b{color:#ffe24d;font-size:1rem}
 .lt-tab .lt-bd{position:absolute;top:-4px;right:-2px;transform:scale(.85);transform-origin:100% 0}
 /* mini icons row */
-.lob-mini{position:absolute;z-index:3;left:50%;translate:-50% 0;top:calc(env(safe-area-inset-top,0px) + clamp(186px,23vh,206px));display:flex;gap:12px}
+.lob-mini{position:absolute;z-index:3;left:10px;top:calc(env(safe-area-inset-top,0px) + clamp(250px,33vh,290px));display:flex;flex-direction:column;gap:10px}
 .lt-mini{position:relative;display:flex;flex-direction:column;align-items:center;gap:0;width:60px;padding:0;border:0;background:none;color:#fff}
 .lt-mini[hidden]{display:none}
 .lt-mini .lt-ic{position:relative;width:54px;height:54px;border-radius:50%;border:3.5px solid #120d2b;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#8f6bff,#4a26b8 70%);box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 4px 0 #120d2b}
@@ -1340,8 +1340,8 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
   .lt-tab b{font-size:.76rem}
   #title.lt-on .lob-bottom{bottom:calc(env(safe-area-inset-bottom,0px) + 84px)}
   #title.lt-on .play-big{min-height:62px;font-size:1.8rem}
-  #title.lt-on .logo{scale:.64;top:calc(env(safe-area-inset-top,0px) + 56px)}
-  .lob-mini{top:calc(env(safe-area-inset-top,0px) + 172px);scale:.9;transform-origin:50% 0}
+  #title.lt-on .logo{transform:translateX(-50%) scale(.68);top:calc(env(safe-area-inset-top,0px) + 60px)}
+  .lob-mini{top:calc(env(safe-area-inset-top,0px) + 196px);gap:6px;scale:.9;transform-origin:0 0}
 }
 /* modes card: whole row reads as one big button */
 .modes .mode-btn{position:relative;min-height:74px;padding-inline-end:44px}
@@ -1360,10 +1360,6 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .lt-tab:not(.home) b{color:#e4dcff}
 .lt-mini .lt-ic{width:50px;height:50px}
 .lt-mini{width:56px}
-@media (max-height:700px){
-  #title.lt-on .logo{scale:.6}
-  .lob-mini{top:calc(env(safe-area-inset-top,0px) + 162px)}
-}
 .lt-mini b{background:rgba(18,13,43,.62);box-shadow:none}
 .modes .mode-btn.m-tour{overflow:hidden}
 .modes .mode-btn.m-tour::before{content:'';position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:ltShine 3.2s ease-in-out infinite;pointer-events:none}
@@ -6503,7 +6499,7 @@ function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e
 {const sec=document.getElementById('title');if(sec){
   // bottom tab bar
   const bar=document.createElement('nav');bar.className='lob-tabs';
-  const tab=(id,icon,key,orig,cls='')=>{const b=document.createElement('button');b.className='lt-tab '+cls;b.innerHTML=`<span class="lt-ic"><img src="art/${icon}.webp" alt=""></span><b></b>`;b.dataset.k=key;
+  const tab=(id,icon,key,orig,cls='')=>{const b=document.createElement('button');b.className='lt-tab '+cls;b.innerHTML=`<span class="lt-ic"><img src="art/${icon}.webp" alt=""></span><b></b>`;b.dataset.k=key;b.querySelector('b').textContent=t(key);
     b.onclick=()=>{if(orig){const o=document.getElementById(orig);if(o)o.click()}else{audio();sfx.click();LOB.jump=time}};bar.appendChild(b);LT.tabs.push({b,orig,key})};
   tab('shop','ic_shop','shop','lobShop');tab('style','ic_hats','wardrobeShort','lobHats');tab('home','ic_home','tabHome',null,'home on');tab('modes','ic_modes','tabModes','modesTitleBtn');tab('album','ic_album','album','lobAlbum');
   sec.appendChild(bar);
@@ -6528,6 +6524,8 @@ function ltSync(){
   const n=['rain','mem','whack'].reduce((s,id)=>s+arcLeft(id),0);const b=document.createElement('button');b.className='mode-btn m-arc';
   b.innerHTML='<img src="art/ic_arcade.webp" alt=""><span class="mt"><b></b><small></small></span>'+(n?`<i class="badge lt-arcbd">${n}</i>`:'');b.querySelector('b').textContent=t('arcTitle');b.querySelector('small').textContent=t('arcSubModes',{n});
   b.onclick=()=>{sfx.click();hideOverlay();openArcade()};const tr=box.querySelector('.m-tour');if(tr)tr.after(b);else box.prepend(b)}}
+// the first lobby is drawn before this module loads: sync once now
+setTimeout(()=>{try{if(state==='title')updateLobby()}catch(e){}},0);
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

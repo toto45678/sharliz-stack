@@ -11,7 +11,7 @@ function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e
 {const sec=document.getElementById('title');if(sec){
   // bottom tab bar
   const bar=document.createElement('nav');bar.className='lob-tabs';
-  const tab=(id,icon,key,orig,cls='')=>{const b=document.createElement('button');b.className='lt-tab '+cls;b.innerHTML=`<span class="lt-ic"><img src="art/${icon}.webp" alt=""></span><b></b>`;b.dataset.k=key;
+  const tab=(id,icon,key,orig,cls='')=>{const b=document.createElement('button');b.className='lt-tab '+cls;b.innerHTML=`<span class="lt-ic"><img src="art/${icon}.webp" alt=""></span><b></b>`;b.dataset.k=key;b.querySelector('b').textContent=t(key);
     b.onclick=()=>{if(orig){const o=document.getElementById(orig);if(o)o.click()}else{audio();sfx.click();LOB.jump=time}};bar.appendChild(b);LT.tabs.push({b,orig,key})};
   tab('shop','ic_shop','shop','lobShop');tab('style','ic_hats','wardrobeShort','lobHats');tab('home','ic_home','tabHome',null,'home on');tab('modes','ic_modes','tabModes','modesTitleBtn');tab('album','ic_album','album','lobAlbum');
   sec.appendChild(bar);
@@ -36,3 +36,5 @@ function ltSync(){
   const n=['rain','mem','whack'].reduce((s,id)=>s+arcLeft(id),0);const b=document.createElement('button');b.className='mode-btn m-arc';
   b.innerHTML='<img src="art/ic_arcade.webp" alt=""><span class="mt"><b></b><small></small></span>'+(n?`<i class="badge lt-arcbd">${n}</i>`:'');b.querySelector('b').textContent=t('arcTitle');b.querySelector('small').textContent=t('arcSubModes',{n});
   b.onclick=()=>{sfx.click();hideOverlay();openArcade()};const tr=box.querySelector('.m-tour');if(tr)tr.after(b);else box.prepend(b)}}
+// the first lobby is drawn before this module loads: sync once now
+setTimeout(()=>{try{if(state==='title')updateLobby()}catch(e){}},0);
