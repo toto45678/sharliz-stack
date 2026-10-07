@@ -176,4 +176,6 @@ Bug hunt 4 Oct 7 (branch fix-bugs-4; v48/v51-v54/v56-v58 + native.js + build.py 
 - Style screen: shop Effects tab opens Effects (EN tab was a second "Style"); Deals dot/lobby "!" clears; saved Looks layout; grid keeps its scroll after try-on/buy; Lashes no longer hidden behind Deals/Looks; changing slot clears the selected item (Buy bought the previous slot's hat); buddy power chips say what they do (+ baby dino); no 404 for 3D-only hats; dice tip.
 - Toasts stack instead of covering each other, long hints wrap, hints have no coin icon (noteToast). Album zoom arrows in Hebrew. Full nest says "+5 cookies instead". Hatch screen fits iPhone SE. Tournament "challenge a friend" shares https://sharliztower.com (the store app's location is localhost). Photo share title Sharliz Tower.
 
+Fix Oct 7 (branch fix-nest-grid, end of v56.css): nest 'My buddies' grid ran off both sides of the iPhone screen in English (Tzach's screenshot). A long nowrap lock label ('Golden egg only' / v61 'Hatches from an egg') set the 3rd column's min width; columns are now minmax(0,1fr), labels wrap, .ns-scroll never scrolls sideways. Checked he/en/de/ru at 393x852 + 375x667.
+
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.
