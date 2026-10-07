@@ -173,3 +173,30 @@
 .sb-grid{grid-auto-rows:auto;align-content:center}
 .sb-slot{aspect-ratio:.82}
 .sb-slot .stk{aspect-ratio:1;height:auto;width:80%}
+/* review 1 fixes */
+.sb-paper{background:radial-gradient(circle at 18% 22%,rgba(120,90,60,.05) 0 1px,transparent 1.5px) 0 0/7px 7px,radial-gradient(circle,rgba(120,90,200,.13) 1.2px,transparent 1.6px) 0 0/18px 18px,linear-gradient(180deg,color-mix(in srgb,var(--c) 9%,#fffaf0),color-mix(in srgb,var(--c) 14%,#fbf1df))}
+.sb-paper::before{content:'';position:absolute;top:0;bottom:0;inset-inline-start:0;width:42px;background:linear-gradient(90deg,rgba(60,40,120,.18),rgba(60,40,120,0));pointer-events:none}
+[dir=rtl] .sb-paper::before{background:linear-gradient(270deg,rgba(60,40,120,.18),rgba(60,40,120,0))}
+.sb-paper::after{content:'✦  ♥';position:absolute;bottom:6px;inset-inline-end:10px;font-size:1rem;letter-spacing:6px;color:color-mix(in srgb,var(--c) 70%,#6b4ee6);opacity:.55;pointer-events:none}
+.sb-head::after{content:'★';position:absolute;inset-inline-start:4%;top:-4px;font-size:1.1rem;color:color-mix(in srgb,var(--c) 80%,#6b4ee6);opacity:.6;rotate:-15deg}
+.sb-slot .stk img{filter:brightness(0) opacity(.2)}
+.sb-slot .num{font-size:.86rem;color:#6e5fb0}
+.sb-slot:not(.got){border-color:rgba(90,60,180,.45)}
+.sb-slot.got.r-h .stk,.sb-slot.got.r-r .stk{position:relative;overflow:hidden}
+.sb-slot.got.r-h .stk::after,.sb-slot.got.r-r .stk::after{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.75) 48%,transparent 60%);background-size:260% 100%;animation:zGlint2 2.4s ease-in-out infinite;pointer-events:none}
+.sb-slot.got.r-r .stk::after{animation-duration:3.4s;opacity:.7}
+@keyframes zGlint2{0%{background-position:130% 0}100%{background-position:-130% 0}}
+.sb-slot.got.r-h{filter:drop-shadow(0 0 6px rgba(255,214,110,.9))}
+.sb-etab img{width:36px;height:36px}.sb-etab span{font-size:.55rem}
+.sb-chest{position:relative}
+.sb-chest.near img{filter:drop-shadow(0 0 7px rgba(255,214,80,.85));animation:nsWob 1.4s ease-in-out infinite}
+.sb-chest em{position:absolute;top:-12px;left:50%;translate:-50% 0;padding:1px 6px;border-radius:999px;background:#ff3b5c;border:2px solid #120d2b;color:#fff;font:.66rem/1.3 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;white-space:nowrap}
+.sb-pk .pk-coins{position:absolute;top:calc(env(safe-area-inset-top,0px) + 10px);inset-inline-end:12px;z-index:5}
+.sb-pk .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:4}
+.sb-pk.torn .flash{animation:pkFlash .5s ease-out}
+@keyframes pkFlash{0%{opacity:.9}100%{opacity:0}}
+.pk-card.tease.r-r .bk{box-shadow:0 5px 0 #120d2b,0 0 22px 8px rgba(190,140,255,.95);animation:nsShake .25s ease-in-out infinite}
+.pk-card.tease.r-h .bk{box-shadow:0 5px 0 #120d2b,0 0 26px 10px rgba(255,230,120,1);animation:nsShake .2s ease-in-out infinite}
+.pk-card.tease.r-c .bk{box-shadow:0 5px 0 #120d2b,0 0 14px 4px rgba(255,255,255,.6)}
+.fly-coin{position:fixed;z-index:30;width:26px;height:26px;transition:transform .7s cubic-bezier(.5,-.3,.6,1),opacity .2s .65s;pointer-events:none}
+.sb-pk h3{margin-top:34px}
