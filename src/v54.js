@@ -3,9 +3,9 @@
    and the monthly Pass: 30 tiers × 100 XP, free track + premium track (test IAP 'pass' ₪19.90, bought per season).
    Pass-only items: galaxy colour, comet trail, star-crown hat. Design: ChatGPT (design/pass/). */
 Object.assign(I18N.en,{psTitle:'Sharliz Pass',psLeft:'{n} days left',psTier:'Tier {n}',psFree:'Free',psPrem:'Premium',psClaim:'Collect',psBuy:'Unlock Premium · {p}',psPremOn:'Premium unlocked!',psLocked:'Reach tier {n}',
-  lvShort:'Lv {n}',lvUp:'Level {n}!',lvReward:'Level reward',lvOk:'Yay!',xpGain:'+{n} XP',psItem:'Pass exclusive',psReady:'Rewards ready',psAll:'Collect all',psCoins:'Coins',psBoost:'Boosters',lvUpTag:'Level up!',lvSub:'Great job! You reached a new level!'});
+  lvShort:'Lv {n}',lvUp:'Level {n}!',lvReward:'Level reward',lvOk:'Yay!',xpGain:'+{n} XP',psItem:'Pass exclusive',psReady:'Rewards ready',psAll:'Collect all',psCoins:'Coins',psWhy:'Unlock every gold reward + 3 exclusive items',psBoost:'Boosters',lvUpTag:'Level up!',lvSub:'Great job! You reached a new level!'});
 Object.assign(I18N.he,{psTitle:'כרטיס שארליז',psLeft:'נותרו {n} ימים',psTier:'שלב {n}',psFree:'חינם',psPrem:'פרימיום',psClaim:'אסוף',psBuy:'פתחו פרימיום · {p}',psPremOn:'הפרימיום נפתח!',psLocked:'הגיעו לשלב {n}',
-  lvShort:'רמה {n}',lvUp:'רמה {n}!',lvReward:'פרס רמה',lvOk:'יש!',xpGain:'+{n} XP',psItem:'בלעדי לכרטיס',psReady:'פרסים מחכים',psAll:'אסוף הכל',psCoins:'מטבעות',psBoost:'חיזוקים',lvUpTag:'עליתם רמה!',lvSub:'כל הכבוד! הגעתם לרמה חדשה!'});
+  lvShort:'רמה {n}',lvUp:'רמה {n}!',lvReward:'פרס רמה',lvOk:'יש!',xpGain:'+{n} XP',psItem:'בלעדי לכרטיס',psReady:'פרסים מחכים',psAll:'אסוף הכל',psCoins:'מטבעות',psWhy:'כל הפרסים הזהובים + 3 פריטים בלעדיים',psBoost:'חיזוקים',lvUpTag:'עליתם רמה!',lvSub:'כל הכבוד! הגעתם לרמה חדשה!'});
 // pass-only catalogue
 WCOL.galaxy={c:'#5b2bd6',p:1,pass:1,n:['Galaxy','גלקסיה']};
 STYLE_SKINS.push({id:'t_comet',cat:'t',price:1,pass:1});Object.assign(I18N.en,{sk_t_comet:'Comet'});Object.assign(I18N.he,{sk_t_comet:'שביט'});
@@ -32,7 +32,7 @@ function addXP(n){if(!n||mode==='duo')return;const before=xpLevel(progress.xp||0
 function xpStrip(Q){const body=document.querySelector('#card .card-body');if(!body)return;const d=document.createElement('div');d.className='xp-strip';
   d.innerHTML=`<span class="lv"><i></i></span><div class="bar"><i></i></div><b></b>`;d.querySelector('.lv i').textContent=Q.before.lv;d.querySelector('b').textContent=t('xpGain',{n:Q.n});body.appendChild(d);
   const fill=d.querySelector('.bar i'),from=Q.before.into/Q.before.need;fill.style.width=from*100+'%';
-  setTimeout(()=>{if(Q.after.lv>Q.before.lv){fill.style.width='100%';setTimeout(()=>{d.querySelector('.lv i').textContent=Q.after.lv;d.classList.add('up');fill.style.transition='none';fill.style.width='0%';void fill.offsetWidth;fill.style.transition='';fill.style.width=Q.after.into/Q.after.need*100+'%';lvUpPop(Q.after.lv)},650)}
+  setTimeout(()=>{if(Q.after.lv>Q.before.lv){fill.style.width='100%';setTimeout(()=>{d.querySelector('.lv i').textContent=Q.after.lv;d.classList.add('up');fill.style.transition='none';fill.style.width='0%';void fill.offsetWidth;fill.style.transition='';fill.style.width=Q.after.into/Q.after.need*100+'%';setTimeout(()=>lvUpPop(Q.after.lv),380)},650)}
     else fill.style.width=Q.after.into/Q.after.need*100+'%'},500)}
 function lvUpPop(lv){if(!progress.lvRew)return;const n=progress.lvRew;progress.lvRew=0;const coins=50*n;wallet().coins+=coins;saveProgress();updateWalletUI();sfx.flourish(3);vib([30,40,30]);
   const m=document.createElement('div');m.className='lvup';m.innerHTML=`<div class="lvup-c"><div class="rays"></div><div class="badge"><img src="art/xp_star.webp" alt=""><b>${lv}</b></div><span class="tag"></span><h3></h3><p></p><div class="lv-rw"><img src="art/ps_coins.webp" alt=""><span><b>+${coins}</b><small></small></span></div><button class="btn primary"><span></span></button></div>`;
@@ -44,9 +44,8 @@ if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.ov
 if(typeof evFinish==='function'){const _e=evFinish;evFinish=function(won){if(won)addXP(EVP&&EVP.i===9?40:15);return _e.apply(this,arguments)}}
 if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));return r}}
 /* ---------- lobby: level badge on the avatar + Pass button ---------- */
-function lobbyXP(){const pr=document.querySelector('#title .profile');if(!pr)return;let b=pr.querySelector('.av-lv');if(!b){b=document.createElement('i');b.className='av-lv';pr.querySelector('.av').after(b);
-    const bar=document.createElement('span');bar.className='pf-xp';bar.innerHTML='<i></i>';pr.querySelector('.pf').appendChild(bar)}
-  const L=xpLevel(progress.xp||0);b.textContent=L.lv;pr.querySelector('.pf-xp i').style.width=L.into/L.need*100+'%';
+function lobbyXP(){const pr=document.querySelector('#title .profile');if(!pr)return;let b=pr.querySelector('.av-lv');if(!b){const bar=document.createElement('span');bar.className='pf-xp';bar.innerHTML='<i class="av-lv"></i><span class="tr"><i></i></span>';pr.querySelector('.pf').appendChild(bar);b=bar.querySelector('.av-lv')}
+  const L=xpLevel(progress.xp||0);b.textContent=L.lv;pr.querySelector('.pf-xp .tr i').style.width=L.into/L.need*100+'%';
   const pb=document.getElementById('lobPass');if(pb){const P=psData(),n=psReady();pb.querySelector('em span').textContent=t('psLeft',{n:psDays()});pb.querySelector('.dot').hidden=!n;const ev=document.getElementById('lobEvent');pb.parentNode.classList.toggle('two',!!ev&&!ev.hidden)}}
 {const sec=document.getElementById('title'),logo=sec&&sec.querySelector('.logo');if(sec){const row=document.createElement('div');row.className='lob-pills';const b=document.createElement('button');b.id='lobPass';b.className='pass-btn';b.innerHTML='<img src="art/pass_icon.webp" alt=""><span><b></b><em><i>⏱</i><span></span></em></span><i class="dot" hidden>!</i>';b.querySelector('b').textContent=t('psTitle');b.onclick=()=>openPass();
   row.appendChild(b);const ev=document.getElementById('lobEvent');if(ev)row.appendChild(ev);if(logo)logo.after(row);else sec.appendChild(row)}}
@@ -69,16 +68,16 @@ function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady
     <div class="ps-cols"><span class="pf">${t('psFree')}</span><span></span><span class="pp">${P.prem?'':'<img src="art/ps_lock.webp" alt="">'}${t('psPrem')}</span></div><div class="ps-list"></div>
     <div class="ps-foot"></div>`;
   r.querySelector('.ps-x').innerHTML=XSVG;r.querySelector('.ps-x').onclick=()=>{sfx.click();closePass()};r.querySelector('.ps-title b').textContent=t('psTitle');r.querySelector('.ps-title small').textContent=t('psLeft',{n:psDays()});r.querySelector('.coin-pill span').textContent=progress.coins;
-  const L=r.querySelector('.ps-list');
+  const L=r.querySelector('.ps-list');let firstCan=null;
   for(let i=0;i<PS_N;i++){const row=document.createElement('div'),got=i<T;row.className='ps-row'+(got?' got':'')+(i===T?' cur':'');
     const cell=(prem)=>{const R=PS_REW[i][prem?1:0],claimed=(prem?P.p:P.f).includes(i),can=got&&!claimed&&(!prem||P.prem),c=document.createElement('button');
-      c.className='ps-cell '+(prem?'prem':'free')+(claimed?' done':can?' can':'')+(prem&&!P.prem?' lock':'');c.innerHTML=psRewHTML(R)+(claimed?'<i class="ok">✓</i>':can?`<i class="cl">${t('psClaim')}</i>`:(prem&&!P.prem)||!got?'<img class="lk" src="art/ps_lock.webp" alt="">':'');
+      const first=can&&!firstCan;if(first)firstCan=c;c.className='ps-cell '+(prem?'prem':'free')+(claimed?' done':can?' can':'')+(first?' hot':'')+(prem&&!P.prem?' lock':'')+(got?'':' far');c.innerHTML=psRewHTML(R)+(claimed?'<i class="ok">✓</i>':can?`<i class="cl">${t('psClaim')}</i>`:prem&&!P.prem?'<img class="lk" src="art/ps_lock.webp" alt="">':'');
       c.onclick=()=>{if(can&&psClaim(i,prem)){saveProgress();sfx.coin(3);vib(15);psRender(false)}else if(prem&&!P.prem)psBuy();else sfx.locked()};return c};
     const mid=document.createElement('div');mid.className='ps-num';mid.innerHTML=`<b>${i+1}</b>`;row.appendChild(cell(false));row.appendChild(mid);row.appendChild(cell(true));L.appendChild(row)}
   const f=r.querySelector('.ps-foot');
-  if(ready){const a=document.createElement('button');a.className='btn green ps-all';a.innerHTML='<span></span>';a.querySelector('span').textContent=t('psAll')+' ('+ready+')';a.onclick=()=>{for(let i=0;i<T;i++){psClaim(i,false);psClaim(i,true)}saveProgress();sfx.coin(4);psRender(false)};f.appendChild(a)}
-  if(!P.prem){const b=document.createElement('button');b.className='btn primary ps-buy';b.innerHTML='<img src="art/pass_icon.webp" alt=""><span></span>';b.querySelector('span').textContent=t('psBuy',{p:IAP.products.pass.price});b.onclick=psBuy;f.appendChild(b)}
-  if(scroll){const can=L.querySelector('.ps-cell.can'),cur=(can&&can.parentNode)||L.querySelector('.cur')||L.lastElementChild;requestAnimationFrame(()=>{L.scrollTop=Math.max(0,cur.offsetTop-L.offsetTop-(can?12:L.clientHeight*.4))})}}
+  if(ready>1){const a=document.createElement('button');a.className='btn green ps-all';a.innerHTML='<span></span>';a.querySelector('span').textContent=t('psAll')+' ('+ready+')';a.onclick=()=>{for(let i=0;i<T;i++){psClaim(i,false);psClaim(i,true)}saveProgress();sfx.coin(4);psRender(false)};f.appendChild(a)}
+  if(!P.prem){const h=document.createElement('p');h.className='ps-why';h.textContent=t('psWhy');f.appendChild(h);const b=document.createElement('button');b.className='btn primary ps-buy';b.innerHTML='<img src="art/pass_icon.webp" alt=""><span></span>';b.querySelector('span').textContent=t('psBuy',{p:IAP.products.pass.price});b.onclick=psBuy;f.appendChild(b)}
+  if(scroll){const can=firstCan,cur=(can&&can.parentNode)||L.querySelector('.cur')||L.lastElementChild;requestAnimationFrame(()=>{L.scrollTop=Math.max(0,cur.offsetTop-L.offsetTop-(can?12:L.clientHeight*.4))})}}
 function psBuy(){IAP.buy('pass',t('psTitle')+' · '+t('psPrem')).then(ok=>{if(ok){popupToast(t('psPremOn'));psRender(false)}})}
 {const _g=IAP.grant;IAP.grant=function(sku){if(sku==='pass'){psData().prem=true;progress.purchases=progress.purchases||[];progress.purchases.push({sku,at:Date.now(),test:!IAP.live()});saveProgress();updateWalletUI();return}return _g.apply(this,arguments)}}
 // pass items: gated in My hero until earned

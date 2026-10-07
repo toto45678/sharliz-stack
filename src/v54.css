@@ -1,8 +1,9 @@
 /* ===== v54: player level + Sharliz Pass ===== */
 .profile{position:relative}
-.av-lv{position:absolute;bottom:-10px;inset-inline-start:-10px;width:32px;height:32px;display:grid;place-items:center;background:url(art/xp_star.webp) center/contain no-repeat;font:.85rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;text-align:center;color:#fff;-webkit-text-stroke:2.5px var(--ink);paint-order:stroke fill;z-index:2}
-.pf-xp{display:block;width:100%;min-width:56px;height:6px;border-radius:4px;background:rgba(18,13,43,.6);overflow:hidden;margin-top:1px}
-.pf-xp i{display:block;height:100%;background:linear-gradient(90deg,#5ee85a,#b6f07a);border-radius:4px;transition:width .6s}
+.pf-xp{display:flex;align-items:center;width:100%;min-width:70px;margin-top:2px}
+.pf-xp .av-lv{flex:none;position:relative;z-index:1;width:26px;height:26px;margin-block:-6px;margin-inline-end:-7px;display:grid;place-items:center;background:url(art/xp_star.webp) center/contain no-repeat;font:.78rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;color:#fff;-webkit-text-stroke:2.5px #120d2b;paint-order:stroke fill}
+.pf-xp .tr{flex:1;height:9px;border-radius:5px;border:2px solid #120d2b;background:#241a5e;overflow:hidden}
+.pf-xp .tr i{display:block;height:100%;background:linear-gradient(90deg,#5ee85a,#b6f07a);transition:width .6s}
 .lob-pills{position:absolute;z-index:3;left:50%;translate:-50% 0;top:calc(env(safe-area-inset-top,0px) + clamp(226px,29vh,262px));display:flex;gap:8px;align-items:center;justify-content:center;width:max-content;max-width:calc(100vw - 150px)}
 .lob-pills .ev-banner{position:relative;left:auto;top:auto;translate:none;flex:0 1 auto;min-width:0}
 .pass-btn{position:relative;flex:0 1 auto;min-width:0;display:flex;align-items:center;gap:6px;padding:6px 14px 6px 8px;border-radius:20px;border:3.5px solid #120d2b;
@@ -14,11 +15,11 @@
 .pass-btn em{display:inline-flex;align-items:center;gap:3px;padding:1px 8px 2px;border-radius:999px;background:#120d2b;font-style:normal;font-weight:800;font-size:.64rem;white-space:nowrap}.pass-btn em i{font-style:normal}
 .pass-btn .dot{position:absolute;top:-9px;inset-inline-end:-7px;width:22px;height:22px;border-radius:50%;background:#ff3b5c;border:2.5px solid #120d2b;font:900 13px/17px system-ui;font-style:normal;text-align:center;color:#fff;animation:bob 1.2s ease-in-out infinite}
 .pass-btn .dot[hidden]{display:none}
-.lob-pills.two{gap:6px;align-items:stretch}
-.lob-pills.two .pass-btn,.lob-pills.two .ev-banner{flex-direction:column;justify-content:flex-end;gap:2px;width:118px;max-width:none;padding:4px 6px 6px;border-radius:18px}
+.lob-pills.two{gap:12px;align-items:stretch}
+.lob-pills.two .pass-btn,.lob-pills.two .ev-banner{flex-direction:column;justify-content:flex-end;gap:2px;width:108px;max-width:none;padding:3px 5px 5px;border-radius:16px}
 .lob-pills.two .pass-btn>span,.lob-pills.two .ev-banner>span{align-items:center;gap:3px;max-width:100%}
-.lob-pills.two .pass-btn b,.lob-pills.two .ev-banner b{font-size:.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
-.lob-pills.two .pass-btn img,.lob-pills.two .ev-banner img{width:50px;height:44px;margin:-22px 0 0}
+.lob-pills.two .pass-btn b,.lob-pills.two .ev-banner b{font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.lob-pills.two .pass-btn img,.lob-pills.two .ev-banner img{width:44px;height:38px;margin:-18px 0 0}
 .lob-pills.two .ev-banner small,.lob-pills.two .pass-btn em{margin-top:0;font-size:.6rem}
 @keyframes psGlow{0%,100%{box-shadow:inset 0 3px 0 rgba(255,255,255,.55),0 5px 0 #120d2b,0 0 0 0 rgba(255,214,80,0)}50%{box-shadow:inset 0 3px 0 rgba(255,255,255,.55),0 5px 0 #120d2b,0 0 18px 4px rgba(255,214,80,.55)}}
 /* XP strip on result cards */
@@ -66,7 +67,7 @@
 .ps-cols .pf{background:linear-gradient(180deg,#6b4ee6,#3f2aa6)}
 .ps-cols .pp{background:linear-gradient(180deg,#ffe66b,#f3a400);color:#fff}
 .ps-cols .pp img{width:22px;height:22px;object-fit:contain}
-.ps-list{flex:1;min-height:0;overflow-y:auto;padding:6px 14px 12px;display:flex;flex-direction:column;gap:10px}
+.ps-list{flex:1;min-height:0;overflow-y:auto;padding:6px 14px 12px;display:flex;flex-direction:column;gap:9px}
 .ps-row{position:relative;display:grid;grid-template-columns:1fr 46px 1fr;gap:6px;align-items:center}
 .ps-row::before{content:'';position:absolute;left:50%;top:-10px;bottom:-10px;width:8px;translate:-50% 0;background:#3a2a86;border-inline:2px solid #120d2b}
 .ps-row.got::before{background:#ffc93c}
@@ -74,14 +75,18 @@
 .ps-num b{font:1.15rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
 .ps-row.got .ps-num{background:linear-gradient(180deg,#ffe66b,#f3a400)}
 .ps-row.cur .ps-num{background:#fff;box-shadow:0 0 0 4px rgba(255,226,77,.6)}.ps-row.cur .ps-num b{color:#3a2a86;-webkit-text-stroke:0}
-.ps-cell{position:relative;height:96px;border-radius:18px;border:3px solid #120d2b;background:linear-gradient(180deg,#5a3fc0,#2e1d7a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:inset 0 3px 0 rgba(255,255,255,.18),0 4px 0 #120d2b;color:#fff;padding:4px 4px 14px}
-.ps-cell.prem{background:linear-gradient(180deg,#ffe58a,#f5a800);box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 4px 0 #120d2b}
+.ps-cell{position:relative;height:82px;border-radius:18px;border:3px solid #120d2b;background:linear-gradient(180deg,#5a3fc0,#2e1d7a);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:inset 0 3px 0 rgba(255,255,255,.18),0 4px 0 #120d2b;color:#fff;padding:2px 4px 12px}
+.ps-cell.prem{background:linear-gradient(180deg,#ffe58a,#f5a800);box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 0 0 3px #fff3b0,0 4px 0 #120d2b,0 0 14px rgba(255,200,40,.45)}
 .ps-cell.prem.lock{filter:saturate(.8) brightness(.9)}
 .ps-cell.done .rw,.ps-cell.done .lab{opacity:.55}
-.ps-cell.can{border-color:#3db618;box-shadow:0 0 0 3px #5ee85a,0 4px 0 #120d2b;animation:evPr 1.3s ease-in-out infinite}
+.ps-cell.can{border-color:#2f8a1a;box-shadow:0 0 0 2px rgba(94,232,90,.55),0 4px 0 #120d2b}
+.ps-cell.can:not(.hot) .cl{filter:saturate(.7) brightness(.92)}
+.ps-cell.hot{border-color:#3db618;box-shadow:0 0 0 3px #5ee85a,0 4px 0 #120d2b,0 0 16px rgba(94,232,90,.55)}
+.ps-cell.hot{animation:evPr 1.3s ease-in-out infinite}
+.ps-cell.far .rw{opacity:.85}
 .ps-cell .rw{position:relative;display:flex;align-items:flex-end;justify-content:center}
-.ps-cell .rw img{width:62px;height:52px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.45))}
-.ps-cell .rw.it img{width:70px;height:58px}
+.ps-cell .rw img{width:54px;height:44px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.45))}
+.ps-cell .rw.it img{width:62px;height:50px}
 .ps-cell .rw b{position:absolute;bottom:-4px;inset-inline-end:-14px;font:1.05rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill;direction:ltr}
 .ps-cell .lab{font:.82rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .ps-cell i{position:absolute;font-style:normal}
@@ -90,5 +95,15 @@
 .ps-cell .lk{position:absolute;top:-8px;inset-inline-end:-6px;width:28px;height:28px;object-fit:contain}
 .ps-foot{display:flex;flex-direction:column;gap:8px;padding:8px 14px 14px}
 .ps-foot .btn{width:100%}
+.ps-foot .ps-all{padding-block:9px;font-size:1.05rem;filter:saturate(.85);margin-bottom:4px}
 .ps-buy img{width:48px;height:48px;margin-block:-14px;object-fit:contain;rotate:-8deg}
 .ps-foot .ps-buy{font-size:1.25rem}
+
+.ps-why{margin:0 0 -2px;text-align:center;font:.92rem/1.15 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+/* small phones */
+@media (max-height:700px){
+  #title .logo{scale:.88;transform-origin:50% 0}
+  .lob-pills{top:calc(env(safe-area-inset-top,0px) + 192px);scale:.86;transform-origin:50% 0}
+  .lob-side .side-btn b{letter-spacing:.01em;line-height:1.15}
+  .lob-side .side-btn b{font-size:.72rem}
+}
