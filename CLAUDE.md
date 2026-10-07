@@ -130,7 +130,7 @@ Done Oct 7 (branch halloween, src/v52.js): step 3a — holiday-event framework +
 Done Oct 7 (branch tournament, src/v53.js): step 3b — weekly tournament (ChatGPT mockup + assets, review 9.1 + fixes). No server: personal best + share.
 Done Oct 7 (branch pass, src/v54.js): step 4a — player level + monthly Sharliz Pass (ChatGPT mockup + asset sheet, ChatGPT reviews 9.0 → 9.48 → 9.55). IAP product 'pass' must also be created in the stores.
 Done Oct 7 (branch lobby-tabs, src/v55.js): calm lobby — tab bar + mini icon row, Sharliz stays big on the stage (ChatGPT reviews 9.4 → 9.6).
-Done Oct 7 (branch eggs, src/v56.js): step 4b — eggs/nest, buddy evolution, baby dino, trophy room (ChatGPT mockup + asset sheet, reviews 9.05 → see design/eggs/).
+Done Oct 7 (branch eggs, src/v56.js): step 4b — eggs/nest, buddy evolution, baby dino, trophy room (ChatGPT mockup + asset sheet, reviews 9.05 → 9.44 → 9.56).
 Next steps of the plan (task list): more arcade games, more holiday events (Thanksgiving next), Hanukkah event + weekly tournament, player level/pass/3 challenges per level/eggs/buddy evolution/trophy room, 'beat me' WhatsApp link + ghost tower, special pieces/secret level/golden Sharliz, Sharliz village, comic story.
 
 Bug hunt 2 Oct 6 (branch fix-bugs, build.py "v50" patches + v28/v44/v45/v48): bot on all 300 levels, 0 JS errors, plus a code review. Fixed:
