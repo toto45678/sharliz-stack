@@ -46,6 +46,7 @@ src/v33.js            3D bosses: loads art/b3d_<zone>.{wasm,json,_map/_mr/_nrm.w
                       idle/wind-up/attack signature move/phase roar/entrance/defeat (b3Draw)
 tools/build.py        applies exact-string patches (rep) to base.html, injects the modules + css, writes index.html
 tools/smoke.py        headless check: python3 tools/smoke.py 1 10 20  → prints state + JS errors, saves .smoke_*.png
+tools/bot.py          autoplay bot (fast-forwards game time): python3 tools/bot.py .9 1 2 10 81 → win/over/stuck + JS errors per level. It never taps bombs, so classic bomb bosses can read as 'stuck'. Run shards in parallel with BOT_PORT.
 tools/glb2sh.py       Meshy GLB → compact boss format: python3 tools/glb2sh.py boss.glb b3d_<zone> art/
 ```
 
@@ -127,5 +128,15 @@ Done Oct 7 (branch halloween, src/v52.js): step 3a — holiday-event framework +
 Done Oct 7 (branch tournament, src/v53.js): step 3b — weekly tournament (ChatGPT mockup + assets, review 9.1 + fixes). No server: personal best + share.
 Done Oct 7 (branch pass, src/v54.js): step 4a — player level + monthly Sharliz Pass (ChatGPT mockup + asset sheet, ChatGPT reviews 9.0 → 9.48 → 9.55). IAP product 'pass' must also be created in the stores.
 Next steps of the plan (task list): more arcade games, more holiday events (Thanksgiving next), Hanukkah event + weekly tournament, player level/pass/3 challenges per level/eggs/buddy evolution/trophy room, 'beat me' WhatsApp link + ghost tower, special pieces/secret level/golden Sharliz, Sharliz village, comic story.
+
+Bug hunt 2 Oct 6 (branch fix-bugs, build.py "v50" patches + v28/v44/v45/v48): bot on all 300 levels, 0 JS errors, plus a code review. Fixed:
+- Sticker book on iPhone: the tab `scrollIntoView` also scrolled `#app` sideways on iOS (dark strip, close button lost). Now the tab strip scrolls itself and `#app` is reset on any scroll.
+- Sticker book boss page showed 8 of 30 (`bossAll()` filter broke when v46 made z.id = sid).
+- A landing after the last heart (lava burn during a fall) pulled the game out of 'over'. Lava no longer burns during a fall.
+- Freeze left an ice block drawn on the landed piece.
+- Night/storm stages lost snow/sand/ocean current/space fall cap/ambience: `baseId(z)` = classic world for seasons 2-3.
+- Mirror: tap flip done once in the pointer handler (coin balloon works), canvas unflipped on pause/win/loss.
+- Saved-look button used the missing key `save` (now `saveLook`).
+- Thunder Goat trophy (TROPHY_FX.farmS) gave `imm:'lightning'` (all of season 3). It is now `imm:'tornado'`, its own stage's mechanic (Raz approved).
 
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.

@@ -12,7 +12,7 @@ const TROPHY_NAMES={farmN:['Pumpkin Crown','כתר הדלעת'],cityN:['Alley Ca
 // Trophies are a reward for beating the boss, so they have no cost (Raz, "משפטי ועסקי" thread, Oct 6). The v49 caps still apply.
 const TROPHY_FX={farmN:{imm:'bats',light:1.45},cityN:{imm:'blackout',coins:1.1},desertN:{imm:'scorpion',boss:1.25},candyN:{imm:'jelly',tol:1.1},
   snowN:{imm:'icicle',wind:.7},oceanN:{imm:'jellyfish',light:1.6},volcanoN:{lavaK:.45,feverT:1.3},spaceN:{imm:'portal',fall:.85},
-  farmS:{imm:'lightning',perfPts:1.3},cityS:{imm:'newspaper',noSlip:1},desertS:{swayK:.35,coins:1.1},candyS:{imm:'hail',perfCoins:2},
+  farmS:{imm:'tornado',perfPts:1.3},cityS:{imm:'newspaper',noSlip:1},desertS:{swayK:.35,coins:1.1},candyS:{imm:'hail',perfCoins:2},
   snowS:{imm:'freeze',spd:.92},oceanS:{swayK:.35,boss:1.25},volcanoS:{imm:'meteor',hearts:1},spaceS:{imm:'gravity',aim:1},
   jungle:{imm:'monkey',coins:1.15},castle:{imm:'ghost',tol:1.12},clouds:{imm:'cloud',fall:.8},dino:{imm:'egg',hearts:1},
   factory:{convK:0,coins:1.2},crystal:{imm:'mirror',feverT:1.5}};
