@@ -123,10 +123,10 @@ def build_penguin():
 def build_firefly():
     """turn_firefly.png: navy ball head over a glowing yellow-green belly ball, huge white eyes, curly antennae, see-through wings, stub arms"""
     DB, GL = '#2e3c7a', '#e2ff4a'
-    head = ellipsoid_bm(.31, .3, .3, at=(0, -.02, .7), seg=40, rings=22)
+    head = ellipsoid_bm(.31, .3, .3, at=(0, -.02, .7), seg=72, rings=40)
     S = Surface(head)
     part('head', head, DB, role='body', ink=.013)
-    bulb = ellipsoid_bm(.29, .31, .28, at=(0, .05, .3), seg=36, rings=20)
+    bulb = ellipsoid_bm(.29, .31, .28, at=(0, .05, .3), seg=64, rings=36)
     part('bulb', bulb, GL, role='glow', ink=.012, rough=.15, cc=1, emis='#d8ff2a', ei=1.0)
     eyes_open(S, .125, .72, .11, .13, rim=.017)
     mouth_small(S, 0, .56, .035, .03)
@@ -192,7 +192,7 @@ def build_kitten():
 def build_octopus():
     """turn_octopus.png: pink-magenta ball head, huge white eyes, tiny open mouth, blush, seven chunky tentacles curling up at the tips"""
     PP = '#d95fd8'
-    head = ellipsoid_bm(.4, .39, .37, at=(0, 0, .5), seg=44, rings=24)
+    head = ellipsoid_bm(.4, .39, .37, at=(0, 0, .5), seg=80, rings=44)
     for v in head.verts:
         if v.co.z < .5: v.co.z = .5 + (v.co.z - .5) * .75
     S = Surface(head)
@@ -204,17 +204,17 @@ def build_octopus():
     for k in range(7):
         a = (k + .5) / 7 * math.tau; d = Vector((math.sin(a), math.cos(a), 0))
         ctrl = [(.14, .3), (.28, .18), (.4, .09), (.47, .045), (.49, .1), (.45, .16), (.4, .14)]
-        pts = smooth_path([d * r + Vector((0, 0, z)) for r, z in ctrl], 5)
-        bm_merge(tent, tube_bm(pts, radii(.085, .04, len(pts)), seg=12))
+        pts = smooth_path([d * r + Vector((0, 0, z)) for r, z in ctrl], 8)
+        bm_merge(tent, tube_bm(pts, radii(.085, .04, len(pts)), seg=18))
     part('tentacles', tent, PP, role='part', ink=.012)
 
 
 def build_cloudy():
     """turn_cloudy.png: a cloud of round white puffs, huge white eyes, tiny open mouth, blush"""
     W = '#fcfcff'
-    cl = ellipsoid_bm(.33, .3, .31, at=(0, -.03, .38), seg=32, rings=18)
+    cl = ellipsoid_bm(.33, .3, .31, at=(0, -.03, .38), seg=64, rings=36)
     for x, y, z, r in [(-.03, .08, .55, .27), (-.36, .02, .3, .24), (.36, .02, .3, .24), (0, .24, .36, .26), (-.2, -.12, .22, .18), (.2, -.12, .22, .18), (-.22, .2, .52, .17), (.24, .2, .5, .17)]:
-        bm_merge(cl, ellipsoid_bm(r, r * .95, r * .92, at=(x, y, z), seg=22, rings=14))
+        bm_merge(cl, ellipsoid_bm(r, r * .95, r * .92, at=(x, y, z), seg=48, rings=28))
     S = Surface(cl)
     part('body', cl, W, role='body', ink=.013, rough=.45, cc=.35, emis='#ffffff', ei=.1)
     eyes_open(S, .14, .43, .105, .125, rim=.016)

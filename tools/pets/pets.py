@@ -66,13 +66,13 @@ def part(name, ob_or_bm, color, role='part', ink=.012, rough=.32, cc=.6, metal=0
 
 
 # ---------------- shape helpers (all return BMesh in model space) ----------------
-def sphere_bm(r=1., seg=40, rings=20):
+def sphere_bm(r=1., seg=64, rings=32):
     bm = bmesh.new()
     bmesh.ops.create_uvsphere(bm, u_segments=seg, v_segments=rings, radius=r)
     return bm
 
 
-def egg_bm(w=.84, d=.8, h=1., taper=.2, flat=.06, seg=48, rings=26):
+def egg_bm(w=.84, d=.8, h=1., taper=.2, flat=.06, seg=80, rings=44):
     """tall glossy egg: wider low, narrower top, a slightly flattened bottom; bottom at z=0"""
     bm = sphere_bm(1, seg, rings)
     for v in bm.verts:
@@ -96,17 +96,17 @@ def uv_equirect(bm, z0=None, z1=None):
     return bm
 
 
-def ellipsoid_bm(rx, ry, rz, at=(0, 0, 0), seg=24, rings=14, rot=None):
+def ellipsoid_bm(rx, ry, rz, at=(0, 0, 0), seg=36, rings=22, rot=None):
     bm = sphere_bm(1, seg, rings)
     M = Matrix.Translation(at) @ (rot.to_4x4() if rot else Matrix()) @ Matrix.Diagonal((rx, ry, rz, 1))
     bmesh.ops.transform(bm, matrix=M, verts=bm.verts)
     return bm
 
 
-def cone_bm(r1, r2, h, seg=20, round_tip=True):
+def cone_bm(r1, r2, h, seg=28, round_tip=True):
     """cone along +Z from z=0, rounded tip"""
     bm = bmesh.new()
-    rings = 10
+    rings = 16
     for i in range(rings + 1):
         f = i / rings; r = r1 + (r2 - r1) * f
         if round_tip and f > .75: r *= math.sqrt(max(0., 1 - ((f - .75) / .25) ** 2)) * .9 + .1 * (1 - (f - .75) / .25)
@@ -126,7 +126,7 @@ def cone_bm(r1, r2, h, seg=20, round_tip=True):
     return bm
 
 
-def tube_bm(pts, radii, seg=12):
+def tube_bm(pts, radii, seg=16):
     """smooth tube through 3D points (list of Vector) with per-point radius, closed ends"""
     bm = bmesh.new(); n = len(pts); rows = []
     for i, p in enumerate(pts):
@@ -180,7 +180,7 @@ class Surface:
         loc, nrm, _, _ = self.t.ray_cast(o, d)
         return loc, nrm
 
-    def decal(self, shape, cx, cz, sx, sz, bulge=.025, lift=.004, n=16, rings=7, front=-1):
+    def decal(self, shape, cx, cz, sx, sz, bulge=.025, lift=.004, n=24, rings=10, front=-1):
         """closed lens lying on the surface. shape(u,v) -> True inside, u,v in [-1,1]; built on a polar grid of the ellipse,
         clipped by shape via radial search. Domed by `bulge` at the centre."""
         bm = bmesh.new(); seg = n * 2
@@ -218,7 +218,7 @@ class Surface:
         return bm
 
 
-def _stroke(self, pts, r=.016, lift=.0, front=-1, seg=8, sink=.35):
+def _stroke(self, pts, r=.016, lift=.0, front=-1, seg=10, sink=.35):
     """tube through surface points pts=[(x,z),...] (projected from the front), half sunk into the surface"""
     P = []
     for x, z in pts:
@@ -231,7 +231,7 @@ def _stroke(self, pts, r=.016, lift=.0, front=-1, seg=8, sink=.35):
 Surface.stroke = _stroke
 
 
-def arc_pts(cx, cz, w, h, n=12, up=True, a0=.12, a1=.88):
+def arc_pts(cx, cz, w, h, n=16, up=True, a0=.12, a1=.88):
     """points along a half ellipse: up=True -> ∩ (happy closed eye), False -> ∪ (smile)"""
     out = []
     for i in range(n):
@@ -355,7 +355,7 @@ def bm_merge(dst, src):
     tmp = bpy.data.meshes.new('t'); src.to_mesh(tmp); src.free(); dst.from_mesh(tmp); bpy.data.meshes.remove(tmp)
 
 
-def spike_bm(base, direction, r=.06, h=.16, seg=16):
+def spike_bm(base, direction, r=.06, h=.16, seg=24):
     """rounded cone standing on `base`, pointing along `direction` (Vector)"""
     c = cone_bm(r, r * .15, h, seg=seg)
     q = Vector((0, 0, 1)).rotation_difference(Vector(direction).normalized())
@@ -444,7 +444,7 @@ def blush(S, bx, bz, bw, bh, col='#ff8fb0', op=.75):
         part('blush' + ('L' if sx < 0 else 'R'), S.decal(ELLIPSE, sx * bx, bz, bw, bh, bulge=.004, lift=.003), col, role='blush', ink=0, rough=.5, cc=.2, opacity=op)
 
 
-def lathe_bm(profile, seg=48, wav=None):
+def lathe_bm(profile, seg=72, wav=None):
     """surface of revolution around Z: profile = [(r, z), ...] bottom->top. wav(a, z) -> radius/height wobble (dr, dz)"""
     bm = bmesh.new(); rows = []
     for r, z in profile:
@@ -476,7 +476,7 @@ def star_outline(n=5, r1=.55, r2=.3, p=1.6, N=120):
     return pts
 
 
-def pillow_bm(outline, H=.12, cuts=4, power=.5):
+def pillow_bm(outline, H=.12, cuts=5, power=.5):
     """inflated flat shape (a balloon/cushion): outline in the XZ plane, both faces bulge by H*(d/dmax)^power,
     d = distance to the outline. Good for stars, cookies, flat wings."""
     bm = bmesh.new()
@@ -523,7 +523,7 @@ def band_bm(S, z0, z1, off=.004):
     return bm
 
 
-def snowman_bm(r1, z1, r2, z2, seg=48, rows=44, k=7., wx=1., wy=1.):
+def snowman_bm(r1, z1, r2, z2, seg=80, rows=72, k=7., wx=1., wy=1.):
     """one smooth surface of revolution = union of two spheres (body r1 at z1, head r2 at z2) with a soft neck (smooth max)"""
     zb, zt = z1 - r1, z2 + r2; prof = []
     for i in range(rows + 1):
@@ -616,7 +616,7 @@ def build_chick():
     body = snowman_bm(.36, .36, .32, .78, k=9, wx=1.04, wy=1.)
     S = Surface(body)
     part('body', body, Y, role='body', ink=.014, rough=.3, cc=.7)
-    eyes_happy(S, .13, .83, .085, .055, r=.02)
+    eyes_happy(S, .13, .83, .09, .06, r=.022)
     blush(S, .23, .74, .06, .032)
     part('beak', beak_bm((0, -.28, .74), up=.15, size=1.15, gap=.06), OR, role='beak', ink=.01)
     part('mouthIn', ellipsoid_bm(.04, .06, .02, at=(0, -.3, .74), seg=12, rings=8), '#b3233f', role='mouth', ink=0, rough=.5, cc=.2)
@@ -635,14 +635,15 @@ def build_chick():
 def build_slime():
     """turn_slime.png: green glossy dome whose base spreads into round lobes, huge white Sharliz eyes, tiny open mouth, a drip at the back"""
     G = '#7be24a'
-    prof = [(.28, 0.), (.36, .012), (.405, .035), (.415, .07), (.405, .11)]
-    for i in range(1, 24):
-        f = i / 23; a = f * math.pi / 2
-        prof.append((max(.003, .385 * math.cos(a) ** .6), .11 + .39 * math.sin(a) ** 1.1))
-    def wav(a, z):
-        k = max(0., 1 - z / .17) ** 1.5; lobe = max(0., math.cos(a * 7)) ** 1.3
-        return (.075 * k * (.2 + .8 * lobe), 0)
-    body = lathe_bm(prof, seg=84, wav=wav)
+    prof = [(.30, 0.)]                                     # one smooth curve: rounded under-rim, wide skirt, dome
+    for i in range(52):
+        a = -.75 + (math.pi / 2 + .75) * i / 51
+        r = .40 * math.cos(a) ** .6; z = .10 + (.40 * math.sin(a) ** 1.1 if a >= 0 else .085 * math.sin(a))
+        prof.append((max(.003, r), z))
+    def wav(a, z):   # round lobes around the base: a bell in z (peak just above the floor), 7 bumps around
+        k = math.exp(-((z - .055) / .075) ** 2); lobe = max(0., math.cos(a * 7)) ** 1.2
+        return (.085 * k * (.15 + .85 * lobe), 0)
+    body = lathe_bm(prof, seg=120, wav=wav)
     S = Surface(body)
     part('body', body, G, role='body', ink=.014, rough=.06, cc=1)
     eyes_open(S, .155, .3, .125, .155, rim=.017)
@@ -658,10 +659,10 @@ def build_ghost():
     W = '#f8f6ff'
     prof = [(.36, 0.0), (.365, .08), (.36, .25), (.35, .45), (.33, .6), (.29, .72), (.22, .82), (.13, .89), (.003, .92)]
     hem = lambda a, z: (.012 * math.sin(a * 6) * max(0, 1 - z / .14), .05 * math.sin(a * 6) * max(0, 1 - z / .14))
-    body = lathe_bm(prof, seg=60, wav=hem)
+    body = lathe_bm(prof, seg=96, wav=hem)
     S = Surface(body)
     part('body', body, W, role='body', ink=.014, rough=.3, cc=.5)
-    inner = lathe_bm([(.33, .02), (.003, .05)], seg=60, wav=lambda a, z: (0, .05 * math.sin(a * 6)))
+    inner = lathe_bm([(.33, .02), (.003, .05)], seg=96, wav=lambda a, z: (0, .05 * math.sin(a * 6)))
     part('hollow', inner, '#d9d2ee', role='body', ink=0, rough=.6, cc=0)
     for sx in (-1, 1):
         sd = 'L' if sx < 0 else 'R'
@@ -728,7 +729,7 @@ def build_bee():
 def build_star():
     """turn_star.png: puffy golden star, happy closed eyes, blush, open mouth with tongue"""
     Y = '#ffd12e'
-    out = star_outline(5, .55, .31, p=1.45, N=90)
+    out = star_outline(5, .55, .33, p=1.35, N=120)
     st = pillow_bm(out, H=.21, cuts=3, power=.5)
     bmesh.ops.translate(st, vec=(0, 0, .5), verts=st.verts)
     S = Surface(st)
@@ -743,8 +744,8 @@ def build_mini():
     body = egg_bm(.78, .74, 1., taper=.22)
     S = Surface(body)
     part('body', body, '#44d2dc', role='body', ink=.016)
-    eyes_open(S, .165, .59, .14, .175, rim=.02)
-    mouth_small(S, 0, .395, .04, .04)
+    eyes_open(S, .165, .59, .15, .19, rim=.02)
+    mouth_small(S, 0, .385, .05, .045)
 
 
 def build_cyborg():
@@ -793,11 +794,11 @@ def build_dino():
     G, G2, SH, SP = '#5fc95c', '#8fdc6c', '#f3e9d2', '#8fd16a'
     # bottom shell
     prof = []
-    for i in range(16):
-        f = i / 15; a = -math.pi / 2 + f * math.pi * .55
+    for i in range(26):
+        f = i / 25; a = -math.pi / 2 + f * math.pi * .55
         prof.append((max(.003, .43 * math.cos(a)), .43 + .43 * math.sin(a)))
     zig = lambda a, z: (0, (.035 * (2 * abs(((a / math.tau * 11) % 1) - .5) * 2 - 1)) * max(0., (z - .33) / .12))
-    shell = lathe_bm(prof, seg=66, wav=zig)
+    shell = lathe_bm(prof, seg=110, wav=zig)
     SS = Surface(shell)
     part('shell', shell, SH, role='shell', ink=.013, rough=.45, cc=.3)
     # the baby dino: head + snout in one surface
@@ -812,9 +813,9 @@ def build_dino():
     for sx in (-1, 1): bm_merge(nos, ellipsoid_bm(.015, .015, .012, at=(sx * .055, -.37, .665), seg=10, rings=6))
     part('nostrils', nos, '#2b6b2e', role='part', ink=0)
     # shell cap on the head
-    cprof = [(max(.003, .40 * math.sqrt(max(0., 1 - (z / .36) ** 2))), z) for z in [i / 12 * .32 for i in range(13)]]
+    cprof = [(max(.003, .40 * math.sqrt(max(0., 1 - (z / .36) ** 2))), z) for z in [i / 20 * .32 for i in range(21)]]
     czig = lambda a, z: (0, (.03 * (2 * abs(((a / math.tau * 9) % 1) - .5) * 2 - 1)) * max(0., 1 - z / .08))
-    cap = lathe_bm(cprof, seg=54, wav=czig)
+    cap = lathe_bm(cprof, seg=90, wav=czig)
     bmesh.ops.transform(cap, matrix=Matrix.Translation((0.02, -.01, .8)) @ Matrix.Rotation(.1, 4, 'Y') @ Matrix.Rotation(-.08, 4, 'X'), verts=cap.verts)
     CS = Surface(cap)
     part('cap', cap, SH, role='shell', ink=.013, rough=.45, cc=.3)
