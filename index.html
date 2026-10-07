@@ -797,6 +797,11 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 @media (max-height:720px){.cs-stage{flex-basis:30%}.cs-slot{width:54px;height:58px}.cs-slot img{width:42px;height:34px}.cs-stats{row-gap:3px;padding:5px 9px 6px}}
 .cs-subs{flex:1;min-width:0}
 .cs-extra{flex:none}
+/* bug hunt 4: Deals/Looks wrap to their own line instead of hiding the 4th sub-tab (Lashes); saved looks one per row */
+.cs-dh{flex-wrap:wrap}.cs-subs{flex:1 1 auto}
+.cs-sets{grid-template-columns:1fr;align-content:start}.cs-sets .wd-set{grid-column:auto}
+.cs-sets .wd-set .wd-th{width:76px;height:80px;flex:none;display:grid;place-items:center}.cs-sets .wd-set .wd-th img{width:84px;height:84px}
+.cs-sets .wd-set .col{flex-direction:row;flex-wrap:wrap;align-items:center}.cs-sets .wd-set .col b{flex:1 0 100%}.cs-sets .wd-set .col button{flex:1}
 
 .cs-act{gap:8px}.cs-act .cs-buy{flex:1 1 0;min-width:0}.cs-act .cs-coinalt{--g1:#ffe066;--g2:#f5a300}
 
@@ -1302,6 +1307,9 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
   .lob-side .side-btn b{letter-spacing:.01em;line-height:1.15}
   .lob-side .side-btn b{font-size:.72rem}
 }
+/* toasts never run off the screen; long hints wrap in a smaller font */
+.coin-toast{max-width:calc(100vw - 32px);box-sizing:border-box}
+.coin-toast.long{white-space:normal;text-align:center;justify-content:center;font-size:1.05rem;line-height:1.25;-webkit-text-stroke:3px var(--ink);padding:8px 16px 10px;border-radius:22px;width:max-content}
 
 /* ===== v55: calm lobby (tab bar + mini icons) ===== */
 #title.lt-on .lob-side,#title.lt-on .lob-pills,#title.lt-on .lob-tip{display:none!important}
@@ -1521,6 +1529,8 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .ac-row.can:not(.hot){box-shadow:0 4px 0 #120d2b;border-color:#120d2b}
 .ac-row.can:not(.hot) .ac-claim{filter:none;transform:scale(.9)}
 .ac-cups img.next{transform:scale(1.3)}
+/* short phones (iPhone SE): the hatch moment was taller than the screen and cut the button */
+@media (max-height:720px){.egg-pop.hatch .hz{gap:6px;padding:12px;justify-content:safe center;overflow-y:auto}.egg-pop.hatch .hx{transform:scale(.78);margin:-33px 0}.egg-pop.hatch .hnest{width:200px;margin-top:-56px}.egg-pop.hatch h3{font-size:2.3rem}}
 
 /* ===== v57: sticker album 2.0 ===== */
 #sbook{position:absolute;inset:0;z-index:12;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);overflow:hidden;
@@ -1643,6 +1653,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .za.zp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15 5l-7 7 7 7' fill='none' stroke='%23120d2b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 .za.zn{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='%23120d2b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 .za:disabled{opacity:.3}
+[dir=rtl] .za{transform:scaleX(-1)}
 .zr{position:absolute;top:4%;inset-inline-start:max(8px,calc(50% - min(33vw,140px) - 18px));padding:6px 14px;background:#6b2fd6;border:3px solid #120d2b;border-radius:12px;font:1.1rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;rotate:-10deg;box-shadow:0 3px 0 #120d2b;z-index:2}
 .z-h .zr{background:linear-gradient(135deg,#ff8ad8,#7ee8ff,#fff27a,#b58cff);color:#2a1a66}.z-c .zr{background:#4a8af0}
 .zno{font:1.6rem/1 "Lilita One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill;direction:ltr}
@@ -1770,6 +1781,12 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .sb-slot.card.got.r-h .stk img{border-radius:11px}
 @keyframes sbRing{0%{background-position:0% 50%}100%{background-position:300% 50%}}
 .sb-slot.card.got:not(.r-h) .stk img{box-shadow:0 3px 5px rgba(35,24,60,.18)}
+/* bug hunt 4 */
+#tour .x-btn{position:relative;z-index:2}
+.tr-title b{font-size:clamp(1.2rem,5.6vw,2rem);white-space:normal;text-align:center}
+.tr-rws{grid-template-columns:repeat(3,minmax(0,1fr))}.tr-rw{flex-wrap:wrap;row-gap:3px}
+[dir=rtl] #boosterBar{left:auto;right:8px}
+.xp-strip,.tr-res-bar{align-self:stretch}
 
 </style>
 
@@ -2836,7 +2853,7 @@ function resolveLanding(){
   hzOnLanding(perfect,!perfect&&Math.abs(dx)<gT);
   {const fl=tower.length-1;
    if(fl>0&&fl%10===0&&hearts<3+hatHearts()){hearts++;updateHud();const hx=xOf(d.xs);setTimeout(()=>{popup(t('heartUp'),hx,y-BH*1.6,'#ff3ea5');sfx.flourish(1)},550)}
-   if(!isBoss()&&!lv.cp&&fl>=Math.ceil(goal()/2)&&fl<goal()){lv.cp=fl;const cx=xOf(d.xs);setTimeout(()=>{popup(t('checkpoint'),cx,y-BH*1.1,'#a3e635');sfx.perfect(2)},fl%10===0?1150:550)}}
+   if(mode==='levels'&&!isBoss()&&!lv.cp&&fl>=Math.ceil(goal()/2)&&fl<goal()){lv.cp=fl;const cx=xOf(d.xs);setTimeout(()=>{popup(t('checkpoint'),cx,y-BH*1.1,'#a3e635');sfx.perfect(2)},fl%10===0?1150:550)}}
   if(d.gold&&Math.abs(dx)<gT)goldFix(tower.length-1);
   if(perfect&&combo>0&&combo%3===0)alignAll();
   const b=computeBalance();
@@ -3245,7 +3262,7 @@ function shopBody(card){
   card.appendChild(list);
 }
 /* ---- skins: every Sharliz in your tower wears the hat ---- */
-const SKP={};function skinPic(id){if(!id||id==='none')return null;let i=SKP[id];if(!i){i=new Image();i.src='art/'+hatPicId(id)+'.webp';SKP[id]=i}return i.complete&&i.naturalWidth?i:null}
+const SKP={};function skinPic(id){if(!id||id==='none'||(typeof WHATX!=='undefined'&&WHATX[id]))return null;let i=SKP[id];if(!i){i=new Image();i.src='art/'+hatPicId(id)+'.webp';SKP[id]=i}return i.complete&&i.naturalWidth?i:null}
 function drawHat(w,topY){const im=skinPic(progress.skin);if(!im)return;const hw=w*.92,hh=hw*im.naturalHeight/im.naturalWidth;ctx.drawImage(im,-hw/2,topY-hh*.86,hw,hh)}
 /* ---- boosters in a level ---- */
 let boost={slow:0,laser:0,shield:false};
@@ -3357,7 +3374,8 @@ function tipOnce(key,anchor,place,text,delay=600){progress.tips=progress.tips||{
     progress.tips[key]=1;saveProgress();TIP.el=b;
     const kill=()=>{if(TIP.el!==b)return;TIP.el=null;b.classList.add('out');setTimeout(()=>b.remove(),260);removeEventListener('pointerdown',kill,true)};
     setTimeout(()=>addEventListener('pointerdown',kill,true),250);setTimeout(kill,7000)},delay)}
-function popupToast(txt){const el=document.createElement('div');el.className='coin-toast';el.innerHTML=coinImg()+txt;document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}
+function toastSlot(el){const n=document.querySelectorAll('.coin-toast').length;if(n)el.style.top='calc(40% + '+Math.min(n,3)*64+'px)'}
+function popupToast(txt){const el=document.createElement('div');el.className='coin-toast';el.innerHTML=coinImg()+txt;toastSlot(el);document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}
 
 /* ---------- in-level coins fly to the score ---------- */
 let flyCoins=[];
@@ -3542,7 +3560,7 @@ function shareTower(){
   g.font='34px "Lilita One","Secular One",system-ui,sans-serif';g.textAlign='center';g.lineWidth=8;g.strokeStyle=INK;g.lineJoin='round';const tl=(mode==='levels'?t('level')+' '+level+' · ':'')+t('floorsN',{n:n-1});
   g.strokeText('Sharliz Stack',w/2,56);g.fillStyle='#ffd60a';g.fillText('Sharliz Stack',w/2,56);g.font='24px "Lilita One","Secular One",system-ui,sans-serif';g.strokeText(tl,w/2,92);g.fillStyle='#fff';g.fillText(tl,w/2,92);
   c.toBlob(async blob=>{if(!blob)return;const file=new File([blob],'sharliz-tower.png',{type:'image/png'});
-    try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Sharliz Stack'});return}}catch(e){if(e&&e.name==='AbortError')return}
+    try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Sharliz Tower'});return}}catch(e){if(e&&e.name==='AbortError')return}
     const u=URL.createObjectURL(blob),ov=document.createElement('div');ov.className='photo-ov';ov.innerHTML=`<img src="${u}" alt=""><p></p>`;ov.querySelector('p').textContent=t('photoHint');ov.onclick=()=>{ov.remove();URL.revokeObjectURL(u)};document.body.appendChild(ov)},'image/png')}
 
 /* ---------- world twists ---------- */
@@ -4135,7 +4153,7 @@ function startCardHero(c,name,cssH){const d=Math.min(3,devicePixelRatio||1),w=Ma
 /* ---------- the wardrobe screen ---------- */
 const W3={on:false,cat:'color',preview:null,previewHat:undefined,thumbR:null,thumbP:null,thumbCache:{},sel:null};
 function openWardrobe(){audio();sfx.click();loadHero3D();W3.on=true;W3.preview=Object.assign({},lookNow());W3.previewHat=progress.skin||'none';W3.sel=null;
-  document.getElementById('title').classList.add('wardrobe-on');document.getElementById('wardrobe').hidden=false;renderWardrobe();tipOnce('dice','#wardrobe .wd-rand','down',t('tipDice'),1400)}
+  document.getElementById('title').classList.add('wardrobe-on');document.getElementById('wardrobe').hidden=false;renderWardrobe();tipOnce('dice','#wardrobe .cs-rand','down',t('tipDice'),1400)}
 function closeWardrobe(){sfx.click();W3.on=false;W3.preview=null;W3.previewHat=undefined;W3.sel=null;H3.yaw=0;document.getElementById('title').classList.remove('wardrobe-on');document.getElementById('wardrobe').hidden=true;setHero3DSkin();rebakeIfNeeded();updateLobby()}
 function wSelect(cat,id){const owned=wOwned(cat,id);W3.sel={cat,id};if(cat==='hat')W3.previewHat=id;else W3.preview[cat]=id;
   if(owned){if(cat==='hat')progress.skin=id;else{lookNow()[cat]=id}saveProgress()}setHero3DSkin();LOB.jump=time-.5;sfx.pop?sfx.pop():sfx.click();renderWardrobe()}
@@ -6070,7 +6088,7 @@ Object.assign(I18N.en,{csTitle:'My hero',csTry:'Tap an item to try it on',csWorn
   ct_trail:'Trail',ct_land:'Landing',ct_cfilt:'Tint',
   st_tol:'Landing zone',st_coins:'Coins',st_hearts:'Hearts',st_spd:'Swing',st_boss:'Boss hits',st_feverT:'Frenzy',
   ng_fall:'Falls faster',ng_wind:'Wind pushes more',ng_pts:'Fewer points',ng_perfPts:'Fewer points for PERFECT',ng_clear:'Less coins for clearing',ng_feverN:'Frenzy needs 7 PERFECTs',
-  ps_astro:'Start 5 floors up',ps_ghost:'Ghost buddy',ps_combo:'Combo helper',ps_bee:'Bee buddy',
+  ps_astro:'Start 5 floors up',ps_ghost:'Saves 1st lost heart',ps_combo:'Combo coins ×2',ps_egg:'Eggs grow ×2',ps_bee:'+2 coins per perfect',
   sk_t_sparkle:'Sparkles',sk_t_notes:'Music notes',sk_t_leaves:'Leaves',sk_t_rainbow:'Rainbow',
   sk_l_confetti:'Confetti',sk_l_stars:'Star burst',sk_l_bubbles:'Bubbles',sk_l_hearts:'Hearts'});
 Object.assign(I18N.he,{csTitle:'הגיבור שלי',csTry:'הקישו על פריט כדי למדוד',csWorn:'לבוש עכשיו',csPowers:'הכוחות שלי',csPreview:'מודדים',
@@ -6079,7 +6097,7 @@ Object.assign(I18N.he,{csTitle:'הגיבור שלי',csTry:'הקישו על פר
   ct_trail:'שובל',ct_land:'נחיתה',ct_cfilt:'גוון',
   st_tol:'אזור נחיתה',st_coins:'מטבעות',st_hearts:'לבבות',st_spd:'נדנוד',st_boss:'מכה לבוס',st_feverT:'טירוף',
   ng_fall:'נופל מהר יותר',ng_wind:'הרוח מזיזה יותר',ng_pts:'פחות נקודות',ng_perfPts:'פחות נקודות על "מושלם"',ng_clear:'פחות מטבעות על סיום',ng_feverN:'טירוף רק אחרי 7 "מושלם"',
-  ps_astro:'מתחילים מקומה 5',ps_ghost:'חבר רוח',ps_combo:'עוזר קומבו',ps_bee:'חבר דבורה',
+  ps_astro:'מתחילים מקומה 5',ps_ghost:'מציל לב ראשון',ps_combo:'מטבעות קומבו ×2',ps_egg:'ביצים גדלות פי 2',ps_bee:'+2 מטבעות למושלם',
   sk_t_sparkle:'נצנצים',sk_t_notes:'תווים',sk_t_leaves:'עלים',sk_t_rainbow:'קשת',
   sk_l_confetti:'קונפטי',sk_l_stars:'פיצוץ כוכבים',sk_l_bubbles:'בועות',sk_l_hearts:'לבבות'});
 
@@ -6129,7 +6147,7 @@ function fxCombine(look,hat){const parts=[];if(hat&&HAT_FX[hat])parts.push(HAT_F
   for(const c of ['outfit','glasses']){const F=GEAR_FX[c]&&GEAR_FX[c][look[c]];if(F)parts.push(F)}
   const pk=typeof PERKS!=='undefined'&&PET_FX[PERKS[look.pet]];if(pk)parts.push(pk);
   const R={};for(const F of parts)for(const k in F){if(FX_ADD.has(k)||k.startsWith('imm_')||k==='imm')R[k]=k==='imm'?F[k]:(R[k]||0)+F[k];else if(k==='feverN')R[k]=F[k];else R[k]=(R[k]===undefined?1:R[k])*F[k]}
-  if(look.outfit==='astro')R.astro=1;const pp=typeof PERKS!=='undefined'&&PERKS[look.pet];if(pp==='ghost'||pp==='combo'||pp==='bee')R['pet_'+pp]=1;return R}
+  if(look.outfit==='astro')R.astro=1;const pp=typeof PERKS!=='undefined'&&PERKS[look.pet];if(pp==='ghost'||pp==='combo'||pp==='bee'||pp==='egg')R['pet_'+pp]=1;return R}
 function itemFX(c,id){if(c==='hat')return HAT_FX[id]||null;if(c==='outfit'&&id==='astro')return {astro:1};if(c==='pet')return typeof PERKS!=='undefined'&&PERKS[id]?{perk:1}:null;return GEAR_FX[c]&&GEAR_FX[c][id]||null}
 
 /* ---------------- new 3D builds ---------------- */
@@ -6271,7 +6289,7 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
     const c0=s.cats[0],id=s.k==='fx'?(progress.tskin||progress.lskin||progress.cskin||'none'):csPrevId(c0),th=mk('img');th.alt='';const sw=mk('i','sw');sw.hidden=true;
     const pw=s.cats.some(c=>c!=='fx'&&itemFX(c,csPrevId(c)));if(pw)b.classList.add('pow');
     if(s.k==='fx')csThumb(progress.tskin?'trail':progress.lskin?'land':'cfilt',id,th,sw);else if(id&&id!=='none')csThumb(c0,id,th,sw);else th.src=csStyleIcon('none');
-    b.append(th,sw,mk('span','',t('sl_'+s.k)));b.onclick=()=>{sfx.click();CS.slot=s.k;W3.cat=s.cats[0];CS.filter='all';renderWardrobe()};st.appendChild(b)}
+    b.append(th,sw,mk('span','',t('sl_'+s.k)));b.onclick=()=>{sfx.click();if(CS.slot!==s.k)W3.sel=null;CS.slot=s.k;W3.cat=s.cats[0];CS.filter='all';renderWardrobe()};st.appendChild(b)}
   el.appendChild(st);
   // power bars: what you wear vs what you are trying on
   const prevL=heroLook(),eqL=Object.assign({},lookNow(),{hat:progress.skin||'none'});const FP=fxCombine(prevL,prevL.hat),FE=fxCombine(eqL,eqL.hat);
@@ -6289,10 +6307,10 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
   if(scats.length>1)for(const c of scats){const b=mk('button','cs-sub'+(c===cat?' on':''),STYLE_CAT[c]?t('ct_'+c):(WCATS.find(w=>w[0]===c)||[0,[c,c]])[1][lang==='he'?1:0]);
     if(c!==cat&&!STYLE_CAT[c]&&wNewIn(c))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();W3.cat=c;renderWardrobe()};subs.appendChild(b)}
   else subs.appendChild(mk('b','cs-sl',cat==='deal'?t('csDeals'):cat==='sets'?t('csLooks'):t('sl_'+slot.k)));
-  const extra=mk('div','cs-extra');for(const [c,key] of [['deal','csDeals'],['sets','csLooks']]){const b=mk('button','cs-sub small'+(cat===c?' on':''),t(key));if(c==='deal'&&wNewIn('deal'))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();W3.cat=cat===c?slot.cats[0]:c;renderWardrobe()};extra.appendChild(b)}
+  const extra=mk('div','cs-extra');for(const [c,key] of [['deal','csDeals'],['sets','csLooks']]){const b=mk('button','cs-sub small'+(cat===c?' on':''),t(key));if(c==='deal'&&cat!=='deal'&&wNewIn('deal'))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();W3.cat=cat===c?slot.cats[0]:c;renderWardrobe()};extra.appendChild(b)}
   hd.append(subs,extra);dr.appendChild(hd);
-  if(cat==='sets'){const g=mk('div','cs-sets');wSets().forEach((S,i)=>{const c=mk('div','wd-set'+(S?'':' empty'));const im=mk('img');im.alt='';if(S){const u=wThumb('set',i);if(u)im.src=u}c.appendChild(im);c.appendChild(mk('b','',t('lookN',{n:i+1})));
-      const w=mk('button','wear',t('wear'));w.disabled=!S;w.onclick=()=>{wWearSet(i)};const sv=mk('button','save',t('saveLook'));sv.onclick=()=>wSaveSet(i);c.append(w,sv);g.appendChild(c)});dr.appendChild(g)}
+  if(cat==='sets'){const g=mk('div','cs-sets');wSets().forEach((S,i)=>{const c=mk('div','wd-set'+(S?'':' empty'));const th=mk('div','wd-th'),im=mk('img');im.alt='';if(S){const u=wThumb('set',i);if(u)im.src=u}th.appendChild(im);c.appendChild(th);const col=mk('div','col');col.appendChild(mk('b','',t('lookN',{n:i+1})));c.appendChild(col);
+      const w=mk('button','wear',t('wear'));w.disabled=!S;w.onclick=()=>{wWearSet(i)};const sv=mk('button','save',t('saveLook'));sv.onclick=()=>wSaveSet(i);col.append(w,sv);g.appendChild(c)});dr.appendChild(g)}
   else{const fl=mk('div','cs-filter');const powCat=c=>c==='hat'||c==='outfit'||c==='glasses'||c==='pet';
     if(cat!=='deal'&&powCat(cat))for(const [f,key] of [['all','csAll'],['pow','csPow'],['skin','csSkin']]){const b=mk('button','cs-f'+(CS.filter===f?' on':''),t(key));b.onclick=()=>{CS.filter=f;renderWardrobe()};fl.appendChild(b)}
     if(fl.childNodes.length)dr.appendChild(fl);
@@ -6317,19 +6335,23 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
     else act.appendChild(mk('div','cs-hint',(I.worn?'✓ '+t('csWorn')+': ':'')+I.name))}
   else act.appendChild(mk('div','cs-hint',t('csTry')));
   dr.appendChild(act);el.appendChild(dr);
-  if(cat!=='sets'&&cat!=='deal'&&!STYLE_CAT[cat])wMarkSeen(cat);saveProgress();wBadge()};
+  if(cat!=='sets'&&!STYLE_CAT[cat])wMarkSeen(cat);saveProgress();wBadge()};
 function csTap(c,id,I){if(I.gate&&!I.owned){sfx.locked();popupToast(I.gate);return}sfx.click();
   if(STYLE_CAT[c]){const key=STYLE_CAT[c]+'skin';if(I.owned){progress[key]=id==='none'?null:id;W3.sel=null}else W3.sel={cat:c,id};saveProgress();renderWardrobe();return}
   wSelect(c,id)}
 function csBuy(c,id){if(STYLE_CAT[c]){const q=STYLE_SKINS.find(q=>q.id===id);if(!q||wallet().skins.includes(id))return;if(progress.coins<q.price){sfx.locked();popupToast(t('needCoins'));return}
     progress.coins-=q.price;progress.skins.push(id);progress[q.cat+'skin']=id;W3.sel=null;sfx.flourish&&sfx.flourish(2);saveProgress();updateWalletUI();renderWardrobe();return}
   wBuy()}
-{const _ow=openWardrobe;openWardrobe=function(...a){const r=_ow(...a);CS.slot=csSlotOf(W3.cat)||'look';return r}}
+{const _ow=openWardrobe;openWardrobe=function(...a){CS.slot=csSlotOf(W3.cat)||CS.slot||'look';return _ow(...a)}}
 // every pattern drawn 30% bigger (Tzach): paint at 1/1.3 size, then stretch to the full texture — periodic patterns stay seamless
 const PAT_SCALE=1.3;
 {const _pt=patternTex;patternTex=function(id,base){const _ct=canvasTex;
   canvasTex=function(k,w,h,draw){return _ct(k+'_x'+PAT_SCALE,w,h,(g,W,H)=>{const c=document.createElement('canvas');c.width=Math.round(W/PAT_SCALE);c.height=Math.round(H/PAT_SCALE);draw(c.getContext('2d'),c.width,c.height);g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(c,0,0,W,H)})};
   try{return _pt(id,base)}finally{canvasTex=_ct}}}
+// bug hunt 4: a try-on or buy re-renders the drawer; keep the grid's scroll when the slot/category/filter didn't change
+{const _rw=renderWardrobe;renderWardrobe=function(){const key=()=>CS.slot+'/'+W3.cat+'/'+CS.filter,g=document.querySelector('#wardrobe .cs-grid'),y=g&&g.dataset.k===key()?g.scrollTop:0;
+  const r=_rw.apply(this,arguments);const n=document.querySelector('#wardrobe .cs-grid');if(n){n.dataset.k=key();if(y)n.scrollTop=y}return r}}
+I18N.en.style='Effects';I18N.he.style='אפקטים'; // the shop had two tabs called 'Style'; this one opens the Effects slot
 
 /* ===== v49: fair powers — "different, not stronger" (Tzach) for everything that can be bought =====
    - Premium buddies get a cost too (dragon falls faster, unicorn: more wind, cyborg: faster swing).
@@ -6505,7 +6527,7 @@ function arcBar(G){const r=G.r,s=Math.ceil(G.t);r.querySelector('.arc-score b').
 function arcAdd(G,n,x,y,cls){G.score=Math.max(0,G.score+n);if(x!==undefined){const d=document.createElement('div');d.className='arc-fx '+(cls||(n>=0?'pos':'neg'));d.textContent=(n>0?'+':'')+n;d.style.left=x+'px';d.style.top=y+'px';G.stage.appendChild(d);setTimeout(()=>d.remove(),800)}
   if(n>0){const sc=G.r.querySelector('.arc-score');sc.classList.remove('bump');void sc.offsetWidth;sc.classList.add('bump')}}
 function arcEnd(G){if(G.over)return;G.over=true;G.run=false;if(G.D.end)G.D.end(G);
-  const a=arcData(),id=G.id,paid=arcLeft(id)>0,coins=paid?Math.min(ARC_MAX,G.D.coins(G.score)):0,nb=G.score>(a.best[id]||0)&&G.score>0;
+  const a=arcData(),id=G.id,paid=arcLeft(id)>0&&G.score>0,coins=paid?Math.min(ARC_MAX,G.D.coins(G.score)):0,nb=G.score>(a.best[id]||0)&&G.score>0;
   if(paid)a.plays[id]=(a.plays[id]||0)+1;if(nb)a.best[id]=G.score;progress.coins+=coins;saveProgress();updateWalletUI();
   sfx.flourish(nb?3:1);
   setTimeout(()=>{if(G.dead)return;const p=document.createElement('div');p.className='arc-end';
@@ -6643,7 +6665,7 @@ function evShop(N,body){const E=N.E,D=evData(E.id);const g=document.createElemen
     if(it.c==='color')b.querySelector('.th').style.setProperty('--c',WCOL[it.id].c);
     b.querySelector('b').textContent=it.c==='trail'?t('sk_'+it.id):wName(it.c,it.id);b.querySelector('small').textContent=t('evOnly',{n:t('evs_'+E.id)});
     const pr=b.querySelector('.pr');if(own){const on=evWorn(it);pr.textContent=on?t('evOn'):'✓ '+t('evOwned');pr.classList.add('got');if(on)b.classList.add('worn')}else{pr.innerHTML=`<img src="art/ev_${E.cur}.webp" alt="">${it.p}`;if(D.cur<it.p)pr.classList.add('poor')}
-    b.onclick=()=>{if(own){sfx.click();evWear(it);evHub(N,'shop');return}if(D.cur<it.p){sfx.locked();popupToast(t('evNeed',{n:t('cur_'+E.cur)}));return}
+    b.onclick=()=>{if(own){sfx.click();evWear(it);evHub(N,'shop');return}if(D.cur<it.p){sfx.locked();noteToast(t('evNeed',{n:t('cur_'+E.cur)}));return}
       D.cur-=it.p;evGive(it);saveProgress();sfx.coin(4);vib(20);evWear(it);evHub(N,'shop');popupToast(t('evGot'))};g.appendChild(b)})}
 function evWorn(it){if(it.c==='hat')return progress.skin===it.id;if(it.c==='trail')return progress.tskin===it.id;return lookNow()[it.c]===it.id}
 function evOwned(it){if(it.c==='hat')return wallet().skins.includes(it.id);if(it.c==='trail')return wallet().skins.includes(it.id);return (progress.owned[it.c]||[]).includes(it.id)}
@@ -6756,7 +6778,7 @@ function trScreen(){const N=trNow(),D=trData(),r=trRoot(),z=ZONES[N.zi],nx=TR_ME
   r.querySelector('.tr-nx').textContent=nx?t('trNext',{n:nx.f-D.best,m:t('md_'+nx.k)}):t('trAllMedals');
   r.querySelector('.tr-play span').textContent=t('trPlay');r.querySelector('.tr-play').onclick=()=>{sfx.click();trStart()};
   r.querySelector('.tr-share span').textContent=D.best?t('trChallenge')+' · '+t('trFloorsN',{n:D.best}):t('trChallenge');r.querySelector('.tr-share').onclick=()=>{sfx.click();trShare(D.best)}}
-function trShare(n){const url=location.origin+location.pathname,txt=t('trShare',{n});
+function trShare(n){const url='https://sharliztower.com',txt=t('trShare',{n}); // the store app runs on localhost, and the Pages copy has every level open
   if(navigator.share){navigator.share({text:txt,url}).catch(()=>{});return}
   try{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')}catch(e){}}
 /* ---------- playing (mode 'tour') ---------- */
@@ -6778,9 +6800,10 @@ function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge'
 {const _ss=spawnSwinger;spawnSwinger=function(){_ss.apply(this,arguments);if(mode==='tour'&&TR&&TR.N.tw==='gold'&&swinger&&!swinger.gold&&!swinger.kind&&tower.length>=2&&Math.random()<.22){swinger.color=GOLDC;swinger.gold=true}}}
 {const _mo=modeOver;modeOver=function(won){if(mode!=='tour'||!TR)return _mo.apply(this,arguments);trEnd()}}
 {const _sm=startMode;startMode=function(m){if(m==='tour'){trStart(true);return}return _sm.apply(this,arguments)}}
-function trEnd(){const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.best=fl;const won=[];
+function trEnd(){TR.banked=1;const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.best=fl;const won=[];
   for(const m of TR_MEDALS){if(D.best>=m.f&&!D.got[m.k]){D.got[m.k]=1;wallet();progress.coins+=m.c;for(let i=0;i<m.bo;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}if(m.pk&&typeof sbGive==='function')sbGive(m.pk);won.push(m)}}
   saveProgress();trHud(false);const nx=TR_MEDALS.find(m=>D.best<m.f);
+  if(TRQUIET){if(won.length){popupToast('+'+won.reduce((a,m)=>a+m.c,0));setTimeout(()=>sfx.coin(4),300)}return}
   showOverlay(()=>({title:nb?t('trNew'):fl>=D.best-3?t('trClose'):t('trNice'),big:true,
     extra:card=>{card.classList.add('tr-res');const big=document.createElement('div');big.className='tr-big';big.innerHTML=`<b>${fl}</b><span></span>`;big.querySelector('span').textContent=t('trFloorsN',{n:''}).trim();card.appendChild(big);
       const bs=document.createElement('div');bs.className='tr-best';bs.innerHTML='<span></span><b></b>';bs.querySelector('span').textContent=t('trBest');bs.querySelector('b').textContent=t('trFloorsN',{n:D.best});card.appendChild(bs);
@@ -6799,6 +6822,15 @@ function trExit(){const L=TR?TR.from:level;TR=null;mode='levels';modeZi=null;lev
   const b=document.createElement('button');b.className='mode-btn m-tour';b.innerHTML=`<img src="art/tr_trophy.webp" alt=""><span class="mt"><b></b><small></small></span>`;b.querySelector('b').textContent=t('tourTitle');
   b.querySelector('small').textContent=t('tw_'+N.tw)+' · '+t('trBest')+' '+D.best;b.onclick=openTour;box.prepend(b)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const mb=document.getElementById('modesTitleBtn');if(mb){let bd=mb.querySelector('.tr-bd');if(!bd){bd=document.createElement('i');bd.className='badge tr-bd';bd.innerHTML='<img src="art/tr_trophy.webp" alt="">';mb.appendChild(bd)}const D=trData();bd.hidden=!progress.tut;bd.classList.toggle('done',!!D.got.g);bd.innerHTML=D.got.g?'✓':'<img src="art/tr_trophy.webp" alt="">'}return r}}
+// bug hunt 4: Pause → Map / Restart threw the run away (the medal popup had already said 'Bronze!'). Bank the best + medals
+// quietly first (no result card); Sky Tower keeps its best (no coins, those stay for finishing a run).
+let TRQUIET=false;
+function runBank(){try{
+  if(mode==='tour'&&TR&&!TR.banked&&TR.floors>0&&state!=='over'){TRQUIET=true;try{trEnd()}finally{TRQUIET=false}}
+  else if(mode==='endless'&&endless&&state!=='over'&&(endless.floors||0)>(progress.bestEndless||0)){progress.bestEndless=endless.floors;saveProgress()}}catch(e){}}
+{const _o=openMap;openMap=function(){runBank();return _o.apply(this,arguments)}}
+{const _t=toTitle;toTitle=function(){runBank();return _t.apply(this,arguments)}}
+{const _s=startMode;startMode=function(m){if(m===mode)runBank();return _s.apply(this,arguments)}}
 
 /* ===== v54: PLAYER LEVEL (XP) + SHARLIZ PASS (monthly season pass) =====
    XP from everything (levels, bosses, bonus stage, arcade, events, tournament) → player level (badge on the avatar)
@@ -6845,9 +6877,9 @@ function lvUpPop(lv){if(!progress.lvRew)return;const n=progress.lvRew;progress.l
 /* ---------- XP sources ---------- */
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if(mode==='levels'&&was!=='win'&&state==='win')addXP(20+5*(lv.starsNow||0)+(isBoss()?40:0));return r}}
 if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){if(BN&&!BN.paid){addXP(10);xpDrop()}return _b.apply(this,arguments)}}
-if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over,paid=!was&&arcLeft(G.id)>0;const r=_a.apply(this,arguments);if(paid){addXP(5);xpDrop();popupToast(t('xpGain',{n:5}))}return r}}
+if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over,paid=!was&&arcLeft(G.id)>0&&G.score>0;const r=_a.apply(this,arguments);if(paid){addXP(5);xpDrop();noteToast(t('xpGain',{n:5}))}return r}}
 if(typeof evFinish==='function'){const _e=evFinish;evFinish=function(won){if(won)addXP(EVP&&EVP.i===9?40:15);return _e.apply(this,arguments)}}
-if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));if(XPQ&&document.querySelector('#card .card-body')){const Q=XPQ;XPQ=null;setTimeout(()=>xpStrip(Q),60)}return r}}
+if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));if(TRQUIET)XPQ=null;else if(XPQ&&document.querySelector('#card .card-body')){const Q=XPQ;XPQ=null;setTimeout(()=>xpStrip(Q),60)}return r}}
 /* ---------- lobby: level badge on the avatar + Pass button ---------- */
 function lobbyXP(){const pr=document.querySelector('#title .profile');if(!pr)return;let b=pr.querySelector('.av-lv');if(!b){const bar=document.createElement('span');bar.className='pf-xp';bar.innerHTML='<i class="av-lv"></i><span class="tr"><i></i></span>';pr.querySelector('.pf').appendChild(bar);b=bar.querySelector('.av-lv')}
   const L=xpLevel(progress.xp||0);b.textContent=L.lv;pr.querySelector('.pf-xp .tr i').style.width=L.into/L.need*100+'%';
@@ -6867,7 +6899,7 @@ function psRewHTML(R){let img,amt='',lab;if(R.c){img='ps_coins';amt='×'+R.c;lab
 function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}}
   if(R.it){const [c,id]=R.it;if(c==='hat'||c==='trail'){if(!wallet().skins.includes(id))progress.skins.push(id)}else{progress.owned[c]=progress.owned[c]||[];if(!progress.owned[c].includes(id))progress.owned[c].push(id)}}}
 function psClaim(i,prem){const P=psData();const arr=prem?P.p:P.f;if(arr.includes(i)||i>=psTierOf(P.xp)||(prem&&!P.prem))return false;arr.push(i);psGive(PS_REW[i][prem?1:0]);return true}
-function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady();
+function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady(),L0=r.querySelector('.ps-list'),y0=!scroll&&L0?L0.scrollTop:0;
   r.innerHTML=`<div class="ps-top"><button class="x-btn ps-x" aria-label="close"></button><div class="ps-title"><b></b><small></small></div><div class="coin-pill">${coinImg()}<span></span></div></div>
     <div class="ps-head"><div class="ps-star"><b>${T}</b></div><div class="ps-bar"><i style="width:${T>=PS_N?100:(P.xp%PS_XP)/PS_XP*100}%"></i><span>${T>=PS_N?'MAX':(P.xp%PS_XP)+'/'+PS_XP+' XP'}</span></div><div class="ps-next"><b>${Math.min(PS_N,T+1)}</b></div></div>
     <div class="ps-cols"><span class="pf">${t('psFree')}</span><span></span><span class="pp">${P.prem?'':'<img src="art/ps_lock.webp" alt="">'}${t('psPrem')}</span></div><div class="ps-list"></div>
@@ -6877,12 +6909,15 @@ function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady
   for(let i=0;i<PS_N;i++){const row=document.createElement('div'),got=i<T;row.className='ps-row'+(got?' got':'')+(i===T?' cur':'');
     const cell=(prem)=>{const R=PS_REW[i][prem?1:0],claimed=(prem?P.p:P.f).includes(i),can=got&&!claimed&&(!prem||P.prem),c=document.createElement('button');
       const first=can&&!firstCan;if(first)firstCan=c;c.className='ps-cell '+(prem?'prem':'free')+(claimed?' done':can?' can':'')+(first?' hot':'')+(prem&&!P.prem?' lock':'')+(got?'':' far');c.innerHTML=psRewHTML(R)+(claimed?'<i class="ok">✓</i>':can?`<i class="cl">${t('psClaim')}</i>`:prem&&!P.prem?'<img class="lk" src="art/ps_lock.webp" alt="">':'');
-      c.onclick=()=>{if(can&&psClaim(i,prem)){saveProgress();sfx.coin(3);vib(15);psRender(false)}else if(prem&&!P.prem)psBuy();else sfx.locked()};return c};
+      c.onclick=()=>{if(can&&psClaim(i,prem)){saveProgress();sfx.coin(3);vib(15);psRender(false)}else if(prem&&!P.prem)psBuy();else{sfx.locked();if(!got)noteToast(t('psLocked',{n:i+1}))}};return c};
     const mid=document.createElement('div');mid.className='ps-num';mid.innerHTML=`<b>${i+1}</b>`;row.appendChild(cell(false));row.appendChild(mid);row.appendChild(cell(true));L.appendChild(row)}
   const f=r.querySelector('.ps-foot');
   if(ready>1){const a=document.createElement('button');a.className='btn green ps-all';a.innerHTML='<span></span>';a.querySelector('span').textContent=t('psAll')+' ('+ready+')';a.onclick=()=>{for(let i=0;i<T;i++){psClaim(i,false);psClaim(i,true)}saveProgress();sfx.coin(4);psRender(false)};f.appendChild(a)}
   if(!P.prem){const h=document.createElement('p');h.className='ps-why';h.textContent=t('psWhy');f.appendChild(h);const b=document.createElement('button');b.className='btn primary ps-buy';b.innerHTML='<img src="art/pass_icon.webp" alt=""><span></span>';b.querySelector('span').textContent=t('psBuy',{p:IAP.products.pass.price});b.onclick=psBuy;f.appendChild(b)}
+  if(y0)L.scrollTop=y0;
   if(scroll){const can=firstCan,cur=(can&&can.parentNode)||L.querySelector('.cur')||L.lastElementChild;requestAnimationFrame(()=>{L.scrollTop=Math.max(0,cur.offsetTop-L.offsetTop-(can?12:L.clientHeight*.4))})}}
+// a plain message (no coin): hints, 'reach tier n'. Longer texts wrap and stay on screen longer
+function noteToast(txt){document.querySelectorAll('.coin-toast.note').forEach(e=>e.remove());const el=document.createElement('div');el.className='coin-toast note'+(String(txt).length>22?' long':'');el.textContent=txt;toastSlot(el);document.body.appendChild(el);setTimeout(()=>el.remove(),String(txt).length>40?3200:1800)}
 function psBuy(){IAP.buy('pass',t('psTitle')+' · '+t('psPrem')).then(ok=>{if(ok){popupToast(t('psPremOn'));psRender(false)}})}
 {const _g=IAP.grant;IAP.grant=function(sku){if(sku==='pass'){psData().prem=true;progress.purchases=progress.purchases||[];progress.purchases.push({sku,at:Date.now(),test:!IAP.live()});saveProgress();updateWalletUI();return}return _g.apply(this,arguments)}}
 // pass items: gated in My hero until earned
@@ -6945,12 +6980,12 @@ setTimeout(()=>{try{if(state==='title')updateLobby()}catch(e){}},0);
    hatches after N won levels → a buddy you don't own yet, otherwise cookies (treats). Cookies evolve buddies (3 stages:
    bigger, then a golden aura) and every evolved stage adds +5% coins on won levels. Golden eggs can hatch the egg-only baby dino.
    Trophy room (tap the profile pill): achievements with bronze/silver/gold cups that pay coins + XP. */
-Object.assign(I18N.en,{nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',
+Object.assign(I18N.en,{nestFull:'Nest is full! +5 cookies instead',nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',
   egg_c:'Egg',egg_r:'Rare egg',egg_g:'Golden egg',eggNew:'You found an egg!',eggNewSub:'It hatches after {n} wins',hatchNew:'New buddy!',hatchDup:'Cookies!',hatchDupSub:'You already have {b} — it turned into cookies',hatchOk:'Yay!',hatchWear:'Wear it',
   evoTitle:'{b} evolved!',evoSub:'Stage {n} · +{p}% coins on wins',evoBonus:'Evolved buddy',eggOnly:'Golden egg only',miniNest:'Nest',
   achTitle:'Trophy room',achClaim:'Collect',achDone:'All gold!',achNext:'{a}/{b}',
   ach_wins:'Levels won',ach_bosses:'Bosses beaten',ach_stars:'Stars',ach_tower:'Tallest endless tower',ach_perf:'Perfect drops',ach_stk:'Stickers',ach_eggs:'Eggs hatched',ach_lv:'Player level',ach_bud:'Buddies',ach_medal:'Tournament medals'});
-Object.assign(I18N.he,{nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',
+Object.assign(I18N.he,{nestFull:'הקן מלא! קיבלתם 5 עוגיות במקום',nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',
   egg_c:'ביצה',egg_r:'ביצה נדירה',egg_g:'ביצת זהב',eggNew:'מצאתם ביצה!',eggNewSub:'היא תבקע אחרי {n} ניצחונות',hatchNew:'חבר חדש!',hatchDup:'עוגיות!',hatchDupSub:'{b} כבר אצלכם — הוא הפך לעוגיות',hatchOk:'יש!',hatchWear:'לשים עליי',
   evoTitle:'{b} התפתח!',evoSub:'שלב {n} · ‎+{p}%‎ מטבעות בניצחון',evoBonus:'חבר מפותח',eggOnly:'רק מביצת זהב',miniNest:'קן',
   achTitle:'חדר הגביעים',achClaim:'אסוף',achDone:'הכל זהב!',achNext:'{a}/{b}',
@@ -6977,9 +7012,9 @@ const EGG={c:{need:3,pool:['chick','slime','ghost','bee'],dup:3},r:{need:5,pool:
 const EVO_COST=[0,10,25],EGG_MAX=6;
 function nest(){const N=progress.nest=progress.nest||{};N.q=N.q||[];N.treats=N.treats||0;N.hatched=N.hatched||0;N.got=N.got||{};return N}
 function budSt(id){return Math.min(3,Math.max(1,((progress.bud||{})[id])||1))}
-function eggGive(t,src){const N=nest();if(src){if(N.got[src])return false;N.got[src]=1}
-  if(!N.cur)N.cur={t,w:0};else if(N.q.length<EGG_MAX)N.q.push(t);else{N.treats+=5;saveProgress();return true}
-  saveProgress();EGGQ.push(t);setTimeout(eggNotify,0);return true}
+function eggGive(ty,src){const N=nest();if(src){if(N.got[src])return false;N.got[src]=1}
+  if(!N.cur)N.cur={t:ty,w:0};else if(N.q.length<EGG_MAX)N.q.push(ty);else{N.treats+=5;saveProgress();noteToast(t('nestFull'));return true}
+  saveProgress();EGGQ.push(ty);setTimeout(eggNotify,0);return true}
 let EGGQ=[];
 function eggReady(){const N=nest();return !!N.cur&&N.cur.w>=EGG[N.cur.t].need}
 /* wins feed the egg (+1, +2 with the dino) and give a cookie when a buddy is worn */
@@ -7022,7 +7057,7 @@ function petRefresh(id){try{if(typeof H3!=='undefined'){H3.petId='__';if(typeof 
 {const _ci=csInfo;csInfo=function(c,id){const I=_ci.apply(this,arguments);if(c==='pet'&&WPET[id]&&WPET[id].egg&&!I.owned){I.gate=t('eggOnly');I.rar='leg'}return I}}
 /* ---------- nest screen ---------- */
 let NEL=null;
-function openNest(){audio();sfx.click();if(!NEL){NEL=document.createElement('div');NEL.id='nestScr';document.body.appendChild(NEL)}NEL.hidden=false;nestRender()}
+function openNest(){audio();sfx.click();if(!NEL){NEL=document.createElement('div');NEL.id='nestScr';document.body.appendChild(NEL)}NEL.hidden=false;NEL.innerHTML='';nestRender()}
 function closeNest(){if(NEL)NEL.hidden=true;updateWalletUI();if(state==='title')updateLobby()}
 function nestRender(){const N=nest(),r=NEL,C=N.cur,E=C&&EGG[C.t],ready=eggReady();
   r.innerHTML=`<div class="ps-top"><button class="x-btn ns-x" aria-label="close"></button><div class="ps-title"><b></b><small></small></div><div class="coin-pill ns-ck"><img src="art/ns_cookie.webp" alt=""><span></span></div></div>
@@ -7076,7 +7111,7 @@ const ACH_PAY=[[100,20],[250,40],[600,80]],CUP=['b','s','g'];
 function achGot(id){return ((progress.ach||{})[id])||0}
 function achReady(){return ACH.reduce((n,A)=>{const g=achGot(A.id);return n+(g<3&&A.v()>=A.T[g]?1:0)},0)}
 let ACEL=null;
-function openTrophy(){audio();sfx.click();if(!ACEL){ACEL=document.createElement('div');ACEL.id='achScr';document.body.appendChild(ACEL)}ACEL.hidden=false;achRender()}
+function openTrophy(){audio();sfx.click();if(!ACEL){ACEL=document.createElement('div');ACEL.id='achScr';document.body.appendChild(ACEL)}ACEL.hidden=false;ACEL.innerHTML='';achRender()}
 function achRender(){const r=ACEL;r.innerHTML=`<div class="ps-top"><button class="x-btn ac-x" aria-label="close"></button><div class="ps-title"><b></b><small></small></div><div class="coin-pill">${coinImg()}<span></span></div></div><div class="ac-list"></div>`;
   r.querySelector('.ac-x').innerHTML=XSVG;r.querySelector('.ac-x').onclick=()=>{sfx.click();r.hidden=true;updateWalletUI();if(state==='title')updateLobby()};
   r.querySelector('.ps-title b').textContent=t('achTitle');const tot=ACH.reduce((a,A)=>a+achGot(A.id),0);r.querySelector('.ps-title small').innerHTML=`<img src="art/cup_g.webp" alt=""> ${tot}/${ACH.length*3}`;r.querySelector('.coin-pill span').textContent=progress.coins;
@@ -7100,6 +7135,9 @@ function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+
     b.querySelectorAll('.lt-bd').forEach(e=>e.remove());if(eggReady()){const d=document.createElement('i');d.className='badge lt-bd';d.textContent='!';b.querySelector('.lt-ic').appendChild(d)}}
   const d=document.querySelector('#title .ac-dot');if(d)d.hidden=!achReady()}catch(e){}return r}}
 setTimeout(()=>{try{if(state==='title')updateLobby()}catch(e){}},0);
+// a re-render after Collect / Evolve keeps the list where the player was (it jumped back to the top)
+function keepScroll(fn,root,sel){return function(){const R=root(),o=R&&R.querySelector(sel),y=o?o.scrollTop:0;const r=fn.apply(this,arguments);const n=y&&R&&R.querySelector(sel);if(n)n.scrollTop=y;return r}}
+nestRender=keepScroll(nestRender,()=>NEL,'.ns-scroll');achRender=keepScroll(achRender,()=>ACEL,'.ac-list');
 
 /* ===== v57: STICKER ALBUM 2.0 — a real collectible sticker book (design: ChatGPT, design/stickers/) =====
    Cover → chapter pages of 9 numbered slots (die-cut stickers, holo foil for rare/holo), tap a sticker → zoom with tilt + shine.
@@ -7209,11 +7247,11 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
     s.innerHTML=`<span class="num">#${String(num).padStart(2,'0')}</span><span class="stk"><img alt=""></span>`+(it.n>1?`<i class="cnt">×${it.n}</i>`:'');
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
-    s.onclick=()=>{if(it.n){sfx.click();sbZoom(P,all,idx)}else{sfx.locked();popupToast((it.hint||t('hint_'+P.id)))}};grid.appendChild(s)});
+    s.onclick=()=>{if(it.n){sfx.click();sbZoom(P,all,idx)}else{sfx.locked();noteToast(it.hint||t('hint_'+P.id))}};grid.appendChild(s)});
   const ch=r.querySelector('.sb-chest');ch.onclick=()=>{if(done&&!claimed){const [c,x]=SB_REW[P.id]||[500,60];D.done[P.id]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+(SB_REW[P.id]||[500])[0]+' 🪙')}};
   const pb=r.querySelector('.sb-packbtn');pb.querySelector('span').textContent=D.packs?t('sbPacks',{n:D.packs}):t('sbNext',{n:D.w%3});
   // packs are earned only (no buying with coins): random items for purchase would be a loot box (Apple odds disclosure, AU 16+)
-  pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();popupToast(t('sbHow'))}};
+  pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();noteToast(t('sbHow'))}};
   if(fresh.length){fresh.forEach((id,k)=>setTimeout(()=>{if(sfx.ok()){tone({f:900,f2:1500,d:.1,type:'sine',v:.06});noise({d:.08,v:.05,hp:3000})}vib(10)},250+k*200));seen.push(...fresh);saveProgress()}
   stkBadge()}
 /* ---------- zoom ---------- */
@@ -7229,7 +7267,7 @@ function sbZoom(P,all,idx){const owned=all.map((it,i)=>[it,i]).filter(([it])=>it
     m.querySelector('.znm').textContent=it.name;m.querySelector('.zln').textContent=it.line||it.hint||t('hint_'+P.id);m.querySelector('.zhave span').textContent=t('sbHave',{n:it.n});m.querySelector('.zbk span').textContent=t('sbToBook');
     const close=()=>{sfx.click();m.remove()};bk.onclick=close;m.querySelector('.zbk').onclick=close;
     const zp=m.querySelector('.zp'),zn=m.querySelector('.zn');zp.disabled=owned.length<2;zn.disabled=owned.length<2;
-    const rtl=I18N[lang]._dir==='rtl';zp.onclick=()=>{k=(k+(rtl?1:-1)+owned.length)%owned.length;sfx.click();draw()};zn.onclick=()=>{k=(k+(rtl?-1:1)+owned.length)%owned.length;sfx.click();draw()};
+    zp.onclick=()=>{k=(k-1+owned.length)%owned.length;sfx.click();draw()};zn.onclick=()=>{k=(k+1)%owned.length;sfx.click();draw()}; // RTL: the row is mirrored, so 'next' sits on the left like the page arrows
     const card=m.querySelector('.zcard');let tx=0,ty=0;const set=(x,y)=>{card.style.setProperty('--rx',(-y*16)+'deg');card.style.setProperty('--ry',(x*18)+'deg');card.style.setProperty('--mx',(50+x*60)+'%');card.style.setProperty('--my',(50+y*60)+'%')};
     card.onpointermove=e=>{const b=card.getBoundingClientRect();tx=(e.clientX-b.left)/b.width-.5;ty=(e.clientY-b.top)/b.height-.5;card.classList.add('drag');set(tx,ty)};card.onpointerleave=()=>{card.classList.remove('drag')}};
   draw();sfx.flourish(1)}
@@ -7289,6 +7327,12 @@ function storySync(){try{const D=sbData();D.story=D.story||[];const al=progress.
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{if(storySync())stkBadge()}catch(e){}return r}}
 /* buddies: an illustrated scene of the buddy with Sharliz (paid buddies glow) */
 {const P=STK_PAGES.find(p=>p.id==='buddy');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const id=it.id.slice(6);return Object.assign(it,{src:'art/stk_p_'+id+'.webp',img:null,card:1,rar:WPET[id]&&WPET[id].real?'h':'c'})})}}
+/* bug hunt 4: the second tap of a double-tap landed on the card/screen that had just opened (Next → bought a booster on the
+   pre-level card; Arcade → started 'Bonk' and used a coin play). Real taps on a freshly opened card are ignored for 350 ms. */
+let TAPGUARD=0;
+{const _so=showOverlay;showOverlay=function(){TAPGUARD=performance.now();return _so.apply(this,arguments)}}
+for(const f of ['openArcade','openTour','openEvent','openPass','openNest','openTrophy']){const _f=window[f];if(typeof _f==='function')window[f]=function(){TAPGUARD=performance.now();return _f.apply(this,arguments)}}
+document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD<350&&e.target&&e.target.closest&&e.target.closest('#overlay,#arcade,#tour,#evhub,#passScr,#nestScr,#achScr')){e.stopPropagation();e.preventDefault()}},true);
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

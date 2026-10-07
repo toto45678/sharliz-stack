@@ -43,9 +43,9 @@ function lvUpPop(lv){if(!progress.lvRew)return;const n=progress.lvRew;progress.l
 /* ---------- XP sources ---------- */
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if(mode==='levels'&&was!=='win'&&state==='win')addXP(20+5*(lv.starsNow||0)+(isBoss()?40:0));return r}}
 if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){if(BN&&!BN.paid){addXP(10);xpDrop()}return _b.apply(this,arguments)}}
-if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over,paid=!was&&arcLeft(G.id)>0;const r=_a.apply(this,arguments);if(paid){addXP(5);xpDrop();popupToast(t('xpGain',{n:5}))}return r}}
+if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over,paid=!was&&arcLeft(G.id)>0&&G.score>0;const r=_a.apply(this,arguments);if(paid){addXP(5);xpDrop();noteToast(t('xpGain',{n:5}))}return r}}
 if(typeof evFinish==='function'){const _e=evFinish;evFinish=function(won){if(won)addXP(EVP&&EVP.i===9?40:15);return _e.apply(this,arguments)}}
-if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));if(XPQ&&document.querySelector('#card .card-body')){const Q=XPQ;XPQ=null;setTimeout(()=>xpStrip(Q),60)}return r}}
+if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));if(TRQUIET)XPQ=null;else if(XPQ&&document.querySelector('#card .card-body')){const Q=XPQ;XPQ=null;setTimeout(()=>xpStrip(Q),60)}return r}}
 /* ---------- lobby: level badge on the avatar + Pass button ---------- */
 function lobbyXP(){const pr=document.querySelector('#title .profile');if(!pr)return;let b=pr.querySelector('.av-lv');if(!b){const bar=document.createElement('span');bar.className='pf-xp';bar.innerHTML='<i class="av-lv"></i><span class="tr"><i></i></span>';pr.querySelector('.pf').appendChild(bar);b=bar.querySelector('.av-lv')}
   const L=xpLevel(progress.xp||0);b.textContent=L.lv;pr.querySelector('.pf-xp .tr i').style.width=L.into/L.need*100+'%';
@@ -65,7 +65,7 @@ function psRewHTML(R){let img,amt='',lab;if(R.c){img='ps_coins';amt='×'+R.c;lab
 function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}}
   if(R.it){const [c,id]=R.it;if(c==='hat'||c==='trail'){if(!wallet().skins.includes(id))progress.skins.push(id)}else{progress.owned[c]=progress.owned[c]||[];if(!progress.owned[c].includes(id))progress.owned[c].push(id)}}}
 function psClaim(i,prem){const P=psData();const arr=prem?P.p:P.f;if(arr.includes(i)||i>=psTierOf(P.xp)||(prem&&!P.prem))return false;arr.push(i);psGive(PS_REW[i][prem?1:0]);return true}
-function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady();
+function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady(),L0=r.querySelector('.ps-list'),y0=!scroll&&L0?L0.scrollTop:0;
   r.innerHTML=`<div class="ps-top"><button class="x-btn ps-x" aria-label="close"></button><div class="ps-title"><b></b><small></small></div><div class="coin-pill">${coinImg()}<span></span></div></div>
     <div class="ps-head"><div class="ps-star"><b>${T}</b></div><div class="ps-bar"><i style="width:${T>=PS_N?100:(P.xp%PS_XP)/PS_XP*100}%"></i><span>${T>=PS_N?'MAX':(P.xp%PS_XP)+'/'+PS_XP+' XP'}</span></div><div class="ps-next"><b>${Math.min(PS_N,T+1)}</b></div></div>
     <div class="ps-cols"><span class="pf">${t('psFree')}</span><span></span><span class="pp">${P.prem?'':'<img src="art/ps_lock.webp" alt="">'}${t('psPrem')}</span></div><div class="ps-list"></div>
@@ -75,12 +75,15 @@ function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady
   for(let i=0;i<PS_N;i++){const row=document.createElement('div'),got=i<T;row.className='ps-row'+(got?' got':'')+(i===T?' cur':'');
     const cell=(prem)=>{const R=PS_REW[i][prem?1:0],claimed=(prem?P.p:P.f).includes(i),can=got&&!claimed&&(!prem||P.prem),c=document.createElement('button');
       const first=can&&!firstCan;if(first)firstCan=c;c.className='ps-cell '+(prem?'prem':'free')+(claimed?' done':can?' can':'')+(first?' hot':'')+(prem&&!P.prem?' lock':'')+(got?'':' far');c.innerHTML=psRewHTML(R)+(claimed?'<i class="ok">✓</i>':can?`<i class="cl">${t('psClaim')}</i>`:prem&&!P.prem?'<img class="lk" src="art/ps_lock.webp" alt="">':'');
-      c.onclick=()=>{if(can&&psClaim(i,prem)){saveProgress();sfx.coin(3);vib(15);psRender(false)}else if(prem&&!P.prem)psBuy();else sfx.locked()};return c};
+      c.onclick=()=>{if(can&&psClaim(i,prem)){saveProgress();sfx.coin(3);vib(15);psRender(false)}else if(prem&&!P.prem)psBuy();else{sfx.locked();if(!got)noteToast(t('psLocked',{n:i+1}))}};return c};
     const mid=document.createElement('div');mid.className='ps-num';mid.innerHTML=`<b>${i+1}</b>`;row.appendChild(cell(false));row.appendChild(mid);row.appendChild(cell(true));L.appendChild(row)}
   const f=r.querySelector('.ps-foot');
   if(ready>1){const a=document.createElement('button');a.className='btn green ps-all';a.innerHTML='<span></span>';a.querySelector('span').textContent=t('psAll')+' ('+ready+')';a.onclick=()=>{for(let i=0;i<T;i++){psClaim(i,false);psClaim(i,true)}saveProgress();sfx.coin(4);psRender(false)};f.appendChild(a)}
   if(!P.prem){const h=document.createElement('p');h.className='ps-why';h.textContent=t('psWhy');f.appendChild(h);const b=document.createElement('button');b.className='btn primary ps-buy';b.innerHTML='<img src="art/pass_icon.webp" alt=""><span></span>';b.querySelector('span').textContent=t('psBuy',{p:IAP.products.pass.price});b.onclick=psBuy;f.appendChild(b)}
+  if(y0)L.scrollTop=y0;
   if(scroll){const can=firstCan,cur=(can&&can.parentNode)||L.querySelector('.cur')||L.lastElementChild;requestAnimationFrame(()=>{L.scrollTop=Math.max(0,cur.offsetTop-L.offsetTop-(can?12:L.clientHeight*.4))})}}
+// a plain message (no coin): hints, 'reach tier n'. Longer texts wrap and stay on screen longer
+function noteToast(txt){document.querySelectorAll('.coin-toast.note').forEach(e=>e.remove());const el=document.createElement('div');el.className='coin-toast note'+(String(txt).length>22?' long':'');el.textContent=txt;toastSlot(el);document.body.appendChild(el);setTimeout(()=>el.remove(),String(txt).length>40?3200:1800)}
 function psBuy(){IAP.buy('pass',t('psTitle')+' · '+t('psPrem')).then(ok=>{if(ok){popupToast(t('psPremOn'));psRender(false)}})}
 {const _g=IAP.grant;IAP.grant=function(sku){if(sku==='pass'){psData().prem=true;progress.purchases=progress.purchases||[];progress.purchases.push({sku,at:Date.now(),test:!IAP.live()});saveProgress();updateWalletUI();return}return _g.apply(this,arguments)}}
 // pass items: gated in My hero until earned

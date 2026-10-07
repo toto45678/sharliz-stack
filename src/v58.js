@@ -32,3 +32,9 @@ function storySync(){try{const D=sbData();D.story=D.story||[];const al=progress.
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{if(storySync())stkBadge()}catch(e){}return r}}
 /* buddies: an illustrated scene of the buddy with Sharliz (paid buddies glow) */
 {const P=STK_PAGES.find(p=>p.id==='buddy');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const id=it.id.slice(6);return Object.assign(it,{src:'art/stk_p_'+id+'.webp',img:null,card:1,rar:WPET[id]&&WPET[id].real?'h':'c'})})}}
+/* bug hunt 4: the second tap of a double-tap landed on the card/screen that had just opened (Next → bought a booster on the
+   pre-level card; Arcade → started 'Bonk' and used a coin play). Real taps on a freshly opened card are ignored for 350 ms. */
+let TAPGUARD=0;
+{const _so=showOverlay;showOverlay=function(){TAPGUARD=performance.now();return _so.apply(this,arguments)}}
+for(const f of ['openArcade','openTour','openEvent','openPass','openNest','openTrophy']){const _f=window[f];if(typeof _f==='function')window[f]=function(){TAPGUARD=performance.now();return _f.apply(this,arguments)}}
+document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD<350&&e.target&&e.target.closest&&e.target.closest('#overlay,#arcade,#tour,#evhub,#passScr,#nestScr,#achScr')){e.stopPropagation();e.preventDefault()}},true);

@@ -160,4 +160,12 @@ Bug hunt 3 Oct 7 (branch fix-bugs-3, build.py "bug hunt 3" patches + v28/v38/v40
 - Daily gift / starter offer no longer pop over the arcade/tournament/event/Pass/nest/trophy layers. Restore purchases says when the store is off; 'test mode' notes hidden in the store build; native grants non-consumables once.
 Open: a save code from the free web version (test purchases) imported into the store app unlocks paid items — needs Tzach's decision.
 
+Bug hunt 4 Oct 7 (branch fix-bugs-4; v48/v51-v54/v56-v58 + native.js + build.py "bug hunt 4" reps): Tzach hit bugs the code reviews missed ("couldn't collect Pass prizes"), so 3 testers TAPPED through every screen (Playwright touch, elementFromPoint check before each tap, HE+EN, iPhone 15 + SE). Lesson: tap-test real flows, not only read code. Fixed:
+- Pass/nest/trophy lists jumped back to the top after every Collect/Evolve (the next reward went off-screen). Locked Pass tier tap now says "Reach tier n".
+- Store app: test purchases in an imported save code (and what they gave: coins, boosters, halo, buddies, astronaut, premium Pass items) are stripped on save (native.js stripTest). Tzach approved.
+- Double-tap guard: real taps within 350 ms of a card/screen opening are ignored (v58 TAPGUARD) — Next used to buy a booster on the pre-level card, Arcade used to start Bonk. A 0-point arcade game no longer uses a coin play.
+- Tournament/Sky Tower: leaving or restarting through Pause banks best + medals quietly (runBank in v53). Checkpoint only in level mode. Tournament X was under the English title; prize row wrapped; XP/tournament result bars full width; RTL booster bar no longer covers the floor gauge.
+- Style screen: shop Effects tab opens Effects (EN tab was a second "Style"); Deals dot/lobby "!" clears; saved Looks layout; grid keeps its scroll after try-on/buy; Lashes no longer hidden behind Deals/Looks; changing slot clears the selected item (Buy bought the previous slot's hat); buddy power chips say what they do (+ baby dino); no 404 for 3D-only hats; dice tip.
+- Toasts stack instead of covering each other, long hints wrap, hints have no coin icon (noteToast). Album zoom arrows in Hebrew. Full nest says "+5 cookies instead". Hatch screen fits iPhone SE. Tournament "challenge a friend" shares https://sharliztower.com (the store app's location is localhost). Photo share title Sharliz Tower.
+
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.

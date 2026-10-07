@@ -229,6 +229,16 @@ rep("if(hearts<=0){state='over';renderBoosterBar();","if(hearts<=0){state='over'
 # ---- bug hunt 3: the pre-level card still used the old goal / hazard formulas (level 5 said 14 floors, real goal 9; level 81+ listed the classic hazards)
 rep("const hz2=HZ_ORDER.slice(0,zi+1).map(h=>t('hz_'+h)).join(' · ');","const hz2=(()=>{const L0=level;level=lvN;try{return hzList()}finally{level=L0}})().map(h=>t('hz_'+h)).join(' · ');")
 rep("t('preBossTxt',{n:4+Math.floor(zi/2)}):t('floorsN',{n:6+2*zi+2*k})","t('preBossTxt',{n:4+Math.floor(etOf(zi)/2)}):t('floorsN',{n:6+Math.round(2*etOf(zi))+lvStep(k)})")
+# ---- bug hunt 4: the photo share sheet still said the old name
+rep("await navigator.share({files:[file],title:'Sharliz Stack'});","await navigator.share({files:[file],title:'Sharliz Tower'});")
+# two reward toasts at the same moment (daily gift + sticker pack, trophy + pack) sat exactly on top of each other: stack them
+rep("function popupToast(txt){const el=document.createElement('div');el.className='coin-toast';el.innerHTML=coinImg()+txt;document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}",
+    "function toastSlot(el){const n=document.querySelectorAll('.coin-toast').length;if(n)el.style.top='calc(40% + '+Math.min(n,3)*64+'px)'}\nfunction popupToast(txt){const el=document.createElement('div');el.className='coin-toast';el.innerHTML=coinImg()+txt;toastSlot(el);document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}")
+# hats without a 2D picture (all WHATX hats) asked for art/skin_<id>.webp on every launch → 404
+rep("const SKP={};function skinPic(id){if(!id||id==='none')return null;","const SKP={};function skinPic(id){if(!id||id==='none'||(typeof WHATX!=='undefined'&&WHATX[id]))return null;")
+# the dice tip pointed at the old style screen's button (.wd-rand); v48 calls it .cs-rand
+rep("tipOnce('dice','#wardrobe .wd-rand','down',t('tipDice'),1400)}","tipOnce('dice','#wardrobe .cs-rand','down',t('tipDice'),1400)}")
+rep("if(!isBoss()&&!lv.cp&&fl>=Math.ceil(goal()/2)&&fl<goal()){lv.cp=fl;","if(mode==='levels'&&!isBoss()&&!lv.cp&&fl>=Math.ceil(goal()/2)&&fl<goal()){lv.cp=fl;")
 # ---- inject module + css
 import glob as _g
 B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT,'art','b3d_*.json')))}

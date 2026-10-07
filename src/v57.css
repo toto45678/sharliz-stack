@@ -119,6 +119,7 @@
 .za.zp{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M15 5l-7 7 7 7' fill='none' stroke='%23120d2b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 .za.zn{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 5l7 7-7 7' fill='none' stroke='%23120d2b' stroke-width='4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")}
 .za:disabled{opacity:.3}
+[dir=rtl] .za{transform:scaleX(-1)}
 .zr{position:absolute;top:4%;inset-inline-start:max(8px,calc(50% - min(33vw,140px) - 18px));padding:6px 14px;background:#6b2fd6;border:3px solid #120d2b;border-radius:12px;font:1.1rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;rotate:-10deg;box-shadow:0 3px 0 #120d2b;z-index:2}
 .z-h .zr{background:linear-gradient(135deg,#ff8ad8,#7ee8ff,#fff27a,#b58cff);color:#2a1a66}.z-c .zr{background:#4a8af0}
 .zno{font:1.6rem/1 "Lilita One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill;direction:ltr}

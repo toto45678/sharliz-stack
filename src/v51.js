@@ -46,7 +46,7 @@ function arcBar(G){const r=G.r,s=Math.ceil(G.t);r.querySelector('.arc-score b').
 function arcAdd(G,n,x,y,cls){G.score=Math.max(0,G.score+n);if(x!==undefined){const d=document.createElement('div');d.className='arc-fx '+(cls||(n>=0?'pos':'neg'));d.textContent=(n>0?'+':'')+n;d.style.left=x+'px';d.style.top=y+'px';G.stage.appendChild(d);setTimeout(()=>d.remove(),800)}
   if(n>0){const sc=G.r.querySelector('.arc-score');sc.classList.remove('bump');void sc.offsetWidth;sc.classList.add('bump')}}
 function arcEnd(G){if(G.over)return;G.over=true;G.run=false;if(G.D.end)G.D.end(G);
-  const a=arcData(),id=G.id,paid=arcLeft(id)>0,coins=paid?Math.min(ARC_MAX,G.D.coins(G.score)):0,nb=G.score>(a.best[id]||0)&&G.score>0;
+  const a=arcData(),id=G.id,paid=arcLeft(id)>0&&G.score>0,coins=paid?Math.min(ARC_MAX,G.D.coins(G.score)):0,nb=G.score>(a.best[id]||0)&&G.score>0;
   if(paid)a.plays[id]=(a.plays[id]||0)+1;if(nb)a.best[id]=G.score;progress.coins+=coins;saveProgress();updateWalletUI();
   sfx.flourish(nb?3:1);
   setTimeout(()=>{if(G.dead)return;const p=document.createElement('div');p.className='arc-end';

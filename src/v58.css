@@ -22,3 +22,9 @@
 .sb-slot.card.got.r-h .stk img{border-radius:11px}
 @keyframes sbRing{0%{background-position:0% 50%}100%{background-position:300% 50%}}
 .sb-slot.card.got:not(.r-h) .stk img{box-shadow:0 3px 5px rgba(35,24,60,.18)}
+/* bug hunt 4 */
+#tour .x-btn{position:relative;z-index:2}
+.tr-title b{font-size:clamp(1.2rem,5.6vw,2rem);white-space:normal;text-align:center}
+.tr-rws{grid-template-columns:repeat(3,minmax(0,1fr))}.tr-rw{flex-wrap:wrap;row-gap:3px}
+[dir=rtl] #boosterBar{left:auto;right:8px}
+.xp-strip,.tr-res-bar{align-self:stretch}
