@@ -1,0 +1,123 @@
+/* ===== v56: eggs nest, evolution, trophy room ===== */
+#nestScr,#achScr{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;overflow:hidden;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+#nestScr{background:radial-gradient(120% 60% at 50% 18%,#7d5ad8 0%,#4b2a9a 45%,#24124f 100%)}
+#achScr{background:radial-gradient(120% 60% at 50% 0%,#6a4bd0 0%,#3a2290 50%,#1d1050 100%)}
+#nestScr[hidden],#achScr[hidden]{display:none}
+#nestScr .x-btn,#achScr .x-btn{position:static;width:44px;height:44px;flex:none}
+.ns-ck img{width:26px;height:26px;object-fit:contain}
+.ps-title small img{width:18px;height:18px;vertical-align:-3px}
+.ns-scroll{flex:1;min-height:0;overflow-y:auto;padding:0 14px 18px}
+.ns-hero{position:relative;display:flex;justify-content:center;margin-top:4px;height:230px}
+.ns-stand{position:relative;width:220px;height:230px}
+.ns-stand::after{content:'';position:absolute;left:10px;right:10px;bottom:4px;height:38px;border-radius:50%;background:linear-gradient(180deg,#8c5ad8,#4d2a96);border:3.5px solid #120d2b;box-shadow:0 5px 0 #120d2b;z-index:0}
+.ns-nimg{position:absolute;left:50%;bottom:12px;width:200px;translate:-50% 0;z-index:2;filter:drop-shadow(0 4px 0 rgba(10,8,40,.45))}
+.ns-egg{position:absolute;left:50%;bottom:92px;width:100px;translate:-50% 0;z-index:1;filter:drop-shadow(0 4px 0 rgba(10,8,40,.35));animation:nsWob 2.6s ease-in-out infinite;transform-origin:50% 90%}
+.ns-stand.ready .ns-egg{animation:nsShake .5s ease-in-out infinite}
+.ns-stand.ready::before{content:'';position:absolute;left:50%;top:40%;width:260px;height:260px;translate:-50% -50%;background:repeating-conic-gradient(rgba(255,226,77,.35) 0 10deg,transparent 10deg 20deg);border-radius:50%;animation:evSpin 8s linear infinite;-webkit-mask:radial-gradient(circle,#000 20%,transparent 70%);mask:radial-gradient(circle,#000 20%,transparent 70%);z-index:0}
+@keyframes nsWob{0%,100%{rotate:-3deg}50%{rotate:3deg}}
+@keyframes nsShake{0%,100%{rotate:0deg}25%{rotate:-8deg}75%{rotate:8deg}}
+.ns-sign{position:absolute;inset-inline-end:2px;top:22px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 12px 10px;border-radius:12px;border:3.5px solid #120d2b;background:linear-gradient(180deg,#e0a35f,#a8642b);box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 4px 0 #120d2b;rotate:6deg;z-index:3}
+.ns-sign b{font:1.5rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill}
+.ns-sign small{font-weight:800;font-size:.75rem;color:#3a1d00}
+.ns-sign .bar{display:block;width:62px;height:8px;border-radius:5px;background:#3a1d00;overflow:hidden}.ns-sign .bar i{display:block;height:100%;background:#7ef05a}
+.ns-act{display:flex;justify-content:center;margin:6px 0 4px}
+.ns-act:empty{display:none}
+.ns-hatch{width:min(80%,280px);font-size:1.4rem;animation:playPulse 1.2s ease-in-out infinite}
+.ns-empty{margin:0;text-align:center;font-weight:800;font-size:.95rem;opacity:.9}
+.ns-q,.ns-grid{margin-top:12px;padding:10px;border-radius:20px;border:3px solid #120d2b;background:rgba(18,13,43,.45)}
+.ns-q h4,.ns-h{margin:-24px 0 6px;text-align:center}
+.ns-q h4 span,.ns-h span{display:inline-block;padding:3px 16px;border-radius:999px;background:linear-gradient(180deg,#6b4ee6,#3f2aa6);border:3px solid #120d2b;font:1.05rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.ns-h{margin:20px 0 -16px;position:relative;z-index:1}
+.ns-q{margin-top:22px}
+.ns-eggs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.ns-et{display:flex;flex-direction:column;align-items:center;gap:2px;width:78px;padding:6px 0 4px;border-radius:16px;border:3px solid #120d2b;background:linear-gradient(180deg,#4a33a8,#2a1a6a)}
+.ns-et img{width:50px;height:58px;object-fit:contain}
+.ns-et small{font-weight:800;font-size:.72rem}
+.ns-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding-top:24px}
+.ns-bud{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px 6px;border-radius:16px;border:3px solid #120d2b;background:linear-gradient(180deg,#6a52e0,#3a26a0);box-shadow:inset 0 3px 0 rgba(255,255,255,.2),0 3px 0 #120d2b}
+.ns-bud .th{width:70px;height:66px;display:grid;place-items:center}
+.ns-bud .th img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.4))}
+.ns-bud b{font:.85rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ns-bud .sts,.egg-pop .sts{display:flex;gap:1px;font-style:normal}
+.ns-bud .sts em,.egg-pop .sts em{font-style:normal;font-size:.95rem;color:#2a1d66;-webkit-text-stroke:2px #120d2b;paint-order:stroke fill}
+.ns-bud .sts em.on,.egg-pop .sts em.on{color:#ffd23f}
+.ns-bud.off .th img{filter:brightness(0) opacity(.45)}
+.ns-bud.off{background:linear-gradient(180deg,#3a2b80,#24185a)}
+.ns-bud.super{background:linear-gradient(180deg,#ffd76b,#e89a00);box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 3px 0 #120d2b,0 0 16px rgba(255,200,40,.6)}
+.ns-evo{display:flex;flex-direction:column;align-items:center;gap:0;width:100%;margin-top:3px;padding:3px 4px 4px;border-radius:12px;border:2.5px solid #120d2b;background:linear-gradient(180deg,#8a8aa8,#5a5a78);color:#fff}
+.ns-evo.can{background:linear-gradient(180deg,#7ef05a,#2fa512)}
+.ns-evo span{font:.8rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:2.5px #120d2b;paint-order:stroke fill}
+.ns-evo em{display:inline-flex;align-items:center;gap:2px;font-style:normal;font-weight:900;font-size:.8rem;direction:ltr}
+.ns-evo em img{width:16px;height:16px}
+.ns-evo.nope{animation:nsNope .35s}
+@keyframes nsNope{25%{translate:-4px 0}75%{translate:4px 0}}
+.ns-max,.ns-lock{margin-top:3px;padding:2px 8px;border-radius:999px;background:rgba(18,13,43,.6);font-weight:800;font-size:.72rem;white-space:nowrap}
+.ns-max{background:#ffb000;color:#3a2400}
+/* pop-ups: egg found, hatch, evolve */
+.egg-pop{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(18,13,43,.62);animation:arcFade .25s}
+.egg-c{position:relative;width:min(84vw,300px);padding:22px 18px 18px;border-radius:26px;border:4px solid #120d2b;background:linear-gradient(180deg,#9a6bff,#5b2bd6);box-shadow:inset 0 4px 0 rgba(255,255,255,.3),0 8px 0 #120d2b;display:flex;flex-direction:column;align-items:center;gap:8px;animation:arcIn .5s cubic-bezier(.3,1.6,.5,1)}
+.egg-c h3,.egg-pop.hatch h3{margin:0;font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-align:center}
+.egg-c p,.egg-pop.hatch p{margin:0;font-weight:800;text-align:center}
+.egg-c .btn{width:100%}
+.egg-pop .rays{position:absolute;left:50%;top:30%;width:340px;height:340px;translate:-50% -50%;background:repeating-conic-gradient(rgba(255,226,77,.35) 0 10deg,transparent 10deg 20deg);border-radius:50%;animation:evSpin 8s linear infinite;-webkit-mask:radial-gradient(circle,#000 25%,transparent 70%);mask:radial-gradient(circle,#000 25%,transparent 70%);pointer-events:none}
+.egg-big{width:120px;height:140px;object-fit:contain;margin-top:-70px;position:relative;filter:drop-shadow(0 6px 0 rgba(10,8,40,.4))}
+.pop-bud{position:relative;width:150px;height:140px;object-fit:contain;margin-top:-80px;filter:drop-shadow(0 6px 0 rgba(10,8,40,.4))}
+.egg-strip{display:flex;align-items:center;gap:10px;margin:10px 4px 2px;padding:6px 12px 6px 6px;border-radius:16px;border:3px solid #7ef05a;background:linear-gradient(180deg,#2e6b1e,#1c4a12);box-shadow:0 3px 0 #120d2b;animation:arcIn .5s cubic-bezier(.3,1.6,.5,1)}
+.egg-strip img{width:42px;height:48px;object-fit:contain;margin-block:-8px;animation:nsWob 1.6s ease-in-out infinite}
+.egg-strip span{display:flex;flex-direction:column;line-height:1.15;text-align:start}
+.egg-strip b{font:1.05rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#b6f07a;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.egg-strip small{font-weight:800;font-size:.75rem}
+/* hatch moment: full screen */
+.egg-pop.hatch{background:radial-gradient(90% 60% at 50% 42%,#ffe9a6 0%,#b77bff 35%,#3a1d8a 80%)}
+.egg-pop.hatch .hz{position:relative;width:100%;max-width:420px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px}
+.egg-pop.hatch h3{font-size:2.8rem;-webkit-text-stroke:8px #120d2b;opacity:0;transform:scale(.4);transition:opacity .3s,transform .5s cubic-bezier(.3,1.6,.5,1);min-height:1em}
+.egg-pop.hatch.open h3{opacity:1;transform:none}
+.egg-pop.hatch .rays{top:48%;width:520px;height:520px;opacity:0;transition:opacity .4s}
+.egg-pop.hatch.open .rays{opacity:1}
+.egg-pop.hatch .hx{position:relative;width:240px;height:300px;display:grid;place-items:end center;z-index:2}
+.egg-pop.hatch .hx .egg-big{margin:0;width:160px;height:190px}
+.egg-big.shake{animation:nsShake .22s ease-in-out infinite}
+.egg-pop.hatch .hx .pop-bud{position:absolute;left:50%;bottom:105px;translate:-50% 0;margin:0;width:190px;height:190px;animation:hBud .7s cubic-bezier(.3,1.6,.5,1) both;z-index:1}
+.egg-pop.hatch .hx .pop-bud.ck{width:120px;height:120px;bottom:110px}
+.egg-pop.hatch .sh-b{position:absolute;left:50%;bottom:-4px;width:170px;translate:-50% 0;z-index:2}
+.egg-pop.hatch .sh-t{position:absolute;left:50%;bottom:110px;width:120px;translate:-50% 0;z-index:3;animation:hTop .9s ease-out forwards}
+@keyframes hBud{0%{transform:translateY(60px) scale(.3);opacity:0}100%{transform:none;opacity:1}}
+@keyframes hTop{0%{transform:none}100%{transform:translate(110px,-160px) rotate(70deg);opacity:0}}
+.egg-pop.hatch .hnest{width:250px;margin-top:-70px;position:relative;z-index:3;filter:drop-shadow(0 6px 0 rgba(10,8,40,.4))}
+.egg-pop.hatch p{font:1.3rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill;min-height:1.3em}
+.egg-pop.hatch .hb{display:flex;flex-direction:column;gap:8px;width:min(86%,320px)}
+.egg-pop.hatch .hb .btn{width:100%}.egg-pop.hatch .hb .btn.primary{font-size:1.5rem}
+.egg-c.evo .pop-bud{margin-top:-90px}
+/* trophy room */
+.ac-list{flex:1;min-height:0;overflow-y:auto;padding:6px 14px 18px;display:flex;flex-direction:column;gap:18px}
+.ac-row{position:relative;display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:16px;border:3px solid #120d2b;background:linear-gradient(180deg,#e9e0ff,#c7b8f5);color:#2a1a66;box-shadow:0 4px 0 #120d2b}
+.ac-row::after{content:'';position:absolute;left:-8px;right:-8px;bottom:-15px;height:12px;border-radius:4px;background:linear-gradient(180deg,#b9773a,#7a4718);border:2.5px solid #120d2b;z-index:-1}
+.ac-row{z-index:0}
+.ac-ic{flex:none;width:46px;height:46px;display:grid;place-items:center}
+.ac-ic img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 2px 0 rgba(10,8,40,.35))}
+.ac-mid{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.ac-mid b{font:1rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#2a1a66;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ac-bar{position:relative;height:16px;border-radius:999px;border:2.5px solid #120d2b;background:#3a2a86;overflow:hidden}
+.ac-bar i{position:absolute;inset-block:0;left:0;background:linear-gradient(180deg,#ffe66b,#f3a400)}
+[dir=rtl] .ac-bar i{left:auto;right:0}
+.ac-bar span{position:absolute;inset:0;display:grid;place-items:center;font:700 .72rem/1 var(--bf,Rubik),system-ui,sans-serif;color:#fff;text-shadow:0 1px 0 #120d2b}
+.ac-cups{flex:none;display:flex;gap:2px}
+.ac-cups img{width:26px;height:30px;object-fit:contain;filter:brightness(0) opacity(.28)}
+.ac-cups img.on{filter:drop-shadow(0 2px 0 rgba(10,8,40,.4))}
+.ac-row.done{background:linear-gradient(180deg,#fff2b0,#ffd04a)}
+.ac-claim{flex:none;display:flex;align-items:center;gap:3px;padding:3px 10px 3px 4px;border-radius:999px;border:2.5px solid #120d2b;background:linear-gradient(180deg,#7ef05a,#2fa512);color:#fff;box-shadow:0 3px 0 #120d2b}
+.ac-claim img{width:22px;height:24px;object-fit:contain}
+.ac-claim span{font:.9rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.ac-row.hot .ac-claim{animation:evPr 1.3s ease-in-out infinite}
+.ac-row.can{border-color:#2fa512;box-shadow:0 0 0 2px #7ef05a,0 4px 0 #120d2b}
+/* lobby: nest icon + profile dot */
+.lt-mini.nest .lt-ic{background:radial-gradient(circle at 50% 35%,#ffe1a8,#c98a3d 72%)}
+.lt-mini.nest .lt-ic>img{width:78%;height:88%}
+.lt-mini.nest .ring{position:absolute;inset:-6px;width:calc(100% + 12px);height:calc(100% + 12px);rotate:-90deg;pointer-events:none}
+.lt-mini.nest .ring circle{fill:none;stroke:rgba(18,13,43,.55);stroke-width:3}
+.lt-mini.nest .ring circle.p{stroke:#7ef05a;stroke-dasharray:100.5;stroke-dashoffset:100.5;stroke-linecap:round;transition:stroke-dashoffset .6s}
+.lt-mini.nest.ready .lt-ic{animation:nsShake .5s ease-in-out infinite}
+.profile .ac-dot{top:-10px;right:-10px;left:auto}
+[dir=rtl] .profile .ac-dot{right:auto;left:-10px}
+.ac-row.can .ac-cups{display:none}
+.ac-cups img{width:23px;height:27px}
