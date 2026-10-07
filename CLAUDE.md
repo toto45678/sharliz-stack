@@ -178,4 +178,6 @@ Bug hunt 4 Oct 7 (branch fix-bugs-4; v48/v51-v54/v56-v58 + native.js + build.py 
 
 Fix Oct 7 (branch fix-nest-grid, end of v56.css): nest 'My buddies' grid ran off both sides of the iPhone screen in English (Tzach's screenshot). A long nowrap lock label ('Golden egg only' / v61 'Hatches from an egg') set the 3rd column's min width; columns are now minmax(0,1fr), labels wrap, .ns-scroll never scrolls sideways. Checked he/en/de/ru at 393x852 + 375x667.
 
+Nightly check (Tzach, Oct 7): the bug-fix thread is never closed; a Routine wakes it every night at 00:59 Israel time to check that everything is connected and there are no bugs (checklist + screen sweep: /mnt/project-files/testing/nightly/README.md, sweep.py = 18 screens × languages × iPhone 15/SE: JS errors, 404s, sideways lists, cut-off buttons, orphan title characters). First run Oct 8 (branch fix-nightly-2026-10-08, end of v58.js/v58.css): Settings save-code 'Load' button was cut off by the card in German/Russian (row now wraps); Japanese/Chinese/Korean big titles broke mid-word ('マイヒーロ / ー', lobby 'プレ / イ'): a MutationObserver shrinks a wrapping CJK title step by step to one line (≥60%, else wraps as before).
+
 Backlog: Tzach's own illustrations for the album "specials" page + how to earn them, check performance on iPhone.
