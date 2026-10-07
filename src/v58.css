@@ -8,7 +8,9 @@
 .sb-slot.card.got.r-h{filter:drop-shadow(0 0 7px rgba(255,214,110,.95)) drop-shadow(0 0 2px rgba(255,255,255,.9))}
 .sb-slot.card.got.r-h .stk::before{content:'';position:absolute;inset:4%;border-radius:9px;background:linear-gradient(135deg,rgba(255,138,216,.0),rgba(126,232,255,.28),rgba(255,242,122,.0) 60%,rgba(181,140,255,.28));background-size:240% 240%;animation:sbHolo 3s linear infinite;mix-blend-mode:screen;z-index:1;pointer-events:none}
 .sb-slot.card:not(.got) .stk{border-radius:10px;background:rgba(120,90,200,.08)}
-.sb-slot.card:not(.got) .stk img{filter:brightness(0) opacity(.18);border-radius:10px}
+.sb-slot.card:not(.got) .stk{overflow:hidden;position:relative}
+.sb-slot.card:not(.got) .stk img{filter:grayscale(1) blur(4px) opacity(.32);border-radius:10px;transform:scale(1.04)}
+.sb-slot.card:not(.got) .stk::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;font:2.4rem/1 "Lilita One",system-ui,sans-serif;color:rgba(70,45,150,.45)}
 .sb-slot.card.got .stk img[src^="data:"]{border:3px solid #fff;box-sizing:border-box;border-radius:12px;object-fit:cover}
 .zcard.card{aspect-ratio:3/4;background:none;border:none;box-shadow:none;overflow:visible}
 .zcard.card .foil{display:none}
