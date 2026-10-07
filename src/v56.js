@@ -55,8 +55,8 @@ if(typeof PS_REW!=='undefined'){[4,14,24].forEach(i=>{PS_REW[i][0]={egg:'c'}});[
   const _rh=psRewHTML;psRewHTML=function(R){if(!R.egg)return _rh.apply(this,arguments);return `<span class="rw it"><img src="art/egg_${R.egg}.webp" alt=""></span><small class="lab">${t('egg_'+R.egg)}</small>`};
   const _pg=psGive;psGive=function(R){if(R.egg){eggGive(R.egg);return}return _pg.apply(this,arguments)}}
 // "you found an egg": a strip on the open result card, or a small pop-up in the lobby
-function eggNotify(){if(!EGGQ.length)return;const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
-  if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){while(EGGQ.length){const tp=EGGQ.shift(),d=document.createElement('div');d.className='egg-strip';d.innerHTML=`<img src="art/egg_${tp}.webp" alt=""><span><b></b><small></small></span>`;
+function eggNotify(){if(!EGGQ.length)return;if(document.querySelector('.lvup')){setTimeout(eggNotify,500);return}const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
+  if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){while(EGGQ.length){const tp=EGGQ.shift(),d=document.createElement('div');d.className='egg-strip pulse';d.innerHTML=`<img src="art/egg_${tp}.webp" alt=""><span><b></b><small></small></span>`;
       d.querySelector('b').textContent=t('eggNew');d.querySelector('small').textContent=t('egg_'+tp)+' · '+t('eggNewSub',{n:EGG[tp].need});body.appendChild(d)}sfx.flourish(2)}
   else if(state==='title'&&!document.querySelector('.egg-pop'))eggPop()}
 {const _s=showOverlay;showOverlay=function(){const r=_s.apply(this,arguments);if(EGGQ.length)setTimeout(eggNotify,140);return r}}
@@ -112,7 +112,8 @@ function hatchShow(tp,got,dupId){const m=document.createElement('div');m.classNa
     const hb=m.querySelector('.hb');const ok=document.createElement('button');ok.className='btn primary';ok.innerHTML='<span></span>';ok.querySelector('span').textContent=got?t('hatchWear'):t('hatchOk');
     ok.onclick=()=>{sfx.click();if(got){lookNow().pet=got;saveProgress();petRefresh(got)}m.remove();nestRender()};hb.appendChild(ok);
     if(got){const no=document.createElement('button');no.className='btn';no.innerHTML='<span></span>';no.querySelector('span').textContent=t('hatchOk');no.onclick=()=>{sfx.click();m.remove();nestRender()};hb.appendChild(no)}},1400)}
-function evoPop(id){const st=budSt(id),m=document.createElement('div');m.className='egg-pop';m.innerHTML=`<div class="egg-c evo"><div class="rays"></div><img class="pop-bud" alt=""><i class="sts">${'<em class="on">★</em>'.repeat(st)}</i><h3></h3><p></p><button class="btn primary"><span></span></button></div>`;
+function evoPop(id){const st=budSt(id),m=document.createElement('div');m.className='egg-pop';const stars=n=>`<i class="sts">${[1,2,3].map(k=>`<em class="${k<=n?'on':''}">★</em>`).join('')}</i>`;
+  m.innerHTML=`<div class="egg-c evo"><div class="rays"></div><img class="pop-bud" alt=""><div class="evo-ba">${stars(st-1)}<span class="ar">${document.documentElement.dir==='rtl'?'←':'→'}</span>${stars(st)}</div><h3></h3><p></p><button class="btn primary"><span></span></button></div>`;
   try{m.querySelector('.pop-bud').src=wThumb('pet',id)}catch(e){}m.querySelector('h3').textContent=t('evoTitle',{b:wName('pet',id)});m.querySelector('p').textContent=t('evoSub',{n:st,p:5*(st-1)});m.querySelector('.btn span').textContent=t('hatchOk');
   m.querySelector('.btn').onclick=()=>{sfx.click();m.remove();nestRender()};document.body.appendChild(m)}
 /* ---------- trophy room ---------- */
@@ -137,11 +138,14 @@ function achRender(){const r=ACEL;r.innerHTML=`<div class="ps-top"><button class
   r.querySelector('.ps-title b').textContent=t('achTitle');const tot=ACH.reduce((a,A)=>a+achGot(A.id),0);r.querySelector('.ps-title small').innerHTML=`<img src="art/cup_g.webp" alt=""> ${tot}/${ACH.length*3}`;r.querySelector('.coin-pill span').textContent=progress.coins;
   const L=r.querySelector('.ac-list');let first=true;
   ACH.forEach(A=>{const g=achGot(A.id),v=A.v(),done=g>=3,goal=done?A.T[2]:A.T[g],can=!done&&v>=goal,row=document.createElement('div');row.className='ac-row'+(can?' can':'')+(done?' done':'')+(can&&first?' hot':'');if(can)first=false;
-    row.innerHTML=`<span class="ac-ic"><img src="art/${A.ic}.webp" alt=""></span><div class="ac-mid"><b></b><div class="ac-bar"><i style="width:${Math.min(1,v/goal)*100}%"></i><span></span></div></div><div class="ac-cups">${CUP.map((c,i)=>`<img class="${i<g?'on':''}" src="art/cup_${c}.webp" alt="">`).join('')}</div>`;
+    row.innerHTML=`<span class="ac-ic"><img src="art/${A.ic}.webp" alt=""></span><div class="ac-mid"><b></b><div class="ac-ln"><div class="ac-bar"><i style="width:${Math.min(1,v/goal)*100}%"></i><span></span></div></div></div><div class="ac-cups">${CUP.map((c,i)=>`<img class="${i<g?'on':i===g?'next':''}" src="art/cup_${c}.webp" alt="">`).join('')}</div>`;
     row.querySelector('b').textContent=t('ach_'+A.id);row.querySelector('.ac-bar span').textContent=done?t('achDone'):t('achNext',{a:Math.min(v,goal),b:goal});
     if(can){const b=document.createElement('button');b.className='ac-claim';b.innerHTML=`<img src="art/cup_${CUP[g]}.webp" alt=""><span></span>`;b.querySelector('span').textContent=t('achClaim');
-      b.onclick=()=>{progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;saveProgress();sfx.coin(4);vib(15);addXP(x);XPQ=null;popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};row.appendChild(b)}
-    L.appendChild(row)})}
+      b.onclick=()=>{achClaim(A,g);saveProgress();sfx.coin(4);vib(15);achRender()};row.querySelector('.ac-ln').appendChild(b)}
+    L.appendChild(row)});
+  const n=achReady();if(n>1){const f=document.createElement('div');f.className='ac-foot';const b=document.createElement('button');b.className='btn green';b.innerHTML='<span></span>';b.querySelector('span').textContent=t('psAll')+' ('+n+')';
+    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();sfx.coin(5);popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
+function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;popupToast('+'+c+' 🪙  +'+x+' XP')}return [c,x]}
 // profile pill → trophy room, with a red dot when a cup is waiting
 {const pr=document.querySelector('#title .profile');if(pr){pr.style.cursor='pointer';pr.addEventListener('click',()=>openTrophy());const d=document.createElement('i');d.className='badge ac-dot';d.hidden=true;d.textContent='!';pr.appendChild(d)}}
 /* ---------- lobby: nest icon in the mini column ---------- */
