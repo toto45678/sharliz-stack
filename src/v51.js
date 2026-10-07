@@ -93,7 +93,7 @@ ARCG.mem={dur:60,star:1,how:'arcHowMem',hint:'gd_mem',coins:s=>Math.round(s*.5),
       b.onclick=()=>{if(!G.run||G.lock||b.classList.contains('up'))return;b.classList.add('up');if(sfx.ok())tone({f:640,d:.05,type:'triangle',v:.04});G.open.push(b);
         if(G.open.length===2){G.moves++;const [x,y]=G.open;G.open=[];
           if(x.dataset.k===y.dataset.k){x.classList.add('ok');y.classList.add('ok');G.pairs++;const r=y.getBoundingClientRect(),s=G.stage.getBoundingClientRect();arcAdd(G,10,r.left-s.left+r.width/2,r.top-s.top);sfx.perfect(Math.min(4,1+G.pairs%4));
-            if(G.pairs===8){const bonus=Math.ceil(G.t)*2;setTimeout(()=>{arcAdd(G,bonus,s.width/2,s.height*.4,'gem');arcEnd(G)},500)}}
+            if(G.pairs===8){const bonus=Math.ceil(G.t)*2;G.run=false;setTimeout(()=>{arcAdd(G,bonus,s.width/2,s.height*.4,'gem');arcEnd(G)},500)}}
           else{G.lock=true;x.classList.add('no');y.classList.add('no');setTimeout(()=>{x.classList.remove('up','no');y.classList.remove('up','no');G.lock=false},750)}}};grid.appendChild(b)})},
   tick(G){G.sub={ic:'👆',txt:t('arcMoves',{n:G.moves}),on:true}}};
 /* ---------- game 3: bonk the monster (DOM) ---------- */

@@ -8,7 +8,7 @@ ICONS.chest=IMGTAG('bn_chest_gold','ico');
 const BN_TIME=30,BN_CH=[{f:8,k:'bronze',c:50,b:0},{f:16,k:'silver',c:100,b:1},{f:24,k:'gold',c:200,b:2}];
 let BN=null;
 const bnZi=()=>Math.max(0,ZONES.findIndex(z=>z.sid==='clouds'));
-const bnSpeed=()=>(1.5+Math.min(tower.length-1,24)*.03)*(boost.slow>0?.6:1)*(fever>0?.8:1)*easyK();
+const bnSpeed=()=>(1.5+Math.min(tower.length-1,24)*.03)*(boost.slow>0?.6:1)*(fever>0?.8:1)*easyK()*hatSpd();
 // the golden button on the boss win card
 function bnAct(){if(mode!=='levels'||!isBoss()||level>=TOTAL)return[];const from=level;document.documentElement.style.setProperty('--bn-new',JSON.stringify(t('bnNew')));
   return[{label:t('bnBtn'),icon:'chest',primary:true,color:'bonus',fn:()=>go(()=>startBonus(from))}]}

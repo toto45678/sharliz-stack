@@ -16,7 +16,7 @@ function gearSlow(){const L=lookNow(),h=progress.skin||'none',own=Object.assign(
   return Math.max(GEAR_SLOW_MIN,Math.pow(GEAR_SLOW,poweredCount(own,hatNow()?h:null)))}
 const petPerk=()=>mode!=='duo'&&typeof PERKS!=='undefined'&&wOwned('pet',petNow())?PERKS[petNow()]:null;
 {const _hk=hatK;hatK=function(k,d=1){let v=_hk(k,d);if(mode==='duo')return v;const pk=petPerk(),C=pk&&PET_COST[pk];
-  if(k==='hearts'){if(pk==='heart')v+=1;if(astroOn()&&level>1)v-=1;return Math.min(FAIR_MAX_HEARTS,v)}
+  if(k==='hearts'){if(pk==='heart')v+=1;if(astroOn()&&level>1&&!astroSkip)v-=1;return Math.min(FAIR_MAX_HEARTS,v)}
   if(C&&C[k]!==undefined)v*=C[k];
   if(k==='spd')v*=gearSlow();
   return v}}

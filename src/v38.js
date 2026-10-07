@@ -22,7 +22,9 @@ function openDailyGift(){showOverlay(()=>{const s0=dlState();return {title:t('dl
   actions:s0.claimed?[{label:t('close'),primary:true,fn:hideOverlay}]:[{label:t('dlClaim'),primary:true,fn:()=>{dlClaim();rerenderOverlay();setTimeout(()=>{if(document.querySelector('.dl-grid'))hideOverlay()},1300)}}]}},true)}
 // show it by itself once per day, the first time the lobby is idle (not on the very first launch, before any level)
 let dlShownOn=null;
+// full-screen layers that sit over the lobby (arcade, tournament, event hub, pass, nest, trophies): no surprise pop-ups on top of them
+function lobbyLayerOpen(){return ['arcade','tour','evhub','passScr','nestScr','achScr'].some(id=>{const e=document.getElementById(id);return e&&!e.hidden})}
 function dlMaybe(){const td=dlDate(0);if(dlShownOn===td||dlState().claimed||progress.unlocked<2)return;
-  setTimeout(()=>{if(dlShownOn===td||state!=='title'||W3.on||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;dlShownOn=td;openDailyGift()},700)}
+  setTimeout(()=>{if(dlShownOn===td||state!=='title'||W3.on||lobbyLayerOpen()||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;dlShownOn=td;openDailyGift()},700)}
 {const _ul=updateLobby;updateLobby=function(){_ul();dlMaybe()}}
 dlMaybe();   // modules load after the boot toTitle(), so check once now too

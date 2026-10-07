@@ -49,7 +49,7 @@ function starterCard(onBuy){const P=IAP.products.starter,d=document.createElemen
 {const _sb=shopBody;shopBody=function(card){_sb(card);if(shopTab!=='coins'||starterOwned())return;const list=card.querySelector('.shop-list.packs');if(list)list.prepend(starterCard(()=>rerenderOverlay&&rerenderOverlay()))}}
 
 function openStarter(){sfx.click();showOverlay(()=>({title:t('stTitle'),extra:card=>{(card.closest('.card')||card).classList.add('st-card');
-    if(starterOwned())return;card.appendChild(starterCard(()=>{hideOverlay();if(W3.on)renderWardrobe()}));const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');card.appendChild(n)},
+    if(starterOwned())return;card.appendChild(starterCard(()=>{hideOverlay();if(W3.on)renderWardrobe()}));const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');if(!IAP.live())card.appendChild(n)},
   actions:[{label:t(starterOwned()?'close':'stLater'),fn:hideOverlay}]}),true)}
 
 // lobby: a glowing "offer" button under Missions, there until the pack is bought
@@ -61,7 +61,7 @@ function stBtnSync(){stBtn.hidden=starterOwned()||progress.unlocked<2;stBtn.quer
 let stWon=false;
 {const _w=win;win=function(){stWon=true;return _w.apply(this,arguments)}}
 function stMaybe(){if(!stWon||progress.stOffer||starterOwned()||progress.unlocked<6||(typeof dlState==='function'&&!dlState().claimed))return;
-  setTimeout(()=>{if(progress.stOffer||state!=='title'||W3.on||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;
+  setTimeout(()=>{if(progress.stOffer||state!=='title'||W3.on||lobbyLayerOpen()||!document.getElementById('overlay').hidden||document.getElementById('title').hidden)return;
     progress.stOffer=Date.now();saveProgress();openStarter()},1200)}
 {const _ul=updateLobby;updateLobby=function(){_ul();stBtnSync();stMaybe()}}
 {const _g2=IAP.grant;IAP.grant=function(sku){_g2(sku);stBtnSync()}}
