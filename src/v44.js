@@ -105,7 +105,7 @@ function drawPortal(x,y,t,a=1){ctx.save();ctx.globalAlpha=a;ctx.translate(x,y);c
 function drawFunnel(x,y0,y1,t){ctx.save();const h=y1-y0;for(let i=0;i<12;i++){const k=i/11,yy=y0+k*h,w=S*(.25+ (1-k)*1.6),wob=Math.sin(t*6+i)*S*.25*(1-k);
   ctx.strokeStyle=`rgba(${190-i*4},${195-i*4},${210-i*4},${.75-k*.3})`;ctx.lineWidth=5;ctx.beginPath();ctx.ellipse(x+wob,yy,w,w*.22,0,0,7);ctx.stroke()}ctx.restore()}
 function drawNewspaper(x,y,w,h,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);ctx.beginPath();ctx.rect(-w/2,-h/2,w,h);outlineFill('#f4efe2',3);
-  ctx.fillStyle='#1d1b22';ctx.font=`${Math.round(h*.16)}px "Lilita One","Secular One",system-ui,sans-serif`;ctx.textAlign='center';ctx.fillText(lang==='he'?'חדשות הסערה':'STORM NEWS',0,-h*.28);
+  ctx.fillStyle='#1d1b22';ctx.font=`${Math.round(h*.16)}px "Lilita One","Secular One",system-ui,sans-serif`;ctx.textAlign='center';ctx.fillText(lang==='he'?'חדשות הסערה':T_('STORM NEWS'),0,-h*.28);
   ctx.fillStyle='#b9b2a3';for(let i=0;i<6;i++){ctx.fillRect(-w*.42,-h*.12+i*h*.1,w*(i%3===2?.5:.84),h*.035)}ctx.fillStyle='#9ec5e8';ctx.fillRect(w*.12,-h*.12,w*.3,h*.3);ctx.restore()}
 function drawCandy(x,y,c,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);const r=S*.17;ctx.beginPath();ctx.arc(0,0,r,0,7);outlineFill(c,2);
   ctx.beginPath();ctx.moveTo(r,0);ctx.lineTo(r*1.8,-r*.6);ctx.lineTo(r*1.8,r*.6);ctx.closePath();outlineFill(c,2);ctx.beginPath();ctx.moveTo(-r,0);ctx.lineTo(-r*1.8,-r*.6);ctx.lineTo(-r*1.8,r*.6);ctx.closePath();outlineFill(c,2);ctx.restore()}

@@ -71,6 +71,10 @@ jobs:
           # portrait-only on iPad is allowed only when the app opts out of iPad multitasking
           /usr/libexec/PlistBuddy -c "Add :UIRequiresFullScreen bool true" $PL || /usr/libexec/PlistBuddy -c "Set :UIRequiresFullScreen true" $PL
           /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" $PL || true
+          # the game picks the phone language from navigator.languages; in WKWebView that only follows languages the bundle declares
+          /usr/libexec/PlistBuddy -c "Delete :CFBundleLocalizations" $PL || true
+          /usr/libexec/PlistBuddy -c "Add :CFBundleLocalizations array" $PL
+          i=0; for L in en he es pt fr de it ru tr ar ja ko zh-Hans id; do /usr/libexec/PlistBuddy -c "Add :CFBundleLocalizations:$i string $L" $PL; i=$((i+1)); done
           /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Sharliz" $PL || /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string Sharliz" $PL
           npx cap sync ios
       - name: Version 1.0, build number = run number
