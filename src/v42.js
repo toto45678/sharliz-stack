@@ -12,8 +12,8 @@ Object.assign(I18N.he,{seasonN:'עונה {n}',season1:'יום',season2:'לילה
   bFarmN:'ינשוף הלילה',bCityN:'חתול הסמטאות',bDesertN:'המלך עוקץ',bCandyN:'מכשפת הסוכר',bSnowN:'זאב הכפור',bOceanN:'דג הפנס',bVolcanoN:'דרקון הלבה',bSpaceN:'ספינת האם',
   bFarmS:'תיש הרעם',bCityS:'מנוף הענק',bDesertS:'תולעת החול',bCandyS:'ענק הג׳ינג׳ר',bSnowS:'דרקון הקרח',bOceanS:'ספינת הרפאים',bVolcanoS:'עוף החול',bSpaceS:'עין החור השחור',
   bJungle:'מלך הגורילות',bCastle:'מלך הרוחות',bClouds:'ציפור הרעם',bDino:'טי-רקס',bFactory:'מגה-רובוט',bCrystal:'גולם הקריסטל'});
-for(const L of ['en','he']){const D=I18N[L];for(const k of ['zFarm','zCity','zDesert','zCandy','zSnow','zOcean','zVolcano','zSpace']){
-  D[k+'N']=L==='he'?D[k]+' בלילה':D[k]+' by Night';D[k+'S']=L==='he'?D[k]+' בסערה':'Stormy '+D[k]}}
+for(const L of LANG_SET()){const D=I18N[L],F=(L!=='en'&&L!=='he'&&window.LANGX&&LANGX.fmt)||{};for(const k of ['zFarm','zCity','zDesert','zCandy','zSnow','zOcean','zVolcano','zSpace']){
+  D[k+'N']=L==='he'?D[k]+' בלילה':(F.night||'{w} by Night').replace('{w}',D[k]);D[k+'S']=L==='he'?D[k]+' בסערה':(F.storm||'Stormy {w}').replace('{w}',D[k])}}
 for(const z of ZONES)if(z.sid&&z.sid!==z.id){const k='b'+z.sid[0].toUpperCase()+z.sid.slice(1);BOSS_NAMES[z.sid]=k}
 
 /* map look per season (canvas filter on the world panel); season-4 worlds borrow S1 art until their own art ships */

@@ -42,7 +42,7 @@ function trText(){
 }
 function openTesterReport(){let armed=false;
   showOverlay(()=>({title:t('trTitle'),extra:card=>{const h=document.createElement('p');h.className='tr-help';h.textContent=t('trHelp');card.appendChild(h);
-      const box=document.createElement('div');box.className='tr-text';trText().split('\n').forEach(x=>{const d=document.createElement('div');d.dir=lang==='he'?'rtl':'ltr';d.textContent=x||'\u00a0';if(x.includes('⚠️'))d.className='tr-stuck';box.appendChild(d)});card.appendChild(box)},
+      const box=document.createElement('div');box.className='tr-text';trText().split('\n').forEach(x=>{const d=document.createElement('div');d.dir=I18N[lang]._dir;d.textContent=x||'\u00a0';if(x.includes('⚠️'))d.className='tr-stuck';box.appendChild(d)});card.appendChild(box)},
     actions:[{label:t('trCopy'),icon:'camera',primary:true,fn:async()=>{const txt=trText();try{await navigator.clipboard.writeText(txt);popupToast(t('copied'))}catch(e){const ta=document.createElement('textarea');ta.value=txt;ta.style.cssText='position:fixed;opacity:0;top:0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');popupToast(t('copied'))}catch(_){}ta.remove()}}},
       {label:t('trReset'),icon:'restart',fn:()=>{if(!armed){armed=true;popupToast(t('trResetQ'));return}const on=tr.on;tr={v:1,on,lv:{},days:[trDay()],launch:1,secs:0,last:0,err:[]};trCur=0;trSave();rerenderOverlay()}},
       {label:'OK',fn:openSettings}]}),true)}

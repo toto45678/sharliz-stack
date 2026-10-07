@@ -15,7 +15,7 @@ function toast(text,c){text=String(text);const now=performance.now()/1000;if(Obj
 let _sab=null;const safeB=()=>{if(_sab===null){try{const d=document.createElement('div');d.style.cssText='position:fixed;bottom:0;height:0;padding-bottom:env(safe-area-inset-bottom)';document.body.appendChild(d);_sab=parseFloat(getComputedStyle(d).paddingBottom)||0;d.remove()}catch(e){_sab=0}}return _sab};
 function drawToasts(){if(!TOASTS.length)return;const dt=Math.min(.05,frameDt||.016);
   const fs=Math.round(Math.max(13,Math.min(17,S*.24)));
-  ctx.save();ctx.font=`${fs}px "Rubik","Secular One",system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction=(typeof lang!=='undefined'&&lang==='he')?'rtl':'ltr';
+  ctx.save();ctx.font=`${fs}px "Rubik","Secular One",system-ui,sans-serif`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.direction=(typeof lang!=='undefined'&&I18N[lang]._dir==='rtl')?'rtl':'ltr';
   let row=0;for(let i=TOASTS.length-1;i>=0;i--){const q=TOASTS[i];q.t+=dt;if(q.t>q.life){TOASTS.splice(i,1);continue}}
   for(const q of TOASTS){const inA=Math.min(1,q.t/.18),outA=Math.min(1,(q.life-q.t)/.3),a=Math.min(inA,outA),w=Math.min(W*.86,ctx.measureText(q.text).width+fs*2.2),h=fs*1.9,
       y=H-safeB()-h*3.3-row*(h+6)+(1-inA)*10,x=W/2;row++;
