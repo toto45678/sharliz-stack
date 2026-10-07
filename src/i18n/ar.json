@@ -741,6 +741,8 @@
   "bgBack": "رجوع",
   "bgGo": "فهمت!",
   "bgHelp": "من هم الرفاق؟",
+  "eggOnlyC": "يفقس من بيضة",
+  "eggOnlyR": "من بيضة نادرة فقط",
   "ps_egg": "البيض ينمو ×2",
   "nestFull": "العش ممتلئ! حصلت على 5 بسكويت بدلاً منه"
  },
@@ -991,7 +993,18 @@
   "Wizard": "ساحر",
   "You did not see this sticker.": "أنت لم ترَ هذا الملصق.",
   "Zebra": "حمار وحشي",
-  "STORM NEWS": "أخبار العاصفة"
+  "STORM NEWS": "أخبار العاصفة",
+  "Penguin": "بطريق",
+  "Firefly": "يراعة",
+  "Kitten": "قطيطة",
+  "Octopus": "أخطبوط صغير",
+  "Cloudy": "غيمة",
+  "Little monkey": "قرد صغير",
+  "Crystal bunny": "أرنب كريستالي",
+  "Baby phoenix": "عنقاء صغيرة",
+  "Robo puppy": "جرو آلي",
+  "Galaxy whale": "حوت المجرة",
+  "Thunder griffin": "غريفين الرعد"
  },
  "pw": {
   "imm": "بلا {m}",

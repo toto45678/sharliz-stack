@@ -71,6 +71,7 @@ function buyReal(cat,id){const sku=wIsReal(cat,id);IAP.buy(sku,wName(cat,id)).th
 const _tallyRows=tallyRows;
 tallyRows=function(won){const rows=_tallyRows(won);if(mode==='duo')return rows;const base=rows.reduce((a,r)=>a+r[2],0);let add=0;
   if(perk('coins10'))add=Math.round(base*.1);else if(perk('coins25'))add=Math.round(base*.25);else if(perk('bee'))add=(lv.perfect||0)*2;else if(perk('combo')&&lv.best>=2)add=lv.best*2;
+  else{const pk=PERKS[petNow()],F=pk&&pk.startsWith('x_')&&perk(pk)&&PET_FX[pk];if(F&&F.coins)add=Math.round(base*(F.coins-1))}
   if(!won)add=Math.ceil(add/2);if(add>0)rows.push([t('buddyBonus'),wName('pet',petNow()),add]);return rows};
 const _startLevel=startLevel;
 startLevel=function(l){_startLevel(l);lv.ghost=perk('ghost');BUD.ev=null;BUD.perf=0;BUD.x=null;buddyEnsure()};

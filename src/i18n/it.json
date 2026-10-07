@@ -741,6 +741,8 @@
   "bgBack": "Indietro",
   "bgGo": "Ho capito!",
   "bgHelp": "Cosa sono gli amichetti?",
+  "eggOnlyC": "Nasce da un uovo",
+  "eggOnlyR": "Solo da uovo raro",
   "ps_egg": "Uova crescono ×2",
   "nestFull": "Il nido è pieno! +5 biscotti al suo posto"
  },
@@ -991,7 +993,18 @@
   "Wizard": "Mago",
   "You did not see this sticker.": "Non hai visto questa figurina.",
   "Zebra": "Zebra",
-  "STORM NEWS": "NOTIZIE DALLA TEMPESTA"
+  "STORM NEWS": "NOTIZIE DALLA TEMPESTA",
+  "Penguin": "Pinguino",
+  "Firefly": "Lucciola",
+  "Kitten": "Gattino",
+  "Octopus": "Polpetto",
+  "Cloudy": "Nuvoletta",
+  "Little monkey": "Scimmietta",
+  "Crystal bunny": "Coniglietto di cristallo",
+  "Baby phoenix": "Fenice baby",
+  "Robo puppy": "Cucciolo robot",
+  "Galaxy whale": "Balena galattica",
+  "Thunder griffin": "Grifone del tuono"
  },
  "pw": {
   "imm": "Niente {m}",
