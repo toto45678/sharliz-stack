@@ -153,7 +153,7 @@
   "photoHint": "长按图片保存。点击关闭。",
   "newHat": "新奖杯帽子！",
   "hats": "帽子",
-  "style": "风格",
+  "style": "特效",
   "cat_c": "颜色",
   "cat_t": "拖尾",
   "cat_l": "落地特效",
@@ -503,9 +503,9 @@
   "ng_clear": "通关金币更少",
   "ng_feverN": "狂热需要7次完美",
   "ps_astro": "开局高5层",
-  "ps_ghost": "幽灵伙伴",
-  "ps_combo": "连击助手",
-  "ps_bee": "蜜蜂伙伴",
+  "ps_ghost": "保住第一颗爱心",
+  "ps_combo": "连击金币×2",
+  "ps_bee": "每次完美+2金币",
   "sk_t_sparkle": "闪闪",
   "sk_t_notes": "音符",
   "sk_t_leaves": "树叶",
@@ -742,7 +742,9 @@
   "bgGo": "知道啦！",
   "bgHelp": "伙伴是什么？",
   "eggOnlyC": "从蛋里孵出",
-  "eggOnlyR": "仅限稀有蛋"
+  "eggOnlyR": "仅限稀有蛋",
+  "ps_egg": "蛋成长×2",
+  "nestFull": "巢满了！改为获得5块饼干"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

@@ -153,7 +153,7 @@
   "photoHint": "사진을 길게 눌러 저장해. 탭하면 닫혀.",
   "newHat": "새 트로피 모자!",
   "hats": "모자",
-  "style": "스타일",
+  "style": "효과",
   "cat_c": "색깔",
   "cat_t": "꼬리 효과",
   "cat_l": "착지 효과",
@@ -503,9 +503,9 @@
   "ng_clear": "클리어 코인 감소",
   "ng_feverN": "피버에 퍼펙트 7번 필요",
   "ps_astro": "5층에서 시작",
-  "ps_ghost": "유령 단짝",
-  "ps_combo": "콤보 도우미",
-  "ps_bee": "꿀벌 단짝",
+  "ps_ghost": "첫 하트를 지켜 줘",
+  "ps_combo": "콤보 코인 ×2",
+  "ps_bee": "퍼펙트마다 코인 +2",
   "sk_t_sparkle": "반짝이",
   "sk_t_notes": "음표",
   "sk_t_leaves": "나뭇잎",
@@ -742,7 +742,9 @@
   "bgGo": "알겠어!",
   "bgHelp": "단짝이 뭐야?",
   "eggOnlyC": "알에서 태어나요",
-  "eggOnlyR": "희귀 알 전용"
+  "eggOnlyR": "희귀 알 전용",
+  "ps_egg": "알 성장 ×2",
+  "nestFull": "둥지가 꽉 찼어! 대신 쿠키 +5"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

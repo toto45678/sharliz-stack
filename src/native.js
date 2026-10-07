@@ -36,5 +36,20 @@
       if(!offer){try{popupToast(t('storeOff'))}catch(e){}return false}
       return new Promise(res=>{pending[sku]=res;store.order(offer).then(err=>{if(err&&pending[sku]){delete pending[sku];res(false)}})})})},
     restore(){return init().then(ok=>{if(!ok)return false;return Promise.resolve(window.CdvPurchase.store.restorePurchases()).then(()=>true)})}};
-  addEventListener('load',()=>setTimeout(init,1500));
+  // A save code from the free web version carries TEST purchases (nothing was paid). In the store app they and what
+  // they gave are removed, so a code can't unlock paid items for free (Tzach, Oct 7). Real purchases are never test:true here.
+  function stripTest(){try{const L=progress&&progress.purchases;if(!L||!L.some(p=>p&&p.test))return;
+    const del=(a,id)=>{if(a){const i=a.indexOf(id);if(i>=0)a.splice(i,1)}},look=lookNow(),o=progress.owned,w=wallet(),realPass=L.some(p=>p&&p.sku==='pass'&&!p.test);
+    for(const p of L.filter(p=>p&&p.test)){const P=IAP.products[p.sku]||{};
+      if(P.coins)w.coins=Math.max(0,w.coins-P.coins);
+      if(P.boost)ST_BOOST.forEach(b=>w.inv[b]=Math.max(0,(w.inv[b]||0)-P.boost));
+      if(P.hat){del(w.skins,P.hat);if(w.skin===P.hat)w.skin='none'}
+      if(P.pet){del(o.pet,P.pet);if(look.pet===P.pet)look.pet='none'}
+      if(P.outfit){del(o.outfit,P.outfit);if(look.outfit===P.outfit)look.outfit='none'}
+      if(P.pass&&!realPass&&progress.pass){progress.pass.prem=false;progress.pass.p=[];del(o.color,'galaxy');if(look.color==='galaxy')look.color='pink';
+        ['t_comet','starcrown'].forEach(id=>del(w.skins,id));if(w.skin==='starcrown')w.skin='none';if(progress.tskin==='t_comet')delete progress.tskin}}
+    progress.purchases=L.filter(p=>p&&!p.test)}catch(e){}}
+  addEventListener('load',()=>{const _s=window.saveProgress;if(typeof _s==='function'){window.saveProgress=function(){stripTest();return _s.apply(this,arguments)};
+    if((progress.purchases||[]).some(p=>p&&p.test)){window.saveProgress();try{updateWalletUI();if(state==='title')updateLobby()}catch(e){}}}
+    setTimeout(init,1500)});
 })();

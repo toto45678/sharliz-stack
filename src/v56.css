@@ -152,3 +152,5 @@
 .ac-row.can:not(.hot){box-shadow:0 4px 0 #120d2b;border-color:#120d2b}
 .ac-row.can:not(.hot) .ac-claim{filter:none;transform:scale(.9)}
 .ac-cups img.next{transform:scale(1.3)}
+/* short phones (iPhone SE): the hatch moment was taller than the screen and cut the button */
+@media (max-height:720px){.egg-pop.hatch .hz{gap:6px;padding:12px;justify-content:safe center;overflow-y:auto}.egg-pop.hatch .hx{transform:scale(.78);margin:-33px 0}.egg-pop.hatch .hnest{width:200px;margin-top:-56px}.egg-pop.hatch h3{font-size:2.3rem}}

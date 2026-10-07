@@ -153,7 +153,7 @@
   "photoHint": "Kaydetmek için resme basılı tut. Kapatmak için dokun.",
   "newHat": "Yeni kupa şapkası!",
   "hats": "Şapkalar",
-  "style": "Stil",
+  "style": "Efektler",
   "cat_c": "Renkler",
   "cat_t": "İzler",
   "cat_l": "İniş efektleri",
@@ -503,9 +503,9 @@
   "ng_clear": "Bölüm sonunda daha az jeton",
   "ng_feverN": "Çılgınlık için 7 MÜKEMMEL gerekir",
   "ps_astro": "5 kat yukarıdan başla",
-  "ps_ghost": "Hayalet dost",
-  "ps_combo": "Kombo yardımcısı",
-  "ps_bee": "Arı dost",
+  "ps_ghost": "İlk kalbi kurtarır",
+  "ps_combo": "Kombo jetonları ×2",
+  "ps_bee": "Her mükemmel için +2 jeton",
   "sk_t_sparkle": "Pırıltılar",
   "sk_t_notes": "Notalar",
   "sk_t_leaves": "Yapraklar",
@@ -742,7 +742,9 @@
   "bgGo": "Anladım!",
   "bgHelp": "Dostlar ne işe yarar?",
   "eggOnlyC": "Yumurtadan çıkar",
-  "eggOnlyR": "Sadece nadir yumurtadan"
+  "eggOnlyR": "Sadece nadir yumurtadan",
+  "ps_egg": "Yumurtalar ×2 büyür",
+  "nestFull": "Yuva dolu! Yerine +5 kurabiye"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

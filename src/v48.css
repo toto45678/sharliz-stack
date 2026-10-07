@@ -64,3 +64,8 @@
 @media (max-height:720px){.cs-stage{flex-basis:30%}.cs-slot{width:54px;height:58px}.cs-slot img{width:42px;height:34px}.cs-stats{row-gap:3px;padding:5px 9px 6px}}
 .cs-subs{flex:1;min-width:0}
 .cs-extra{flex:none}
+/* bug hunt 4: Deals/Looks wrap to their own line instead of hiding the 4th sub-tab (Lashes); saved looks one per row */
+.cs-dh{flex-wrap:wrap}.cs-subs{flex:1 1 auto}
+.cs-sets{grid-template-columns:1fr;align-content:start}.cs-sets .wd-set{grid-column:auto}
+.cs-sets .wd-set .wd-th{width:76px;height:80px;flex:none;display:grid;place-items:center}.cs-sets .wd-set .wd-th img{width:84px;height:84px}
+.cs-sets .wd-set .col{flex-direction:row;flex-wrap:wrap;align-items:center}.cs-sets .wd-set .col b{flex:1 0 100%}.cs-sets .wd-set .col button{flex:1}

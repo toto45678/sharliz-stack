@@ -3,12 +3,12 @@
    hatches after N won levels → a buddy you don't own yet, otherwise cookies (treats). Cookies evolve buddies (3 stages:
    bigger, then a golden aura) and every evolved stage adds +5% coins on won levels. Golden eggs can hatch the egg-only baby dino.
    Trophy room (tap the profile pill): achievements with bronze/silver/gold cups that pay coins + XP. */
-Object.assign(I18N.en,{nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',
+Object.assign(I18N.en,{nestFull:'Nest is full! +5 cookies instead',nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',
   egg_c:'Egg',egg_r:'Rare egg',egg_g:'Golden egg',eggNew:'You found an egg!',eggNewSub:'It hatches after {n} wins',hatchNew:'New buddy!',hatchDup:'Cookies!',hatchDupSub:'You already have {b} — it turned into cookies',hatchOk:'Yay!',hatchWear:'Wear it',
   evoTitle:'{b} evolved!',evoSub:'Stage {n} · +{p}% coins on wins',evoBonus:'Evolved buddy',eggOnly:'Golden egg only',miniNest:'Nest',
   achTitle:'Trophy room',achClaim:'Collect',achDone:'All gold!',achNext:'{a}/{b}',
   ach_wins:'Levels won',ach_bosses:'Bosses beaten',ach_stars:'Stars',ach_tower:'Tallest endless tower',ach_perf:'Perfect drops',ach_stk:'Stickers',ach_eggs:'Eggs hatched',ach_lv:'Player level',ach_bud:'Buddies',ach_medal:'Tournament medals'});
-Object.assign(I18N.he,{nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',
+Object.assign(I18N.he,{nestFull:'הקן מלא! קיבלתם 5 עוגיות במקום',nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',
   egg_c:'ביצה',egg_r:'ביצה נדירה',egg_g:'ביצת זהב',eggNew:'מצאתם ביצה!',eggNewSub:'היא תבקע אחרי {n} ניצחונות',hatchNew:'חבר חדש!',hatchDup:'עוגיות!',hatchDupSub:'{b} כבר אצלכם — הוא הפך לעוגיות',hatchOk:'יש!',hatchWear:'לשים עליי',
   evoTitle:'{b} התפתח!',evoSub:'שלב {n} · ‎+{p}%‎ מטבעות בניצחון',evoBonus:'חבר מפותח',eggOnly:'רק מביצת זהב',miniNest:'קן',
   achTitle:'חדר הגביעים',achClaim:'אסוף',achDone:'הכל זהב!',achNext:'{a}/{b}',
@@ -35,9 +35,9 @@ const EGG={c:{need:3,pool:['chick','slime','ghost','bee'],dup:3},r:{need:5,pool:
 const EVO_COST=[0,10,25],EGG_MAX=6;
 function nest(){const N=progress.nest=progress.nest||{};N.q=N.q||[];N.treats=N.treats||0;N.hatched=N.hatched||0;N.got=N.got||{};return N}
 function budSt(id){return Math.min(3,Math.max(1,((progress.bud||{})[id])||1))}
-function eggGive(t,src){const N=nest();if(src){if(N.got[src])return false;N.got[src]=1}
-  if(!N.cur)N.cur={t,w:0};else if(N.q.length<EGG_MAX)N.q.push(t);else{N.treats+=5;saveProgress();return true}
-  saveProgress();EGGQ.push(t);setTimeout(eggNotify,0);return true}
+function eggGive(ty,src){const N=nest();if(src){if(N.got[src])return false;N.got[src]=1}
+  if(!N.cur)N.cur={t:ty,w:0};else if(N.q.length<EGG_MAX)N.q.push(ty);else{N.treats+=5;saveProgress();noteToast(t('nestFull'));return true}
+  saveProgress();EGGQ.push(ty);setTimeout(eggNotify,0);return true}
 let EGGQ=[];
 function eggReady(){const N=nest();return !!N.cur&&N.cur.w>=EGG[N.cur.t].need}
 /* wins feed the egg (+1, +2 with the dino) and give a cookie when a buddy is worn */
@@ -80,7 +80,7 @@ function petRefresh(id){try{if(typeof H3!=='undefined'){H3.petId='__';if(typeof 
 {const _ci=csInfo;csInfo=function(c,id){const I=_ci.apply(this,arguments);if(c==='pet'&&WPET[id]&&WPET[id].egg&&!I.owned){I.gate=t('eggOnly');I.rar='leg'}return I}}
 /* ---------- nest screen ---------- */
 let NEL=null;
-function openNest(){audio();sfx.click();if(!NEL){NEL=document.createElement('div');NEL.id='nestScr';document.body.appendChild(NEL)}NEL.hidden=false;nestRender()}
+function openNest(){audio();sfx.click();if(!NEL){NEL=document.createElement('div');NEL.id='nestScr';document.body.appendChild(NEL)}NEL.hidden=false;NEL.innerHTML='';nestRender()}
 function closeNest(){if(NEL)NEL.hidden=true;updateWalletUI();if(state==='title')updateLobby()}
 function nestRender(){const N=nest(),r=NEL,C=N.cur,E=C&&EGG[C.t],ready=eggReady();
   r.innerHTML=`<div class="ps-top"><button class="x-btn ns-x" aria-label="close"></button><div class="ps-title"><b></b><small></small></div><div class="coin-pill ns-ck"><img src="art/ns_cookie.webp" alt=""><span></span></div></div>
@@ -134,7 +134,7 @@ const ACH_PAY=[[100,20],[250,40],[600,80]],CUP=['b','s','g'];
 function achGot(id){return ((progress.ach||{})[id])||0}
 function achReady(){return ACH.reduce((n,A)=>{const g=achGot(A.id);return n+(g<3&&A.v()>=A.T[g]?1:0)},0)}
 let ACEL=null;
-function openTrophy(){audio();sfx.click();if(!ACEL){ACEL=document.createElement('div');ACEL.id='achScr';document.body.appendChild(ACEL)}ACEL.hidden=false;achRender()}
+function openTrophy(){audio();sfx.click();if(!ACEL){ACEL=document.createElement('div');ACEL.id='achScr';document.body.appendChild(ACEL)}ACEL.hidden=false;ACEL.innerHTML='';achRender()}
 function achRender(){const r=ACEL;r.innerHTML=`<div class="ps-top"><button class="x-btn ac-x" aria-label="close"></button><div class="ps-title"><b></b><small></small></div><div class="coin-pill">${coinImg()}<span></span></div></div><div class="ac-list"></div>`;
   r.querySelector('.ac-x').innerHTML=XSVG;r.querySelector('.ac-x').onclick=()=>{sfx.click();r.hidden=true;updateWalletUI();if(state==='title')updateLobby()};
   r.querySelector('.ps-title b').textContent=t('achTitle');const tot=ACH.reduce((a,A)=>a+achGot(A.id),0);r.querySelector('.ps-title small').innerHTML=`<img src="art/cup_g.webp" alt=""> ${tot}/${ACH.length*3}`;r.querySelector('.coin-pill span').textContent=progress.coins;
@@ -158,3 +158,6 @@ function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+
     b.querySelectorAll('.lt-bd').forEach(e=>e.remove());if(eggReady()){const d=document.createElement('i');d.className='badge lt-bd';d.textContent='!';b.querySelector('.lt-ic').appendChild(d)}}
   const d=document.querySelector('#title .ac-dot');if(d)d.hidden=!achReady()}catch(e){}return r}}
 setTimeout(()=>{try{if(state==='title')updateLobby()}catch(e){}},0);
+// a re-render after Collect / Evolve keeps the list where the player was (it jumped back to the top)
+function keepScroll(fn,root,sel){return function(){const R=root(),o=R&&R.querySelector(sel),y=o?o.scrollTop:0;const r=fn.apply(this,arguments);const n=y&&R&&R.querySelector(sel);if(n)n.scrollTop=y;return r}}
+nestRender=keepScroll(nestRender,()=>NEL,'.ns-scroll');achRender=keepScroll(achRender,()=>ACEL,'.ac-list');

@@ -153,7 +153,7 @@
   "photoHint": "Tekan lama gambarnya untuk menyimpan. Ketuk untuk menutup.",
   "newHat": "Topi trofi baru!",
   "hats": "Topi",
-  "style": "Gaya",
+  "style": "Efek",
   "cat_c": "Warna",
   "cat_t": "Jejak",
   "cat_l": "Efek mendarat",
@@ -503,9 +503,9 @@
   "ng_clear": "Koin selesai level lebih sedikit",
   "ng_feverN": "Heboh butuh 7 SEMPURNA",
   "ps_astro": "Mulai 5 lantai di atas",
-  "ps_ghost": "Sobat hantu",
-  "ps_combo": "Pembantu kombo",
-  "ps_bee": "Sobat lebah",
+  "ps_ghost": "Selamatkan nyawa pertama",
+  "ps_combo": "Koin kombo ×2",
+  "ps_bee": "+2 koin tiap Sempurna",
   "sk_t_sparkle": "Kilauan",
   "sk_t_notes": "Not musik",
   "sk_t_leaves": "Daun",
@@ -742,7 +742,9 @@
   "bgGo": "Paham!",
   "bgHelp": "Apa itu sobat?",
   "eggOnlyC": "Menetas dari telur",
-  "eggOnlyR": "Hanya dari telur langka"
+  "eggOnlyR": "Hanya dari telur langka",
+  "ps_egg": "Telur tumbuh ×2",
+  "nestFull": "Sarang penuh! Dapat +5 kue sebagai gantinya"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
