@@ -22,9 +22,10 @@ const PW_TXT={en:{imm:'No {m}',coins:'+{p}% coins',boss:'Hits bosses harder',tol
   he:{imm:'בלי {m}',coins:'עוד {p}% מטבעות',boss:'פוגע חזק יותר בבוסים',tol:'אזור נחיתה רחב יותר',wind:'הרוח מזיזה פחות',light:'יותר אור בלילה',
     lavaK:'הלבה עולה לאט',feverT:'מצב טירוף ארוך יותר',fall:'נופל לאט יותר',perfPts:'יותר נקודות על "מושלם"',noSlip:'לא מחליק בגשם',
     swayK:'החול והגלים כמעט לא מזיזים',perfCoins:'עוד 2 מטבעות על כל "מושלם"',spd:'נדנוד איטי וקל לכוון',hearts:'לב נוסף בכל שלב',aim:'קו הכיוון תמיד מופיע',convK:'המסועים עוצרים'}};
+if(window.LANGX&&I18N[lang]&&!PW_TXT[lang])PW_TXT[lang]=Object.assign({},PW_TXT.en,LANGX.pw);
 for(const [sid,fx] of Object.entries(TROPHY_FX)){const id='h_'+sid;
   WHATX[id]={p:0,w:1,trophy:sid,n:TROPHY_NAMES[sid]};const F=Object.assign({},fx);if(F.imm){F['imm_'+F.imm]=1}HAT_FX[id]=F;
-  for(const L of ['en','he']){const P=PW_TXT[L],parts=[];for(const k in fx){if(k==='imm'){const m=(I18N[L]['hz_'+fx.imm]||fx.imm).replace(/!/g,'');parts.push(P.imm.replace('{m}',m))}
+  for(const L of LANG_SET()){const P=PW_TXT[L]||PW_TXT.en,parts=[];for(const k in fx){if(k==='imm'){const m=(I18N[L]['hz_'+fx.imm]||fx.imm).replace(/[!¡！]/g,'');parts.push(P.imm.replace('{m}',m))}
       else parts.push((P[k]||k).replace('{p}',Math.round((fx[k]-1)*100)))}
     I18N[L]['hp_'+id]=parts.join(' · ');I18N[L]['hm_'+id]=''}}
 const TROPHY_IDS=Object.keys(TROPHY_FX).map(s=>'h_'+s);

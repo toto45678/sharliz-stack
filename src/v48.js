@@ -191,8 +191,8 @@ function csThumb(c,id,img,sw){if(c==='color'){sw.style.setProperty('--c',WCOL[id
 /* the numbers in the bars */
 const CS_ROWS=['tol','coins','hearts','spd','boss','feverT'];
 function csStatVal(F,k){if(k==='hearts')return 3+(F.hearts||0);return F[k]===undefined?1:F[k]}
-function csChips(F){const out=[],L=lang==='he'?'he':'en',P=typeof PW_TXT!=='undefined'?PW_TXT[L]:{};
-  for(const k in F){const v=F[k];if(k.startsWith('imm_')){const m=(I18N[L]['hz_'+k.slice(4)]||k.slice(4)).replace(/!/g,'');out.push(['+',(P.imm||'No {m}').replace('{m}',m)])}
+function csChips(F){const out=[],L=PW_TXT[lang]?lang:'en',P=typeof PW_TXT!=='undefined'?PW_TXT[L]:{};
+  for(const k in F){const v=F[k];if(k.startsWith('imm_')){const m=(I18N[L]['hz_'+k.slice(4)]||k.slice(4)).replace(/[!¡！]/g,'');out.push(['+',(P.imm||'No {m}').replace('{m}',m)])}
     else if(k==='astro')out.push(['+',t('ps_astro')]);else if(k.startsWith('pet_'))out.push(['+',t('ps_'+k.slice(4))]);
     else if(['aim','noSlip','light','lavaK','swayK','convK','perfCoins'].includes(k))out.push(['+',P[k]||k]);
     else if(k==='fall')out.push(v<1?['+',P.fall||'']:['-',t('ng_fall')]);else if(k==='wind')out.push(v<1?['+',P.wind||'']:['-',t('ng_wind')]);

@@ -251,12 +251,44 @@ rep(":[{label:t('next'),icon:'play',primary:true,fn:()=>{hideOverlay();",":[...b
 # ---- v52: holiday events (mode 'event' plays like a normal level: goal + countdown)
 rep("mode==='daily'?endless.goal:mode!=='levels'?999:","mode==='daily'?endless.goal:mode!=='levels'&&mode!=='event'?999:")
 rep("function drawCountdown(){if(isBoss()||mode!=='levels'||","function drawCountdown(){if(isBoss()||(mode!=='levels'&&mode!=='event')||")
+# ---- languages (Tzach, Oct 7): the device language + English. 14 languages; en/he live in I18N, the other 12 in
+# src/i18n/<code>.json → art/i18n_<code>.js, loaded by the head script (LANG_HEAD) before the game. Changing language reloads.
+LANGS={'en':'English','he':'עברית','es':'Español','pt':'Português','fr':'Français','de':'Deutsch','it':'Italiano','ru':'Русский',
+       'tr':'Türkçe','ar':'العربية','ja':'日本語','ko':'한국어','zh':'中文','id':'Indonesia'}
+LANG_RTL={'he','ar'}
+rep("let lang=store('sharliz-lang'); if(!I18N[lang]) lang='en';",
+    "let lang=window.SHZ_LANG||'en';if(window.LANGX&&!I18N[lang])I18N[lang]=Object.assign({},LANGX.keys,{_label:LANGX.label,_dir:LANGX.dir});if(!I18N[lang])lang='en';\n"
+    "function LANG_SET(){return ['en','he'].concat(lang!=='en'&&lang!=='he'&&I18N[lang]?[lang]:[])}")
+rep("  Object.keys(I18N).forEach(code=>{const b=document.createElement('button');b.textContent=I18N[code]._label;b.setAttribute('aria-pressed',code===lang);b.onclick=()=>{lang=code;store('sharliz-lang',code);sfx.click();applyLang()};el.appendChild(b)});",
+    "  const N=window.LANG_NAMES||{};['en'].concat(window.SHZ_DEV&&SHZ_DEV!=='en'?[SHZ_DEV]:[]).forEach(code=>{const b=document.createElement('button');b.textContent=N[code]||code;b.setAttribute('aria-pressed',code===lang);"
+    "b.onclick=()=>{if(code===lang)return;store('sharliz-lang',code);sfx.click();if(!window.LANGX&&I18N[code]){lang=code;applyLang()}else location.reload()};el.appendChild(b)});")
 js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')+'\n'+rd('v51.js')+'\n'+rd('v52.js')+'\n'+rd('v53.js')+'\n'+rd('v54.js')+'\n'+rd('v55.js')+'\n'+rd('v56.js')+'\n'+rd('v57.js')+'\n'+rd('v58.js')
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')+'\n'+rd('v51.css')+'\n'+rd('v52.css')+'\n'+rd('v53.css')+'\n'+rd('v54.css')+'\n'+rd('v55.css')+'\n'+rd('v56.css')+'\n'+rd('v57.css')+'\n'+rd('v58.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
 i=src.index('</style>')
 src=src[:i]+css+'\n'+src[i:]
+_H=re.compile('[֐-׿]');_T=list(re.finditer(r"""'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)\"""",src));_out=[];_last=0;_nw=0
+for _i in range(len(_T)-1):
+    _a,_b=_T[_i],_T[_i+1]
+    if re.fullmatch(r'\s*,\s*',src[_a.end():_b.start()]) and _H.search(_b.group(0)) and not _H.search(_a.group(0)) and re.search('[A-Za-z]',_a.group(0)):
+        _out.append(src[_last:_a.start()]+'T_('+_a.group(0)+')');_last=_a.end();_nw+=1
+src=''.join(_out)+src[_last:]
+assert _nw>=250,_nw
+os.makedirs(P(ROOT,'art'),exist_ok=True)
+for _c in LANGS:
+    if _c in ('en','he'):continue
+    _f=P(SRC,'i18n',_c+'.json')
+    if not os.path.exists(_f):continue
+    _d=json.load(open(_f,encoding='utf-8'))
+    _x={'code':_c,'label':LANGS[_c],'dir':'rtl' if _c in LANG_RTL else 'ltr','keys':_d['keys'],'pairs':_d['pairs'],'pw':_d.get('pw',{}),'fmt':_d.get('fmt',{})}
+    open(P(ROOT,'art','i18n_'+_c+'.js'),'w',encoding='utf-8').write('window.LANGX='+json.dumps(_x,ensure_ascii=False,separators=(',',':'))+';\n')
+_OK=[c for c in LANGS if c in ('en','he') or os.path.exists(P(ROOT,'art','i18n_'+c+'.js'))]
+LANG_HEAD=('<script>(function(){var OK='+json.dumps(_OK)+';window.LANG_NAMES='+json.dumps(LANGS,ensure_ascii=False)+';'
+  "function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}"
+  "var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;"
+  "window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};"
+  "if(l!=='en'&&l!=='he')document.write('<script src=\"art/i18n_'+l+'.js?v=__V__\"><\\/script>')})();</script>\n")
 head='''<!doctype html><html lang="he" dir="ltr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
@@ -268,6 +300,7 @@ head='''<!doctype html><html lang="he" dir="ltr"><head><meta charset="utf-8">
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
 </head><body>
 '''
+head=head.replace('</head><body>',LANG_HEAD+'</head><body>')
 tail='''
 <script>
 if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
@@ -278,6 +311,7 @@ if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWo
   const x=document.createElement('button');x.textContent='×';x.onclick=()=>d.remove();d.appendChild(x);setTimeout(()=>document.body.appendChild(d),2500);setTimeout(()=>d.remove(),16000)}catch(e){}})();
 </script></body></html>'''
 V='sharliz-'+time.strftime('%Y%m%d%H%M%S')
+head=head.replace('__V__',V)
 open(P(ROOT,'index.html'),'w',encoding='utf-8').write(head+src+tail)
 sw=open(P(ROOT,'sw.js')).read();sw=re.sub(r"const V='[^']*';","const V='%s';"%V,sw,count=1);open(P(ROOT,'sw.js'),'w').write(sw)
 if '--preview' in sys.argv:open(P(ROOT,'preview.html'),'w',encoding='utf-8').write('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+src)
