@@ -33,14 +33,14 @@ const IAP={products:{
     if(P.coins){wallet().coins+=P.coins;coinShower(P.coins)}
     if(P.pet){progress.owned=progress.owned||{};progress.owned.pet=progress.owned.pet||[];if(!progress.owned.pet.includes(P.pet))progress.owned.pet.push(P.pet);lookNow().pet=P.pet}
     saveProgress();updateWalletUI()}};
-function payModal(sku,label){return new Promise(res=>{const P=IAP.products[sku];sfx.click();
+function payModal(sku,label){return new Promise(res=>{if(document.querySelector('.pay-modal:not(.out)'))return res(false);const P=IAP.products[sku];sfx.click();
   const m=document.createElement('div');m.className='pay-modal';
   m.innerHTML=`<div class="pay-card"><div class="pay-tag"></div><b class="pay-t"></b><div class="pay-item"></div><div class="pay-price"></div><small class="pay-note"></small><button class="btn green pay-ok"><span></span></button><button class="btn pay-no"><span></span></button></div>`;
   m.querySelector('.pay-tag').textContent=t('payTest');m.querySelector('.pay-t').textContent=t('payTitle');m.querySelector('.pay-item').textContent=label;m.querySelector('.pay-price').textContent=P.price;
   m.querySelector('.pay-note').textContent=t('testMode');m.querySelector('.pay-ok span').textContent=t('payBtn',{p:P.price});m.querySelector('.pay-no span').textContent=t('cancel');
   const done=ok=>{m.classList.add('out');setTimeout(()=>m.remove(),220);res(ok)};
   m.querySelector('.pay-ok').onclick=()=>{sfx.flourish(2);vib([20,40,20]);done(true)};m.querySelector('.pay-no').onclick=()=>{sfx.click();done(false)};
-  m.onclick=e=>{if(e.target===m)done(false)};document.getElementById('app').appendChild(m)})}
+  m.onclick=e=>{if(e.target===m)done(false)};document.body.appendChild(m)})}
 function coinShower(n){const app=document.getElementById('app'),k=Math.min(26,8+Math.round(n/400));for(let i=0;i<k;i++){const c=document.createElement('img');c.src='art/ic_coin.webp';c.className='coin-rain';
     c.style.left=(10+Math.random()*80)+'%';c.style.animationDelay=(i*.045)+'s';c.style.setProperty('--dx',(Math.random()*80-40)+'px');app.appendChild(c);setTimeout(()=>c.remove(),1800+i*45)}
   for(let i=0;i<6;i++)setTimeout(()=>sfx.coin(i),i*90);popupToast('+'+n)}
@@ -55,7 +55,7 @@ shopBody=function(card){const tab=shopTab;if(tab==='coins')shopTab='boost';_shop
     r.innerHTML=(P.tag?`<i class="pk-tag"></i>`:'')+`<span class="pk-pile">${'<img src="art/ic_coin.webp" alt="">'.repeat(i+2)}</span><b>${P.coins.toLocaleString()}</b><em>${P.price}</em>`;
     if(P.tag)r.querySelector('.pk-tag').textContent=t(P.tag);
     r.onclick=()=>IAP.buy(sku,P.coins.toLocaleString()+' '+t('coins')).then(ok=>{if(ok&&rerenderOverlay)rerenderOverlay()});list.appendChild(r)});
-  const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');list.appendChild(n)};
+  const n=document.createElement('p');n.className='pay-foot';n.textContent=t('testMode');if(!IAP.live())list.appendChild(n)};
 
 /* ---------- buddies: every buddy helps, three premium ones ---------- */
 Object.assign(WPET,{cyborg:{p:0,real:'buddy_cyborg',n:['Cyborg Sharliz','שארליז סייבורג']},unicorn:{p:0,real:'buddy_unicorn',n:['Unicorn','חד־קרן']},dragon:{p:0,real:'buddy_dragon',n:['Baby dragon','דרקונצ׳יק']}});

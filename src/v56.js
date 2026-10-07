@@ -47,7 +47,7 @@ function eggWin(){const N=nest();if(N.cur&&!eggReady())N.cur.w=Math.min(EGG[N.cu
 if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),had=!!(D.got&&D.got.g),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const D2=trData();
   progress.stat=progress.stat||{};progress.stat.medals=(progress.stat.medals||0)+Math.max(0,Object.keys(D2.got||{}).length-g0);if(!had&&D2.got&&D2.got.g)eggGive('g','T'+D2.wk);saveProgress();return r}}
 // every 5th player level → a rare egg
-if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const r=_l.apply(this,arguments);if(lv%5===0)eggGive('r','P'+lv);return r}}
+if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const n=progress.lvRew||0;const r=_l.apply(this,arguments);for(let L=lv-n+1;L<=lv;L++)if(L%5===0)eggGive('r','P'+L);return r}}
 // perfect drops counter for the trophy room
 {const _s=showOverlay;showOverlay=function(){if((state==='win'||state==='over')&&lv&&!lv._pc){lv._pc=1;progress.stat=progress.stat||{};progress.stat.perf=(progress.stat.perf||0)+(lv.perfect||0)}return _s.apply(this,arguments)}}
 // Pass: free tiers 5 = an egg, 15/25 = a golden egg; premium 15/25 = 12 cookies (a fixed reward: nothing random is ever
@@ -146,8 +146,8 @@ function achRender(){const r=ACEL;r.innerHTML=`<div class="ps-top"><button class
       b.onclick=()=>{achClaim(A,g);saveProgress();sfx.coin(4);vib(15);achRender()};row.querySelector('.ac-ln').appendChild(b)}
     L.appendChild(row)});
   const n=achReady();if(n>1){const f=document.createElement('div');f.className='ac-foot';const b=document.createElement('button');b.className='btn green';b.innerHTML='<span></span>';b.querySelector('span').textContent=t('psAll')+' ('+n+')';
-    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();sfx.coin(5);popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
-function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;popupToast('+'+c+' 🪙  +'+x+' XP')}return [c,x]}
+    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();lvUpLater();sfx.coin(5);popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
+function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;lvUpLater();popupToast('+'+c+' 🪙  +'+x+' XP')}return [c,x]}
 // profile pill → trophy room, with a red dot when a cup is waiting
 {const pr=document.querySelector('#title .profile');if(pr){pr.style.cursor='pointer';pr.addEventListener('click',()=>openTrophy());const d=document.createElement('i');d.className='badge ac-dot';d.hidden=true;d.textContent='!';pr.appendChild(d)}}
 /* ---------- lobby: nest icon in the mini column ---------- */

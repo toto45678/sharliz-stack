@@ -32,24 +32,27 @@ function addXP(n){if(!n||mode==='duo')return;const before=xpLevel(progress.xp||0
 function xpStrip(Q){const body=document.querySelector('#card .card-body');if(!body)return;const d=document.createElement('div');d.className='xp-strip';
   d.innerHTML=`<span class="lv"><i></i></span><div class="bar"><i></i></div><b></b>`;d.querySelector('.lv i').textContent=Q.before.lv;d.querySelector('b').textContent=t('xpGain',{n:Q.n});body.appendChild(d);
   const fill=d.querySelector('.bar i'),from=Q.before.into/Q.before.need;fill.style.width=from*100+'%';
-  setTimeout(()=>{if(Q.after.lv>Q.before.lv){fill.style.width='100%';setTimeout(()=>{d.querySelector('.lv i').textContent=Q.after.lv;d.classList.add('up');fill.style.transition='none';fill.style.width='0%';void fill.offsetWidth;fill.style.transition='';fill.style.width=Q.after.into/Q.after.need*100+'%';setTimeout(()=>lvUpPop(Q.after.lv),380)},650)}
-    else fill.style.width=Q.after.into/Q.after.need*100+'%'},500)}
+  setTimeout(()=>{if(Q.after.lv>Q.before.lv){fill.style.width='100%';setTimeout(()=>{d.querySelector('.lv i').textContent=Q.after.lv;d.classList.add('up');fill.style.transition='none';fill.style.width='0%';void fill.offsetWidth;fill.style.transition='';fill.style.width=Q.after.into/Q.after.need*100+'%';setTimeout(()=>{if(d.isConnected)lvUpPop(Q.after.lv)},380)},650)}
+    else{fill.style.width=Q.after.into/Q.after.need*100+'%';if(progress.lvRew)setTimeout(()=>{if(d.isConnected)lvUpLater()},700)}},500)}
+// a level-up that had no result card to show on (trophy room, album chest, bonus, arcade, or the player left the card early) pays out here
+function lvUpLater(){if(progress.lvRew&&!document.querySelector('.lvup'))lvUpPop(xpLevel(progress.xp||0).lv)}
+function xpDrop(){XPQ=null}
 function lvUpPop(lv){if(!progress.lvRew)return;const n=progress.lvRew;progress.lvRew=0;const coins=50*n;wallet().coins+=coins;saveProgress();updateWalletUI();sfx.flourish(3);vib([30,40,30]);
   const m=document.createElement('div');m.className='lvup';m.innerHTML=`<div class="lvup-c"><div class="rays"></div><div class="badge"><img src="art/xp_star.webp" alt=""><b>${lv}</b></div><span class="tag"></span><h3></h3><p></p><div class="lv-rw"><img src="art/ps_coins.webp" alt=""><span><b>+${coins}</b><small></small></span></div><button class="btn primary"><span></span></button></div>`;
   m.querySelector('.tag').textContent=t('lvUpTag');m.querySelector('h3').textContent=t('lvUp',{n:lv});m.querySelector('p').textContent=t('lvSub');m.querySelector('.lv-rw small').textContent=t('psCoins');m.querySelector('.btn span').textContent=t('lvOk');m.querySelector('.btn').onclick=()=>{sfx.click();m.remove()};document.body.appendChild(m)}
 /* ---------- XP sources ---------- */
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if(mode==='levels'&&was!=='win'&&state==='win')addXP(20+5*(lv.starsNow||0)+(isBoss()?40:0));return r}}
-if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){addXP(10);return _b.apply(this,arguments)}}
-if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over;const r=_a.apply(this,arguments);if(!was)addXP(5);return r}}
+if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){if(BN&&!BN.paid){addXP(10);xpDrop()}return _b.apply(this,arguments)}}
+if(typeof arcEnd==='function'){const _a=arcEnd;arcEnd=function(G){const was=G.over,paid=!was&&arcLeft(G.id)>0;const r=_a.apply(this,arguments);if(paid){addXP(5);xpDrop();popupToast(t('xpGain',{n:5}))}return r}}
 if(typeof evFinish==='function'){const _e=evFinish;evFinish=function(won){if(won)addXP(EVP&&EVP.i===9?40:15);return _e.apply(this,arguments)}}
-if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));return r}}
+if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const D=trData(),g0=Object.keys(D.got||{}).length;const r=_t.apply(this,arguments);const g1=Object.keys(trData().got||{}).length;addXP(10+15*(g1-g0));if(XPQ&&document.querySelector('#card .card-body')){const Q=XPQ;XPQ=null;setTimeout(()=>xpStrip(Q),60)}return r}}
 /* ---------- lobby: level badge on the avatar + Pass button ---------- */
 function lobbyXP(){const pr=document.querySelector('#title .profile');if(!pr)return;let b=pr.querySelector('.av-lv');if(!b){const bar=document.createElement('span');bar.className='pf-xp';bar.innerHTML='<i class="av-lv"></i><span class="tr"><i></i></span>';pr.querySelector('.pf').appendChild(bar);b=bar.querySelector('.av-lv')}
   const L=xpLevel(progress.xp||0);b.textContent=L.lv;pr.querySelector('.pf-xp .tr i').style.width=L.into/L.need*100+'%';
   const pb=document.getElementById('lobPass');if(pb){const P=psData(),n=psReady();pb.querySelector('em span').textContent=t('psLeft',{n:psDays()});pb.querySelector('.dot').hidden=!n;const ev=document.getElementById('lobEvent');pb.parentNode.classList.toggle('two',!!ev&&!ev.hidden)}}
 {const sec=document.getElementById('title'),logo=sec&&sec.querySelector('.logo');if(sec){const row=document.createElement('div');row.className='lob-pills';const b=document.createElement('button');b.id='lobPass';b.className='pass-btn';b.innerHTML='<img src="art/pass_icon.webp" alt=""><span><b></b><em><i>⏱</i><span></span></em></span><i class="dot" hidden>!</i>';b.querySelector('b').textContent=t('psTitle');b.onclick=()=>openPass();
   row.appendChild(b);const ev=document.getElementById('lobEvent');if(ev)row.appendChild(ev);if(logo)logo.after(row);else sec.appendChild(row)}}
-{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{lobbyXP();const b=document.getElementById('lobPass');if(b){b.hidden=!progress.tut;b.querySelector('b').textContent=t('psTitle')}}catch(e){}return r}}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{lobbyXP();if(state==='title')setTimeout(()=>{if(state==='title')lvUpLater()},400);const b=document.getElementById('lobPass');if(b){b.hidden=!progress.tut;b.querySelector('b').textContent=t('psTitle')}}catch(e){}return r}}
 /* ---------- Pass screen ---------- */
 let PSEL=null;
 function openPass(){audio();sfx.click();if(!PSEL){PSEL=document.createElement('div');PSEL.id='passScr';document.body.appendChild(PSEL)}PSEL.hidden=false;psRender(true)}

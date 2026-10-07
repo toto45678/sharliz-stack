@@ -21,8 +21,9 @@ Object.assign(I18N.en,{sk_t_bats:'Bats'});Object.assign(I18N.he,{sk_t_bats:'עט
 const evItem=(c,id)=>{for(const E of EVENTS)for(const it of E.items)if(it.c===c&&it.id===id)return [E,it];return null};
 // dates
 function evDate(md,yr){return new Date(yr,md[0]-1,md[1])}
-function evWindow(E,now=new Date()){let y=now.getFullYear();let a=evDate(E.from,y),b=evDate(E.to,y);b.setHours(23,59,59);if(b<a)b.setFullYear(y+1);
-  if(now>b){a.setFullYear(y+1);b.setFullYear(b.getFullYear()+1)}return {a,b}}
+// the first window (starting last year, this year or next) that has not ended yet, so Dec 27 – Jan 2 is live on Jan 1 too
+function evWindow(E,now=new Date()){const y0=now.getFullYear();for(const y of[y0-1,y0,y0+1]){const a=evDate(E.from,y),b=evDate(E.to,y);b.setHours(23,59,59);if(b<a)b.setFullYear(y+1);if(now<=b)return {a,b}}
+  const a=evDate(E.from,y0+1),b=evDate(E.to,y0+1);b.setHours(23,59,59);if(b<a)b.setFullYear(y0+2);return {a,b}}
 function evNow(){const now=new Date();let best=null;for(const E of EVENTS){const w=evWindow(E,now);if(now>=w.a&&now<=w.b)return {E,live:true,w};if(!best||w.a<best.w.a)best={E,live:false,w}}
   return typeof DEV_OPEN!=='undefined'&&DEV_OPEN&&best?best:null}
 const evDays=ms=>Math.max(0,Math.ceil(ms/864e5));
@@ -75,10 +76,11 @@ function evWear(it){try{if(it.c==='trail')progress.tskin=it.id;else if(it.c==='h
 {const _ci=csInfo;csInfo=function(c,id){const I=_ci.apply(this,arguments);const e=evItem(c==='trail'?'trail':c,id);if(e&&!evOwned(e[1])){I.gate=t('evOnly',{n:t('ev_'+e[0].id)});I.rar='leg'}return I}}
 /* ---------- playing an event stage (mode 'event') ---------- */
 let EVP=null;
-function evStart(i){const N=evNow();if(!N)return;if(EVEL)EVEL.hidden=true;const E=N.E,zi=evZi(E);
-  EVP={E,i,from:level,perf:0};mode='event';modeZi=zi;go(()=>{startLevel(zi*LPZ+1+i);evDeco(true)})}
+// direct=true when already inside go() (pause → restart): go() ignores nested calls while busy
+function evStart(i,direct){if(!direct&&busy)return;const N=evNow();if(!N){if(EVP)evExit(false);return}if(EVEL)EVEL.hidden=true;const E=N.E,zi=evZi(E);
+  EVP={E,i,from:EVP?EVP.from:level,perf:0};mode='event';modeZi=zi;score=0;const run=()=>{startLevel(zi*LPZ+1+i);evDeco(true)};if(direct)run();else go(run)}
 function evStageCandy(won){const boss=EVP.i===9,D=evData(EVP.E.id),first=won&&EVP.i>=D.done;const base=won?(boss?25:8):2,perf=Math.min(12,lv.perfect||0);return {base,perf,first:first?10:0,total:base+perf+(first?10:0)}}
-function evFinish(won){const E=EVP.E,D=evData(E.id),R=evStageCandy(won);D.cur+=R.total;if(won&&EVP.i>=D.done)D.done=Math.min(10,EVP.i+1);saveProgress();
+function evFinish(won){if(evCnt)evCnt.hidden=true;const E=EVP.E,D=evData(E.id),R=evStageCandy(won);D.cur+=R.total;if(won&&EVP.i>=D.done)D.done=Math.min(10,EVP.i+1);saveProgress();
   const boss=EVP.i===9;
   showOverlay(()=>({title:won?(boss?t('evBossClear'):t('evClear')):t('whoops'),big:true,
     extra:card=>{card.classList.add('ev-res');{const hi=document.createElement('img');hi.className='ev-hero';hi.src=won?(boss?'art/ev_boss_'+E.id+'.webp':'art/ev_icon_'+E.id+'.webp'):'art/ev_node_off.webp';hi.alt='';card.appendChild(hi)}const rows=document.createElement('div');rows.className='ev-rows';
@@ -97,13 +99,13 @@ function evExit(toHub){evDeco(false);const L=EVP?EVP.from:level;EVP=null;mode='l
   sfx.flourish(3);for(let i=0;i<50;i++)particles.push({x:rnd(0,W),y:camY+rnd(-40,H*.25),vx:rnd(-60,60),vy:rnd(40,200),life:2,c:pick(['#ff7a1a','#8a4dff','#ffd23f','#2a2a2a']),sz:rnd(5,9),rot:rnd(0,6),vr:rnd(-8,8),conf:true});
   setTimeout(()=>{if(mode==='event'&&EVP)evFinish(true)},1300)}}
 {const _mo=modeOver;modeOver=function(won){if(mode!=='event'||!EVP)return _mo.apply(this,arguments);evFinish(false)}}
-{const _sm=startMode;startMode=function(m){if(m==='event'&&EVP){evStart(EVP.i);return}return _sm.apply(this,arguments)}}
+{const _sm=startMode;startMode=function(m){if(m==='event'&&EVP){evStart(EVP.i,true);return}return _sm.apply(this,arguments)}}
 {const _t=toTitle;toTitle=function(){if(mode==='event'&&!EVEL_KEEP){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _t.apply(this,arguments)}}
 let EVEL_KEEP=false;
 {const _o=openMap;openMap=function(){if(mode==='event'){mode='levels';modeZi=null;if(EVP)level=EVP.from;EVP=null;evDeco(false)}return _o.apply(this,arguments)}}
 // candy pops on PERFECT landings
 let evCnt=null;
-function evCounter(on){if(!evCnt){evCnt=document.createElement('div');evCnt.id='evCnt';evCnt.innerHTML='<img alt=""><b>0</b>';document.body.appendChild(evCnt)}evCnt.hidden=!on;if(on&&EVP){evCnt.querySelector('img').src='art/ev_'+EVP.E.cur+'.webp';evCnt.querySelector('b').textContent=Math.min(12,lv.perfect||0)}}
+function evCounter(on){if(!evCnt){evCnt=document.createElement('div');evCnt.id='evCnt';evCnt.innerHTML='<img alt=""><b>0</b>';(document.getElementById('hud')||document.body).appendChild(evCnt)}evCnt.hidden=!on;if(on&&EVP){evCnt.querySelector('img').src='art/ev_'+EVP.E.cur+'.webp';evCnt.querySelector('b').textContent=Math.min(12,lv.perfect||0)}}
 {const _p=popup;popup=function(txt,x,y,c,key,sub){const r=_p.apply(this,arguments);if(mode==='event'&&EVP&&(key==='perfect'||key==='wow')){evCounter(true);const d=document.createElement('div');d.className='ev-pop';d.innerHTML=`<img src="art/ev_${EVP.E.cur}.webp" alt="">+1`;const x0=Math.round(clamp(x+S*1.2,30,W-30)),y0=Math.round(sy(y));d.style.left=x0+'px';d.style.top=y0+'px';document.body.appendChild(d);
   const tr=evCnt.getBoundingClientRect(),dx=tr.left+tr.width*.3-x0,dy=tr.top+tr.height/2-y0;
   try{d.animate([{transform:'translate(-50%,-50%) scale(.6)',opacity:0},{transform:'translate(-50%,-80%) scale(1.15)',opacity:1,offset:.25},{transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(.55)`,opacity:.9}],{duration:750,easing:'cubic-bezier(.5,0,.7,1)'}).onfinish=()=>{d.remove();evCounter(true);evCnt.classList.remove('pulse');void evCnt.offsetWidth;evCnt.classList.add('pulse')}}catch(e){setTimeout(()=>d.remove(),800)}}return r}}
