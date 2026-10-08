@@ -874,7 +874,16 @@
   "gf_cups": "Win all {n} gold cups in the trophy room",
   "gf_3s": "3 stars on {n} levels",
   "gf_sec": "Fill {n} album sections",
-  "gf_all": "Collect all the other gold stickers"
+  "gf_all": "Collect all the other gold stickers",
+  "g_sling": "Sling Shot",
+  "gd_sling": "Fling Sharliz at the bosses",
+  "arcHowSling": "Pull back, aim, let go!",
+  "g_shadow": "Who's in the Shadow?",
+  "gd_shadow": "Guess the boss from its shadow",
+  "arcHowShadow": "Pick the boss that matches the shadow",
+  "slMiss": "Miss",
+  "shStreak": "Streak {n}",
+  "shWho": "Who is it?"
  },
  "pairs": [
   "3D boss models (season 1)",

@@ -897,7 +897,16 @@
   "gf_cups": "Ganhe as {n} taças de ouro da sala de troféus",
   "gf_3s": "3 estrelas em {n} fases",
   "gf_sec": "Complete {n} seções do álbum",
-  "gf_all": "Colecione todas as outras figurinhas de ouro"
+  "gf_all": "Colecione todas as outras figurinhas de ouro",
+  "g_sling": "Estilingue",
+  "gd_sling": "Lance Sharliz nos chefões",
+  "arcHowSling": "Puxe, mire e solte!",
+  "g_shadow": "Quem está na sombra?",
+  "gd_shadow": "Adivinhe o chefão pela sombra",
+  "arcHowShadow": "Escolha o chefão que combina com a sombra",
+  "slMiss": "Errou",
+  "shStreak": "Sequência {n}",
+  "shWho": "Quem é?"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

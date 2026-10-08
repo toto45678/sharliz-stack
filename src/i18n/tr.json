@@ -897,7 +897,16 @@
   "gf_cups": "Kupa odasındaki {n} altın kupanın hepsini kazan",
   "gf_3s": "{n} bölümde 3 yıldız",
   "gf_sec": "{n} albüm bölümünü doldur",
-  "gf_all": "Diğer tüm altın çıkartmaları topla"
+  "gf_all": "Diğer tüm altın çıkartmaları topla",
+  "g_sling": "Sapan",
+  "gd_sling": "Sharliz'i patronlara fırlat",
+  "arcHowSling": "Geri çek, nişan al, bırak!",
+  "g_shadow": "Gölgedeki kim?",
+  "gd_shadow": "Patronu gölgesinden tahmin et",
+  "arcHowShadow": "Gölgeye uyan patronu seç",
+  "slMiss": "Iska",
+  "shStreak": "Seri {n}",
+  "shWho": "Bu kim?"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

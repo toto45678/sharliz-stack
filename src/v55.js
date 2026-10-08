@@ -33,7 +33,7 @@ function ltSync(){
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{ltSync()}catch(e){}return r}}
 // arcade now lives inside the Modes card (right under the tournament)
 {const _om=openModes;openModes=function(){_om.apply(this,arguments);const box=document.querySelector('#card .modes');if(!box||typeof openArcade!=='function')return;
-  const n=['rain','mem','whack'].reduce((s,id)=>s+arcLeft(id),0);const b=document.createElement('button');b.className='mode-btn m-arc';
+  const n=ARC_IDS.reduce((s,id)=>s+arcLeft(id),0);const b=document.createElement('button');b.className='mode-btn m-arc';
   b.innerHTML='<img src="art/ic_arcade.webp" alt=""><span class="mt"><b></b><small></small></span>'+(n?`<i class="badge lt-arcbd">${n}</i>`:'');b.querySelector('b').textContent=t('arcTitle');b.querySelector('small').textContent=t('arcSubModes',{n});
   b.onclick=()=>{sfx.click();hideOverlay();openArcade()};const tr=box.querySelector('.m-tour');if(tr)tr.after(b);else box.prepend(b)}}
 // the first lobby is drawn before this module loads: sync once now

@@ -897,7 +897,16 @@
   "gf_cups": "Vinci tutte e {n} le coppe d'oro nella sala trofei",
   "gf_3s": "3 stelle in {n} livelli",
   "gf_sec": "Completa {n} sezioni dell'album",
-  "gf_all": "Colleziona tutte le altre figurine d'oro"
+  "gf_all": "Colleziona tutte le altre figurine d'oro",
+  "g_sling": "Fionda",
+  "gd_sling": "Lancia Sharliz contro i boss",
+  "arcHowSling": "Tira indietro, mira e lascia!",
+  "g_shadow": "Chi c'è nell'ombra?",
+  "gd_shadow": "Indovina il boss dalla sua ombra",
+  "arcHowShadow": "Scegli il boss che corrisponde all'ombra",
+  "slMiss": "Mancato",
+  "shStreak": "Serie {n}",
+  "shWho": "Chi è?"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

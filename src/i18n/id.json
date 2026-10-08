@@ -897,7 +897,16 @@
   "gf_cups": "Menangkan semua {n} piala emas di ruang trofi",
   "gf_3s": "3 bintang di {n} level",
   "gf_sec": "Penuhi {n} bagian album",
-  "gf_all": "Kumpulkan semua stiker emas lainnya"
+  "gf_all": "Kumpulkan semua stiker emas lainnya",
+  "g_sling": "Ketapel",
+  "gd_sling": "Lempar Sharliz ke para bos",
+  "arcHowSling": "Tarik, bidik, lepaskan!",
+  "g_shadow": "Siapa di balik bayangan?",
+  "gd_shadow": "Tebak bos dari bayangannya",
+  "arcHowShadow": "Pilih bos yang cocok dengan bayangan",
+  "slMiss": "Meleset",
+  "shStreak": "Beruntun {n}",
+  "shWho": "Siapa ini?"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

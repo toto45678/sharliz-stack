@@ -897,7 +897,16 @@
   "gf_cups": "Gewinne alle {n} Goldpokale im Trophäenraum",
   "gf_3s": "3 Sterne in {n} Leveln",
   "gf_sec": "Fülle {n} Albumkapitel",
-  "gf_all": "Sammle alle anderen Gold-Sticker"
+  "gf_all": "Sammle alle anderen Gold-Sticker",
+  "g_sling": "Steinschleuder",
+  "gd_sling": "Schleudere Sharliz auf die Bosse",
+  "arcHowSling": "Zurückziehen, zielen, loslassen!",
+  "g_shadow": "Wer ist der Schatten?",
+  "gd_shadow": "Errate den Boss an seinem Schatten",
+  "arcHowShadow": "Wähle den Boss, der zum Schatten passt",
+  "slMiss": "Daneben",
+  "shStreak": "Serie {n}",
+  "shWho": "Wer ist das?"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

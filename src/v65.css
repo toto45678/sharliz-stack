@@ -1,0 +1,35 @@
+/* ===== v65: sling shot + who's in the shadow ===== */
+.arc-card.c-sling{background:linear-gradient(180deg,#36c98a,#178a5a)}
+.arc-card.c-shadow{background:linear-gradient(180deg,#ffa53d,#e0631b)}
+/* sling */
+.g-sling .arc-stage{background:url(art/w3b_clouds.webp) center bottom/cover,linear-gradient(180deg,#7fd3ff,#e8f7ff)}
+.sl-miss{font-size:1.3rem}
+/* shadow */
+.g-shadow .arc-stage{background:radial-gradient(90% 60% at 50% 28%,#4a3a9a 0%,#24184f 60%,#140c33 100%)}
+.sh-wrap{position:absolute;inset:8px 10px 10px;display:flex;flex-direction:column;align-items:center;gap:16px;max-width:440px;margin:auto}
+.sh-q{position:relative;flex:1;min-height:0;width:100%;display:grid;place-items:center}
+.sh-spot{position:absolute;inset:4% 10%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,240,170,.55),rgba(255,240,170,.12) 70%,transparent);animation:shSpot 2.6s ease-in-out infinite}
+@keyframes shSpot{50%{transform:scale(1.06);opacity:.85}}
+.sh-img{position:absolute;inset:6% 8%;width:84%;height:88%;object-fit:contain;filter:brightness(0) drop-shadow(0 0 2px rgba(255,255,255,.9)) drop-shadow(0 0 10px rgba(255,240,170,.6));transition:filter .35s}
+.sh-q.in .sh-img{animation:shIn .45s cubic-bezier(.3,1.5,.5,1)}
+@keyframes shIn{0%{transform:scale(.6) rotate(-6deg);opacity:0}100%{transform:none;opacity:1}}
+.sh-q.rev .sh-img{filter:brightness(1) drop-shadow(0 6px 0 rgba(10,8,40,.5));animation:shRev .4s ease-out}
+@keyframes shRev{40%{transform:scale(1.1)}}
+.sh-q.bad.rev .sh-img{filter:brightness(1) grayscale(.2) drop-shadow(0 0 10px rgba(255,80,100,.8))}
+.sh-ask{position:absolute;top:2px;left:50%;translate:-50% 0;padding:4px 14px;border-radius:999px;background:rgba(18,13,43,.85);border:2px solid #8b6cff;font:1.15rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;white-space:nowrap}
+.sh-q.rev .sh-ask{opacity:0}
+.sh-name{position:absolute;bottom:0;left:50%;translate:-50% 0;padding:4px 14px;border-radius:999px;background:#ffe24d;color:#120d2b;border:3px solid #120d2b;font:1.1rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;white-space:nowrap;box-shadow:0 3px 0 #120d2b}
+.sh-name:empty{display:none}
+.sh-q.rev .sh-name{animation:arcCd .4s cubic-bezier(.3,1.7,.5,1)}
+.sh-opts{flex:none;width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.sh-opt{position:relative;height:clamp(96px,19vh,160px);min-width:0;padding:0;border-radius:18px;border:3.5px solid #120d2b;background:radial-gradient(circle at 50% 35%,#fff7e0,#ffd6f0);box-shadow:inset 0 3px 0 rgba(255,255,255,.7),0 5px 0 #120d2b;display:grid;place-items:center;animation:arcIn .35s cubic-bezier(.3,1.5,.5,1) both;touch-action:manipulation}
+.sh-opt img{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);object-fit:contain;pointer-events:none}
+.sh-opt:active{transform:translateY(3px);box-shadow:inset 0 3px 0 rgba(255,255,255,.7),0 2px 0 #120d2b}
+.sh-opt.ok{border-color:#2f8a12;box-shadow:0 0 0 4px #5ee85a,0 0 18px 4px rgba(94,232,90,.8),0 5px 0 #120d2b;animation:memOk .45s ease-out}
+.sh-opt.ok.show{animation:memOk .45s ease-out .15s}
+.sh-opt.no{background:radial-gradient(circle at 50% 35%,#ffd0d6,#ff8a9a);animation:memNo .4s ease-in-out}
+
+.g-sling .arc-fx{font-size:2.1rem}.g-sling .arc-fx.big{font-size:2.6rem}
+.g-sling .arc-sub{transform:scale(1.22);transform-origin:center}
+.g-sling .arc-sub.pop{animation:slUp .3s ease-out}
+@keyframes slUp{50%{transform:scale(1.6)}100%{transform:scale(1.22)}}

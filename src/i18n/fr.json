@@ -897,7 +897,16 @@
   "gf_cups": "Gagne les {n} coupes d'or de la salle des trophées",
   "gf_3s": "3 étoiles sur {n} niveaux",
   "gf_sec": "Remplis {n} sections de l'album",
-  "gf_all": "Collectionne tous les autres stickers en or"
+  "gf_all": "Collectionne tous les autres stickers en or",
+  "g_sling": "Lance-pierre",
+  "gd_sling": "Envoie Sharliz sur les boss",
+  "arcHowSling": "Tire, vise et lâche !",
+  "g_shadow": "Qui est dans l'ombre ?",
+  "gd_shadow": "Devine le boss d'après son ombre",
+  "arcHowShadow": "Choisis le boss qui correspond à l'ombre",
+  "slMiss": "Raté",
+  "shStreak": "Série {n}",
+  "shWho": "Qui est-ce ?"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",

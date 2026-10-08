@@ -897,7 +897,16 @@
   "gf_cups": "Gana las {n} copas de oro de la sala de trofeos",
   "gf_3s": "3 estrellas en {n} niveles",
   "gf_sec": "Completa {n} secciones del álbum",
-  "gf_all": "Colecciona todos los demás stickers de oro"
+  "gf_all": "Colecciona todos los demás stickers de oro",
+  "g_sling": "Tirachinas",
+  "gd_sling": "Lanza a Sharliz contra los jefes",
+  "arcHowSling": "¡Tira hacia atrás, apunta y suelta!",
+  "g_shadow": "¿Quién es la sombra?",
+  "gd_shadow": "Adivina el jefe por su sombra",
+  "arcHowShadow": "Elige el jefe que encaja con la sombra",
+  "slMiss": "Fallo",
+  "shStreak": "Racha {n}",
+  "shWho": "¿Quién es?"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

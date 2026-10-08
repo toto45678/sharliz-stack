@@ -897,7 +897,16 @@
   "gf_cups": "赢得奖杯室全部{n}个金杯",
   "gf_3s": "{n}关拿到3星",
   "gf_sec": "集满{n}个贴纸册分区",
-  "gf_all": "集齐其他所有金卡贴纸"
+  "gf_all": "集齐其他所有金卡贴纸",
+  "g_sling": "弹弓",
+  "gd_sling": "把夏莉丝弹向首领",
+  "arcHowSling": "拉开、瞄准、松手!",
+  "g_shadow": "影子是谁?",
+  "gd_shadow": "根据影子猜首领",
+  "arcHowShadow": "选出和影子相配的首领",
+  "slMiss": "没打中",
+  "shStreak": "连对 {n}",
+  "shWho": "这是谁?"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

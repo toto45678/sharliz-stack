@@ -897,7 +897,16 @@
   "gf_cups": "트로피 방의 금컵 {n}개 모두 획득",
   "gf_3s": "레벨 {n}개에서 별 3개",
   "gf_sec": "앨범 섹션 {n}개 채우기",
-  "gf_all": "다른 골드 스티커 모두 모으기"
+  "gf_all": "다른 골드 스티커 모두 모으기",
+  "g_sling": "새총",
+  "gd_sling": "샤를리즈를 보스에게 날려요",
+  "arcHowSling": "당기고, 조준하고, 놓아요!",
+  "g_shadow": "그림자는 누구?",
+  "gd_shadow": "그림자로 보스를 맞혀요",
+  "arcHowShadow": "그림자와 맞는 보스를 골라요",
+  "slMiss": "빗나감",
+  "shStreak": "연속 {n}",
+  "shWho": "누구일까?"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

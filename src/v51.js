@@ -7,7 +7,7 @@ Object.assign(I18N.en,{arcShort:'Arcade',arcTitle:'Arcade',arcNote:'3 coin plays
 Object.assign(I18N.he,{arcShort:'ארקייד',arcTitle:'ארקייד',arcNote:'3 משחקים עם מטבעות בכל יום לכל משחק',arcBest:'שיא',arcPlay:'שחקו',arcFree:'נגמרו הכרטיסים להיום: משחקים בשביל השיא!',arcNewBest:'שיא חדש!',arcScore:'ניקוד',arcAgain:'שוב',arcBack:'לארקייד',arcGo:'צאו!',arcTix:'משחקים עם מטבעות היום',
   g_rain:'גשם מטבעות',gd_rain:'תפסו מטבעות, התחמקו מפצצות',g_mem:'זיכרון בוסים',gd_mem:'מצאו את הזוגות',g_whack:'הכו במפלצת',gd_whack:'רק מפלצות, לא שארליז!',
   arcMoves:'מהלכים {n}',arcCombo:'קומבו ×{n}',arcHowRain:'גררו את השארליז ימינה ושמאלה',arcHowMem:'הפכו שני קלפים ומצאו זוג',arcHowWhack:'הכו במפלצות, אף פעם לא בשארליז',arcOops:'אופס!',arcPrize:'פרס',arcLeftN:'{n} משחקים עם מטבעות היום'});
-const ARC_TIX=3,ARC_MAX=40;
+const ARC_TIX=3,ARC_MAX=40,ARC_IDS=['rain','mem','whack'];
 const ARC_BOSSES='candy candyN candyS castle city cityN cityS clouds crystal desert desertN desertS dino factory farm farmN farmS jungle ocean oceanN oceanS snow snowN snowS space spaceN spaceS volcano volcanoN volcanoS'.split(' ');
 function arcData(){const a=progress.arcade=progress.arcade||{best:{},day:'',plays:{}};a.best=a.best||{};a.plays=a.plays||{};if(a.day!==today()){a.day=today();a.plays={}}return a}
 const arcLeft=id=>Math.max(0,ARC_TIX-(arcData().plays[id]||0));
@@ -21,7 +21,7 @@ function arcHub(){const r=arcRoot(),a=arcData();r.className='arc-hub';
   r.innerHTML=`<div class="arc-top"><button class="x-btn arc-x" aria-label="close"></button><div class="arc-title"></div><div class="coin-pill">${coinImg()}<span></span></div></div><div class="arc-list"></div><p class="arc-note"></p>`;
   r.querySelector('.arc-title').textContent=t('arcTitle');r.querySelector('.coin-pill span').textContent=progress.coins;r.querySelector('.arc-note').textContent=t('arcNote');r.querySelector('.arc-x').innerHTML=XSVG;r.querySelector('.arc-x').onclick=()=>{sfx.click();closeArcade()};
   const L=r.querySelector('.arc-list');
-  ['rain','mem','whack'].forEach((id,i)=>{const b=document.createElement('button');b.className='arc-card c-'+id;b.style.animationDelay=(i*.08)+'s';
+  ARC_IDS.forEach((id,i)=>{const b=document.createElement('button');b.className='arc-card c-'+id;b.style.animationDelay=(i*.08)+'s';
     b.innerHTML=`<span class="th"><img src="art/arc_${id}.webp" alt=""></span><span class="tx"><b></b><small></small><span class="meta"><span class="best"><img src="art/ic_trophy.webp" alt=""><em></em></span><span class="tix" aria-label=""></span></span></span><span class="go"><svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg></span>`;
     b.querySelector('b').textContent=t('g_'+id);b.querySelector('small').textContent=t('gd_'+id);b.querySelector('.best em').textContent=a.best[id]||0;const tx=b.querySelector('.tix');tx.innerHTML=arcTix(id)+`<em>${arcLeft(id)}/${ARC_TIX}</em>`;tx.setAttribute('aria-label',t('arcTix')+': '+arcLeft(id));
     b.onclick=()=>{sfx.click();arcStart(id)};L.appendChild(b)})}
@@ -114,5 +114,5 @@ ARCG.whack={dur:30,star:1,how:'arcHowWhack',hint:'gd_whack',coins:s=>Math.round(
   end(G){for(const H of G.holes){H.k=null;H.el.classList.remove('up')}}};
 /* lobby button (right column, first) */
 {const col=document.querySelector('.lob-side.r');if(col){const b=document.createElement('button');b.className='side-btn arcade';b.id='lobArcade';b.innerHTML='<span class="sq"><img src="art/ic_arcade.webp" alt=""></span><b data-i18n="arcShort"></b><i class="badge arc-badge" data-abadge hidden></i>';b.querySelector('b').textContent=t('arcShort');b.onclick=openArcade;col.insertBefore(b,col.children[1]||null)}}
-{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const b=document.getElementById('lobArcade');if(b){b.querySelector('b').textContent=t('arcShort');const bd=b.querySelector('[data-abadge]');const n=['rain','mem','whack'].reduce((s,id)=>s+arcLeft(id),0);bd.hidden=!n||!progress.tut;bd.innerHTML='<img src="art/arc_ticket.webp" alt="">'+n;b.setAttribute('aria-label',t('arcShort')+' · '+t('arcLeftN',{n}))}return r}}
+{const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);const b=document.getElementById('lobArcade');if(b){b.querySelector('b').textContent=t('arcShort');const bd=b.querySelector('[data-abadge]');const n=ARC_IDS.reduce((s,id)=>s+arcLeft(id),0);bd.hidden=!n||!progress.tut;bd.innerHTML='<img src="art/arc_ticket.webp" alt="">'+n;b.setAttribute('aria-label',t('arcShort')+' · '+t('arcLeftN',{n}))}return r}}
 {const _d=drawTitleArt;drawTitleArt=function(){if(ARCEL&&!ARCEL.hidden)return;return _d.apply(this,arguments)}}
