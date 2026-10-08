@@ -906,7 +906,10 @@
   "arcHowShadow": "Scegli il boss che corrisponde all'ombra",
   "slMiss": "Mancato",
   "shStreak": "Serie {n}",
-  "shWho": "Chi è?"
+  "shWho": "Chi è?",
+  "ps_ballet": "Abbatte ogni attaccante",
+  "ng_heart1": "Un cuore in meno",
+  "m_pirouette": "Piroetta!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "Gravità zero",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "L'UFO di Zorg colpisce una Sharliz... e la rimpicciolisce!",
   "Zzz... *drool bubble*... zzz": "Zzz... *bolla di bava*... zzz",
-  "Zzz... wait, where's the ground?": "Zzz... aspetta, dov'è il pavimento?"
+  "Zzz... wait, where's the ground?": "Zzz... aspetta, dov'è il pavimento?",
+  "Ballerina suit": "Tutù da ballerina",
+  "Pirouette power": "Potere piroetta",
+  "Twirl! Poof! Bye-bye, bats!": "Gira! Puff! Ciao ciao, pipistrelli!"
  }
 }

@@ -906,7 +906,10 @@
   "arcHowShadow": "Pilih bos yang cocok dengan bayangan",
   "slMiss": "Meleset",
   "shStreak": "Beruntun {n}",
-  "shWho": "Siapa ini?"
+  "shWho": "Siapa ini?",
+  "ps_ballet": "Menjatuhkan setiap penyerang",
+  "ng_heart1": "Kurang satu hati",
+  "m_pirouette": "Pirouette!"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "Tanpa gravitasi",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "UFO Zorg menembak satu Sharliz... dan membuatnya mungil!",
   "Zzz... *drool bubble*... zzz": "Zzz... *gelembung iler*... zzz",
-  "Zzz... wait, where's the ground?": "Zzz... eh, lantainya mana?"
+  "Zzz... wait, where's the ground?": "Zzz... eh, lantainya mana?",
+  "Ballerina suit": "Kostum balerina",
+  "Pirouette power": "Kekuatan pirouette",
+  "Twirl! Poof! Bye-bye, bats!": "Berputar! Puf! Dadah, kelelawar!"
  }
 }

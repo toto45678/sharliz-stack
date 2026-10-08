@@ -245,6 +245,7 @@ const SHZ3=[
  ['s242','r','Combo x5','קומבו x5','Five in a row! On fire!','חמש ברצף! בוערת!','game'],
  ['s243','c','Tower selfie','סלפי מגדל','Everybody smile! Don\'t wobble!','כולם לחייך! לא לזוז!','game'],
  ['s244','c','Victory dance','ריקוד ניצחון','We did it! Hop, hop, hooray!','הצלחנו! הופ, הופ, הידד!','game'],
+['s271','h','Pirouette power','כוח הפירואט','Twirl! Poof! Bye-bye, bats!','סיבוב! פוף! ביי ביי, עטלפים!','game'],
  ['s245','r','Little fairy','פיה קטנה','Sprinkle, sparkle, wish!','פיזור, נצנוץ, משאלה!','fantasy'],
  ['s246','h','Lamp genie','השד מהמנורה','Three wishes? Make them towers!','שלוש משאלות? שיהיו מגדלים!','fantasy'],
  ['s247','c','Alien','חייזרית','Take me to your tower.','קחו אותי אל המגדל שלכם.','fantasy'],

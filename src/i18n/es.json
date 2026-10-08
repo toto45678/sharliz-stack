@@ -906,7 +906,10 @@
   "arcHowShadow": "Elige el jefe que encaja con la sombra",
   "slMiss": "Fallo",
   "shStreak": "Racha {n}",
-  "shWho": "¿Quién es?"
+  "shWho": "¿Quién es?",
+  "ps_ballet": "Derriba a todo atacante",
+  "ng_heart1": "Un corazón menos",
+  "m_pirouette": "¡Pirueta!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "Gravedad cero",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "El ovni de Zorg le dispara a una Sharliz... ¡y la deja chiquitita!",
   "Zzz... *drool bubble*... zzz": "Zzz... *burbuja de baba*... zzz",
-  "Zzz... wait, where's the ground?": "Zzz... espera, ¿dónde está el piso?"
+  "Zzz... wait, where's the ground?": "Zzz... espera, ¿dónde está el piso?",
+  "Ballerina suit": "Traje de bailarina",
+  "Pirouette power": "Poder pirueta",
+  "Twirl! Poof! Bye-bye, bats!": "¡Gira! ¡Puf! ¡Adiós, murciélagos!"
  }
 }

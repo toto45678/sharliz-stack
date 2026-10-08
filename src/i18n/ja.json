@@ -906,7 +906,10 @@
   "arcHowShadow": "かげに合うボスをえらぼう",
   "slMiss": "はずれ",
   "shStreak": "れんぞく {n}",
-  "shWho": "だれかな?"
+  "shWho": "だれかな?",
+  "ps_ballet": "こうげきしてくる敵をぜんぶたおす",
+  "ng_heart1": "ハートが1つへる",
+  "m_pirouette": "ピルエット！"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "無重力",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "ゾーグのUFOがSharlizをビビッ…ちっちゃくちぢめた!",
   "Zzz... *drool bubble*... zzz": "Zzz…*よだれのあわ*…zzz",
-  "Zzz... wait, where's the ground?": "Zzz…あれ、地面はどこ?"
+  "Zzz... wait, where's the ground?": "Zzz…あれ、地面はどこ?",
+  "Ballerina suit": "バレリーナのいしょう",
+  "Pirouette power": "ピルエットパワー",
+  "Twirl! Poof! Bye-bye, bats!": "くるっ！ポン！コウモリさん、バイバイ！"
  }
 }
