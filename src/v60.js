@@ -46,4 +46,5 @@ function pet3dBuild(T,id){const M=PET3D_META[id],buf=PET3D[id];const g=new T.Gro
 if(typeof PETFLY!=='undefined')for(const id in PET3D_META){if(PET3D_META[id].float)PETFLY[id]=1;else delete PETFLY[id]}
 // start fetching right away (small files); the worn buddy is first in line
 try{const w=petNow();if(w&&PET3D_META[w])pet3dLoad(w)}catch(e){}
-setTimeout(pet3dAll,1500);
+// all the other buddies only when a screen that shows them opens (they were 7.9 MB at every launch, Oct 8 load-time fix)
+for(const fn of ['openWardrobe','openNest'])if(typeof window[fn]==='function'){const _o=window[fn];window[fn]=function(){try{pet3dAll()}catch(e){}return _o.apply(this,arguments)}}
