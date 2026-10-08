@@ -277,6 +277,55 @@ rep("let dt=Math.min(.033,(now-last)/1000);last=now;","let dt=Math.max(0,Math.mi
 # aim guide: an off-centre ice landing slips, so it shows red, not 'ok'
 rep("const col=d<pT?'#a3e635':d<gT?'#ffd60a':d<mT?'#fff4d6':'#ff3ea5';","const col=d<pT?'#a3e635':d<gT?'#ffd60a':d<mT&&swinger.kind!=='ice'?'#fff4d6':'#ff3ea5';")
 
+# world-card thumbnails art/mapt_<id>.webp (150 px) made from the map panels when they are missing or older
+def _mapt():
+    try:
+        from PIL import Image as _Im
+    except ImportError:
+        return all(os.path.exists(P(ROOT,'art','mapt_'+f[5:])) for f in os.listdir(P(ROOT,'art')) if f.startswith('mapn_'))
+    for f in os.listdir(P(ROOT,'art')):
+        if not (f.startswith('mapn_') and f.endswith('.webp')):continue
+        a,b=P(ROOT,'art',f),P(ROOT,'art','mapt_'+f[5:])
+        if os.path.exists(b) and os.path.getmtime(b)>=os.path.getmtime(a):continue
+        im=_Im.open(a).convert('RGB');im=im.resize((150,round(im.height*150/im.width)),_Im.LANCZOS);im.save(b,'WEBP',quality=82,method=6)
+    return True
+MAPT_OK=_mapt()
+# ---- FAST LOAD (Oct 8, Tzach: "loading times can surely be improved a lot"; measured in /mnt/project-files/game/perf/load-report.md):
+# the first visit downloaded 98 files / 20.8 MB before the lobby, the lobby needs ~1.5 MB. Now: the lobby first, the next level's art
+# in idle time after the 3D hero is up (BOOT_IDLE), maps/fallback art/music only when they are used.
+rep("PIC_NAMES.filter(n=>/^(mapn?_|goal_tag|fb_)/.test(n)||/^w3[bmfc]_farm$/.test(n)).forEach(loadPic);",
+    "function bootIdle(fn,wait){let done=false;const go=()=>{if(done)return;done=true;setTimeout(()=>{(window.requestIdleCallback||(f=>setTimeout(f,1)))(()=>{try{fn()}catch(e){}},{timeout:2500})},wait)};"
+    "const t0=Date.now(),chk=()=>{if(typeof H3==='undefined'||H3.state==='ready'||H3.state==='failed'||Date.now()-t0>9000)go();else setTimeout(chk,250)};setTimeout(chk,250)}\n"
+    "// tier 1: the art of the level the Play button starts (+ feedback words in this language, hazards, HUD); tier 2: the map\n"
+    "bootIdle(()=>{try{const z=ZONES[zoneIdx(Math.max(1,Math.min(progress.unlocked||1,ZONES.length*LPZ)))];preloadWorld(z.id)}catch(e){}"
+    "['wow','great','perfect','splendid','whoops','gust'].forEach(k=>{const n='fb_'+(lang==='he'?'he_':'')+k;loadPic(PIC_SET.has(n)?n:'fb_'+k)});loadPic('goal_tag');['hz_crow0','hz_crow1','hz_bomb','hz_bubble','hz_octo','hz_boom'].forEach(n=>{try{hzPic(n)}catch(e){}})},1200);\n"
+    "bootIdle(()=>PIC_NAMES.filter(n=>/^mapn_/.test(n)).forEach(loadPic),5000);const MAPT=%s;" % ('true' if MAPT_OK else 'false'))
+rep("['hz_crow0','hz_crow1','hz_bomb','hz_bubble','hz_octo','hz_boom'].forEach(hzPic);\n","")
+# Tzach's hand-drawn gag sheets and the painted character sheets are only a fallback for when there is no 3D bake yet: load them on first use
+rep("Object.values(ANIMS).forEach(a=>a.sheets.forEach(f=>{const n=f.replace('.webp','');if(ANIM_PICS[n])return;const i=new Image();i.decoding='async';i.src='art/'+f;ANIM_PICS[n]=i}));",
+    "function animLoad(a){a.sheets.forEach(f=>{const n=f.replace('.webp','');if(ANIM_PICS[n])return;const i=new Image();i.decoding='async';i.src='art/'+f;ANIM_PICS[n]=i})}")
+rep("function animReady(name){if(typeof H3!=='undefined'&&H3.baked)return false;const A=ANIMS[name];return !!A&&A.sheets.every(",
+    "function animReady(name){if(typeof H3!=='undefined'&&H3.baked)return false;const A=ANIMS[name];if(A)animLoad(A);return !!A&&A.sheets.every(")
+rep("loadChars();\nconst FACE=","const FACE=")
+rep("function charSprite(col){const C=CHARS[col];if(!C)return null;const i=CHAR_PICS[C.pic];",
+    "function charSprite(col){const C=CHARS[col];if(!C)return null;const i=CHAR_PICS[C.pic];if(!i&&!C.b3d&&(state!=='title'||typeof H3==='undefined'||H3.state==='failed'))loadChars();")
+# the lobby music (2 MB) was downloaded before any tap although it can only play after one
+rep("function musStart(f,loop){const a=new Audio(","let musGest=false;\nfunction musStart(f,loop){if(!musGest)return;const a=new Audio(")
+rep("addEventListener('pointerdown',()=>{if(MUS.pend)","addEventListener('pointerdown',()=>{musGest=true;if(MUS.pend)")
+# world card: a 150 px thumbnail instead of the 1024x1536 map panel shown at 50x50
+rep("const th=document.getElementById('wThumb');const src='art/'+artAlias('mapn_'+z.id)+'.webp'",
+    "const th=document.getElementById('wThumb');const src='art/'+artAlias('mapn_'+z.id).replace(/^mapn_/,MAPT?'mapt_':'mapn_')+'.webp'")
+# no debug shader queries (each one waits for the GPU) and no leftover WebGL probe context
+rep("try{const t=document.createElement('canvas');if(!(t.getContext('webgl2')||t.getContext('webgl'))){H3.state='failed';return}}catch(e){H3.state='failed';return}",
+    "try{const t=document.createElement('canvas'),gl=t.getContext('webgl2')||t.getContext('webgl');if(!gl){H3.state='failed';return}try{const x=gl.getExtension('WEBGL_lose_context');if(x)x.loseContext()}catch(e){}}catch(e){H3.state='failed';return}")
+# the sprite bake (a 2nd WebGL context, ~50 renders) no longer starts the moment three.js arrives: it waits until the lobby is idle
+rep("setTimeout(()=>{bakeFromCache().then(ok=>{if(ok||H3.baked)return;try{bakeChars()}catch(e){console.warn('bake',e)}})},60)};",
+    "setTimeout(()=>{bakeFromCache().then(ok=>{if(ok||H3.baked)return;const go=()=>{if(H3.baked||H3.baking)return;try{bakeChars()}catch(e){console.warn('bake',e)}};H3.bakeGo=go;"
+    "setTimeout(()=>(window.requestIdleCallback||(f=>setTimeout(f,1)))(go,{timeout:3000}),state==='title'?2500:0)})},60)};")
+rep("function bakeChars(){B3OPT=B3GAME;let job;","function bakeChars(){H3.baking=true;B3OPT=B3GAME;let job;")
+rep("if(!col){r.dispose();try{r.forceContextLoss()}catch(e){}H3.baked=true;","if(!col){r.dispose();try{r.forceContextLoss()}catch(e){}H3.baked=true;H3.baking=false;")
+rep("bakePut(col,bakeSig(col,L,hat),sheet,cells);return true}}","bakePut(col,bakeSig(col,L,hat),sheet,cells);return true}}\n{const _sl=startLevel;startLevel=function(){if(H3.bakeGo&&!H3.baked)H3.bakeGo();return _sl.apply(this,arguments)}}")
+rep("},'image/webp',.92)})}\nfunction bakeCols()","},'image/png')})}\nfunction bakeCols()")
 js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')+'\n'+rd('v51.js')+'\n'+rd('v52.js')+'\n'+rd('v53.js')+'\n'+rd('v54.js')+'\n'+rd('v55.js')+'\n'+rd('v56.js')+'\n'+rd('v57.js')+'\n'+rd('v58.js')+'\n'+rd('v59.js')+'\n'+rd('v60.js').replace('__PET3D__',json.dumps(PET3D,separators=(',',':')))+'\n'+rd('v61.js').replace('__STK_BUD_ART__',json.dumps(sorted(os.path.basename(f)[6:-5] for f in _g.glob(P(ROOT,'art','stk_p_*.webp')))))+'\n'+rd('v62.js').replace('__MV_LIST__',json.dumps(sorted(f[3:-4] for f in os.listdir(P(ROOT,'art')) if f.startswith('mv_') and f.endswith('.mp4'))))+'\n'+rd('v63.js')+'\n'+rd('v64.js').replace('__STK3_ART__',json.dumps(sorted(f[4:-5] for f in os.listdir(P(ROOT,'art')) if re.fullmatch(r'stk_(s\d{3}|st\d{2,3}|g\d\d)\.webp',f))))+'\n'+rd('v65.js')+'\n'+rd('v66.js')
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')+'\n'+rd('v51.css')+'\n'+rd('v52.css')+'\n'+rd('v53.css')+'\n'+rd('v54.css')+'\n'+rd('v55.css')+'\n'+rd('v56.css')+'\n'+rd('v57.css')+'\n'+rd('v58.css')+'\n'+rd('v59.css')+'\n'+rd('v62.css')+'\n'+rd('v63.css')+'\n'+rd('v64.css')+'\n'+rd('v65.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
@@ -303,7 +352,9 @@ LANG_HEAD=('<script>(function(){var OK='+json.dumps(_OK)+';window.LANG_NAMES='+j
   "function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}"
   "var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;"
   "window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};"
-  "if(l!=='en'&&l!=='he')document.write('<script src=\"art/i18n_'+l+'.js?v=__V__\"><\\/script>')})();</script>\n")
+  "if(l!=='en'&&l!=='he')document.write('<script src=\"art/i18n_'+l+'.js?v=__V__\"><\\/script>');"
+  "document.write('<link rel=\"preload\" as=\"image\" fetchpriority=\"high\" href=\"art/logo_'+(l==='he'?'he':'en')+'.webp\">')})();</script>\n"
+  '<link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">\n')
 head='''<!doctype html><html lang="he" dir="ltr"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
@@ -328,7 +379,14 @@ if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWo
 V='sharliz-'+time.strftime('%Y%m%d%H%M%S')
 head=head.replace('__V__',V)
 open(P(ROOT,'index.html'),'w',encoding='utf-8').write(head+src+tail)
-sw=open(P(ROOT,'sw.js')).read();sw=re.sub(r"const V='[^']*';","const V='%s';"%V,sw,count=1);open(P(ROOT,'sw.js'),'w').write(sw)
+sw=open(P(ROOT,'sw.js')).read();sw=re.sub(r"const V='[^']*';","const V='%s';"%V,sw,count=1)
+# content hash of every art file: the service worker keeps unchanged art across deploys (sw.js M)
+import hashlib
+_M={}
+for _dp,_dn,_fn in os.walk(P(ROOT,'art')):
+    for _f in _fn:
+        _p=os.path.join(_dp,_f);_M[os.path.relpath(_p,ROOT).replace(os.sep,'/')]=hashlib.md5(open(_p,'rb').read()).hexdigest()[:8]
+sw=re.sub(r"const M=\{[^\n]*\};","const M="+json.dumps(dict(sorted(_M.items())),separators=(',',':'))+";",sw,count=1);open(P(ROOT,'sw.js'),'w').write(sw)
 if '--preview' in sys.argv:open(P(ROOT,'preview.html'),'w',encoding='utf-8').write('<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">\n'+src)
 print('built index.html',len(src),V)
 if STORE:

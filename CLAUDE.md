@@ -65,6 +65,9 @@ tools/album_import.py  album v3 art batches → art/stk_<id>.webp (regular trimm
 tools/glb2sh.py       Meshy GLB → compact boss format: python3 tools/glb2sh.py boss.glb b3d_<zone> art/
 ```
 
+### Loading (Oct 8, measured: /mnt/project-files/game/perf/load-report.md, scripts in /mnt/project-files/game/perf/scripts/)
+RULE: nothing new may download at boot unless the lobby shows it. The first visit used to fetch 98 files / 20.8 MB before the lobby (lobby art at ~17 s on 4G); now 27 files / 1.2 MB (lobby art 0.5 s, three.js 0.8 s). build.py "FAST LOAD" reps: `bootIdle(fn,wait)` runs after the 3D hero is up (tier 1 = the next level's world + fb words in this language + hazards + goal tag; tier 2 = map panels); hand-drawn gag sheets (animLoad) and painted character sheets (loadChars) load only when used without a 3D bake; lobby music is created on the first tap (musGest); buddy models load when worn or when Style/nest opens (v60); world card uses art/mapt_<id>.webp (150 px, made by build.py from mapn_); `<link rel=preload>` for lobby.webp, logo and three.min.js; the sprite bake waits for an idle lobby (or starts on Play) and stores PNG. sw.js: art/ lives in cache 'sharliz-art-1' keyed by content hash (build.py writes `const M={path:hash}`), so a deploy re-downloads only changed art; the page is network-first with a 3 s fallback to the saved copy.
+
 ### Build & test
 ```
 python3 tools/build.py            # regenerates index.html (+ preview.html with --preview, no PWA shell)
