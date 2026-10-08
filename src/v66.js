@@ -79,7 +79,7 @@ function balDraw(){if(!BAL.zaps.length)return;ctx.save();ctx.lineCap='round';ctx
     else if(z.hit){const q=z.hit,k=q.t/.8;
       ctx.save();ctx.globalAlpha=Math.max(0,1-k);ctx.strokeStyle='#ff5fb4';ctx.lineWidth=4;ctx.beginPath();ctx.arc(q.x,q.y,S*(.4+k*1.1),0,7);ctx.stroke();
       for(let i=0;i<6;i++){const a=i/6*Math.PI*2+k*2,r=S*(.5+k*1.2);ctx.save();ctx.translate(q.x+Math.cos(a)*r,q.y+Math.sin(a)*r);ctx.fillStyle=i%2?'#ffd1ea':'#ffd23f';ctx.strokeStyle=INK;ctx.lineWidth=2;star(S*.13);ctx.stroke();ctx.fill();ctx.restore()}ctx.restore();
-      if(z===BAL.zaps.find(w=>w.hit&&Math.hypot(w.hit.x-q.x,w.hit.y-q.y)<S*1.5))gameText(ctx,t('m_pirouette'),clamp(q.x,S*1.4,W-S*1.4),q.y-S*.7-k*S*.6,Math.round(S*.42),POPPAL.wow,-.08)}}
+      if(z===BAL.zaps.find(w=>w.hit&&Math.hypot(w.hit.x-q.x,w.hit.y-q.y)<S*1.5))gameText(ctx,t('m_pirouette'),clamp(q.x,S*1.4,W-S*1.4),q.y-S*.7<H*.26?q.y+S*1.1+k*S*.3:q.y-S*.7-k*S*.6,Math.round(S*.42),POPPAL.wow,-.08)}}
   ctx.restore()}
 
 /* ---------- hooks ---------- */

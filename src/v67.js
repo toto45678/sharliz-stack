@@ -11,7 +11,7 @@ Object.assign(I18N.en,{hsTitle:'Sharliz House',hsSub:'Furniture with powers',hsL
   hsNeedLv:'Player level {n}',hsNow:'Now',hsNext:'Next level',hsTurn:'Turn',hsDrag:'Drag it with your finger to move it',hsSkins:'House skins',hsUse:'Use',hsUsing:'In use',
   hsOpenT:'Your house is open!',hsOpenP:'Buy furniture, decorate it, and every piece makes your Sharliz stronger.',hsGo:'To the house',hsBought:'{x}: level {n}!',hsRoomLock:'This room opens at player level {n}',
   hsNoRoom:'No free spot in this room. Move something first.',hsMini:'House',hsBonus:'House bonus',
-  hsOven:'Cookie oven: +1 buddy cookie!',hsFridge:'Fridge: a free booster!',hsBed:'Comfy bed: a free shield!',hsWard:'Wardrobe: {n} coins back!',hsMail:'Mailbox: +{n} coins!',hsBird:'Bird house: +{n} cookies!',
+  hsOven:'Cookie oven: +1 buddy cookie!',hsFridge:'Fridge: a free booster!',hsBed:'Comfy bed: a free shield!',hsWard:'Coins back from the wardrobe: +{n}!',hsMail:'Mailbox: +{n} coins!',hsBird:'Cookies from the bird house: +{n}!',
   hsr_living:'Living room',hsr_kitchen:'Kitchen',hsr_bedroom:'Bedroom',hsr_yard:'Yard',
   hss_cottage:'Wood cottage',hss_candy:'Candy house',hss_space:'Space station',hss_ocean:'Undersea bubble',hss_castle:'Royal castle',hss_jungle:'Jungle treehouse',
   hsf_piggy:'Piggy bank',hsf_sofa:'Cozy sofa',hsf_clock:'Grandfather clock',hsf_fireplace:'Fireplace',hsf_aquarium:'Fish tank',hsf_books:'Bookshelf',hsf_tv:'TV',
@@ -20,15 +20,15 @@ Object.assign(I18N.en,{hsTitle:'Sharliz House',hsSub:'Furniture with powers',hsL
   hsf_vane:'Weather vane',hsf_mailbox:'Mailbox',hsf_birdhouse:'Bird house',hsf_flowers:'Flower bed',hsf_trampoline:'Trampoline',hsf_balloons:'Balloon post',
   hsp_piggy:'+{n}% coins every level you win',hsp_sofa:'+{n}% wider landing window',hsp_clock:'Swing {n}% slower',hsp_fireplace:'+{n}% light in night worlds',hsp_aquarium:'Waves, currents and dunes {n}% weaker',
   hsp_books:'+{n}% XP',hsp_tv:'Frenzy lasts {n}% longer',hsp_oven:'A buddy cookie every {n} wins',hsp_fridge:'A free booster every {n} wins',hsp_candyjar:'+{n}% candy in holiday events',
-  hsp_table:'Every heart left is worth +{n} coins',hsp_sink:'Storm landings slide {n}% less',hsp_toaster:'+{n} s in the bonus stage',hsp_bed:'A free shield every {n} levels',
+  hsp_table:'Coins for every heart left: +{n}',hsp_sink:'Storm landings slide {n}% less',hsp_toaster:'+{n} s in the bonus stage',hsp_bed:'A free shield every {n} levels',
   hsp_nightlight:'Aim line for the first {n} floors',hsp_toychest:'+{n}% coins in the arcade',hsp_wardrobe:'{n}% coins back on My hero buys',hsp_trophies:'+{n}% boss damage',
-  hsp_telescope:'Fall {n}% slower in space worlds',hsp_vane:'Wind {n}% weaker',hsp_mailbox:'+{n}% coins in the daily gift',hsp_birdhouse:'+{n} cookies when an egg hatches',
-  hsp_flowers:'+{n}% points for a perfect',hsp_trampoline:'+{n} coins for every frenzy landing',hsp_balloons:'Coin balloon comes {n}% more often'});
+  hsp_telescope:'Fall {n}% slower in space worlds',hsp_vane:'Wind {n}% weaker',hsp_mailbox:'+{n}% coins in the daily gift',hsp_birdhouse:'Cookies when an egg hatches: +{n}',
+  hsp_flowers:'+{n}% points for a perfect',hsp_trampoline:'Coins for every frenzy landing: +{n}',hsp_balloons:'Coin balloon comes {n}% more often'});
 Object.assign(I18N.he,{hsTitle:'בית השארליזים',hsSub:'רהיטים עם כוחות',hsLocked:'נפתח ברמת שחקן {n}',hsLvl:'רמה {n}',hsBuy:'קנה',hsUp:'שדרג',hsMax:'רמה מקסימלית!',
   hsNeedLv:'רמת שחקן {n}',hsNow:'עכשיו',hsNext:'ברמה הבאה',hsTurn:'סובב',hsDrag:'גרור באצבע כדי להזיז',hsSkins:'סקינים לבית',hsUse:'בחר',hsUsing:'בשימוש',
   hsOpenT:'הבית שלך נפתח!',hsOpenP:'קנה רהיטים, קשט את הבית, וכל רהיט מחזק את השארליז שלך.',hsGo:'לבית',hsBought:'{x}: רמה {n}!',hsRoomLock:'החדר הזה נפתח ברמת שחקן {n}',
   hsNoRoom:'אין מקום פנוי בחדר. הזז משהו קודם.',hsMini:'בית',hsBonus:'בונוס הבית',
-  hsOven:'תנור עוגיות: עוד עוגייה לבאדי!',hsFridge:'מקרר: בוסטר חינם!',hsBed:'מיטה מפנקת: מגן חינם!',hsWard:'ארון בגדים: {n} מטבעות חזרו!',hsMail:'תיבת דואר: עוד {n} מטבעות!',hsBird:'בית ציפורים: עוד {n} עוגיות!',
+  hsOven:'תנור עוגיות: עוד עוגייה לבאדי!',hsFridge:'מקרר: בוסטר חינם!',hsBed:'מיטה מפנקת: מגן חינם!',hsWard:'מטבעות שחזרו מארון הבגדים: {n}!',hsMail:'תיבת דואר: עוד {n} מטבעות!',hsBird:'עוגיות מבית הציפורים: {n}!',
   hsr_living:'סלון',hsr_kitchen:'מטבח',hsr_bedroom:'חדר שינה',hsr_yard:'חצר',
   hss_cottage:'בקתת עץ',hss_candy:'בית ממתקים',hss_space:'תחנת חלל',hss_ocean:'בועה מתחת לים',hss_castle:'ארמון מלכותי',hss_jungle:'בית עץ בג׳ונגל',
   hsf_piggy:'קופת חזיר',hsf_sofa:'ספה רכה',hsf_clock:'שעון סבא',hsf_fireplace:'אח בוערת',hsf_aquarium:'אקווריום',hsf_books:'מדף ספרים',hsf_tv:'טלוויזיה',
@@ -37,10 +37,10 @@ Object.assign(I18N.he,{hsTitle:'בית השארליזים',hsSub:'רהיטים �
   hsf_vane:'שבשבת',hsf_mailbox:'תיבת דואר',hsf_birdhouse:'בית ציפורים',hsf_flowers:'ערוגת פרחים',hsf_trampoline:'טרמפולינה',hsf_balloons:'עמוד בלונים',
   hsp_piggy:'עוד {n}% מטבעות מכל שלב שעוברים',hsp_sofa:'חלון נחיתה רחב יותר ב-{n}%',hsp_clock:'התנודה איטית יותר ב-{n}%',hsp_fireplace:'עוד {n}% אור בעולמות לילה',hsp_aquarium:'גלים, זרמים ודיונות חלשים יותר ב-{n}%',
   hsp_books:'עוד {n}% XP',hsp_tv:'הפרנזי ארוך יותר ב-{n}%',hsp_oven:'עוגייה לבאדי כל {n} ניצחונות',hsp_fridge:'בוסטר חינם כל {n} ניצחונות',hsp_candyjar:'עוד {n}% ממתקים באירועי חג',
-  hsp_table:'כל לב שנשאר שווה עוד {n} מטבעות',hsp_sink:'נחיתה בסערה מחליקה פחות ב-{n}%',hsp_toaster:'עוד {n} שניות בשלב הבונוס',hsp_bed:'מגן חינם כל {n} שלבים',
+  hsp_table:'מטבעות נוספים על כל לב שנשאר: {n}',hsp_sink:'נחיתה בסערה מחליקה פחות ב-{n}%',hsp_toaster:'שניות נוספות בשלב הבונוס: {n}',hsp_bed:'מגן חינם כל {n} שלבים',
   hsp_nightlight:'קו כיוון ב-{n} הקומות הראשונות',hsp_toychest:'עוד {n}% מטבעות בארקייד',hsp_wardrobe:'{n}% מהמחיר חוזר על קנייה ב"הגיבור שלי"',hsp_trophies:'עוד {n}% נזק לבוסים',
-  hsp_telescope:'נפילה איטית יותר ב-{n}% בעולמות חלל',hsp_vane:'רוח חלשה יותר ב-{n}%',hsp_mailbox:'עוד {n}% מטבעות במתנה היומית',hsp_birdhouse:'עוד {n} עוגיות כשביצה בוקעת',
-  hsp_flowers:'עוד {n}% נקודות על פרפקט',hsp_trampoline:'עוד {n} מטבעות על כל נחיתה בפרנזי',hsp_balloons:'בלון המטבעות מגיע יותר ב-{n}%'});
+  hsp_telescope:'נפילה איטית יותר ב-{n}% בעולמות חלל',hsp_vane:'רוח חלשה יותר ב-{n}%',hsp_mailbox:'עוד {n}% מטבעות במתנה היומית',hsp_birdhouse:'עוגיות נוספות כשביצה בוקעת: {n}',
+  hsp_flowers:'עוד {n}% נקודות על פרפקט',hsp_trampoline:'מטבעות נוספים על כל נחיתה בפרנזי: {n}',hsp_balloons:'בלון המטבעות מגיע יותר ב-{n}%'});
 
 const HS_G=6,HS_OPEN=10,HS_PRICE=[250,400,600,900,1300],HS_GATE=[0,12,15,19,24];
 const HS_ROOMS=[{id:'living',lv:10,ic:'🛋️'},{id:'kitchen',lv:13,ic:'🍳'},{id:'bedroom',lv:16,ic:'🛏️'},{id:'yard',lv:20,ic:'🌳'}];
@@ -191,7 +191,8 @@ function hsHit(x,y){const room=hs().room,list=hsItemsIn(room).map(f=>({f,F:hsFoo
   for(const {f,F} of list){const r=HSV.rect[f.id];if(r&&hsPic('hs_f_'+f.id)){if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){const u=(x-r.x)/r.w;if(hsAlphaAt(r.im,r.fl?1-u:u,(y-r.y)/r.h))return f.id}continue}
     let {i,j,di,dj}=F;if(f.wall){if(F.f)di=.5;else dj=.5}const z0=f.z0,z1=f.z0+Math.max(f.h,.5);
     const P=[hsP(i,j+dj,z0),hsP(i+di,j+dj,z0),hsP(i+di,j,z0),hsP(i+di,j,z1),hsP(i,j,z1),hsP(i,j+dj,z1)];if(hsInPoly(x,y,P))return f.id}
-  // a near miss still picks the closest item
+  // a tap on a free floor tile picks nothing (so it unselects); a near miss elsewhere still picks the closest item
+  const [ti,tj]=hsInv(x,y);if(ti>=0&&tj>=0&&ti<HS_G&&tj<HS_G){const busy=new Set();list.forEach(({f,F})=>hsCells(f.id,F).forEach(c=>busy.add(c)));if(!busy.has(Math.floor(ti)+','+Math.floor(tj)))return null}
   let best=null,bd=HSV.TW*.35;for(const {f,F} of list){const [cx,cy]=hsP(F.i+F.di/2,F.j+F.dj/2,f.z0+f.h/2),d=Math.hypot(cx-x,cy-y)-HSV.TW*.4*(F.di+F.dj)/2;if(d<bd){bd=d;best=f.id}}return best}
 function hsDown(e){const [x,y]=hsPt(e),id=hsHit(x,y);if(!id){if(HSV.sel){HSV.sel=null;hsPanel()}return}const F=hsFoot(id),[pi,pj]=hsInv(x,y);
   HSV.drag={id,gi:pi-F.i,gj:pj-F.j,x0:x,y0:y,moved:false,F:null};try{HSV.cv.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()}
@@ -221,14 +222,14 @@ function hsRender(){const r=HSV.el,H=hs();
   const rooms=r.querySelector('.hs-rooms');HS_ROOMS.forEach(R=>{const open=hsRoomOpen(R.id),b=document.createElement('button');b.className='hs-room'+(H.room===R.id?' on':'')+(open?'':' lock');
     b.innerHTML=`<i>${open?R.ic:'🔒'}</i><b></b>${open?'':'<small></small>'}`;b.querySelector('b').textContent=t('hsr_'+R.id);if(!open)b.querySelector('small').textContent=t('hsLvl',{n:R.lv});
     b.onclick=()=>{if(!open){sfx.locked();noteToast(t('hsRoomLock',{n:R.lv}));return}sfx.click();H.room=R.id;HSV.sel=null;HSV.hero=null;saveProgress();hsRender()};rooms.appendChild(b)});
-  const cv=HSV.cv=r.querySelector('.hs-cv');HSV.g=cv.getContext('2d');HSV.dpr=Math.min(2,window.devicePixelRatio||1);HSV.W=Math.min(560,Math.max(300,(r.clientWidth||window.innerWidth)-12));hsGeom();
+  const cv=HSV.cv=r.querySelector('.hs-cv');HSV.g=cv.getContext('2d');HSV.dpr=Math.min(2,window.devicePixelRatio||1);HSV.W=Math.round(Math.min(560,Math.max(300,(r.clientWidth||window.innerWidth)-12),Math.max(260,(window.innerHeight||800)*.36/.7535)));hsGeom();
   cv.width=Math.round(HSV.W*HSV.dpr);cv.height=Math.round(HSV.H*HSV.dpr);cv.style.width=HSV.W+'px';cv.style.height=HSV.H+'px';
   cv.addEventListener('pointerdown',hsDown);cv.addEventListener('pointermove',hsMove);cv.addEventListener('pointerup',hsUp);cv.addEventListener('pointercancel',()=>{HSV.drag=null});
   hsCoins();hsPanel();hsFit(rooms.querySelectorAll('b'))}
 // a long single word (German 'Wohnzimmer') shrinks to fit instead of breaking in the middle
 function hsFit(els,min=8){els.forEach(e=>{e.style.fontSize='';let fs=parseFloat(getComputedStyle(e).fontSize);while(e.scrollWidth>e.clientWidth+1&&fs>min){fs-=.5;e.style.fontSize=fs+'px'}})}
-function hsCoins(){const s=HSV.el&&HSV.el.querySelector('.hs-coins span');if(s)s.textContent=(progress.coins||0).toLocaleString()}
-function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-panel'),H=hs(),room=H.room,sel=HSV.sel,plv=hsPlayerLv(),sc=p.scrollTop;p.innerHTML='';
+function hsCoins(){const s=HSV.el&&HSV.el.querySelector('.hs-coins span');if(s){s.textContent=(progress.coins||0).toLocaleString();hsFit(HSV.el.querySelectorAll('.ps-title b'),16)}}
+function hsPanel(keep){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-panel'),H=hs(),room=H.room,sel=HSV.sel,plv=hsPlayerLv(),sc=p.scrollTop;p.innerHTML='';
   if(sel){const f=HSF[sel],L=hsLv(sel),c=document.createElement('div');c.className='hs-sel';
     c.innerHTML=`<span class="hs-ic big"></span><div class="hs-st"><b></b><i class="hs-stars"></i><p class="now"></p><p class="nx"></p><small></small></div><div class="hs-acts"><button class="btn hs-turn"><span></span></button><button class="btn primary hs-upb"></button><button class="x-btn hs-unsel" aria-label="close"></button></div>`;
     hsIcon(c.querySelector('.hs-ic'),sel);c.querySelector('b').textContent=t('hsf_'+sel);c.querySelector('.hs-stars').innerHTML=[1,2,3,4,5].map(k=>`<em class="${k<=L?'on':''}">★</em>`).join('');
@@ -236,22 +237,24 @@ function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-pane
     c.querySelector('small').textContent=t('hsDrag');c.querySelector('.hs-turn span').textContent=t('hsTurn');c.querySelector('.hs-turn').onclick=()=>hsTurn(sel);
     c.querySelector('.hs-unsel').innerHTML=XSVG;c.querySelector('.hs-unsel').onclick=()=>{sfx.click();HSV.sel=null;hsPanel()};hsBuyBtn(c.querySelector('.hs-upb'),sel);p.appendChild(c)}
   const grid=document.createElement('div');grid.className='hs-grid';
-  HS_F.filter(f=>f.room===room).forEach(f=>{const L=hsLv(f.id),c=document.createElement('div');c.className='hs-card'+(L?' hs-own':'')+(sel===f.id?' on':'')+(L>=5?' max':'');
+  HS_F.filter(f=>f.room===room).forEach(f=>{const L=hsLv(f.id),c=document.createElement('div');c.className='hs-card'+(L?' hs-own':'')+(sel===f.id?' on':'')+(L>=5?' max':'');c.dataset.id=f.id;
     c.innerHTML=`<span class="hs-ic"></span><b></b><i class="hs-stars">${[1,2,3,4,5].map(k=>`<em class="${k<=L?'on':''}">★</em>`).join('')}</i><p></p><button class="btn hs-bb"></button>`;
     hsIcon(c.querySelector('.hs-ic'),f.id);c.querySelector('b').textContent=t('hsf_'+f.id);c.querySelector('p').textContent=hsTxt(f.id,L||1);hsBuyBtn(c.querySelector('.hs-bb'),f.id);
     if(L)c.onclick=e=>{if(e.target.closest('button'))return;sfx.click();HSV.sel=f.id;hsPanel()};grid.appendChild(c)});
-  p.appendChild(grid);p.scrollTop=sel?0:sc;hsCoins();hsFit(p.querySelectorAll('.hs-card b,.hs-st b'))}
+  p.appendChild(grid);p.scrollTop=sel&&!keep?0:sc;if(keep){const e=p.querySelector(keep.q);if(e)p.scrollTop+=e.getBoundingClientRect().top-p.getBoundingClientRect().top-keep.y}hsCoins();hsFit(p.querySelectorAll('.hs-card b,.hs-st b'))}
 function hsIcon(el,id){const src=hsSrc('hs_f_'+id);if(src){const i=document.createElement('img');i.src=src;i.alt='';el.appendChild(i)}else{el.textContent=HSF[id].em;el.style.setProperty('--c',HSF[id].col)}}
 function hsBuyBtn(b,id){const L=hsLv(id),plv=hsPlayerLv();if(L>=5){b.textContent=t('hsMax');b.disabled=true;b.className+=' max';return}
   const need=hsGate(id,L+1),price=HS_PRICE[L];
   if(plv<need){b.innerHTML='<span>🔒</span> ';b.appendChild(document.createTextNode(t('hsNeedLv',{n:need})));b.className+=' lock';b.onclick=e=>{e.stopPropagation();sfx.locked();noteToast(t('hsNeedLv',{n:need}))};return}
   b.innerHTML=`<span></span>${coinImg()}<em>${price.toLocaleString()}</em>`;b.querySelector('span').textContent=L?t('hsUp'):t('hsBuy');if((progress.coins||0)<price)b.className+=' poor';
-  b.onclick=e=>{e.stopPropagation();hsBuy(id)}}
-function hsBuy(id){const H=hs(),L=hsLv(id),price=HS_PRICE[L];if(L>=5||hsPlayerLv()<hsGate(id,L+1))return;
+  b.onclick=e=>{e.stopPropagation();hsBuy(id,b)}}
+function hsBuy(id,btn){const H=hs(),L=hsLv(id),price=HS_PRICE[L];if(L>=5||hsPlayerLv()<hsGate(id,L+1))return;
   if((progress.coins||0)<price){sfx.locked();popupToast(t('needCoins'));return}
   if(!L&&!hsAutoPlace(id)){sfx.locked();noteToast(t('hsNoRoom'));return}
   progress.coins-=price;H.lv[id]=L+1;saveProgress();updateWalletUI();sfx.flourish&&sfx.flourish(L>=4?4:2);vib([20,30,20]);HSV.sel=id;hsBurst(id);
-  noteToast(t('hsBought',{x:t('hsf_'+id),n:L+1}));hsPanel()}
+  noteToast(t('hsBought',{x:t('hsf_'+id),n:L+1}));
+  const host=btn&&btn.closest('.hs-sel,.hs-card'),pn=HSV.el&&HSV.el.querySelector('.hs-panel');
+  hsPanel(host&&pn?{q:host.classList.contains('hs-sel')?'.hs-sel':'.hs-card[data-id="'+id+'"]',y:host.getBoundingClientRect().top-pn.getBoundingClientRect().top}:null)}
 function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className='hs-sheet';
   m.innerHTML=`<div class="hs-sh"><div class="hs-shh"><b></b><button class="x-btn" aria-label="close"></button></div><div class="hs-skins"></div></div>`;
   m.querySelector('b').textContent=t('hsSkins');const x=m.querySelector('.x-btn');x.innerHTML=XSVG;x.onclick=()=>{sfx.click();m.remove()};m.onclick=e=>{if(e.target===m)m.remove()};
@@ -270,11 +273,13 @@ function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className=
   b.onclick=openHouse;row.appendChild(b)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{const b=document.getElementById('lobHouse');if(b){const open=hsOpen();b.hidden=!progress.tut;b.classList.toggle('lock',!open);
     b.querySelector('b').textContent=open?t('hsMini'):t('hsLvl',{n:HS_OPEN});const pic=hsSrc('hs_house_'+hs().skin),ic=b.querySelector('.lt-ic');if(pic){const im=ic.querySelector('img')||ic.insertBefore(Object.assign(document.createElement('img'),{alt:''}),ic.firstChild);if(!im.src.endsWith(pic))im.src=pic;const sv=ic.querySelector('svg');if(sv)sv.remove()}}
-    if(hsOpen()&&!hs().intro)setTimeout(hsIntroMaybe,1200)}catch(e){}return r}}
+    if(hsOpen()&&!hs().intro)hsIntroLater(1200)}catch(e){}return r}}
+let hsIT=0;function hsIntroLater(ms){clearTimeout(hsIT);hsIT=setTimeout(hsIntroMaybe,ms)}
 function hsIntroMaybe(){const H=hs();if(H.intro||!hsOpen()||state!=='title'||document.querySelector('.hs-pop'))return;
-  if(typeof gdBusy==='function'&&gdBusy())return;H.intro=1;saveProgress();const m=document.createElement('div');m.className='hs-pop';
+  if(typeof gdBusy==='function'&&gdBusy()){if(state==='title')hsIntroLater(2000);return}H.intro=1;saveProgress();const m=document.createElement('div');m.className='hs-pop';
   m.innerHTML=`<div class="hz"><div class="rays"></div><div class="hs-house">🏠</div><h3></h3><p></p><button class="btn primary"><span></span></button></div>`;m.querySelector('h3').textContent=t('hsOpenT');m.querySelector('p').textContent=t('hsOpenP');
   m.querySelector('button span').textContent=t('hsGo');m.querySelector('button').onclick=()=>{m.remove();openHouse()};m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);sfx.flourish&&sfx.flourish(3)}
+{const _d=drawTitleArt;drawTitleArt=function(){if(HSV.el&&!HSV.el.hidden)return;return _d.apply(this,arguments)}}
 {const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){const e=document.getElementById('houseScr');return (!!e&&!e.hidden)||!!document.querySelector('.hs-pop')||_lo()}}
 
 /* ---------- the powers in the game ---------- */

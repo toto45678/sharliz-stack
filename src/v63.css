@@ -55,3 +55,5 @@
 .ss-sec{flex:none;display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;border:2.5px solid #120d2b;background:#fff;color:#2a1a66;font:.85rem/1 "Lilita One","Secular One",system-ui,sans-serif;white-space:nowrap}
 .ss-sec.on{background:linear-gradient(180deg,#ffe24d,#ffad00);box-shadow:0 2px 0 #120d2b}
 .ss-sec i{font-style:normal;min-width:18px;padding:1px 5px;border-radius:999px;background:#2a1a66;color:#fff;font-size:.7rem}
+/* nightly Oct 9: the name of a missing sticker sat on its dark silhouette */
+.ss-it small{position:relative;z-index:1;max-width:100%;box-sizing:border-box;padding:1px 6px;border-radius:8px;background:rgba(255,255,255,.9)}

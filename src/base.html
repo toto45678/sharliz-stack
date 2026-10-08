@@ -1,4 +1,4 @@
-<title>Sharliz Stack</title>
+<title>Sharliz Tower</title>
 <style>
 @font-face{font-family:'Lilita One';src:url(art/fonts/lilita.woff) format('woff');font-display:swap}
 @font-face{font-family:'Secular One';src:url(art/fonts/secular.woff) format('woff');font-display:swap}
@@ -510,7 +510,7 @@ canvas.wt{position:fixed;inset:0;width:100vw;height:100vh;z-index:98}
       <button class="coin-pill" id="lobCoins"><img class="coin-i" src="art/ic_coin.webp" alt=""><span data-coins>0</span><span class="plus">+</span></button>
       <button class="round-btn" id="settingsBtn" aria-label="Settings"><img src="art/ic_gear.webp" alt=""></button>
     </div>
-    <div class="logo" aria-label="Sharliz Stack"><div class="bt l1" id="logo1"></div><div class="bt pink l2" id="logo2"></div></div>
+    <div class="logo" aria-label="Sharliz Tower"><div class="bt l1" id="logo1"></div><div class="bt pink l2" id="logo2"></div></div>
     <div class="lob-side l">
       <button class="side-btn orange" id="lobShop"><span class="sq"><img src="art/ic_shop.webp" alt=""></span><b data-i18n="shop"></b></button>
       <button class="side-btn purple" id="lobHats"><span class="sq"><img src="art/ic_hats.webp" alt=""></span><b data-i18n="wardrobeShort"></b><i class="badge" data-wbadge hidden>!</i></button>
@@ -2212,7 +2212,7 @@ function shareTower(){
   g.fillStyle=P.grass;g.fillRect(0,h-90,w,90);
   withCtx(g,sz,()=>{for(let i=0;i<n;i++){const s=tower[i];drawSharliz(s,w/2+s.xs*sz,h-90-bh*.3-i*step,0,'happy',{x:0,y:-1,forced:true},0)}});
   g.font='34px "Lilita One","Secular One",system-ui,sans-serif';g.textAlign='center';g.lineWidth=8;g.strokeStyle=INK;g.lineJoin='round';const tl=(mode==='levels'?t('level')+' '+level+' · ':'')+t('floorsN',{n:n-1});
-  g.strokeText('Sharliz Stack',w/2,56);g.fillStyle='#ffd60a';g.fillText('Sharliz Stack',w/2,56);g.font='24px "Lilita One","Secular One",system-ui,sans-serif';g.strokeText(tl,w/2,92);g.fillStyle='#fff';g.fillText(tl,w/2,92);
+  g.strokeText('Sharliz Tower',w/2,56);g.fillStyle='#ffd60a';g.fillText('Sharliz Tower',w/2,56);g.font='24px "Lilita One","Secular One",system-ui,sans-serif';g.strokeText(tl,w/2,92);g.fillStyle='#fff';g.fillText(tl,w/2,92);
   c.toBlob(async blob=>{if(!blob)return;const file=new File([blob],'sharliz-tower.png',{type:'image/png'});
     try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Sharliz Stack'});return}}catch(e){}
     const u=URL.createObjectURL(blob),ov=document.createElement('div');ov.className='photo-ov';ov.innerHTML=`<img src="${u}" alt=""><p></p>`;ov.querySelector('p').textContent=t('photoHint');ov.onclick=()=>{ov.remove();URL.revokeObjectURL(u)};document.body.appendChild(ov)},'image/png')}

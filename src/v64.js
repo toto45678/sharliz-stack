@@ -533,3 +533,6 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
 if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const had=!!(trData().got||{}).g;const r=_t.apply(this,arguments);try{if(!had&&(trData().got||{}).g){ST().tgold=(ST().tgold||0)+1;saveProgress()}}catch(e){}return r}}
 if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){const ok=BN&&!BN.paid&&BN.open.length>=BN_CH.length;const r=_b.apply(this,arguments);try{if(ok){ST().bn3=(ST().bn3||0)+1;saveProgress()}}catch(e){}return r}}
 if(typeof dlClaim==='function'){const _d=dlClaim;dlClaim=function(){const s=dlState();const r=_d.apply(this,arguments);try{if(!s.claimed&&s.day===7){ST().gift7=(ST().gift7||0)+1;saveProgress()}}catch(e){}return r}}
+// nightly Oct 9: a long page title shrinks to fit its column (down to 60%), then wraps
+{const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const b=SB.el&&SB.el.querySelector('.sb-head b');if(b&&b.clientWidth){b.classList.remove('wrap');b.style.fontSize='';
+  let fs=parseFloat(getComputedStyle(b).fontSize);const min=fs*.6;while(b.scrollWidth>b.clientWidth+1&&fs>min){fs-=1;b.style.fontSize=fs+'px'}if(b.scrollWidth>b.clientWidth+1)b.classList.add('wrap')}}catch(e){}return r}}

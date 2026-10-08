@@ -108,5 +108,5 @@
   .lob-side .side-btn b{font-size:.72rem}
 }
 /* toasts never run off the screen; long hints wrap in a smaller font */
-.coin-toast{max-width:calc(100vw - 32px);box-sizing:border-box}
+.coin-toast{max-width:calc(100vw - 32px);box-sizing:border-box;pointer-events:none}
 .coin-toast.long{white-space:normal;text-align:center;justify-content:center;font-size:1.05rem;line-height:1.25;-webkit-text-stroke:3px var(--ink);padding:8px 16px 10px;border-radius:22px;width:max-content}
