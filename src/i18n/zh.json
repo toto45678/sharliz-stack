@@ -857,7 +857,9 @@
   "ssHow": "卖重复 → 星星 → 想买什么买什么！",
   "sbDouble": "重复！",
   "sbDupHint": "重复贴纸可在贴纸商店换星星",
-  "sk_t_stk": "贴纸"
+  "sk_t_stk": "贴纸",
+  "ssFrame": "相册金色边框",
+  "ssFrameOn": "你的相册变成金色啦!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "机器小狗",
   "Galaxy whale": "银河鲸",
   "Thunder griffin": "雷霆狮鹫",
-  "Sticker bomb": "满身贴纸"
+  "Sticker bomb": "满身贴纸",
+  "Sticker hat": "贴纸帽"
  }
 }

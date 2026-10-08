@@ -857,7 +857,9 @@
   "ssHow": "Doppelte verkaufen → Sterne → kaufen, was du willst!",
   "sbDouble": "Doppelt!",
   "sbDupHint": "Verkaufe doppelte im Sticker-Laden für Sterne",
-  "sk_t_stk": "Sticker"
+  "sk_t_stk": "Sticker",
+  "ssFrame": "Goldrahmen fürs Album",
+  "ssFrameOn": "Dein Album ist jetzt aus Gold!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "Robo-Welpe",
   "Galaxy whale": "Galaxiewal",
   "Thunder griffin": "Donnergreif",
-  "Sticker bomb": "Sticker-Explosion"
+  "Sticker bomb": "Sticker-Explosion",
+  "Sticker hat": "Stickermütze"
  }
 }

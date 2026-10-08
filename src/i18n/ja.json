@@ -857,7 +857,9 @@
   "ssHow": "ダブりを売る→スター→ほしいものを買おう！",
   "sbDouble": "ダブり！",
   "sbDupHint": "ダブりはシールショップでスターに交換できるよ",
-  "sk_t_stk": "シール"
+  "sk_t_stk": "シール",
+  "ssFrame": "アルバムの金のフレーム",
+  "ssFrameOn": "アルバムが金色になったよ!"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "ロボこいぬ",
   "Galaxy whale": "ギャラクシークジラ",
   "Thunder griffin": "いかずちグリフィン",
-  "Sticker bomb": "シールだらけ"
+  "Sticker bomb": "シールだらけ",
+  "Sticker hat": "シールぼうし"
  }
 }

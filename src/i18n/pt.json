@@ -857,7 +857,9 @@
   "ssHow": "Venda repetidas → estrelas → compre o que quiser!",
   "sbDouble": "Repetida!",
   "sbDupHint": "Venda as repetidas na loja de figurinhas por estrelas",
-  "sk_t_stk": "Figurinhas"
+  "sk_t_stk": "Figurinhas",
+  "ssFrame": "Moldura dourada do álbum",
+  "ssFrameOn": "Seu álbum agora é de ouro!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "Cachorrinho robô",
   "Galaxy whale": "Baleia galáctica",
   "Thunder griffin": "Grifo do trovão",
-  "Sticker bomb": "Chuva de figurinhas"
+  "Sticker bomb": "Chuva de figurinhas",
+  "Sticker hat": "Gorro de figurinhas"
  }
 }

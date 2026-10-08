@@ -857,7 +857,9 @@
   "ssHow": "Vendi i doppioni → stelle → compra quello che vuoi!",
   "sbDouble": "Doppione!",
   "sbDupHint": "Vendi i doppioni nel negozio figurine in cambio di stelle",
-  "sk_t_stk": "Figurine"
+  "sk_t_stk": "Figurine",
+  "ssFrame": "Cornice d’oro per l’album",
+  "ssFrameOn": "Ora il tuo album è d’oro!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "Cucciolo robot",
   "Galaxy whale": "Balena galattica",
   "Thunder griffin": "Grifone del tuono",
-  "Sticker bomb": "Pioggia di figurine"
+  "Sticker bomb": "Pioggia di figurine",
+  "Sticker hat": "Berretto di figurine"
  }
 }

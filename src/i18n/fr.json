@@ -857,7 +857,9 @@
   "ssHow": "Vends tes doubles → étoiles → achète ce que tu veux !",
   "sbDouble": "Double !",
   "sbDupHint": "Vends tes doubles à la boutique d’autocollants contre des étoiles",
-  "sk_t_stk": "Autocollants"
+  "sk_t_stk": "Autocollants",
+  "ssFrame": "Cadre doré de l’album",
+  "ssFrameOn": "Ton album est en or maintenant !"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "Chiot robot",
   "Galaxy whale": "Baleine galactique",
   "Thunder griffin": "Griffon tonnerre",
-  "Sticker bomb": "Pluie d’autocollants"
+  "Sticker bomb": "Pluie d’autocollants",
+  "Sticker hat": "Bonnet à autocollants"
  }
 }

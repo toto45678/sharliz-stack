@@ -857,7 +857,9 @@
   "ssHow": "Vende repetidos → estrellas → ¡compra lo que quieras!",
   "sbDouble": "¡Repetido!",
   "sbDupHint": "Vende los repetidos en la tienda de cromos por estrellas",
-  "sk_t_stk": "Cromos"
+  "sk_t_stk": "Cromos",
+  "ssFrame": "Marco dorado del álbum",
+  "ssFrameOn": "¡Tu álbum ahora es de oro!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "Perrito robot",
   "Galaxy whale": "Ballena galáctica",
   "Thunder griffin": "Grifo del trueno",
-  "Sticker bomb": "Lluvia de cromos"
+  "Sticker bomb": "Lluvia de cromos",
+  "Sticker hat": "Gorro de cromos"
  }
 }

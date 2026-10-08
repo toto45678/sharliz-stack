@@ -857,7 +857,9 @@
   "ssHow": "Tekrarları sat → yıldız → istediğini al!",
   "sbDouble": "Tekrar!",
   "sbDupHint": "Tekrarları çıkartma dükkânında yıldız karşılığı sat",
-  "sk_t_stk": "Çıkartmalar"
+  "sk_t_stk": "Çıkartmalar",
+  "ssFrame": "Altın albüm çerçevesi",
+  "ssFrameOn": "Albümün artık altın!"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "Robot köpek",
   "Galaxy whale": "Galaksi balinası",
   "Thunder griffin": "Gök gürültüsü grifonu",
-  "Sticker bomb": "Çıkartma yağmuru"
+  "Sticker bomb": "Çıkartma yağmuru",
+  "Sticker hat": "Çıkartmalı şapka"
  }
 }

@@ -834,7 +834,9 @@
   "ssHow": "Sell doubles → stars → buy what you want!",
   "sbDouble": "Double!",
   "sbDupHint": "Sell doubles in the sticker shop for stars",
-  "sk_t_stk": "Stickers"
+  "sk_t_stk": "Stickers",
+  "ssFrame": "Gold album frame",
+  "ssFrameOn": "Your album is golden now!"
  },
  "pairs": [
   "3D boss models (season 1)",
@@ -1059,6 +1061,7 @@
   "Starry",
   "Stars",
   "Sticker bomb",
+  "Sticker hat",
   "Stinger Crown",
   "Stories under a million stars.",
   "Stripes",

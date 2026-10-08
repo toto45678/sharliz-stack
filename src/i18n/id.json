@@ -857,7 +857,9 @@
   "ssHow": "Jual dobel → bintang → beli yang kamu mau!",
   "sbDouble": "Dobel!",
   "sbDupHint": "Jual stiker dobel di toko stiker untuk bintang",
-  "sk_t_stk": "Stiker"
+  "sk_t_stk": "Stiker",
+  "ssFrame": "Bingkai emas album",
+  "ssFrameOn": "Albummu sekarang emas!"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
@@ -1118,6 +1120,7 @@
   "Robo puppy": "Anak anjing robot",
   "Galaxy whale": "Paus galaksi",
   "Thunder griffin": "Griffin petir",
-  "Sticker bomb": "Hujan stiker"
+  "Sticker bomb": "Hujan stiker",
+  "Sticker hat": "Topi stiker"
  }
 }
