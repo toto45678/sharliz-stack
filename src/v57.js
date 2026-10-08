@@ -2,10 +2,10 @@
    Cover → chapter pages of 9 numbered slots (die-cut stickers, holo foil for rare/holo), tap a sticker → zoom with tilt + shine.
    New chapter "Sharliz": 24 illustrated stickers that only come from STICKER PACKS (3 stickers each; common/rare/holo).
    Packs: every 3 won levels, the first win over each boss, or 150 coins. Duplicates → coins. A full chapter → a big reward. */
-Object.assign(I18N.en,{sbOpen:'Open',sbBack:'Back',sbPacks:'Packs: {n}',sbNext:'Next pack {n}/3',sbHow:'Packs come from wins, bosses, the daily gift, weekly missions, level-ups, the tournament, the Pass and events',psPack:'Sticker pack',dlPack:'+ pack',sbOpenPack:'Opening a pack!',sbOpenSub:'Which stickers are inside?',sbTap:'Tap to continue',sbTapPack:'Tap the pack!',sbNew:'New!',sbDup:'Double +{n}',sbMore:'Open another ({n})',sbToBook:'To the album',
+Object.assign(I18N.en,{sbOpen:'Open',sbBack:'Back',sbPacks:'Packs: {n}',sbNext:'Next pack {n}/3',sbHow:'Packs come from wins, bosses, the daily gift, weekly missions, level-ups, the tournament, the Pass and events',psPack:'Sticker pack',dlPack:'+ pack',sbOpenPack:'Opening a pack!',sbOpenSub:'Which stickers are inside?',sbTap:'Tap to continue',sbTapPack:'Tap the pack!',sbNew:'New!',sbDup:'Double +{n}',sbMore:'Open another ({n})',sbToBook:'To the album',sbAll:'Open all ({n})',sbOpenMany:'Opening {n} packs!',sbNewN:'{n} new stickers!',sbNoNew:'All doubles: coins!',sbGold:'Golden pack',sbGoldGot:'+1 golden sticker pack!',sbGoldOpen:'Golden pack!',sbGoldSub:'A holo sticker inside for sure!',sbHowG:'Golden packs: the gold chest in the bonus stage, a tournament gold medal and day 7 of the daily gift',
   sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
   sbHow_shz:'Comes from sticker packs',sbCover:'Collect · Discover · Complete!',ch_shz:'Sharliz',sbPage:'Page {a}/{b}'});
-Object.assign(I18N.he,{sbOpen:'פתחו',sbBack:'חזרה',sbPacks:'שקיות: {n}',sbNext:'שקית הבאה {n}/3',sbHow:'שקיות מקבלים מניצחונות, בוסים, המתנה היומית, משימות שבועיות, עליית רמה, הטורניר, ה-Pass ואירועים',psPack:'שקית מדבקות',dlPack:'+ שקית',sbOpenPack:'פותחים שקית!',sbOpenSub:'איזה מדבקות מחכות בפנים?',sbTap:'הקישו להמשיך',sbTapPack:'הקישו על השקית!',sbNew:'חדש!',sbDup:'כפולה +{n}',sbMore:'פתחו עוד ({n})',sbToBook:'חזרה לאלבום',
+Object.assign(I18N.he,{sbOpen:'פתחו',sbBack:'חזרה',sbPacks:'שקיות: {n}',sbNext:'שקית הבאה {n}/3',sbHow:'שקיות מקבלים מניצחונות, בוסים, המתנה היומית, משימות שבועיות, עליית רמה, הטורניר, ה-Pass ואירועים',psPack:'שקית מדבקות',dlPack:'+ שקית',sbOpenPack:'פותחים שקית!',sbOpenSub:'איזה מדבקות מחכות בפנים?',sbTap:'הקישו להמשיך',sbTapPack:'הקישו על השקית!',sbNew:'חדש!',sbDup:'כפולה +{n}',sbMore:'פתחו עוד ({n})',sbToBook:'חזרה לאלבום',sbAll:'פתחו הכל ({n})',sbOpenMany:'פותחים {n} שקיות!',sbNewN:'{n} מדבקות חדשות!',sbNoNew:'הכל כפולות: מטבעות!',sbGold:'שקית זהב',sbGoldGot:'+1 שקית מדבקות זהב!',sbGoldOpen:'שקית זהב!',sbGoldSub:'בטוח יש בפנים מדבקת הולוגרמה!',sbHowG:'שקיות זהב: תיבת הזהב בשלב הבונוס, מדליית זהב בטורניר ויום 7 במתנה היומית',
   sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
   sbHow_shz:'מגיעה בשקיות מדבקות',sbCover:'אספו · גלו · השלימו!',ch_shz:'שארליז',sbPage:'עמוד {a}/{b}'});
 /* the 24 Sharliz stickers: id, rarity, names, a fun line */
@@ -35,26 +35,32 @@ const SHZ=[
  ['s23','h','Galaxy Sharliz','שארליז הגלקסיה','Made of stars. Literally.','עשויה מכוכבים. ממש.'],
  ['s24','h','Rainbow Sharliz','שארליז הקשת','Every colour at once!','כל הצבעים ביחד!']];
 const SB_DUP={c:10,r:25,h:60},SB_REW={shz:[1500,120],rare:[500,60],boss:[2000,150],world:[1000,100],buddy:[800,80],hat:[1500,120],special:[500,60]};
-function sbData(){const D=progress.stkp=progress.stkp||{};D.packs=D.packs||0;D.w=D.w||0;D.got=D.got||{};D.done=D.done||{};D.boss=D.boss||{};return D}
+function sbData(){const D=progress.stkp=progress.stkp||{};D.packs=D.packs||0;D.gpacks=D.gpacks||0;D.w=D.w||0;D.got=D.got||{};D.done=D.done||{};D.boss=D.boss||{};return D}
 STK_PAGES.unshift({id:'shz',items:()=>{const D=sbData(),L=lang==='he'?1:0;return SHZ.map(s=>({id:'shz:'+s[0],n:D.got[s[0]]||0,src:'art/stk_'+s[0]+'.webp',name:L?s[3]:s[2],line:L?s[5]:s[4],rar:s[1],hint:t('sbHow_shz'),shz:1}))}});
 {const sp=STK_PAGES.findIndex(P=>P.id==='special');if(sp>=0&&!SPECIALS.length)STK_PAGES.splice(sp,1)}
 const SB_ICON={shz:'stk_s01',rare:'ic_star',boss:'ic_boss',world:'ic_map',buddy:'ns_nest',hat:'ic_hats',special:'ic_gift'};
 const SB_COL={shz:'#ff7ab8',rare:'#ffcf3a',boss:'#ff6a5a',world:'#5fd068',buddy:'#59c6ff',hat:'#b48cff',special:'#ffa94d'};
 function sbRar(P,it){if(it.rar)return it.rar;if(P.id==='boss'||it.prem)return 'r';if(P.id==='rare')return 'h';return 'c'}
 /* ---------- earning packs ---------- */
-let SBQ=0;
-function sbGive(n){if(!n)return;const D=sbData();D.packs+=n;saveProgress();SBQ+=n;try{stkBadge()}catch(e){}setTimeout(sbNotify,0)}
+let SBQ=0,SBQG=0;
+function sbGive(n,g){if(!n)return;const D=sbData();if(g){D.gpacks+=n;SBQG+=n}else{D.packs+=n;SBQ+=n}saveProgress();try{stkBadge()}catch(e){}setTimeout(sbNotify,0)}
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if((mode==='levels'||mode==='event')&&was!=='win'&&state==='win'){try{const D=sbData();D.w++;let n=0;if(D.w%3===0)n++;
     if(mode==='levels'&&lvInZone()===LPZ-1){const k=zone().sid||zone().id;if(!D.boss[k]){D.boss[k]=1;n++}}saveProgress();if(n)sbGive(n)}catch(e){}}return r}}
-function sbNotify(){if(!SBQ)return;if(document.querySelector('.lvup')){setTimeout(sbNotify,500);return}const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
-  if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){const n=SBQ;SBQ=0;const d=document.createElement('div');d.className='sb-strip';d.innerHTML=`<img src="art/sb_pack.webp" alt=""><span><b></b><small></small></span>`;
-    d.querySelector('b').textContent=n>1?t('sbPackGot').replace('+1','+'+n):t('sbPackGot');d.querySelector('small').textContent=t('sbPackSub');body.appendChild(d)}
+function sbNotify(){if(!SBQ&&!SBQG)return;if(document.querySelector('.lvup')){setTimeout(sbNotify,500);return}const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
+  const items=[[SBQ,'sb_pack','sbPackGot'],[SBQG,'sb_gpack','sbGoldGot']].filter(x=>x[0]),txt=([n,,k])=>n>1?t(k).replace('+1','+'+n):t(k);
+  if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){SBQ=SBQG=0;items.forEach(it=>{const d=document.createElement('div');d.className='sb-strip'+(it[1]==='sb_gpack'?' gold':'');d.innerHTML=`<img src="art/${it[1]}.webp" alt=""><span><b></b><small></small></span>`;
+    d.querySelector('b').textContent=txt(it);d.querySelector('small').textContent=t('sbPackSub');body.appendChild(d)})}
   else if(state==='win'||state==='over'){} // the result card opens a moment later and picks the queue up (showOverlay below)
-  else{const n=SBQ;SBQ=0;popupToast(n>1?t('sbPackGot').replace('+1','+'+n):t('sbPackGot'))}}
-{const _s=showOverlay;showOverlay=function(){const r=_s.apply(this,arguments);if(SBQ)setTimeout(sbNotify,160);return r}}
+  else{SBQ=SBQG=0;popupToast(items.map(txt).join('  '))}}
+{const _s=showOverlay;showOverlay=function(){const r=_s.apply(this,arguments);if(SBQ||SBQG)setTimeout(sbNotify,160);return r}}
 /* more ways to EARN packs (Tzach, Oct 7). Packs are never sold, for coins or money: random stickers for purchase = a loot box (App Store). */
 // player level-up: a pack for every even player level
 if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const n=progress.lvRew||0;const r=_l.apply(this,arguments);if(n){let k=0;for(let L=lv-n+1;L<=lv;L++)if(L%2===0)k++;sbGive(k)}return r}}
+// bonus stage: the gold chest (24 floors) gives a GOLDEN pack the first time on each boss (replays: coins only)
+if(typeof bnCollect==='function'){const _bc=bnCollect;bnCollect=function(){const g=BN&&!BN.paid&&BN.first&&BN.open.includes(2);const r=_bc.apply(this,arguments);if(g)sbGive(1,1);return r}
+  const _br=bnResult;bnResult=function(){const r=_br.apply(this,arguments);try{if(BN&&BN.first&&BN.open.includes(2)){const rw=document.querySelector('#card .bn-rew');if(rw){let bo=rw.querySelector('.bn-bos');if(!bo){bo=document.createElement('div');bo.className='bn-bos';rw.appendChild(bo)}
+    const e=document.createElement('span');e.className='bn-bo bn-gpk';e.innerHTML='<img src="art/sb_gpack.webp" alt=""><em>×1</em><small></small>';e.querySelector('small').textContent=t('sbGold');bo.appendChild(e)}}}catch(e){}return r}
+  const _bi=bnIntro;bnIntro=function(){const r=_bi.apply(this,arguments);try{if(BN&&BN.first){const c=document.querySelector('#card .bn-ch.gold');if(c){const im=document.createElement('img');im.className='bn-gpk';im.src='art/sb_gpack.webp';im.alt='';c.appendChild(im)}}}catch(e){}return r}}
 // trophy room: every gold trophy
 if(typeof achClaim==='function'){const _a=achClaim;achClaim=function(A,g){const r=_a.apply(this,arguments);if(g===2)sbGive(1);return r}}
 // holiday events: finishing stage 5 and stage 10 of the event path for the first time
@@ -63,7 +69,7 @@ if(typeof evFinish==='function'){const _e=evFinish;evFinish=function(won){let d0
 if(typeof PS_REW!=='undefined'){[3,10,15,22,27].forEach(i=>{PS_REW[i][0]={pk:1}});
   const _rh=psRewHTML;psRewHTML=function(R){if(!R.pk)return _rh.apply(this,arguments);return `<span class="rw it"><img src="art/sb_pack.webp" alt=""></span><small class="lab">${t('psPack')}</small>`};
   const _pg=psGive;psGive=function(R){if(R.pk){sbGive(R.pk);return}return _pg.apply(this,arguments)}}
-{const _b=stkBadge;stkBadge=function(){const n=stkNew()+sbData().packs;document.querySelectorAll('[data-sbadge]').forEach(b=>{b.hidden=!n;b.textContent=n})}}
+{const _b=stkBadge;stkBadge=function(){const D=sbData(),n=stkNew()+D.packs+D.gpacks;document.querySelectorAll('[data-sbadge]').forEach(b=>{b.hidden=!n;b.textContent=n})}}
 /* ---------- the book ---------- */
 const SB={el:null,ch:0,pg:0,view:'cover'};
 function sbChapters(){return STK_PAGES}
@@ -91,7 +97,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
   r.innerHTML=sbTop(true)+`<div class="sb-chs"></div><div class="sb-paperwrap"><div class="sb-paper ${dir>0?'flip-n':dir<0?'flip-p':''}" style="--c:${SB_COL[P.id]||'#b48cff'}"><div class="sb-rings"></div>
       <div class="sb-head"><span class="sb-washi"></span><b></b><small></small></div><div class="sb-grid"></div><div class="sb-pnav"><button class="sb-pp" aria-label="prev"></button><span></span><button class="sb-pn" aria-label="next"></button></div></div></div>
     <div class="sb-foot"><div class="sb-bar${done?' full':''}"><div class="t"><i style="width:${got/all.length*100}%"></i><span>${got}/${all.length}</span></div><button class="sb-chest${done&&!claimed?' can':''}${claimed?' got':''}${!done&&all.length-got<=3?' near':''}"><img src="art/ic_chest${claimed?'_open':''}.webp" alt="">${!done&&all.length-got<=3?`<em>${all.length-got}</em>`:''}</button></div>
-      <button class="sb-packbtn${D.packs?' has':''}"><img src="art/sb_pack.webp" alt=""><span></span>${D.packs?`<i class="badge">${D.packs}</i>`:''}</button></div>`;
+      <button class="sb-packbtn${D.packs?' has':''}"><img src="art/sb_pack.webp" alt=""><span></span>${D.packs?`<i class="badge">${D.packs}</i>`:''}</button><button class="sb-gpackbtn${D.gpacks?' has':''}" aria-label="gold"><img src="art/sb_gpack.webp" alt="">${D.gpacks?`<i class="badge">${D.gpacks}</i>`:''}</button></div>`;
   sbWireTop(r,true);r.querySelector('.sb-ttl').textContent=t('albumBook');
   const chs=r.querySelector('.sb-chs');sbChapters().forEach((Q,i)=>{const it=Q.items().filter(x=>!x.soon),g=it.filter(x=>x.n).length,nw=it.some(x=>x.n&&!seen.includes(x.id)),bt=document.createElement('button');
     bt.className='sb-ch'+(i===SB.ch?' on':'');bt.style.setProperty('--c',SB_COL[Q.id]||'#b48cff');bt.innerHTML=`<img src="art/${SB_ICON[Q.id]}.webp" alt=""><span><b></b><small>${g}/${it.length}</small></span>${nw?'<i class="dot"></i>':''}`;
@@ -111,6 +117,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
   const pb=r.querySelector('.sb-packbtn');pb.querySelector('span').textContent=D.packs?t('sbPacks',{n:D.packs}):t('sbNext',{n:D.w%3});
   // packs are earned only (no buying with coins): random items for purchase would be a loot box (Apple odds disclosure, AU 16+)
   pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();noteToast(t('sbHow'))}};
+  r.querySelector('.sb-gpackbtn').onclick=()=>{if(D.gpacks){sbPack(1)}else{sfx.locked();noteToast(t('sbHowG'))}};
   if(fresh.length){fresh.forEach((id,k)=>setTimeout(()=>{if(sfx.ok()){tone({f:900,f2:1500,d:.1,type:'sine',v:.06});noise({d:.08,v:.05,hp:3000})}vib(10)},250+k*200));seen.push(...fresh);saveProgress()}
   stkBadge()}
 /* ---------- zoom ---------- */
@@ -131,23 +138,39 @@ function sbZoom(P,all,idx){const owned=all.map((it,i)=>[it,i]).filter(([it])=>it
     card.onpointermove=e=>{const b=card.getBoundingClientRect();tx=(e.clientX-b.left)/b.width-.5;ty=(e.clientY-b.top)/b.height-.5;card.classList.add('drag');set(tx,ty)};card.onpointerleave=()=>{card.classList.remove('drag')}};
   draw();sfx.flourish(1)}
 /* ---------- pack opening ---------- */
-function sbRoll(){const r=Math.random(),rar=r<.06?'h':r<.30?'r':'c';const pool=SHZ.filter(s=>s[1]===rar);return pick(pool)}
-function sbPack(){const D=sbData();if(!D.packs)return;D.packs--;const got=[sbRoll(),sbRoll(),sbRoll()];let coins=0;const res=got.map(s=>{const had=D.got[s[0]]||0;D.got[s[0]]=had+1;if(had){coins+=SB_DUP[s[1]]}return {s,dup:had>0}});
-  if(coins){wallet().coins+=coins}saveProgress();updateWalletUI();
-  const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk';document.getElementById('app').appendChild(m);
-  m.innerHTML=`<div class="coin-pill pk-coins">${coinImg()}<span>${progress.coins-coins}</span></div><div class="flash"></div><h3></h3><p></p><div class="pk-cards"></div><div class="pk-pack"><img class="pk-body" src="art/sb_pack.webp" alt=""><img class="pk-logo" src="art/logo_${lang==='he'?'he':'en'}.webp" alt=""><img class="pk-top" src="art/sb_pack_top.webp" alt=""></div><small class="pk-tap"></small><div class="pk-btns"></div>`;
-  m.querySelector('h3').textContent=t('sbOpenPack');m.querySelector('p').textContent=t('sbOpenSub');m.querySelector('.pk-tap').textContent=t('sbTapPack');
-  const cards=m.querySelector('.pk-cards');res.forEach((R,i)=>{const c=document.createElement('div');c.className='pk-card r-'+R.s[1]+(R.dup?' dup':' nw');c.style.setProperty('--i',i);
-    c.innerHTML=`<div class="in"><div class="bk"><img src="art/sb_pack.webp" alt=""></div><div class="fr"><div class="foil"></div><img src="art/stk_${R.s[0]}.webp" alt=""><b></b></div></div><span class="tag ${R.dup?'dup':'nw'}"></span><span class="rc">${t('sbRar_'+R.s[1])}</span>`;
-    c.querySelector('.tag').textContent=R.dup?t('sbDup',{n:SB_DUP[R.s[1]]}):t('sbNew');c.querySelector('b').textContent=L?R.s[3]:R.s[2];cards.appendChild(c)});
-  let stage=0;const step=()=>{if(stage===0){stage=1;m.classList.add('torn');setTimeout(()=>{const b=m.querySelector('.pk-body');if(b)b.src='art/sb_pack_open.webp'},250);sfx.flourish(2);vib([20,30,20]);if(sfx.ok())noise({d:.25,v:.08,hp:2500});
-      const cs=m.querySelector('.pk-coins span');let shown=progress.coins-coins;
-      res.forEach((R,i)=>{const T0=800+i*750,c=cards.children[i];setTimeout(()=>{c.classList.add('tease');if(sfx.ok()&&R.s[1]!=='c')tone({f:400,f2:R.s[1]==='h'?900:700,d:.3,type:'triangle',v:.05})},T0);
+/* golden pack (earned only, never sold): the first sticker is always holo, the other two are holo 25% / rare 75% */
+function sbRoll(g,i){const r=Math.random(),rar=g?(i===0||r<.25?'h':'r'):(r<.06?'h':r<.30?'r':'c');const pool=SHZ.filter(s=>s[1]===rar);return pick(pool)}
+const SB_MAX=10; // most packs opened at once
+/* g = golden pack, many = open all of that kind (up to SB_MAX). Nothing is spent until the pack is torn open. */
+function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])return;const np=many?Math.min(SB_MAX,D[key]):1,art=g?'sb_gpack':'sb_pack';
+  const got=[];for(let p=0;p<np;p++)for(let i=0;i<3;i++)got.push(sbRoll(g,i));const seen={};
+  const res=got.map(s=>{const had=(D.got[s[0]]||0)+(seen[s[0]]||0);seen[s[0]]=(seen[s[0]]||0)+1;return {s,dup:had>0}});const coins=res.reduce((a,R)=>a+(R.dup?SB_DUP[R.s[1]]:0),0);
+  const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk'+(g?' gold':'')+(np>1?' many':'');document.getElementById('app').appendChild(m);
+  m.innerHTML=`<div class="coin-pill pk-coins">${coinImg()}<span>${progress.coins}</span></div><div class="flash"></div><h3></h3><p></p><div class="pk-cards"></div><div class="pk-pack"><img class="pk-body" src="art/${art}.webp" alt=""><img class="pk-logo" src="art/logo_${lang==='he'?'he':'en'}.webp" alt=""><img class="pk-top" src="art/${art}_top.webp" alt="">${np>1?`<i class="pk-n">×${np}</i>`:''}</div><small class="pk-tap"></small><div class="pk-btns"></div>`;
+  m.querySelector('h3').textContent=np>1?t('sbOpenMany',{n:np}):g?t('sbGoldOpen'):t('sbOpenPack');m.querySelector('p').textContent=g?t('sbGoldSub'):t('sbOpenSub');m.querySelector('.pk-tap').textContent=t('sbTapPack');
+  const cards=m.querySelector('.pk-cards');if(np>1){const k=res.length;cards.style.setProperty('--cols',k<=9?3:k<=12?4:k<=15?5:6)}
+  res.forEach((R,i)=>{const c=document.createElement('div');c.className='pk-card r-'+R.s[1]+(R.dup?' dup':' nw');c.style.setProperty('--i',i);
+    c.innerHTML=`<div class="in"><div class="bk"><img src="art/${art}.webp" alt=""></div><div class="fr"><div class="foil"></div><img src="art/stk_${R.s[0]}.webp" alt=""><b></b></div></div><span class="tag ${R.dup?'dup':'nw'}"></span><span class="rc">${t('sbRar_'+R.s[1])}</span>`;
+    c.querySelector('.tag').textContent=np>1?(R.dup?'+'+SB_DUP[R.s[1]]:t('sbNew')):R.dup?t('sbDup',{n:SB_DUP[R.s[1]]}):t('sbNew');c.querySelector('b').textContent=L?R.s[3]:R.s[2];cards.appendChild(c)});
+  // before tearing: 'open all' when there is more than one pack of this kind
+  if(np===1&&D[key]>1){const all=document.createElement('button');all.className='btn';all.innerHTML='<span></span>';all.querySelector('span').textContent=t('sbAll',{n:Math.min(SB_MAX,D[key])});all.onclick=e=>{e.stopPropagation();sfx.click();m.remove();sbPack(g,true)};m.querySelector('.pk-btns').appendChild(all)}
+  let stage=0;const step=()=>{if(stage!==0)return;stage=1;
+      // spend the packs + add the stickers now (the result was rolled when the screen opened)
+      D[key]-=np;res.forEach(R=>{D.got[R.s[0]]=(D.got[R.s[0]]||0)+1});if(coins)wallet().coins+=coins;saveProgress();updateWalletUI();
+      m.querySelector('.pk-btns').innerHTML='';m.classList.add('torn');setTimeout(()=>{const b=m.querySelector('.pk-body');if(b)b.src=`art/${art}_open.webp`},250);sfx.flourish(2);vib([20,30,20]);if(sfx.ok())noise({d:.25,v:.08,hp:2500});
+      const cs=m.querySelector('.pk-coins span');let shown=progress.coins-coins;cs.textContent=shown;
+      const fin=()=>{stage=2;m.querySelector('.pk-tap').textContent='';const bt=m.querySelector('.pk-btns');const D2=sbData(),left=D2[key];
+        if(np>1){const nw=res.filter(R=>!R.dup).length;m.querySelector('p').textContent=nw?t('sbNewN',{n:nw}):t('sbNoNew')}
+        if(left){const more=document.createElement('button');more.className='btn primary';more.innerHTML='<span></span>';more.querySelector('span').textContent=t('sbMore',{n:left});more.onclick=()=>{m.remove();sbPack(g)};bt.appendChild(more);
+          if(left>1){const all=document.createElement('button');all.className='btn';all.innerHTML='<span></span>';all.querySelector('span').textContent=t('sbAll',{n:Math.min(SB_MAX,left)});all.onclick=()=>{sfx.click();m.remove();sbPack(g,true)};bt.appendChild(all)}}
+        const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=0;sbPageView()};bt.appendChild(back)};
+      if(np===1){res.forEach((R,i)=>{const T0=800+i*750,c=cards.children[i];setTimeout(()=>{c.classList.add('tease');if(sfx.ok()&&R.s[1]!=='c')tone({f:400,f2:R.s[1]==='h'?900:700,d:.3,type:'triangle',v:.05})},T0);
         setTimeout(()=>{c.classList.remove('tease');c.classList.add('flip');if(sfx.ok())tone({f:R.s[1]==='h'?1200:R.s[1]==='r'?900:700,f2:R.s[1]==='h'?1900:1300,d:.14,type:'sine',v:.07});vib(R.s[1]==='c'?8:[15,20,15]);
           if(R.dup)setTimeout(()=>sbFlyCoins(c,m.querySelector('.pk-coins'),()=>{shown+=SB_DUP[R.s[1]];cs.textContent=shown}),500)},T0+(R.s[1]==='c'?250:600))});
-      setTimeout(()=>{stage=2;m.querySelector('.pk-tap').textContent='';const bt=m.querySelector('.pk-btns');const D2=sbData();
-        if(D2.packs){const more=document.createElement('button');more.className='btn primary';more.innerHTML='<span></span>';more.querySelector('span').textContent=t('sbMore',{n:D2.packs});more.onclick=()=>{m.remove();sbPack()};bt.appendChild(more)}
-        const back=document.createElement('button');back.className='btn'+(D2.packs?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=0;sbPageView()};bt.appendChild(back)},800+res.length*750+900)}};
+        setTimeout(fin,800+res.length*750+900)}
+      else{// many packs: the cards deal into a grid and flip one after another, fast; doubles pay out at the end in one go
+        const dt=Math.max(90,Math.min(160,2600/res.length));res.forEach((R,i)=>{const c=cards.children[i];setTimeout(()=>{c.classList.add('flip');if(sfx.ok())tone({f:R.s[1]==='h'?1200:R.s[1]==='r'?900:650+i*8,f2:R.s[1]==='h'?1900:1300,d:.1,type:'sine',v:R.s[1]==='c'?.04:.07});if(R.s[1]!=='c')vib([15,20,15])},700+i*dt)});
+        const T=700+res.length*dt+500;if(coins)setTimeout(()=>sbFlyCoins(cards,m.querySelector('.pk-coins'),()=>{cs.textContent=progress.coins}),T);setTimeout(fin,T+(coins?900:300))}};
   m.querySelector('.pk-pack').onclick=step;m.onclick=e=>{if(stage===0&&!e.target.closest('.pk-btns'))step()};sfx.click()}
 function sbFlyCoins(from,to,done){const a=from.getBoundingClientRect(),b=to.getBoundingClientRect();for(let k=0;k<5;k++){const im=document.createElement('img');im.src='art/ic_coin.webp';im.className='fly-coin';im.style.left=(a.left+a.width/2-13+(k-2)*8)+'px';im.style.top=(a.top+a.height/2-13)+'px';document.body.appendChild(im);
   setTimeout(()=>{im.style.transform=`translate(${b.left+14-(a.left+a.width/2-13+(k-2)*8)}px,${b.top+4-(a.top+a.height/2-13)}px) scale(.8)`;im.style.opacity='0'},30+k*70);setTimeout(()=>{im.remove();if(k===4){if(sfx.ok())sfx.coin(2);done&&done()}},800+k*70)}}

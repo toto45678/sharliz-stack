@@ -263,6 +263,8 @@ rep("let lang=store('sharliz-lang'); if(!I18N[lang]) lang='en';",
 rep("  Object.keys(I18N).forEach(code=>{const b=document.createElement('button');b.textContent=I18N[code]._label;b.setAttribute('aria-pressed',code===lang);b.onclick=()=>{lang=code;store('sharliz-lang',code);sfx.click();applyLang()};el.appendChild(b)});",
     "  const N=window.LANG_NAMES||{};['en'].concat(window.SHZ_DEV&&SHZ_DEV!=='en'?[SHZ_DEV]:[]).forEach(code=>{const b=document.createElement('button');b.textContent=N[code]||code;b.setAttribute('aria-pressed',code===lang);"
     "b.onclick=()=>{if(code===lang)return;store('sharliz-lang',code);sfx.click();if(!window.LANGX&&I18N[code]){lang=code;applyLang()}else location.reload()};el.appendChild(b)});")
+# story stickers (v58): after a rare Sharliz lands, show progress toward the next story card
+rep("popup(nw?t('rareNew'):t('rareAgain'),xOf(d.xs),y-BH*1.4,'#22d3ee')}","popup(nw?t('rareNew'):t('rareAgain'),xOf(d.xs),y-BH*1.4,'#22d3ee');if(typeof storyHit==='function')storyHit()}")
 # --- mechanic videos (v62): the game now does what the videos show ---
 # ghost: drawSharliz0 used to reset globalAlpha to the sprite's own alpha, so the ghosted swinger was never see-through
 rep("ctx.save();ctx.globalAlpha=.2;ctx.fillStyle=LINE;ctx.beginPath();ctx.ellipse(w*.06+off(.5)*.5",
