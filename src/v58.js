@@ -40,7 +40,7 @@ function storyLeft(){const D=sbData(),own=(D.story||[]).length;return own>=STORY
 /* worlds: an illustrated postcard of each world (art/stk_w_<sid>.webp) */
 {const P=STK_PAGES.find(p=>p.id==='world');if(P){const _it=P.items;P.items=()=>{const it=_it();return it.map((x,i)=>{const z=ZONES[i];return Object.assign(x,{src:'art/stk_w_'+(z.sid||z.id)+'.webp',img:null,round:false,card:1})})}}}
 {const _o=openAlbum;openAlbum=function(){storySync();return _o.apply(this,arguments)}}
-{const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const P=sbChapters()[SB.ch],q=storyLeft();if(P.id==='rare'&&q){const sm=SB.el.querySelector('.sb-head small');sm.textContent=t('storyNext',q);sm.classList.add('sb-snext')}}catch(e){}return r}}
+{const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const P=sbChapters()[SB.ch],q=storyLeft();if(P.id==='rare'&&q&&(SB.sec===undefined||SB.sec==='short')){const sm=SB.el.querySelector('.sb-head small');sm.textContent=t('storyNext',q);sm.classList.add('sb-snext')}}catch(e){}return r}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{if(storySync())stkBadge()}catch(e){}return r}}
 /* buddies: an illustrated scene of the buddy with Sharliz (paid buddies glow) */
 {const P=STK_PAGES.find(p=>p.id==='buddy');if(P){const _it=P.items;P.items=()=>_it().map(it=>{const id=it.id.slice(6);return Object.assign(it,{src:'art/stk_p_'+id+'.webp',img:null,card:1,rar:WPET[id]&&WPET[id].real?'h':'c'})})}}

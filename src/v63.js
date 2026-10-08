@@ -50,22 +50,26 @@ function ssStars(){return sbData().stars||0}
 function ssExtras(){const D=sbData();return SHZ.map(s=>[s,Math.max(0,(D.got[s[0]]||0)-1)]).filter(x=>x[1])}
 function ssOwnedSp(S){return S.k==='gold'?false:S.k==='frame'?!!sbData().frame:ssHas(S.c,S.id)}
 /* ---------- the shop screen ---------- */
-let SSEL=null;
+let SSEL=null,ssSec=null;
 function openStkShop(){audio();sfx.click();if(!SSEL){SSEL=document.createElement('div');SSEL.className='ss';document.getElementById('app').appendChild(SSEL)}SSEL.hidden=false;ssRender(true)}
 function ssClose(){sfx.click();SSEL.hidden=true;if(SB.el&&!SB.el.hidden){SB.view==='cover'?sbCover():sbPageView()}}
 function ssRender(top){const D=sbData(),ex=ssExtras(),nEx=ex.reduce((a,x)=>a+x[1],0),val=ex.reduce((a,[s,n])=>a+n*SS_SELL[s[1]],0),L=lang==='he'?1:0,r=SSEL,y0=top?0:(r.querySelector('.ss-body')||{}).scrollTop||0;
-  const miss=SHZ.filter(s=>!D.got[s[0]]);
+  // album v3: 270 stickers in sections → the missing ones are shown one section at a time (default: the closest to full)
+  const sOf=s=>s[6]||'classic',missAll=SHZ.filter(s=>!D.got[s[0]]),cnt=sc=>missAll.filter(s=>sOf(s)===sc).length,msecs=[...new Set(missAll.map(sOf))];
+  if(!msecs.includes(ssSec))ssSec=msecs.slice().sort((a,b)=>cnt(a)-cnt(b))[0]||null;const miss=msecs.length>1?missAll.filter(s=>sOf(s)===ssSec):missAll;
   r.innerHTML=`<div class="sb-top"><button class="sb-rb sb-back" aria-label="back"></button><div class="sb-ttl"></div><div class="ss-pill big"><img src="art/ic_star.webp" alt=""><span>${ssStars()}</span></div></div>
     <div class="ss-body"><p class="ss-how"></p>
       <div class="ss-sell${nEx?'':' empty'}"><div class="ss-sh"><b></b></div><div class="ss-dups">${ex.slice(0,10).map(([s,n])=>`<span class="r-${s[1]}"><img src="art/stk_${s[0]}.webp" alt=""><i>×${n}</i></span>`).join('')}${ex.length>10?`<span class="more">+${ex.length-10}</span>`:''}</div>
         <button class="btn primary ss-sellbtn"${nEx?'':' disabled'}><span></span><img src="art/ic_star.webp" alt=""></button></div>
-      <h4 class="ss-h"></h4><div class="ss-grid">${miss.length?miss.map(s=>`<button class="ss-it r-${s[1]}" data-id="${s[0]}"><span class="ss-art"><img src="art/stk_${s[0]}.webp" alt=""></span><small></small><em>${SS_BUY[s[1]]}<img src="art/ic_star.webp" alt=""></em></button>`).join(''):'<p class="ss-all"></p>'}</div>
+      <h4 class="ss-h"></h4>${msecs.length>1?`<div class="ss-secs">${msecs.map(sc=>`<button class="ss-sec${sc===ssSec?' on':''}" data-sec="${sc}"><span></span><i>${cnt(sc)}</i></button>`).join('')}</div>`:''}<div class="ss-grid">${miss.length?miss.map(s=>`<button class="ss-it r-${s[1]}" data-id="${s[0]}"><span class="ss-art"><img src="art/stk_${s[0]}.webp" alt="" loading="lazy"></span><small></small><em>${SS_BUY[s[1]]}<img src="art/ic_star.webp" alt=""></em></button>`).join(''):'<p class="ss-all"></p>'}</div>
       <h4 class="ss-h sp"></h4><div class="ss-grid sp">${SS_SPECIAL.map((S,i)=>`<button class="ss-it sp k-${S.k}${ssOwnedSp(S)?' ss-own':''}" data-sp="${i}"><span class="ss-art"></span><small></small><em>${ssOwnedSp(S)?'✓':S.p+'<img src="art/ic_star.webp" alt="">'}</em></button>`).join('')}</div></div>`;
   const bk=r.querySelector('.sb-back');bk.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';bk.onclick=ssClose;
   r.querySelector('.sb-ttl').textContent=t('ssTitle');r.querySelector('.ss-how').textContent=t('ssHow');
   r.querySelector('.ss-sh b').textContent=nEx?t('ssDoubles',{n:nEx}):t('ssNoDup');r.querySelector('.ss-sellbtn span').textContent=t('ssSell',{n:val});
   r.querySelector('.ss-sellbtn').onclick=()=>ssSell();
   r.querySelector('.ss-h').textContent=t('ssPick');r.querySelector('.ss-h.sp').textContent=t('ssSpecial');{const a=r.querySelector('.ss-all');if(a)a.textContent=t('ssAllGot')}
+  r.querySelectorAll('.ss-sec').forEach(b=>{b.querySelector('span').textContent=sbSecName('shz',b.dataset.sec);b.onclick=()=>{if(ssSec===b.dataset.sec)return;sfx.click();ssSec=b.dataset.sec;ssRender()}});
+  {const on=r.querySelector('.ss-sec.on');if(on)requestAnimationFrame(()=>{const c=on.parentNode;c.scrollLeft+=on.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-on.offsetWidth)/2})}
   r.querySelectorAll('.ss-it[data-id]').forEach(b=>{const s=SHZ.find(x=>x[0]===b.dataset.id);b.querySelector('small').textContent=L?s[3]:s[2];b.onclick=()=>ssAsk(L?s[3]:s[2],SS_BUY[s[1]],()=>{D.got[s[0]]=1;ssPaid(SS_BUY[s[1]]);ssWin(`art/stk_${s[0]}.webp`,L?s[3]:s[2])})});
   r.querySelectorAll('.ss-it[data-sp]').forEach(b=>{const S=SS_SPECIAL[+b.dataset.sp],art=b.querySelector('.ss-art'),nm=S.k==='gold'?t('sbGold'):S.k==='pat'?wName('pattern','stkbomb'):S.k==='hat'?wName('hat','stkhat'):S.k==='frame'?t('ssFrame'):t('sk_t_stk');b.querySelector('small').textContent=nm;
     if(S.k==='gold')art.innerHTML='<img src="art/sb_gpack.webp" alt="">';else{const c=document.createElement('canvas');c.width=c.height=120;const g=c.getContext('2d');
