@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008172617"><\/script>')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008175615"><\/script>')})();</script>
 </head><body>
 <title>Sharliz Stack</title>
 <style>
@@ -2011,10 +2011,6 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .sb-head::after{pointer-events:none}
 .sb-toc{z-index:2}
 .tc-can{flex:none;width:34px;height:30px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,214,80,.9));animation:nsShake .6s ease-in-out infinite}
-/* a golden pack with a bonus gold sticker: 4 cards in the row */
-.sb-pk.k4 .pk-card{width:23%}
-.sb-pk.k4.torn .pk-card{left:calc(12.5% + var(--i) * 25%)}
-[dir=rtl] .sb-pk.k4.torn .pk-card{left:calc(87.5% - var(--i) * 25%)}
 .zft{display:flex;align-items:center;gap:6px;margin:2px 16px 0;padding:4px 10px;border-radius:12px;background:rgba(255,214,60,.18);border:2px solid rgba(255,200,40,.6);color:#fff;font-weight:700;font-size:.8rem;text-align:start}
 .zft img{width:22px;height:22px;object-fit:contain;flex:none}
 
@@ -7561,9 +7557,9 @@ function sbRoll(g,i){const r=Math.random(),rar=g?(i===0||r<.25?'h':'r'):(r<.06?'
 const SB_MAX=10; // most packs opened at once
 /* g = golden pack, many = open all of that kind (up to SB_MAX). Nothing is spent until the pack is torn open. */
 function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])return;const np=many?Math.min(SB_MAX,D[key]):1,art=g?'sb_gpack':'sb_pack';
-  const got=[];for(let p=0;p<np;p++){for(let i=0;i<3;i++)got.push(sbRoll(g,i));if(g&&typeof goldRoll==='function'){const x=goldRoll(got);if(x)got.push(x)}}const seen={};
+  const got=[];for(let p=0;p<np;p++){for(let i=0;i<3;i++)got.push(sbRoll(g,i))}const seen={};
   const res=got.map(s=>{const had=(D.got[s[0]]||0)+(seen[s[0]]||0);seen[s[0]]=(seen[s[0]]||0)+1;return {s,dup:had>0}});const coins=0; // doubles no longer pay coins: they are sold for sticker stars in the sticker shop (v63)
-  const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk'+(g?' gold':'')+(np>1?' many':'')+(np===1&&res.length>3?' k4':'');document.getElementById('app').appendChild(m);
+  const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk'+(g?' gold':'')+(np>1?' many':'');document.getElementById('app').appendChild(m);
   m.innerHTML=`<div class="coin-pill pk-coins">${coinImg()}<span>${progress.coins}</span></div><div class="flash"></div><h3></h3><p></p><div class="pk-cards"></div><div class="pk-pack"><img class="pk-body" src="art/${art}.webp" alt=""><img class="pk-logo" src="art/logo_${lang==='he'?'he':'en'}.webp" alt=""><img class="pk-top" src="art/${art}_top.webp" alt="">${np>1?`<i class="pk-n">×${np}</i>`:''}</div><small class="pk-tap"></small><div class="pk-btns"></div>`;
   m.querySelector('h3').textContent=np>1?t('sbOpenMany',{n:np}):g?t('sbGoldOpen'):t('sbOpenPack');m.querySelector('p').textContent=g?t('sbGoldSub'):t('sbOpenSub');m.querySelector('.pk-tap').textContent=t('sbTapPack');
   const cards=m.querySelector('.pk-cards');if(np>1){const k=res.length;cards.style.setProperty('--cols',k<=9?3:k<=12?4:k<=15?5:6)}
@@ -7931,8 +7927,8 @@ function ssWin(src,name,cv){sfx.flourish(3);vib([30,40,30]);const m=document.cre
    - Story chapter: the 18 short stories (rare Sharliz on the rope, v58) + "The Sky Tower" (STORY3, 10 chapters): one card,
      in story order, for every 3 levels won (first wins), so the story unfolds as you play.
    - GOLD chapter: every gold sticker is a LEGENDARY FEAT (GFEAT: a long-term goal, shown on its slot with a progress bar);
-     g30 = all the others. Earned only: never sold, not in the sticker shop. A golden pack (earned only) also has a 3% chance
-     of a bonus gold sticker (never g30). Gold stickers live in stkp.got like the Sharliz stickers (no doubles, never sold). */
+     g30 = all the others. Earned only, and ONLY by finishing that card's feat (Tzach, Oct 8): never sold, not in the sticker shop,
+     never in any pack (not even a golden pack). Gold stickers live in stkp.got like the Sharliz stickers (no doubles, never sold). */
 // Album v3 sections: [secId,'English title','Hebrew title']
 const SHZ_SEC=[
  ['sport',T_('Sports'),'ספורט'],
@@ -8398,7 +8394,7 @@ function stOwnArt(){const n=stOwn();return STORY3.filter((s,i)=>i<n&&has3(s[0]))
   STORY3.forEach((s,i)=>{if(!has3(s[0]))return;a.push({id:'story:'+s[0],n:i<own?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1,sec:'c'+s[5],
     hint:i===own?t('stNext',{n:ST_PER-stWins()%ST_PER}):t('stLater')})});return a}}}
 /* ---------- GOLD: legendary feats ---------- */
-const GOLD_PACK=.03,S1W=['farm','city','desert','candy','snow','ocean','volcano','space'];
+const S1W=['farm','city','desert','candy','snow','ocean','volcano','space'];
 const ST=()=>progress.stat=progress.stat||{};
 const zIx=sid=>ZONES.findIndex(z=>(z.sid||z.id)===sid);
 function st3(sids){let n=0;for(const s of sids){const zi=zIx(s);if(zi<0)continue;for(let i=0;i<LPZ;i++)if((progress.stars[zi*LPZ+i]||0)>=3)n++}return n}
@@ -8426,9 +8422,6 @@ function gfProg(id){const F=GFEAT[id];if(!F||F.T<=1)return null;let v=0;try{v=Ma
 if(GOLDS.some(g=>has3(g[0])))STK_PAGES.splice(1,0,{id:'gold',items:()=>{const D=sbData(),L=lang==='he'?1:0;
   return GOLDS.filter(g=>has3(g[0])).map(g=>{const p=gfProg(g[0]);return {id:'gold:'+g[0],n:D.got[g[0]]?1:0,src:'art/stk_'+g[0]+'.webp',name:L?g[2]:g[1],line:L?g[4]:g[3],rar:'g',card:1,gold:1,feat:t('gdFeat')+': '+gfText(g[0]),
     hint:gfText(g[0])+(p?' ('+p[0].toLocaleString()+'/'+p[1].toLocaleString()+')':''),prog:p}})}});
-/* golden packs: a small chance of one bonus gold sticker the player doesn't have yet (v57 sbPack) */
-function goldRoll(got){if(Math.random()>=GOLD_PACK)return null;const D=sbData(),inb=new Set(got.map(s=>s[0]));
-  const pool=GOLDS.filter(g=>has3(g[0])&&g[0]!=='g30'&&!D.got[g[0]]&&!inb.has(g[0]));if(!pool.length)return null;const g=pick(pool);return [g[0],'g',g[1],g[2]]}
 let GDQ=[];
 function goldCheck(){const D=sbData(),nw=[];for(const g of GOLDS){const id=g[0],F=GFEAT[id];if(!has3(id)||D.got[id]||!F)continue;let v=0;try{v=F.v()}catch(e){}if(v>=F.T){D.got[id]=1;nw.push(id)}}
   if(nw.length){saveProgress();GDQ.push(...nw);try{stkBadge()}catch(e){}}return nw.length}
