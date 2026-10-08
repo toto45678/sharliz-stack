@@ -215,7 +215,9 @@ function hsRender(){const r=HSV.el,H=hs();
   const cv=HSV.cv=r.querySelector('.hs-cv');HSV.g=cv.getContext('2d');HSV.dpr=Math.min(2,window.devicePixelRatio||1);HSV.W=Math.min(560,Math.max(300,(r.clientWidth||window.innerWidth)-12));hsGeom();
   cv.width=Math.round(HSV.W*HSV.dpr);cv.height=Math.round(HSV.H*HSV.dpr);cv.style.width=HSV.W+'px';cv.style.height=HSV.H+'px';
   cv.addEventListener('pointerdown',hsDown);cv.addEventListener('pointermove',hsMove);cv.addEventListener('pointerup',hsUp);cv.addEventListener('pointercancel',()=>{HSV.drag=null});
-  hsCoins();hsPanel()}
+  hsCoins();hsPanel();hsFit(rooms.querySelectorAll('b'))}
+// a long single word (German 'Wohnzimmer') shrinks to fit instead of breaking in the middle
+function hsFit(els,min=8){els.forEach(e=>{e.style.fontSize='';let fs=parseFloat(getComputedStyle(e).fontSize);while(e.scrollWidth>e.clientWidth+1&&fs>min){fs-=.5;e.style.fontSize=fs+'px'}})}
 function hsCoins(){const s=HSV.el&&HSV.el.querySelector('.hs-coins span');if(s)s.textContent=(progress.coins||0).toLocaleString()}
 function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-panel'),H=hs(),room=H.room,sel=HSV.sel,plv=hsPlayerLv(),sc=p.scrollTop;p.innerHTML='';
   if(sel){const f=HSF[sel],L=hsLv(sel),c=document.createElement('div');c.className='hs-sel';
@@ -225,11 +227,11 @@ function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-pane
     c.querySelector('small').textContent=t('hsDrag');c.querySelector('.hs-turn span').textContent=t('hsTurn');c.querySelector('.hs-turn').onclick=()=>hsTurn(sel);
     c.querySelector('.hs-unsel').innerHTML=XSVG;c.querySelector('.hs-unsel').onclick=()=>{sfx.click();HSV.sel=null;hsPanel()};hsBuyBtn(c.querySelector('.hs-upb'),sel);p.appendChild(c)}
   const grid=document.createElement('div');grid.className='hs-grid';
-  HS_F.filter(f=>f.room===room).forEach(f=>{const L=hsLv(f.id),c=document.createElement('div');c.className='hs-card'+(L?' own':'')+(sel===f.id?' on':'')+(L>=5?' max':'');
+  HS_F.filter(f=>f.room===room).forEach(f=>{const L=hsLv(f.id),c=document.createElement('div');c.className='hs-card'+(L?' hs-own':'')+(sel===f.id?' on':'')+(L>=5?' max':'');
     c.innerHTML=`<span class="hs-ic"></span><b></b><i class="hs-stars">${[1,2,3,4,5].map(k=>`<em class="${k<=L?'on':''}">★</em>`).join('')}</i><p></p><button class="btn hs-bb"></button>`;
     hsIcon(c.querySelector('.hs-ic'),f.id);c.querySelector('b').textContent=t('hsf_'+f.id);c.querySelector('p').textContent=hsTxt(f.id,L||1);hsBuyBtn(c.querySelector('.hs-bb'),f.id);
     if(L)c.onclick=e=>{if(e.target.closest('button'))return;sfx.click();HSV.sel=f.id;hsPanel()};grid.appendChild(c)});
-  p.appendChild(grid);p.scrollTop=sel?0:sc;hsCoins()}
+  p.appendChild(grid);p.scrollTop=sel?0:sc;hsCoins();hsFit(p.querySelectorAll('.hs-card b,.hs-st b'))}
 function hsIcon(el,id){const im=hsPic('hs_f_'+id);if(im){const i=document.createElement('img');i.src=im.src;i.alt='';el.appendChild(i)}else{el.textContent=HSF[id].em;el.style.setProperty('--c',HSF[id].col)}}
 function hsBuyBtn(b,id){const L=hsLv(id),plv=hsPlayerLv();if(L>=5){b.textContent=t('hsMax');b.disabled=true;b.className+=' max';return}
   const need=hsGate(id,L+1),price=HS_PRICE[L];
@@ -251,7 +253,7 @@ function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className=
     else{b.innerHTML=`${coinImg()}<em>${K.p.toLocaleString()}</em>`;if((progress.coins||0)<K.p)b.className+=' poor'}
     b.onclick=()=>{if(H.skin===K.id)return;if(!own){if((progress.coins||0)<K.p){sfx.locked();popupToast(t('needCoins'));return}progress.coins-=K.p;H.skins.push(K.id);sfx.flourish&&sfx.flourish(3);updateWalletUI()}else sfx.click();
       H.skin=K.id;saveProgress();m.remove();hsCoins();hsPanel();hsSkinSheet()};box.appendChild(c)});
-  HSV.el.appendChild(m)}
+  HSV.el.appendChild(m);hsFit(m.querySelectorAll('.hs-skin b'))}
 
 /* ---------- lobby: house icon in the small column + "your house is open" once ---------- */
 {const row=document.querySelector('#title .lob-mini');if(row){const b=document.createElement('button');b.className='lt-mini house';b.id='lobHouse';
