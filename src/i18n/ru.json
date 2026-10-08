@@ -906,7 +906,10 @@
   "arcHowShadow": "Выбери босса, который подходит к тени",
   "slMiss": "Мимо",
   "shStreak": "Серия {n}",
-  "shWho": "Кто это?"
+  "shWho": "Кто это?",
+  "ps_ballet": "Сбивает любого врага",
+  "ng_heart1": "На одно сердце меньше",
+  "m_pirouette": "Пируэт!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-модели боссов (сезон 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "Невесомость",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "НЛО Зорга стреляет в одну Sharliz... и уменьшает её до крошки!",
   "Zzz... *drool bubble*... zzz": "Zzz... *пузырёк слюны*... zzz",
-  "Zzz... wait, where's the ground?": "Zzz... стоп, а где земля?"
+  "Zzz... wait, where's the ground?": "Zzz... стоп, а где земля?",
+  "Ballerina suit": "Костюм балерины",
+  "Pirouette power": "Сила пируэта",
+  "Twirl! Poof! Bye-bye, bats!": "Кружись! Пуф! Пока-пока, летучие мыши!"
  }
 }

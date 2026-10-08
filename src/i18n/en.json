@@ -883,7 +883,10 @@
   "arcHowShadow": "Pick the boss that matches the shadow",
   "slMiss": "Miss",
   "shStreak": "Streak {n}",
-  "shWho": "Who is it?"
+  "shWho": "Who is it?",
+  "ps_ballet": "Knocks out every attacker",
+  "ng_heart1": "One heart less",
+  "m_pirouette": "Pirouette!"
  },
  "pairs": [
   "3D boss models (season 1)",
@@ -956,6 +959,7 @@
   "Baker",
   "Balances the ball all day long.",
   "Ballerina",
+  "Ballerina suit",
   "Balloon poodle",
   "Balloon ride",
   "Balloon trip",
@@ -1528,6 +1532,7 @@
   "Pink round",
   "Pirate parrot",
   "Pirate sailor",
+  "Pirouette power",
   "Pixels",
   "Pizza slice",
   "Plaid",
@@ -1834,6 +1839,7 @@
   "Trumpet puff",
   "Tutu",
   "Tweet! No stacking in the hallway!",
+  "Twirl! Poof! Bye-bye, bats!",
   "Twirl, twirl, bow... wobble!",
   "Twister",
   "Two Sharliz, one big squishy hug.",

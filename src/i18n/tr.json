@@ -906,7 +906,10 @@
   "arcHowShadow": "Gölgeye uyan patronu seç",
   "slMiss": "Iska",
   "shStreak": "Seri {n}",
-  "shWho": "Bu kim?"
+  "shWho": "Bu kim?",
+  "ps_ballet": "Saldıran herkesi devirir",
+  "ng_heart1": "Bir kalp eksik",
+  "m_pirouette": "Piruet!"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "Sıfır yerçekimi",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "Zorg'un UFO'su bir Sharliz'i vurur... ve onu minicik yapar!",
   "Zzz... *drool bubble*... zzz": "Zzz... *salya balonu*... zzz",
-  "Zzz... wait, where's the ground?": "Zzz... dur, yer nerede?"
+  "Zzz... wait, where's the ground?": "Zzz... dur, yer nerede?",
+  "Ballerina suit": "Balerin kostümü",
+  "Pirouette power": "Piruet gücü",
+  "Twirl! Poof! Bye-bye, bats!": "Dön! Puf! Güle güle yarasalar!"
  }
 }

@@ -906,7 +906,10 @@
   "arcHowShadow": "اختر الزعيم الذي يطابق الظل",
   "slMiss": "أخطأت",
   "shStreak": "سلسلة {n}",
-  "shWho": "من هذا؟"
+  "shWho": "من هذا؟",
+  "ps_ballet": "تُسقط كل مهاجم",
+  "ng_heart1": "قلب واحد أقل",
+  "m_pirouette": "دوران!"
  },
  "pairs": {
   "3D boss models (season 1)": "نماذج 3D للزعماء (الموسم 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "انعدام الجاذبية",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "صحن زورغ الطائر يصيب Sharliz... ويصغّرها جدًا!",
   "Zzz... *drool bubble*... zzz": "زززز... *فقاعة لعاب*... زززز",
-  "Zzz... wait, where's the ground?": "زززز... لحظة، أين الأرض؟"
+  "Zzz... wait, where's the ground?": "زززز... لحظة، أين الأرض؟",
+  "Ballerina suit": "بدلة باليرينا",
+  "Pirouette power": "قوة الدوران",
+  "Twirl! Poof! Bye-bye, bats!": "دوري! بوف! وداعًا يا خفافيش!"
  }
 }

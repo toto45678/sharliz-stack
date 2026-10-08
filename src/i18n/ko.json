@@ -906,7 +906,10 @@
   "arcHowShadow": "그림자와 맞는 보스를 골라요",
   "slMiss": "빗나감",
   "shStreak": "연속 {n}",
-  "shWho": "누구일까?"
+  "shWho": "누구일까?",
+  "ps_ballet": "공격하는 적을 모두 물리쳐요",
+  "ng_heart1": "하트 1개 줄어요",
+  "m_pirouette": "피루엣!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "무중력",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "조그의 UFO가 Sharliz 하나를 지직… 쪼끄맣게 줄여 버렸어!",
   "Zzz... *drool bubble*... zzz": "쿨쿨… *침 방울*… 쿨쿨",
-  "Zzz... wait, where's the ground?": "쿨쿨… 잠깐, 땅이 어디 갔지?"
+  "Zzz... wait, where's the ground?": "쿨쿨… 잠깐, 땅이 어디 갔지?",
+  "Ballerina suit": "발레리나 옷",
+  "Pirouette power": "피루엣 파워",
+  "Twirl! Poof! Bye-bye, bats!": "빙글! 펑! 박쥐야, 안녕!"
  }
 }

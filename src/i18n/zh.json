@@ -906,7 +906,10 @@
   "arcHowShadow": "选出和影子相配的首领",
   "slMiss": "没打中",
   "shStreak": "连对 {n}",
-  "shWho": "这是谁?"
+  "shWho": "这是谁?",
+  "ps_ballet": "击退所有来袭的敌人",
+  "ng_heart1": "少一颗心",
+  "m_pirouette": "旋转！"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "零重力",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "佐格的飞碟射中一只Sharliz……把她缩得超小！",
   "Zzz... *drool bubble*... zzz": "呼呼……*口水泡泡*……呼呼",
-  "Zzz... wait, where's the ground?": "呼呼……等等，地面去哪了？"
+  "Zzz... wait, where's the ground?": "呼呼……等等，地面去哪了？",
+  "Ballerina suit": "芭蕾舞裙",
+  "Pirouette power": "旋转魔力",
+  "Twirl! Poof! Bye-bye, bats!": "转一圈！噗！蝙蝠，拜拜！"
  }
 }

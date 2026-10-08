@@ -906,7 +906,10 @@
   "arcHowShadow": "Wähle den Boss, der zum Schatten passt",
   "slMiss": "Daneben",
   "shStreak": "Serie {n}",
-  "shWho": "Wer ist das?"
+  "shWho": "Wer ist das?",
+  "ps_ballet": "Haut jeden Angreifer weg",
+  "ng_heart1": "Ein Herz weniger",
+  "m_pirouette": "Pirouette!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -1941,6 +1944,9 @@
   "Zero gravity": "Schwerelosigkeit",
   "Zorg's UFO zaps one Sharliz... and shrinks her tiny!": "Zorgs UFO trifft eine Sharliz... und schrumpft sie winzig klein!",
   "Zzz... *drool bubble*... zzz": "Zzz... *Sabberblase*... zzz",
-  "Zzz... wait, where's the ground?": "Zzz... Moment, wo ist der Boden?"
+  "Zzz... wait, where's the ground?": "Zzz... Moment, wo ist der Boden?",
+  "Ballerina suit": "Ballerina-Kostüm",
+  "Pirouette power": "Pirouetten-Power",
+  "Twirl! Poof! Bye-bye, bats!": "Dreh! Puff! Tschüss, Fledermäuse!"
  }
 }
