@@ -109,7 +109,7 @@ function drawNewspaper(x,y,w,h,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot
   ctx.fillStyle='#b9b2a3';for(let i=0;i<6;i++){ctx.fillRect(-w*.42,-h*.12+i*h*.1,w*(i%3===2?.5:.84),h*.035)}ctx.fillStyle='#9ec5e8';ctx.fillRect(w*.12,-h*.12,w*.3,h*.3);ctx.restore()}
 function drawCandy(x,y,c,rot){ctx.save();ctx.translate(x,y);ctx.rotate(rot);const r=S*.17;ctx.beginPath();ctx.arc(0,0,r,0,7);outlineFill(c,2);
   ctx.beginPath();ctx.moveTo(r,0);ctx.lineTo(r*1.8,-r*.6);ctx.lineTo(r*1.8,r*.6);ctx.closePath();outlineFill(c,2);ctx.beginPath();ctx.moveTo(-r,0);ctx.lineTo(-r*1.8,-r*.6);ctx.lineTo(-r*1.8,r*.6);ctx.closePath();outlineFill(c,2);ctx.restore()}
-function drawMeteor(x,y,t){ctx.save();ctx.translate(x,y);for(let i=0;i<6;i++){ctx.fillStyle=`rgba(255,${120+i*20},40,${.5-i*.07})`;ctx.beginPath();ctx.arc(-i*S*.18,-i*S*.22,S*(.42-i*.04),0,7);ctx.fill()}
+function drawMeteor(x,y,t){ctx.save();ctx.translate(x,y);for(let i=0;i<6;i++){ctx.fillStyle=`rgba(255,${120+i*20},40,${.5-i*.07})`;ctx.beginPath();ctx.arc(i*S*.18,-i*S*.22,S*(.42-i*.04),0,7);ctx.fill()}
   ctx.rotate(t*3);ctx.beginPath();for(let i=0;i<9;i++){const a=i/9*Math.PI*2,r=S*.38*(i%2?.85:1);ctx.lineTo(Math.cos(a)*r,Math.sin(a)*r)}ctx.closePath();outlineFill('#5a3a2e',2.5);
   ctx.fillStyle='#3b241c';ctx.beginPath();ctx.arc(S*.1,-S*.08,S*.09,0,7);ctx.arc(-S*.12,S*.1,S*.06,0,7);ctx.fill();ctx.restore()}
 function drawStormCloud(x,y,w,charge){ctx.save();ctx.translate(x,y);ctx.fillStyle=mix('#5b6478','#2b3142',charge);ctx.strokeStyle=INK;ctx.lineWidth=2.5;ctx.beginPath();
@@ -200,7 +200,7 @@ Object.assign(MECH,{
     update(dt,m,live){m.t+=dt;if(m.t>m.next&&m.t<m.dur){m.next+=.42;const tp=topScreen();m.c.push({x:tp.x+rnd(-S*.3,S*.3),y:-20,vy:500,col:pick(['#ff3ea5','#ffd60a','#22d3ee','#a3e635']),r:rnd(0,6)})}
       for(const c of m.c){if(c.hit)continue;c.y+=c.vy*dt;const tp=topScreen();if(c.y>=tp.y-BH*.5){c.hit=1;if(live&&tower.length>1){const top=tower[tower.length-1];top.xs+=(Math.random()<.5?-1:1)*rnd(.05,.09);jig(top,.9)}burst(c.x,scrToW(c.y),[c.col,'#ffffff'],6,140)}}
       if(m.t>m.dur+1)delete hz.m.hail},
-    landing(perfect,great,d,m){if(perfect){m.t=Math.max(m.t,m.dur);pts(20);popup(t('m_calm'),W/2,swingY()-BH*.3,'#ff9ecf')}},
+    landing(perfect,great,d,m){if(perfect){m.t=Math.max(m.t,m.dur);for(const c of m.c)if(!c.hit){c.hit=1;burst(c.x,scrToW(c.y),[c.col,'#ffffff'],4,100)}pts(20);popup(t('m_calm'),W/2,swingY()-BH*.3,'#ff9ecf')}},
     draw(m){for(const c of m.c)if(!c.hit)drawCandy(c.x,c.y,c.col,c.r+time*6)},
     demo(p,H_){for(let i=0;i<3;i++){const y=((p*200)+i*60)%170;drawCandy(H_.cx-20+i*20,y,['#ff3ea5','#ffd60a','#22d3ee'][i],p*6)}}}),
   freeze:ev('event',{start(){if(!swinger||swinger.entering||state!=='aim')return false;swinger.frozen=1.3;hz.m.freeze={t:0};popup(t('m_frozen'),xOf(swinger.xs),swingY()-BH*.7,'#8fd7f2');sfx.creak();return true},
@@ -299,7 +299,7 @@ const passiveNow=()=>{const k=MECH_OF[zone().sid];return k&&MECH[k].type==='pass
   if(curSeason()===3&&!perfect&&d&&tower.length>1){const prev=tower[tower.length-2],dx=d.xs-prev.xs;if(Math.abs(dx)>.04){d.xs+=dx*.22;d.slideX=-dx*.22*S;if(Math.abs(dx)>.18)popup(t('m_slide'),xOf(d.xs),yOf(tower.length-1)-BH*1.1,'#bfe3ff')}}
   if(hz.m)for(const k in hz.m){const M=MECH[k];if(M&&M.landing&&k!=='jelly'&&hz.m[k])M.landing(perfect,great,d,hz.m[k])}
   _ol(perfect,great)}}
-{const _ds=drawSharliz;drawSharliz=function(s,...a){if(s&&s.ghost>0&&s===swinger){ctx.save();ctx.globalAlpha=.1+.06*Math.sin(time*9);const r=_ds(s,...a);ctx.restore();return r}
+{const _ds=drawSharliz;drawSharliz=function(s,...a){if(s&&s.ghost>0&&s===swinger){s._ga=.1+.06*Math.sin(time*9);ctx.save();ctx.globalAlpha=s._ga;let r;try{r=_ds(s,...a)}finally{ctx.restore();delete s._ga}return r}
   const r=_ds(s,...a);if(s&&s.kind==='jelly'&&(s===swinger||s===dropping))jellyGlow(a[0],a[1]);if(s&&s.frozen>0&&s===swinger){ctx.save();ctx.globalAlpha=.45;ctx.fillStyle='#bff3ff';ctx.fillRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.globalAlpha=1;ctx.strokeStyle='#e8fbff';ctx.lineWidth=3;ctx.strokeRect(a[0]-S*.6,a[1]-BH*.55,S*1.2,BH*1.1);ctx.restore()}return r}}
 
 /* intro cards: a season card the first time a season starts, then the mechanic card */
