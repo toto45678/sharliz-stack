@@ -27,6 +27,13 @@ function begin(target,minT){hz.since=-99;
   const top=tower[tower.length-1],xs=target(top,windFor(tower.length)),T=nextCross(xs,minT);
   m.x=xOf(xs)+DIR*S*.5-m.vx*T;   // when the Sharliz swings over that spot, the cloud is right under it (a bit ahead)
   const s=sw();SC.mem.h={x:W*.8,y:s.y+470};SC.mem.press=-9;SC.mem.taps=[];SC.mem.h0=hearts;SC.mem.T=T}
+// where a drop made right now would land (xs): steps the game's own fall, wind and cloud rules forward (dt = the scene's step)
+function windAt(n,tm){const z=zone(),h=clamp((n-2)/10,0,1),lv=.5+.5*(level-1)/(TOTAL-1),g=Math.sin(tm*.33+windSeed)*.75+Math.sin(tm*1.1+windSeed*2)*.25;return z.windK*h*lv*g*1.3+(hz.gustV||0)}
+function predict(useCloud,dt){const m=cl(),n=tower.length,yT=yOf(n),G=BH*30*zone().grav;let y=swingY(),vy=0,xs=swinger.xs,tm=time,cx=m?m.x:-1e9,cT=0,got=0,first=1;
+  for(let k=0;k<900;k++){tm+=dt;const w=windAt(n,tm);if(m){cx+=m.vx*dt;if(first&&useCloud&&Math.abs(xOf(xs)-cx)<S*1.7&&Math.abs(sy(y)-(sy(swingY())+BH*.2))<BH){cT=.9;got=1}}first=0;
+    vy+=G*dt;y+=vy*dt;xs+=w*dt;if(y>=yT)return {xs,hit:!!got};
+    if(cT>0){cT-=dt;vy=Math.min(vy,BH*1.1);xs+=m.vx/S*dt*.32}}
+  return {xs,hit:!!got}}
 const HOV=()=>{const tp=topScreen();return {x:W*.8,y:tp.y-BH*.15}};
 function tapDrop(M,t){drop();M.press=t;M.taps.push({x:M.h.x,y:M.h.y,t})}
 function hand(M,I,t,dt){const h=HOV();M.h.x+=(h.x-M.h.x)*Math.min(1,dt*6);M.h.y+=(h.y-M.h.y)*Math.min(1,dt*6);
@@ -38,8 +45,10 @@ const A={level:261,floors:0,dur:12,seed:7,fadeOut:true,
   speed(t){const M=SC.mem;if(M.missT!=null)return t-M.missT<.6?.45:1;if(M.dropT!=null)return .62;return 1},
   tick(t){hz.since=-99;const m=cl(),M=SC.mem,I=[],dt=1/30,s=sw();
     if(m&&M.missT==null){const x=m.x,y=cy();if(t<1.1)I.push({k:'spot',x,y,r:S*1.6,a:.5*Math.min(1,t/.2)*Math.min(1,(1.1-t)/.25)});I.push({k:'ring',x,y,r:S*1.45,col:RED})}
-    if(M.dropT==null&&m&&swinger&&!swinger.entering&&state==='aim'){const top=tower[tower.length-1],L=swinger.xs+wind*TF+DIR*DRIFT()-top.xs;
-      if(t>M.T-.3&&Math.abs(m.x-s.x)<S*1.6&&Math.abs(L-DIR*.66)<.07){tapDrop(M,t);M.dropT=t}}
+    if(M.dropT==null&&m&&swinger&&!swinger.entering&&state==='aim'&&t>M.T-.45){const top=tower[tower.length-1],pc=predict(true,.62/30),pn=predict(false,.62/30);
+      // into the cloud, it would have landed on the tower without it, and the cloud carries it off the edge (miss: more than .5 off)
+      const off=(pc.xs-top.xs)*DIR,late=t>M.T+1.2;
+      if(pc.hit&&(Math.abs(pn.xs-top.xs)<.45||late)&&off>(late?.56:.64)&&off<.95){tapDrop(M,t);M.dropT=t;M.pc=pc.xs}}
     if(dropping){M.dp={x:xOf(dropping.xs),y:sy(dropping.y)};if(dropping.cloudT>0)I.push({k:'arrow',x1:M.dp.x+DIR*S*.7,y1:M.dp.y,x2:M.dp.x+DIR*S*2.1,y2:M.dp.y,col:RED,p:1})}
     if(M.dropT!=null&&M.missT==null&&hearts<M.h0){M.missT=t;M.missP={x:M.dp.x,y:topScreen().y-BH*.55};this.dur=t+1.7}
     if(M.missT!=null){const p=Math.min(1,(t-M.missT)/.45),h=M.missP;I.push({k:'badge',x:h.x,y:h.y,ok:false,p})}

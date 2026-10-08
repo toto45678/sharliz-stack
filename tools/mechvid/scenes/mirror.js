@@ -46,7 +46,7 @@ const A={level:291,floors:0,dur:12,seed:7,fadeOut:true,
 // scene B: follow the tower to its new place and drop when the Sharliz is over it -> perfect
 const B={level:291,floors:0,dur:12,seed:7,fadeIn:true,fadeOut:true,
   start(){build(4);begin()},
-  speed(t){const M=SC.mem;return M.okT!=null?1:.85},
+  speed(t){return 1},
   tick(t){hz.since=-99;cam();const M=SC.mem,I=[],dt=1/30;
     flipFx(M,I,t);
     const o=M.old,nw=topV();
@@ -54,7 +54,7 @@ const B={level:291,floors:0,dur:12,seed:7,fadeIn:true,fadeOut:true,
     else if(M.okT==null){const q=Math.min(1,(t-M.flipT)/.5),x=o.x+(nw.x-o.x)*q*q*(3-2*q);I.push({k:'ring',x,y:nw.y,r:44,col:YEL});
       if(t-M.flipT<1.2&&Math.abs(nw.x-o.x)>60){const L=Math.sign(nw.x-o.x);I.push({k:'arrow',x1:o.x-L*4,y1:o.y-BH*1.05,x2:nw.x+L*4,y2:nw.y-BH*1.05,col:YEL,p:Math.min(1,(t-M.flipT)/.4)})}}
     if(M.flipT!=null&&M.dropT==null&&t-M.flipT>.9){const top=tower[tower.length-1];if(aimAt(top.xs,.05)){tapDrop(M,t);M.dropT=t}}
-    if(M.dropT!=null&&M.okT==null&&!dropping){M.okT=t;M.tp=topV();this.dur=t+1.9}
+    if(M.dropT!=null&&M.okT==null&&!dropping){M.okT=t;M.tp=topV();this.dur=t+1.5}
     if(M.okT!=null){const p=Math.min(1,(t-M.okT)/.45),h=M.tp;if(t-M.okT<.5)I.push({k:'ring',x:h.x,y:h.y,r:46+(t-M.okT)*20,col:GRN});I.push({k:'badge',x:h.x+(h.x<W/2?95:-95),y:h.y-BH*.7,ok:true,p})}
     hand(M,I,t,dt);return I}};
 for(const s of [A,B]){const tk=s.tick;s.tick=function(t){if(SC.f===0)last=__man.now();return tk.call(this,t)}}
