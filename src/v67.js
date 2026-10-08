@@ -79,8 +79,9 @@ function hsK(k){if(typeof mode!=='undefined'&&mode==='duo')return 1;
 /* ---------- art (pictures from the graphics department when they exist) ---------- */
 const HS_IMG={},HS_ART=new Set(__HS_ART__);
 function hsPic(name){if(!HS_ART.has(name))return null;if(HS_IMG[name]!==undefined)return HS_IMG[name];HS_IMG[name]=null;const im=new Image();im.onload=()=>{HS_IMG[name]=im;HSV.dirty=true};im.onerror=()=>{HS_IMG[name]=false};im.src='art/'+name+'.webp';return null}
-// floor corners of every room picture (image px): {top:[x,y],bottom:[x,y]} — filled in when the pictures are imported
-const HS_CAL={};
+// floor corners of every room picture in its own px: [top, right, bottom, left] (check with tools/house_cal.py; AI art is never an
+// exact 2:1 diamond, so the picture is fitted to the floor grid by least squares per axis)
+const HS_CAL={hs_room_cottage_living:[[510,416],[939,629],[499,870],[90,626]]};
 
 /* ---------- isometric view ---------- */
 const HSV={el:null,cv:null,g:null,dpr:1,TW:0,TH:0,VZ:0,WH:0,ox:0,oy:0,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
@@ -92,7 +93,9 @@ function hsPoly(g,pts,fill,stroke){g.beginPath();pts.forEach(([x,y],i)=>i?g.line
 function hsSkin(){return HS_SKINS.find(s=>s.id===hs().skin)||HS_SKINS[0]}
 function hsDrawRoom(g,room){const v=HSV,K=hsSkin(),G=HS_G,yard=room==='yard';
   const name='hs_room_'+K.id+'_'+room,im=HS_CAL[name]&&hsPic(name);
-  if(im){const C=HS_CAL[name],[tx,ty]=C.top,[bx,by]=C.bottom,[px,py]=hsP(0,0),[qx,qy]=hsP(G,G),k=(qy-py)/(by-ty);g.drawImage(im,px-tx*k,py-ty*k,im.width*k,im.height*k);return}
+  if(im){const C=HS_CAL[name],D=[hsP(0,0),hsP(G,0),hsP(G,G),hsP(0,G)],fit=a=>{const n=4,X=C.map(c=>c[a]),Y=D.map(d=>d[a]),mx=X.reduce((p,q)=>p+q)/n,my=Y.reduce((p,q)=>p+q)/n;
+      let sxy=0,sxx=0;for(let k=0;k<n;k++){sxy+=(X[k]-mx)*(Y[k]-my);sxx+=(X[k]-mx)**2}const sc=sxy/sxx;return [sc,my-sc*mx]};
+    const [sx,ox]=fit(0),[sy,oy]=fit(1);g.drawImage(im,ox,oy,im.width*sx,im.height*sy);return}
   if(yard){g.fillStyle='#bfe8ff';g.fillRect(0,0,v.W,v.oy+G*v.TH/2)}
   // floor tiles
   for(let i=0;i<G;i++)for(let j=0;j<G;j++){const c=yard?((i+j)%2?'#7fcf5f':'#74c455'):((i+j)%2?K.floor:K.floor2);hsPoly(g,[hsP(i,j),hsP(i+1,j),hsP(i+1,j+1),hsP(i,j+1)],c)}
