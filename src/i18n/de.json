@@ -741,6 +741,8 @@
   "bgBack": "Zurück",
   "bgGo": "Alles klar!",
   "bgHelp": "Was sind Kumpel?",
+  "eggOnlyC": "Schlüpft aus einem Ei",
+  "eggOnlyR": "Nur aus seltenem Ei",
   "ps_egg": "Eier wachsen ×2",
   "nestFull": "Nest ist voll! Stattdessen +5 Kekse"
  },
@@ -991,7 +993,18 @@
   "Wizard": "Zauberer",
   "You did not see this sticker.": "Diesen Sticker hast du nie gesehen.",
   "Zebra": "Zebra",
-  "STORM NEWS": "STURM-NEWS"
+  "STORM NEWS": "STURM-NEWS",
+  "Penguin": "Pinguin",
+  "Firefly": "Glühwürmchen",
+  "Kitten": "Kätzchen",
+  "Octopus": "Kraken",
+  "Cloudy": "Wölkchen",
+  "Little monkey": "Äffchen",
+  "Crystal bunny": "Kristallhase",
+  "Baby phoenix": "Baby-Phönix",
+  "Robo puppy": "Robo-Welpe",
+  "Galaxy whale": "Galaxiewal",
+  "Thunder griffin": "Donnergreif"
  },
  "pw": {
   "imm": "Ohne {m}",

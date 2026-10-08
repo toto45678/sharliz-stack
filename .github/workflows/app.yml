@@ -1,5 +1,6 @@
 # Builds the native store apps from the same game code (no Mac needed).
 #  - Android: a test APK you can install on any Android phone + an AAB for Google Play
+#    (signed with the upload key when the ANDROID_UPLOAD_KEYSTORE / ANDROID_UPLOAD_PASSWORD secrets exist)
 #  - iOS: signs the app with the App Store Connect API key and uploads it to TestFlight
 # Output files are in the run's "Artifacts" box on GitHub (Actions tab -> this run).
 # iOS secrets: APP_STORE_CONNECT_KEY_ID, APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_PRIVATE_KEY, APPLE_TEAM_ID
@@ -31,12 +32,28 @@ jobs:
           sed -i 's/android:name=".MainActivity"/android:name=".MainActivity" android:screenOrientation="portrait"/' android/app/src/main/AndroidManifest.xml
           sed -i -E 's/(targetSdkVersion\s*=\s*)[0-9]+/\136/; s/(compileSdkVersion\s*=\s*)[0-9]+/\136/' android/variables.gradle
           grep -E 'targetSdk|compileSdk|minSdk' android/variables.gradle
+          # Google Play needs a higher versionCode on every upload: the run number (same as the iOS build number)
+          sed -i -E 's/versionCode [0-9]+/versionCode ${{ github.run_number }}/; s/versionName "[^"]*"/versionName "1.0"/' android/app/build.gradle
+          grep -E 'versionCode|versionName' android/app/build.gradle
           npx cap sync android
       - name: Build APK (test) + AAB (store)
         working-directory: app/android
         run: |
           chmod +x gradlew
           ./gradlew --no-daemon assembleDebug bundleRelease
+      - name: Sign the AAB with the upload key (Google Play)
+        working-directory: app/android/app/build/outputs/bundle/release
+        env:
+          KS_B64: ${{ secrets.ANDROID_UPLOAD_KEYSTORE }}
+          KS_PASS: ${{ secrets.ANDROID_UPLOAD_PASSWORD }}
+        run: |
+          if [ -z "$KS_B64" ]; then echo "::warning::No ANDROID_UPLOAD_KEYSTORE secret, so the AAB is unsigned and Google Play will refuse it"; exit 0; fi
+          echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/upload.p12"
+          AAB=$(ls *.aab | head -1)
+          jarsigner -keystore "$RUNNER_TEMP/upload.p12" -storetype PKCS12 -storepass "$KS_PASS" -sigalg SHA256withRSA -digestalg SHA-256 "$AAB" upload
+          rm -f "$RUNNER_TEMP/upload.p12"
+          jarsigner -verify "$AAB"
+          mv "$AAB" "sharliz-tower-${{ github.run_number }}.aab"
       - uses: actions/upload-artifact@v4
         with:
           name: sharliz-android

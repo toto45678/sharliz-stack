@@ -741,6 +741,8 @@
   "bgBack": "Retour",
   "bgGo": "Compris !",
   "bgHelp": "C’est quoi, un compagnon ?",
+  "eggOnlyC": "Éclot d’un œuf",
+  "eggOnlyR": "Œuf rare uniquement",
   "ps_egg": "Œufs 2× plus vite",
   "nestFull": "Le nid est plein ! +5 cookies à la place"
  },
@@ -991,7 +993,18 @@
   "Wizard": "Magicien",
   "You did not see this sticker.": "Tu n'as pas vu ce sticker.",
   "Zebra": "Zèbre",
-  "STORM NEWS": "INFOS TEMPÊTE"
+  "STORM NEWS": "INFOS TEMPÊTE",
+  "Penguin": "Pingouin",
+  "Firefly": "Luciole",
+  "Kitten": "Chaton",
+  "Octopus": "Petite pieuvre",
+  "Cloudy": "Petit nuage",
+  "Little monkey": "Petit singe",
+  "Crystal bunny": "Lapin de cristal",
+  "Baby phoenix": "Bébé phénix",
+  "Robo puppy": "Chiot robot",
+  "Galaxy whale": "Baleine galactique",
+  "Thunder griffin": "Griffon tonnerre"
  },
  "pw": {
   "imm": "Pas de {m}",

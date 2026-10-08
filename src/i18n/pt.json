@@ -741,6 +741,8 @@
   "bgBack": "Voltar",
   "bgGo": "Entendi!",
   "bgHelp": "O que são mascotes?",
+  "eggOnlyC": "Nasce de um ovo",
+  "eggOnlyR": "Só em ovo raro",
   "ps_egg": "Ovos crescem ×2",
   "nestFull": "O ninho está cheio! +5 biscoitos no lugar"
  },
@@ -991,7 +993,18 @@
   "Wizard": "Mago",
   "You did not see this sticker.": "Você não viu esta figurinha.",
   "Zebra": "Zebra",
-  "STORM NEWS": "NOTÍCIAS DA TEMPESTADE"
+  "STORM NEWS": "NOTÍCIAS DA TEMPESTADE",
+  "Penguin": "Pinguim",
+  "Firefly": "Vaga-lume",
+  "Kitten": "Gatinho",
+  "Octopus": "Polvinho",
+  "Cloudy": "Nuvenzinha",
+  "Little monkey": "Macaquinho",
+  "Crystal bunny": "Coelhinho de cristal",
+  "Baby phoenix": "Fênix bebê",
+  "Robo puppy": "Cachorrinho robô",
+  "Galaxy whale": "Baleia galáctica",
+  "Thunder griffin": "Grifo do trovão"
  },
  "pw": {
   "imm": "Sem {m}",
