@@ -134,11 +134,11 @@ function sbZoom(P,all,idx){const owned=all.map((it,i)=>[it,i]).filter(([it])=>it
   const draw=()=>{const [it,i]=owned[k],rar=sbRar(P,it);m.className='sb-zoom z-'+rar;
     m.innerHTML=`<div class="sb-top"><button class="sb-rb sb-back" aria-label="back"></button><div class="sb-ttl"></div><span></span></div><div class="zc"><button class="za zp" aria-label="prev"></button>
       <div class="zcard${it.round?' round':''}${it.card?' card':''}"><div class="foil"></div><img alt=""><div class="shine"></div></div><button class="za zn" aria-label="next"></button><span class="zr"></span></div>
-      <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p><div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
+      <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p>${it.feat?'<p class="zft"><img src="art/cup_g.webp" alt=""><span></span></p>':''}<div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
     const bk=m.querySelector('.sb-back');bk.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     m.querySelector('.sb-ttl').textContent=rar==='h'?t('sbRar_h')+'!':rar==='r'?t('sbRar_r')+'!':(P.id==='shz'?t('ch_shz'):t('pg_'+P.id));
     const im=m.querySelector('.zcard img'),src=it.src||(it.img?it.img():'');if(src)im.src=src;m.querySelector('.zr').textContent=t('sbRar_'+rar);
-    m.querySelector('.znm').textContent=it.name;m.querySelector('.zln').textContent=it.line||it.hint||t('hint_'+P.id);m.querySelector('.zhave span').textContent=t('sbHave',{n:it.n});m.querySelector('.zbk span').textContent=t('sbToBook');
+    m.querySelector('.znm').textContent=it.name;m.querySelector('.zln').textContent=it.line||it.hint||t('hint_'+P.id);m.querySelector('.zhave span').textContent=t('sbHave',{n:it.n});if(it.feat)m.querySelector('.zft span').textContent=it.feat;m.querySelector('.zbk span').textContent=t('sbToBook');
     const close=()=>{sfx.click();m.remove()};bk.onclick=close;m.querySelector('.zbk').onclick=close;
     const zp=m.querySelector('.zp'),zn=m.querySelector('.zn');zp.disabled=owned.length<2;zn.disabled=owned.length<2;
     zp.onclick=()=>{k=(k-1+owned.length)%owned.length;sfx.click();draw()};zn.onclick=()=>{k=(k+1)%owned.length;sfx.click();draw()}; // RTL: the row is mirrored, so 'next' sits on the left like the page arrows

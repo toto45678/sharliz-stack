@@ -6,7 +6,7 @@
      sections, every full section opens its own chest; all of them full → the chapter chest (in ☰).
    - Story chapter: the 18 short stories (rare Sharliz on the rope, v58) + "The Sky Tower" (STORY3, 10 chapters): one card,
      in story order, for every 3 levels won (first wins), so the story unfolds as you play.
-   - GOLDS chapter: every gold sticker is a LEGENDARY FEAT (GFEAT: a long-term goal, shown on its slot with a progress bar);
+   - GOLD chapter: every gold sticker is a LEGENDARY FEAT (GFEAT: a long-term goal, shown on its slot with a progress bar);
      g30 = all the others. Earned only: never sold, not in the sticker shop. A golden pack (earned only) also has a 3% chance
      of a bonus gold sticker (never g30). Gold stickers live in stkp.got like the Sharliz stickers (no doubles, never sold). */
 // Album v3 sections: [secId,'English title','Hebrew title']
@@ -421,7 +421,7 @@ const STK3_ART=new Set(__STK3_ART__),has3=id=>STK3_ART.has(id);
 SHZ.forEach(s=>{if(!s[6])s[6]='classic'});SHZ.push(...SHZ3.filter(s=>has3(s[0])));
 Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold',sec_classic:'Classics',sec_short:'Short stories',stCh:'Chapter {n}',
   sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stLater:'Keep playing to see what happens next',stNew:'A new story card!',
-  gdTitle:'GOLDS STICKER!',gdFeat:'Legendary feat',gdOk:'Wow!',gdAlbum:'To the album',
+  gdTitle:'GOLD STICKER!',gdFeat:'Legendary feat',gdOk:'Wow!',gdAlbum:'To the album',
   gf_coins:'Have {n} coins at once',gf_s1:'3 stars on all {n} levels of the first 8 worlds',gf_combo:'{n} perfect landings in a row',
   gf_evo:'Evolve {n} buddies to 3 stars',gf_nh:'Beat {b} without losing a heart',gf_endless:'Reach floor {n} in {m}',
   gf_nhN:'Beat {n} different bosses without losing a heart',gf_w3:'3 stars on all {n} {w} levels (day, night and storm)',
@@ -472,7 +472,7 @@ function stOwnArt(){const n=stOwn();return STORY3.filter((s,i)=>i<n&&has3(s[0]))
 {const P=STK_PAGES.find(p=>p.id==='rare');if(P){const _it=P.items;P.items=()=>{const a=_it().map(x=>Object.assign(x,{sec:'short'})),own=stOwn(),L=lang==='he'?1:0;
   STORY3.forEach((s,i)=>{if(!has3(s[0]))return;a.push({id:'story:'+s[0],n:i<own?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1,sec:'c'+s[5],
     hint:i===own?t('stNext',{n:ST_PER-stWins()%ST_PER}):t('stLater')})});return a}}}
-/* ---------- GOLDS: legendary feats ---------- */
+/* ---------- GOLD: legendary feats ---------- */
 const GOLD_PACK=.03,S1W=['farm','city','desert','candy','snow','ocean','volcano','space'];
 const ST=()=>progress.stat=progress.stat||{};
 const zIx=sid=>ZONES.findIndex(z=>(z.sid||z.id)===sid);
@@ -499,7 +499,7 @@ function gfText(id){const F=GFEAT[id];if(!F)return t('hint_gold');const zi=F.w?z
   return t('gf_'+F.k,{n:F.T.toLocaleString(),b:F.b?bossNm(F.b):'',w:zi>=0?t(ZONES[zi].key):'',m:t('mode_endless')})}
 function gfProg(id){const F=GFEAT[id];if(!F||F.T<=1)return null;let v=0;try{v=Math.min(F.T,F.v())}catch(e){}return [v,F.T]}
 if(GOLDS.some(g=>has3(g[0])))STK_PAGES.splice(1,0,{id:'gold',items:()=>{const D=sbData(),L=lang==='he'?1:0;
-  return GOLDS.filter(g=>has3(g[0])).map(g=>{const p=gfProg(g[0]);return {id:'gold:'+g[0],n:D.got[g[0]]?1:0,src:'art/stk_'+g[0]+'.webp',name:L?g[2]:g[1],line:L?g[4]:g[3],rar:'g',card:1,gold:1,
+  return GOLDS.filter(g=>has3(g[0])).map(g=>{const p=gfProg(g[0]);return {id:'gold:'+g[0],n:D.got[g[0]]?1:0,src:'art/stk_'+g[0]+'.webp',name:L?g[2]:g[1],line:L?g[4]:g[3],rar:'g',card:1,gold:1,feat:t('gdFeat')+': '+gfText(g[0]),
     hint:gfText(g[0])+(p?' ('+p[0].toLocaleString()+'/'+p[1].toLocaleString()+')':''),prog:p}})}});
 /* golden packs: a small chance of one bonus gold sticker the player doesn't have yet (v57 sbPack) */
 function goldRoll(got){if(Math.random()>=GOLD_PACK)return null;const D=sbData(),inb=new Set(got.map(s=>s[0]));

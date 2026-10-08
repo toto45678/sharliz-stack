@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008031145"><\/script>')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008034017"><\/script>')})();</script>
 </head><body>
 <title>Sharliz Stack</title>
 <style>
@@ -2011,6 +2011,8 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .sb-pk.k4 .pk-card{width:23%}
 .sb-pk.k4.torn .pk-card{left:calc(12.5% + var(--i) * 25%)}
 [dir=rtl] .sb-pk.k4.torn .pk-card{left:calc(87.5% - var(--i) * 25%)}
+.zft{display:flex;align-items:center;gap:6px;margin:2px 16px 0;padding:4px 10px;border-radius:12px;background:rgba(255,214,60,.18);border:2px solid rgba(255,200,40,.6);color:#fff;font-weight:700;font-size:.8rem;text-align:start}
+.zft img{width:22px;height:22px;object-fit:contain;flex:none}
 
 </style>
 
@@ -7502,11 +7504,11 @@ function sbZoom(P,all,idx){const owned=all.map((it,i)=>[it,i]).filter(([it])=>it
   const draw=()=>{const [it,i]=owned[k],rar=sbRar(P,it);m.className='sb-zoom z-'+rar;
     m.innerHTML=`<div class="sb-top"><button class="sb-rb sb-back" aria-label="back"></button><div class="sb-ttl"></div><span></span></div><div class="zc"><button class="za zp" aria-label="prev"></button>
       <div class="zcard${it.round?' round':''}${it.card?' card':''}"><div class="foil"></div><img alt=""><div class="shine"></div></div><button class="za zn" aria-label="next"></button><span class="zr"></span></div>
-      <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p><div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
+      <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p>${it.feat?'<p class="zft"><img src="art/cup_g.webp" alt=""><span></span></p>':''}<div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
     const bk=m.querySelector('.sb-back');bk.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     m.querySelector('.sb-ttl').textContent=rar==='h'?t('sbRar_h')+'!':rar==='r'?t('sbRar_r')+'!':(P.id==='shz'?t('ch_shz'):t('pg_'+P.id));
     const im=m.querySelector('.zcard img'),src=it.src||(it.img?it.img():'');if(src)im.src=src;m.querySelector('.zr').textContent=t('sbRar_'+rar);
-    m.querySelector('.znm').textContent=it.name;m.querySelector('.zln').textContent=it.line||it.hint||t('hint_'+P.id);m.querySelector('.zhave span').textContent=t('sbHave',{n:it.n});m.querySelector('.zbk span').textContent=t('sbToBook');
+    m.querySelector('.znm').textContent=it.name;m.querySelector('.zln').textContent=it.line||it.hint||t('hint_'+P.id);m.querySelector('.zhave span').textContent=t('sbHave',{n:it.n});if(it.feat)m.querySelector('.zft span').textContent=it.feat;m.querySelector('.zbk span').textContent=t('sbToBook');
     const close=()=>{sfx.click();m.remove()};bk.onclick=close;m.querySelector('.zbk').onclick=close;
     const zp=m.querySelector('.zp'),zn=m.querySelector('.zn');zp.disabled=owned.length<2;zn.disabled=owned.length<2;
     zp.onclick=()=>{k=(k-1+owned.length)%owned.length;sfx.click();draw()};zn.onclick=()=>{k=(k+1)%owned.length;sfx.click();draw()}; // RTL: the row is mirrored, so 'next' sits on the left like the page arrows
@@ -7888,7 +7890,7 @@ function ssWin(src,name,cv){sfx.flourish(3);vib([30,40,30]);const m=document.cre
      sections, every full section opens its own chest; all of them full → the chapter chest (in ☰).
    - Story chapter: the 18 short stories (rare Sharliz on the rope, v58) + "The Sky Tower" (STORY3, 10 chapters): one card,
      in story order, for every 3 levels won (first wins), so the story unfolds as you play.
-   - GOLDS chapter: every gold sticker is a LEGENDARY FEAT (GFEAT: a long-term goal, shown on its slot with a progress bar);
+   - GOLD chapter: every gold sticker is a LEGENDARY FEAT (GFEAT: a long-term goal, shown on its slot with a progress bar);
      g30 = all the others. Earned only: never sold, not in the sticker shop. A golden pack (earned only) also has a 3% chance
      of a bonus gold sticker (never g30). Gold stickers live in stkp.got like the Sharliz stickers (no doubles, never sold). */
 // Album v3 sections: [secId,'English title','Hebrew title']
@@ -8303,7 +8305,7 @@ const STK3_ART=new Set(["st01", "st02", "st03", "st04", "st05", "st06", "st07", 
 SHZ.forEach(s=>{if(!s[6])s[6]='classic'});SHZ.push(...SHZ3.filter(s=>has3(s[0])));
 Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold',sec_classic:'Classics',sec_short:'Short stories',stCh:'Chapter {n}',
   sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stLater:'Keep playing to see what happens next',stNew:'A new story card!',
-  gdTitle:'GOLDS STICKER!',gdFeat:'Legendary feat',gdOk:'Wow!',gdAlbum:'To the album',
+  gdTitle:'GOLD STICKER!',gdFeat:'Legendary feat',gdOk:'Wow!',gdAlbum:'To the album',
   gf_coins:'Have {n} coins at once',gf_s1:'3 stars on all {n} levels of the first 8 worlds',gf_combo:'{n} perfect landings in a row',
   gf_evo:'Evolve {n} buddies to 3 stars',gf_nh:'Beat {b} without losing a heart',gf_endless:'Reach floor {n} in {m}',
   gf_nhN:'Beat {n} different bosses without losing a heart',gf_w3:'3 stars on all {n} {w} levels (day, night and storm)',
@@ -8354,7 +8356,7 @@ function stOwnArt(){const n=stOwn();return STORY3.filter((s,i)=>i<n&&has3(s[0]))
 {const P=STK_PAGES.find(p=>p.id==='rare');if(P){const _it=P.items;P.items=()=>{const a=_it().map(x=>Object.assign(x,{sec:'short'})),own=stOwn(),L=lang==='he'?1:0;
   STORY3.forEach((s,i)=>{if(!has3(s[0]))return;a.push({id:'story:'+s[0],n:i<own?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1,sec:'c'+s[5],
     hint:i===own?t('stNext',{n:ST_PER-stWins()%ST_PER}):t('stLater')})});return a}}}
-/* ---------- GOLDS: legendary feats ---------- */
+/* ---------- GOLD: legendary feats ---------- */
 const GOLD_PACK=.03,S1W=['farm','city','desert','candy','snow','ocean','volcano','space'];
 const ST=()=>progress.stat=progress.stat||{};
 const zIx=sid=>ZONES.findIndex(z=>(z.sid||z.id)===sid);
@@ -8381,7 +8383,7 @@ function gfText(id){const F=GFEAT[id];if(!F)return t('hint_gold');const zi=F.w?z
   return t('gf_'+F.k,{n:F.T.toLocaleString(),b:F.b?bossNm(F.b):'',w:zi>=0?t(ZONES[zi].key):'',m:t('mode_endless')})}
 function gfProg(id){const F=GFEAT[id];if(!F||F.T<=1)return null;let v=0;try{v=Math.min(F.T,F.v())}catch(e){}return [v,F.T]}
 if(GOLDS.some(g=>has3(g[0])))STK_PAGES.splice(1,0,{id:'gold',items:()=>{const D=sbData(),L=lang==='he'?1:0;
-  return GOLDS.filter(g=>has3(g[0])).map(g=>{const p=gfProg(g[0]);return {id:'gold:'+g[0],n:D.got[g[0]]?1:0,src:'art/stk_'+g[0]+'.webp',name:L?g[2]:g[1],line:L?g[4]:g[3],rar:'g',card:1,gold:1,
+  return GOLDS.filter(g=>has3(g[0])).map(g=>{const p=gfProg(g[0]);return {id:'gold:'+g[0],n:D.got[g[0]]?1:0,src:'art/stk_'+g[0]+'.webp',name:L?g[2]:g[1],line:L?g[4]:g[3],rar:'g',card:1,gold:1,feat:t('gdFeat')+': '+gfText(g[0]),
     hint:gfText(g[0])+(p?' ('+p[0].toLocaleString()+'/'+p[1].toLocaleString()+')':''),prog:p}})}});
 /* golden packs: a small chance of one bonus gold sticker the player doesn't have yet (v57 sbPack) */
 function goldRoll(got){if(Math.random()>=GOLD_PACK)return null;const D=sbData(),inb=new Set(got.map(s=>s[0]));
