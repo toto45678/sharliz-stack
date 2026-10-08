@@ -1,0 +1,75 @@
+/* ===== v64: album v3 — sections + contents, Sky Tower story, GOLD chapter ===== */
+.sb-toc{position:absolute;inset-inline-start:0;top:0;width:34px;height:30px;border-radius:10px;border:2.5px solid #120d2b;background:linear-gradient(180deg,#fff,#e6defc);box-shadow:0 2px 0 #120d2b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
+.sb-toc i{display:block;width:15px;height:2.6px;border-radius:2px;background:#2a1a66}
+.sb-pnav .sb-pnum{min-width:52px;text-align:center;font:1rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#2a1a66;direction:ltr}
+/* contents */
+.sb-tocm{position:absolute;inset:0;z-index:7;background:rgba(18,13,43,.62);display:grid;place-items:center;padding:16px;animation:tcIn .18s ease-out}
+@keyframes tcIn{from{opacity:0}to{opacity:1}}
+.tc-card{width:min(100%,380px);max-height:86%;display:flex;flex-direction:column;border-radius:20px;border:3.5px solid #120d2b;background:#fffaf0;box-shadow:0 6px 0 #120d2b,0 18px 40px rgba(0,0,0,.4);overflow:hidden}
+.tc-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;background:var(--c);border-bottom:3px solid #120d2b}
+.tc-hd b{font:1.35rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#2a1a66}
+.tc-hd .x-btn{position:static;width:38px;height:38px;flex:none}
+.tc-list{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:8px;display:flex;flex-direction:column;gap:6px}
+.tc-row{display:flex;align-items:center;gap:10px;width:100%;padding:6px 10px 6px 6px;border-radius:14px;border:2.5px solid rgba(90,60,180,.25);background:#fff;text-align:start;font:inherit;color:#2a1a66}
+.tc-row.on{border-color:#6b4ee6;background:#f1ecff}
+.tc-row.full{background:linear-gradient(90deg,#fff8d6,#fff)}
+.tc-th{flex:none;width:42px;height:42px;border-radius:10px;background:#f1ecff;display:grid;place-items:center;overflow:hidden}
+.tc-th img{width:100%;height:100%;object-fit:contain}
+.tc-th.no img{filter:blur(4px) brightness(.55) saturate(.3);opacity:.6}
+.tc-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.tc-t b{font:1rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;overflow-wrap:anywhere}
+.tc-t i{display:block;height:8px;border-radius:5px;background:#e6defc;overflow:hidden}
+.tc-t u{display:block;height:100%;background:linear-gradient(90deg,#8a6cff,#ff7ab8);border-radius:5px}
+.tc-row.full .tc-t u{background:linear-gradient(90deg,#ffcf3a,#ff9f1a)}
+.tc-row em{flex:none;font:900 .82rem/1 system-ui,sans-serif;font-style:normal;color:#6b4ee6}
+.tc-all{display:flex;align-items:center;gap:10px;padding:8px 12px;border-top:3px solid #120d2b;background:#fff3c4}
+.tc-all span{flex:1;display:flex;flex-direction:column}
+.tc-all b{font:1.05rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#2a1a66}
+.tc-all small{font-weight:800;opacity:.7}
+/* GOLD chapter */
+.sb-slot.gold{border-color:rgba(201,138,18,.55);background:rgba(255,214,80,.1)}
+.sb-slot.card.gold:not(.got) .stk img{filter:blur(7px) sepia(1) saturate(2.2) brightness(.6);opacity:.7}
+.sb-slot.card.gold:not(.got) .stk::after{content:"★";color:rgba(160,100,0,.6)}
+.sb-slot.card.gold.got{filter:drop-shadow(0 0 7px rgba(255,200,40,.95)) drop-shadow(0 0 2px #fff)}
+.sb-slot.card.gold.got .stk::before{content:'';position:absolute;inset:4%;border-radius:9px;z-index:1;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,250,210,.85) 48%,transparent 60%);background-size:260% 100%;animation:zGlint2 2.2s ease-in-out infinite}
+.sb-slot.card.gold.got .stk{position:relative;overflow:hidden}
+.gd-pb{position:absolute;left:12%;right:12%;bottom:18px;height:6px;border-radius:4px;background:rgba(80,50,0,.25);overflow:hidden}
+.gd-pb u{display:block;height:100%;background:linear-gradient(90deg,#ffe36b,#ffb300);border-radius:4px}
+.z-g .zr{background:linear-gradient(135deg,#fff3a6,#ffcf3a 40%,#d99a14);color:#3a2400}
+.z-g .zcard.card img{filter:drop-shadow(0 0 18px rgba(255,200,40,1)) drop-shadow(0 8px 0 #120d2b)}
+.z-g .zcard .shine{background:radial-gradient(circle at var(--mx,30%) var(--my,25%),rgba(255,250,220,.9),rgba(255,255,255,0) 40%),linear-gradient(115deg,transparent 30%,rgba(255,240,180,.6) 45%,transparent 60%);background-size:100% 100%,260% 100%;animation:zGlint2 2.4s ease-in-out infinite}
+.pk-card.r-g .rc{background:linear-gradient(90deg,#fff3a6,#ffcf3a,#d99a14);color:#3a2400}
+.pk-card.flip.r-g .fr{box-shadow:0 5px 0 #120d2b,0 0 30px 12px rgba(255,200,40,1)}
+.pk-card.r-g .fr .foil{background:linear-gradient(135deg,#fff3a6,#ffcf3a 35%,#d99a14 60%,#fff3a6);background-size:240% 240%;animation:sbHolo 2.4s linear infinite}
+.pk-card.r-g .fr img{object-fit:contain}
+/* gold reveal */
+.gd-rev{position:fixed;inset:0;z-index:62;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px;overflow:hidden;
+  background:radial-gradient(circle at 50% 42%,#5a3a00 0,#2a1700 45%,#120a00 100%);animation:tcIn .25s ease-out;color:#fff}
+.gd-rays{position:absolute;left:50%;top:42%;width:240vmax;height:240vmax;translate:-50% -50%;background:repeating-conic-gradient(rgba(255,214,60,.22) 0 9deg,transparent 9deg 18deg);animation:gdSpin 14s linear infinite;pointer-events:none}
+@keyframes gdSpin{to{rotate:360deg}}
+.gd-sp{position:absolute;inset:0;pointer-events:none}
+.gd-sp i{position:absolute;left:calc(6% + var(--i)*6.5%);top:calc(12% + (var(--i)*37%) % 70%);width:10px;height:10px;background:#fff6c2;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:gdTw 1.6s ease-in-out calc(var(--i)*-.23s) infinite}
+@keyframes gdTw{0%,100%{opacity:0;scale:.4}50%{opacity:1;scale:1.3}}
+.gd-rev h2{position:relative;margin:0;font:2.2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe36b;text-shadow:0 3px 0 #7a4a00,0 0 18px rgba(255,200,40,.8);rotate:-3deg;animation:gdPop .5s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes gdPop{from{scale:.3;opacity:0}to{scale:1;opacity:1}}
+.gd-card{position:relative;width:min(56vw,230px);aspect-ratio:3/4;border-radius:18px;animation:gdFlip 1s cubic-bezier(.2,1.3,.4,1) .15s both}
+@keyframes gdFlip{0%{transform:perspective(700px) rotateY(180deg) scale(.4);opacity:0}60%{opacity:1}100%{transform:perspective(700px) rotateY(0) scale(1)}}
+.gd-card img{width:100%;height:100%;object-fit:contain;border-radius:16px;filter:drop-shadow(0 0 22px rgba(255,200,40,1)) drop-shadow(0 8px 0 #120d2b)}
+.gd-shine{position:absolute;inset:3%;border-radius:14px;background:linear-gradient(115deg,transparent 30%,rgba(255,250,220,.75) 45%,transparent 60%);background-size:260% 100%;animation:zGlint2 2s ease-in-out infinite;pointer-events:none}
+.gd-nm{position:relative;font:1.6rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;text-align:center;text-shadow:0 2px 0 #120d2b}
+.gd-ln{position:relative;margin:0;max-width:320px;text-align:center;font-weight:700;opacity:.9}
+.gd-feat{position:relative;display:flex;align-items:center;gap:8px;max-width:340px;padding:6px 12px;border-radius:14px;background:rgba(255,214,60,.16);border:2px solid rgba(255,214,60,.55)}
+.gd-feat img{width:30px;height:30px;object-fit:contain;flex:none}
+.gd-feat span{display:flex;flex-direction:column}
+.gd-feat small{font-weight:800;color:#ffe36b;font-size:.72rem}
+.gd-feat em{font-style:normal;font-weight:700;font-size:.86rem}
+.gd-btns{position:relative;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:6px}
+.sb-head::after{pointer-events:none}
+.sb-toc{z-index:2}
+.tc-can{flex:none;width:34px;height:30px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,214,80,.9));animation:nsShake .6s ease-in-out infinite}
+/* a golden pack with a bonus gold sticker: 4 cards in the row */
+.sb-pk.k4 .pk-card{width:23%}
+.sb-pk.k4.torn .pk-card{left:calc(12.5% + var(--i) * 25%)}
+[dir=rtl] .sb-pk.k4.torn .pk-card{left:calc(87.5% - var(--i) * 25%)}
+.zft{display:flex;align-items:center;gap:6px;margin:2px 16px 0;padding:4px 10px;border-radius:12px;background:rgba(255,214,60,.18);border:2px solid rgba(255,200,40,.6);color:#fff;font-weight:700;font-size:.8rem;text-align:start}
+.zft img{width:22px;height:22px;object-fit:contain;flex:none}

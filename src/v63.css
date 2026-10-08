@@ -49,3 +49,9 @@
 .sb-goldf .sb-cover h2{color:#fff}
 .sb-goldf .sb-paper{border-color:#8a5a00;box-shadow:inset 0 0 0 4px #ffd23f,inset 0 0 0 6px #c98a12,0 6px 0 #120d2b,0 14px 30px rgba(0,0,0,.35)}
 .sb-goldf .sb-slot.got{outline:3px solid #ffd23f;outline-offset:1px}
+/* album v3: missing stickers by section */
+.ss-secs{display:flex;gap:6px;overflow-x:auto;overflow-y:hidden;padding:2px 2px 8px;margin:0 -2px 4px;scrollbar-width:none}
+.ss-secs::-webkit-scrollbar{display:none}
+.ss-sec{flex:none;display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;border:2.5px solid #120d2b;background:#fff;color:#2a1a66;font:.85rem/1 "Lilita One","Secular One",system-ui,sans-serif;white-space:nowrap}
+.ss-sec.on{background:linear-gradient(180deg,#ffe24d,#ffad00);box-shadow:0 2px 0 #120d2b}
+.ss-sec i{font-style:normal;min-width:18px;padding:1px 5px;border-radius:999px;background:#2a1a66;color:#fff;font-size:.7rem}

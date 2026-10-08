@@ -35,8 +35,9 @@ const SHZ=[
  ['s23','h','Galaxy Sharliz','שארליז הגלקסיה','Made of stars. Literally.','עשויה מכוכבים. ממש.'],
  ['s24','h','Rainbow Sharliz','שארליז הקשת','Every colour at once!','כל הצבעים ביחד!']];
 const SB_REW={shz:[1500,120],rare:[500,60],boss:[2000,150],world:[1000,100],buddy:[800,80],hat:[1500,120],special:[500,60]};
-function sbData(){const D=progress.stkp=progress.stkp||{};D.packs=D.packs||0;D.gpacks=D.gpacks||0;D.w=D.w||0;D.got=D.got||{};D.done=D.done||{};D.boss=D.boss||{};return D}
-STK_PAGES.unshift({id:'shz',items:()=>{const D=sbData(),L=lang==='he'?1:0;return SHZ.map(s=>({id:'shz:'+s[0],n:D.got[s[0]]||0,src:'art/stk_'+s[0]+'.webp',name:L?s[3]:s[2],line:L?s[5]:s[4],rar:s[1],hint:t('sbHow_shz'),shz:1}))}});
+function sbData(){const D=progress.stkp=progress.stkp||{};D.packs=D.packs||0;D.gpacks=D.gpacks||0;D.w=D.w||0;D.got=D.got||{};D.done=D.done||{};D.boss=D.boss||{};
+  if(!D.v3){D.v3=1;if(D.done.shz){D.done['shz:classic']=1;delete D.done.shz}if(D.done.rare){D.done['rare:short']=1;delete D.done.rare}}return D}
+STK_PAGES.unshift({id:'shz',items:()=>{const D=sbData(),L=lang==='he'?1:0;return SHZ.map(s=>({id:'shz:'+s[0],n:D.got[s[0]]||0,src:'art/stk_'+s[0]+'.webp',name:L?s[3]:s[2],line:L?s[5]:s[4],rar:s[1],hint:t('sbHow_shz'),shz:1,sec:s[6]||'classic'}))}});
 {const sp=STK_PAGES.findIndex(P=>P.id==='special');if(sp>=0&&!SPECIALS.length)STK_PAGES.splice(sp,1)}
 const SB_ICON={shz:'stk_s01',rare:'ic_star',boss:'ic_boss',world:'ic_map',buddy:'ns_nest',hat:'ic_hats',special:'ic_gift'};
 const SB_COL={shz:'#ff7ab8',rare:'#ffcf3a',boss:'#ff6a5a',world:'#5fd068',buddy:'#59c6ff',hat:'#b48cff',special:'#ffa94d'};
@@ -73,6 +74,11 @@ if(typeof PS_REW!=='undefined'){[3,10,15,22,27].forEach(i=>{PS_REW[i][0]={pk:1}}
 /* ---------- the book ---------- */
 const SB={el:null,ch:0,pg:0,view:'cover'};
 function sbChapters(){return STK_PAGES}
+/* pages: a chapter's items split by section (it.sec, album v3); a section starts on a new page and is spread evenly over its
+   pages (10 → 5+5, not 9+1). Chapters without sections are one section. */
+function sbPages(P,all){all=all||P.items().filter(x=>!x.soon);const secs=[];all.forEach((it,i)=>{const L=secs[secs.length-1];if(L&&L.sec===it.sec)L.ix.push(i);else secs.push({sec:it.sec,ix:[i]})});
+  const pg=[];secs.forEach(S=>{const n=Math.ceil(S.ix.length/9),per=Math.ceil(S.ix.length/n);for(let k=0;k<n;k++)pg.push({sec:S.sec,ix:S.ix.slice(k*per,k*per+per),k,n})});return pg.length?pg:[{sec:undefined,ix:[],k:0,n:1}]}
+function sbSecs(P){return [...new Set(P.items().filter(x=>!x.soon).map(x=>x.sec))].filter(x=>x!==undefined)}
 function sbNumBase(ci){let n=0;for(let i=0;i<ci;i++)n+=sbChapters()[i].items().filter(x=>!x.soon).length;return n}
 openAlbum=function(){audio();sfx.click();if(!SB.el){const el=document.createElement('div');el.id='sbook';document.getElementById('app').appendChild(el);SB.el=el;
     let sx=null;el.addEventListener('pointerdown',e=>{if(e.target.closest('.sb-paper'))sx=e.clientX});el.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>50&&SB.view==='page')sbTurn((dx<0?1:-1)*(I18N[lang]._dir==='rtl'?-1:1))})}
@@ -89,31 +95,33 @@ function sbCover(){SB.view='cover';const r=SB.el,[a,b]=stkTotals();r.className='
   r.querySelector('.sb-openbtn').onclick=()=>{sfx.click();r.querySelector('.sb-cover').classList.add('opening');setTimeout(()=>{SB.pg=0;sbPageView()},320)};
   const te=r.querySelector('.sb-tabs-edge');sbChapters().forEach((P,i)=>{const it=P.items(),got=it.filter(x=>x.n).length,tot=it.filter(x=>!x.soon).length,bt=document.createElement('button');bt.className='sb-etab';bt.style.setProperty('--c',SB_COL[P.id]||'#b48cff');
     bt.innerHTML=`<img src="art/${SB_ICON[P.id]}.webp" alt=""><span></span>`;bt.querySelector('span').textContent=P.id==='shz'?t('ch_shz'):t('pg_'+P.id);bt.onclick=()=>{sfx.click();SB.ch=i;SB.pg=0;sbPageView()};te.appendChild(bt)})}
-function sbTurn(d){const P=sbChapters()[SB.ch],np=Math.ceil(P.items().filter(x=>!x.soon).length/9)||1;let pg=SB.pg+d,ch=SB.ch;
-  if(pg<0){if(ch===0){sfx.locked();return}ch--;pg=Math.ceil(sbChapters()[ch].items().filter(x=>!x.soon).length/9)-1}else if(pg>=np){if(ch===sbChapters().length-1){sfx.locked();return}ch++;pg=0}
+function sbTurn(d){const P=sbChapters()[SB.ch],np=sbPages(P).length;let pg=SB.pg+d,ch=SB.ch;
+  if(pg<0){if(ch===0){sfx.locked();return}ch--;pg=sbPages(sbChapters()[ch]).length-1}else if(pg>=np){if(ch===sbChapters().length-1){sfx.locked();return}ch++;pg=0}
   SB.ch=ch;SB.pg=pg;if(sfx.ok()){noise({d:.18,v:.06,hp:1800});tone({f:300,f2:520,d:.12,type:'sine',v:.03})}sbPageView(d)}
-function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=P.items().filter(x=>!x.soon),np=Math.ceil(all.length/9)||1,D=sbData(),seen=progress.stkSeen=progress.stkSeen||[];SB.pg=Math.min(SB.pg,np-1);
-  r.className='sb-page-v';const got=all.filter(x=>x.n).length,base=sbNumBase(SB.ch),done=got===all.length&&all.length>0,claimed=!!D.done[P.id];
+function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=P.items().filter(x=>!x.soon),pages=sbPages(P,all),np=pages.length,D=sbData(),seen=progress.stkSeen=progress.stkSeen||[];SB.pg=Math.max(0,Math.min(SB.pg,np-1));
+  const PG=pages[SB.pg],secs=sbSecs(P),sec=PG.sec;SB.sec=sec;const ck=sec!==undefined?P.id+':'+sec:P.id,inSec=sec!==undefined?all.filter(x=>x.sec===sec):all;
+  r.className='sb-page-v';const got=inSec.filter(x=>x.n).length,base=sbNumBase(SB.ch),done=got===inSec.length&&inSec.length>0,claimed=!!D.done[ck];
   r.innerHTML=sbTop(true)+`<div class="sb-chs"></div><div class="sb-paperwrap"><div class="sb-paper ${dir>0?'flip-n':dir<0?'flip-p':''}" style="--c:${SB_COL[P.id]||'#b48cff'}"><div class="sb-rings"></div>
       <div class="sb-head"><span class="sb-washi"></span><b></b><small></small></div><div class="sb-grid"></div><div class="sb-pnav"><button class="sb-pp" aria-label="prev"></button><span></span><button class="sb-pn" aria-label="next"></button></div></div></div>
-    <div class="sb-foot"><div class="sb-bar${done?' full':''}"><div class="t"><i style="width:${got/all.length*100}%"></i><span>${got}/${all.length}</span></div><button class="sb-chest${done&&!claimed?' can':''}${claimed?' got':''}${!done&&all.length-got<=3?' near':''}"><img src="art/ic_chest${claimed?'_open':''}.webp" alt="">${!done&&all.length-got<=3?`<em>${all.length-got}</em>`:''}</button></div>
+    <div class="sb-foot"><div class="sb-bar${done?' full':''}"><div class="t"><i style="width:${got/inSec.length*100}%"></i><span>${got}/${inSec.length}</span></div><button class="sb-chest${done&&!claimed?' can':''}${claimed?' got':''}${!done&&inSec.length-got<=3?' near':''}"><img src="art/ic_chest${claimed?'_open':''}.webp" alt="">${!done&&inSec.length-got<=3?`<em>${inSec.length-got}</em>`:''}</button></div>
       <button class="sb-packbtn${D.packs?' has':''}"><img src="art/sb_pack.webp" alt=""><span></span>${D.packs?`<i class="badge">${D.packs}</i>`:''}</button><button class="sb-gpackbtn${D.gpacks?' has':''}" aria-label="gold"><img src="art/sb_gpack.webp" alt="">${D.gpacks?`<i class="badge">${D.gpacks}</i>`:''}</button></div>`;
   sbWireTop(r,true);r.querySelector('.sb-ttl').textContent=t('albumBook');
   const chs=r.querySelector('.sb-chs');sbChapters().forEach((Q,i)=>{const it=Q.items().filter(x=>!x.soon),g=it.filter(x=>x.n).length,nw=it.some(x=>x.n&&!seen.includes(x.id)),bt=document.createElement('button');
     bt.className='sb-ch'+(i===SB.ch?' on':'');bt.style.setProperty('--c',SB_COL[Q.id]||'#b48cff');bt.innerHTML=`<img src="art/${SB_ICON[Q.id]}.webp" alt=""><span><b></b><small>${g}/${it.length}</small></span>${nw?'<i class="dot"></i>':''}`;
     bt.querySelector('b').textContent=Q.id==='shz'?t('ch_shz'):t('pg_'+Q.id);bt.onclick=()=>{if(i===SB.ch)return;sfx.click();const d=i>SB.ch?1:-1;SB.ch=i;SB.pg=0;sbPageView(d)};chs.appendChild(bt)});
   const on=chs.querySelector('.on');if(on)requestAnimationFrame(()=>{const a=on.getBoundingClientRect(),c=chs.getBoundingClientRect();chs.scrollLeft+=a.left+a.width/2-(c.left+c.width/2)});
-  r.querySelector('.sb-head b').textContent=P.id==='shz'?t('ch_shz'):t('pg_'+P.id);r.querySelector('.sb-head small').textContent=np>1?t('sbPage',{a:SB.pg+1,b:np}):'';
-  const pn=r.querySelector('.sb-pnav');pn.querySelector('span').innerHTML=Array.from({length:np},(_,i)=>`<i class="${i===SB.pg?'on':''}"></i>`).join('');
+  const chN=P.id==='shz'?t('ch_shz'):t('pg_'+P.id);r.querySelector('.sb-head b').textContent=secs.length>1?sbSecName(P.id,sec):chN;r.querySelector('.sb-head small').textContent=secs.length>1?sbSecSub(sec,PG):np>1?t('sbPage',{a:SB.pg+1,b:np}):'';
+  if(secs.length>1){const tb=document.createElement('button');tb.className='sb-toc';tb.setAttribute('aria-label','contents');tb.innerHTML='<i></i><i></i><i></i>';tb.onclick=()=>{sfx.click();sbToc(P)};r.querySelector('.sb-head').appendChild(tb)}
+  const pn=r.querySelector('.sb-pnav');pn.querySelector('span').innerHTML=np>7?`<b class="sb-pnum">${SB.pg+1}/${np}</b>`:Array.from({length:np},(_,i)=>`<i class="${i===SB.pg?'on':''}"></i>`).join('');
   pn.querySelector('.sb-pp').onclick=()=>sbTurn(-1);pn.querySelector('.sb-pn').onclick=()=>sbTurn(1);
   const grid=r.querySelector('.sb-grid'),fresh=[];
-  all.slice(SB.pg*9,SB.pg*9+9).forEach((it,k)=>{const idx=SB.pg*9+k,num=base+idx+1,rar=sbRar(P,it),s=document.createElement('button'),rot=((strHash(it.id)%9)-4)*.8;
+  PG.ix.forEach((idx,k)=>{const it=all[idx],num=base+idx+1,rar=sbRar(P,it),s=document.createElement('button'),rot=((strHash(it.id)%9)-4)*.8;
     s.className='sb-slot'+(it.n?' got r-'+rar:'')+(it.round?' round':'')+(it.card?' card':'')+(P.id==='shz'?' art':'');s.style.setProperty('--r',rot+'deg');
     s.innerHTML=`<span class="num">#${String(num).padStart(2,'0')}</span><span class="stk"><img alt=""></span>`+(it.n>1?`<i class="cnt">×${it.n}</i>`:'');
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
     s.onclick=()=>{if(it.n){sfx.click();sbZoom(P,all,idx)}else{sfx.locked();noteToast(it.hint||t('hint_'+P.id))}};grid.appendChild(s)});
-  const ch=r.querySelector('.sb-chest');ch.onclick=()=>{if(done&&!claimed){const [c,x]=SB_REW[P.id]||[500,60];D.done[P.id]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+(SB_REW[P.id]||[500])[0]+' 🪙')}};
+  const ch=r.querySelector('.sb-chest'),rew=sbRew(ck);ch.onclick=()=>{if(done&&!claimed){const [c,x]=rew;D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+rew[0]+' 🪙')}};
   const pb=r.querySelector('.sb-packbtn');pb.querySelector('span').textContent=D.packs?t('sbPacks',{n:D.packs}):t('sbNext',{n:D.w%3});
   // packs are earned only (no buying with coins): random items for purchase would be a loot box (Apple odds disclosure, AU 16+)
   pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();noteToast(t('sbHow'))}};
@@ -126,11 +134,11 @@ function sbZoom(P,all,idx){const owned=all.map((it,i)=>[it,i]).filter(([it])=>it
   const draw=()=>{const [it,i]=owned[k],rar=sbRar(P,it);m.className='sb-zoom z-'+rar;
     m.innerHTML=`<div class="sb-top"><button class="sb-rb sb-back" aria-label="back"></button><div class="sb-ttl"></div><span></span></div><div class="zc"><button class="za zp" aria-label="prev"></button>
       <div class="zcard${it.round?' round':''}${it.card?' card':''}"><div class="foil"></div><img alt=""><div class="shine"></div></div><button class="za zn" aria-label="next"></button><span class="zr"></span></div>
-      <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p><div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
+      <b class="zno">#${String(base+i+1).padStart(2,'0')}</b><div class="znm"></div><p class="zln"></p>${it.feat?'<p class="zft"><img src="art/cup_g.webp" alt=""><span></span></p>':''}<div class="zhave"><img src="art/ic_album.webp" alt=""><span></span></div><button class="btn primary zbk"><span></span></button>`;
     const bk=m.querySelector('.sb-back');bk.innerHTML='<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     m.querySelector('.sb-ttl').textContent=rar==='h'?t('sbRar_h')+'!':rar==='r'?t('sbRar_r')+'!':(P.id==='shz'?t('ch_shz'):t('pg_'+P.id));
     const im=m.querySelector('.zcard img'),src=it.src||(it.img?it.img():'');if(src)im.src=src;m.querySelector('.zr').textContent=t('sbRar_'+rar);
-    m.querySelector('.znm').textContent=it.name;m.querySelector('.zln').textContent=it.line||it.hint||t('hint_'+P.id);m.querySelector('.zhave span').textContent=t('sbHave',{n:it.n});m.querySelector('.zbk span').textContent=t('sbToBook');
+    m.querySelector('.znm').textContent=it.name;m.querySelector('.zln').textContent=it.line||it.hint||t('hint_'+P.id);m.querySelector('.zhave span').textContent=t('sbHave',{n:it.n});if(it.feat)m.querySelector('.zft span').textContent=it.feat;m.querySelector('.zbk span').textContent=t('sbToBook');
     const close=()=>{sfx.click();m.remove()};bk.onclick=close;m.querySelector('.zbk').onclick=close;
     const zp=m.querySelector('.zp'),zn=m.querySelector('.zn');zp.disabled=owned.length<2;zn.disabled=owned.length<2;
     zp.onclick=()=>{k=(k-1+owned.length)%owned.length;sfx.click();draw()};zn.onclick=()=>{k=(k+1)%owned.length;sfx.click();draw()}; // RTL: the row is mirrored, so 'next' sits on the left like the page arrows
@@ -143,9 +151,9 @@ function sbRoll(g,i){const r=Math.random(),rar=g?(i===0||r<.25?'h':'r'):(r<.06?'
 const SB_MAX=10; // most packs opened at once
 /* g = golden pack, many = open all of that kind (up to SB_MAX). Nothing is spent until the pack is torn open. */
 function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])return;const np=many?Math.min(SB_MAX,D[key]):1,art=g?'sb_gpack':'sb_pack';
-  const got=[];for(let p=0;p<np;p++)for(let i=0;i<3;i++)got.push(sbRoll(g,i));const seen={};
+  const got=[];for(let p=0;p<np;p++){for(let i=0;i<3;i++)got.push(sbRoll(g,i));if(g&&typeof goldRoll==='function'){const x=goldRoll(got);if(x)got.push(x)}}const seen={};
   const res=got.map(s=>{const had=(D.got[s[0]]||0)+(seen[s[0]]||0);seen[s[0]]=(seen[s[0]]||0)+1;return {s,dup:had>0}});const coins=0; // doubles no longer pay coins: they are sold for sticker stars in the sticker shop (v63)
-  const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk'+(g?' gold':'')+(np>1?' many':'');document.getElementById('app').appendChild(m);
+  const L=lang==='he'?1:0,m=document.createElement('div');m.className='sb-pk'+(g?' gold':'')+(np>1?' many':'')+(np===1&&res.length>3?' k4':'');document.getElementById('app').appendChild(m);
   m.innerHTML=`<div class="coin-pill pk-coins">${coinImg()}<span>${progress.coins}</span></div><div class="flash"></div><h3></h3><p></p><div class="pk-cards"></div><div class="pk-pack"><img class="pk-body" src="art/${art}.webp" alt=""><img class="pk-logo" src="art/logo_${lang==='he'?'he':'en'}.webp" alt=""><img class="pk-top" src="art/${art}_top.webp" alt="">${np>1?`<i class="pk-n">×${np}</i>`:''}</div><small class="pk-tap"></small><div class="pk-btns"></div>`;
   m.querySelector('h3').textContent=np>1?t('sbOpenMany',{n:np}):g?t('sbGoldOpen'):t('sbOpenPack');m.querySelector('p').textContent=g?t('sbGoldSub'):t('sbOpenSub');m.querySelector('.pk-tap').textContent=t('sbTapPack');
   const cards=m.querySelector('.pk-cards');if(np>1){const k=res.length;cards.style.setProperty('--cols',k<=9?3:k<=12?4:k<=15?5:6)}
