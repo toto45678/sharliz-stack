@@ -1,7 +1,7 @@
 """Silhouette fit: how well a built buddy matches its ChatGPT turnaround (front + side views).
 Called from pets.py after a build (python3 -I tools/pets/pets.py chick --fit) — it needs the live Blender scene.
-Projects every mesh triangle to the front plane (x, z) and the side plane (-y, z), rasterises them, normalises by height
-(bottom-aligned, centred like the turnaround masks from turn_measure.py) and prints the IoU per view.
+Projects every mesh triangle to the front plane (x, z) and the side plane (-y, z), rasterises them, normalises by height,
+bottom-aligned and centred by area centroid (both masks), and prints the IoU per view.
 Saves design/buddies/turn/_fit_<id>.png: turnaround silhouette red, model blue, overlap purple (front | side)."""
 import os, sys
 import numpy as np
@@ -51,8 +51,16 @@ def turn_masks(pid):
     return out
 
 
+def _centre(m):
+    """shift the mask sideways so its area centroid sits at the middle (a long tail or antenna no longer skews the comparison)"""
+    xs = np.where(m.any(axis=0))[0]
+    if not len(xs): return m
+    cx = (m.sum(axis=0) * np.arange(m.shape[1])).sum() / m.sum()
+    return np.roll(m, int(round(m.shape[1] / 2 - cx)), axis=1)
+
+
 def fit(pid, save=True):
-    A = turn_masks(pid); B = model_masks(); ious = {}
+    A = {k: _centre(v) for k, v in turn_masks(pid).items()}; B = {k: _centre(v) for k, v in model_masks().items()}; ious = {}
     panels = []
     for name in ('front', 'side'):
         a, b = A[name], B[name]
