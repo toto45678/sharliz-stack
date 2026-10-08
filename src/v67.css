@@ -29,7 +29,7 @@
 .hs-card p{grid-column:1/3;margin:2px 0 0;font-size:.74rem;line-height:1.25;font-weight:600;color:#4a3f66;min-height:2.5em}
 .hs-card .btn{grid-column:1/3}
 .hs-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:26px;line-height:1;background:color-mix(in srgb,var(--c,#ffd36b) 40%,#fff);border:2.5px solid #120d2b}
-.hs-ic img{width:100%;height:100%;object-fit:contain}
+.hs-ic{position:relative;overflow:hidden}.hs-ic img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:contain}
 .hs-ic.big{width:60px;height:60px;font-size:36px;border-radius:16px}
 .hs-stars{font-style:normal;display:flex;gap:1px;font-size:.78rem;line-height:1}
 .hs-stars em{font-style:normal;color:#c9bfe0;-webkit-text-stroke:.6px #120d2b}
@@ -39,7 +39,7 @@
 .hs-panel .btn em{font-style:normal;font-weight:900}
 .hs-panel .btn.poor em{color:#d23b3b}
 .hs-panel .btn.lock{background:linear-gradient(180deg,#e9e2ff,#b9a8ee);color:#120d2b;font-size:.74rem}
-.hs-panel .btn.max{background:linear-gradient(180deg,#fff2a8,#e0a800);color:#120d2b}
+.hs-panel .btn.max{background:linear-gradient(180deg,#fff2a8,#e0a800);color:#120d2b;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
 .hs-sel{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:start;margin:0 0 10px;padding:10px;border-radius:18px;border:3px solid #120d2b;
   background:linear-gradient(180deg,#fff,#efe7ff);color:#120d2b;box-shadow:0 4px 0 #120d2b}
 .hs-st{display:grid;gap:3px;min-width:0}
@@ -64,7 +64,7 @@
 .hs-skin .btn em{font-style:normal;font-weight:900}
 .hs-skin .btn.poor em{color:#d23b3b}
 .hs-skin .sw{width:72px;height:60px;display:grid;place-items:center}
-.hs-skin .sw img{width:100%;height:100%;object-fit:contain}
+.hs-skin .sw{position:relative}.hs-skin .sw img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .hs-skin .sw i{display:block;width:62px;height:52px;position:relative;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
   background:linear-gradient(150deg,var(--w2) 0 49.5%,transparent 50%),linear-gradient(210deg,var(--w) 0 49.5%,transparent 50%),var(--f);border-bottom:4px solid var(--t)}
 .lt-mini.house .lt-ic{position:relative;background:linear-gradient(180deg,#fff3c4,#ffc94a)}

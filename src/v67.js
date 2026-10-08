@@ -50,7 +50,7 @@ const HS_F=[['piggy','living',[1,1],0,.7,'#ff9ec7','🐷'],['sofa','living',[2,1
  ['oven','kitchen',[1,1],0,1,'#e8a04f','🍪'],['fridge','kitchen',[1,1],0,1.9,'#dfe8f0','🧊'],['candyjar','kitchen',[1,1],0,.6,'#ff6fa8','🍬'],['table','kitchen',[2,2],0,.7,'#c98b55','🍽️'],
  ['sink','kitchen',[1,1],1,.9,'#9fd4e8','🚰'],['toaster','kitchen',[1,1],0,.8,'#e0c27a','🍞'],
  ['bed','bedroom',[2,2],0,.6,'#7aa7ff','🛏️'],['nightlight','bedroom',[1,1],0,.6,'#ffe27a','💡'],['toychest','bedroom',[1,1],0,.7,'#e8734f','🧸'],
- ['wardrobe','bedroom',[2,1],1,1.9,'#b07ad9','👗'],['trophies','bedroom',[2,1],1,.55,'#e0a400','🏆',.9],['telescope','bedroom',[1,1],0,1.4,'#5a6bd1','🔭'],
+ ['wardrobe','bedroom',[2,1],1,1.9,'#b07ad9','👗'],['trophies','bedroom',[2,1],1,1.3,'#e0a400','🏆'],['telescope','bedroom',[1,1],0,1.4,'#5a6bd1','🔭'],
  ['vane','yard',[1,1],0,2,'#8fa0b5','🌬️'],['mailbox','yard',[1,1],0,1.1,'#e85a5a','📮'],['birdhouse','yard',[1,1],0,1.6,'#c98b55','🪺'],
  ['flowers','yard',[2,1],0,.45,'#ff8fc0','🌻'],['trampoline','yard',[2,2],0,.5,'#3fbf7f','🤸'],['balloons','yard',[1,1],0,2,'#ff5f8f','🎈']
 ].map(([id,room,ft,wall,h,col,em,z0])=>({id,room,fw:ft[0],fd:ft[1],wall:!!wall,h,col,em,z0:z0||0}));
@@ -78,13 +78,15 @@ function hsK(k){if(typeof mode!=='undefined'&&mode==='duo')return 1;
 
 /* ---------- art (pictures from the graphics department when they exist) ---------- */
 const HS_IMG={},HS_ART=new Set(__HS_ART__);
+const hsSrc=name=>HS_ART.has(name)?'art/'+name+'.webp':'';
 function hsPic(name){if(!HS_ART.has(name))return null;if(HS_IMG[name]!==undefined)return HS_IMG[name];HS_IMG[name]=null;const im=new Image();im.onload=()=>{HS_IMG[name]=im;HSV.dirty=true};im.onerror=()=>{HS_IMG[name]=false};im.src='art/'+name+'.webp';return null}
 // floor corners of every room picture in its own px: [top, right, bottom, left] (check with tools/house_cal.py; AI art is never an
 // exact 2:1 diamond, so the picture is fitted to the floor grid by least squares per axis)
-const HS_CAL={hs_room_cottage_living:[[510,416],[939,629],[499,870],[90,626]]};
+// floor corners [top,right,bottom,left] in the picture's px; every room picture shares the cottage living room's floor (graphics spec)
+const HS_CAL0=[[510,416],[939,629],[499,870],[90,626]],HS_CAL={};
 
 /* ---------- isometric view ---------- */
-const HSV={el:null,cv:null,g:null,dpr:1,TW:0,TH:0,VZ:0,WH:0,ox:0,oy:0,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
+const HSV={rect:{},el:null,cv:null,g:null,dpr:1,TW:0,TH:0,VZ:0,WH:0,ox:0,oy:0,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
 function hsGeom(){const v=HSV,cw=v.W;v.TW=cw/(HS_G+1.1);v.TH=v.TW/2;v.VZ=v.TW*.62;v.WH=v.TW*1.6;v.ox=cw/2;v.oy=v.WH+v.TW*.3;v.H=Math.round(v.oy+HS_G*v.TH+v.TW*.45)}
 const hsP=(i,j,z=0)=>[HSV.ox+(i-j)*HSV.TW/2,HSV.oy+(i+j)*HSV.TH/2-z*HSV.VZ];
 function hsInv(x,y){const a=(x-HSV.ox)/(HSV.TW/2),b=(y-HSV.oy)/(HSV.TH/2);return [(a+b)/2,(b-a)/2]}
@@ -92,8 +94,8 @@ const hsShade=(c,k)=>{const n=parseInt(c.slice(1),16),r=n>>16,g=n>>8&255,b=n&255
 function hsPoly(g,pts,fill,stroke){g.beginPath();pts.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.strokeStyle=stroke;g.lineWidth=Math.max(1,HSV.TW*.035);g.lineJoin='round';g.stroke()}}
 function hsSkin(){return HS_SKINS.find(s=>s.id===hs().skin)||HS_SKINS[0]}
 function hsDrawRoom(g,room){const v=HSV,K=hsSkin(),G=HS_G,yard=room==='yard';
-  const name='hs_room_'+K.id+'_'+room,im=HS_CAL[name]&&hsPic(name);
-  if(im){const C=HS_CAL[name],D=[hsP(0,0),hsP(G,0),hsP(G,G),hsP(0,G)],fit=a=>{const n=4,X=C.map(c=>c[a]),Y=D.map(d=>d[a]),mx=X.reduce((p,q)=>p+q)/n,my=Y.reduce((p,q)=>p+q)/n;
+  const name='hs_room_'+K.id+'_'+room,im=hsPic(name);
+  if(im){const C=HS_CAL[name]||HS_CAL0,D=[hsP(0,0),hsP(G,0),hsP(G,G),hsP(0,G)],fit=a=>{const n=4,X=C.map(c=>c[a]),Y=D.map(d=>d[a]),mx=X.reduce((p,q)=>p+q)/n,my=Y.reduce((p,q)=>p+q)/n;
       let sxy=0,sxx=0;for(let k=0;k<n;k++){sxy+=(X[k]-mx)*(Y[k]-my);sxx+=(X[k]-mx)**2}const sc=sxy/sxx;return [sc,my-sc*mx]};
     const [sx,ox]=fit(0),[sy,oy]=fit(1);g.drawImage(im,ox,oy,im.width*sx,im.height*sy);return}
   if(yard){g.fillStyle='#bfe8ff';g.fillRect(0,0,v.W,v.oy+G*v.TH/2)}
@@ -128,10 +130,11 @@ function hsDrawItem(g,id,ghost){const v=HSV,f=HSF[id],F=ghost||hsFoot(id);if(!F)
   // soft shadow
   if(!f.z0){g.globalAlpha=.25*a;g.fillStyle='#120d2b';g.beginPath();g.ellipse(cx,cy,(di+dj)*v.TW*.3,(di+dj)*v.TH*.3,0,0,7);g.fill();g.globalAlpha=1}
   const im=hsPic('hs_f_'+id);
-  if(im){const w=(F.di+F.dj)*v.TW/2*1.08,h=w*im.height/im.width,[bx,by]=hsP(i+di,j+dj,f.z0);g.save();g.globalAlpha=a;g.translate(cx,by+v.TH*.12);if(f.wall?!F.f:F.f)g.scale(-1,1);g.drawImage(im,-w/2,-h,w,h);g.restore()}
+  if(im){const w=(F.di+F.dj)*v.TW/2*1.08*Math.min(1,im.width/(f.fw+f.fd>2?512:256)),h=w*im.height/im.width,[bx,by]=hsP(i+di,j+dj,f.z0);
+    if(!ghost)v.rect[id]={x:cx-w/2,y:by+v.TH*.12-h,w,h,im,fl:f.wall?!F.f:F.f};g.save();g.globalAlpha=a;g.translate(cx,by+v.TH*.12);if(f.wall?!F.f:F.f)g.scale(-1,1);g.drawImage(im,-w/2,-h,w,h);g.restore()}
   else{const top=hsBox(g,i,j,di,dj,f.z0,f.h,ghost&&!ghost.ok?'#ff6b6b':f.col,a);const [tx,ty]=hsP(i+di/2,j+dj/2,f.z0+f.h),fs=v.TW*(f.fw+f.fd>2?.62:.5);
     g.globalAlpha=a;g.font=`${fs}px "Apple Color Emoji","Noto Color Emoji",sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillText(f.em,tx,ty-fs*.15);g.globalAlpha=1}
-  if(L>=5&&!ghost){const [sx,sy]=hsP(i+di/2,j+dj/2,f.z0+f.h+.35);for(let k=0;k<3;k++){const ph=HSV.last/400+k*2.1;g.fillStyle='#ffe24d';g.globalAlpha=.55+.45*Math.sin(ph);hsStar(g,sx+Math.cos(ph)*v.TW*.35,sy+Math.sin(ph*1.3)*v.TH*.3,v.TW*.07)}g.globalAlpha=1}
+  if(L>=5&&!ghost){const r=im&&v.rect[id];let [sx,sy]=hsP(i+di/2,j+dj/2,f.z0+f.h+.35);if(r)sy=r.y-v.TH*.15;for(let k=0;k<3;k++){const ph=HSV.last/400+k*2.1;g.fillStyle='#ffe24d';g.globalAlpha=.55+.45*Math.sin(ph);hsStar(g,sx+Math.cos(ph)*v.TW*.35,sy+Math.sin(ph*1.3)*v.TH*.3,v.TW*.07)}g.globalAlpha=1}
   if(L&&!ghost){const [lx,ly]=hsP(i+di,j+dj,f.z0);g.font=`900 ${Math.round(v.TW*.24)}px Rubik,system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';
     const s='★'+L;g.lineWidth=3;g.strokeStyle='#120d2b';g.strokeText(s,lx,ly-v.TH*.1);g.fillStyle=L>=5?'#ffe24d':'#fff';g.fillText(s,lx,ly-v.TH*.1)}
   if(sel){g.save();g.strokeStyle='#ffe24d';g.lineWidth=3;g.setLineDash([6,5]);g.lineDashOffset=-HSV.last/40;hsPoly(g,[hsP(F.i,F.j),hsP(F.i+F.di,F.j),hsP(F.i+F.di,F.j+F.dj),hsP(F.i,F.j+F.dj)],null,null);g.stroke();g.restore()}}
@@ -142,10 +145,10 @@ function hsFits(id,F,room){const f=HSF[id];if(F.i<0||F.j<0||F.i+F.di>HS_G||F.j+F
   const mine=new Set(hsCells(id,F));for(const o of hsItemsIn(room)){if(o.id===id)continue;if(hsCells(o.id,hsFoot(o.id)).some(c=>mine.has(c)))return false}return true}
 // a new item goes to its own spot in a furnished room (i, j, turned) — the middle stays free for the Sharliz;
 // if the player moved something there, to the free spot farthest from the other furniture
-const HS_SPOT={piggy:[5,0,0],sofa:[2,3,0],clock:[0,0,0],fireplace:[2,0,0],aquarium:[0,3,1],books:[0,1,1],tv:[5,2,1],
-  oven:[2,0,0],fridge:[0,0,0],candyjar:[0,2,0],table:[2,3,0],sink:[1,0,0],toaster:[3,0,0],
-  bed:[1,0,0],nightlight:[0,0,0],toychest:[0,4,0],wardrobe:[0,1,1],trophies:[3,0,0],telescope:[5,0,0],
-  vane:[0,0,0],mailbox:[5,5,0],birdhouse:[0,3,0],flowers:[1,0,0],trampoline:[3,3,0],balloons:[5,0,0]};
+const HS_SPOT={piggy:[5,0,0],sofa:[1,3,0],clock:[0,0,0],fireplace:[2,0,0],aquarium:[0,4,1],books:[1,0,0],tv:[5,3,1],
+  oven:[1,0,0],fridge:[0,0,0],candyjar:[5,0,0],table:[2,3,0],sink:[3,0,0],toaster:[2,0,0],
+  bed:[1,0,0],nightlight:[0,0,0],toychest:[0,5,0],wardrobe:[0,2,1],trophies:[3,0,0],telescope:[5,0,0],
+  vane:[0,0,0],mailbox:[5,3,0],birdhouse:[0,3,0],flowers:[1,0,0],trampoline:[2,2,0],balloons:[5,0,0]};
 function hsAutoPlace(id){const f=HSF[id],H=hs(),S=HS_SPOT[id];
   if(S){const F=hsFootAt(id,S[0],S[1],S[2]);if(hsFits(id,F,f.room)){H.pos[id]={i:F.i,j:F.j,f:F.f};return true}}
   const others=hsItemsIn(f.room).filter(o=>o.id!==id).map(o=>{const F=hsFoot(o.id);return [F.i+F.di/2,F.j+F.dj/2]}),cand=[];
@@ -181,9 +184,12 @@ function hsLoop(now){const v=HSV;if(!v.el||v.el.hidden){v.raf=0;return}const dt=
 /* ---------- touch: tap = select, drag = move ---------- */
 function hsPt(e){const r=HSV.cv.getBoundingClientRect();return [(e.clientX-r.left)*HSV.W/r.width,(e.clientY-r.top)*HSV.H/r.height]}
 // the item's outline on screen (the six corners of its box), front-most item first
+const HS_AM={};function hsAlphaAt(im,u,v){let m=HS_AM[im.src];if(!m){const w=64,h=Math.max(1,Math.round(64*im.height/im.width)),c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.drawImage(im,0,0,w,h);
+  try{m={w,h,d:g.getImageData(0,0,w,h).data}}catch(_){m={w:0}}HS_AM[im.src]=m}if(!m.w)return true;const a=Math.floor(u*m.w),b=Math.floor(v*m.h);return a>=0&&b>=0&&a<m.w&&b<m.h&&m.d[(b*m.w+a)*4+3]>60}
 function hsInPoly(x,y,P){let c=false;for(let a=0,b=P.length-1;a<P.length;b=a++){const [xa,ya]=P[a],[xb,yb]=P[b];if((ya>y)!==(yb>y)&&x<(xb-xa)*(y-ya)/(yb-ya)+xa)c=!c}return c}
 function hsHit(x,y){const room=hs().room,list=hsItemsIn(room).map(f=>({f,F:hsFoot(f.id)})).sort((a,b)=>(b.F.i+b.F.di+b.F.j+b.F.dj+(b.f.wall?-1.5:0))-(a.F.i+a.F.di+a.F.j+a.F.dj+(a.f.wall?-1.5:0)));
-  for(const {f,F} of list){let {i,j,di,dj}=F;if(f.wall){if(F.f)di=.5;else dj=.5}const z0=f.z0,z1=f.z0+Math.max(f.h,.5);
+  for(const {f,F} of list){const r=HSV.rect[f.id];if(r&&hsPic('hs_f_'+f.id)){if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){const u=(x-r.x)/r.w;if(hsAlphaAt(r.im,r.fl?1-u:u,(y-r.y)/r.h))return f.id}continue}
+    let {i,j,di,dj}=F;if(f.wall){if(F.f)di=.5;else dj=.5}const z0=f.z0,z1=f.z0+Math.max(f.h,.5);
     const P=[hsP(i,j+dj,z0),hsP(i+di,j+dj,z0),hsP(i+di,j,z0),hsP(i+di,j,z1),hsP(i,j,z1),hsP(i,j+dj,z1)];if(hsInPoly(x,y,P))return f.id}
   // a near miss still picks the closest item
   let best=null,bd=HSV.TW*.35;for(const {f,F} of list){const [cx,cy]=hsP(F.i+F.di/2,F.j+F.dj/2,f.z0+f.h/2),d=Math.hypot(cx-x,cy-y)-HSV.TW*.4*(F.di+F.dj)/2;if(d<bd){bd=d;best=f.id}}return best}
@@ -235,7 +241,7 @@ function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-pane
     hsIcon(c.querySelector('.hs-ic'),f.id);c.querySelector('b').textContent=t('hsf_'+f.id);c.querySelector('p').textContent=hsTxt(f.id,L||1);hsBuyBtn(c.querySelector('.hs-bb'),f.id);
     if(L)c.onclick=e=>{if(e.target.closest('button'))return;sfx.click();HSV.sel=f.id;hsPanel()};grid.appendChild(c)});
   p.appendChild(grid);p.scrollTop=sel?0:sc;hsCoins();hsFit(p.querySelectorAll('.hs-card b,.hs-st b'))}
-function hsIcon(el,id){const im=hsPic('hs_f_'+id);if(im){const i=document.createElement('img');i.src=im.src;i.alt='';el.appendChild(i)}else{el.textContent=HSF[id].em;el.style.setProperty('--c',HSF[id].col)}}
+function hsIcon(el,id){const src=hsSrc('hs_f_'+id);if(src){const i=document.createElement('img');i.src=src;i.alt='';el.appendChild(i)}else{el.textContent=HSF[id].em;el.style.setProperty('--c',HSF[id].col)}}
 function hsBuyBtn(b,id){const L=hsLv(id),plv=hsPlayerLv();if(L>=5){b.textContent=t('hsMax');b.disabled=true;b.className+=' max';return}
   const need=hsGate(id,L+1),price=HS_PRICE[L];
   if(plv<need){b.innerHTML='<span>🔒</span> ';b.appendChild(document.createTextNode(t('hsNeedLv',{n:need})));b.className+=' lock';b.onclick=e=>{e.stopPropagation();sfx.locked();noteToast(t('hsNeedLv',{n:need}))};return}
@@ -250,8 +256,8 @@ function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className=
   m.innerHTML=`<div class="hs-sh"><div class="hs-shh"><b></b><button class="x-btn" aria-label="close"></button></div><div class="hs-skins"></div></div>`;
   m.querySelector('b').textContent=t('hsSkins');const x=m.querySelector('.x-btn');x.innerHTML=XSVG;x.onclick=()=>{sfx.click();m.remove()};m.onclick=e=>{if(e.target===m)m.remove()};
   const box=m.querySelector('.hs-skins');HS_SKINS.forEach(K=>{const own=H.skins.includes(K.id),c=document.createElement('div');c.className='hs-skin'+(H.skin===K.id?' on':'');
-    const pic=hsPic('hs_house_'+K.id);
-    c.innerHTML=`<span class="sw">${pic?`<img src="${pic.src}" alt="">`:`<i style="--w:${K.wall};--w2:${K.wall2};--f:${K.floor};--t:${K.trim}"></i>`}</span><b></b><button class="btn"></button>`;c.querySelector('b').textContent=t('hss_'+K.id);
+    const pic=hsSrc('hs_house_'+K.id);
+    c.innerHTML=`<span class="sw">${pic?`<img src="${pic}" alt="">`:`<i style="--w:${K.wall};--w2:${K.wall2};--f:${K.floor};--t:${K.trim}"></i>`}</span><b></b><button class="btn"></button>`;c.querySelector('b').textContent=t('hss_'+K.id);
     const b=c.querySelector('button');if(H.skin===K.id){b.textContent=t('hsUsing');b.disabled=true}else if(own){b.textContent=t('hsUse');b.className+=' primary'}
     else{b.innerHTML=`${coinImg()}<em>${K.p.toLocaleString()}</em>`;if((progress.coins||0)<K.p)b.className+=' poor'}
     b.onclick=()=>{if(H.skin===K.id)return;if(!own){if((progress.coins||0)<K.p){sfx.locked();popupToast(t('needCoins'));return}progress.coins-=K.p;H.skins.push(K.id);sfx.flourish&&sfx.flourish(3);updateWalletUI()}else sfx.click();
@@ -263,7 +269,7 @@ function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className=
   b.innerHTML='<span class="lt-ic"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M6 19 20 7l14 12" fill="#ff6b7a" stroke="#120d2b" stroke-width="3" stroke-linejoin="round"/><path d="M10 18v15h20V18" fill="#ffe2b0" stroke="#120d2b" stroke-width="3" stroke-linejoin="round"/><rect x="17" y="24" width="7" height="9" rx="1.5" fill="#b8743a" stroke="#120d2b" stroke-width="2.5"/><rect x="25.5" y="10" width="4" height="7" fill="#b8743a" stroke="#120d2b" stroke-width="2.5"/></svg><i class="hs-lk">🔒</i></span><b></b>';
   b.onclick=openHouse;row.appendChild(b)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{const b=document.getElementById('lobHouse');if(b){const open=hsOpen();b.hidden=!progress.tut;b.classList.toggle('lock',!open);
-    b.querySelector('b').textContent=open?t('hsMini'):t('hsLvl',{n:HS_OPEN});const pic=hsPic('hs_house_'+hs().skin);if(pic&&!b.querySelector('img')){const ic=b.querySelector('.lt-ic');ic.querySelector('svg').replaceWith(Object.assign(document.createElement('img'),{src:pic.src,alt:''}))}}
+    b.querySelector('b').textContent=open?t('hsMini'):t('hsLvl',{n:HS_OPEN});const pic=hsSrc('hs_house_'+hs().skin),ic=b.querySelector('.lt-ic');if(pic){const im=ic.querySelector('img')||ic.insertBefore(Object.assign(document.createElement('img'),{alt:''}),ic.firstChild);if(!im.src.endsWith(pic))im.src=pic;const sv=ic.querySelector('svg');if(sv)sv.remove()}}
     if(hsOpen()&&!hs().intro)setTimeout(hsIntroMaybe,1200)}catch(e){}return r}}
 function hsIntroMaybe(){const H=hs();if(H.intro||!hsOpen()||state!=='title'||document.querySelector('.hs-pop'))return;
   if(typeof gdBusy==='function'&&gdBusy())return;H.intro=1;saveProgress();const m=document.createElement('div');m.className='hs-pop';
