@@ -67,9 +67,5 @@
 .sb-head::after{pointer-events:none}
 .sb-toc{z-index:2}
 .tc-can{flex:none;width:34px;height:30px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,214,80,.9));animation:nsShake .6s ease-in-out infinite}
-/* a golden pack with a bonus gold sticker: 4 cards in the row */
-.sb-pk.k4 .pk-card{width:23%}
-.sb-pk.k4.torn .pk-card{left:calc(12.5% + var(--i) * 25%)}
-[dir=rtl] .sb-pk.k4.torn .pk-card{left:calc(87.5% - var(--i) * 25%)}
 .zft{display:flex;align-items:center;gap:6px;margin:2px 16px 0;padding:4px 10px;border-radius:12px;background:rgba(255,214,60,.18);border:2px solid rgba(255,200,40,.6);color:#fff;font-weight:700;font-size:.8rem;text-align:start}
 .zft img{width:22px;height:22px;object-fit:contain;flex:none}
