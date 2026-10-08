@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008103722"><\/script>')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008104559"><\/script>')})();</script>
 </head><body>
 <title>Sharliz Stack</title>
 <style>
@@ -1375,6 +1375,10 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .modes .mode-btn.m-tour{overflow:hidden}
 .modes .mode-btn.m-tour::before{content:'';position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);animation:ltShine 3.2s ease-in-out infinite;pointer-events:none}
 @keyframes ltShine{0%,55%{left:-60%}100%{left:130%}}
+/* the raised middle tab is Missions (was a Home tab that did nothing) */
+.lt-tab.home.mis .lt-ic{background:linear-gradient(180deg,#b8f5a6 0 48%,#5fcf45 52% 100%);box-shadow:inset 0 3px 0 rgba(255,255,255,.5),0 5px 0 #120d2b,0 0 18px rgba(120,230,90,.45)}
+.lt-tab.home.mis .lt-ic>img{margin-top:-2px}
+.lt-tab.home.mis .lt-bd{top:-10px;right:-10px}
 
 /* ===== v56: eggs nest, evolution, trophy room ===== */
 #nestScr,#achScr{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;overflow:hidden;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -7201,7 +7205,8 @@ const psItem=(c,id)=>PS_REW.some(r=>r[1].it&&r[1].it[0]===c&&r[1].it[1]===id);
 
 /* ===== v55: calm lobby — bottom TAB BAR + one row of small time-limited icons (Tzach chose concept C, design/lobby/) =====
    The old side columns stay in the DOM (hidden) so every module that updates their badges keeps working;
-   the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby. */
+   the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby.
+   The raised middle tab is MISSIONS (Tzach, Oct 8: a Home tab did nothing in the lobby); it left the small icon column. */
 Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
 Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
 const LT={tabs:[],mini:[]};
@@ -7214,7 +7219,7 @@ function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e
   const bar=document.createElement('nav');bar.className='lob-tabs';
   const tab=(id,icon,key,orig,cls='')=>{const b=document.createElement('button');b.className='lt-tab '+cls;b.innerHTML=`<span class="lt-ic"><img src="art/${icon}.webp" alt=""></span><b></b>`;b.dataset.k=key;b.querySelector('b').textContent=t(key);
     b.onclick=()=>{if(orig){const o=document.getElementById(orig);if(o)o.click()}else{audio();sfx.click();LOB.jump=time}};bar.appendChild(b);LT.tabs.push({b,orig,key})};
-  tab('shop','ic_shop','shop','lobShop');tab('style','ic_hats','wardrobeShort','lobHats');tab('home','ic_home','tabHome',null,'home on');tab('modes','ic_modes','tabModes','modesTitleBtn');tab('album','ic_album','album','lobAlbum');
+  tab('shop','ic_shop','shop','lobShop');tab('style','ic_hats','wardrobeShort','lobHats');tab('missions','ic_missions','miniMis','lobMissions','home mis');tab('modes','ic_modes','tabModes','modesTitleBtn');tab('album','ic_album','album','lobAlbum');
   sec.appendChild(bar);
   // small time-limited icons under the logo
   const row=document.createElement('div');row.className='lob-mini';
@@ -7222,7 +7227,6 @@ function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e
     b.onclick=()=>{const o=document.getElementById(orig);if(o)o.click()};row.appendChild(b);LT.mini.push({b,orig,label})};
   mini('pass','pass_icon','lobPass',()=>t('miniDays',{n:psDays()}),'gold');
   mini('event','ev_icon_halloween','lobEvent',()=>{const N=typeof evNow==='function'&&evNow();if(!N)return '';return t('miniDays',{n:N.live?Math.max(1,evDays(N.w.b-new Date())):evDays(N.w.a-new Date())})},'ev');
-  mini('missions','ic_missions','lobMissions',()=>t('miniMis'),'green');
   mini('offer','ic_gift','lobStarter',()=>t('miniOffer'),'offer');
   const logo=sec.querySelector('.logo');if(logo)logo.after(row);else sec.appendChild(row);
   sec.classList.add('lt-on')}}

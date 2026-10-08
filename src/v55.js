@@ -1,6 +1,7 @@
 /* ===== v55: calm lobby — bottom TAB BAR + one row of small time-limited icons (Tzach chose concept C, design/lobby/) =====
    The old side columns stay in the DOM (hidden) so every module that updates their badges keeps working;
-   the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby. */
+   the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby.
+   The raised middle tab is MISSIONS (Tzach, Oct 8: a Home tab did nothing in the lobby); it left the small icon column. */
 Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
 Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
 const LT={tabs:[],mini:[]};
@@ -13,7 +14,7 @@ function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e
   const bar=document.createElement('nav');bar.className='lob-tabs';
   const tab=(id,icon,key,orig,cls='')=>{const b=document.createElement('button');b.className='lt-tab '+cls;b.innerHTML=`<span class="lt-ic"><img src="art/${icon}.webp" alt=""></span><b></b>`;b.dataset.k=key;b.querySelector('b').textContent=t(key);
     b.onclick=()=>{if(orig){const o=document.getElementById(orig);if(o)o.click()}else{audio();sfx.click();LOB.jump=time}};bar.appendChild(b);LT.tabs.push({b,orig,key})};
-  tab('shop','ic_shop','shop','lobShop');tab('style','ic_hats','wardrobeShort','lobHats');tab('home','ic_home','tabHome',null,'home on');tab('modes','ic_modes','tabModes','modesTitleBtn');tab('album','ic_album','album','lobAlbum');
+  tab('shop','ic_shop','shop','lobShop');tab('style','ic_hats','wardrobeShort','lobHats');tab('missions','ic_missions','miniMis','lobMissions','home mis');tab('modes','ic_modes','tabModes','modesTitleBtn');tab('album','ic_album','album','lobAlbum');
   sec.appendChild(bar);
   // small time-limited icons under the logo
   const row=document.createElement('div');row.className='lob-mini';
@@ -21,7 +22,6 @@ function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e
     b.onclick=()=>{const o=document.getElementById(orig);if(o)o.click()};row.appendChild(b);LT.mini.push({b,orig,label})};
   mini('pass','pass_icon','lobPass',()=>t('miniDays',{n:psDays()}),'gold');
   mini('event','ev_icon_halloween','lobEvent',()=>{const N=typeof evNow==='function'&&evNow();if(!N)return '';return t('miniDays',{n:N.live?Math.max(1,evDays(N.w.b-new Date())):evDays(N.w.a-new Date())})},'ev');
-  mini('missions','ic_missions','lobMissions',()=>t('miniMis'),'green');
   mini('offer','ic_gift','lobStarter',()=>t('miniOffer'),'offer');
   const logo=sec.querySelector('.logo');if(logo)logo.after(row);else sec.appendChild(row);
   sec.classList.add('lt-on')}}
