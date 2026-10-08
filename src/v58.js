@@ -50,3 +50,20 @@ let TAPGUARD=0;
 {const _so=showOverlay;showOverlay=function(){TAPGUARD=performance.now();return _so.apply(this,arguments)}}
 for(const f of ['openArcade','openTour','openEvent','openPass','openNest','openTrophy']){const _f=window[f];if(typeof _f==='function')window[f]=function(){TAPGUARD=performance.now();return _f.apply(this,arguments)}}
 document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD<350&&e.target&&e.target.closest&&e.target.closest('#overlay,#arcade,#tour,#evhub,#passScr,#nestScr,#achScr')){e.stopPropagation();e.preventDefault()}},true);
+/* nightly check Oct 8: Japanese/Chinese/Korean have no spaces, so a big title could break anywhere and leave one character
+   alone on the 2nd line ('マイヒーロ / ー', the lobby 'プレ / イ'). In those languages a big title that wraps is shrunk step by
+   step until it fits on one line (down to 60%); if it still can't, it keeps its size and wraps as before. It never stops
+   wrapping, so nothing can be pushed out of its card. Runs on whatever the game adds or shows, one frame later. */
+{const CJK=/^(ja|zh|ko)/,seen=new WeakSet;let q=new Set,raf=0;
+ const lines=rg=>new Set([...rg.getClientRects()].map(r=>Math.round(r.top))).size;
+ const fit=e=>{if(seen.has(e)||!e.isConnected)return;const cs=getComputedStyle(e),fs=parseFloat(cs.fontSize);if(fs<20||cs.display==='none')return;
+   for(const n of e.childNodes){if(n.nodeType!==3||n.textContent.trim().length<2)continue;const rg=document.createRange();rg.selectNodeContents(n);
+     if(!rg.getClientRects().length)return;// not shown yet: try again when it shows
+     seen.add(e);if(lines(rg)<2)return;
+     for(let f=fs*.92;f>=fs*.6;f*=.92){e.style.fontSize=f+'px';if(lines(rg)<2)return}
+     e.style.fontSize='';return}};
+ const run=()=>{raf=0;if(!CJK.test(document.documentElement.lang)){q.clear();return}const roots=[...q];q.clear();
+   for(const r of roots){if(!(r instanceof Element))continue;fit(r);r.querySelectorAll('*').forEach(fit)}};
+ new MutationObserver(ms=>{for(const m of ms)q.add(m.target);if(!raf)raf=requestAnimationFrame(run)})
+   .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','class']});
+ q.add(document.body);raf=requestAnimationFrame(run)}
