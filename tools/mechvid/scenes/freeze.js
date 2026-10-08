@@ -69,7 +69,7 @@ const B={level:LEVEL,floors:4,seed:5,dur:20,fadeIn:true,fadeOut:true,
       if(M.thawT!=null&&t-M.thawT>.1&&bestNow(.065)){M.h0=hearts;M.p0=lv.perfect;M.n0=tower.length;M.rel=s;drop();M.dropT=t;M.press=t;M.taps.push({x:M.h.x,y:M.h.y,t})}}
     if(M.dropT!=null&&M.endT==null){if(dropping){const dx=xOf(dropping.xs),dy=sy(dropping.y);I.push({k:'fn',f:g=>dashed(g,M.rel.x,M.rel.y+BH*.55,tp.x,tp.y-BH*.5,GRN,.9)});I.push({k:'ring',x:dx,y:dy,r:BH*.62,col:GRN})}
       else{M.endT=t;M.ok=lv.perfect>M.p0;this.dur=t+1.6}}
-    if(M.endT!=null){const p=Math.min(1,(t-M.endT)/.45);I.push({k:'ring',x:tp.x,y:tp.y,r:BH*.62,col:GRN});I.push({k:'badge',x:tp.x+(tp.x<W/2?-1:1)*BH*1.15,y:tp.y-BH*.55,ok:true,p});handTo(W*.95,s.y+BH*4.6,3)}
+    if(M.endT!=null){const p=Math.min(1,(t-M.endT)/.45);I.push({k:'ring',x:tp.x,y:tp.y,r:BH*.62,col:GRN});I.push({k:'badge',x:tp.x+(xOf(tower[tower.length-1].xs)<W/2?-1:1)*BH*1.15,y:tp.y-BH*.55,ok:true,p});/* the game puts Perfect! right of the piece when its x<W/2, else left: the check goes on the other side */handTo(W*.95,s.y+BH*4.6,3)}
     handAndRipples(t,I);return I}};
 // warm-up scene with no frames: starts the level once so its own storm art is loaded (and the game's last queued
 // real-time frame has fired) before scene A is set up
