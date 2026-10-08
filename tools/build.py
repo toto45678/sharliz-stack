@@ -263,6 +263,17 @@ rep("let lang=store('sharliz-lang'); if(!I18N[lang]) lang='en';",
 rep("  Object.keys(I18N).forEach(code=>{const b=document.createElement('button');b.textContent=I18N[code]._label;b.setAttribute('aria-pressed',code===lang);b.onclick=()=>{lang=code;store('sharliz-lang',code);sfx.click();applyLang()};el.appendChild(b)});",
     "  const N=window.LANG_NAMES||{};['en'].concat(window.SHZ_DEV&&SHZ_DEV!=='en'?[SHZ_DEV]:[]).forEach(code=>{const b=document.createElement('button');b.textContent=N[code]||code;b.setAttribute('aria-pressed',code===lang);"
     "b.onclick=()=>{if(code===lang)return;store('sharliz-lang',code);sfx.click();if(!window.LANGX&&I18N[code]){lang=code;applyLang()}else location.reload()};el.appendChild(b)});")
+# --- mechanic videos (v62): the game now does what the videos show ---
+# ghost: drawSharliz0 used to reset globalAlpha to the sprite's own alpha, so the ghosted swinger was never see-through
+rep("ctx.save();ctx.globalAlpha=.2;ctx.fillStyle=LINE;ctx.beginPath();ctx.ellipse(w*.06+off(.5)*.5",
+    "ctx.save();ctx.globalAlpha=.2*(s._ga||1);ctx.fillStyle=LINE;ctx.beginPath();ctx.ellipse(w*.06+off(.5)*.5")
+rep("ctx.globalAlpha=sim.alpha;","ctx.globalAlpha=sim.alpha*(s._ga||1);")
+rep("ctx.globalAlpha=1;\n    if(progress.skin&&progress.skin!=='none'&&!s.noHat","ctx.globalAlpha=s._ga||1;\n    if(progress.skin&&progress.skin!=='none'&&!s.noHat")
+# a frame timestamp older than the last one ran game time backwards
+rep("let dt=Math.min(.033,(now-last)/1000);last=now;","let dt=Math.max(0,Math.min(.033,(now-last)/1000));last=now;")
+# aim guide: an off-centre ice landing slips, so it shows red, not 'ok'
+rep("const col=d<pT?'#a3e635':d<gT?'#ffd60a':d<mT?'#fff4d6':'#ff3ea5';","const col=d<pT?'#a3e635':d<gT?'#ffd60a':d<mT&&swinger.kind!=='ice'?'#fff4d6':'#ff3ea5';")
+
 js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')+'\n'+rd('v51.js')+'\n'+rd('v52.js')+'\n'+rd('v53.js')+'\n'+rd('v54.js')+'\n'+rd('v55.js')+'\n'+rd('v56.js')+'\n'+rd('v57.js')+'\n'+rd('v58.js')+'\n'+rd('v59.js')+'\n'+rd('v60.js').replace('__PET3D__',json.dumps(PET3D,separators=(',',':')))+'\n'+rd('v61.js').replace('__STK_BUD_ART__',json.dumps(sorted(os.path.basename(f)[6:-5] for f in _g.glob(P(ROOT,'art','stk_p_*.webp')))))+'\n'+rd('v62.js').replace('__MV_LIST__',json.dumps(sorted(f[3:-4] for f in os.listdir(P(ROOT,'art')) if f.startswith('mv_') and f.endswith('.mp4'))))
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')+'\n'+rd('v51.css')+'\n'+rd('v52.css')+'\n'+rd('v53.css')+'\n'+rd('v54.css')+'\n'+rd('v55.css')+'\n'+rd('v56.css')+'\n'+rd('v57.css')+'\n'+rd('v58.css')+'\n'+rd('v59.css')+'\n'+rd('v62.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')

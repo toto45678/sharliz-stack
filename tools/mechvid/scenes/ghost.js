@@ -16,9 +16,7 @@ const RED='#ef4444',YEL='#facc15',GRN='#22c55e';
 // GAME BUG (reported): v44 fades the ghosted swinger by setting ctx.globalAlpha before drawSharliz, but drawSharliz0's sprite path
 // then sets ctx.globalAlpha=sim.alpha (=1), so in the game the Sharliz never actually turns invisible. The fix is
 // 'ctx.globalAlpha*=sim.alpha' in drawSharliz0; until it ships, this applies the same effect so the video shows the intended mechanic.
-function ghostFix(){if(window.__ghostFix)return;window.__ghostFix=1;const _sf=spriteFor;
-  spriteFor=function(s,spr){const r=_sf(s,spr);return s&&s===swinger&&s.ghost>0?{im:r.im,alpha:r.alpha*(.1+.06*Math.sin(time*9))}:r}}
-function begin(){ghostFix();hz.since=-99;startEvent('ghost');const m=gh();if(!m)return;m.side=swinger&&swinger.xs>0?1:-1;m.t=.3}   // the ghost comes from behind and chases the Sharliz
+function begin(){hz.since=-99;startEvent('ghost');const m=gh();if(!m)return;m.side=swinger&&swinger.xs>0?1:-1;m.t=.3}   // the ghost comes from behind and chases the Sharliz
 function dashRing(g,x,y,r,col,t){g.save();g.setLineDash([9,7]);g.lineDashOffset=-t*40;g.lineWidth=7;g.strokeStyle=SC_lib.INK;g.beginPath();g.arc(x,y,r,0,7);g.stroke();g.lineWidth=4;g.strokeStyle=col;g.beginPath();g.arc(x,y,r,0,7);g.stroke();g.restore()}
 // scene A: nobody taps -> the Sharliz turns invisible, the blind drop misses the tower
 const A={level:251,floors:0,dur:10,seed:7,fadeOut:true,
