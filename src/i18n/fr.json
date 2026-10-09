@@ -998,7 +998,10 @@
   "hsp_birdhouse": "Cookies quand un œuf éclot : +{n}",
   "hsp_flowers": "+{n} % de points par Parfait",
   "hsp_trampoline": "Pièces par atterrissage en Frénésie : +{n}",
-  "hsp_balloons": "Le ballon à pièces vient {n} % plus souvent"
+  "hsp_balloons": "Le ballon à pièces vient {n} % plus souvent",
+  "hsDesign": "Style",
+  "hsNewLook": "Nouveau look : {x} !",
+  "hsDesLock": "Améliore à ★{n} pour ouvrir ce design"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
@@ -2036,6 +2039,8 @@
   "Zzz... wait, where's the ground?": "Zzz... attends, où est le sol ?",
   "Ballerina suit": "Tenue de ballerine",
   "Pirouette power": "Pouvoir pirouette",
-  "Twirl! Poof! Bye-bye, bats!": "Tourne ! Pouf ! Bye-bye, les chauves-souris !"
+  "Twirl! Poof! Bye-bye, bats!": "Tourne ! Pouf ! Bye-bye, les chauves-souris !",
+  "Home sweet home": "Home sweet home",
+  "My house, my sofa, my rules!": "Ma maison, mon canapé, mes règles !"
  }
 }

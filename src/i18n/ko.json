@@ -998,7 +998,10 @@
   "hsp_birdhouse": "알이 부화하면 쿠키 +{n}",
   "hsp_flowers": "퍼펙트 점수 +{n}%",
   "hsp_trampoline": "피버 중 착지마다 코인 +{n}",
-  "hsp_balloons": "코인 풍선이 {n}% 더 자주 와"
+  "hsp_balloons": "코인 풍선이 {n}% 더 자주 와",
+  "hsDesign": "디자인",
+  "hsNewLook": "새 디자인: {x}!",
+  "hsDesLock": "★{n}로 업그레이드하면 이 디자인이 열려요"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",
@@ -2036,6 +2039,8 @@
   "Zzz... wait, where's the ground?": "쿨쿨… 잠깐, 땅이 어디 갔지?",
   "Ballerina suit": "발레리나 옷",
   "Pirouette power": "피루엣 파워",
-  "Twirl! Poof! Bye-bye, bats!": "빙글! 펑! 박쥐야, 안녕!"
+  "Twirl! Poof! Bye-bye, bats!": "빙글! 펑! 박쥐야, 안녕!",
+  "Home sweet home": "즐거운 나의 집",
+  "My house, my sofa, my rules!": "내 집, 내 소파, 내 규칙!"
  }
 }

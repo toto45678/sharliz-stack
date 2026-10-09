@@ -998,7 +998,10 @@
   "hsp_birdhouse": "タマゴがかえるとクッキー+{n}",
   "hsp_flowers": "パーフェクトの点数+{n}%",
   "hsp_trampoline": "フィーバー中の着地ごとにコイン+{n}",
-  "hsp_balloons": "コインふうせんが{n}%よく来る"
+  "hsp_balloons": "コインふうせんが{n}%よく来る",
+  "hsDesign": "デザイン",
+  "hsNewLook": "新しいデザイン：{x}！",
+  "hsDesLock": "★{n}にアップグレードするとこのデザインが開きます"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
@@ -2036,6 +2039,8 @@
   "Zzz... wait, where's the ground?": "Zzz…あれ、地面はどこ?",
   "Ballerina suit": "バレリーナのいしょう",
   "Pirouette power": "ピルエットパワー",
-  "Twirl! Poof! Bye-bye, bats!": "くるっ！ポン！コウモリさん、バイバイ！"
+  "Twirl! Poof! Bye-bye, bats!": "くるっ！ポン！コウモリさん、バイバイ！",
+  "Home sweet home": "わが家がいちばん",
+  "My house, my sofa, my rules!": "わたしの家、わたしのソファ、わたしのルール！"
  }
 }

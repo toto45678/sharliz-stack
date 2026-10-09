@@ -998,7 +998,10 @@
   "hsp_birdhouse": "Galletas cuando se incuba un huevo: +{n}",
   "hsp_flowers": "+{n}% puntos por cada perfecto",
   "hsp_trampoline": "Monedas por cada aterrizaje en frenesí: +{n}",
-  "hsp_balloons": "El globo de monedas sale un {n}% más seguido"
+  "hsp_balloons": "El globo de monedas sale un {n}% más seguido",
+  "hsDesign": "Diseño",
+  "hsNewLook": "¡Nuevo aspecto: {x}!",
+  "hsDesLock": "Mejora a ★{n} para abrir este diseño"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",
@@ -2036,6 +2039,8 @@
   "Zzz... wait, where's the ground?": "Zzz... espera, ¿dónde está el piso?",
   "Ballerina suit": "Traje de bailarina",
   "Pirouette power": "Poder pirueta",
-  "Twirl! Poof! Bye-bye, bats!": "¡Gira! ¡Puf! ¡Adiós, murciélagos!"
+  "Twirl! Poof! Bye-bye, bats!": "¡Gira! ¡Puf! ¡Adiós, murciélagos!",
+  "Home sweet home": "Hogar, dulce hogar",
+  "My house, my sofa, my rules!": "¡Mi casa, mi sofá, mis reglas!"
  }
 }

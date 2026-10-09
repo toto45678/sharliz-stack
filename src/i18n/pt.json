@@ -998,7 +998,10 @@
   "hsp_birdhouse": "Biscoitos quando um ovo choca: +{n}",
   "hsp_flowers": "+{n}% pontos a cada perfeito",
   "hsp_trampoline": "Moedas a cada pouso no frenesi: +{n}",
-  "hsp_balloons": "O balão de moedas aparece {n}% mais vezes"
+  "hsp_balloons": "O balão de moedas aparece {n}% mais vezes",
+  "hsDesign": "Design",
+  "hsNewLook": "Novo visual: {x}!",
+  "hsDesLock": "Melhore para ★{n} para abrir este design"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",
@@ -2036,6 +2039,8 @@
   "Zzz... wait, where's the ground?": "Zzz... peraí, cadê o chão?",
   "Ballerina suit": "Roupa de bailarina",
   "Pirouette power": "Poder da pirueta",
-  "Twirl! Poof! Bye-bye, bats!": "Gira! Puf! Tchau, morcegos!"
+  "Twirl! Poof! Bye-bye, bats!": "Gira! Puf! Tchau, morcegos!",
+  "Home sweet home": "Lar, doce lar",
+  "My house, my sofa, my rules!": "Minha casa, meu sofá, minhas regras!"
  }
 }

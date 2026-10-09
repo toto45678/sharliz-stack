@@ -998,7 +998,10 @@
   "hsp_birdhouse": "Kekse, wenn ein Ei schlüpft: +{n}",
   "hsp_flowers": "+{n}% Punkte für jedes Perfekt",
   "hsp_trampoline": "Münzen für jede Landung im Fieber: +{n}",
-  "hsp_balloons": "Der Münzballon kommt {n}% öfter"
+  "hsp_balloons": "Der Münzballon kommt {n}% öfter",
+  "hsDesign": "Design",
+  "hsNewLook": "Neuer Look: {x}!",
+  "hsDesLock": "Verbessere auf ★{n}, um dieses Design zu öffnen"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -2036,6 +2039,8 @@
   "Zzz... wait, where's the ground?": "Zzz... Moment, wo ist der Boden?",
   "Ballerina suit": "Ballerina-Kostüm",
   "Pirouette power": "Pirouetten-Power",
-  "Twirl! Poof! Bye-bye, bats!": "Dreh! Puff! Tschüss, Fledermäuse!"
+  "Twirl! Poof! Bye-bye, bats!": "Dreh! Puff! Tschüss, Fledermäuse!",
+  "Home sweet home": "Trautes Heim",
+  "My house, my sofa, my rules!": "Mein Haus, mein Sofa, meine Regeln!"
  }
 }

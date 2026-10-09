@@ -998,7 +998,10 @@
   "hsp_birdhouse": "+{n} kue saat telur menetas",
   "hsp_flowers": "+{n}% poin tiap Sempurna",
   "hsp_trampoline": "+{n} koin tiap mendarat saat Heboh",
-  "hsp_balloons": "Balon koin muncul {n}% lebih sering"
+  "hsp_balloons": "Balon koin muncul {n}% lebih sering",
+  "hsDesign": "Desain",
+  "hsNewLook": "Tampilan baru: {x}!",
+  "hsDesLock": "Tingkatkan ke ★{n} untuk membuka desain ini"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
@@ -2036,6 +2039,8 @@
   "Zzz... wait, where's the ground?": "Zzz... eh, lantainya mana?",
   "Ballerina suit": "Kostum balerina",
   "Pirouette power": "Kekuatan pirouette",
-  "Twirl! Poof! Bye-bye, bats!": "Berputar! Puf! Dadah, kelelawar!"
+  "Twirl! Poof! Bye-bye, bats!": "Berputar! Puf! Dadah, kelelawar!",
+  "Home sweet home": "Rumahku istanaku",
+  "My house, my sofa, my rules!": "Rumahku, sofaku, aturanku!"
  }
 }
