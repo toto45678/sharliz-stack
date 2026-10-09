@@ -99,18 +99,19 @@ function hsPic(name){if(!HS_ART.has(name))return null;if(HS_IMG[name]!==undefine
    progress.house.fpos[id]={x: centre, y: bottom edge (both fractions of the room), m: mirrored}. A room picture fills the room
    (4:3, HF_CAL = where its floor starts); an item is HF_SZ wide, its height follows its picture. */
 // [width, height] as fractions of the room's width / height (the height is only used until the item has a picture)
-// living room = the graphics sample (Oct 9): widths measured on its sheet, at the mock's scale (wall height 783 px = .67 of the room)
+// widths = the item's width on the graphics sheet (all 4 sheets share one scale) × .000615 (measured on the approved living-room mock:
+// wall height 783 px = .67 of the room); the height (2nd number) is only used until the item has a picture
 const HF_SZ={piggy:[.105,.22],sofa:[.44,.26],clock:[.108,.41],fireplace:[.214,.28],aquarium:[.165,.28],books:[.187,.17],tv:[.154,.28],
-  oven:[.2,.3],fridge:[.18,.5],candyjar:[.1,.15],table:[.32,.2],sink:[.24,.29],toaster:[.12,.13],
-  bed:[.42,.25],nightlight:[.1,.2],toychest:[.18,.16],wardrobe:[.25,.52],trophies:[.27,.16],telescope:[.14,.36],
-  vane:[.12,.56],mailbox:[.1,.3],birdhouse:[.12,.42],flowers:[.3,.12],trampoline:[.34,.16],balloons:[.14,.56]};
+  oven:[.212,.26],fridge:[.177,.44],candyjar:[.136,.22],table:[.461,.27],sink:[.171,.3],toaster:[.14,.28],
+  bed:[.346,.36],nightlight:[.132,.29],toychest:[.22,.23],wardrobe:[.2,.45],trophies:[.29,.17],telescope:[.177,.32],
+  vane:[.151,.46],mailbox:[.124,.3],birdhouse:[.121,.45],flowers:[.293,.16],trampoline:[.351,.2],balloons:[.141,.46]};
 const HF_WALL=new Set(['books','trophies']); // hang on the wall; everything else stands on the floor
 // where a new item goes the first time: [x, y] (the middle front stays free for the Sharliz)
 const HF_SPOT={aquarium:[.13,.73],fireplace:[.42,.7],clock:[.66,.71],piggy:[.84,.75],books:[.17,.42],sofa:[.43,.9],tv:[.8,.93],
-  fridge:[.1,.76],oven:[.3,.76],sink:[.53,.76],toaster:[.72,.77],candyjar:[.9,.78],table:[.5,.94],
-  wardrobe:[.12,.76],trophies:[.5,.4],bed:[.42,.9],nightlight:[.76,.77],telescope:[.9,.8],toychest:[.79,.95],
-  vane:[.08,.76],birdhouse:[.28,.77],flowers:[.52,.78],balloons:[.92,.77],mailbox:[.74,.82],trampoline:[.44,.94]};
-const HF_FT=.67,HF_FF=.975,HF_CAL={}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
+  fridge:[.09,.71],oven:[.27,.71],sink:[.45,.71],toaster:[.6,.72],candyjar:[.76,.74],table:[.5,.93],
+  wardrobe:[.12,.7],trophies:[.3,.4],bed:[.47,.85],nightlight:[.74,.72],telescope:[.88,.89],toychest:[.2,.95],
+  vane:[.1,.7],mailbox:[.3,.72],birdhouse:[.5,.7],balloons:[.9,.71],flowers:[.68,.78],trampoline:[.42,.93]};
+const HF_FT=.67,HF_FF=.975,HF_CAL={hf_room_cottage_bedroom:.652,hf_room_cottage_yard:.635}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
 const hfFT=(room=hs().room)=>HF_CAL['hf_room_'+hsSkin().id+'_'+room]||HF_FT;
 const HSV={ord:{},focus:{},peek:null,pop:null,up:null,lockB:null,cam:0,camT:0,pan:null,RW:0,RH:0,RX:0,SP:0,TW:0,el:null,cv:null,g:null,dpr:1,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
 // the house is the 4 rooms stacked top to bottom (living, kitchen, bedroom, yard); the canvas is a window (W x H) on it and the camera

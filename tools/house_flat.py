@@ -31,12 +31,13 @@ def cut(sheet,ids,out):
     objs=[(s,(lab[s]==k+1)&fg[s]) for k,s in enumerate(nd.find_objects(lab))]
     objs=[o for o in objs if o[1].sum()>fg.sum()*.004]
     if len(objs)!=len(ids):print(f'WARNING: found {len(objs)} items on the sheet, expected {len(ids)}')
-    # reading order: rows (items whose vertical middles are close), then left to right
-    objs.sort(key=lambda o:(o[0][0].start+o[0][0].stop)/2);rows=[]
+    # reading order: rows, then left to right. Items in a row stand on one line, so rows are found by their bottom edges
+    # (a tall item like a balloon post has its middle between the rows, its bottom is still on its row's line)
+    objs.sort(key=lambda o:o[0][0].stop);rows=[]
     for o in objs:
-        cy=(o[0][0].start+o[0][0].stop)/2
-        if rows and abs(cy-rows[-1][0])<H*.12:rows[-1][1].append(o)
-        else:rows.append([cy,[o]])
+        by=o[0][0].stop
+        if rows and by-rows[-1][0]<H*.15:rows[-1][0]=by;rows[-1][1].append(o)
+        else:rows.append([by,[o]])
     order=[o for _,r in rows for o in sorted(r,key=lambda o:o[0][1].start)]
     os.makedirs(out,exist_ok=True);arr=np.asarray(im).copy()
     for id_,(s,m) in zip(ids,order):
