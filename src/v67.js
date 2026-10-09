@@ -111,7 +111,9 @@ const HF_SPOT={aquarium:[.13,.73],fireplace:[.42,.7],clock:[.66,.71],piggy:[.84,
   fridge:[.09,.71],oven:[.27,.71],sink:[.45,.71],toaster:[.6,.72],candyjar:[.76,.74],table:[.5,.93],
   wardrobe:[.12,.7],trophies:[.3,.4],bed:[.47,.85],nightlight:[.74,.72],telescope:[.88,.89],toychest:[.2,.95],
   vane:[.1,.7],mailbox:[.3,.72],birdhouse:[.5,.7],balloons:[.9,.71],flowers:[.68,.78],trampoline:[.42,.93]};
-const HF_FT=.67,HF_FF=.975,HF_CAL={hf_room_cottage_bedroom:.652,hf_room_cottage_yard:.635,hf_room_candy_yard:.65}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
+const HF_FT=.67,HF_FF=.975,HF_CAL={hf_room_cottage_bedroom:.652,hf_room_cottage_yard:.635,hf_room_candy_yard:.65,
+  hf_room_castle_living:.635,hf_room_castle_kitchen:.645,hf_room_castle_bedroom:.635,hf_room_castle_yard:.69,
+  hf_room_jungle_living:.61,hf_room_jungle_kitchen:.61,hf_room_jungle_bedroom:.61,hf_room_jungle_yard:.655}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
 const hfFT=(room=hs().room)=>HF_CAL['hf_room_'+hsSkin().id+'_'+room]||HF_FT;
 const HSV={ord:{},focus:{},peek:null,pop:null,up:null,lockB:null,cam:0,camT:0,pan:null,RW:0,RH:0,RX:0,SP:0,TW:0,el:null,cv:null,g:null,dpr:1,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
 // the house is the 4 rooms stacked top to bottom (living, kitchen, bedroom, yard); the canvas is a window (W x H) on it and the camera
@@ -156,7 +158,7 @@ function hsLockTag(g,R){const v=HSV,s=v.TW*.95,B=v.lockB,p=B&&B.room===R.id?(per
   const txt=t('hsLvl',{n:R.lv});g.font=`900 ${Math.round(s*.3)}px Rubik,system-ui,sans-serif`;const w=g.measureText(txt).width+s*.5,h=s*.46;
   hsRR(g,-w/2,s*.3,w,h,h/2);g.fillStyle='#241250';g.fill();g.lineWidth=2.5;g.strokeStyle='#ffe9a8';g.stroke();g.fillStyle='#fff';g.fillText(txt,0,s*.3+h/2+1);g.restore()}
 // where an item is (while you drag it: where your finger has it)
-function hsPos(id){const d=HSV.drag;if(d&&d.id===id&&d.p)return d.p;const P=hs().fpos[id];if(P)return P;const S=HF_SPOT[id]||[.5,.9],c=hsClamp(id,S[0],S[1]);return {x:c.x,y:c.y,m:0}}
+function hsPos(id){const d=HSV.drag;if(d&&d.id===id&&d.p)return d.p;const P=hs().fpos[id];if(P){const c=hsClamp(id,P.x,P.y);return {x:c.x,y:c.y,m:P.m}}const S=HF_SPOT[id]||[.5,.9],c=hsClamp(id,S[0],S[1]);return {x:c.x,y:c.y,m:0}}
 function hsItemPic(id){const pk=hsPeek(id);return pk&&hsPic(hsDN(id,pk))||hsPic(hsFN(id))}
 // the item's box on screen in the room's coordinates (its picture fills it; mirrored when turned)
 function hsRect(id,p=hsPos(id)){const v=HSV,[w0,h0]=HF_SZ[id],im=hsItemPic(id),w=w0*v.RW,h=im?w*im.height/im.width:h0*v.RH;
