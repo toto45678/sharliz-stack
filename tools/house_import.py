@@ -6,7 +6,7 @@ usage: python3 tools/house_import.py [/mnt/project-files/graphics/house] [--all]
   furniture/f_<id>_d<N>.png     -> art/hs_f_<id>_d<N>.webp       (designs 2..10 of an item)
 Only files newer than their webp are converted (--all redoes everything), 4 at a time.
 A design that faces the other way than design 1 is mirrored on import: its outline is compared with design 1 and with
-design 1 mirrored, and it is flipped when the mirror matches clearly better (printed; check it by eye).
+design 1 mirrored, and it is flipped when the mirror matches clearly better (by .12; the sofa designs were .2+, a crescent lamp .05 was a false flip; printed, check by eye).
 A new room picture also needs its four floor corners in HS_CAL (src/v67.js); tools/house_cal.py draws the grid to check them."""
 import sys,os,glob,re
 from multiprocessing import Pool
@@ -36,7 +36,7 @@ def job(t):
         d1=os.path.join(os.path.dirname(f),'f_'+m.group(1)+'.png')
         if os.path.exists(d1):
             b=crop(Image.open(d1),520);o=outline(im);same=iou(o,outline(b));mir=iou(o,outline(ImageOps.mirror(b)))
-            if mir>same+.05:im=ImageOps.mirror(im);note=f'  MIRRORED to face like design 1 ({same:.2f} vs {mir:.2f})'
+            if mir>same+.12:im=ImageOps.mirror(im);note=f'  MIRRORED to face like design 1 ({same:.2f} vs {mir:.2f})'
     im.save(out,'WEBP',quality=86,method=6)
     return f'{os.path.basename(out)} {im.size} {os.path.getsize(out)//1024} KB{note}'
 jobs=[]
