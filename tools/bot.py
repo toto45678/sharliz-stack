@@ -1,5 +1,6 @@
 """Autoplay bot: plays levels headless (fast-forwarding game time), reports win/lose/stuck + JS errors per level.
-usage: python3 tools/bot.py [skill 0..1] levels...   e.g. python3 tools/bot.py .9 1 2 10 81 90"""
+usage: python3 tools/bot.py [skill 0..1] levels...   e.g. python3 tools/bot.py .9 1 2 10 81 90
+It drops bombs beside the tower (never taps them)."""
 import asyncio,json,sys,os,subprocess,time
 from playwright.async_api import async_playwright
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,8 +16,11 @@ setInterval(()=>{try{
     if(state==='aim'&&swinger&&!swinger.entering){
       const top=tower[tower.length-1],dist=Math.max(1,yOf(tower.length)-swingY()),tf=Math.sqrt(2*dist/(BH*30*zone().grav));
       const aim=swinger.xs+wind*tf, err=Math.abs(aim-top.xs);
-      const want=Math.random()<__bot.skill?.03:.35;
-      if(err<want)drop();
+      // a bomb is dropped beside the tower (a player would tap it or miss on purpose): dropping it on the tower knocks floors off,
+      // and the city-based bosses (castle, rat king) queue bombs, so the bot used to read as 'stuck' there
+      if(swinger.kind==='bomb'){if(err>.75&&err<1.6)drop()}
+      else{const want=Math.random()<__bot.skill?.03:.35;
+      if(err<want)drop()}
     }
     if(typeof hz!=='undefined'){ // tap stoppable enemies sometimes
     }
@@ -39,7 +43,7 @@ async def main():
             await pg.evaluate(BOT)
             for lv in LVS:
                 n0=len(errs)
-                await pg.evaluate(f"hideOverlay();startLevel({lv})")
+                await pg.evaluate(f"hideOverlay();iris.r=-1;drawIris();startLevel({lv})")
                 t0=time.time();res='stuck'
                 while time.time()-t0<float(os.environ.get('BOT_T','150')):
                     await pg.wait_for_timeout(1000)
