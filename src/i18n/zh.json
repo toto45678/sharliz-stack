@@ -1034,7 +1034,10 @@
   "nsNeedCk": "还需要{n}块饼干",
   "sbPacksGot": "+{n}贴纸包！",
   "sbGoldsGot": "+{n}金色贴纸包！",
-  "stKeep": "继续玩，看看接下来会发生什么"
+  "stKeep": "继续玩，看看接下来会发生什么",
+  "arcZero": "这次没有得分，所以金币次数没有用掉",
+  "trInvite": "来和我一起玩Sharliz每周锦标赛吧！🏆",
+  "evWinFirst": "先赢下第{n}关"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

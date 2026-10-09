@@ -60,3 +60,4 @@
 .cs-slot .dot{position:absolute;top:-6px;inset-inline-start:-6px;width:13px;height:13px;border-radius:50%;background:#ff3b5c;border:2px solid var(--ink)}
 .cs-drawer.still{animation:none}
 .st-it.hat small.cost,.st-pack.astro-pack .st-it.hat small.cost{color:#ffb3b3}
+.season-banner.narrow{white-space:normal;max-width:150px;padding:6px 16px 8px}.season-banner.narrow b{line-height:1}

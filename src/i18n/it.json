@@ -1034,7 +1034,10 @@
   "nsNeedCk": "Mancano {n} biscotti",
   "sbPacksGot": "+{n} bustine di figurine!",
   "sbGoldsGot": "+{n} bustine d’oro!",
-  "stKeep": "Continua a giocare per scoprire cosa succede"
+  "stKeep": "Continua a giocare per scoprire cosa succede",
+  "arcZero": "Nessun punto questa volta, quindi la partita a monete non è stata usata",
+  "trInvite": "Vieni a giocare con me al torneo settimanale di Sharliz! 🏆",
+  "evWinFirst": "Prima vinci la tappa {n}"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

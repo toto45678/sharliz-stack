@@ -1034,7 +1034,10 @@
   "nsNeedCk": "{n} kurabiye daha lazım",
   "sbPacksGot": "+{n} çıkartma paketi!",
   "sbGoldsGot": "+{n} altın çıkartma paketi!",
-  "stKeep": "Neler olacağını görmek için oynamaya devam et"
+  "stKeep": "Neler olacağını görmek için oynamaya devam et",
+  "arcZero": "Bu sefer puan yok, bu yüzden altınlı oyun hakkın kullanılmadı",
+  "trInvite": "Benimle Sharliz haftalık turnuvasında oyna! 🏆",
+  "evWinFirst": "Önce {n}. aşamayı kazan"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

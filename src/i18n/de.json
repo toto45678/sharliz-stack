@@ -1034,7 +1034,10 @@
   "nsNeedCk": "Noch {n} Kekse nötig",
   "sbPacksGot": "+{n} Sticker-Packs!",
   "sbGoldsGot": "+{n} goldene Stickertüten!",
-  "stKeep": "Spiel weiter, um zu sehen, wie es weitergeht"
+  "stKeep": "Spiel weiter, um zu sehen, wie es weitergeht",
+  "arcZero": "Diesmal keine Punkte, also wurde dein Münzspiel nicht verbraucht",
+  "trInvite": "Spiel mit mir das Sharliz-Wochenturnier! 🏆",
+  "evWinFirst": "Gewinne zuerst Etappe {n}"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

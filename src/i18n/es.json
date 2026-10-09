@@ -1034,7 +1034,10 @@
   "nsNeedCk": "Faltan {n} galletas",
   "sbPacksGot": "¡+{n} sobres de stickers!",
   "sbGoldsGot": "¡+{n} sobres de cromos dorados!",
-  "stKeep": "Sigue jugando para ver qué pasa"
+  "stKeep": "Sigue jugando para ver qué pasa",
+  "arcZero": "Esta vez sin puntos, así que tu partida con monedas no se gastó",
+  "trInvite": "¡Ven a jugar conmigo el torneo semanal de Sharliz! 🏆",
+  "evWinFirst": "Primero gana la etapa {n}"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

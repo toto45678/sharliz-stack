@@ -63,4 +63,17 @@ function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonSt
 function seasonBanners(){const inner=document.getElementById('mapInner');if(!inner||!mapGeo)return;inner.querySelectorAll('.season-banner').forEach(e=>e.remove());
   for(let zi=1;zi<ZONES.length;zi++){const s=ZONES[zi].season||1;if(s===(ZONES[zi-1].season||1))continue;
     const y=mapGeo.h-MAP_MARGIN-zi*mapGeo.ph,b=document.createElement('div');b.className='season-banner s'+s;b.style.top=y+'px';
-    b.innerHTML='<small></small><b></b>';b.querySelector('small').textContent=t('seasonN',{n:s});b.querySelector('b').textContent=t('season'+s);inner.appendChild(b)}}
+    b.innerHTML='<small></small><b></b>';b.querySelector('small').textContent=t('seasonN',{n:s});b.querySelector('b').textContent=t('season'+s);inner.appendChild(b)}
+  requestAnimationFrame(mapDeclutter)}
+// world ribbons stay whole on screen (long night/storm names were cut by the edge), and a season banner slides sideways
+// so it doesn't cover the boss pin below the seam, the first pin above it or the world ribbon
+function mapDeclutter(){const inner=document.getElementById('mapInner');if(!inner||!mapGeo)return;const W=inner.clientWidth;if(!W)return;
+  inner.querySelectorAll('.map-ribbon:not(.home)').forEach(r=>{const w=r.offsetWidth;if(!w)return;const h=w/2+6,x=parseFloat(r.style.left);if(!isNaN(x))r.style.left=Math.max(h,Math.min(W-h,x))+'px'});
+  const R=e=>{const x=parseFloat(e.style.left),y=parseFloat(e.style.top),p=e.classList.contains('boss')?20:4,w=e.offsetWidth/2+p,h=e.offsetHeight/2+p;return [x-w,y-h,x+w,y+h]};
+  inner.querySelectorAll('.season-banner').forEach(bn=>{const y0=parseFloat(bn.dataset.y||bn.style.top);if(isNaN(y0))return;bn.dataset.y=y0;
+   for(const narrow of [0,1]){bn.classList.toggle('narrow',!!narrow);const bw=bn.offsetWidth,bh=bn.offsetHeight,y=y0;if(!bw)return;
+    const obs=[...inner.querySelectorAll('.pin,.map-ribbon')].map(R).filter(r=>!isNaN(r[0])&&r[3]>y-bh*1.6&&r[1]<y+bh*1.6);let best=null;
+    for(const dy of [0,-24,24,-48,48])for(let x=bw/2+4;x<=W-bw/2-4;x+=6){const a=[x-bw/2,y+dy-bh/2,x+bw/2,y+dy+bh/2];let ov=0;
+      for(const r of obs){const ix=Math.min(a[2],r[2])-Math.max(a[0],r[0]),iy=Math.min(a[3],r[3])-Math.max(a[1],r[1]);if(ix>0&&iy>0)ov+=ix*iy}
+      const sc=ov*20+Math.abs(x-W/2)+Math.abs(dy)*4;if(!best||sc<best.sc)best={sc,x,dy}}
+    if(best){bn.style.left=best.x+'px';bn.style.top=(y+best.dy)+'px'}if(!best||best.sc<20*40)return}})}// a long name (Season 4 'New worlds') wraps to 2 lines when it can't get out of the way

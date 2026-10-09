@@ -1034,7 +1034,10 @@
   "nsNeedCk": "쿠키 {n}개가 더 필요해",
   "sbPacksGot": "스티커 팩 +{n}!",
   "sbGoldsGot": "황금 스티커 팩 +{n}!",
-  "stKeep": "계속 플레이하면 다음 이야기를 볼 수 있어"
+  "stKeep": "계속 플레이하면 다음 이야기를 볼 수 있어",
+  "arcZero": "이번엔 점수가 없어서 코인 플레이를 쓰지 않았어",
+  "trInvite": "나랑 같이 Sharliz 주간 토너먼트 하자! 🏆",
+  "evWinFirst": "먼저 {n}단계를 깨야 해"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

@@ -1034,7 +1034,10 @@
   "nsNeedCk": "Butuh {n} kue lagi",
   "sbPacksGot": "+{n} paket stiker!",
   "sbGoldsGot": "+{n} bungkus stiker emas!",
-  "stKeep": "Terus main untuk tahu kelanjutannya"
+  "stKeep": "Terus main untuk tahu kelanjutannya",
+  "arcZero": "Kali ini tanpa poin, jadi jatah main koinmu tidak terpakai",
+  "trInvite": "Ayo main turnamen mingguan Sharliz bareng aku! 🏆",
+  "evWinFirst": "Menangkan tahap {n} dulu"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

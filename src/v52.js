@@ -6,10 +6,10 @@
 const EVENTS=[
   {id:'halloween',from:[10,15],to:[11,1],sid:'farmN',cur:'candy',deco:'halloween',
    items:[{c:'hat',id:'pumpkin',p:120},{c:'hat',id:'witch',p:150},{c:'color',id:'pumpkin',p:60},{c:'trail',id:'t_bats',p:90}]}];
-Object.assign(I18N.en,{ev_halloween:'Halloween',evLeft:'{n} days left',evOn:'Wearing',evOwned:'Owned',evAlmost:'So close! Try again',evDoneAll:'Event complete!',evBossDown:'Boss defeated!',evLeft1:'Last day!',evSoon:'Starts in {n} days',evTest:'Test mode',evPath:'Path',evShop:'Shop',evPlay:'Play',
+Object.assign(I18N.en,{evWinFirst:'Win stage {n} first',ev_halloween:'Halloween',evLeft:'{n} days left',evOn:'Wearing',evOwned:'Owned',evAlmost:'So close! Try again',evDoneAll:'Event complete!',evBossDown:'Boss defeated!',evLeft1:'Last day!',evSoon:'Starts in {n} days',evTest:'Test mode',evPath:'Path',evShop:'Shop',evPlay:'Play',
   evStage:'Stage {n}',evBossStage:'Boss',evFinal:'Final boss',evOnly:'Only during {n}',evGot:'Yours!',evNeed:'Need more {n}',cur_candy:'Candy',evClear:'Stage clear!',evBossClear:'Boss beaten!',
   evAgain:'Again',evBack:'Event',evDone:'All stages done! Replay for more candy',evFirst:'First clear bonus',evs_halloween:'Halloween',evExcl:'Exclusive items for a limited time!',evEnded:'This event has ended'});
-Object.assign(I18N.he,{ev_halloween:'ליל כל הקדושים',evLeft:'נותרו {n} ימים',evOn:'בשימוש',evOwned:'נרכש',evAlmost:'כמעט! נסו שוב',evDoneAll:'האירוע הושלם!',evBossDown:'הבוס הובס!',evLeft1:'יום אחרון!',evSoon:'מתחיל בעוד {n} ימים',evTest:'מצב בדיקה',evPath:'מסלול',evShop:'חנות',evPlay:'שחקו',
+Object.assign(I18N.he,{evWinFirst:'קודם מנצחים בשלב {n}',ev_halloween:'ליל כל הקדושים',evLeft:'נותרו {n} ימים',evOn:'בשימוש',evOwned:'נרכש',evAlmost:'כמעט! נסו שוב',evDoneAll:'האירוע הושלם!',evBossDown:'הבוס הובס!',evLeft1:'יום אחרון!',evSoon:'מתחיל בעוד {n} ימים',evTest:'מצב בדיקה',evPath:'מסלול',evShop:'חנות',evPlay:'שחקו',
   evStage:'שלב {n}',evBossStage:'בוס',evFinal:'בוס סופי',evOnly:'רק ב{n}',evGot:'שלך!',evNeed:'צריך עוד {n}',cur_candy:'ממתקים',evClear:'השלב עבר!',evBossClear:'ניצחתם את הבוס!',
   evAgain:'שוב',evBack:'לאירוע',evDone:'סיימתם את כל השלבים! שחקו שוב בשביל עוד ממתקים',evFirst:'בונוס פעם ראשונה',evs_halloween:'האלווין',evExcl:'פריטים בלעדיים לזמן מוגבל!',evEnded:'האירוע נגמר'});
 // event-only catalogue (not buyable with coins; wGate/csInfo show "only during …")
@@ -45,12 +45,13 @@ function evHub(N,tab){const E=N.E,D=evData(E.id),r=evRoot();r.className='ev-hub 
 function evPath(N,body){const E=N.E,D=evData(E.id),nx=Math.min(9,D.done);
   const wrap=document.createElement('div');wrap.className='ev-path';body.appendChild(wrap);
   // winding path: 10 nodes, bottom (stage 1) to top (boss)
-  const pts=[];for(let i=0;i<10;i++){const y=5+i*8.9,x=50+Math.sin(i*1.25+.6)*28;pts.push([x,y])}
+  const pts=[];for(let i=0;i<10;i++){const y=i<9?5+i*8.3:88,x=50+Math.sin(i*1.25+.6)*28;pts.push([x,y])}// the boss gets more room: stage 9 hid behind it on small phones
   const svg=`<svg class="ev-road" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}"/></svg>`;wrap.innerHTML=svg;
   pts.forEach(([x,y],i)=>{const b=document.createElement('button'),boss=i===9,st=i<D.done?'done':i===nx?'next':'lock';b.className='ev-node '+st+(boss?' boss':'');b.style.left=x+'%';b.style.top=y+'%';
     b.innerHTML=boss?`<img src="art/ev_boss_${E.id}.webp" alt=""><i>${t('evFinal')}</i>`:`<img src="art/ev_node${st==='lock'?'_off':''}.webp" alt=""><i>${i+1}</i>`;
     b.setAttribute('aria-label',boss?t('evBossStage'):t('evStage',{n:i+1}));
-    b.onclick=()=>{if(st==='lock'){sfx.locked();return}sfx.click();evStart(i)};wrap.appendChild(b)});
+    b.onclick=()=>{if(st==='lock'){sfx.locked();noteToast(t('evWinFirst',{n:nx+1}));return}sfx.click();evStart(i)};wrap.appendChild(b)});
+  requestAnimationFrame(()=>{const h=wrap.clientHeight;if(h)wrap.style.setProperty('--evs',Math.max(.68,Math.min(1,h/540)).toFixed(3))});
   const foot=document.createElement('div');foot.className='ev-foot';
   if(D.done>=10){const p=document.createElement('p');p.textContent=t('evDone');foot.appendChild(p)}
   const pb=document.createElement('button');pb.className='btn primary ev-play';pb.innerHTML='<svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span>';pb.querySelector('span').textContent=t('evPlay')+' · '+(nx===9?t('evBossStage'):t('evStage',{n:nx+1}));
@@ -60,7 +61,7 @@ function evThumb(c,id){if(c==='trail')return csStyleIcon(id);if(H3.state!=='read
   const r=W3.thumbR,cam=W3.thumbCam,P=W3.thumbP;P.g.visible=true;applyLook(P,L);setFace3(P,2);cam.left=-1.05;cam.right=1.05;cam.top=c==='hat'?2.55:2.1;cam.bottom=c==='hat'?.35:-.05;cam.updateProjectionMatrix();r.render(W3.thumbS,cam);
   const url=r.domElement.toDataURL('image/png');W3.thumbCache[key]=url;return url}
 function evShop(N,body){const E=N.E,D=evData(E.id);const g=document.createElement('div');g.className='ev-shop';body.appendChild(g);{const f=document.createElement('div');f.className='ev-shopnote';f.textContent=t('evExcl');body.appendChild(f)}
-  E.items.forEach(it=>{const own=evOwned(it),b=document.createElement('button');b.className='ev-item'+(own?' own':'');
+  E.items.forEach(it=>{const own=evOwned(it),b=document.createElement('button');b.className='ev-item'+(own?' ev-own':'');
     b.innerHTML=`<span class="th"><img alt=""></span><b></b><small></small><span class="pr"></span>`;const src=evThumb(it.c,it.id);if(src)b.querySelector('.th img').src=src;else b.querySelector('.th').classList.add('sw');
     if(it.c==='color')b.querySelector('.th').style.setProperty('--c',WCOL[it.id].c);
     b.querySelector('b').textContent=it.c==='trail'?t('sk_'+it.id):wName(it.c,it.id);b.querySelector('small').textContent=t('evOnly',{n:t('evs_'+E.id)});

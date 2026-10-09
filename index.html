@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009144521"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009145548"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -916,7 +916,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .arc-card .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
 .arc-card .tx b{font:1.45rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:4px #120d2b;paint-order:stroke fill;color:#fff}
 .arc-card .tx small{font-weight:700;font-size:.82rem;opacity:.95}
-.arc-card .meta{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:2px}
+.arc-card .meta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:3px 6px;margin-top:2px}
 .arc-card .best{display:inline-flex;align-items:center;gap:4px;padding:2px 8px 2px 4px;border-radius:999px;background:rgba(18,13,43,.55);font:1rem/1.3 "Lilita One","Secular One",system-ui,sans-serif}
 .arc-card .best img{width:22px;height:22px}
 .tix{display:inline-flex;gap:3px}
@@ -1036,7 +1036,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .ev-path{position:relative;flex:1;min-height:0;margin:8px 14px 0}
 .ev-road{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .ev-road path{fill:none;stroke:rgba(255,179,71,.55);stroke-width:2.2;stroke-dasharray:3 3;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-width:6}
-.ev-node{position:absolute;translate:-50% -50%;width:62px;height:62px;padding:0;border:0;background:none;display:grid;place-items:center}
+.ev-node{position:absolute;translate:-50% -50%;scale:var(--evs,1);width:62px;height:62px;padding:0;border:0;background:none;display:grid;place-items:center}
 .ev-node img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.6))}
 .ev-node i{position:absolute;bottom:-6px;left:50%;translate:-50% 0;min-width:24px;padding:0 6px;border-radius:999px;background:#120d2b;border:2px solid #ff7a1a;color:#fff;font:.85rem/1.4 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;white-space:nowrap}
 .ev-node.lock img{filter:grayscale(.6) brightness(.55) drop-shadow(0 3px 0 rgba(10,8,40,.6))}.ev-node.lock i{border-color:#55507a;color:#b9b0e0}
@@ -1064,7 +1064,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .ev-item .pr img{width:24px;height:24px;object-fit:contain}
 .ev-item .pr.poor{filter:saturate(.4) brightness(.9)}
 .ev-item .pr.got{padding:2px 12px;background:linear-gradient(180deg,var(--g1),var(--g2));color:#fff;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
-.ev-item.own{background:linear-gradient(180deg,#3db618,#1d6b0c)}
+.ev-item.ev-own{background:linear-gradient(180deg,#3db618,#1d6b0c)}
 /* lobby banner */
 .ev-banner{position:absolute;z-index:3;left:50%;translate:-50% 0;top:calc(env(safe-area-inset-top,0px) + clamp(226px,29vh,262px));display:flex;align-items:center;gap:6px;max-width:216px;padding:6px 12px 6px 6px;border-radius:20px;border:3.5px solid #120d2b;
   background:radial-gradient(120% 140% at 30% 20%,#7a3fd0,#2a1250);box-shadow:inset 0 3px 0 rgba(255,255,255,.45),0 4px 0 #120d2b,0 0 18px rgba(255,140,30,.75);color:#fff;white-space:nowrap;animation:evBan 1.8s ease-in-out infinite}
@@ -1108,7 +1108,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 #evCnt{position:fixed;z-index:4;top:calc(env(safe-area-inset-top,0px) + 66px);inset-inline-start:10px;display:inline-flex;align-items:center;gap:3px;height:34px;padding:0 12px 0 4px;border-radius:999px;background:rgba(18,13,43,.86);border:3px solid #120d2b;box-shadow:0 3px 0 #120d2b;color:#ffb347;font:1.15rem/1 "Lilita One","Secular One",system-ui,sans-serif;direction:ltr;pointer-events:none}
 #evCnt[hidden]{display:none}#evCnt img{width:30px;height:30px;object-fit:contain}#evCnt b{font-weight:400;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill}
 #evCnt.pulse{animation:arcBump .35s ease-out}
-.ev-item:not(.own) .pr:not(.poor){animation:evPr 1.6s ease-in-out infinite}.ev-item:active .pr{transform:scale(.94)}
+.ev-item:not(.ev-own) .pr:not(.poor){animation:evPr 1.6s ease-in-out infinite}.ev-item:active .pr{transform:scale(.94)}
 @keyframes evPr{0%,100%{box-shadow:0 3px 0 #120d2b}50%{box-shadow:0 3px 0 #120d2b,0 0 12px 3px rgba(255,226,77,.75)}}
 #evCnt{height:30px;font-size:1rem;opacity:.9}#evCnt img{width:26px;height:26px}
 
@@ -1123,9 +1123,9 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .tr-title b{font:2rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-shadow:0 4px 0 #120d2b;white-space:nowrap}
 .tr-title b{grid-column:1}.tr-title small{grid-column:1;justify-self:center;padding:2px 12px;border-radius:999px;background:rgba(18,13,43,.8);border:2px solid #8b6cff;font-weight:800;font-size:.8rem}
 .tr-body{flex:1;min-height:0;overflow-y:auto;padding:10px 14px 0;display:flex;flex-direction:column;gap:10px}
-.tr-twist{position:relative;height:150px;border-radius:22px;border:3.5px solid #120d2b;overflow:hidden;box-shadow:0 5px 0 #120d2b;background:#7fd3ff}
+.tr-twist{position:relative;min-height:150px;display:flex;justify-content:flex-end;border-radius:22px;border:3.5px solid #120d2b;overflow:hidden;box-shadow:0 5px 0 #120d2b;background:#7fd3ff}
 .tr-twist .w{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 70%}
-.tr-twist .tw{position:absolute;inset-inline-end:8px;top:8px;bottom:8px;width:56%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px;border-radius:16px;background:rgba(255,255,255,.82);color:#120d2b;text-align:center}
+.tr-twist .tw{position:relative;margin:8px;width:56%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px;border-radius:16px;background:rgba(255,255,255,.82);color:#120d2b;text-align:center}
 .tr-twist .tw>div{display:flex;flex-direction:column;align-items:center}
 .tr-twist .tw img{width:54px;height:54px;object-fit:contain}
 .tr-twist small{font-weight:800;font-size:.72rem;color:#5a4a99}
@@ -1174,7 +1174,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .tr-res .tr-big{display:flex;align-items:baseline;justify-content:center;gap:8px;margin:0 0 4px}
 .tr-res .tr-big b{font:3.4rem/1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe24d;-webkit-text-stroke:7px #120d2b;paint-order:stroke fill}
 .tr-res .tr-big span{font:1.6rem/1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:5px #120d2b;paint-order:stroke fill}
-.tr-res .tr-best{display:flex;width:max-content;margin:0 auto 8px;font-size:.9rem;padding:3px 12px}
+.tr-res .tr-best{display:flex;flex-wrap:wrap;justify-content:center;width:max-content;max-width:100%;margin:0 auto 8px;font-size:.9rem;padding:3px 12px}
 .tr-won{display:flex;flex-direction:column;align-items:center;gap:6px;margin:4px 0 10px;animation:arcIn .6s cubic-bezier(.3,1.6,.5,1) both .2s}
 .tr-won img{width:110px;height:120px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(255,226,77,.85))}
 .tr-won p{margin:0;padding:4px 14px;border-radius:999px;background:rgba(18,13,43,.7);font-weight:800}
@@ -1865,6 +1865,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .cs-slot .dot{position:absolute;top:-6px;inset-inline-start:-6px;width:13px;height:13px;border-radius:50%;background:#ff3b5c;border:2px solid var(--ink)}
 .cs-drawer.still{animation:none}
 .st-it.hat small.cost,.st-pack.astro-pack .st-it.hat small.cost{color:#ffb3b3}
+.season-banner.narrow{white-space:normal;max-width:150px;padding:6px 16px 8px}.season-banner.narrow b{line-height:1}
 
 /* ===== v59: buddy guide ===== */
 .bg-guide{z-index:45}
@@ -5911,7 +5912,20 @@ function seasonFx(){const s=curSeason();if(s!==2&&s!==3)return;const S_=seasonSt
 function seasonBanners(){const inner=document.getElementById('mapInner');if(!inner||!mapGeo)return;inner.querySelectorAll('.season-banner').forEach(e=>e.remove());
   for(let zi=1;zi<ZONES.length;zi++){const s=ZONES[zi].season||1;if(s===(ZONES[zi-1].season||1))continue;
     const y=mapGeo.h-MAP_MARGIN-zi*mapGeo.ph,b=document.createElement('div');b.className='season-banner s'+s;b.style.top=y+'px';
-    b.innerHTML='<small></small><b></b>';b.querySelector('small').textContent=t('seasonN',{n:s});b.querySelector('b').textContent=t('season'+s);inner.appendChild(b)}}
+    b.innerHTML='<small></small><b></b>';b.querySelector('small').textContent=t('seasonN',{n:s});b.querySelector('b').textContent=t('season'+s);inner.appendChild(b)}
+  requestAnimationFrame(mapDeclutter)}
+// world ribbons stay whole on screen (long night/storm names were cut by the edge), and a season banner slides sideways
+// so it doesn't cover the boss pin below the seam, the first pin above it or the world ribbon
+function mapDeclutter(){const inner=document.getElementById('mapInner');if(!inner||!mapGeo)return;const W=inner.clientWidth;if(!W)return;
+  inner.querySelectorAll('.map-ribbon:not(.home)').forEach(r=>{const w=r.offsetWidth;if(!w)return;const h=w/2+6,x=parseFloat(r.style.left);if(!isNaN(x))r.style.left=Math.max(h,Math.min(W-h,x))+'px'});
+  const R=e=>{const x=parseFloat(e.style.left),y=parseFloat(e.style.top),p=e.classList.contains('boss')?20:4,w=e.offsetWidth/2+p,h=e.offsetHeight/2+p;return [x-w,y-h,x+w,y+h]};
+  inner.querySelectorAll('.season-banner').forEach(bn=>{const y0=parseFloat(bn.dataset.y||bn.style.top);if(isNaN(y0))return;bn.dataset.y=y0;
+   for(const narrow of [0,1]){bn.classList.toggle('narrow',!!narrow);const bw=bn.offsetWidth,bh=bn.offsetHeight,y=y0;if(!bw)return;
+    const obs=[...inner.querySelectorAll('.pin,.map-ribbon')].map(R).filter(r=>!isNaN(r[0])&&r[3]>y-bh*1.6&&r[1]<y+bh*1.6);let best=null;
+    for(const dy of [0,-24,24,-48,48])for(let x=bw/2+4;x<=W-bw/2-4;x+=6){const a=[x-bw/2,y+dy-bh/2,x+bw/2,y+dy+bh/2];let ov=0;
+      for(const r of obs){const ix=Math.min(a[2],r[2])-Math.max(a[0],r[0]),iy=Math.min(a[3],r[3])-Math.max(a[1],r[1]);if(ix>0&&iy>0)ov+=ix*iy}
+      const sc=ov*20+Math.abs(x-W/2)+Math.abs(dy)*4;if(!best||sc<best.sc)best={sc,x,dy}}
+    if(best){bn.style.left=best.x+'px';bn.style.top=(y+best.dy)+'px'}if(!best||best.sc<20*40)return}})}// a long name (Season 4 'New worlds') wraps to 2 lines when it can't get out of the way
 
 /* ===== v43: tester report (anonymous beta stats, kept on the device) =====
    Per level: attempts, wins, losses, quits (= attempts - wins - losses), seconds played, best floor, boosters used.
@@ -6912,10 +6926,10 @@ function bnCollect(){if(!BN||BN.paid)return;BN.paid=true;const R=bnReward();wall
 /* ===== v51: mini-games ARCADE (lobby button) =====
    Design: ChatGPT mockup (design/arcade/). 3 games for now: coin rain, boss memory, whack-a-monster.
    Each game gives coins for its first 3 plays of the day (tickets); after that you play for the high score. */
-Object.assign(I18N.en,{arcShort:'Arcade',arcTitle:'Arcade',arcNote:'3 coin plays per game every day',arcBest:'Best',arcPlay:'Play',arcFree:'No tickets left today: play for the high score!',arcNewBest:'New record!',arcScore:'Score',arcAgain:'Again',arcBack:'Arcade',arcGo:'GO!',arcTix:'Coin plays today',
+Object.assign(I18N.en,{arcShort:'Arcade',arcTitle:'Arcade',arcNote:'3 coin plays per game every day',arcBest:'Best',arcPlay:'Play',arcFree:'No tickets left today: play for the high score!',arcZero:'No points this time, so your coin play was not used',arcNewBest:'New record!',arcScore:'Score',arcAgain:'Again',arcBack:'Arcade',arcGo:'GO!',arcTix:'Coin plays today',
   g_rain:'Coin Rain',gd_rain:'Catch coins, dodge bombs',g_mem:'Boss Memory',gd_mem:'Find the boss pairs',g_whack:'Bonk the Monster',gd_whack:"Tap monsters, not Sharliz!",
   arcMoves:'Moves {n}',arcCombo:'Combo ×{n}',arcHowRain:'Drag your Sharliz left and right',arcHowMem:'Flip two cards to find a pair',arcHowWhack:'Tap the monsters, never a Sharliz',arcOops:'Oops!',arcPrize:'Prize',arcLeftN:'{n} coin plays today'});
-Object.assign(I18N.he,{arcShort:'ארקייד',arcTitle:'ארקייד',arcNote:'3 משחקים עם מטבעות בכל יום לכל משחק',arcBest:'שיא',arcPlay:'שחקו',arcFree:'נגמרו הכרטיסים להיום: משחקים בשביל השיא!',arcNewBest:'שיא חדש!',arcScore:'ניקוד',arcAgain:'שוב',arcBack:'לארקייד',arcGo:'צאו!',arcTix:'משחקים עם מטבעות היום',
+Object.assign(I18N.he,{arcShort:'ארקייד',arcTitle:'ארקייד',arcNote:'3 משחקים עם מטבעות בכל יום לכל משחק',arcBest:'שיא',arcPlay:'שחקו',arcFree:'נגמרו הכרטיסים להיום: משחקים בשביל השיא!',arcZero:'הפעם בלי נקודות, אז הכרטיס לא נוצל',arcNewBest:'שיא חדש!',arcScore:'ניקוד',arcAgain:'שוב',arcBack:'לארקייד',arcGo:'צאו!',arcTix:'משחקים עם מטבעות היום',
   g_rain:'גשם מטבעות',gd_rain:'תפסו מטבעות, התחמקו מפצצות',g_mem:'זיכרון בוסים',gd_mem:'מצאו את הזוגות',g_whack:'הכו במפלצת',gd_whack:'רק מפלצות, לא שארליז!',
   arcMoves:'מהלכים {n}',arcCombo:'קומבו ×{n}',arcHowRain:'גררו את השארליז ימינה ושמאלה',arcHowMem:'הפכו שני קלפים ומצאו זוג',arcHowWhack:'הכו במפלצות, אף פעם לא בשארליז',arcOops:'אופס!',arcPrize:'פרס',arcLeftN:'{n} משחקים עם מטבעות היום'});
 const ARC_TIX=3,ARC_MAX=40,ARC_IDS=['rain','mem','whack'];
@@ -6964,7 +6978,7 @@ function arcEnd(G){if(G.over)return;G.over=true;G.run=false;if(G.D.end)G.D.end(G
     p.innerHTML=`<div class="arc-panel"><div class="ar-title"></div><div class="ar-score"><small></small><b>0</b></div><div class="ar-best"><img src="art/ic_trophy.webp" alt=""><span></span></div><div class="ar-rew"></div><div class="ar-acts"><button class="btn primary ar-again"><svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span></button><button class="btn ar-back"><span></span></button></div></div>`;
     p.querySelector('.ar-title').textContent=nb?t('arcNewBest'):t('g_'+id);if(nb)p.querySelector('.ar-title').classList.add('nb');
     p.querySelector('.ar-score small').textContent=t('arcScore');p.querySelector('.ar-best span').textContent=t('arcBest')+' '+Math.max(G.score,a.best[id]||0);
-    const rw=p.querySelector('.ar-rew');if(paid){rw.innerHTML=`<span class="ar-lbl"></span><span class="bn-coins">${coinImg()}<b>+${coins}</b></span><span class="tix">${arcTix(id)}</span>`;rw.querySelector('.ar-lbl').textContent=t('arcPrize')}else{rw.className='ar-rew free';rw.textContent=t('arcFree')}
+    const rw=p.querySelector('.ar-rew');if(paid){rw.innerHTML=`<span class="ar-lbl"></span><span class="bn-coins">${coinImg()}<b>+${coins}</b></span><span class="tix">${arcTix(id)}</span>`;rw.querySelector('.ar-lbl').textContent=t('arcPrize')}else{rw.className='ar-rew free';rw.textContent=t(arcLeft(id)>0?'arcZero':'arcFree')}
     if(!arcLeft(id)){p.querySelector('.ar-again').classList.remove('primary');p.querySelector('.ar-back').classList.add('primary');p.querySelector('.ar-acts').prepend(p.querySelector('.ar-back'))}
     p.querySelector('.ar-again span').textContent=t('arcAgain');p.querySelector('.ar-back span').textContent=t('arcBack');
     p.querySelector('.ar-again').onclick=()=>{sfx.click();arcStart(id)};p.querySelector('.ar-back').onclick=()=>{sfx.click();arcStop();arcHub()};
@@ -7036,10 +7050,10 @@ ARCG.whack={dur:30,star:1,how:'arcHowWhack',hint:'gd_whack',coins:s=>Math.round(
 const EVENTS=[
   {id:'halloween',from:[10,15],to:[11,1],sid:'farmN',cur:'candy',deco:'halloween',
    items:[{c:'hat',id:'pumpkin',p:120},{c:'hat',id:'witch',p:150},{c:'color',id:'pumpkin',p:60},{c:'trail',id:'t_bats',p:90}]}];
-Object.assign(I18N.en,{ev_halloween:'Halloween',evLeft:'{n} days left',evOn:'Wearing',evOwned:'Owned',evAlmost:'So close! Try again',evDoneAll:'Event complete!',evBossDown:'Boss defeated!',evLeft1:'Last day!',evSoon:'Starts in {n} days',evTest:'Test mode',evPath:'Path',evShop:'Shop',evPlay:'Play',
+Object.assign(I18N.en,{evWinFirst:'Win stage {n} first',ev_halloween:'Halloween',evLeft:'{n} days left',evOn:'Wearing',evOwned:'Owned',evAlmost:'So close! Try again',evDoneAll:'Event complete!',evBossDown:'Boss defeated!',evLeft1:'Last day!',evSoon:'Starts in {n} days',evTest:'Test mode',evPath:'Path',evShop:'Shop',evPlay:'Play',
   evStage:'Stage {n}',evBossStage:'Boss',evFinal:'Final boss',evOnly:'Only during {n}',evGot:'Yours!',evNeed:'Need more {n}',cur_candy:'Candy',evClear:'Stage clear!',evBossClear:'Boss beaten!',
   evAgain:'Again',evBack:'Event',evDone:'All stages done! Replay for more candy',evFirst:'First clear bonus',evs_halloween:'Halloween',evExcl:'Exclusive items for a limited time!',evEnded:'This event has ended'});
-Object.assign(I18N.he,{ev_halloween:'ליל כל הקדושים',evLeft:'נותרו {n} ימים',evOn:'בשימוש',evOwned:'נרכש',evAlmost:'כמעט! נסו שוב',evDoneAll:'האירוע הושלם!',evBossDown:'הבוס הובס!',evLeft1:'יום אחרון!',evSoon:'מתחיל בעוד {n} ימים',evTest:'מצב בדיקה',evPath:'מסלול',evShop:'חנות',evPlay:'שחקו',
+Object.assign(I18N.he,{evWinFirst:'קודם מנצחים בשלב {n}',ev_halloween:'ליל כל הקדושים',evLeft:'נותרו {n} ימים',evOn:'בשימוש',evOwned:'נרכש',evAlmost:'כמעט! נסו שוב',evDoneAll:'האירוע הושלם!',evBossDown:'הבוס הובס!',evLeft1:'יום אחרון!',evSoon:'מתחיל בעוד {n} ימים',evTest:'מצב בדיקה',evPath:'מסלול',evShop:'חנות',evPlay:'שחקו',
   evStage:'שלב {n}',evBossStage:'בוס',evFinal:'בוס סופי',evOnly:'רק ב{n}',evGot:'שלך!',evNeed:'צריך עוד {n}',cur_candy:'ממתקים',evClear:'השלב עבר!',evBossClear:'ניצחתם את הבוס!',
   evAgain:'שוב',evBack:'לאירוע',evDone:'סיימתם את כל השלבים! שחקו שוב בשביל עוד ממתקים',evFirst:'בונוס פעם ראשונה',evs_halloween:'האלווין',evExcl:'פריטים בלעדיים לזמן מוגבל!',evEnded:'האירוע נגמר'});
 // event-only catalogue (not buyable with coins; wGate/csInfo show "only during …")
@@ -7075,12 +7089,13 @@ function evHub(N,tab){const E=N.E,D=evData(E.id),r=evRoot();r.className='ev-hub 
 function evPath(N,body){const E=N.E,D=evData(E.id),nx=Math.min(9,D.done);
   const wrap=document.createElement('div');wrap.className='ev-path';body.appendChild(wrap);
   // winding path: 10 nodes, bottom (stage 1) to top (boss)
-  const pts=[];for(let i=0;i<10;i++){const y=5+i*8.9,x=50+Math.sin(i*1.25+.6)*28;pts.push([x,y])}
+  const pts=[];for(let i=0;i<10;i++){const y=i<9?5+i*8.3:88,x=50+Math.sin(i*1.25+.6)*28;pts.push([x,y])}// the boss gets more room: stage 9 hid behind it on small phones
   const svg=`<svg class="ev-road" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}"/></svg>`;wrap.innerHTML=svg;
   pts.forEach(([x,y],i)=>{const b=document.createElement('button'),boss=i===9,st=i<D.done?'done':i===nx?'next':'lock';b.className='ev-node '+st+(boss?' boss':'');b.style.left=x+'%';b.style.top=y+'%';
     b.innerHTML=boss?`<img src="art/ev_boss_${E.id}.webp" alt=""><i>${t('evFinal')}</i>`:`<img src="art/ev_node${st==='lock'?'_off':''}.webp" alt=""><i>${i+1}</i>`;
     b.setAttribute('aria-label',boss?t('evBossStage'):t('evStage',{n:i+1}));
-    b.onclick=()=>{if(st==='lock'){sfx.locked();return}sfx.click();evStart(i)};wrap.appendChild(b)});
+    b.onclick=()=>{if(st==='lock'){sfx.locked();noteToast(t('evWinFirst',{n:nx+1}));return}sfx.click();evStart(i)};wrap.appendChild(b)});
+  requestAnimationFrame(()=>{const h=wrap.clientHeight;if(h)wrap.style.setProperty('--evs',Math.max(.68,Math.min(1,h/540)).toFixed(3))});
   const foot=document.createElement('div');foot.className='ev-foot';
   if(D.done>=10){const p=document.createElement('p');p.textContent=t('evDone');foot.appendChild(p)}
   const pb=document.createElement('button');pb.className='btn primary ev-play';pb.innerHTML='<svg viewBox="0 0 24 24"><path d="M7 4.5 L19 12 L7 19.5 Z"/></svg><span></span>';pb.querySelector('span').textContent=t('evPlay')+' · '+(nx===9?t('evBossStage'):t('evStage',{n:nx+1}));
@@ -7090,7 +7105,7 @@ function evThumb(c,id){if(c==='trail')return csStyleIcon(id);if(H3.state!=='read
   const r=W3.thumbR,cam=W3.thumbCam,P=W3.thumbP;P.g.visible=true;applyLook(P,L);setFace3(P,2);cam.left=-1.05;cam.right=1.05;cam.top=c==='hat'?2.55:2.1;cam.bottom=c==='hat'?.35:-.05;cam.updateProjectionMatrix();r.render(W3.thumbS,cam);
   const url=r.domElement.toDataURL('image/png');W3.thumbCache[key]=url;return url}
 function evShop(N,body){const E=N.E,D=evData(E.id);const g=document.createElement('div');g.className='ev-shop';body.appendChild(g);{const f=document.createElement('div');f.className='ev-shopnote';f.textContent=t('evExcl');body.appendChild(f)}
-  E.items.forEach(it=>{const own=evOwned(it),b=document.createElement('button');b.className='ev-item'+(own?' own':'');
+  E.items.forEach(it=>{const own=evOwned(it),b=document.createElement('button');b.className='ev-item'+(own?' ev-own':'');
     b.innerHTML=`<span class="th"><img alt=""></span><b></b><small></small><span class="pr"></span>`;const src=evThumb(it.c,it.id);if(src)b.querySelector('.th img').src=src;else b.querySelector('.th').classList.add('sw');
     if(it.c==='color')b.querySelector('.th').style.setProperty('--c',WCOL[it.id].c);
     b.querySelector('b').textContent=it.c==='trail'?t('sk_'+it.id):wName(it.c,it.id);b.querySelector('small').textContent=t('evOnly',{n:t('evs_'+E.id)});
@@ -7172,11 +7187,11 @@ function evDeco(on){EVD=on&&EVP?{k:EVP.E.deco,bats:Array.from({length:5},()=>({x
    Same challenge for everyone each week (seeded by the week number): one world + one twist (wind / fast / night / gold rush).
    3 hearts, build as high as you can, unlimited tries, best of the week counts. Medals at 10 / 20 / 35 floors pay coins + boosters
    once per week. No server yet → "challenge a friend" shares your best to WhatsApp. Design: ChatGPT (design/tournament/). */
-Object.assign(I18N.en,{tourTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
+Object.assign(I18N.en,{trInvite:'Come play the Sharliz weekly tournament with me! 🏆',tourTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
   trNew:'New record!',trMedal:'Medal unlocked!',trNext:'{n} more to {m}',trAllMedals:'All medals this week!',trTwist:'This week',
   tw_wind:'Strong wind',twd_wind:'The wind pushes twice as hard',tw_fast:'Speed week',twd_fast:'Everything swings faster',tw_night:'Night tower',twd_night:'Build in the dark',tw_gold:'Golden rush',twd_gold:'Lots of golden Sharliz',
   md_b:'Bronze',md_s:'Silver',md_g:'Gold',trShare:'I built {n} floors in the Sharliz weekly tournament! Can you beat me? 🏆',trModes:'Weekly',trGot:'Collected',trClose:'So close to your record!',trNice:'Nice run!',trPrizes:'Tournament prizes',trReached:'You reached the {m} prize!',trHow:'3 hearts · as high as you can'});
-Object.assign(I18N.he,{tourTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
+Object.assign(I18N.he,{trInvite:'בואו לשחק איתי בטורניר השבועי של שארליז! 🏆',tourTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
   trNew:'שיא חדש!',trMedal:'מדליה חדשה!',trNext:'עוד {n} קומות ל{m}',trAllMedals:'כל המדליות השבוע!',trTwist:'השבוע',
   tw_wind:'רוח חזקה',twd_wind:'הרוח דוחפת פי שניים',tw_fast:'שבוע מהיר',twd_fast:'הכל מתנדנד מהר יותר',tw_night:'מגדל לילה',twd_night:'בונים בחושך',tw_gold:'בהלת זהב',twd_gold:'הרבה שארליז מוזהבות',
   md_b:'ארד',md_s:'כסף',md_g:'זהב',trShare:'בניתי מגדל של {n} קומות בטורניר השבועי של שארליז! תצליחו לעבור אותי? 🏆',trModes:'שבועי',trGot:'נאסף',trClose:'כמעט שיא!',trNice:'סיבוב יפה!',trPrizes:'פרסי הטורניר',trReached:'הגעתם לפרס ה{m}!',trHow:'3 לבבות · כמה שיותר גבוה'});
@@ -7208,7 +7223,7 @@ function trScreen(){const N=trNow(),D=trData(),r=trRoot(),z=ZONES[N.zi],nx=TR_ME
   r.querySelector('.tr-nx').textContent=nx?t('trNext',{n:nx.f-D.best,m:t('md_'+nx.k)}):t('trAllMedals');
   r.querySelector('.tr-play span').textContent=t('trPlay');r.querySelector('.tr-play').onclick=()=>{sfx.click();trStart()};
   r.querySelector('.tr-share span').textContent=D.best?t('trChallenge')+' · '+t('trFloorsN',{n:D.best}):t('trChallenge');r.querySelector('.tr-share').onclick=()=>{sfx.click();trShare(D.best)}}
-function trShare(n){const url='https://sharliztower.com',txt=t('trShare',{n}); // the store app runs on localhost, and the Pages copy has every level open
+function trShare(n){const url='https://sharliztower.com',txt=n?t('trShare',{n}):t('trInvite'); // the store app runs on localhost, and the Pages copy has every level open
   if(navigator.share){navigator.share({text:txt,url}).catch(()=>{});return}
   try{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')}catch(e){}}
 /* ---------- playing (mode 'tour') ---------- */
@@ -7223,7 +7238,7 @@ function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge'
 {const _u=updateHud;updateHud=function(){_u.apply(this,arguments);if(mode!=='tour'||!TR){if(trG&&!trG.hidden)trG.hidden=true;return}trGauge(true);document.getElementById('gauge').hidden=true;const fl=Math.max(0,tower.length-1);
   trG.querySelector('.tube i').style.height=Math.min(1,fl/35)*100+'%';trG.querySelector('em').textContent=fl+'/35';{const nk=(TR_MEDALS.find(m=>fl<m.f)||{}).k;TR_MEDALS.forEach(m=>{const e=trG.querySelector('.m-'+m.k);e.classList.toggle('on',fl>=m.f);e.classList.toggle('nx',m.k===nk)})}}}
 {const _ml=modeLanded;modeLanded=function(){if(mode!=='tour'||!TR)return _ml.apply(this,arguments);const fl=tower.length-1;TR.floors=Math.max(TR.floors,fl);endless.floors=TR.floors;
-  const m=TR_MEDALS.find(m=>m.f===fl);if(m&&!TR.newMd.includes(m.k)){const D=trData();if(!D.got[m.k]){TR.newMd.push(m.k)}const d=document.createElement('div');d.className='tr-pop';d.innerHTML=`<img src="art/tr_medal_${m.k}.webp" alt=""><b>${t('md_'+m.k)}!</b>`;document.body.appendChild(d);setTimeout(()=>d.remove(),1400);sfx.flourish(2);vib([20,40,20])}
+  const m=TR_MEDALS.find(m=>m.f===fl);if(m&&!TR.newMd.includes(m.k)&&!trData().got[m.k]){TR.newMd.push(m.k);const d=document.createElement('div');d.className='tr-pop';d.innerHTML=`<img src="art/tr_medal_${m.k}.webp" alt=""><b>${t('md_'+m.k)}!</b>`;document.body.appendChild(d);setTimeout(()=>d.remove(),1400);sfx.flourish(2);vib([20,40,20])}
   updateHud();return false}}
 // twists
 {const _hk=hatK;hatK=function(k,d=1){const v=_hk.apply(this,arguments);if(mode!=='tour'||!TR)return v;if(TR.N.tw==='fast'&&k==='spd')return v*1.25;if(TR.N.tw==='wind'&&k==='wind')return v*2;return v}}

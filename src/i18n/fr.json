@@ -1034,7 +1034,10 @@
   "nsNeedCk": "Il manque {n} cookies",
   "sbPacksGot": "+{n} pochettes de stickers !",
   "sbGoldsGot": "+{n} pochettes dorées !",
-  "stKeep": "Continue à jouer pour découvrir la suite"
+  "stKeep": "Continue à jouer pour découvrir la suite",
+  "arcZero": "Pas de points cette fois, ta partie à pièces n’a pas été utilisée",
+  "trInvite": "Viens jouer avec moi au tournoi hebdo de Sharliz ! 🏆",
+  "evWinFirst": "Gagne d’abord l’étape {n}"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
