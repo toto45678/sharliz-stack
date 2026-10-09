@@ -4,73 +4,129 @@
 #houseScr[hidden]{display:none}
 #houseScr .x-btn{position:static;width:44px;height:44px;flex:none}
 #houseScr .coin-pill{flex:none}
-.hs-rooms{display:flex;gap:6px;padding:4px 10px 6px;justify-content:center}
-.hs-room{flex:1;max-width:120px;min-width:0;display:flex;flex-direction:column;align-items:center;gap:0;padding:5px 4px 4px;border-radius:14px;border:3px solid #120d2b;
-  background:linear-gradient(180deg,#fff3c4,#ffd36b);color:#120d2b;font:inherit;box-shadow:0 3px 0 #120d2b;cursor:pointer}
+/* room tabs = one dark bar (Tzach approved the ChatGPT screen, Oct 9): quiet lavender tabs, the room you are in is gold,
+   a locked room has a lock badge and its level, an open room its stars */
+.hs-rooms{display:flex;gap:6px;box-sizing:border-box;width:calc(100% - 20px);max-width:560px;margin:2px auto 6px;padding:6px;border-radius:20px;background:#2a1660;border:3px solid #120d2b;box-shadow:inset 0 2px 0 rgba(255,255,255,.08),0 3px 0 rgba(18,13,43,.4)}
+.hs-room{position:relative;flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:1px;padding:5px 4px 4px;border-radius:14px;border:2.5px solid #120d2b;
+  background:linear-gradient(180deg,#e9e1ff,#c6b6f3);color:#2a1660;font:inherit;cursor:pointer;transition:transform .15s}
 .hs-room i{font-style:normal;font-size:20px;line-height:1.1}
-.hs-room b{font-size:.74rem;font-weight:800;line-height:1.15;text-align:center;width:100%;min-width:0;overflow:hidden}
-.hs-room small{font-size:.66rem;font-weight:700;opacity:.8}
-.hs-room.on{background:linear-gradient(180deg,#b8f5a6,#5fcf45);transform:translateY(-2px);box-shadow:0 5px 0 #120d2b}
-.hs-room.lock{background:linear-gradient(180deg,#e9e2ff,#b9a8ee);opacity:.85}
+.hs-room b{font-size:.78rem;font-weight:900;line-height:1.15;text-align:center;width:100%;min-width:0;overflow:hidden;white-space:nowrap}
+.hs-room small{font-size:.66rem;font-weight:800;opacity:.75;line-height:1.1;white-space:nowrap}
+.hs-room.on{background:linear-gradient(180deg,#fff3b0,#ffc61a);color:#120d2b;box-shadow:0 0 0 2.5px #ffe24d,0 0 16px rgba(255,210,31,.7);transform:translateY(-1px)}
+.hs-room.on small{opacity:.85}
+.hs-room.lock{background:linear-gradient(180deg,#a996dc,#8a76c8);color:#241250}
+.hs-room.lock i{filter:grayscale(.6) brightness(.85);opacity:.7}
+.hs-room.lock.on{background:linear-gradient(180deg,#c9b9f5,#a996dc);box-shadow:0 0 0 2.5px #c9b9f5}
+.hs-lk{position:absolute;top:-6px;inset-inline-end:-4px;font-style:normal;font-size:12px;line-height:1;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;
+  background:#fff3c4;border:2px solid #120d2b;box-sizing:border-box}
+.hs-room.shake{animation:hsShake .45s}
+.hs-room.shake .hs-lk{animation:hsLockB .45s}
+@keyframes hsShake{0%,100%{transform:none}20%{transform:translateX(-5px) rotate(-3deg)}40%{transform:translateX(5px) rotate(3deg)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+@keyframes hsLockB{0%,100%{transform:none}35%{transform:scale(1.45) rotate(-12deg)}70%{transform:scale(.9) rotate(8deg)}}
 .hs-stage{position:relative;display:flex;justify-content:center;flex:1;min-height:0;overflow:hidden}
 .hs-cv{display:block;touch-action:none;max-width:100%}
-.hs-skinbtn{position:absolute;top:4px;inset-inline-end:10px;display:flex;align-items:center;gap:4px;padding:5px 10px 5px 8px;border-radius:999px;border:3px solid #120d2b;
-  background:#fff;color:#120d2b;font:800 .78rem/1 var(--bf,Rubik),system-ui,sans-serif;box-shadow:0 3px 0 #120d2b;cursor:pointer}
-.hs-skinbtn i{font-style:normal;font-size:16px}
-/* the strip under the house: fixed height, so the house keeps its size */
-/* a picked item: the strip grows over the bottom of the house (the canvas keeps its size, the camera re-centres on what is still visible) */
-.hs-panel.sel{height:auto;min-height:clamp(182px,24vh,224px);max-height:66%}
-.hs-panel{flex:none;height:clamp(182px,24vh,224px);overflow-y:auto;overflow-x:hidden;padding:8px 10px 10px;border-top:3px solid #120d2b;border-radius:20px 20px 0 0;
-  background:linear-gradient(180deg,#3b1f7c,#241250);box-shadow:0 -4px 0 rgba(18,13,43,.35)}
-.hs-grid{display:flex;align-items:stretch;gap:9px;height:100%;box-sizing:border-box;overflow-x:auto;overflow-y:hidden;padding:2px 2px 6px;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain}
+.hs-skinbtn{position:absolute;z-index:1;top:2px;inset-inline-end:10px;display:flex;align-items:center;gap:5px;padding:5px 10px 5px 7px;border-radius:999px;border:3px solid #120d2b;
+  background:#fff;color:#120d2b;font:900 .8rem/1 var(--bf,Rubik),system-ui,sans-serif;box-shadow:0 3px 0 #120d2b;cursor:pointer}
+.hs-skinbtn i{font-style:normal;font-size:17px}
+.hs-skinbtn .chev{width:7px;height:7px;border:solid #120d2b;border-width:0 3px 3px 0;transform:rotate(-45deg);margin-inline-start:2px}
+[dir=rtl] .hs-skinbtn .chev{transform:rotate(135deg)}
+/* arrows beside the room: the next / previous room */
+.hs-arr{position:absolute;z-index:1;width:42px;height:52px;padding:0;display:grid;place-items:center;border-radius:16px;border:3px solid #120d2b;cursor:pointer;
+  background:linear-gradient(180deg,#8a64e0,#4d2c9e);box-shadow:0 0 0 2.5px #ffd21f,0 3px 0 #120d2b}
+.hs-arr svg{width:24px;height:24px}
+.hs-arr.l{left:6px}.hs-arr.r{right:6px}.hs-arr.r svg{transform:scaleX(-1)}
+.hs-arr[hidden],.hs-hassel .hs-arr{display:none}
+.hs-arr:active{transform:translateY(2px)}
+/* the strip under the house: one big card in the middle, the next ones peek out at the sides, dots below. Fixed height, so the house keeps its size */
+.hs-panel{flex:none;height:clamp(214px,26vh,244px);box-sizing:border-box;overflow:hidden;padding:7px 0 4px;border-top:3px solid #120d2b;border-radius:22px 22px 0 0;
+  background:linear-gradient(180deg,#3b1f7c,#241250);box-shadow:0 -4px 0 rgba(18,13,43,.35);display:flex;flex-direction:column}
+/* a picked item: a sheet that grows over the bottom of the house (the canvas keeps its size, the camera keeps the item in sight) */
+.hs-panel.sel>*,.hs-lockb{max-width:560px;margin-inline:auto;box-sizing:border-box}
+.hs-panel.sel{height:auto;min-height:clamp(214px,26vh,244px);max-height:72%;overflow-y:auto;padding:8px 10px 10px}
+.hs-grid{--cw:min(300px,76%);display:flex;align-items:center;gap:10px;flex:1;min-height:0;overflow-x:auto;overflow-y:hidden;padding:5px 0 6px;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 .hs-grid::-webkit-scrollbar{display:none}
-.hs-grid .hs-card{flex:none;width:152px;scroll-snap-align:start;box-sizing:border-box;grid-template-rows:auto auto 1fr auto}
-.hs-grid .hs-card p{align-self:start}
-.hs-lockb+.hs-grid{height:calc(100% - 40px)}
-/* a locked room: the banner already says when it opens, so the cards drop their lock buttons (on iPhone SE they were cut off under the banner) */
-.hs-lockb+.hs-grid .hs-bb{display:none}
-.hs-lockb{margin:0 0 7px;padding:6px 10px;border-radius:12px;border:2.5px solid #120d2b;background:#fff3c4;color:#120d2b;font-weight:800;font-size:.8rem;line-height:1.25;text-align:center}
-.hs-card{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto auto auto;column-gap:8px;row-gap:2px;align-items:center;padding:8px;border-radius:16px;
-  border:3px solid #120d2b;background:linear-gradient(180deg,#fffaf0,#ffe9c4);color:#120d2b;box-shadow:0 4px 0 #120d2b}
-.hs-card.hs-own{background:linear-gradient(180deg,#fff,#e8f9e0)}
-.hs-card.max{background:linear-gradient(180deg,#fff7c8,#ffd84a)}
-.hs-card .hs-ic{grid-row:1/3}
-.hs-card b{font-weight:800;font-size:.86rem;line-height:1.15;min-width:0;overflow:hidden}
-.hs-card p{grid-column:1/3;margin:2px 0 0;font-size:.74rem;line-height:1.2;font-weight:600;color:#4a3f66;min-height:2.5em}
-.hs-card .btn{grid-column:1/3}
-.hs-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:26px;line-height:1;background:color-mix(in srgb,var(--c,#ffd36b) 40%,#fff);border:2.5px solid #120d2b}
-.hs-ic{position:relative;overflow:hidden}.hs-ic img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:contain}
-.hs-ic.big{width:60px;height:60px;font-size:36px;border-radius:16px}
+.hs-grid::before,.hs-grid::after{content:'';flex:none;width:calc((100% - var(--cw))/2 - 10px)}
+.hs-card{position:relative;flex:none;width:var(--cw);box-sizing:border-box;scroll-snap-align:center;display:grid;grid-template-columns:56px minmax(0,1fr);column-gap:10px;row-gap:5px;align-items:center;
+  padding:8px 11px 9px;border-radius:20px;border:3px solid #120d2b;background:linear-gradient(180deg,#fffdf6,#fff0d2);color:#120d2b;box-shadow:0 4px 0 #120d2b;
+  transition:transform .2s,opacity .2s,box-shadow .2s;transform:scale(.9);opacity:.72;cursor:pointer}
+.hs-card.focus{transform:none;opacity:1;box-shadow:0 0 0 3px #ffd21f,0 0 18px rgba(255,210,31,.5),0 4px 0 #120d2b}
+.hs-card.max{background:linear-gradient(180deg,#fffbe0,#ffe58a)}
+.hs-card .hs-ic{width:56px;height:56px;border-radius:14px}
+.hs-cn{display:grid;gap:4px;min-width:0}
+.hs-cn b{font-weight:900;font-size:1.06rem;line-height:1.1;min-width:0;overflow:hidden;white-space:nowrap}
+.hs-card .hs-stars{font-size:1rem}
+.hs-pw{grid-column:1/-1;margin:0;font-size:.8rem;font-weight:700;line-height:1.25;color:#3d335a;height:2.5em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.hs-panel em.n{font-style:normal;font-weight:900;color:#20913a;unicode-bidi:isolate}
+.hs-dl{display:inline-block;font-weight:900;font-size:.76rem;line-height:1.3;color:#17722c;background:#d9f6cf;border:1.5px solid #8fd67d;border-radius:8px;padding:0 5px;unicode-bidi:isolate}
+.hs-ca{grid-column:1/-1;display:flex;gap:8px;min-width:0}
+.hs-ca>*{flex:1;min-width:0}
+.hs-ca .hs-des{flex:0 0 40%}
+.hs-lockb{flex:none;margin:0 12px 2px;padding:5px 10px;border-radius:12px;border:2.5px solid #120d2b;background:#fff3c4;color:#120d2b;font-weight:800;font-size:.8rem;line-height:1.25;text-align:center}
+.hs-lockb~.hs-grid .hs-card{row-gap:7px}
+.hs-dots{flex:none;display:flex;justify-content:center;align-items:center;gap:7px;padding:1px 0 2px}
+.hs-dots i{width:8px;height:8px;border-radius:50%;background:#7a62c4;border:1.5px solid #120d2b;cursor:pointer;transition:all .2s}
+.hs-dots i.on{width:12px;height:12px;background:#ffd21f}
+.hs-ic{position:relative;overflow:hidden;width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:26px;line-height:1;
+  background:radial-gradient(circle at 50% 40%,#fff,color-mix(in srgb,var(--c,#ffd36b) 30%,#fff3dc));border:2.5px solid #120d2b}
+.hs-ic img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:contain}
 .hs-stars{font-style:normal;display:flex;gap:1px;font-size:.78rem;line-height:1}
-.hs-stars em{font-style:normal;color:#c9bfe0;-webkit-text-stroke:.6px #120d2b}
+.hs-stars em{font-style:normal;color:#d6cdea;-webkit-text-stroke:.8px #120d2b}
 .hs-stars em.on{color:#ffc61a}
-.hs-panel .btn{display:flex;align-items:center;justify-content:center;gap:4px;min-height:36px;padding:4px 8px;font-size:.82rem;border-radius:12px;width:100%;margin:4px 0 0}
-.hs-panel .btn .coin,.hs-panel .btn img{width:18px;height:18px}
+.hs-stars em.pop{animation:hsStarPop .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes hsStarPop{0%{transform:scale(0) rotate(-90deg)}60%{transform:scale(1.6) rotate(10deg)}100%{transform:none}}
+/* buttons: gold = spend coins, blue = turn, light purple = design, lavender = waits for a player level, max = a label, not a button */
+.hs-panel .btn{display:flex;align-items:center;justify-content:center;gap:5px;min-height:44px;padding:4px 8px;font-size:.92rem;border-radius:14px;width:100%;margin:0;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -4px 0 rgba(0,0,0,.18),0 4px 0 var(--ink)}
+.hs-panel .btn span{min-width:0;overflow:hidden;white-space:nowrap}
+.hs-panel .btn .coin,.hs-panel .btn img{width:20px;height:20px;flex:none}
 .hs-panel .btn em{font-style:normal;font-weight:900}
-.hs-panel .btn.poor em{color:#d23b3b}
-.hs-panel .btn.lock{background:linear-gradient(180deg,#e9e2ff,#b9a8ee);color:#120d2b;font-size:.74rem;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
-.hs-panel .btn.max{background:linear-gradient(180deg,#fff2a8,#e0a800);color:#120d2b;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
-.hs-sel{display:grid;grid-template-columns:60px minmax(0,1fr) 38px;gap:6px 10px;align-items:start;margin:0;padding:10px;border-radius:18px;border:3px solid #120d2b;
-  background:linear-gradient(180deg,#fff,#efe7ff);color:#120d2b;box-shadow:0 4px 0 #120d2b}
-.hs-st{display:grid;gap:3px;min-width:0}
-.hs-st b{font-weight:900;font-size:1.05rem;min-width:0;overflow:hidden}
-.hs-st p{margin:0;font-size:.8rem;font-weight:700;line-height:1.3}
-.hs-st p.nx{color:#2f8a3e}
-.hs-st small{font-size:.72rem;color:#6a5f86}
-.hs-acts{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:8px;align-items:center}
-.hs-acts .btn{margin:0}
-.hs-sel .hs-unsel{position:static;width:38px;height:38px}
-/* designs: one button per picture, the one in use is green, the others show their coin price until bought */
-.hs-sty{grid-column:1/-1;display:flex;align-items:center;gap:8px;min-width:0}
-.hs-sbs{display:flex;gap:7px;flex:1;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:5px 5px 11px}.hs-sbs::-webkit-scrollbar{display:none}
-.hs-sty span{font-weight:900;font-size:.8rem;margin-inline-end:2px}
-.hs-sb{position:relative;width:58px;height:58px;flex:none;border-radius:14px;border:3px solid #120d2b;background:#fff;padding:3px;cursor:pointer;box-shadow:0 3px 0 #120d2b}
+.hs-panel .btn.gold{--c1:#ffe76a;--c2:#ffb800;color:#120d2b;-webkit-text-stroke:0;text-shadow:none;paint-order:normal;filter:none;font-weight:900}
+.hs-panel .btn.gold.poor em{color:#c62828}
+.hs-panel .btn.hs-des{--c1:#efe6ff;--c2:#cdb8fb;color:#3b1f7c;-webkit-text-stroke:0;text-shadow:none;paint-order:normal;filter:none;font-weight:900}
+.hs-panel .btn.hs-des i{font-style:normal;font-size:17px}
+.hs-panel .btn.lock{--c1:#ddd5f2;--c2:#bcb0de;color:#3b2d66;font-size:.8rem;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
+.hs-maxp{display:grid;place-items:center;min-height:40px;padding:2px 8px;border-radius:14px;border:2.5px dashed #b88a00;background:#fff6c8;color:#7a5600;font-weight:900;font-size:.86rem;text-align:center;line-height:1.1}
+/* the picked item: name + stars, now → next level, the designs, turn + upgrade */
+.hs-sel{display:grid;grid-template-columns:76px minmax(0,1fr) 40px;gap:8px 12px;align-items:center;margin:0;padding:11px 12px 12px;border-radius:22px;border:3px solid #120d2b;
+  background:linear-gradient(180deg,#fffdf6,#fff0d2);color:#120d2b;box-shadow:0 0 0 3px #ffd21f,0 4px 0 #120d2b}
+.hs-ic.big{width:76px;height:68px;border-radius:16px;font-size:40px}
+.hs-st{display:grid;gap:5px;min-width:0}
+.hs-st b{font-weight:900;font-size:1.3rem;line-height:1.1;min-width:0;overflow:hidden;white-space:nowrap}
+.hs-stars.big{font-size:1.45rem;gap:2px}
+.hs-sel .hs-unsel{position:static;width:40px;height:40px;align-self:start}
+.hs-cmp{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1.55fr) auto minmax(0,1fr);gap:6px;align-items:stretch}
+.hs-now,.hs-nx{display:grid;align-content:center;justify-items:center;gap:2px;padding:6px 8px;border-radius:14px;text-align:center;min-width:0}
+.hs-now{background:#ece6fb;border:2px solid #d3c8f2}
+.hs-nx{background:#ddf7d4;border:2px solid #a8e29a}
+.hs-nx.max{background:#fff3b8;border-color:#f0cc4a}
+.hs-now small,.hs-nx small{font-size:.72rem;font-weight:800;color:#5a4f78;line-height:1.1}
+.hs-now p{margin:0;font-size:.8rem;font-weight:700;line-height:1.25}
+.hs-nx b{font-size:1.45rem;font-weight:900;color:#20913a;line-height:1.1}
+.hs-nx.max b{font-size:.95rem;color:#7a5600}
+.hs-arw{display:grid;place-items:center;color:#7a6bb0}
+.hs-arw svg{width:22px;height:22px}
+[dir=rtl] .hs-arw svg{transform:scaleX(-1)}
+.hs-hint{font-size:.68rem;font-weight:600;line-height:1.2;color:#6a5f86;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.hs-acts{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:center}
+.hs-acts .btn,.hs-acts .hs-maxp{min-height:48px}
+.hs-acts .hs-turn svg{width:22px;height:22px;flex:none}
+/* designs: a row of 10 pictures; the one in use has a gold glow and a check, a locked one a lock and the level that opens it
+   (tapping a locked one shows it in the room for a moment) */
+.hs-sty{grid-column:1/-1;display:grid;gap:2px;min-width:0}
+.hs-sty>span{display:flex;align-items:center;gap:8px;font-weight:900;font-size:.82rem;color:#3b1f7c}
+.hs-sty>span::before,.hs-sty>span::after{content:'';flex:1;height:2px;background:#e0d6f5;border-radius:2px}
+.hs-sbs{display:flex;gap:8px;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:6px 4px 12px}.hs-sbs::-webkit-scrollbar{display:none}
+.hs-sb{position:relative;width:62px;height:58px;flex:none;border-radius:14px;border:2.5px solid #c9bde6;background:#fff;padding:3px;cursor:pointer;box-shadow:0 3px 0 #d6cdea}
 .hs-sb img{width:100%;height:100%;object-fit:contain;display:block}
-.hs-sb.lock img{filter:grayscale(.75) brightness(.7);opacity:.75}.hs-sb.lock{background:#d9d3ea}
-.hs-sb.on{background:linear-gradient(180deg,#e8f9e0,#b8f5a6);outline:3px solid #ffe24d;outline-offset:1px}
-.hs-sb em{position:absolute;inset-inline:-4px;bottom:-8px;display:flex;align-items:center;justify-content:center;gap:2px;font:900 .66rem/1 Rubik,system-ui,sans-serif;font-style:normal;
+.hs-sb.lock{background:#e4def2}.hs-sb.lock img{filter:grayscale(.7) brightness(.78);opacity:.7}
+.hs-sb u{position:absolute;inset:0;display:grid;place-items:center;text-decoration:none;font-size:18px;line-height:1}
+.hs-sb em{position:absolute;inset-inline:6px;bottom:-8px;display:flex;align-items:center;justify-content:center;font:900 .68rem/1 Rubik,system-ui,sans-serif;font-style:normal;
   background:#fff3c4;border:2px solid #120d2b;border-radius:999px;padding:2px 3px;color:#120d2b}
-.hs-sb em img,.hs-sb em .coin{width:12px;height:12px}
+.hs-sb.on{border-color:#120d2b;background:linear-gradient(180deg,#fffbe6,#ffefb0);box-shadow:0 0 0 3px #ffd21f,0 0 14px rgba(255,210,31,.75),0 3px 0 #120d2b}
+.hs-sb.on::after{content:'✓';position:absolute;inset-inline-end:-7px;bottom:-7px;width:22px;height:22px;border-radius:50%;background:#2fbf4a;color:#fff;border:2px solid #120d2b;
+  font:900 13px/18px Rubik,system-ui,sans-serif;text-align:center;box-sizing:border-box}
+.hs-sb.peek{box-shadow:0 0 0 3px #b48cff,0 0 14px rgba(180,140,255,.8)}
+.hs-sb.peek img{filter:none;opacity:1}
 .hs-sheet{position:absolute;inset:0;z-index:3;background:rgba(18,13,43,.55);display:flex;align-items:flex-end;justify-content:center}
 .hs-sh{width:100%;max-width:560px;max-height:82%;overflow-y:auto;border-radius:22px 22px 0 0;border:3px solid #120d2b;border-bottom:0;background:linear-gradient(180deg,#fffaf0,#ffe9c4);color:#120d2b;padding:10px 12px calc(14px + env(safe-area-inset-bottom,0px))}
 .hs-shh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
