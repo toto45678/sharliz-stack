@@ -58,7 +58,7 @@ function sbNotify(){if(!SBQ&&!SBQG)return;if(document.querySelector('.lvup')){se
 // player level-up: a pack for every even player level
 if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const n=progress.lvRew||0;const r=_l.apply(this,arguments);if(n){let k=0;for(let L=lv-n+1;L<=lv;L++)if(L%2===0)k++;sbGive(k)}return r}}
 // bonus stage: the gold chest (24 floors) gives a GOLDEN pack the first time on each boss (replays: coins only)
-if(typeof bnCollect==='function'){const _bc=bnCollect;bnCollect=function(){const g=BN&&!BN.paid&&BN.first&&BN.open.includes(2);const r=_bc.apply(this,arguments);if(g)sbGive(1,1);return r}
+if(typeof bnCollect==='function'){const _bc=bnCollect;bnCollect=function(){const g=BN&&!BN.paid&&BN.first&&BN.open.includes(2);const r=_bc.apply(this,arguments);if(g){/* quietly: the bonus result card already showed the pack (a strip would land on the next pre-level card) */const D=sbData();D.gpacks=(D.gpacks||0)+1;saveProgress();try{stkBadge()}catch(e){}}return r}
   const _br=bnResult;bnResult=function(){const r=_br.apply(this,arguments);try{if(BN&&BN.first&&BN.open.includes(2)){const rw=document.querySelector('#card .bn-rew');if(rw){let bo=rw.querySelector('.bn-bos');if(!bo){bo=document.createElement('div');bo.className='bn-bos';rw.appendChild(bo)}
     const e=document.createElement('span');e.className='bn-bo bn-gpk';e.innerHTML='<img src="art/sb_gpack.webp" alt=""><em>×1</em><small></small>';e.querySelector('small').textContent=t('sbGold');bo.appendChild(e)}}}catch(e){}return r}
   const _bi=bnIntro;bnIntro=function(){const r=_bi.apply(this,arguments);try{if(BN&&BN.first){const c=document.querySelector('#card .bn-ch.gold');if(c){const im=document.createElement('img');im.className='bn-gpk';im.src='art/sb_gpack.webp';im.alt='';c.appendChild(im)}}}catch(e){}return r}}
@@ -78,12 +78,14 @@ function sbChapters(){return STK_PAGES}
    pages (10 → 5+5, not 9+1). Chapters without sections are one section. */
 function sbPages(P,all){all=all||P.items().filter(x=>!x.soon);const secs=[];all.forEach((it,i)=>{const L=secs[secs.length-1];if(L&&L.sec===it.sec)L.ix.push(i);else secs.push({sec:it.sec,ix:[i]})});
   const pg=[];secs.forEach(S=>{const n=Math.ceil(S.ix.length/9),per=Math.ceil(S.ix.length/n);for(let k=0;k<n;k++)pg.push({sec:S.sec,ix:S.ix.slice(k*per,k*per+per),k,n})});return pg.length?pg:[{sec:undefined,ix:[],k:0,n:1}]}
+// the page that holds the first sticker the player has not seen yet (the Sharliz chapter has ~30 pages; page 1 rarely has the new one)
+function sbNewPg(ci){try{const P=sbChapters()[ci],all=P.items().filter(x=>!x.soon),seen=progress.stkSeen||[],k=sbPages(P,all).findIndex(p=>p.ix.some(i=>all[i].n&&!seen.includes(all[i].id)));return Math.max(0,k)}catch(e){return 0}}
 function sbSecs(P){return [...new Set(P.items().filter(x=>!x.soon).map(x=>x.sec))].filter(x=>x!==undefined)}
 function sbNumBase(ci){let n=0;for(let i=0;i<ci;i++)n+=sbChapters()[i].items().filter(x=>!x.soon).length;return n}
 openAlbum=function(){audio();sfx.click();if(!SB.el){const el=document.createElement('div');el.id='sbook';document.getElementById('app').appendChild(el);SB.el=el;
     let sx=null;el.addEventListener('pointerdown',e=>{if(e.target.closest('.sb-paper'))sx=e.clientX});el.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>50&&SB.view==='page')sbTurn((dx<0?1:-1)*(I18N[lang]._dir==='rtl'?-1:1))})}
   SB.el.hidden=false;const seen=progress.stkSeen||[];const ci=sbChapters().findIndex(P=>P.items().some(it=>it.n&&!seen.includes(it.id)));
-  if(ci>=0){SB.ch=ci;SB.pg=0;sbPageView()}else sbCover()};
+  if(ci>=0){SB.ch=ci;SB.pg=sbNewPg(ci);sbPageView()}else sbCover()};
 function sbClose(){sfx.click();SB.el.hidden=true;stkBadge();updateWalletUI();if(state==='title')updateLobby()}
 function sbTop(back){return `<div class="sb-top"><button class="sb-rb ${back?'sb-back':'sb-x'}" aria-label="back"></button><div class="sb-ttl"></div><div class="coin-pill">${coinImg()}<span>${progress.coins}</span></div></div>`}
 function sbWireTop(r,back){const b=r.querySelector('.sb-rb');b.innerHTML=back?'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>':XSVG;b.onclick=back?()=>{sfx.click();sbCover()}:sbClose}
@@ -171,7 +173,7 @@ function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])retur
         {const nw=res.filter(R=>!R.dup).length;if(np>1)m.querySelector('p').textContent=nw?t('sbNewN',{n:nw}):t('sbDupHint');else if(nw<res.length)m.querySelector('p').textContent=t('sbDupHint')}
         if(left){const more=document.createElement('button');more.className='btn primary';more.innerHTML='<span></span>';more.querySelector('span').textContent=t('sbMore',{n:left});more.onclick=()=>{m.remove();sbPack(g)};bt.appendChild(more);
           if(left>1){const all=document.createElement('button');all.className='btn';all.innerHTML='<span></span>';all.querySelector('span').textContent=t('sbAll',{n:Math.min(SB_MAX,left)});all.onclick=()=>{sfx.click();m.remove();sbPack(g,true)};bt.appendChild(all)}}
-        const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=0;sbPageView()};bt.appendChild(back)};
+        const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=sbNewPg(0);sbPageView()};bt.appendChild(back)};
       if(np===1){res.forEach((R,i)=>{const T0=800+i*750,c=cards.children[i];setTimeout(()=>{c.classList.add('tease');if(sfx.ok()&&R.s[1]!=='c')tone({f:400,f2:R.s[1]==='h'?900:700,d:.3,type:'triangle',v:.05})},T0);
         setTimeout(()=>{c.classList.remove('tease');c.classList.add('flip');if(sfx.ok())tone({f:R.s[1]==='h'?1200:R.s[1]==='r'?900:700,f2:R.s[1]==='h'?1900:1300,d:.14,type:'sine',v:.07});vib(R.s[1]==='c'?8:[15,20,15]);
 },T0+(R.s[1]==='c'?250:600))});

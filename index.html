@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009050347"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009131624"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -7297,7 +7297,7 @@ const PS_ART={galaxy:'ps_galaxy',t_comet:'ps_comet',starcrown:'ps_crown'};
 function psRewHTML(R){let img,amt='',lab;if(R.c){img='ps_coins';amt='×'+R.c;lab=t('psCoins')}else if(R.b){img='ps_boost';amt='×'+R.b;lab=t('psBoost')}
   else if(R.it){const [c,id]=R.it;img=PS_ART[id];lab=c==='trail'?t('sk_'+id):wName(c,id)}else return '';
   return `<span class="rw${R.it?' it':''}"><img src="art/${img}.webp" alt="">${amt?`<b>${amt}</b>`:''}</span><small class="lab"></small>`.replace('<small class="lab"></small>',`<small class="lab">${psEsc(lab)}</small>`)}
-function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}}
+function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){/* in turn, never random: the premium track is sold, and a random reward on it would count as a loot box */const k=progress.psBk=(progress.psBk||0)+1,b=['heart','shield','slow','laser'][(k-1)%4];progress.inv[b]=(progress.inv[b]||0)+1}}
   if(R.it){const [c,id]=R.it;if(c==='hat'||c==='trail'){if(!wallet().skins.includes(id))progress.skins.push(id)}else{progress.owned[c]=progress.owned[c]||[];if(!progress.owned[c].includes(id))progress.owned[c].push(id)}}}
 function psClaim(i,prem){const P=psData();const arr=prem?P.p:P.f;if(arr.includes(i)||i>=psTierOf(P.xp)||(prem&&!P.prem))return false;arr.push(i);psGive(PS_REW[i][prem?1:0]);return true}
 function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady(),L0=r.querySelector('.ps-list'),y0=!scroll&&L0?L0.scrollTop:0;
@@ -7600,7 +7600,7 @@ function sbNotify(){if(!SBQ&&!SBQG)return;if(document.querySelector('.lvup')){se
 // player level-up: a pack for every even player level
 if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const n=progress.lvRew||0;const r=_l.apply(this,arguments);if(n){let k=0;for(let L=lv-n+1;L<=lv;L++)if(L%2===0)k++;sbGive(k)}return r}}
 // bonus stage: the gold chest (24 floors) gives a GOLDEN pack the first time on each boss (replays: coins only)
-if(typeof bnCollect==='function'){const _bc=bnCollect;bnCollect=function(){const g=BN&&!BN.paid&&BN.first&&BN.open.includes(2);const r=_bc.apply(this,arguments);if(g)sbGive(1,1);return r}
+if(typeof bnCollect==='function'){const _bc=bnCollect;bnCollect=function(){const g=BN&&!BN.paid&&BN.first&&BN.open.includes(2);const r=_bc.apply(this,arguments);if(g){/* quietly: the bonus result card already showed the pack (a strip would land on the next pre-level card) */const D=sbData();D.gpacks=(D.gpacks||0)+1;saveProgress();try{stkBadge()}catch(e){}}return r}
   const _br=bnResult;bnResult=function(){const r=_br.apply(this,arguments);try{if(BN&&BN.first&&BN.open.includes(2)){const rw=document.querySelector('#card .bn-rew');if(rw){let bo=rw.querySelector('.bn-bos');if(!bo){bo=document.createElement('div');bo.className='bn-bos';rw.appendChild(bo)}
     const e=document.createElement('span');e.className='bn-bo bn-gpk';e.innerHTML='<img src="art/sb_gpack.webp" alt=""><em>×1</em><small></small>';e.querySelector('small').textContent=t('sbGold');bo.appendChild(e)}}}catch(e){}return r}
   const _bi=bnIntro;bnIntro=function(){const r=_bi.apply(this,arguments);try{if(BN&&BN.first){const c=document.querySelector('#card .bn-ch.gold');if(c){const im=document.createElement('img');im.className='bn-gpk';im.src='art/sb_gpack.webp';im.alt='';c.appendChild(im)}}}catch(e){}return r}}
@@ -7620,12 +7620,14 @@ function sbChapters(){return STK_PAGES}
    pages (10 → 5+5, not 9+1). Chapters without sections are one section. */
 function sbPages(P,all){all=all||P.items().filter(x=>!x.soon);const secs=[];all.forEach((it,i)=>{const L=secs[secs.length-1];if(L&&L.sec===it.sec)L.ix.push(i);else secs.push({sec:it.sec,ix:[i]})});
   const pg=[];secs.forEach(S=>{const n=Math.ceil(S.ix.length/9),per=Math.ceil(S.ix.length/n);for(let k=0;k<n;k++)pg.push({sec:S.sec,ix:S.ix.slice(k*per,k*per+per),k,n})});return pg.length?pg:[{sec:undefined,ix:[],k:0,n:1}]}
+// the page that holds the first sticker the player has not seen yet (the Sharliz chapter has ~30 pages; page 1 rarely has the new one)
+function sbNewPg(ci){try{const P=sbChapters()[ci],all=P.items().filter(x=>!x.soon),seen=progress.stkSeen||[],k=sbPages(P,all).findIndex(p=>p.ix.some(i=>all[i].n&&!seen.includes(all[i].id)));return Math.max(0,k)}catch(e){return 0}}
 function sbSecs(P){return [...new Set(P.items().filter(x=>!x.soon).map(x=>x.sec))].filter(x=>x!==undefined)}
 function sbNumBase(ci){let n=0;for(let i=0;i<ci;i++)n+=sbChapters()[i].items().filter(x=>!x.soon).length;return n}
 openAlbum=function(){audio();sfx.click();if(!SB.el){const el=document.createElement('div');el.id='sbook';document.getElementById('app').appendChild(el);SB.el=el;
     let sx=null;el.addEventListener('pointerdown',e=>{if(e.target.closest('.sb-paper'))sx=e.clientX});el.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>50&&SB.view==='page')sbTurn((dx<0?1:-1)*(I18N[lang]._dir==='rtl'?-1:1))})}
   SB.el.hidden=false;const seen=progress.stkSeen||[];const ci=sbChapters().findIndex(P=>P.items().some(it=>it.n&&!seen.includes(it.id)));
-  if(ci>=0){SB.ch=ci;SB.pg=0;sbPageView()}else sbCover()};
+  if(ci>=0){SB.ch=ci;SB.pg=sbNewPg(ci);sbPageView()}else sbCover()};
 function sbClose(){sfx.click();SB.el.hidden=true;stkBadge();updateWalletUI();if(state==='title')updateLobby()}
 function sbTop(back){return `<div class="sb-top"><button class="sb-rb ${back?'sb-back':'sb-x'}" aria-label="back"></button><div class="sb-ttl"></div><div class="coin-pill">${coinImg()}<span>${progress.coins}</span></div></div>`}
 function sbWireTop(r,back){const b=r.querySelector('.sb-rb');b.innerHTML=back?'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>':XSVG;b.onclick=back?()=>{sfx.click();sbCover()}:sbClose}
@@ -7713,7 +7715,7 @@ function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])retur
         {const nw=res.filter(R=>!R.dup).length;if(np>1)m.querySelector('p').textContent=nw?t('sbNewN',{n:nw}):t('sbDupHint');else if(nw<res.length)m.querySelector('p').textContent=t('sbDupHint')}
         if(left){const more=document.createElement('button');more.className='btn primary';more.innerHTML='<span></span>';more.querySelector('span').textContent=t('sbMore',{n:left});more.onclick=()=>{m.remove();sbPack(g)};bt.appendChild(more);
           if(left>1){const all=document.createElement('button');all.className='btn';all.innerHTML='<span></span>';all.querySelector('span').textContent=t('sbAll',{n:Math.min(SB_MAX,left)});all.onclick=()=>{sfx.click();m.remove();sbPack(g,true)};bt.appendChild(all)}}
-        const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=0;sbPageView()};bt.appendChild(back)};
+        const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=sbNewPg(0);sbPageView()};bt.appendChild(back)};
       if(np===1){res.forEach((R,i)=>{const T0=800+i*750,c=cards.children[i];setTimeout(()=>{c.classList.add('tease');if(sfx.ok()&&R.s[1]!=='c')tone({f:400,f2:R.s[1]==='h'?900:700,d:.3,type:'triangle',v:.05})},T0);
         setTimeout(()=>{c.classList.remove('tease');c.classList.add('flip');if(sfx.ok())tone({f:R.s[1]==='h'?1200:R.s[1]==='r'?900:700,f2:R.s[1]==='h'?1900:1300,d:.14,type:'sine',v:.07});vib(R.s[1]==='c'?8:[15,20,15]);
 },T0+(R.s[1]==='c'?250:600))});
@@ -7916,7 +7918,7 @@ EGG.c.pool.push('cloudy');EGG.r.pool.push('monkey','bunny');EGG.g.pool.push('pho
 // the power text of each new buddy (guide chip, nest), built from the shared power words in every language
 for(const L of LANG_SET()){const P=PW_TXT[L]||PW_TXT.en;for(const id in NEW_BUD_FX){const F=NEW_BUD_FX[id],parts=[];
   for(const k in F){const v=F[k];if(k==='coins')parts.push(P.coins.replace('{p}',Math.round((v-1)*100)));else if(k==='hearts')parts.push(P.hearts);
-    else if(k==='fall'||k==='wind'||k==='pts'){if(v<1)parts.push(P[k]||k)}else parts.push(P[k]||k)}
+    else if(k==='fall'||k==='wind'){if(v<1)parts.push(P[k]||k)}else if(k==='pts'){/* a cost (robodog pts .9), not a power */}else parts.push(P[k]||k)}
   I18N[L]['pk_x_'+id]=parts.join(' · ')}}
 Object.assign(I18N.en,{eggOnlyC:'Hatches from an egg',eggOnlyR:'Rare egg only'});Object.assign(I18N.he,{eggOnlyC:'בוקע מביצה',eggOnlyR:'רק מביצה נדירה'});
 function eggGateTxt(id){const e=WPET[id]&&WPET[id].egg;return t(e==='c'?'eggOnlyC':e==='r'?'eggOnlyR':'eggOnly')}
@@ -7958,10 +7960,10 @@ Object.assign(I18N.he,{hzx_bats:"עטלפים דוחפים את השארליז �
    a golden pack, three shop-only looks (sticker hat, sticker-bomb pattern, sticker trail) and the gold album frame (gold cover + gold page edges). Stars come ONLY from doubles: never sold for money
    and never bought with coins, so nothing random can be bought with real money (App Store loot-box rule). */
 Object.assign(I18N.en,{ssTitle:'Sticker shop',ssStars:'Sticker stars',ssDoubles:'Your doubles: {n}',ssNoDup:'No doubles yet. Open packs to get some!',ssSell:'Sell all: +{n}',ssSold:'+{n} sticker stars!',
-  ssPick:'Pick a missing sticker',ssAllGot:'You have all 24 Sharliz stickers!',ssSpecial:'Special',ssBuyQ:'Buy “{x}” for {n} stars?',ssBuy:'Buy',ssCancel:'Cancel',ssNeed:'You need {n} more stars',
+  ssPick:'Pick a missing sticker',ssAllGot:'You have all {n} Sharliz stickers!',ssSpecial:'Special',ssBuyQ:'Buy “{x}” for {n} stars?',ssBuy:'Buy',ssCancel:'Cancel',ssNeed:'You need {n} more stars',
   ssOwned:'Owned',ssGotIt:'It’s yours!',ssOnly:'Only in the sticker shop',ssWear:'Wear it in My hero',ssHow:'Sell doubles → stars → buy what you want!',sbDouble:'Double!',sbDupHint:'Sell doubles in the sticker shop for stars',sk_t_stk:'Stickers',ssFrame:'Gold album frame',ssFrameOn:'Your album is golden now!'});
 Object.assign(I18N.he,{ssTitle:'חנות המדבקות',ssStars:'כוכבי מדבקה',ssDoubles:'הכפולות שלך: {n}',ssNoDup:'עוד אין כפולות. פותחים שקיות ומקבלים!',ssSell:'מכרו הכל: +{n}',ssSold:'+{n} כוכבי מדבקה!',
-  ssPick:'בחרו מדבקה שחסרה לכם',ssAllGot:'יש לכם את כל 24 מדבקות השארליז!',ssSpecial:'מיוחדים',ssBuyQ:'לקנות את „{x}” ב-{n} כוכבים?',ssBuy:'קנו',ssCancel:'ביטול',ssNeed:'חסרים לכם עוד {n} כוכבים',
+  ssPick:'בחרו מדבקה שחסרה לכם',ssAllGot:'יש לכם את כל {n} מדבקות השארליז!',ssSpecial:'מיוחדים',ssBuyQ:'לקנות את „{x}” ב-{n} כוכבים?',ssBuy:'קנו',ssCancel:'ביטול',ssNeed:'חסרים לכם עוד {n} כוכבים',
   ssOwned:'שלכם',ssGotIt:'זה שלכם!',ssOnly:'רק בחנות המדבקות',ssWear:'לובשים את זה ב"הגיבור שלי"',ssHow:'מוכרים כפולות ← מקבלים כוכבים ← קונים מה שרוצים!',sbDouble:'כפולה!',sbDupHint:'את הכפולות מוכרים בחנות המדבקות תמורת כוכבים',sk_t_stk:'מדבקות',ssFrame:'מסגרת זהב לאלבום',ssFrameOn:'האלבום שלכם עכשיו מזהב!'});
 const SS_SELL={c:1,r:3,h:8},SS_BUY={c:6,r:15,h:40};
 const SS_SPECIAL=[{k:'gold',p:25},{k:'hat',c:'hat',id:'stkhat',p:35},{k:'pat',c:'pattern',id:'stkbomb',p:40},{k:'trail',c:'trail',id:'t_stk',p:30},{k:'frame',p:50}];
@@ -8021,7 +8023,7 @@ function ssRender(top){const D=sbData(),ex=ssExtras(),nEx=ex.reduce((a,x)=>a+x[1
   r.querySelector('.sb-ttl').textContent=t('ssTitle');r.querySelector('.ss-how').textContent=t('ssHow');
   r.querySelector('.ss-sh b').textContent=nEx?t('ssDoubles',{n:nEx}):t('ssNoDup');r.querySelector('.ss-sellbtn span').textContent=t('ssSell',{n:val});
   r.querySelector('.ss-sellbtn').onclick=()=>ssSell();
-  r.querySelector('.ss-h').textContent=t('ssPick');r.querySelector('.ss-h.sp').textContent=t('ssSpecial');{const a=r.querySelector('.ss-all');if(a)a.textContent=t('ssAllGot')}
+  r.querySelector('.ss-h').textContent=t('ssPick');r.querySelector('.ss-h.sp').textContent=t('ssSpecial');{const a=r.querySelector('.ss-all');if(a)a.textContent=t('ssAllGot',{n:SHZ.length})}
   r.querySelectorAll('.ss-sec').forEach(b=>{b.querySelector('span').textContent=sbSecName('shz',b.dataset.sec);b.onclick=()=>{if(ssSec===b.dataset.sec)return;sfx.click();ssSec=b.dataset.sec;ssRender()}});
   {const on=r.querySelector('.ss-sec.on');if(on)requestAnimationFrame(()=>{const c=on.parentNode;c.scrollLeft+=on.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-on.offsetWidth)/2})}
   r.querySelectorAll('.ss-it[data-id]').forEach(b=>{const s=SHZ.find(x=>x[0]===b.dataset.id);b.querySelector('small').textContent=L?s[3]:s[2];b.onclick=()=>ssAsk(L?s[3]:s[2],SS_BUY[s[1]],()=>{D.got[s[0]]=1;ssPaid(SS_BUY[s[1]]);ssWin(`art/stk_${s[0]}.webp`,L?s[3]:s[2])})});
@@ -8037,7 +8039,7 @@ function ssRender(top){const D=sbData(),ex=ssExtras(),nEx=ex.reduce((a,x)=>a+x[1
       else{for(let i=0;i<5;i++){g.save();g.translate(18+i*22,96-i*17+Math.sin(i)*6);g.rotate(i*.7);g.globalAlpha=.45+i*.13;ssSticker(g,i%4,9+i*1.6,SS_COL[i]);g.restore()}}art.appendChild(c)}
     b.onclick=()=>{if(ssOwnedSp(S)){sfx.click();noteToast(S.k==='frame'?t('ssFrameOn'):t('ssWear'));return}ssAsk(nm,S.p,()=>{ssPaid(S.p);if(S.k==='gold'){D.gpacks=(D.gpacks||0)+1;ssWin('art/sb_gpack.webp',nm)}
       else if(S.k==='frame'){D.frame=1;saveProgress();ssFrameOn();ssWin(null,t('ssFrameOn'),art.firstChild)}
-      else{if(S.c==='trail'||S.c==='hat'){if(!wallet().skins.includes(S.id))progress.skins.push(S.id)}else{progress.owned[S.c]=progress.owned[S.c]||[];if(!progress.owned[S.c].includes(S.id))progress.owned[S.c].push(S.id)}ssWin(null,nm,art.firstChild)}})}});
+      else{if(S.c==='trail'||S.c==='hat'){if(!wallet().skins.includes(S.id))progress.skins.push(S.id)}else{progress.owned[S.c]=progress.owned[S.c]||[];if(!progress.owned[S.c].includes(S.id))progress.owned[S.c].push(S.id)}ssWin(null,nm,art.firstChild)}saveProgress()})}});
   const bd=r.querySelector('.ss-body');bd.scrollTop=y0}
 function ssPaid(n){const D=sbData();D.stars=Math.max(0,(D.stars||0)-n);saveProgress();try{stkBadge()}catch(e){}}
 function ssSell(){const D=sbData(),ex=ssExtras();if(!ex.length)return;let v=0;ex.forEach(([s,n])=>{v+=n*SS_SELL[s[1]];D.got[s[0]]=1});D.stars=(D.stars||0)+v;saveProgress();
@@ -8516,7 +8518,7 @@ function sbToc(P){const all=P.items().filter(x=>!x.soon),pages=sbPages(P,all),D=
     m.innerHTML=`<div class="tc-card" style="--c:${SB_COL[P.id]||'#b48cff'}"><div class="tc-hd"><b></b><button class="x-btn tc-x" aria-label="close"></button></div><div class="tc-list"></div>
       <div class="tc-all"><span><b></b><small>${all.filter(x=>x.n).length}/${all.length}</small></span><button class="sb-chest${fullAll&&!D.done[ak]?' can':''}${D.done[ak]?' got':''}"><img src="art/ic_chest${D.done[ak]?'_open':''}.webp" alt=""></button></div></div>`;
     m.querySelector('.tc-hd b').textContent=t('sbToc');m.querySelector('.tc-x').innerHTML=XSVG;m.querySelector('.tc-x').onclick=()=>{sfx.click();m.remove()};
-    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{draw();sbPageView()});else if(!D.done[ak]){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+sbRew(ak)[0]+' 🪙')}};
+    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{sbPageView();draw();if(!m.isConnected)SB.el.appendChild(m)});else if(!D.done[ak]){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+sbRew(ak)[0]+' 🪙')}};
     const L=m.querySelector('.tc-list');secs.forEach(sec=>{const a=all.filter(x=>x.sec===sec),g=a.filter(x=>x.n).length,ck=P.id+':'+sec,fst=a.find(x=>x.n)||a[0],row=document.createElement('button'),pi=pages.findIndex(p=>p.sec===sec);
       row.className='tc-row'+(pi===SB.pg||pages[SB.pg].sec===sec?' on':'')+(g===a.length?' full':'');
       row.innerHTML=`<span class="tc-th${fst.n?'':' no'}"><img alt="" loading="lazy"></span><span class="tc-t"><b></b><i><u style="width:${g/a.length*100}%"></u></i></span>${g===a.length&&!D.done[ck]?'<img class="tc-can" src="art/ic_chest.webp" alt="">':`<em>${D.done[ck]?'✓':g+'/'+a.length}</em>`}`;
@@ -8538,8 +8540,10 @@ const zIx=sid=>ZONES.findIndex(z=>(z.sid||z.id)===sid);
 function st3(sids){let n=0;for(const s of sids){const zi=zIx(s);if(zi<0)continue;for(let i=0;i<LPZ;i++)if((progress.stars[zi*LPZ+i]||0)>=3)n++}return n}
 const beatN=sids=>sids.filter(s=>(progress.beat||{})[s]).length,nh=s=>(ST().nh||{})[s]?1:0,bossNm=sid=>t(BOSS_NAMES[sid]||sid);
 function secsDone(){let n=0;try{for(const P of sbChapters()){if(P.id==='gold')continue;const all=P.items().filter(x=>!x.soon);for(const s of new Set(all.map(x=>x.sec))){const a=all.filter(x=>x.sec===s);if(a.length&&a.every(x=>x.n))n++}}}catch(e){}return n}
+// coins that came from purchases never count toward a gold card (gold cards are never sold)
+const boughtCoins=()=>(progress.purchases||[]).reduce((a,p)=>a+((p&&IAP.products[p.sku]||{}).coins||0),0);
 const GFEAT={
-  g01:{k:'coins',T:15000,v:()=>progress.coins||0},          g02:{k:'s1',T:80,v:()=>st3(S1W)},
+  g01:{k:'coins',T:15000,v:()=>Math.max(0,(progress.coins||0)-boughtCoins())},          g02:{k:'s1',T:80,v:()=>st3(S1W)},
   g03:{k:'combo',T:15,v:()=>ST().combo||0},                  g04:{k:'evo',T:3,v:()=>Object.values(progress.bud||{}).filter(x=>x>=3).length},
   g05:{k:'nh',b:'volcanoS',T:1,v:()=>nh('volcanoS')},        g06:{k:'endless',T:100,v:()=>progress.bestEndless||0},
   g07:{k:'nhN',T:10,v:()=>Object.keys(ST().nh||{}).length},  g08:{k:'w3',w:'ocean',T:30,v:()=>st3(['ocean','oceanN','oceanS'])},
@@ -8565,6 +8569,8 @@ function goldCheck(){const D=sbData(),nw=[];for(const g of GOLDS){const id=g[0],
   if(nw.length){saveProgress();GDQ.push(...nw);try{stkBadge()}catch(e){}}return nw.length}
 function gdBusy(){return state!=='title'||W3.on||lobbyLayerOpen()||!document.getElementById('overlay').hidden||document.getElementById('title').hidden||(SB.el&&!SB.el.hidden)||(typeof SSEL!=='undefined'&&SSEL&&!SSEL.hidden)||
   !!document.querySelector('.egg-pop,.sb-pk,.sb-zoom,.lvup,.gd-rev,.pay-modal,#payModal')||(typeof dlState==='function'&&progress.unlocked>=2&&!dlState().claimed)}
+// the starter offer, daily gift and house popup wait while a gold card is being revealed
+{const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector('.gd-rev')||_lo()}}
 function goldMaybe(){goldCheck();if(!GDQ.length)return;setTimeout(()=>{if(!GDQ.length||gdBusy())return;goldReveal(GDQ.shift())},900)}
 /* the big moment: a gold card flips in over rays + sparkles */
 function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=lang==='he'?1:0,m=document.createElement('div');m.className='gd-rev';
@@ -8576,7 +8582,7 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
   m.querySelector('.gd-ok span').textContent=t('gdOk');m.querySelector('.gd-al span').textContent=t('gdAlbum');
   const close=()=>{m.remove();if(GDQ.length)goldMaybe()};
   m.querySelector('.gd-ok').onclick=()=>{sfx.click();close()};
-  m.querySelector('.gd-al').onclick=()=>{sfx.click();m.remove();openAlbum();const ci=sbChapters().findIndex(P=>P.id==='gold');if(ci>=0){SB.ch=ci;SB.pg=0;sbPageView()}};
+  m.querySelector('.gd-al').onclick=()=>{sfx.click();m.remove();openAlbum();const ci=sbChapters().findIndex(P=>P.id==='gold');if(ci>=0){SB.ch=ci;SB.pg=sbNewPg(ci);sbPageView()}};
   document.body.appendChild(m);sfx.flourish(4);vib([30,50,30,50,60]);if(sfx.ok()){tone({f:520,f2:1560,d:.6,type:'triangle',v:.06});setTimeout(()=>tone({f:1040,f2:2080,d:.5,type:'sine',v:.05}),350)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{goldMaybe()}catch(e){}return r}}
 {const _o=openAlbum;openAlbum=function(){try{goldCheck();GDQ=[]}catch(e){}return _o.apply(this,arguments)}} // seen in the album right away
@@ -8584,6 +8590,9 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
 {const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const P=sbChapters()[SB.ch];if(P.id==='gold'){const all=P.items(),pg=sbPages(P,all)[SB.pg];
   SB.el.querySelectorAll('.sb-grid .sb-slot').forEach((s,k)=>{const it=all[pg.ix[k]];if(!it)return;s.classList.add('gold');if(!it.n&&it.prog){const b=document.createElement('i');b.className='gd-pb';b.innerHTML=`<u style="width:${it.prog[0]/it.prog[1]*100}%"></u>`;s.appendChild(b)}})}}catch(e){}return r}}
 /* ---------- trackers the feats need (progress.stat) ---------- */
+// continuing from the checkpoint restarts the level (startLevel → resetStats → lv.lost=0): keep the hearts already lost, so
+// 'beat the boss without losing a heart' (gold cards) and the 'no hit' star mission are not given after losing every heart
+{const _cc=continueCheckpoint;continueCheckpoint=function(){const L=lv&&lv.lost||0;const r=_cc.apply(this,arguments);if(lv&&L)lv.lost=(lv.lost||0)+L;return r}}
 {const _w=win;win=function(){const was=state,b=stOwnArt();const r=_w.apply(this,arguments);if(was!=='win'&&state==='win'){try{const S=ST();if(lv&&lv.best)S.combo=Math.max(S.combo||0,lv.best);
     if(mode==='levels'){S.row=(S.row||0)+1;S.rowB=Math.max(S.rowB||0,S.row);if(lvInZone()===LPZ-1&&!lv.lost){S.nh=S.nh||{};S.nh[zone().sid||zone().id]=1}}saveProgress();
     if(stOwnArt()>b){toast(t('stNew'));try{stkBadge()}catch(e){}}}catch(e){}}return r}}

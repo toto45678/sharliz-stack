@@ -844,7 +844,7 @@
   "ssSell": "Vender todo: +{n}",
   "ssSold": "¡+{n} estrellas de cromo!",
   "ssPick": "Elige un cromo que te falte",
-  "ssAllGot": "¡Tienes los 24 cromos de Sharliz!",
+  "ssAllGot": "¡Tienes los {n} cromos de Sharliz!",
   "ssSpecial": "Especial",
   "ssBuyQ": "¿Comprar “{x}” por {n} estrellas?",
   "ssBuy": "Comprar",

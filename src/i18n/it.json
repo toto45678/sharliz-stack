@@ -844,7 +844,7 @@
   "ssSell": "Vendi tutto: +{n}",
   "ssSold": "+{n} stelle figurina!",
   "ssPick": "Scegli una figurina che ti manca",
-  "ssAllGot": "Hai tutte le 24 figurine Sharliz!",
+  "ssAllGot": "Hai tutte le {n} figurine Sharliz!",
   "ssSpecial": "Speciali",
   "ssBuyQ": "Comprare “{x}” per {n} stelle?",
   "ssBuy": "Compra",

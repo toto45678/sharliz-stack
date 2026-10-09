@@ -459,7 +459,7 @@ function sbToc(P){const all=P.items().filter(x=>!x.soon),pages=sbPages(P,all),D=
     m.innerHTML=`<div class="tc-card" style="--c:${SB_COL[P.id]||'#b48cff'}"><div class="tc-hd"><b></b><button class="x-btn tc-x" aria-label="close"></button></div><div class="tc-list"></div>
       <div class="tc-all"><span><b></b><small>${all.filter(x=>x.n).length}/${all.length}</small></span><button class="sb-chest${fullAll&&!D.done[ak]?' can':''}${D.done[ak]?' got':''}"><img src="art/ic_chest${D.done[ak]?'_open':''}.webp" alt=""></button></div></div>`;
     m.querySelector('.tc-hd b').textContent=t('sbToc');m.querySelector('.tc-x').innerHTML=XSVG;m.querySelector('.tc-x').onclick=()=>{sfx.click();m.remove()};
-    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{draw();sbPageView()});else if(!D.done[ak]){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+sbRew(ak)[0]+' 🪙')}};
+    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{sbPageView();draw();if(!m.isConnected)SB.el.appendChild(m)});else if(!D.done[ak]){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+sbRew(ak)[0]+' 🪙')}};
     const L=m.querySelector('.tc-list');secs.forEach(sec=>{const a=all.filter(x=>x.sec===sec),g=a.filter(x=>x.n).length,ck=P.id+':'+sec,fst=a.find(x=>x.n)||a[0],row=document.createElement('button'),pi=pages.findIndex(p=>p.sec===sec);
       row.className='tc-row'+(pi===SB.pg||pages[SB.pg].sec===sec?' on':'')+(g===a.length?' full':'');
       row.innerHTML=`<span class="tc-th${fst.n?'':' no'}"><img alt="" loading="lazy"></span><span class="tc-t"><b></b><i><u style="width:${g/a.length*100}%"></u></i></span>${g===a.length&&!D.done[ck]?'<img class="tc-can" src="art/ic_chest.webp" alt="">':`<em>${D.done[ck]?'✓':g+'/'+a.length}</em>`}`;
@@ -481,8 +481,10 @@ const zIx=sid=>ZONES.findIndex(z=>(z.sid||z.id)===sid);
 function st3(sids){let n=0;for(const s of sids){const zi=zIx(s);if(zi<0)continue;for(let i=0;i<LPZ;i++)if((progress.stars[zi*LPZ+i]||0)>=3)n++}return n}
 const beatN=sids=>sids.filter(s=>(progress.beat||{})[s]).length,nh=s=>(ST().nh||{})[s]?1:0,bossNm=sid=>t(BOSS_NAMES[sid]||sid);
 function secsDone(){let n=0;try{for(const P of sbChapters()){if(P.id==='gold')continue;const all=P.items().filter(x=>!x.soon);for(const s of new Set(all.map(x=>x.sec))){const a=all.filter(x=>x.sec===s);if(a.length&&a.every(x=>x.n))n++}}}catch(e){}return n}
+// coins that came from purchases never count toward a gold card (gold cards are never sold)
+const boughtCoins=()=>(progress.purchases||[]).reduce((a,p)=>a+((p&&IAP.products[p.sku]||{}).coins||0),0);
 const GFEAT={
-  g01:{k:'coins',T:15000,v:()=>progress.coins||0},          g02:{k:'s1',T:80,v:()=>st3(S1W)},
+  g01:{k:'coins',T:15000,v:()=>Math.max(0,(progress.coins||0)-boughtCoins())},          g02:{k:'s1',T:80,v:()=>st3(S1W)},
   g03:{k:'combo',T:15,v:()=>ST().combo||0},                  g04:{k:'evo',T:3,v:()=>Object.values(progress.bud||{}).filter(x=>x>=3).length},
   g05:{k:'nh',b:'volcanoS',T:1,v:()=>nh('volcanoS')},        g06:{k:'endless',T:100,v:()=>progress.bestEndless||0},
   g07:{k:'nhN',T:10,v:()=>Object.keys(ST().nh||{}).length},  g08:{k:'w3',w:'ocean',T:30,v:()=>st3(['ocean','oceanN','oceanS'])},
@@ -508,6 +510,8 @@ function goldCheck(){const D=sbData(),nw=[];for(const g of GOLDS){const id=g[0],
   if(nw.length){saveProgress();GDQ.push(...nw);try{stkBadge()}catch(e){}}return nw.length}
 function gdBusy(){return state!=='title'||W3.on||lobbyLayerOpen()||!document.getElementById('overlay').hidden||document.getElementById('title').hidden||(SB.el&&!SB.el.hidden)||(typeof SSEL!=='undefined'&&SSEL&&!SSEL.hidden)||
   !!document.querySelector('.egg-pop,.sb-pk,.sb-zoom,.lvup,.gd-rev,.pay-modal,#payModal')||(typeof dlState==='function'&&progress.unlocked>=2&&!dlState().claimed)}
+// the starter offer, daily gift and house popup wait while a gold card is being revealed
+{const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector('.gd-rev')||_lo()}}
 function goldMaybe(){goldCheck();if(!GDQ.length)return;setTimeout(()=>{if(!GDQ.length||gdBusy())return;goldReveal(GDQ.shift())},900)}
 /* the big moment: a gold card flips in over rays + sparkles */
 function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=lang==='he'?1:0,m=document.createElement('div');m.className='gd-rev';
@@ -519,7 +523,7 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
   m.querySelector('.gd-ok span').textContent=t('gdOk');m.querySelector('.gd-al span').textContent=t('gdAlbum');
   const close=()=>{m.remove();if(GDQ.length)goldMaybe()};
   m.querySelector('.gd-ok').onclick=()=>{sfx.click();close()};
-  m.querySelector('.gd-al').onclick=()=>{sfx.click();m.remove();openAlbum();const ci=sbChapters().findIndex(P=>P.id==='gold');if(ci>=0){SB.ch=ci;SB.pg=0;sbPageView()}};
+  m.querySelector('.gd-al').onclick=()=>{sfx.click();m.remove();openAlbum();const ci=sbChapters().findIndex(P=>P.id==='gold');if(ci>=0){SB.ch=ci;SB.pg=sbNewPg(ci);sbPageView()}};
   document.body.appendChild(m);sfx.flourish(4);vib([30,50,30,50,60]);if(sfx.ok()){tone({f:520,f2:1560,d:.6,type:'triangle',v:.06});setTimeout(()=>tone({f:1040,f2:2080,d:.5,type:'sine',v:.05}),350)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{goldMaybe()}catch(e){}return r}}
 {const _o=openAlbum;openAlbum=function(){try{goldCheck();GDQ=[]}catch(e){}return _o.apply(this,arguments)}} // seen in the album right away
@@ -527,6 +531,9 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
 {const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const P=sbChapters()[SB.ch];if(P.id==='gold'){const all=P.items(),pg=sbPages(P,all)[SB.pg];
   SB.el.querySelectorAll('.sb-grid .sb-slot').forEach((s,k)=>{const it=all[pg.ix[k]];if(!it)return;s.classList.add('gold');if(!it.n&&it.prog){const b=document.createElement('i');b.className='gd-pb';b.innerHTML=`<u style="width:${it.prog[0]/it.prog[1]*100}%"></u>`;s.appendChild(b)}})}}catch(e){}return r}}
 /* ---------- trackers the feats need (progress.stat) ---------- */
+// continuing from the checkpoint restarts the level (startLevel → resetStats → lv.lost=0): keep the hearts already lost, so
+// 'beat the boss without losing a heart' (gold cards) and the 'no hit' star mission are not given after losing every heart
+{const _cc=continueCheckpoint;continueCheckpoint=function(){const L=lv&&lv.lost||0;const r=_cc.apply(this,arguments);if(lv&&L)lv.lost=(lv.lost||0)+L;return r}}
 {const _w=win;win=function(){const was=state,b=stOwnArt();const r=_w.apply(this,arguments);if(was!=='win'&&state==='win'){try{const S=ST();if(lv&&lv.best)S.combo=Math.max(S.combo||0,lv.best);
     if(mode==='levels'){S.row=(S.row||0)+1;S.rowB=Math.max(S.rowB||0,S.row);if(lvInZone()===LPZ-1&&!lv.lost){S.nh=S.nh||{};S.nh[zone().sid||zone().id]=1}}saveProgress();
     if(stOwnArt()>b){toast(t('stNew'));try{stkBadge()}catch(e){}}}catch(e){}}return r}}

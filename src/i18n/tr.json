@@ -844,7 +844,7 @@
   "ssSell": "Hepsini sat: +{n}",
   "ssSold": "+{n} çıkartma yıldızı!",
   "ssPick": "Eksik bir çıkartma seç",
-  "ssAllGot": "24 Sharliz çıkartmasının hepsi sende!",
+  "ssAllGot": "{n} Sharliz çıkartmasının hepsi sende!",
   "ssSpecial": "Özel",
   "ssBuyQ": "“{x}” {n} yıldıza alınsın mı?",
   "ssBuy": "Satın al",

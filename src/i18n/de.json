@@ -844,7 +844,7 @@
   "ssSell": "Alle verkaufen: +{n}",
   "ssSold": "+{n} Sticker-Sterne!",
   "ssPick": "Wähle einen fehlenden Sticker",
-  "ssAllGot": "Du hast alle 24 Sharliz-Sticker!",
+  "ssAllGot": "Du hast alle {n} Sharliz-Sticker!",
   "ssSpecial": "Spezial",
   "ssBuyQ": "„{x}“ für {n} Sterne kaufen?",
   "ssBuy": "Kaufen",

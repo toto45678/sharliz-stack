@@ -844,7 +844,7 @@
   "ssSell": "Tout vendre : +{n}",
   "ssSold": "+{n} étoiles autocollant !",
   "ssPick": "Choisis un autocollant manquant",
-  "ssAllGot": "Tu as les 24 autocollants Sharliz !",
+  "ssAllGot": "Tu as les {n} autocollants Sharliz !",
   "ssSpecial": "Spécial",
   "ssBuyQ": "Acheter « {x} » pour {n} étoiles ?",
   "ssBuy": "Acheter",

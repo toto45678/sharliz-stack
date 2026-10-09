@@ -24,7 +24,7 @@ EGG.c.pool.push('cloudy');EGG.r.pool.push('monkey','bunny');EGG.g.pool.push('pho
 // the power text of each new buddy (guide chip, nest), built from the shared power words in every language
 for(const L of LANG_SET()){const P=PW_TXT[L]||PW_TXT.en;for(const id in NEW_BUD_FX){const F=NEW_BUD_FX[id],parts=[];
   for(const k in F){const v=F[k];if(k==='coins')parts.push(P.coins.replace('{p}',Math.round((v-1)*100)));else if(k==='hearts')parts.push(P.hearts);
-    else if(k==='fall'||k==='wind'||k==='pts'){if(v<1)parts.push(P[k]||k)}else parts.push(P[k]||k)}
+    else if(k==='fall'||k==='wind'){if(v<1)parts.push(P[k]||k)}else if(k==='pts'){/* a cost (robodog pts .9), not a power */}else parts.push(P[k]||k)}
   I18N[L]['pk_x_'+id]=parts.join(' · ')}}
 Object.assign(I18N.en,{eggOnlyC:'Hatches from an egg',eggOnlyR:'Rare egg only'});Object.assign(I18N.he,{eggOnlyC:'בוקע מביצה',eggOnlyR:'רק מביצה נדירה'});
 function eggGateTxt(id){const e=WPET[id]&&WPET[id].egg;return t(e==='c'?'eggOnlyC':e==='r'?'eggOnlyR':'eggOnly')}

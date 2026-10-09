@@ -62,7 +62,7 @@ const PS_ART={galaxy:'ps_galaxy',t_comet:'ps_comet',starcrown:'ps_crown'};
 function psRewHTML(R){let img,amt='',lab;if(R.c){img='ps_coins';amt='×'+R.c;lab=t('psCoins')}else if(R.b){img='ps_boost';amt='×'+R.b;lab=t('psBoost')}
   else if(R.it){const [c,id]=R.it;img=PS_ART[id];lab=c==='trail'?t('sk_'+id):wName(c,id)}else return '';
   return `<span class="rw${R.it?' it':''}"><img src="art/${img}.webp" alt="">${amt?`<b>${amt}</b>`:''}</span><small class="lab"></small>`.replace('<small class="lab"></small>',`<small class="lab">${psEsc(lab)}</small>`)}
-function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}}
+function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){/* in turn, never random: the premium track is sold, and a random reward on it would count as a loot box */const k=progress.psBk=(progress.psBk||0)+1,b=['heart','shield','slow','laser'][(k-1)%4];progress.inv[b]=(progress.inv[b]||0)+1}}
   if(R.it){const [c,id]=R.it;if(c==='hat'||c==='trail'){if(!wallet().skins.includes(id))progress.skins.push(id)}else{progress.owned[c]=progress.owned[c]||[];if(!progress.owned[c].includes(id))progress.owned[c].push(id)}}}
 function psClaim(i,prem){const P=psData();const arr=prem?P.p:P.f;if(arr.includes(i)||i>=psTierOf(P.xp)||(prem&&!P.prem))return false;arr.push(i);psGive(PS_REW[i][prem?1:0]);return true}
 function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady(),L0=r.querySelector('.ps-list'),y0=!scroll&&L0?L0.scrollTop:0;

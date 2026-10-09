@@ -844,7 +844,7 @@
   "ssSell": "Jual semua: +{n}",
   "ssSold": "+{n} bintang stiker!",
   "ssPick": "Pilih stiker yang belum kamu punya",
-  "ssAllGot": "Kamu punya semua 24 stiker Sharliz!",
+  "ssAllGot": "Kamu punya semua {n} stiker Sharliz!",
   "ssSpecial": "Spesial",
   "ssBuyQ": "Beli “{x}” seharga {n} bintang?",
   "ssBuy": "Beli",
