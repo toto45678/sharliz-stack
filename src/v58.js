@@ -116,3 +116,6 @@ let HUDH=0;
    .observe(document.body,{childList:true,subtree:true})}
 // one day / one cookie: singular wording where a count can be 1
 {const ONE={dlStreak:1,miniDays:1,psLeft:1};const _t=t;t=function(k,v){if(v&&ONE[k]&&+v.n===1){const k1=k+'1';if(I18N[lang]&&I18N[lang][k1]!=null)return _t.call(this,k1,v)}return _t.apply(this,arguments)}}
+// album Hats chapter: hats sold only for money (starter-pack halo, premium-Pass star crown) are not needed to finish it;
+// they show up as extra stickers once owned
+{const P=STK_PAGES.find(p=>p.id==='hat');if(P){const _i=P.items;P.items=function(){return _i.apply(this,arguments).filter(it=>{const h=WHATX[it.id.slice(4)];return !(h&&(h.pack||h.pass))||it.n})}}}
