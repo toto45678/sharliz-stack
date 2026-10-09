@@ -209,7 +209,7 @@ function hsDraw(dt=1/60){const v=HSV,g=v.g;if(!g)return;const cur=hs().room,d=v.
     hsDrawRoom(g,R.id,!open);if(!open){hsLockTag(g,R);return}
     g.save();hsRoomPath(g);g.clip();
     const list=hsItemsIn(R.id).map(f=>({id:f.id,k:hsDepth(f.id),fn:()=>hsDrawItem(g,f.id)}));
-    if(R.id===cur){if(v.hero&&v.hero.s)list.push({k:v.hero.y,fn:()=>hsDrawHero(g)});if(v.drag&&v.drag.moved)list.forEach(o=>{if(o.id===v.drag.id)o.k=99})}
+    if(R.id===cur){if(v.hero&&v.hero.s)list.push({k:v.hero.y,fn:()=>hsDrawHero(g)});const top=v.drag&&v.drag.moved?v.drag.id:v.sel;if(top)list.forEach(o=>{if(o.id===top)o.k=99})}
     list.sort((a,b)=>a.k-b.k).forEach(o=>o.fn());
     if(R.id===cur){for(const p of v.fx){g.globalAlpha=1-p.t;g.fillStyle=p.c;hsStar(g,p.x+p.vx*p.t,p.y+p.vy*p.t+80*p.t*p.t,v.TW*.08*(1-p.t*.5))}g.globalAlpha=1}
     else{g.fillStyle='rgba(36,18,80,.36)';g.fillRect(v.RX,0,v.RW,v.RH)}
@@ -227,7 +227,7 @@ function hsRoomAt(vy){const v=HSV,k=Math.floor((vy+v.cam+(v.SP-v.RH)/2)/v.SP);re
 const HS_AM={};function hsAlphaAt(im,u,v){let m=HS_AM[im.src];if(!m){const w=64,h=Math.max(1,Math.round(64*im.height/im.width)),c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.drawImage(im,0,0,w,h);
   try{m={w,h,d:g.getImageData(0,0,w,h).data}}catch(_){m={w:0}}HS_AM[im.src]=m}if(!m.w)return true;const a=Math.floor(u*m.w),b=Math.floor(v*m.h);return a>=0&&b>=0&&a<m.w&&b<m.h&&m.d[(b*m.w+a)*4+3]>60}
 // the front-most item under the finger (its picture's painted pixels); a near miss still picks a small item close by
-function hsHit(x,y){const list=hsItemsIn(hs().room).map(f=>f.id).sort((a,b)=>hsDepth(b)-hsDepth(a)),pad=HSV.TW*.25;
+function hsHit(x,y){const list=hsItemsIn(hs().room).map(f=>f.id).sort((a,b)=>(b===HSV.sel)-(a===HSV.sel)||hsDepth(b)-hsDepth(a)),pad=HSV.TW*.25;
   for(const id of list){const r=hsRect(id);if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){if(!r.im)return id;const u=(x-r.x)/r.w;if(hsAlphaAt(r.im,r.m?1-u:u,(y-r.y)/r.h))return id}}
   // a tap on free floor picks nothing (so it unselects); a near miss on the wall still picks the closest item
   if(y>=hfFT()*HSV.RH)return null;
@@ -241,7 +241,7 @@ function hsMove(e){const P=HSV.pan;if(P){const [vx,vy]=hsVP(e);if(P.side||!P.mov
   const d=HSV.drag;if(!d)return;const [x,y]=hsPt(e);if(!d.moved&&Math.hypot(x-d.x0,y-d.y0)<8)return;d.moved=true;
   const c=hsClamp(d.id,x/HSV.RW-d.gx,y/HSV.RH-d.gy);d.p={x:c.x,y:c.y,m:hsPos(d.id).m};e.preventDefault()}
 function hsUp(){const P=HSV.pan;if(P){HSV.pan=null;if(P.side){if(Math.abs(P.side)>40)hsStep((P.side<0?1:-1)*(I18N[lang]._dir==='rtl'?-1:1));return}
-    if(!P.moved){if(P.room!==hs().room)hsFocus(P.room);else if(HSV.sel){HSV.sel=null;hsPanel()}return}
+    if(!P.moved){if(P.room!==hs().room||!hsRoomOpen(P.room))hsFocus(P.room);else if(HSV.sel){HSV.sel=null;hsPanel()}return}
     // let go: glide to the room nearest to where the flick is heading
     const aim=HSV.cam-P.v*.25;let best=0,bd=1e9;HS_ROOMS.forEach((R,k)=>{const dd=Math.abs(hsCamFor(k)-aim);if(dd<bd){bd=dd;best=k}});hsFocus(HS_ROOMS[best].id);return}
   const d=HSV.drag;if(!d)return;if(!d.moved||!d.p){HSV.drag=null;sfx.click();HSV.sel=d.id;hsPanel();return}
@@ -348,11 +348,11 @@ function hsBuyBtn(b,id){const L=hsLv(id),plv=hsPlayerLv();if(L>=5){b.textContent
   const need=hsGate(id,L+1),price=HS_PRICE[L];
   if(plv<need){b.innerHTML='<span>🔒</span> ';b.appendChild(document.createTextNode(t('hsNeedLv',{n:need})));b.className+=' lock';b.onclick=e=>{e.stopPropagation();sfx.locked();noteToast(t('hsNeedLv',{n:need}))};return}
   b.innerHTML=`<span></span>${coinImg()}<em>${price.toLocaleString()}</em>`;b.querySelector('span').textContent=L?t('hsUp'):t('hsBuy');b.className+=' gold';if((progress.coins||0)<price)b.className+=' poor';
-  b.onclick=e=>{e.stopPropagation();if(performance.now()-TAPGUARD<350)return;hsBuy(id,b);TAPGUARD=performance.now()}}
+  b.onclick=e=>{e.stopPropagation();const n=performance.now();if(n-TAPGUARD<350||n-(HSV.newT||0)<900)return;hsBuy(id,b);TAPGUARD=performance.now()}}
 function hsBuy(id,btn){const H=hs(),L=hsLv(id),price=HS_PRICE[L];if(L>=5||hsPlayerLv()<hsGate(id,L+1))return;
   if((progress.coins||0)<price){sfx.locked();popupToast(t('needCoins'));return}
   if(!L&&!hsAutoPlace(id)){sfx.locked();noteToast(t('hsNoRoom'));return}
-  const d0=hsStyOf(id);progress.coins-=price;H.lv[id]=L+1;if(H.sty)delete H.sty[id];saveProgress();updateWalletUI();sfx.flourish&&sfx.flourish(L>=4?4:2);vib([20,30,20]);if(!L||HSV.sel)HSV.sel=id;HSV.styX=null;HSV.peek=null;
+  const d0=hsStyOf(id);progress.coins-=price;H.lv[id]=L+1;if(H.sty)delete H.sty[id];saveProgress();updateWalletUI();sfx.flourish&&sfx.flourish(L>=4?4:2);vib([20,30,20]);if(!L||HSV.sel)HSV.sel=id;if(!L)HSV.newT=performance.now();HSV.styX=null;HSV.peek=null;
   HSV.up={id,L:L+1,t:performance.now()};HSV.pop={id,t0:performance.now()};hsBurst(id);hsTabs();
   noteToast(t('hsBought',{x:t('hsf_'+id),n:L+1}));if(L&&hsStyOf(id)!==d0)noteToast(t('hsNewLook',{x:t('hsf_'+id)}));hsPanel()}
 function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className='hs-sheet';
@@ -423,3 +423,6 @@ if(typeof dlClaim==='function'){const _d=dlClaim;dlClaim=function(){const c0=pro
 if(typeof hatch==='function'){const _h=hatch;hatch=function(){const N=typeof nest==='function'&&nest(),h0=N&&N.hatched;const r=_h.apply(this,arguments);const L=hsLv('birdhouse');
   if(L&&N&&N.hatched>h0){N.treats+=hsVal('birdhouse',L);saveProgress();setTimeout(()=>noteToast(t('hsBird',{n:hsVal('birdhouse',L)})),2600)}return r}}
 setTimeout(()=>{try{if(state==='title')updateLobby()}catch(e){}},0);
+// a locked design's toast sat on the room right over the design preview (most of it on iPhone SE); it goes on the sheet's now → next boxes
+{const _s=hsSetSty;hsSetSty=function(id,k){const r=_s.apply(this,arguments);if(!hsDOpen(id,k)){const el=[...document.querySelectorAll('.coin-toast.note')].pop(),b=document.querySelector('#houseScr .hs-now');
+  if(el&&b){const B=b.getBoundingClientRect();if(B.height)el.style.top=(B.top+B.height/2)+'px'}}return r}}
