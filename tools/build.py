@@ -373,7 +373,10 @@ head='''<!doctype html><html lang="he" dir="ltr"><head><meta charset="utf-8">
 head=head.replace('</head><body>',LANG_HEAD+'</head><body>')
 tail='''
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});
+  // the files loaded before the worker took over (first visit) are handed to it, so the next launch also works offline
+  const keep=()=>navigator.serviceWorker.ready.then(g=>{if(g.active)g.active.postMessage({t:'keep',urls:performance.getEntriesByType('resource').map(x=>x.name)})}).catch(()=>{});
+  try{performance.setResourceTimingBufferSize(1000)}catch(e){}setTimeout(keep,12000);setTimeout(keep,45000)})}
 (function(){try{const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),sa=navigator.standalone||matchMedia('(display-mode: standalone)').matches;
   if(!ios||sa||sessionStorage.getItem('pwaHint'))return;sessionStorage.setItem('pwaHint','1');
   const he=(typeof lang!=='undefined'?lang:'he')==='he',d=document.createElement('div');d.id='pwaHint';

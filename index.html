@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009131624"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009132925"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -6821,7 +6821,7 @@ function bnIntro(){state='intro';
   showOverlay(()=>({title:t('bnTitle'),actions:[{label:t('bnGo'),icon:'play',primary:true,fn:()=>{hideOverlay();state='wait';spawnAt=time+.5;BN.run=true;sfx.flourish(1)}}],
     extra:card=>{card.classList.add('bn-card');const row=document.createElement('div');row.className='bn-chests';
       BN_CH.forEach(c=>{const d=document.createElement('div');d.className='bn-ch '+c.k;d.innerHTML=`<img src="art/bn_chest_${c.k}.webp" alt=""><b></b>`;d.querySelector('b').textContent=t('bnFloors',{n:c.f});row.appendChild(d)});card.appendChild(row);
-      const ul=document.createElement('ul');ul.className='bn-rules';[['<img src="art/bn_stopwatch.webp" alt="">','bnIntro1'],['<em class="neg">−3</em>','bnIntro2a'],['<em class="pos">+1</em>','bnIntro2b']].forEach(([ic,k])=>{const li=document.createElement('li');li.innerHTML=ic+'<span></span>';li.querySelector('span').textContent=t(k);ul.appendChild(li)});card.appendChild(ul);
+      const ul=document.createElement('ul');ul.className='bn-rules';[['<img src="art/bn_stopwatch.webp" alt="">','bnIntro1'],['<em class="neg">−3</em>','bnIntro2a'],['<em class="pos">+1</em>','bnIntro2b']].forEach(([ic,k])=>{const li=document.createElement('li');li.innerHTML=ic+'<span></span>';li.querySelector('span').textContent=k==='bnIntro1'?t(k).replace('45',String(BN_TIME+(typeof hsLv==='function'&&hsLv('toaster')?hsVal('toaster',hsLv('toaster')):0))):t(k);ul.appendChild(li)});card.appendChild(ul);
       if(!BN.first){const p=document.createElement('p');p.className='bn-half';p.textContent=t('bnHalf');card.appendChild(p)}}}),true)}
 // HUD: stopwatch pill (where the hearts are) + chest track (where the goal gauge is)
 let bnEl=null;
@@ -7086,7 +7086,7 @@ function evFinish(won){if(evCnt)evCnt.hidden=true;const E=EVP.E,D=evData(E.id),R
   showOverlay(()=>({title:won?(boss?t('evBossClear'):t('evClear')):t('whoops'),big:true,
     extra:card=>{card.classList.add('ev-res');{const hi=document.createElement('img');hi.className='ev-hero';hi.src=won?(boss?'art/ev_boss_'+E.id+'.webp':'art/ev_icon_'+E.id+'.webp'):'art/ev_node_off.webp';hi.alt='';card.appendChild(hi)}const rows=document.createElement('div');rows.className='ev-rows';
       const row=(lbl,n)=>{const d=document.createElement('div');d.className='ev-row';d.innerHTML=`<span></span><b><img src="art/ev_${E.cur}.webp" alt="">+${n}</b>`;d.querySelector('span').textContent=lbl;rows.appendChild(d)};
-      row(boss?t('evBossStage'):t('evStage',{n:EVP.i+1}),R.base);if(R.perf)row(t('perfect')||'PERFECT',R.perf);if(R.first)row(t('evFirst'),R.first);card.appendChild(rows);if(!won){const al=document.createElement('p');al.className='ev-almost';al.textContent=t('evAlmost');card.insertBefore(al,rows)}
+      row(boss?t('evBossStage'):t('evStage',{n:EVP.i+1}),R.base);if(R.perf)row(t('perfect')||'PERFECT',R.perf);if(R.first)row(t('evFirst'),R.first);if(R.jar)row(t('hsf_candyjar'),R.jar);card.appendChild(rows);if(!won){const al=document.createElement('p');al.className='ev-almost';al.textContent=t('evAlmost');card.insertBefore(al,rows)}
       if(won&&boss){card.classList.add('ev-boss');const bl=document.createElement('p');bl.className='ev-climax';bl.textContent=R.first?t('evDoneAll'):t('evBossDown');card.insertBefore(bl,rows)}
       const tot=document.createElement('div');tot.className='bn-coins ev-tot';tot.innerHTML=`<img src="art/ev_${E.cur}.webp" alt=""><b>+${R.total}</b>`;card.appendChild(tot)},
     actions:[...(won&&EVP.i<9?[{label:t('evPlay')+' · '+(EVP.i+1===9?t('evBossStage'):t('evStage',{n:EVP.i+2})),icon:'play',primary:true,fn:()=>{const n=EVP.i+1;hideOverlay();evStart(n)}}]:[]),
@@ -7778,7 +7778,7 @@ function storyLeft(){const D=sbData(),own=(D.story||[]).length;return own>=STORY
 let TAPGUARD=0;
 {const _so=showOverlay;showOverlay=function(){TAPGUARD=performance.now();return _so.apply(this,arguments)}}
 for(const f of ['openArcade','openTour','openEvent','openPass','openNest','openTrophy']){const _f=window[f];if(typeof _f==='function')window[f]=function(){TAPGUARD=performance.now();return _f.apply(this,arguments)}}
-document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD<350&&e.target&&e.target.closest&&e.target.closest('#overlay,#arcade,#tour,#evhub,#passScr,#nestScr,#achScr')){e.stopPropagation();e.preventDefault()}},true);
+document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD<350&&e.target&&e.target.closest&&e.target.closest('#overlay,#arcade,#tour,#evhub,#passScr,#nestScr,#achScr,#houseScr')){e.stopPropagation();e.preventDefault()}},true);
 /* nightly check Oct 8: Japanese/Chinese/Korean have no spaces, so a big title could break anywhere and leave one character
    alone on the 2nd line ('マイヒーロ / ー', the lobby 'プレ / イ'). In those languages a big title that wraps is shrunk step by
    step until it fits on one line (down to 60%); if it still can't, it keeps its size and wraps as before. It never stops
@@ -8729,13 +8729,13 @@ const BAL={zaps:[],seen:new WeakMap(),DELAY:.45,FLY:.25};
 function balTargets(){const L=[],M=hz.m||{},add=(o,tag,pos,kill,alive)=>L.push({o,tag,pos,kill,alive:alive||(()=>true)});
   const on=p=>p.x>-S*.6&&p.x<W+S*.6&&p.y>-S&&p.y<H+S;
   // classic hazards
-  const c=hz.crow;if(c&&c.phase==='come'&&c.x&&on(c))add(c,'crow',()=>({x:c.x,y:c.y}),()=>{c.phase='shoo';c.t=0;burst(c.x,scrToW(c.y),['#1a1020','#3b2a4a','#ffffff'],10,160)},()=>hz.crow===c&&c.phase==='come');
+  const c=hz.crow;if(c&&c.phase==='come'&&c.x&&on(c))add(c,'crow',()=>({x:c.x,y:c.y}),()=>{c.phase='shoo';c.t=0;track('shoo');burst(c.x,scrToW(c.y),['#1a1020','#3b2a4a','#ffffff'],10,160)},()=>hz.crow===c&&c.phase==='come');
   const o=hz.octo;if(o&&o.phase==='peek')add(o,'octo',()=>octoPos(o),()=>{o.phase='hide';o.t=0},()=>hz.octo===o&&o.phase==='peek');
   const k=hz.ink;if(k&&k.t<k.dur-1)add(k,'ink',()=>({x:k.cx,y:sy(k.wy)}),()=>{k.t=Math.max(k.t,k.dur-.7)},()=>hz.ink===k);
   const g=hz.gust;if(g)add(g,'gust',()=>({x:g.dir>0?S*.9:W-S*.9,y:H*.42}),()=>{hz.gust=null;hz.gustK=1;hz.gustV=0},()=>hz.gust===g);
   const q=hz.quake;if(q)add(q,'quake',()=>({x:W/2,y:Math.min(H-40,sy(0))}),()=>{hz.quake=null},()=>hz.quake===q);
   for(const s of [swinger,dropping])if(s&&BAL_KINDS[s.kind]){const kd=s.kind,p=()=>s===swinger?swingScr():{x:xOf(s.xs),y:sy(s.y)};
-    add(s,'kind_'+kd,p,()=>{s.kind=null;delete s.fuse;delete s.sz;delete s.wt;jig(s,1.2)},()=>s.kind===kd&&(s===swinger||s===dropping))}
+    add(s,'kind_'+kd,p,()=>{if(kd==='bomb')track('defuse');s.kind=null;delete s.fuse;delete s.sz;delete s.wt;jig(s,1.2)},()=>s.kind===kd&&(s===swinger||s===dropping))}
   const top=tower[tower.length-1];if(top&&top.floatT>0&&tower.length>1)add(top,'float',()=>topScreen(),()=>{top.floatT=0;top.inflate=0;if(top.kind==='balloon')top.kind=null},()=>top.floatT>0&&tower[tower.length-1]===top);
   // the new mechanics
   const m=k=>M[k];let x;
@@ -9138,7 +9138,7 @@ function hsBuyBtn(b,id){const L=hsLv(id),plv=hsPlayerLv();if(L>=5){b.textContent
   const need=hsGate(id,L+1),price=HS_PRICE[L];
   if(plv<need){b.innerHTML='<span>🔒</span> ';b.appendChild(document.createTextNode(t('hsNeedLv',{n:need})));b.className+=' lock';b.onclick=e=>{e.stopPropagation();sfx.locked();noteToast(t('hsNeedLv',{n:need}))};return}
   b.innerHTML=`<span></span>${coinImg()}<em>${price.toLocaleString()}</em>`;b.querySelector('span').textContent=L?t('hsUp'):t('hsBuy');if((progress.coins||0)<price)b.className+=' poor';
-  b.onclick=e=>{e.stopPropagation();hsBuy(id,b)}}
+  b.onclick=e=>{e.stopPropagation();if(performance.now()-TAPGUARD<350)return;hsBuy(id,b);TAPGUARD=performance.now()}}
 function hsBuy(id,btn){const H=hs(),L=hsLv(id),price=HS_PRICE[L];if(L>=5||hsPlayerLv()<hsGate(id,L+1))return;
   if((progress.coins||0)<price){sfx.locked();popupToast(t('needCoins'));return}
   if(!L&&!hsAutoPlace(id)){sfx.locked();noteToast(t('hsNoRoom'));return}
@@ -9197,13 +9197,13 @@ if(typeof startBonus==='function'){const _sb=startBonus;startBonus=function(){co
 {const _ol=hzOnLanding;hzOnLanding=function(perfect,great){const d=tower[tower.length-1],x0=d&&d.xs;const r=_ol.apply(this,arguments);const L=hsLv('sink');
   if(L&&mode!=='duo'&&d&&d.slideX&&curSeason()===3){const f=1-hsVal('sink',L)/100;d.xs=x0+(d.xs-x0)*f;d.slideX*=f}return r}}
 const HSQ=[];function hsNote(s){HSQ.push(s);setTimeout(()=>{const m=HSQ.shift();if(m)noteToast(m)},1600+HSQ.length*1400)}
-{const _w=win;win=function(){const r=_w.apply(this,arguments);try{if((mode==='levels'||mode==='event')&&progress.house){const H=hs(),C=H.cnt;
+{const _w=win;win=function(){const was=state,r=_w.apply(this,arguments);try{if(was!=='win'&&state==='win'&&(mode==='levels'||mode==='event')&&progress.house){const H=hs(),C=H.cnt;
     if(hsLv('oven')){C.oven=(C.oven||0)+1;if(C.oven>=hsVal('oven',hsLv('oven'))){C.oven=0;if(typeof nest==='function'){nest().treats+=1;hsNote(t('hsOven'))}}}
     if(hsLv('fridge')){C.fridge=(C.fridge||0)+1;if(C.fridge>=hsVal('fridge',hsLv('fridge'))){C.fridge=0;const b=['shield','slow','laser','heart'][(C.fb=(C.fb||0)+1)%4],inv=wallet().inv;inv[b]=(inv[b]||0)+1;hsNote(t('hsFridge'))}}
     saveProgress()}}catch(e){}return r}}
 {const _sl=startLevel;startLevel=function(){const r=_sl.apply(this,arguments);try{const L=hsLv('bed');if(L&&mode!=='duo'&&mode!=='bonus'){const C=hs().cnt;C.bed=(C.bed||0)+1;
     if(C.bed>=hsVal('bed',L)){C.bed=0;boost.shield=true;try{renderBoosterBar()}catch(e){}setTimeout(()=>noteToast(t('hsBed')),1300)}saveProgress()}}catch(e){}return r}}
-let hsWD=0;for(const fn of ['wBuy','csBuy'])if(typeof window[fn]==='function'){const _b=window[fn];window[fn]=function(){const c0=progress.coins||0;let r;hsWD++;try{r=_b.apply(this,arguments)}finally{hsWD--}const L=hsLv('wardrobe'),spent=c0-(progress.coins||0);
+let hsWD=0;for(const fn of ['wBuy','csBuy','buyWithCoins'])if(typeof window[fn]==='function'){const _b=window[fn];window[fn]=function(){const c0=progress.coins||0;let r;hsWD++;try{r=_b.apply(this,arguments)}finally{hsWD--}const L=hsLv('wardrobe'),spent=c0-(progress.coins||0);
   if(L&&spent>0&&!hsWD){const back=Math.ceil(spent*hsVal('wardrobe',L)/100);progress.coins+=back;saveProgress();updateWalletUI();setTimeout(()=>noteToast(t('hsWard',{n:back})),700)}return r}}
 if(typeof dlClaim==='function'){const _d=dlClaim;dlClaim=function(){const c0=progress.coins||0;const r=_d.apply(this,arguments);const L=hsLv('mailbox'),got=(progress.coins||0)-c0;
   if(L&&got>0){const a=Math.ceil(got*hsVal('mailbox',L)/100);progress.coins+=a;saveProgress();updateWalletUI();setTimeout(()=>noteToast(t('hsMail',{n:a})),900)}return r}}
@@ -9216,7 +9216,10 @@ if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state=
 </script>
 
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});
+  // the files loaded before the worker took over (first visit) are handed to it, so the next launch also works offline
+  const keep=()=>navigator.serviceWorker.ready.then(g=>{if(g.active)g.active.postMessage({t:'keep',urls:performance.getEntriesByType('resource').map(x=>x.name)})}).catch(()=>{});
+  try{performance.setResourceTimingBufferSize(1000)}catch(e){}setTimeout(keep,12000);setTimeout(keep,45000)})}
 (function(){try{const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),sa=navigator.standalone||matchMedia('(display-mode: standalone)').matches;
   if(!ios||sa||sessionStorage.getItem('pwaHint'))return;sessionStorage.setItem('pwaHint','1');
   const he=(typeof lang!=='undefined'?lang:'he')==='he',d=document.createElement('div');d.id='pwaHint';
