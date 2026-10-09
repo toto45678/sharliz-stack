@@ -181,8 +181,9 @@ function hsDrawItem(g,id){const v=HSV,L=hsLv(id),r=hsRect(id),sel=v.sel===id,dra
     const fs=Math.min(w*.62,h*.62);g.font=`${Math.round(fs)}px "Apple Color Emoji","Noto Color Emoji",sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillText(f.em,0,-h*.48)}
   g.restore();
   if(L>=5){for(let k=0;k<3;k++){const ph=HSV.last/400+k*2.1;g.fillStyle='#ffe24d';g.globalAlpha=.55+.45*Math.sin(ph);hsStar(g,bx+Math.cos(ph)*r.w*.4,r.y+r.h*.15+Math.sin(ph*1.3)*v.RH*.04,v.TW*.07)}g.globalAlpha=1}
-  if(L&&sel){const s='★'+L,lx=r.x+r.w-v.TW*.05,ly=by-v.TW*.12; // the level only on the picked item (the room stays clean, the cards show the stars)g.font=`900 ${Math.round(v.TW*.24)}px Rubik,system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';
-    g.lineWidth=3;g.strokeStyle='#120d2b';g.strokeText(s,lx,ly);g.fillStyle=L>=5?'#ffe24d':'#fff';g.fillText(s,lx,ly)}
+  if(L&&sel){const s='★'+L,lx=r.x+r.w-v.TW*.05,ly=by-v.TW*.12; // the level only on the picked item (the room stays clean, the cards show the stars)
+    g.save();g.font=`900 ${Math.round(v.TW*.24)}px Rubik,system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';g.direction='ltr';
+    g.lineWidth=3;g.strokeStyle='#120d2b';g.strokeText(s,lx,ly);g.fillStyle=L>=5?'#ffe24d':'#fff';g.fillText(s,lx,ly);g.restore()}
   if(sel){g.save();g.strokeStyle='#ffe24d';g.lineWidth=3;g.setLineDash([6,5]);g.lineDashOffset=-HSV.last/40;hsRR(g,r.x-4,r.y-4-(drag?v.RH*.025:0),r.w+8,r.h+8,10);g.stroke();g.restore()}}
 function hsStar(g,x,y,r){g.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?r*.45:r;g.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}g.closePath();g.fill()}
 function hsItemsIn(room){return HS_F.filter(f=>f.room===room&&hsLv(f.id))}
@@ -228,6 +229,8 @@ const HS_AM={};function hsAlphaAt(im,u,v){let m=HS_AM[im.src];if(!m){const w=64,
 // the front-most item under the finger (its picture's painted pixels); a near miss still picks a small item close by
 function hsHit(x,y){const list=hsItemsIn(hs().room).map(f=>f.id).sort((a,b)=>hsDepth(b)-hsDepth(a)),pad=HSV.TW*.25;
   for(const id of list){const r=hsRect(id);if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){if(!r.im)return id;const u=(x-r.x)/r.w;if(hsAlphaAt(r.im,r.m?1-u:u,(y-r.y)/r.h))return id}}
+  // a tap on free floor picks nothing (so it unselects); a near miss on the wall still picks the closest item
+  if(y>=hfFT()*HSV.RH)return null;
   let best=null,bd=pad;for(const id of list){const r=hsRect(id),dx=Math.max(r.x-x,0,x-r.x-r.w),dy=Math.max(r.y-y,0,y-r.y-r.h),d=Math.hypot(dx,dy);if(d<bd){bd=d;best=id}}return best}
 function hsDown(e){const v=HSV,[vx,vy]=hsVP(e),[x,y]=hsPt(e),cur=hs().room,id=y>=0&&y<=v.RH&&x>=v.RX&&x<=v.RX+v.RW&&hsRoomOpen(cur)?hsHit(x,y):null;
   if(!id){v.pan={x0:vx,y0:vy,c0:v.cam,moved:false,v:0,ly:vy,lt:performance.now(),room:hsRoomAt(vy)};try{v.cv.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault();return}
