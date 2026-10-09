@@ -33,3 +33,17 @@
 .g-sling .arc-sub{transform:scale(1.22);transform-origin:center}
 .g-sling .arc-sub.pop{animation:slUp .3s ease-out}
 @keyframes slUp{50%{transform:scale(1.6)}100%{transform:scale(1.22)}}
+/* nightly Oct 9: the game bar fits a 375 px screen (the timer was cut off in Sling Shot / Shadow / Memory) */
+.arc-bar>*{flex-shrink:0}
+.arc-bar .arc-sub{min-width:0;flex-shrink:1;overflow:hidden}
+@media (max-width:420px){
+ .arc-bar{gap:5px;padding-inline:8px}
+ #arcade .arc-bar .arc-x{width:40px;height:40px}
+ .arc-score{padding-inline-end:8px;font-size:1.2rem}
+ .arc-sub{font-size:.92rem;padding:0 8px 0 6px;gap:2px}
+ .g-sling .arc-sub{transform:none}
+ .arc-time{height:40px;font-size:1.25rem;padding-inline-end:8px}
+ .arc-time img{width:34px;height:34px}
+}
+/* the 'Who is it?' label sits above the silhouette, not on it */
+.sh-img{top:42px;height:calc(96% - 42px)}

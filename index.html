@@ -7,10 +7,10 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008210650"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261008231429"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
-<title>Sharliz Stack</title>
+<title>Sharliz Tower</title>
 <style>
 @font-face{font-family:'Lilita One';src:url(art/fonts/lilita.woff) format('woff');font-display:swap}
 @font-face{font-family:'Secular One';src:url(art/fonts/secular.woff) format('woff');font-display:swap}
@@ -1310,7 +1310,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
   .lob-side .side-btn b{font-size:.72rem}
 }
 /* toasts never run off the screen; long hints wrap in a smaller font */
-.coin-toast{max-width:calc(100vw - 32px);box-sizing:border-box}
+.coin-toast{max-width:calc(100vw - 32px);box-sizing:border-box;pointer-events:none}
 .coin-toast.long{white-space:normal;text-align:center;justify-content:center;font-size:1.05rem;line-height:1.25;-webkit-text-stroke:3px var(--ink);padding:8px 16px 10px;border-radius:22px;width:max-content}
 
 /* ===== v55: calm lobby (tab bar + mini icons) ===== */
@@ -1942,6 +1942,8 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .ss-sec{flex:none;display:flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;border:2.5px solid #120d2b;background:#fff;color:#2a1a66;font:.85rem/1 "Lilita One","Secular One",system-ui,sans-serif;white-space:nowrap}
 .ss-sec.on{background:linear-gradient(180deg,#ffe24d,#ffad00);box-shadow:0 2px 0 #120d2b}
 .ss-sec i{font-style:normal;min-width:18px;padding:1px 5px;border-radius:999px;background:#2a1a66;color:#fff;font-size:.7rem}
+/* nightly Oct 9: the name of a missing sticker sat on its dark silhouette */
+.ss-it small{position:relative;z-index:1;max-width:100%;box-sizing:border-box;padding:1px 6px;border-radius:8px;background:rgba(255,255,255,.9)}
 
 /* ===== v64: album v3 — sections + contents, Sky Tower story, GOLD chapter ===== */
 .sb-toc{position:absolute;inset-inline-start:0;top:0;width:34px;height:30px;border-radius:10px;border:2.5px solid #120d2b;background:linear-gradient(180deg,#fff,#e6defc);box-shadow:0 2px 0 #120d2b;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:0}
@@ -2014,6 +2016,14 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .tc-can{flex:none;width:34px;height:30px;object-fit:contain;filter:drop-shadow(0 0 6px rgba(255,214,80,.9));animation:nsShake .6s ease-in-out infinite}
 .zft{display:flex;align-items:center;gap:6px;margin:2px 16px 0;padding:4px 10px;border-radius:12px;background:rgba(255,214,60,.18);border:2px solid rgba(255,200,40,.6);color:#fff;font-weight:700;font-size:.8rem;text-align:start}
 .zft img{width:22px;height:22px;object-fit:contain;flex:none}
+/* nightly Oct 9: the page title gets its own column between ☰ and the page counter (it ran under both on long titles) */
+.sb-head{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:6px;justify-content:stretch;min-height:30px}
+.sb-head b{grid-column:2;grid-row:1;min-width:0;text-align:center;white-space:nowrap}
+.sb-head b.wrap{white-space:normal;line-height:1}
+.sb-head small{grid-column:3;grid-row:1;position:static;align-self:center;white-space:nowrap}
+.sb-head small:empty{display:none}
+.sb-head .sb-toc{grid-column:1;grid-row:1;position:relative;inset:auto}
+.tc-all small{color:#2a1a66}
 
 /* ===== v65: sling shot + who's in the shadow ===== */
 .arc-card.c-sling{background:linear-gradient(180deg,#36c98a,#178a5a)}
@@ -2050,6 +2060,20 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .g-sling .arc-sub{transform:scale(1.22);transform-origin:center}
 .g-sling .arc-sub.pop{animation:slUp .3s ease-out}
 @keyframes slUp{50%{transform:scale(1.6)}100%{transform:scale(1.22)}}
+/* nightly Oct 9: the game bar fits a 375 px screen (the timer was cut off in Sling Shot / Shadow / Memory) */
+.arc-bar>*{flex-shrink:0}
+.arc-bar .arc-sub{min-width:0;flex-shrink:1;overflow:hidden}
+@media (max-width:420px){
+ .arc-bar{gap:5px;padding-inline:8px}
+ #arcade .arc-bar .arc-x{width:40px;height:40px}
+ .arc-score{padding-inline-end:8px;font-size:1.2rem}
+ .arc-sub{font-size:.92rem;padding:0 8px 0 6px;gap:2px}
+ .g-sling .arc-sub{transform:none}
+ .arc-time{height:40px;font-size:1.25rem;padding-inline-end:8px}
+ .arc-time img{width:34px;height:34px}
+}
+/* the 'Who is it?' label sits above the silhouette, not on it */
+.sh-img{top:42px;height:calc(96% - 42px)}
 
 /* ===== v67: Sharliz house ===== */
 #houseScr{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;overflow:hidden;
@@ -2091,7 +2115,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .hs-panel .btn .coin,.hs-panel .btn img{width:18px;height:18px}
 .hs-panel .btn em{font-style:normal;font-weight:900}
 .hs-panel .btn.poor em{color:#d23b3b}
-.hs-panel .btn.lock{background:linear-gradient(180deg,#e9e2ff,#b9a8ee);color:#120d2b;font-size:.74rem}
+.hs-panel .btn.lock{background:linear-gradient(180deg,#e9e2ff,#b9a8ee);color:#120d2b;font-size:.74rem;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
 .hs-panel .btn.max{background:linear-gradient(180deg,#fff2a8,#e0a800);color:#120d2b;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
 .hs-sel{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:start;margin:0 0 10px;padding:10px;border-radius:18px;border:3px solid #120d2b;
   background:linear-gradient(180deg,#fff,#efe7ff);color:#120d2b;box-shadow:0 4px 0 #120d2b}
@@ -2123,9 +2147,9 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .lt-mini.house .lt-ic{position:relative;background:linear-gradient(180deg,#fff3c4,#ffc94a)}
 .lt-mini.house .lt-ic svg{width:78%;height:78%}
 .lt-mini.house .lt-ic img{width:90%;height:90%;object-fit:contain}
-.lt-mini.house .hs-lk{display:none;position:absolute;bottom:-4px;inset-inline-end:-4px;font-style:normal;font-size:14px}
-.lt-mini.house.lock .hs-lk{display:block}
-.lt-mini.house.lock .lt-ic{filter:saturate(.45)}
+.lt-mini.house .hs-lk{display:none;position:absolute;top:-5px;inset-inline-end:-5px;font-style:normal;font-size:13px;line-height:1;width:22px;height:22px;display:none;place-items:center;border-radius:50%;background:#fff;border:2.5px solid #120d2b;box-sizing:border-box}
+.lt-mini.house.lock .hs-lk{display:grid}
+.lt-mini.house.lock .lt-ic>img,.lt-mini.house.lock .lt-ic>svg{filter:grayscale(.85) brightness(.9);opacity:.75}
 .hs-pop{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(18,13,43,.6);padding:16px}
 .hs-pop .hz{position:relative;width:min(340px,100%);padding:22px 18px 18px;border-radius:24px;border:4px solid #120d2b;background:linear-gradient(180deg,#8a64e0,#4d2c9e);color:#fff;text-align:center;box-shadow:0 8px 0 #120d2b;overflow:hidden}
 .hs-pop .rays{position:absolute;inset:-50%;background:repeating-conic-gradient(rgba(255,226,77,.18) 0 10deg,transparent 10deg 20deg);animation:hsSpin 14s linear infinite}
@@ -2135,6 +2159,8 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .hs-pop .btn{position:relative}
 @keyframes hsSpin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.hs-pop .rays,.hs-pop .hs-house{animation:none}}
+#houseScr .ps-title{min-width:0}
+#houseScr .ps-title b{white-space:nowrap;max-width:100%}
 
 </style>
 
@@ -2190,7 +2216,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
       <button class="coin-pill" id="lobCoins"><img class="coin-i" src="art/ic_coin.webp" alt=""><span data-coins>0</span><span class="plus">+</span></button>
       <button class="round-btn" id="settingsBtn" aria-label="Settings"><img src="art/ic_gear.webp" alt=""></button>
     </div>
-    <div class="logo" aria-label="Sharliz Stack"><div class="bt l1" id="logo1"></div><div class="bt pink l2" id="logo2"></div></div>
+    <div class="logo" aria-label="Sharliz Tower"><div class="bt l1" id="logo1"></div><div class="bt pink l2" id="logo2"></div></div>
     <div class="lob-side l">
       <button class="side-btn orange" id="lobShop"><span class="sq"><img src="art/ic_shop.webp" alt=""></span><b data-i18n="shop"></b></button>
       <button class="side-btn purple" id="lobHats"><span class="sq"><img src="art/ic_hats.webp" alt=""></span><b data-i18n="wardrobeShort"></b><i class="badge" data-wbadge hidden>!</i></button>
@@ -3909,7 +3935,7 @@ function shareTower(){
   g.fillStyle=P.grass;g.fillRect(0,h-90,w,90);
   withCtx(g,sz,()=>{for(let i=0;i<n;i++){const s=tower[i];drawSharliz(s,w/2+s.xs*sz,h-90-bh*.3-i*step,0,'happy',{x:0,y:-1,forced:true},0)}});
   g.font='34px "Lilita One","Secular One",system-ui,sans-serif';g.textAlign='center';g.lineWidth=8;g.strokeStyle=INK;g.lineJoin='round';const tl=(mode==='levels'?t('level')+' '+level+' · ':'')+t('floorsN',{n:n-1});
-  g.strokeText('Sharliz Stack',w/2,56);g.fillStyle='#ffd60a';g.fillText('Sharliz Stack',w/2,56);g.font='24px "Lilita One","Secular One",system-ui,sans-serif';g.strokeText(tl,w/2,92);g.fillStyle='#fff';g.fillText(tl,w/2,92);
+  g.strokeText('Sharliz Tower',w/2,56);g.fillStyle='#ffd60a';g.fillText('Sharliz Tower',w/2,56);g.font='24px "Lilita One","Secular One",system-ui,sans-serif';g.strokeText(tl,w/2,92);g.fillStyle='#fff';g.fillText(tl,w/2,92);
   c.toBlob(async blob=>{if(!blob)return;const file=new File([blob],'sharliz-tower.png',{type:'image/png'});
     try{if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Sharliz Tower'});return}}catch(e){if(e&&e.name==='AbortError')return}
     const u=URL.createObjectURL(blob),ov=document.createElement('div');ov.className='photo-ov';ov.innerHTML=`<img src="${u}" alt=""><p></p>`;ov.querySelector('p').textContent=t('photoHint');ov.onclick=()=>{ov.remove();URL.revokeObjectURL(u)};document.body.appendChild(ov)},'image/png')}
@@ -8543,6 +8569,9 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
 if(typeof trEnd==='function'){const _t=trEnd;trEnd=function(){const had=!!(trData().got||{}).g;const r=_t.apply(this,arguments);try{if(!had&&(trData().got||{}).g){ST().tgold=(ST().tgold||0)+1;saveProgress()}}catch(e){}return r}}
 if(typeof bnCollect==='function'){const _b=bnCollect;bnCollect=function(){const ok=BN&&!BN.paid&&BN.open.length>=BN_CH.length;const r=_b.apply(this,arguments);try{if(ok){ST().bn3=(ST().bn3||0)+1;saveProgress()}}catch(e){}return r}}
 if(typeof dlClaim==='function'){const _d=dlClaim;dlClaim=function(){const s=dlState();const r=_d.apply(this,arguments);try{if(!s.claimed&&s.day===7){ST().gift7=(ST().gift7||0)+1;saveProgress()}}catch(e){}return r}}
+// nightly Oct 9: a long page title shrinks to fit its column (down to 60%), then wraps
+{const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const b=SB.el&&SB.el.querySelector('.sb-head b');if(b&&b.clientWidth){b.classList.remove('wrap');b.style.fontSize='';
+  let fs=parseFloat(getComputedStyle(b).fontSize);const min=fs*.6;while(b.scrollWidth>b.clientWidth+1&&fs>min){fs-=1;b.style.fontSize=fs+'px'}if(b.scrollWidth>b.clientWidth+1)b.classList.add('wrap')}}catch(e){}return r}}
 
 /* ===== v65: two more ARCADE games =====
    sling  = pull your Sharliz back in a slingshot and fling it at bosses floating on clouds (canvas)
@@ -8731,7 +8760,7 @@ function balDraw(){if(!BAL.zaps.length)return;ctx.save();ctx.lineCap='round';ctx
     else if(z.hit){const q=z.hit,k=q.t/.8;
       ctx.save();ctx.globalAlpha=Math.max(0,1-k);ctx.strokeStyle='#ff5fb4';ctx.lineWidth=4;ctx.beginPath();ctx.arc(q.x,q.y,S*(.4+k*1.1),0,7);ctx.stroke();
       for(let i=0;i<6;i++){const a=i/6*Math.PI*2+k*2,r=S*(.5+k*1.2);ctx.save();ctx.translate(q.x+Math.cos(a)*r,q.y+Math.sin(a)*r);ctx.fillStyle=i%2?'#ffd1ea':'#ffd23f';ctx.strokeStyle=INK;ctx.lineWidth=2;star(S*.13);ctx.stroke();ctx.fill();ctx.restore()}ctx.restore();
-      if(z===BAL.zaps.find(w=>w.hit&&Math.hypot(w.hit.x-q.x,w.hit.y-q.y)<S*1.5))gameText(ctx,t('m_pirouette'),clamp(q.x,S*1.4,W-S*1.4),q.y-S*.7-k*S*.6,Math.round(S*.42),POPPAL.wow,-.08)}}
+      if(z===BAL.zaps.find(w=>w.hit&&Math.hypot(w.hit.x-q.x,w.hit.y-q.y)<S*1.5))gameText(ctx,t('m_pirouette'),clamp(q.x,S*1.4,W-S*1.4),q.y-S*.7<H*.26?q.y+S*1.1+k*S*.3:q.y-S*.7-k*S*.6,Math.round(S*.42),POPPAL.wow,-.08)}}
   ctx.restore()}
 
 /* ---------- hooks ---------- */
@@ -8787,7 +8816,7 @@ Object.assign(I18N.en,{hsTitle:'Sharliz House',hsSub:'Furniture with powers',hsL
   hsNeedLv:'Player level {n}',hsNow:'Now',hsNext:'Next level',hsTurn:'Turn',hsDrag:'Drag it with your finger to move it',hsSkins:'House skins',hsUse:'Use',hsUsing:'In use',
   hsOpenT:'Your house is open!',hsOpenP:'Buy furniture, decorate it, and every piece makes your Sharliz stronger.',hsGo:'To the house',hsBought:'{x}: level {n}!',hsRoomLock:'This room opens at player level {n}',
   hsNoRoom:'No free spot in this room. Move something first.',hsMini:'House',hsBonus:'House bonus',
-  hsOven:'Cookie oven: +1 buddy cookie!',hsFridge:'Fridge: a free booster!',hsBed:'Comfy bed: a free shield!',hsWard:'Wardrobe: {n} coins back!',hsMail:'Mailbox: +{n} coins!',hsBird:'Bird house: +{n} cookies!',
+  hsOven:'Cookie oven: +1 buddy cookie!',hsFridge:'Fridge: a free booster!',hsBed:'Comfy bed: a free shield!',hsWard:'Coins back from the wardrobe: +{n}!',hsMail:'Mailbox: +{n} coins!',hsBird:'Cookies from the bird house: +{n}!',
   hsr_living:'Living room',hsr_kitchen:'Kitchen',hsr_bedroom:'Bedroom',hsr_yard:'Yard',
   hss_cottage:'Wood cottage',hss_candy:'Candy house',hss_space:'Space station',hss_ocean:'Undersea bubble',hss_castle:'Royal castle',hss_jungle:'Jungle treehouse',
   hsf_piggy:'Piggy bank',hsf_sofa:'Cozy sofa',hsf_clock:'Grandfather clock',hsf_fireplace:'Fireplace',hsf_aquarium:'Fish tank',hsf_books:'Bookshelf',hsf_tv:'TV',
@@ -8796,15 +8825,15 @@ Object.assign(I18N.en,{hsTitle:'Sharliz House',hsSub:'Furniture with powers',hsL
   hsf_vane:'Weather vane',hsf_mailbox:'Mailbox',hsf_birdhouse:'Bird house',hsf_flowers:'Flower bed',hsf_trampoline:'Trampoline',hsf_balloons:'Balloon post',
   hsp_piggy:'+{n}% coins every level you win',hsp_sofa:'+{n}% wider landing window',hsp_clock:'Swing {n}% slower',hsp_fireplace:'+{n}% light in night worlds',hsp_aquarium:'Waves, currents and dunes {n}% weaker',
   hsp_books:'+{n}% XP',hsp_tv:'Frenzy lasts {n}% longer',hsp_oven:'A buddy cookie every {n} wins',hsp_fridge:'A free booster every {n} wins',hsp_candyjar:'+{n}% candy in holiday events',
-  hsp_table:'Every heart left is worth +{n} coins',hsp_sink:'Storm landings slide {n}% less',hsp_toaster:'+{n} s in the bonus stage',hsp_bed:'A free shield every {n} levels',
+  hsp_table:'Coins for every heart left: +{n}',hsp_sink:'Storm landings slide {n}% less',hsp_toaster:'+{n} s in the bonus stage',hsp_bed:'A free shield every {n} levels',
   hsp_nightlight:'Aim line for the first {n} floors',hsp_toychest:'+{n}% coins in the arcade',hsp_wardrobe:'{n}% coins back on My hero buys',hsp_trophies:'+{n}% boss damage',
-  hsp_telescope:'Fall {n}% slower in space worlds',hsp_vane:'Wind {n}% weaker',hsp_mailbox:'+{n}% coins in the daily gift',hsp_birdhouse:'+{n} cookies when an egg hatches',
-  hsp_flowers:'+{n}% points for a perfect',hsp_trampoline:'+{n} coins for every frenzy landing',hsp_balloons:'Coin balloon comes {n}% more often'});
+  hsp_telescope:'Fall {n}% slower in space worlds',hsp_vane:'Wind {n}% weaker',hsp_mailbox:'+{n}% coins in the daily gift',hsp_birdhouse:'Cookies when an egg hatches: +{n}',
+  hsp_flowers:'+{n}% points for a perfect',hsp_trampoline:'Coins for every frenzy landing: +{n}',hsp_balloons:'Coin balloon comes {n}% more often'});
 Object.assign(I18N.he,{hsTitle:'בית השארליזים',hsSub:'רהיטים עם כוחות',hsLocked:'נפתח ברמת שחקן {n}',hsLvl:'רמה {n}',hsBuy:'קנה',hsUp:'שדרג',hsMax:'רמה מקסימלית!',
   hsNeedLv:'רמת שחקן {n}',hsNow:'עכשיו',hsNext:'ברמה הבאה',hsTurn:'סובב',hsDrag:'גרור באצבע כדי להזיז',hsSkins:'סקינים לבית',hsUse:'בחר',hsUsing:'בשימוש',
   hsOpenT:'הבית שלך נפתח!',hsOpenP:'קנה רהיטים, קשט את הבית, וכל רהיט מחזק את השארליז שלך.',hsGo:'לבית',hsBought:'{x}: רמה {n}!',hsRoomLock:'החדר הזה נפתח ברמת שחקן {n}',
   hsNoRoom:'אין מקום פנוי בחדר. הזז משהו קודם.',hsMini:'בית',hsBonus:'בונוס הבית',
-  hsOven:'תנור עוגיות: עוד עוגייה לבאדי!',hsFridge:'מקרר: בוסטר חינם!',hsBed:'מיטה מפנקת: מגן חינם!',hsWard:'ארון בגדים: {n} מטבעות חזרו!',hsMail:'תיבת דואר: עוד {n} מטבעות!',hsBird:'בית ציפורים: עוד {n} עוגיות!',
+  hsOven:'תנור עוגיות: עוד עוגייה לבאדי!',hsFridge:'מקרר: בוסטר חינם!',hsBed:'מיטה מפנקת: מגן חינם!',hsWard:'מטבעות שחזרו מארון הבגדים: {n}!',hsMail:'תיבת דואר: עוד {n} מטבעות!',hsBird:'עוגיות מבית הציפורים: {n}!',
   hsr_living:'סלון',hsr_kitchen:'מטבח',hsr_bedroom:'חדר שינה',hsr_yard:'חצר',
   hss_cottage:'בקתת עץ',hss_candy:'בית ממתקים',hss_space:'תחנת חלל',hss_ocean:'בועה מתחת לים',hss_castle:'ארמון מלכותי',hss_jungle:'בית עץ בג׳ונגל',
   hsf_piggy:'קופת חזיר',hsf_sofa:'ספה רכה',hsf_clock:'שעון סבא',hsf_fireplace:'אח בוערת',hsf_aquarium:'אקווריום',hsf_books:'מדף ספרים',hsf_tv:'טלוויזיה',
@@ -8813,10 +8842,10 @@ Object.assign(I18N.he,{hsTitle:'בית השארליזים',hsSub:'רהיטים �
   hsf_vane:'שבשבת',hsf_mailbox:'תיבת דואר',hsf_birdhouse:'בית ציפורים',hsf_flowers:'ערוגת פרחים',hsf_trampoline:'טרמפולינה',hsf_balloons:'עמוד בלונים',
   hsp_piggy:'עוד {n}% מטבעות מכל שלב שעוברים',hsp_sofa:'חלון נחיתה רחב יותר ב-{n}%',hsp_clock:'התנודה איטית יותר ב-{n}%',hsp_fireplace:'עוד {n}% אור בעולמות לילה',hsp_aquarium:'גלים, זרמים ודיונות חלשים יותר ב-{n}%',
   hsp_books:'עוד {n}% XP',hsp_tv:'הפרנזי ארוך יותר ב-{n}%',hsp_oven:'עוגייה לבאדי כל {n} ניצחונות',hsp_fridge:'בוסטר חינם כל {n} ניצחונות',hsp_candyjar:'עוד {n}% ממתקים באירועי חג',
-  hsp_table:'כל לב שנשאר שווה עוד {n} מטבעות',hsp_sink:'נחיתה בסערה מחליקה פחות ב-{n}%',hsp_toaster:'עוד {n} שניות בשלב הבונוס',hsp_bed:'מגן חינם כל {n} שלבים',
+  hsp_table:'מטבעות נוספים על כל לב שנשאר: {n}',hsp_sink:'נחיתה בסערה מחליקה פחות ב-{n}%',hsp_toaster:'שניות נוספות בשלב הבונוס: {n}',hsp_bed:'מגן חינם כל {n} שלבים',
   hsp_nightlight:'קו כיוון ב-{n} הקומות הראשונות',hsp_toychest:'עוד {n}% מטבעות בארקייד',hsp_wardrobe:'{n}% מהמחיר חוזר על קנייה ב"הגיבור שלי"',hsp_trophies:'עוד {n}% נזק לבוסים',
-  hsp_telescope:'נפילה איטית יותר ב-{n}% בעולמות חלל',hsp_vane:'רוח חלשה יותר ב-{n}%',hsp_mailbox:'עוד {n}% מטבעות במתנה היומית',hsp_birdhouse:'עוד {n} עוגיות כשביצה בוקעת',
-  hsp_flowers:'עוד {n}% נקודות על פרפקט',hsp_trampoline:'עוד {n} מטבעות על כל נחיתה בפרנזי',hsp_balloons:'בלון המטבעות מגיע יותר ב-{n}%'});
+  hsp_telescope:'נפילה איטית יותר ב-{n}% בעולמות חלל',hsp_vane:'רוח חלשה יותר ב-{n}%',hsp_mailbox:'עוד {n}% מטבעות במתנה היומית',hsp_birdhouse:'עוגיות נוספות כשביצה בוקעת: {n}',
+  hsp_flowers:'עוד {n}% נקודות על פרפקט',hsp_trampoline:'מטבעות נוספים על כל נחיתה בפרנזי: {n}',hsp_balloons:'בלון המטבעות מגיע יותר ב-{n}%'});
 
 const HS_G=6,HS_OPEN=10,HS_PRICE=[250,400,600,900,1300],HS_GATE=[0,12,15,19,24];
 const HS_ROOMS=[{id:'living',lv:10,ic:'🛋️'},{id:'kitchen',lv:13,ic:'🍳'},{id:'bedroom',lv:16,ic:'🛏️'},{id:'yard',lv:20,ic:'🌳'}];
@@ -8967,7 +8996,8 @@ function hsHit(x,y){const room=hs().room,list=hsItemsIn(room).map(f=>({f,F:hsFoo
   for(const {f,F} of list){const r=HSV.rect[f.id];if(r&&hsPic('hs_f_'+f.id)){if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){const u=(x-r.x)/r.w;if(hsAlphaAt(r.im,r.fl?1-u:u,(y-r.y)/r.h))return f.id}continue}
     let {i,j,di,dj}=F;if(f.wall){if(F.f)di=.5;else dj=.5}const z0=f.z0,z1=f.z0+Math.max(f.h,.5);
     const P=[hsP(i,j+dj,z0),hsP(i+di,j+dj,z0),hsP(i+di,j,z0),hsP(i+di,j,z1),hsP(i,j,z1),hsP(i,j+dj,z1)];if(hsInPoly(x,y,P))return f.id}
-  // a near miss still picks the closest item
+  // a tap on a free floor tile picks nothing (so it unselects); a near miss elsewhere still picks the closest item
+  const [ti,tj]=hsInv(x,y);if(ti>=0&&tj>=0&&ti<HS_G&&tj<HS_G){const busy=new Set();list.forEach(({f,F})=>hsCells(f.id,F).forEach(c=>busy.add(c)));if(!busy.has(Math.floor(ti)+','+Math.floor(tj)))return null}
   let best=null,bd=HSV.TW*.35;for(const {f,F} of list){const [cx,cy]=hsP(F.i+F.di/2,F.j+F.dj/2,f.z0+f.h/2),d=Math.hypot(cx-x,cy-y)-HSV.TW*.4*(F.di+F.dj)/2;if(d<bd){bd=d;best=f.id}}return best}
 function hsDown(e){const [x,y]=hsPt(e),id=hsHit(x,y);if(!id){if(HSV.sel){HSV.sel=null;hsPanel()}return}const F=hsFoot(id),[pi,pj]=hsInv(x,y);
   HSV.drag={id,gi:pi-F.i,gj:pj-F.j,x0:x,y0:y,moved:false,F:null};try{HSV.cv.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()}
@@ -8997,14 +9027,14 @@ function hsRender(){const r=HSV.el,H=hs();
   const rooms=r.querySelector('.hs-rooms');HS_ROOMS.forEach(R=>{const open=hsRoomOpen(R.id),b=document.createElement('button');b.className='hs-room'+(H.room===R.id?' on':'')+(open?'':' lock');
     b.innerHTML=`<i>${open?R.ic:'🔒'}</i><b></b>${open?'':'<small></small>'}`;b.querySelector('b').textContent=t('hsr_'+R.id);if(!open)b.querySelector('small').textContent=t('hsLvl',{n:R.lv});
     b.onclick=()=>{if(!open){sfx.locked();noteToast(t('hsRoomLock',{n:R.lv}));return}sfx.click();H.room=R.id;HSV.sel=null;HSV.hero=null;saveProgress();hsRender()};rooms.appendChild(b)});
-  const cv=HSV.cv=r.querySelector('.hs-cv');HSV.g=cv.getContext('2d');HSV.dpr=Math.min(2,window.devicePixelRatio||1);HSV.W=Math.min(560,Math.max(300,(r.clientWidth||window.innerWidth)-12));hsGeom();
+  const cv=HSV.cv=r.querySelector('.hs-cv');HSV.g=cv.getContext('2d');HSV.dpr=Math.min(2,window.devicePixelRatio||1);HSV.W=Math.round(Math.min(560,Math.max(300,(r.clientWidth||window.innerWidth)-12),Math.max(260,(window.innerHeight||800)*.36/.7535)));hsGeom();
   cv.width=Math.round(HSV.W*HSV.dpr);cv.height=Math.round(HSV.H*HSV.dpr);cv.style.width=HSV.W+'px';cv.style.height=HSV.H+'px';
   cv.addEventListener('pointerdown',hsDown);cv.addEventListener('pointermove',hsMove);cv.addEventListener('pointerup',hsUp);cv.addEventListener('pointercancel',()=>{HSV.drag=null});
   hsCoins();hsPanel();hsFit(rooms.querySelectorAll('b'))}
 // a long single word (German 'Wohnzimmer') shrinks to fit instead of breaking in the middle
 function hsFit(els,min=8){els.forEach(e=>{e.style.fontSize='';let fs=parseFloat(getComputedStyle(e).fontSize);while(e.scrollWidth>e.clientWidth+1&&fs>min){fs-=.5;e.style.fontSize=fs+'px'}})}
-function hsCoins(){const s=HSV.el&&HSV.el.querySelector('.hs-coins span');if(s)s.textContent=(progress.coins||0).toLocaleString()}
-function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-panel'),H=hs(),room=H.room,sel=HSV.sel,plv=hsPlayerLv(),sc=p.scrollTop;p.innerHTML='';
+function hsCoins(){const s=HSV.el&&HSV.el.querySelector('.hs-coins span');if(s){s.textContent=(progress.coins||0).toLocaleString();hsFit(HSV.el.querySelectorAll('.ps-title b'),16)}}
+function hsPanel(keep){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-panel'),H=hs(),room=H.room,sel=HSV.sel,plv=hsPlayerLv(),sc=p.scrollTop;p.innerHTML='';
   if(sel){const f=HSF[sel],L=hsLv(sel),c=document.createElement('div');c.className='hs-sel';
     c.innerHTML=`<span class="hs-ic big"></span><div class="hs-st"><b></b><i class="hs-stars"></i><p class="now"></p><p class="nx"></p><small></small></div><div class="hs-acts"><button class="btn hs-turn"><span></span></button><button class="btn primary hs-upb"></button><button class="x-btn hs-unsel" aria-label="close"></button></div>`;
     hsIcon(c.querySelector('.hs-ic'),sel);c.querySelector('b').textContent=t('hsf_'+sel);c.querySelector('.hs-stars').innerHTML=[1,2,3,4,5].map(k=>`<em class="${k<=L?'on':''}">★</em>`).join('');
@@ -9012,22 +9042,24 @@ function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-pane
     c.querySelector('small').textContent=t('hsDrag');c.querySelector('.hs-turn span').textContent=t('hsTurn');c.querySelector('.hs-turn').onclick=()=>hsTurn(sel);
     c.querySelector('.hs-unsel').innerHTML=XSVG;c.querySelector('.hs-unsel').onclick=()=>{sfx.click();HSV.sel=null;hsPanel()};hsBuyBtn(c.querySelector('.hs-upb'),sel);p.appendChild(c)}
   const grid=document.createElement('div');grid.className='hs-grid';
-  HS_F.filter(f=>f.room===room).forEach(f=>{const L=hsLv(f.id),c=document.createElement('div');c.className='hs-card'+(L?' hs-own':'')+(sel===f.id?' on':'')+(L>=5?' max':'');
+  HS_F.filter(f=>f.room===room).forEach(f=>{const L=hsLv(f.id),c=document.createElement('div');c.className='hs-card'+(L?' hs-own':'')+(sel===f.id?' on':'')+(L>=5?' max':'');c.dataset.id=f.id;
     c.innerHTML=`<span class="hs-ic"></span><b></b><i class="hs-stars">${[1,2,3,4,5].map(k=>`<em class="${k<=L?'on':''}">★</em>`).join('')}</i><p></p><button class="btn hs-bb"></button>`;
     hsIcon(c.querySelector('.hs-ic'),f.id);c.querySelector('b').textContent=t('hsf_'+f.id);c.querySelector('p').textContent=hsTxt(f.id,L||1);hsBuyBtn(c.querySelector('.hs-bb'),f.id);
     if(L)c.onclick=e=>{if(e.target.closest('button'))return;sfx.click();HSV.sel=f.id;hsPanel()};grid.appendChild(c)});
-  p.appendChild(grid);p.scrollTop=sel?0:sc;hsCoins();hsFit(p.querySelectorAll('.hs-card b,.hs-st b'))}
+  p.appendChild(grid);p.scrollTop=sel&&!keep?0:sc;if(keep){const e=p.querySelector(keep.q);if(e)p.scrollTop+=e.getBoundingClientRect().top-p.getBoundingClientRect().top-keep.y}hsCoins();hsFit(p.querySelectorAll('.hs-card b,.hs-st b'))}
 function hsIcon(el,id){const src=hsSrc('hs_f_'+id);if(src){const i=document.createElement('img');i.src=src;i.alt='';el.appendChild(i)}else{el.textContent=HSF[id].em;el.style.setProperty('--c',HSF[id].col)}}
 function hsBuyBtn(b,id){const L=hsLv(id),plv=hsPlayerLv();if(L>=5){b.textContent=t('hsMax');b.disabled=true;b.className+=' max';return}
   const need=hsGate(id,L+1),price=HS_PRICE[L];
   if(plv<need){b.innerHTML='<span>🔒</span> ';b.appendChild(document.createTextNode(t('hsNeedLv',{n:need})));b.className+=' lock';b.onclick=e=>{e.stopPropagation();sfx.locked();noteToast(t('hsNeedLv',{n:need}))};return}
   b.innerHTML=`<span></span>${coinImg()}<em>${price.toLocaleString()}</em>`;b.querySelector('span').textContent=L?t('hsUp'):t('hsBuy');if((progress.coins||0)<price)b.className+=' poor';
-  b.onclick=e=>{e.stopPropagation();hsBuy(id)}}
-function hsBuy(id){const H=hs(),L=hsLv(id),price=HS_PRICE[L];if(L>=5||hsPlayerLv()<hsGate(id,L+1))return;
+  b.onclick=e=>{e.stopPropagation();hsBuy(id,b)}}
+function hsBuy(id,btn){const H=hs(),L=hsLv(id),price=HS_PRICE[L];if(L>=5||hsPlayerLv()<hsGate(id,L+1))return;
   if((progress.coins||0)<price){sfx.locked();popupToast(t('needCoins'));return}
   if(!L&&!hsAutoPlace(id)){sfx.locked();noteToast(t('hsNoRoom'));return}
   progress.coins-=price;H.lv[id]=L+1;saveProgress();updateWalletUI();sfx.flourish&&sfx.flourish(L>=4?4:2);vib([20,30,20]);HSV.sel=id;hsBurst(id);
-  noteToast(t('hsBought',{x:t('hsf_'+id),n:L+1}));hsPanel()}
+  noteToast(t('hsBought',{x:t('hsf_'+id),n:L+1}));
+  const host=btn&&btn.closest('.hs-sel,.hs-card'),pn=HSV.el&&HSV.el.querySelector('.hs-panel');
+  hsPanel(host&&pn?{q:host.classList.contains('hs-sel')?'.hs-sel':'.hs-card[data-id="'+id+'"]',y:host.getBoundingClientRect().top-pn.getBoundingClientRect().top}:null)}
 function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className='hs-sheet';
   m.innerHTML=`<div class="hs-sh"><div class="hs-shh"><b></b><button class="x-btn" aria-label="close"></button></div><div class="hs-skins"></div></div>`;
   m.querySelector('b').textContent=t('hsSkins');const x=m.querySelector('.x-btn');x.innerHTML=XSVG;x.onclick=()=>{sfx.click();m.remove()};m.onclick=e=>{if(e.target===m)m.remove()};
@@ -9046,11 +9078,13 @@ function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className=
   b.onclick=openHouse;row.appendChild(b)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{const b=document.getElementById('lobHouse');if(b){const open=hsOpen();b.hidden=!progress.tut;b.classList.toggle('lock',!open);
     b.querySelector('b').textContent=open?t('hsMini'):t('hsLvl',{n:HS_OPEN});const pic=hsSrc('hs_house_'+hs().skin),ic=b.querySelector('.lt-ic');if(pic){const im=ic.querySelector('img')||ic.insertBefore(Object.assign(document.createElement('img'),{alt:''}),ic.firstChild);if(!im.src.endsWith(pic))im.src=pic;const sv=ic.querySelector('svg');if(sv)sv.remove()}}
-    if(hsOpen()&&!hs().intro)setTimeout(hsIntroMaybe,1200)}catch(e){}return r}}
+    if(hsOpen()&&!hs().intro)hsIntroLater(1200)}catch(e){}return r}}
+let hsIT=0;function hsIntroLater(ms){clearTimeout(hsIT);hsIT=setTimeout(hsIntroMaybe,ms)}
 function hsIntroMaybe(){const H=hs();if(H.intro||!hsOpen()||state!=='title'||document.querySelector('.hs-pop'))return;
-  if(typeof gdBusy==='function'&&gdBusy())return;H.intro=1;saveProgress();const m=document.createElement('div');m.className='hs-pop';
+  if(typeof gdBusy==='function'&&gdBusy()){if(state==='title')hsIntroLater(2000);return}H.intro=1;saveProgress();const m=document.createElement('div');m.className='hs-pop';
   m.innerHTML=`<div class="hz"><div class="rays"></div><div class="hs-house">🏠</div><h3></h3><p></p><button class="btn primary"><span></span></button></div>`;m.querySelector('h3').textContent=t('hsOpenT');m.querySelector('p').textContent=t('hsOpenP');
   m.querySelector('button span').textContent=t('hsGo');m.querySelector('button').onclick=()=>{m.remove();openHouse()};m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);sfx.flourish&&sfx.flourish(3)}
+{const _d=drawTitleArt;drawTitleArt=function(){if(HSV.el&&!HSV.el.hidden)return;return _d.apply(this,arguments)}}
 {const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){const e=document.getElementById('houseScr');return (!!e&&!e.hidden)||!!document.querySelector('.hs-pop')||_lo()}}
 
 /* ---------- the powers in the game ---------- */

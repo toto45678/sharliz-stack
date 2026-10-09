@@ -38,7 +38,7 @@
 .hs-panel .btn .coin,.hs-panel .btn img{width:18px;height:18px}
 .hs-panel .btn em{font-style:normal;font-weight:900}
 .hs-panel .btn.poor em{color:#d23b3b}
-.hs-panel .btn.lock{background:linear-gradient(180deg,#e9e2ff,#b9a8ee);color:#120d2b;font-size:.74rem}
+.hs-panel .btn.lock{background:linear-gradient(180deg,#e9e2ff,#b9a8ee);color:#120d2b;font-size:.74rem;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
 .hs-panel .btn.max{background:linear-gradient(180deg,#fff2a8,#e0a800);color:#120d2b;filter:none;-webkit-text-stroke:0;text-shadow:none;paint-order:normal}
 .hs-sel{display:grid;grid-template-columns:60px minmax(0,1fr);gap:10px;align-items:start;margin:0 0 10px;padding:10px;border-radius:18px;border:3px solid #120d2b;
   background:linear-gradient(180deg,#fff,#efe7ff);color:#120d2b;box-shadow:0 4px 0 #120d2b}
@@ -70,9 +70,9 @@
 .lt-mini.house .lt-ic{position:relative;background:linear-gradient(180deg,#fff3c4,#ffc94a)}
 .lt-mini.house .lt-ic svg{width:78%;height:78%}
 .lt-mini.house .lt-ic img{width:90%;height:90%;object-fit:contain}
-.lt-mini.house .hs-lk{display:none;position:absolute;bottom:-4px;inset-inline-end:-4px;font-style:normal;font-size:14px}
-.lt-mini.house.lock .hs-lk{display:block}
-.lt-mini.house.lock .lt-ic{filter:saturate(.45)}
+.lt-mini.house .hs-lk{display:none;position:absolute;top:-5px;inset-inline-end:-5px;font-style:normal;font-size:13px;line-height:1;width:22px;height:22px;display:none;place-items:center;border-radius:50%;background:#fff;border:2.5px solid #120d2b;box-sizing:border-box}
+.lt-mini.house.lock .hs-lk{display:grid}
+.lt-mini.house.lock .lt-ic>img,.lt-mini.house.lock .lt-ic>svg{filter:grayscale(.85) brightness(.9);opacity:.75}
 .hs-pop{position:fixed;inset:0;z-index:40;display:grid;place-items:center;background:rgba(18,13,43,.6);padding:16px}
 .hs-pop .hz{position:relative;width:min(340px,100%);padding:22px 18px 18px;border-radius:24px;border:4px solid #120d2b;background:linear-gradient(180deg,#8a64e0,#4d2c9e);color:#fff;text-align:center;box-shadow:0 8px 0 #120d2b;overflow:hidden}
 .hs-pop .rays{position:absolute;inset:-50%;background:repeating-conic-gradient(rgba(255,226,77,.18) 0 10deg,transparent 10deg 20deg);animation:hsSpin 14s linear infinite}
@@ -82,3 +82,5 @@
 .hs-pop .btn{position:relative}
 @keyframes hsSpin{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.hs-pop .rays,.hs-pop .hs-house{animation:none}}
+#houseScr .ps-title{min-width:0}
+#houseScr .ps-title b{white-space:nowrap;max-width:100%}
