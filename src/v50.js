@@ -20,10 +20,10 @@ function startBonus(from){
   const tb=document.getElementById('toast');tb.querySelector('small').textContent=t('bnBonus');tb.querySelector('strong').textContent=t('bnTitle');
   bnHud(true);bnIntro()}
 function bnIntro(){state='intro';
-  showOverlay(()=>({title:t('bnTitle'),actions:[{label:t('bnGo'),icon:'play',primary:true,fn:()=>{hideOverlay();state='wait';spawnAt=time+.5;BN.run=true;sfx.flourish(1)}}],
+  showOverlay(()=>({title:t('bnTitle'),actions:[{label:t('bnGo'),icon:'play',primary:true,fn:()=>{hideOverlay();state='wait';spawnAt=time+.5;BN.run=true;BN.max=BN.t;sfx.flourish(1)}}],
     extra:card=>{card.classList.add('bn-card');const row=document.createElement('div');row.className='bn-chests';
       BN_CH.forEach(c=>{const d=document.createElement('div');d.className='bn-ch '+c.k;d.innerHTML=`<img src="art/bn_chest_${c.k}.webp" alt=""><b></b>`;d.querySelector('b').textContent=t('bnFloors',{n:c.f});row.appendChild(d)});card.appendChild(row);
-      const ul=document.createElement('ul');ul.className='bn-rules';[['<img src="art/bn_stopwatch.webp" alt="">','bnIntro1'],['<em class="neg">−3</em>','bnIntro2a'],['<em class="pos">+1</em>','bnIntro2b']].forEach(([ic,k])=>{const li=document.createElement('li');li.innerHTML=ic+'<span></span>';li.querySelector('span').textContent=t(k);ul.appendChild(li)});card.appendChild(ul);
+      const ul=document.createElement('ul');ul.className='bn-rules';[['<img src="art/bn_stopwatch.webp" alt="">','bnIntro1'],['<em class="neg">−3</em>','bnIntro2a'],['<em class="pos">+1</em>','bnIntro2b']].forEach(([ic,k])=>{const li=document.createElement('li');li.innerHTML=ic+'<span></span>';li.querySelector('span').textContent=k==='bnIntro1'?t(k).replace('45',String(BN_TIME+(typeof hsLv==='function'&&hsLv('toaster')?hsVal('toaster',hsLv('toaster')):0))):t(k);ul.appendChild(li)});card.appendChild(ul);
       if(!BN.first){const p=document.createElement('p');p.className='bn-half';p.textContent=t('bnHalf');card.appendChild(p)}}}),true)}
 // HUD: stopwatch pill (where the hearts are) + chest track (where the goal gauge is)
 let bnEl=null;
@@ -34,7 +34,7 @@ function bnHud(on){
   bnEl.hidden=!on;bnEl.tm.hidden=!on;document.getElementById('hud').classList.toggle('bonus',!!on)}
 function bnHudTick(){if(!BN||!bnEl)return;const s=Math.max(0,Math.ceil(BN.t));
   if(s!==BN.shown){BN.shown=s;bnEl.tm.querySelector('b').textContent=Math.floor(s/60)+':'+String(s%60).padStart(2,'0');bnEl.tm.classList.toggle('low',s<=5);if(s<=5&&s>0&&BN.run&&sfx.ok())tone({f:880,d:.06,type:'square',v:.04})}
-  bnEl.tm.style.setProperty('--p',clamp(BN.t/BN_TIME,0,1));
+  bnEl.tm.style.setProperty('--p',clamp(BN.t/(BN.max||BN_TIME),0,1));
   const fl=Math.max(0,tower.length-1);bnEl.querySelector('.bn-track .fill').style.height=Math.min(1,fl/24)*100+'%';bnEl.querySelector('.bn-fl').textContent=fl;
   const nx=BN_CH.findIndex((c,i)=>!BN.open.includes(i));BN_CH.forEach((c,i)=>{const st=bnEl.querySelector('.bn-stop.s'+i),o=BN.open.includes(i);st.classList.toggle('next',i===nx);{const lb=i===nx?t('bnLeft',{n:c.f-fl}):String(c.f),sm=st.querySelector('small');if(sm.textContent!==lb)sm.textContent=lb}if(st.classList.contains('open')!==o){st.classList.toggle('open',o);st.querySelector('img').src=`art/bn_chest_${c.k}${o?'_open':''}.webp`}})}
 function bnChip(txt,cls){if(!bnEl||!bnEl.tm)return;const r=bnEl.tm.getBoundingClientRect(),d=document.createElement('div');d.className='bn-chip '+cls;d.textContent=txt;d.style.left=(r.left+r.width/2)+'px';d.style.top=(r.bottom+4)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),900);
@@ -63,7 +63,7 @@ function bnResult(){const R=bnReward();
   {const btn=document.querySelector('#card .btn.primary');if(btn){btn.disabled=true;btn.classList.add('bn-wait')}const el=document.querySelector('#card .bn-coins b'),t0=performance.now(),D=900+Math.min(900,R.coins*3);
    const step=now=>{if(!el.isConnected)return;const k=Math.min(1,(now-t0-500)/D);el.textContent='+'+Math.round(R.coins*Math.max(0,k)*(2-Math.max(0,k)));if(k<1)requestAnimationFrame(step);else{if(btn){btn.disabled=false;btn.classList.remove('bn-wait')}if(sfx.ok())tone({f:880,f2:1320,d:.12,type:'triangle',v:.05})}};requestAnimationFrame(step)}}
 function bnCollect(){if(!BN||BN.paid)return;BN.paid=true;const R=bnReward();wallet();progress.coins+=R.coins;R.boost.forEach(b=>progress.inv[b]=(progress.inv[b]||0)+1);progress.bonus[BN.sid]=1;saveProgress();sfx.coin(4);popupToast('+'+R.coins);
-  const L=BN.from;BN=null;bnHud(false);mode='levels';modeZi=null;level=L;
+  const L=BN.from;BN=null;bnHud(false);mode='levels';modeZi=null;level=L;try{updateHud()}catch(e){}
   hideOverlay();iris.r=-1;drawIris();worldTransition(zoneIdx(L)+1,()=>{preloadWorld(ZONES[zoneIdx(L)+1].id);preLevel(L+1)})}
 // wiring
 {const _u=update;update=function(dt){_u(dt);if(mode!=='bonus'||!BN){if(bnEl&&!bnEl.hidden)bnHud(false);return}

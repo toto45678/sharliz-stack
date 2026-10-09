@@ -3,10 +3,10 @@
    New chapter "Sharliz": 24 illustrated stickers that only come from STICKER PACKS (3 stickers each; common/rare/holo).
    Packs: every 3 won levels, the first win over each boss, or 150 coins. Duplicates → coins. A full chapter → a big reward. */
 Object.assign(I18N.en,{sbOpen:'Open',sbBack:'Back',sbPacks:'Packs: {n}',sbNext:'Next pack {n}/3',sbHow:'Packs come from wins, bosses, the daily gift, weekly missions, level-ups, the tournament, the Pass and events',psPack:'Sticker pack',dlPack:'+ pack',sbOpenPack:'Opening a pack!',sbOpenSub:'Which stickers are inside?',sbTap:'Tap to continue',sbTapPack:'Tap the pack!',sbNew:'New!',sbMore:'Open another ({n})',sbToBook:'To the album',sbAll:'Open all ({n})',sbOpenMany:'Opening {n} packs!',sbNewN:'{n} new stickers!',sbGold:'Golden pack',sbGoldGot:'+1 golden sticker pack!',sbGoldOpen:'Golden pack!',sbGoldSub:'A holo sticker inside for sure!',sbHowG:'Golden packs: the gold chest in the bonus stage, a tournament gold medal and day 7 of the daily gift',
-  sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
+  sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbFillAll:'Collect them all to win {n}',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPacksGot:'+{n} sticker packs!',sbGoldsGot:'+{n} golden sticker packs!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
   sbHow_shz:'Comes from sticker packs',sbCover:'Collect · Discover · Complete!',ch_shz:'Sharliz',sbPage:'Page {a}/{b}'});
 Object.assign(I18N.he,{sbOpen:'פתחו',sbBack:'חזרה',sbPacks:'שקיות: {n}',sbNext:'שקית הבאה {n}/3',sbHow:'שקיות מקבלים מניצחונות, בוסים, המתנה היומית, משימות שבועיות, עליית רמה, הטורניר, ה-Pass ואירועים',psPack:'שקית מדבקות',dlPack:'+ שקית',sbOpenPack:'פותחים שקית!',sbOpenSub:'איזה מדבקות מחכות בפנים?',sbTap:'הקישו להמשיך',sbTapPack:'הקישו על השקית!',sbNew:'חדש!',sbMore:'פתחו עוד ({n})',sbToBook:'חזרה לאלבום',sbAll:'פתחו הכל ({n})',sbOpenMany:'פותחים {n} שקיות!',sbNewN:'{n} מדבקות חדשות!',sbGold:'שקית זהב',sbGoldGot:'+1 שקית מדבקות זהב!',sbGoldOpen:'שקית זהב!',sbGoldSub:'בטוח יש בפנים מדבקת הולוגרמה!',sbHowG:'שקיות זהב: תיבת הזהב בשלב הבונוס, מדליית זהב בטורניר ויום 7 במתנה היומית',
-  sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
+  sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbFillAll:'אספו את כולן וזכו ב-{n}',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPacksGot:'+{n} שקיות מדבקות!',sbGoldsGot:'+{n} שקיות מדבקות זהב!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
   sbHow_shz:'מגיעה בשקיות מדבקות',sbCover:'אספו · גלו · השלימו!',ch_shz:'שארליז',sbPage:'עמוד {a}/{b}'});
 /* the 24 Sharliz stickers: id, rarity, names, a fun line */
 const SHZ=[
@@ -48,17 +48,17 @@ function sbGive(n,g){if(!n)return;const D=sbData();if(g){D.gpacks+=n;SBQG+=n}els
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if((mode==='levels'||mode==='event')&&was!=='win'&&state==='win'){try{const D=sbData();D.w++;let n=0;if(D.w%3===0)n++;
     if(mode==='levels'&&lvInZone()===LPZ-1){const k=zone().sid||zone().id;if(!D.boss[k]){D.boss[k]=1;n++}}saveProgress();if(n)sbGive(n)}catch(e){}}return r}}
 function sbNotify(){if(!SBQ&&!SBQG)return;if(document.querySelector('.lvup')){setTimeout(sbNotify,500);return}const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
-  const items=[[SBQ,'sb_pack','sbPackGot'],[SBQG,'sb_gpack','sbGoldGot']].filter(x=>x[0]),txt=([n,,k])=>n>1?t(k).replace('+1','+'+n):t(k);
+  const items=[[SBQ,'sb_pack','sbPackGot'],[SBQG,'sb_gpack','sbGoldGot']].filter(x=>x[0]),txt=([n,,k])=>n>1?t(k==='sbPackGot'?'sbPacksGot':'sbGoldsGot',{n}):t(k);
   if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){SBQ=SBQG=0;items.forEach(it=>{const d=document.createElement('div');d.className='sb-strip'+(it[1]==='sb_gpack'?' gold':'');d.innerHTML=`<img src="art/${it[1]}.webp" alt=""><span><b></b><small></small></span>`;
     d.querySelector('b').textContent=txt(it);d.querySelector('small').textContent=t('sbPackSub');body.appendChild(d)})}
   else if(state==='win'||state==='over'){} // the result card opens a moment later and picks the queue up (showOverlay below)
-  else{SBQ=SBQG=0;popupToast(items.map(txt).join('  '))}}
+  else{SBQ=SBQG=0;noteToast(items.map(txt).join('  '))}}
 {const _s=showOverlay;showOverlay=function(){const r=_s.apply(this,arguments);if(SBQ||SBQG)setTimeout(sbNotify,160);return r}}
 /* more ways to EARN packs (Tzach, Oct 7). Packs are never sold, for coins or money: random stickers for purchase = a loot box (App Store). */
 // player level-up: a pack for every even player level
 if(typeof lvUpPop==='function'){const _l=lvUpPop;lvUpPop=function(lv){const n=progress.lvRew||0;const r=_l.apply(this,arguments);if(n){let k=0;for(let L=lv-n+1;L<=lv;L++)if(L%2===0)k++;sbGive(k)}return r}}
 // bonus stage: the gold chest (24 floors) gives a GOLDEN pack the first time on each boss (replays: coins only)
-if(typeof bnCollect==='function'){const _bc=bnCollect;bnCollect=function(){const g=BN&&!BN.paid&&BN.first&&BN.open.includes(2);const r=_bc.apply(this,arguments);if(g)sbGive(1,1);return r}
+if(typeof bnCollect==='function'){const _bc=bnCollect;bnCollect=function(){const g=BN&&!BN.paid&&BN.first&&BN.open.includes(2);const r=_bc.apply(this,arguments);if(g){/* quietly: the bonus result card already showed the pack (a strip would land on the next pre-level card) */const D=sbData();D.gpacks=(D.gpacks||0)+1;saveProgress();try{stkBadge()}catch(e){}}return r}
   const _br=bnResult;bnResult=function(){const r=_br.apply(this,arguments);try{if(BN&&BN.first&&BN.open.includes(2)){const rw=document.querySelector('#card .bn-rew');if(rw){let bo=rw.querySelector('.bn-bos');if(!bo){bo=document.createElement('div');bo.className='bn-bos';rw.appendChild(bo)}
     const e=document.createElement('span');e.className='bn-bo bn-gpk';e.innerHTML='<img src="art/sb_gpack.webp" alt=""><em>×1</em><small></small>';e.querySelector('small').textContent=t('sbGold');bo.appendChild(e)}}}catch(e){}return r}
   const _bi=bnIntro;bnIntro=function(){const r=_bi.apply(this,arguments);try{if(BN&&BN.first){const c=document.querySelector('#card .bn-ch.gold');if(c){const im=document.createElement('img');im.className='bn-gpk';im.src='art/sb_gpack.webp';im.alt='';c.appendChild(im)}}}catch(e){}return r}}
@@ -78,12 +78,14 @@ function sbChapters(){return STK_PAGES}
    pages (10 → 5+5, not 9+1). Chapters without sections are one section. */
 function sbPages(P,all){all=all||P.items().filter(x=>!x.soon);const secs=[];all.forEach((it,i)=>{const L=secs[secs.length-1];if(L&&L.sec===it.sec)L.ix.push(i);else secs.push({sec:it.sec,ix:[i]})});
   const pg=[];secs.forEach(S=>{const n=Math.ceil(S.ix.length/9),per=Math.ceil(S.ix.length/n);for(let k=0;k<n;k++)pg.push({sec:S.sec,ix:S.ix.slice(k*per,k*per+per),k,n})});return pg.length?pg:[{sec:undefined,ix:[],k:0,n:1}]}
+// the page that holds the first sticker the player has not seen yet (the Sharliz chapter has ~30 pages; page 1 rarely has the new one)
+function sbNewPg(ci){try{const P=sbChapters()[ci],all=P.items().filter(x=>!x.soon),seen=progress.stkSeen||[],k=sbPages(P,all).findIndex(p=>p.ix.some(i=>all[i].n&&!seen.includes(all[i].id)));return Math.max(0,k)}catch(e){return 0}}
 function sbSecs(P){return [...new Set(P.items().filter(x=>!x.soon).map(x=>x.sec))].filter(x=>x!==undefined)}
 function sbNumBase(ci){let n=0;for(let i=0;i<ci;i++)n+=sbChapters()[i].items().filter(x=>!x.soon).length;return n}
 openAlbum=function(){audio();sfx.click();if(!SB.el){const el=document.createElement('div');el.id='sbook';document.getElementById('app').appendChild(el);SB.el=el;
     let sx=null;el.addEventListener('pointerdown',e=>{if(e.target.closest('.sb-paper'))sx=e.clientX});el.addEventListener('pointerup',e=>{if(sx===null)return;const dx=e.clientX-sx;sx=null;if(Math.abs(dx)>50&&SB.view==='page')sbTurn((dx<0?1:-1)*(I18N[lang]._dir==='rtl'?-1:1))})}
   SB.el.hidden=false;const seen=progress.stkSeen||[];const ci=sbChapters().findIndex(P=>P.items().some(it=>it.n&&!seen.includes(it.id)));
-  if(ci>=0){SB.ch=ci;SB.pg=0;sbPageView()}else sbCover()};
+  if(ci>=0){SB.ch=ci;SB.pg=sbNewPg(ci);sbPageView()}else sbCover()};
 function sbClose(){sfx.click();SB.el.hidden=true;stkBadge();updateWalletUI();if(state==='title')updateLobby()}
 function sbTop(back){return `<div class="sb-top"><button class="sb-rb ${back?'sb-back':'sb-x'}" aria-label="back"></button><div class="sb-ttl"></div><div class="coin-pill">${coinImg()}<span>${progress.coins}</span></div></div>`}
 function sbWireTop(r,back){const b=r.querySelector('.sb-rb');b.innerHTML=back?'<svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="#120d2b" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>':XSVG;b.onclick=back?()=>{sfx.click();sbCover()}:sbClose}
@@ -121,7 +123,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
     s.onclick=()=>{if(it.n){sfx.click();sbZoom(P,all,idx)}else{sfx.locked();noteToast(it.hint||t('hint_'+P.id))}};grid.appendChild(s)});
-  const ch=r.querySelector('.sb-chest'),rew=sbRew(ck);ch.onclick=()=>{if(done&&!claimed){const [c,x]=rew;D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+rew[0]+' 🪙')}};
+  const ch=r.querySelector('.sb-chest'),rew=sbRew(ck);ch.onclick=()=>{if(done&&!claimed){const [c,x]=rew;D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+'  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();noteToast(t('sbFillAll',{n:rew[0]})+' 🪙')}};
   const pb=r.querySelector('.sb-packbtn');pb.querySelector('span').textContent=D.packs?t('sbPacks',{n:D.packs}):t('sbNext',{n:D.w%3});
   // packs are earned only (no buying with coins): random items for purchase would be a loot box (Apple odds disclosure, AU 16+)
   pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();noteToast(t('sbHow'))}};
@@ -171,7 +173,7 @@ function sbPack(g,many){const D=sbData(),key=g?'gpacks':'packs';if(!D[key])retur
         {const nw=res.filter(R=>!R.dup).length;if(np>1)m.querySelector('p').textContent=nw?t('sbNewN',{n:nw}):t('sbDupHint');else if(nw<res.length)m.querySelector('p').textContent=t('sbDupHint')}
         if(left){const more=document.createElement('button');more.className='btn primary';more.innerHTML='<span></span>';more.querySelector('span').textContent=t('sbMore',{n:left});more.onclick=()=>{m.remove();sbPack(g)};bt.appendChild(more);
           if(left>1){const all=document.createElement('button');all.className='btn';all.innerHTML='<span></span>';all.querySelector('span').textContent=t('sbAll',{n:Math.min(SB_MAX,left)});all.onclick=()=>{sfx.click();m.remove();sbPack(g,true)};bt.appendChild(all)}}
-        const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=0;sbPageView()};bt.appendChild(back)};
+        const back=document.createElement('button');back.className='btn'+(left?'':' primary');back.innerHTML='<span></span>';back.querySelector('span').textContent=t('sbToBook');back.onclick=()=>{sfx.click();m.remove();SB.ch=0;SB.pg=sbNewPg(0);sbPageView()};bt.appendChild(back)};
       if(np===1){res.forEach((R,i)=>{const T0=800+i*750,c=cards.children[i];setTimeout(()=>{c.classList.add('tease');if(sfx.ok()&&R.s[1]!=='c')tone({f:400,f2:R.s[1]==='h'?900:700,d:.3,type:'triangle',v:.05})},T0);
         setTimeout(()=>{c.classList.remove('tease');c.classList.add('flip');if(sfx.ok())tone({f:R.s[1]==='h'?1200:R.s[1]==='r'?900:700,f2:R.s[1]==='h'?1900:1300,d:.14,type:'sine',v:.07});vib(R.s[1]==='c'?8:[15,20,15]);
 },T0+(R.s[1]==='c'?250:600))});

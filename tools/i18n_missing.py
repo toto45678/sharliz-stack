@@ -16,7 +16,7 @@ async def dump():
     finally: srv.terminate()
 d=asyncio.run(dump())
 # derived at runtime (v42 night/storm names, v47 trophy power lines, v61 new buddy powers) — not translated directly
-keys={k:v for k,v in d['en'].items() if isinstance(v,str) and v.strip() and not k.startswith('_') and not re.fullmatch(r'z[A-Z][a-z]+[NS]',k) and not k.startswith(('hp_','hm_','pk_x_'))}
+keys={k:v for k,v in d['en'].items() if isinstance(v,str) and v.strip() and not k.startswith('_') and not re.fullmatch(r'z[A-Z][a-z]+[NS]',k) and not k.startswith(('hp_h_','hm_h_','pk_x_'))}
 s=open(os.path.join(ROOT,'index.html'),encoding='utf-8').read()
 pairs=sorted(set(m.replace("\\'","'") for m in re.findall(r"T_\('((?:[^'\\\n]|\\.)*)'\)",s))|set(re.findall(r'T_\("((?:[^"\\\n]|\\.)*)"\)',s)))
 src={'keys':keys,'pairs':pairs,'pw':d['pw'],'fmt':{'night':'{w} by Night','storm':'Stormy {w}'}}

@@ -422,7 +422,7 @@ const GOLDS=[
 const STK3_ART=new Set(__STK3_ART__),has3=id=>STK3_ART.has(id);
 SHZ.forEach(s=>{if(!s[6])s[6]='classic'});SHZ.push(...SHZ3.filter(s=>has3(s[0])));
 Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold',sec_classic:'Classics',sec_short:'Short stories',stCh:'Chapter {n}',
-  sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stLater:'Keep playing to see what happens next',stNew:'A new story card!',
+  sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stNext1:'Next part: win 1 more level',stKeep:'Keep playing to see what happens next',stNew:'A new story card!',
   gdTitle:'GOLD STICKER!',gdFeat:'Legendary feat',gdOk:'Wow!',gdAlbum:'To the album',
   gf_coins:'Have {n} coins at once',gf_s1:'3 stars on all {n} levels of the first 8 worlds',gf_combo:'{n} perfect landings in a row',
   gf_evo:'Evolve {n} buddies to 3 stars',gf_nh:'Beat {b} without losing a heart',gf_endless:'Reach floor {n} in {m}',
@@ -433,7 +433,7 @@ Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold
   gf_lv:'Reach player level {n}',gf_gift:'Finish the 7-day daily gift {n} times',gf_stk:'Collect {n} different Sharliz stickers',
   gf_cups:'Win all {n} gold cups in the trophy room',gf_3s:'3 stars on {n} levels',gf_sec:'Fill {n} album sections',gf_all:'Collect all the other gold stickers'});
 Object.assign(I18N.he,{pg_gold:'זהב',hint_gold:'משימה אגדית',sbRar_g:'זהב',sec_classic:'הקלאסיות',sec_short:'סיפורים קצרים',stCh:'פרק {n}',
-  sbToc:'תוכן העניינים',sbWhole:'כל הפרק',stNext:'להמשך הסיפור: עוד {n} ניצחונות בשלבים',stLater:'תמשיכו לשחק כדי לגלות מה קורה',stNew:'קלף סיפור חדש!',
+  sbToc:'תוכן העניינים',sbWhole:'כל הפרק',stNext:'להמשך הסיפור: עוד {n} ניצחונות בשלבים',stNext1:'להמשך הסיפור: עוד ניצחון אחד בשלב',stKeep:'תמשיכו לשחק כדי לגלות מה קורה',stNew:'קלף סיפור חדש!',
   gdTitle:'מדבקת זהב!',gdFeat:'משימה אגדית',gdOk:'וואו!',gdAlbum:'לאלבום',
   gf_coins:'להחזיק {n} מטבעות בבת אחת',gf_s1:'3 כוכבים בכל {n} השלבים של 8 העולמות הראשונים',gf_combo:'{n} נחיתות מושלמות ברצף',
   gf_evo:'לפתח {n} חברים ל-3 כוכבים',gf_nh:'לנצח את {b} בלי לאבד לב',gf_endless:'להגיע לקומה {n} ב{m}',
@@ -452,16 +452,16 @@ function sbSecSub(sec,PG){const pg=PG.n>1?t('sbPage',{a:PG.k+1,b:PG.n}):'';if(/^
 // chest per section; the old single-chapter chests became the first section's (migration in sbData)
 function sbRew(ck){if(ck==='shz:classic')return SB_REW.shz;if(ck==='rare:short')return SB_REW.rare;if(ck==='shz:all')return [3000,200];if(ck==='rare:all')return [2000,150];
   if(ck.includes(':'))return ck.startsWith('rare:')?[300,30]:[400,40];return SB_REW[ck]||[500,60]}
-function sbClaim(ck,after){const D=sbData();if(D.done[ck])return;const [c,x]=sbRew(ck);D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');after&&after()}
+function sbClaim(ck,after){const D=sbData();if(D.done[ck])return;const [c,x]=sbRew(ck);D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+'  +'+x+' XP');after&&after()}
 /* ☰ contents: every section with its progress and chest, tap → its first page; the whole-chapter chest at the bottom */
 function sbToc(P){const all=P.items().filter(x=>!x.soon),pages=sbPages(P,all),D=sbData(),m=document.createElement('div');m.className='sb-tocm';
   const draw=()=>{const secs=sbSecs(P),fullAll=all.every(x=>x.n),ak=P.id+':all';
     m.innerHTML=`<div class="tc-card" style="--c:${SB_COL[P.id]||'#b48cff'}"><div class="tc-hd"><b></b><button class="x-btn tc-x" aria-label="close"></button></div><div class="tc-list"></div>
       <div class="tc-all"><span><b></b><small>${all.filter(x=>x.n).length}/${all.length}</small></span><button class="sb-chest${fullAll&&!D.done[ak]?' can':''}${D.done[ak]?' got':''}"><img src="art/ic_chest${D.done[ak]?'_open':''}.webp" alt=""></button></div></div>`;
     m.querySelector('.tc-hd b').textContent=t('sbToc');m.querySelector('.tc-x').innerHTML=XSVG;m.querySelector('.tc-x').onclick=()=>{sfx.click();m.remove()};
-    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{draw();sbPageView()});else if(!D.done[ak]){sfx.locked();popupToast(t('sbDone').replace('!','')+' → '+sbRew(ak)[0]+' 🪙')}};
+    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{sbPageView();draw();if(!m.isConnected)SB.el.appendChild(m)});else if(!D.done[ak]){sfx.locked();noteToast(t('sbFillAll',{n:sbRew(ak)[0]})+' 🪙')}};
     const L=m.querySelector('.tc-list');secs.forEach(sec=>{const a=all.filter(x=>x.sec===sec),g=a.filter(x=>x.n).length,ck=P.id+':'+sec,fst=a.find(x=>x.n)||a[0],row=document.createElement('button'),pi=pages.findIndex(p=>p.sec===sec);
-      row.className='tc-row'+(pi===SB.pg||pages[SB.pg].sec===sec?' on':'')+(g===a.length?' full':'');
+      row.className='tc-row'+(pi===SB.pg||pages[SB.pg].sec===sec?' on':'')+(g===a.length?' full':'')+(a.some(x=>x.n&&!(progress.stkSeen||[]).includes(x.id))?' nw':'');
       row.innerHTML=`<span class="tc-th${fst.n?'':' no'}"><img alt="" loading="lazy"></span><span class="tc-t"><b></b><i><u style="width:${g/a.length*100}%"></u></i></span>${g===a.length&&!D.done[ck]?'<img class="tc-can" src="art/ic_chest.webp" alt="">':`<em>${D.done[ck]?'✓':g+'/'+a.length}</em>`}`;
       row.querySelector('img').src=fst.src||'';row.querySelector('b').textContent=sbSecName(P.id,sec);row.onclick=()=>{sfx.click();m.remove();SB.pg=pi;sbPageView(1)};L.appendChild(row)});
     const on=L.querySelector('.on');if(on)requestAnimationFrame(()=>on.scrollIntoView({block:'center'}))};
@@ -473,7 +473,7 @@ function stOwn(){return Math.floor(stWins()/ST_PER)}
 function stOwnArt(){const n=stOwn();return STORY3.filter((s,i)=>i<n&&has3(s[0])).length}
 {const P=STK_PAGES.find(p=>p.id==='rare');if(P){const _it=P.items;P.items=()=>{const a=_it().map(x=>Object.assign(x,{sec:'short'})),own=stOwn(),L=lang==='he'?1:0;
   STORY3.forEach((s,i)=>{if(!has3(s[0]))return;a.push({id:'story:'+s[0],n:i<own?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1,sec:'c'+s[5],
-    hint:i===own?t('stNext',{n:ST_PER-stWins()%ST_PER}):t('stLater')})});return a}}}
+    hint:i===own?(ST_PER-stWins()%ST_PER===1?t('stNext1'):t('stNext',{n:ST_PER-stWins()%ST_PER})):t('stKeep')})});return a}}}
 /* ---------- GOLD: legendary feats ---------- */
 const S1W=['farm','city','desert','candy','snow','ocean','volcano','space'];
 const ST=()=>progress.stat=progress.stat||{};
@@ -481,8 +481,10 @@ const zIx=sid=>ZONES.findIndex(z=>(z.sid||z.id)===sid);
 function st3(sids){let n=0;for(const s of sids){const zi=zIx(s);if(zi<0)continue;for(let i=0;i<LPZ;i++)if((progress.stars[zi*LPZ+i]||0)>=3)n++}return n}
 const beatN=sids=>sids.filter(s=>(progress.beat||{})[s]).length,nh=s=>(ST().nh||{})[s]?1:0,bossNm=sid=>t(BOSS_NAMES[sid]||sid);
 function secsDone(){let n=0;try{for(const P of sbChapters()){if(P.id==='gold')continue;const all=P.items().filter(x=>!x.soon);for(const s of new Set(all.map(x=>x.sec))){const a=all.filter(x=>x.sec===s);if(a.length&&a.every(x=>x.n))n++}}}catch(e){}return n}
+// coins that came from purchases never count toward a gold card (gold cards are never sold)
+const boughtCoins=()=>(progress.purchases||[]).reduce((a,p)=>a+((p&&IAP.products[p.sku]||{}).coins||0),0);
 const GFEAT={
-  g01:{k:'coins',T:15000,v:()=>progress.coins||0},          g02:{k:'s1',T:80,v:()=>st3(S1W)},
+  g01:{k:'coins',T:15000,v:()=>Math.max(0,(progress.coins||0)-boughtCoins())},          g02:{k:'s1',T:80,v:()=>st3(S1W)},
   g03:{k:'combo',T:15,v:()=>ST().combo||0},                  g04:{k:'evo',T:3,v:()=>Object.values(progress.bud||{}).filter(x=>x>=3).length},
   g05:{k:'nh',b:'volcanoS',T:1,v:()=>nh('volcanoS')},        g06:{k:'endless',T:100,v:()=>progress.bestEndless||0},
   g07:{k:'nhN',T:10,v:()=>Object.keys(ST().nh||{}).length},  g08:{k:'w3',w:'ocean',T:30,v:()=>st3(['ocean','oceanN','oceanS'])},
@@ -508,6 +510,8 @@ function goldCheck(){const D=sbData(),nw=[];for(const g of GOLDS){const id=g[0],
   if(nw.length){saveProgress();GDQ.push(...nw);try{stkBadge()}catch(e){}}return nw.length}
 function gdBusy(){return state!=='title'||W3.on||lobbyLayerOpen()||!document.getElementById('overlay').hidden||document.getElementById('title').hidden||(SB.el&&!SB.el.hidden)||(typeof SSEL!=='undefined'&&SSEL&&!SSEL.hidden)||
   !!document.querySelector('.egg-pop,.sb-pk,.sb-zoom,.lvup,.gd-rev,.pay-modal,#payModal')||(typeof dlState==='function'&&progress.unlocked>=2&&!dlState().claimed)}
+// the starter offer, daily gift and house popup wait while a gold card is being revealed
+{const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector('.gd-rev')||_lo()}}
 function goldMaybe(){goldCheck();if(!GDQ.length)return;setTimeout(()=>{if(!GDQ.length||gdBusy())return;goldReveal(GDQ.shift())},900)}
 /* the big moment: a gold card flips in over rays + sparkles */
 function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=lang==='he'?1:0,m=document.createElement('div');m.className='gd-rev';
@@ -519,7 +523,7 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
   m.querySelector('.gd-ok span').textContent=t('gdOk');m.querySelector('.gd-al span').textContent=t('gdAlbum');
   const close=()=>{m.remove();if(GDQ.length)goldMaybe()};
   m.querySelector('.gd-ok').onclick=()=>{sfx.click();close()};
-  m.querySelector('.gd-al').onclick=()=>{sfx.click();m.remove();openAlbum();const ci=sbChapters().findIndex(P=>P.id==='gold');if(ci>=0){SB.ch=ci;SB.pg=0;sbPageView()}};
+  m.querySelector('.gd-al').onclick=()=>{sfx.click();m.remove();const rest=GDQ.slice();openAlbum();GDQ=rest;const ci=sbChapters().findIndex(P=>P.id==='gold');if(ci>=0){SB.ch=ci;SB.pg=sbNewPg(ci);sbPageView()}};
   document.body.appendChild(m);sfx.flourish(4);vib([30,50,30,50,60]);if(sfx.ok()){tone({f:520,f2:1560,d:.6,type:'triangle',v:.06});setTimeout(()=>tone({f:1040,f2:2080,d:.5,type:'sine',v:.05}),350)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{goldMaybe()}catch(e){}return r}}
 {const _o=openAlbum;openAlbum=function(){try{goldCheck();GDQ=[]}catch(e){}return _o.apply(this,arguments)}} // seen in the album right away
@@ -527,6 +531,9 @@ function goldReveal(id){const g=GOLDS.find(x=>x[0]===id);if(!g)return;const L=la
 {const _pv=sbPageView;sbPageView=function(){const r=_pv.apply(this,arguments);try{const P=sbChapters()[SB.ch];if(P.id==='gold'){const all=P.items(),pg=sbPages(P,all)[SB.pg];
   SB.el.querySelectorAll('.sb-grid .sb-slot').forEach((s,k)=>{const it=all[pg.ix[k]];if(!it)return;s.classList.add('gold');if(!it.n&&it.prog){const b=document.createElement('i');b.className='gd-pb';b.innerHTML=`<u style="width:${it.prog[0]/it.prog[1]*100}%"></u>`;s.appendChild(b)}})}}catch(e){}return r}}
 /* ---------- trackers the feats need (progress.stat) ---------- */
+// continuing from the checkpoint restarts the level (startLevel → resetStats → lv.lost=0): keep the hearts already lost, so
+// 'beat the boss without losing a heart' (gold cards) and the 'no hit' star mission are not given after losing every heart
+{const _cc=continueCheckpoint;continueCheckpoint=function(){const L=lv&&lv.lost||0;const r=_cc.apply(this,arguments);if(lv&&L)lv.lost=(lv.lost||0)+L;return r}}
 {const _w=win;win=function(){const was=state,b=stOwnArt();const r=_w.apply(this,arguments);if(was!=='win'&&state==='win'){try{const S=ST();if(lv&&lv.best)S.combo=Math.max(S.combo||0,lv.best);
     if(mode==='levels'){S.row=(S.row||0)+1;S.rowB=Math.max(S.rowB||0,S.row);if(lvInZone()===LPZ-1&&!lv.lost){S.nh=S.nh||{};S.nh[zone().sid||zone().id]=1}}saveProgress();
     if(stOwnArt()>b){toast(t('stNew'));try{stkBadge()}catch(e){}}}catch(e){}}return r}}

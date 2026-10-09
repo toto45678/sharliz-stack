@@ -1,6 +1,6 @@
 /* ===== v38: daily login gift — 7-day streak calendar, pops up once a day in the lobby ===== */
-Object.assign(I18N.en,{dlTitle:'Daily gift',dlDay:'Day {n}',dlClaim:'Collect!',dlSub:'Come back every day — day 7 is a big chest!',dlStreak:'Streak: {n} days',dlBoost:'+ booster',dlBoost2:'+ 2 boosters'});
-Object.assign(I18N.he,{dlTitle:'מתנה יומית',dlDay:'יום {n}',dlClaim:'לקחת!',dlSub:'חוזרים כל יום, וביום 7 מחכה תיבה גדולה!',dlStreak:'רצף: {n} ימים',dlBoost:'+ בוסטר',dlBoost2:'+ 2 בוסטרים'});
+Object.assign(I18N.en,{dlTitle:'Daily gift',dlDay:'Day {n}',dlClaim:'Collect!',dlSub:'Come back every day — day 7 is a big chest!',dlStreak:'Streak: {n} days',dlStreak1:'Streak: 1 day',dlBoost:'+ booster',dlBoost2:'+ 2 boosters'});
+Object.assign(I18N.he,{dlTitle:'מתנה יומית',dlDay:'יום {n}',dlClaim:'לקחת!',dlSub:'חוזרים כל יום, וביום 7 מחכה תיבה גדולה!',dlStreak:'רצף: {n} ימים',dlStreak1:'רצף: יום אחד',dlBoost:'+ בוסטר',dlBoost2:'+ 2 בוסטרים'});
 
 // coins per streak day; b = boosters added on top
 const DL_REWARDS=[{c:50},{c:80},{c:100,b:1,pk:1},{c:120},{c:150,b:1},{c:200},{c:400,b:2,gpk:1}];  // pk = sticker packs, gpk = golden sticker pack (v57)

@@ -17,13 +17,13 @@ const BAL={zaps:[],seen:new WeakMap(),DELAY:.45,FLY:.25};
 function balTargets(){const L=[],M=hz.m||{},add=(o,tag,pos,kill,alive)=>L.push({o,tag,pos,kill,alive:alive||(()=>true)});
   const on=p=>p.x>-S*.6&&p.x<W+S*.6&&p.y>-S&&p.y<H+S;
   // classic hazards
-  const c=hz.crow;if(c&&c.phase==='come'&&c.x&&on(c))add(c,'crow',()=>({x:c.x,y:c.y}),()=>{c.phase='shoo';c.t=0;burst(c.x,scrToW(c.y),['#1a1020','#3b2a4a','#ffffff'],10,160)},()=>hz.crow===c&&c.phase==='come');
+  const c=hz.crow;if(c&&c.phase==='come'&&c.x&&on(c))add(c,'crow',()=>({x:c.x,y:c.y}),()=>{c.phase='shoo';c.t=0;track('shoo');burst(c.x,scrToW(c.y),['#1a1020','#3b2a4a','#ffffff'],10,160)},()=>hz.crow===c&&c.phase==='come');
   const o=hz.octo;if(o&&o.phase==='peek')add(o,'octo',()=>octoPos(o),()=>{o.phase='hide';o.t=0},()=>hz.octo===o&&o.phase==='peek');
   const k=hz.ink;if(k&&k.t<k.dur-1)add(k,'ink',()=>({x:k.cx,y:sy(k.wy)}),()=>{k.t=Math.max(k.t,k.dur-.7)},()=>hz.ink===k);
   const g=hz.gust;if(g)add(g,'gust',()=>({x:g.dir>0?S*.9:W-S*.9,y:H*.42}),()=>{hz.gust=null;hz.gustK=1;hz.gustV=0},()=>hz.gust===g);
   const q=hz.quake;if(q)add(q,'quake',()=>({x:W/2,y:Math.min(H-40,sy(0))}),()=>{hz.quake=null},()=>hz.quake===q);
   for(const s of [swinger,dropping])if(s&&BAL_KINDS[s.kind]){const kd=s.kind,p=()=>s===swinger?swingScr():{x:xOf(s.xs),y:sy(s.y)};
-    add(s,'kind_'+kd,p,()=>{s.kind=null;delete s.fuse;delete s.sz;delete s.wt;jig(s,1.2)},()=>s.kind===kd&&(s===swinger||s===dropping))}
+    add(s,'kind_'+kd,p,()=>{if(kd==='bomb')track('defuse');s.kind=null;delete s.fuse;delete s.sz;delete s.wt;jig(s,1.2)},()=>s.kind===kd&&(s===swinger||s===dropping))}
   const top=tower[tower.length-1];if(top&&top.floatT>0&&tower.length>1)add(top,'float',()=>topScreen(),()=>{top.floatT=0;top.inflate=0;if(top.kind==='balloon')top.kind=null},()=>top.floatT>0&&tower[tower.length-1]===top);
   // the new mechanics
   const m=k=>M[k];let x;

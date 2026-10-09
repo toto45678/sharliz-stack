@@ -193,7 +193,7 @@ const CS_ROWS=['tol','coins','hearts','spd','boss','feverT'];
 function csStatVal(F,k){if(k==='hearts')return 3+(F.hearts||0);return F[k]===undefined?1:F[k]}
 function csChips(F){const out=[],L=PW_TXT[lang]?lang:'en',P=typeof PW_TXT!=='undefined'?PW_TXT[L]:{};
   for(const k in F){const v=F[k];if(k.startsWith('imm_')){const m=(I18N[L]['hz_'+k.slice(4)]||k.slice(4)).replace(/[!¡！]/g,'');out.push(['+',(P.imm||'No {m}').replace('{m}',m)])}
-    else if(k==='astro')out.push(['+',t('ps_astro')]);else if(k.startsWith('pet_'))out.push(['+',t('ps_'+k.slice(4))]);
+    else if(k==='astro'){out.push(['+',t('ps_astro')]);out.push(['-',t('ng_heart1')])}else if(k.startsWith('pet_'))out.push(['+',t('ps_'+k.slice(4))]);
     else if(['aim','noSlip','light','lavaK','swayK','convK','perfCoins'].includes(k))out.push(['+',P[k]||k]);
     else if(k==='fall')out.push(v<1?['+',P.fall||'']:['-',t('ng_fall')]);else if(k==='wind')out.push(v<1?['+',P.wind||'']:['-',t('ng_wind')]);
     else if(k==='pts'&&v<1)out.push(['-',t('ng_pts')]);else if(k==='perfPts')out.push(v>1?['+',P.perfPts||'']:['-',t('ng_perfPts')]);
@@ -214,7 +214,7 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
     const c0=s.cats[0],id=s.k==='fx'?(progress.tskin||progress.lskin||progress.cskin||'none'):csPrevId(c0),th=mk('img');th.alt='';const sw=mk('i','sw');sw.hidden=true;
     const pw=s.cats.some(c=>c!=='fx'&&itemFX(c,csPrevId(c)));if(pw)b.classList.add('pow');
     if(s.k==='fx')csThumb(progress.tskin?'trail':progress.lskin?'land':'cfilt',id,th,sw);else if(id&&id!=='none')csThumb(c0,id,th,sw);else th.src=csStyleIcon('none');
-    b.append(th,sw,mk('span','',t('sl_'+s.k)));b.onclick=()=>{sfx.click();if(CS.slot!==s.k)W3.sel=null;CS.slot=s.k;W3.cat=s.cats[0];CS.filter='all';renderWardrobe()};st.appendChild(b)}
+    b.append(th,sw,mk('span','',t('sl_'+s.k)));if(s.k!==CS.slot&&s.cats.some(c=>!STYLE_CAT[c]&&wNewIn(c)))b.appendChild(mk('i','dot'));b.onclick=()=>{sfx.click();if(CS.slot!==s.k)W3.sel=null;CS.slot=s.k;W3.cat=s.cats[0];CS.filter='all';renderWardrobe()};st.appendChild(b)}
   el.appendChild(st);
   // power bars: what you wear vs what you are trying on
   const prevL=heroLook(),eqL=Object.assign({},lookNow(),{hat:progress.skin||'none'});const FP=fxCombine(prevL,prevL.hat),FE=fxCombine(eqL,eqL.hat);
@@ -224,7 +224,7 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
     else{const f=v=>Math.max(.04,Math.min(1,v/1.6));const a=mk('i','fill');a.style.width=(f(Math.min(vp,ve))*100)+'%';bar.appendChild(a);
       if(vp!==ve){const better=k==='spd'?vp<ve:vp>ve,d=mk('i','delta '+(better?'up':'down'));d.style.width=(Math.abs(f(vp)-f(ve))*100)+'%';d.style.insetInlineStart=(f(Math.min(vp,ve))*100)+'%';bar.appendChild(d)}}
     r.appendChild(bar);const pct=k==='hearts'?String(vp):Math.round(vp*100)+'%';const v=mk('span','vl'+(vp!==ve?((k==='spd'?vp<ve:vp>ve)?' up':' down'):(vp!==1&&k!=='hearts'?(k==='spd'?(vp<1?' up':' down'):(vp>1?' up':' down')):'')),pct);r.appendChild(v);sp.appendChild(r)}
-  const chips=csChips(FP);if(chips.length){const cw=mk('div','cs-chips');for(const [s,tx] of chips.slice(0,6))cw.appendChild(mk('span','ch '+(s==='+'?'up':'down'),(s==='+'?'▲ ':'▼ ')+tx));sp.appendChild(cw)}
+  const chips=csChips(FP);if(chips.length){const cw=mk('div','cs-chips');for(const [s,tx] of csPick(chips))cw.appendChild(mk('span','ch '+(s==='+'?'up':'down'),(s==='+'?'▲ ':'▼ ')+tx));sp.appendChild(cw)}
   el.appendChild(sp);
   // drawer
   const dr=mk('div','cs-drawer');const hd=mk('div','cs-dh');
@@ -236,7 +236,7 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
   hd.append(subs,extra);dr.appendChild(hd);
   if(cat==='sets'){const g=mk('div','cs-sets');wSets().forEach((S,i)=>{const c=mk('div','wd-set'+(S?'':' empty'));const th=mk('div','wd-th'),im=mk('img');im.alt='';if(S){const u=wThumb('set',i);if(u)im.src=u}th.appendChild(im);c.appendChild(th);const col=mk('div','col');col.appendChild(mk('b','',t('lookN',{n:i+1})));c.appendChild(col);
       const w=mk('button','wear',t('wear'));w.disabled=!S;w.onclick=()=>{wWearSet(i)};const sv=mk('button','save',t('saveLook'));sv.onclick=()=>wSaveSet(i);col.append(w,sv);g.appendChild(c)});dr.appendChild(g)}
-  else{const fl=mk('div','cs-filter');const powCat=c=>c==='hat'||c==='outfit'||c==='glasses'||c==='pet';
+  else{const fl=mk('div','cs-filter');const powCat=c=>c==='hat'||c==='outfit'||c==='glasses';
     if(cat!=='deal'&&powCat(cat))for(const [f,key] of [['all','csAll'],['pow','csPow'],['skin','csSkin']]){const b=mk('button','cs-f'+(CS.filter===f?' on':''),t(key));b.onclick=()=>{CS.filter=f;renderWardrobe()};fl.appendChild(b)}
     if(fl.childNodes.length)dr.appendChild(fl);
     const grid=mk('div','cs-grid');let list=csList(cat);
@@ -253,27 +253,30 @@ renderWardrobe=function(){const el=document.getElementById('wardrobe');if(!el)re
   // action
   const act=mk('div','cs-act');const s=W3.sel;
   if(s&&cat!=='sets'){const I=csInfo(s.cat,s.id);
-    if(!I.owned){const bb=mk('button','btn green cs-buy');if(I.gate){bb.disabled=true;bb.textContent=I.gate}
+    if(!I.owned){const bb=mk('button','btn green cs-buy');if(I.gate){bb.disabled=true;bb.textContent='🔒 '+I.gate}
       else if(I.real){bb.classList.add('prem');bb.textContent=t('buyEquip')+' · '+((IAP.products[I.real]||{}).price||'')}
       else{bb.innerHTML='<span></span>'+coinImg()+I.price.toLocaleString();bb.querySelector('span').textContent=t('buyEquip')+' ';if(I.price>progress.coins)bb.classList.add('poor')}
       bb.onclick=()=>csBuy(s.cat,s.id);act.appendChild(bb)}
     else act.appendChild(mk('div','cs-hint',(I.worn?'✓ '+t('csWorn')+': ':'')+I.name))}
-  else act.appendChild(mk('div','cs-hint',t('csTry')));
-  dr.appendChild(act);el.appendChild(dr);
+  else if(cat!=='sets')act.appendChild(mk('div','cs-hint',t('csTry')));
+  dr.appendChild(act);if(!CS.fresh)dr.classList.add('still');CS.fresh=false;el.appendChild(dr);
   if(cat!=='sets'&&!STYLE_CAT[cat])wMarkSeen(cat);saveProgress();wBadge()};
-function csTap(c,id,I){if(I.gate&&!I.owned){sfx.locked();popupToast(I.gate);return}sfx.click();
+function csTap(c,id,I){if(I.gate&&!I.owned)sfx.locked();else sfx.click();// a locked item can be tried on; the buy button says why it is locked
+
   if(STYLE_CAT[c]){const key=STYLE_CAT[c]+'skin';if(I.owned){progress[key]=id==='none'?null:id;W3.sel=null}else W3.sel={cat:c,id};saveProgress();renderWardrobe();return}
   wSelect(c,id)}
 function csBuy(c,id){if(STYLE_CAT[c]){const q=STYLE_SKINS.find(q=>q.id===id);if(!q||wallet().skins.includes(id))return;if(progress.coins<q.price){sfx.locked();popupToast(t('needCoins'));return}
     progress.coins-=q.price;progress.skins.push(id);progress[q.cat+'skin']=id;W3.sel=null;sfx.flourish&&sfx.flourish(2);saveProgress();updateWalletUI();renderWardrobe();return}
   wBuy()}
-{const _ow=openWardrobe;openWardrobe=function(...a){CS.slot=csSlotOf(W3.cat)||CS.slot||'look';return _ow(...a)}}
+{const _ow=openWardrobe;openWardrobe=function(...a){CS.slot=csSlotOf(W3.cat)||CS.slot||'look';CS.fresh=true;return _ow(...a)}}
+// power chips: never drop a cost to make room (max 6, costs kept)
+function csPick(ch){const m=ch.filter(x=>x[0]==='-'),p=ch.filter(x=>x[0]!=='-');return p.slice(0,Math.max(0,6-m.length)).concat(m).slice(0,Math.max(6,m.length))}
 // every pattern drawn 30% bigger (Tzach): paint at 1/1.3 size, then stretch to the full texture — periodic patterns stay seamless
 const PAT_SCALE=1.3;
 {const _pt=patternTex;patternTex=function(id,base){const _ct=canvasTex;
   canvasTex=function(k,w,h,draw){return _ct(k+'_x'+PAT_SCALE,w,h,(g,W,H)=>{const c=document.createElement('canvas');c.width=Math.round(W/PAT_SCALE);c.height=Math.round(H/PAT_SCALE);draw(c.getContext('2d'),c.width,c.height);g.imageSmoothingEnabled=true;g.imageSmoothingQuality='high';g.drawImage(c,0,0,W,H)})};
   try{return _pt(id,base)}finally{canvasTex=_ct}}}
 // bug hunt 4: a try-on or buy re-renders the drawer; keep the grid's scroll when the slot/category/filter didn't change
-{const _rw=renderWardrobe;renderWardrobe=function(){const key=()=>CS.slot+'/'+W3.cat+'/'+CS.filter,g=document.querySelector('#wardrobe .cs-grid'),y=g&&g.dataset.k===key()?g.scrollTop:0;
-  const r=_rw.apply(this,arguments);const n=document.querySelector('#wardrobe .cs-grid');if(n){n.dataset.k=key();if(y)n.scrollTop=y}return r}}
+{const _rw=renderWardrobe;renderWardrobe=function(){const key=()=>CS.slot+'/'+W3.cat+'/'+CS.filter,G='#wardrobe .cs-grid,#wardrobe .cs-sets',g=document.querySelector(G),y=g&&g.dataset.k===key()?g.scrollTop:0;
+  const r=_rw.apply(this,arguments);const n=document.querySelector(G);if(n){n.dataset.k=key();if(y)n.scrollTop=y}return r}}
 I18N.en.style='Effects';I18N.he.style='אפקטים'; // the shop had two tabs called 'Style'; this one opens the Effects slot

@@ -40,7 +40,7 @@ function starterCard(onBuy){const P=IAP.products.starter,d=document.createElemen
       <div class="st-it bo">${ST_BOOST.map(b=>`<img src="art/ic_${b}.webp" alt="">`).join('')}<span></span></div></div></div>
     <button class="st-buy"><em>${P.price}</em></button>`;
   d.querySelector('.pk-tag').textContent=t('stOnce');d.querySelector('.st-t').textContent=t('stTitle');
-  d.querySelector('.hat span').textContent=wName('hat','halo');d.querySelector('.hat small').textContent='▲ '+t('hp_halo');
+  d.querySelector('.hat span').textContent=wName('hat','halo');d.querySelector('.hat small').textContent='▲ '+t('hp_halo');{const c=document.createElement('small');c.className='cost';c.textContent='▼ '+t('hm_halo');d.querySelector('.hat small').after(c)}
   d.querySelector('.bo span').textContent=t('stBoost');
   d.querySelector('.st-buy').onclick=()=>IAP.buy('starter',t('stTitle')).then(ok=>{if(!ok)return;try{setHero3DSkin();rebakeIfNeeded()}catch(e){}popupToast(t('stGot'));onBuy&&onBuy()});
   return d}

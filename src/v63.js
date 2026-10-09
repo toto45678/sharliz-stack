@@ -4,10 +4,10 @@
    a golden pack, three shop-only looks (sticker hat, sticker-bomb pattern, sticker trail) and the gold album frame (gold cover + gold page edges). Stars come ONLY from doubles: never sold for money
    and never bought with coins, so nothing random can be bought with real money (App Store loot-box rule). */
 Object.assign(I18N.en,{ssTitle:'Sticker shop',ssStars:'Sticker stars',ssDoubles:'Your doubles: {n}',ssNoDup:'No doubles yet. Open packs to get some!',ssSell:'Sell all: +{n}',ssSold:'+{n} sticker stars!',
-  ssPick:'Pick a missing sticker',ssAllGot:'You have all 24 Sharliz stickers!',ssSpecial:'Special',ssBuyQ:'Buy “{x}” for {n} stars?',ssBuy:'Buy',ssCancel:'Cancel',ssNeed:'You need {n} more stars',
+  ssPick:'Pick a missing sticker',ssAllGot:'You have all {n} Sharliz stickers!',ssSpecial:'Special',ssBuyQ:'Buy “{x}” for {n} stars?',ssBuy:'Buy',ssCancel:'Cancel',ssNeed:'You need {n} more stars',
   ssOwned:'Owned',ssGotIt:'It’s yours!',ssOnly:'Only in the sticker shop',ssWear:'Wear it in My hero',ssHow:'Sell doubles → stars → buy what you want!',sbDouble:'Double!',sbDupHint:'Sell doubles in the sticker shop for stars',sk_t_stk:'Stickers',ssFrame:'Gold album frame',ssFrameOn:'Your album is golden now!'});
 Object.assign(I18N.he,{ssTitle:'חנות המדבקות',ssStars:'כוכבי מדבקה',ssDoubles:'הכפולות שלך: {n}',ssNoDup:'עוד אין כפולות. פותחים שקיות ומקבלים!',ssSell:'מכרו הכל: +{n}',ssSold:'+{n} כוכבי מדבקה!',
-  ssPick:'בחרו מדבקה שחסרה לכם',ssAllGot:'יש לכם את כל 24 מדבקות השארליז!',ssSpecial:'מיוחדים',ssBuyQ:'לקנות את „{x}” ב-{n} כוכבים?',ssBuy:'קנו',ssCancel:'ביטול',ssNeed:'חסרים לכם עוד {n} כוכבים',
+  ssPick:'בחרו מדבקה שחסרה לכם',ssAllGot:'יש לכם את כל {n} מדבקות השארליז!',ssSpecial:'מיוחדים',ssBuyQ:'לקנות את „{x}” ב-{n} כוכבים?',ssBuy:'קנו',ssCancel:'ביטול',ssNeed:'חסרים לכם עוד {n} כוכבים',
   ssOwned:'שלכם',ssGotIt:'זה שלכם!',ssOnly:'רק בחנות המדבקות',ssWear:'לובשים את זה ב"הגיבור שלי"',ssHow:'מוכרים כפולות ← מקבלים כוכבים ← קונים מה שרוצים!',sbDouble:'כפולה!',sbDupHint:'את הכפולות מוכרים בחנות המדבקות תמורת כוכבים',sk_t_stk:'מדבקות',ssFrame:'מסגרת זהב לאלבום',ssFrameOn:'האלבום שלכם עכשיו מזהב!'});
 const SS_SELL={c:1,r:3,h:8},SS_BUY={c:6,r:15,h:40};
 const SS_SPECIAL=[{k:'gold',p:25},{k:'hat',c:'hat',id:'stkhat',p:35},{k:'pat',c:'pattern',id:'stkbomb',p:40},{k:'trail',c:'trail',id:'t_stk',p:30},{k:'frame',p:50}];
@@ -67,7 +67,7 @@ function ssRender(top){const D=sbData(),ex=ssExtras(),nEx=ex.reduce((a,x)=>a+x[1
   r.querySelector('.sb-ttl').textContent=t('ssTitle');r.querySelector('.ss-how').textContent=t('ssHow');
   r.querySelector('.ss-sh b').textContent=nEx?t('ssDoubles',{n:nEx}):t('ssNoDup');r.querySelector('.ss-sellbtn span').textContent=t('ssSell',{n:val});
   r.querySelector('.ss-sellbtn').onclick=()=>ssSell();
-  r.querySelector('.ss-h').textContent=t('ssPick');r.querySelector('.ss-h.sp').textContent=t('ssSpecial');{const a=r.querySelector('.ss-all');if(a)a.textContent=t('ssAllGot')}
+  r.querySelector('.ss-h').textContent=t('ssPick');r.querySelector('.ss-h.sp').textContent=t('ssSpecial');{const a=r.querySelector('.ss-all');if(a)a.textContent=t('ssAllGot',{n:SHZ.length})}
   r.querySelectorAll('.ss-sec').forEach(b=>{b.querySelector('span').textContent=sbSecName('shz',b.dataset.sec);b.onclick=()=>{if(ssSec===b.dataset.sec)return;sfx.click();ssSec=b.dataset.sec;ssRender()}});
   {const on=r.querySelector('.ss-sec.on');if(on)requestAnimationFrame(()=>{const c=on.parentNode;c.scrollLeft+=on.getBoundingClientRect().left-c.getBoundingClientRect().left-(c.clientWidth-on.offsetWidth)/2})}
   r.querySelectorAll('.ss-it[data-id]').forEach(b=>{const s=SHZ.find(x=>x[0]===b.dataset.id);b.querySelector('small').textContent=L?s[3]:s[2];b.onclick=()=>ssAsk(L?s[3]:s[2],SS_BUY[s[1]],()=>{D.got[s[0]]=1;ssPaid(SS_BUY[s[1]]);ssWin(`art/stk_${s[0]}.webp`,L?s[3]:s[2])})});
@@ -83,7 +83,7 @@ function ssRender(top){const D=sbData(),ex=ssExtras(),nEx=ex.reduce((a,x)=>a+x[1
       else{for(let i=0;i<5;i++){g.save();g.translate(18+i*22,96-i*17+Math.sin(i)*6);g.rotate(i*.7);g.globalAlpha=.45+i*.13;ssSticker(g,i%4,9+i*1.6,SS_COL[i]);g.restore()}}art.appendChild(c)}
     b.onclick=()=>{if(ssOwnedSp(S)){sfx.click();noteToast(S.k==='frame'?t('ssFrameOn'):t('ssWear'));return}ssAsk(nm,S.p,()=>{ssPaid(S.p);if(S.k==='gold'){D.gpacks=(D.gpacks||0)+1;ssWin('art/sb_gpack.webp',nm)}
       else if(S.k==='frame'){D.frame=1;saveProgress();ssFrameOn();ssWin(null,t('ssFrameOn'),art.firstChild)}
-      else{if(S.c==='trail'||S.c==='hat'){if(!wallet().skins.includes(S.id))progress.skins.push(S.id)}else{progress.owned[S.c]=progress.owned[S.c]||[];if(!progress.owned[S.c].includes(S.id))progress.owned[S.c].push(S.id)}ssWin(null,nm,art.firstChild)}})}});
+      else{if(S.c==='trail'||S.c==='hat'){if(!wallet().skins.includes(S.id))progress.skins.push(S.id)}else{progress.owned[S.c]=progress.owned[S.c]||[];if(!progress.owned[S.c].includes(S.id))progress.owned[S.c].push(S.id)}ssWin(null,nm,art.firstChild)}saveProgress()})}});
   const bd=r.querySelector('.ss-body');bd.scrollTop=y0}
 function ssPaid(n){const D=sbData();D.stars=Math.max(0,(D.stars||0)-n);saveProgress();try{stkBadge()}catch(e){}}
 function ssSell(){const D=sbData(),ex=ssExtras();if(!ex.length)return;let v=0;ex.forEach(([s,n])=>{v+=n*SS_SELL[s[1]];D.got[s[0]]=1});D.stars=(D.stars||0)+v;saveProgress();
@@ -96,7 +96,7 @@ function ssAsk(name,price,ok){sfx.click();const have=ssStars();if(have<price){sf
   m.querySelector('.ss-no').onclick=()=>{sfx.click();m.remove()};m.onclick=e=>{if(e.target===m){sfx.click();m.remove()}};m.querySelector('.ss-yes').onclick=()=>{m.remove();ok()};SSEL.appendChild(m)}
 function ssWin(src,name,cv){sfx.flourish(3);vib([30,40,30]);const m=document.createElement('div');m.className='ss-win';m.innerHTML=`<div class="ss-wc"><div class="rays"></div><div class="art"></div><b></b><small></small><button class="btn primary"><span></span></button></div>`;
   const art=m.querySelector('.art');if(src){const im=document.createElement('img');im.src=src;im.alt='';art.appendChild(im)}else if(cv){const c=document.createElement('canvas');c.width=c.height=120;c.getContext('2d').drawImage(cv,0,0);art.appendChild(c)}
-  m.querySelector('b').textContent=t('ssGotIt');m.querySelector('small').textContent=name;m.querySelector('.btn span').textContent='OK';m.querySelector('.btn').onclick=()=>{sfx.click();m.remove();ssRender()};SSEL.appendChild(m)}
+  m.querySelector('b').textContent=t('ssGotIt');m.querySelector('small').textContent=name;m.querySelector('.btn span').textContent=t('gotIt');m.querySelector('.btn').onclick=()=>{sfx.click();m.remove();ssRender()};SSEL.appendChild(m)}
 /* ---------- album: a star pill next to the coins opens the shop (red dot = doubles to sell) ---------- */
 {const _w=sbWireTop;sbWireTop=function(r){const x=_w.apply(this,arguments);try{const cp=r.querySelector('.sb-top .coin-pill');if(cp&&!r.querySelector('.ss-pill')){const b=document.createElement('button');b.className='ss-pill';b.setAttribute('aria-label',t('ssTitle'));
   b.innerHTML=`<img src="art/ic_star.webp" alt=""><span>${ssStars()}</span>${ssExtras().length?'<i class="dot"></i>':''}`;b.onclick=openStkShop;cp.before(b)}}catch(e){}return x}}

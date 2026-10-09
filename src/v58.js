@@ -49,14 +49,14 @@ function storyLeft(){const D=sbData(),own=(D.story||[]).length;return own>=STORY
 let TAPGUARD=0;
 {const _so=showOverlay;showOverlay=function(){TAPGUARD=performance.now();return _so.apply(this,arguments)}}
 for(const f of ['openArcade','openTour','openEvent','openPass','openNest','openTrophy']){const _f=window[f];if(typeof _f==='function')window[f]=function(){TAPGUARD=performance.now();return _f.apply(this,arguments)}}
-document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD<350&&e.target&&e.target.closest&&e.target.closest('#overlay,#arcade,#tour,#evhub,#passScr,#nestScr,#achScr')){e.stopPropagation();e.preventDefault()}},true);
+document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD<350&&e.target&&e.target.closest&&e.target.closest('#overlay,#arcade,#tour,#evhub,#passScr,#nestScr,#achScr,#houseScr')){e.stopPropagation();e.preventDefault()}},true);
 /* nightly check Oct 8: Japanese/Chinese/Korean have no spaces, so a big title could break anywhere and leave one character
    alone on the 2nd line ('マイヒーロ / ー', the lobby 'プレ / イ'). In those languages a big title that wraps is shrunk step by
    step until it fits on one line (down to 60%); if it still can't, it keeps its size and wraps as before. It never stops
    wrapping, so nothing can be pushed out of its card. Runs on whatever the game adds or shows, one frame later. */
 {const CJK=/^(ja|zh|ko)/,seen=new WeakSet;let q=new Set,raf=0;
  const lines=rg=>new Set([...rg.getClientRects()].map(r=>Math.round(r.top))).size;
- const fit=e=>{if(seen.has(e)||!e.isConnected)return;const cs=getComputedStyle(e),fs=parseFloat(cs.fontSize);if(fs<20||cs.display==='none')return;
+ const fit=e=>{if(seen.has(e)||!e.isConnected)return;const cs=getComputedStyle(e),fs=parseFloat(cs.fontSize);if((fs<20&&!e.matches('.shop-tabs button'))||cs.display==='none')return;
    for(const n of e.childNodes){if(n.nodeType!==3||n.textContent.trim().length<2)continue;const rg=document.createRange();rg.selectNodeContents(n);
      if(!rg.getClientRects().length)return;// not shown yet: try again when it shows
      seen.add(e);if(lines(rg)<2)return;
@@ -67,3 +67,55 @@ document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD
  new MutationObserver(ms=>{for(const m of ms)q.add(m.target);if(!raf)raf=requestAnimationFrame(run)})
    .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','class']});
  q.add(document.body);raf=requestAnimationFrame(run)}
+
+/* ---------- bug hunt 5 (Oct 9) ---------- */
+// result card: the XP / egg / sticker-pack strips are added inside the scrolling card body after the card opens. On a phone they
+// landed below its visible part (the scrollbar is hidden), so nobody saw them. The body now glides to the newest strip, and its
+// bottom edge fades while there is more below.
+{const card=document.getElementById('card');
+ const more=b=>b.classList.toggle('more',b.scrollHeight-b.clientHeight-b.scrollTop>6);
+ const hook=b=>{if(b._more)return;b._more=1;b.addEventListener('scroll',()=>more(b),{passive:true});b.addEventListener('load',()=>more(b),true)};
+ const reveal=el=>setTimeout(()=>{const b=el.isConnected&&el.parentElement;if(!b||!b.classList.contains('card-body'))return;const B=b.getBoundingClientRect(),E=el.getBoundingClientRect();
+   if(E.bottom>B.bottom-2)b.scrollTo({top:b.scrollTop+E.bottom-B.bottom+8,behavior:reduceMotion?'auto':'smooth'});more(b)},650);
+ if(card)new MutationObserver(ms=>{const b=card.querySelector('.card-body');if(b){hook(b);more(b)}
+   for(const m of ms)if(m.target===b)for(const n of m.addedNodes)if(n.nodeType===1&&/-strip\b/.test(n.className))reveal(n)}).observe(card,{childList:true,subtree:true})}
+// in-game HUD on a 375 px phone: with a 3-digit level and a 4-5 digit score the pause button was pushed off the screen (the
+// middle plaque had a fixed half of the row on each side). The plaque now takes what is left and shrinks its text to fit;
+// if even that is too small the word 'Level' is dropped and only the number stays.
+{const fitPlaque=()=>{const p=document.querySelector('.level-plaque');if(!p||!p.offsetParent)return;const w=p.querySelector('[data-i18n]');
+   p.style.fontSize='';if(w)w.style.display='';if(p.scrollWidth<=p.clientWidth+1)return;
+   let fs=parseFloat(getComputedStyle(p).fontSize);const min=fs*.72;while(p.scrollWidth>p.clientWidth+1&&fs>min){fs-=.5;p.style.fontSize=fs+'px'}
+   if(p.scrollWidth>p.clientWidth+1&&w&&w.textContent){w.style.display='none';p.style.fontSize=''}};
+ let key='';const _u=updateHud;updateHud=function(){const r=_u.apply(this,arguments);try{const p=document.querySelector('.level-plaque'),s=document.getElementById('score'),k=(p?p.textContent:'')+'|'+(s?s.textContent.length:0)+'|'+innerWidth;
+   if(k!==key){key=k;fitPlaque()}}catch(e){}return r};
+ addEventListener('resize',()=>{key=''})}
+// hearts in the HUD: a level that starts with fewer than 3 hearts (duo = 1, ballerina / astronaut / king = 2) showed black
+// 'lost' hearts from the very first second. The row now has as many hearts as the level started with (more if a booster adds one).
+let HUDH=0;
+{const _sl=startLevel;startLevel=function(){HUDH=0;const r=_sl.apply(this,arguments);queueMicrotask(()=>{HUDH=Math.max(1,hearts);try{updateHud()}catch(e){}});return r}}
+{const _u=updateHud;updateHud=function(){const r=_u.apply(this,arguments);try{if(HUDH){if(hearts>HUDH)HUDH=hearts;const n=Math.max(hearts,HUDH),el=document.getElementById('hearts');
+   if(el&&el.children.length!==n)el.innerHTML=Array.from({length:n},(_,i)=>heartSvg(i<hearts)).join('')}}catch(e){}return r}}
+// the Language buttons reload the page: in the Pause menu that threw the running level away without a word. Language is
+// changed from the home screen's Settings only.
+{const _sr=settingsRows;settingsRows=function(card){const r=_sr.apply(this,arguments);try{if(state==='paused')card.querySelectorAll('.opt-row').forEach(rw=>{const l=rw.firstElementChild;if(l&&l.textContent===t('language')&&rw.querySelector('.toggle'))rw.remove()})}catch(e){}return r}}
+// a trophy hat that makes you immune to this stage's mechanic still showed that mechanic's intro card (and marked it as
+// seen, so without the hat the real intro never came). The card is skipped and stays unseen.
+{const _mi=maybeIntro;maybeIntro=function(){let p=null;try{p=hzPrimary()}catch(e){}
+  if(!p||typeof hatImm!=='function'||!MECH[p]||!hatImm(p)||seenKey(p))return _mi.apply(this,arguments);
+  progress.seen[p]=1;let r;try{r=_mi.apply(this,arguments)}finally{delete progress.seen[p];saveProgress()}return r}}
+// lobby pop-ups opened on top of each other (level-up + egg over the daily gift, starter offer under a level-up, buddy guide over a
+// level-up): each one checked a different list. They now all wait for the others, and when one closes the lobby looks again.
+{const POPS='.lvup,.egg-pop,.gd-rev,.bg-guide,.hs-pop';
+ const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector(POPS)||_lo.apply(this,arguments)};
+ const busy=()=>!document.getElementById('overlay').hidden||!!document.querySelector(POPS+',.pay-modal,#payModal');
+ const _lu=lvUpLater;lvUpLater=function(){if(state==='title'&&progress.lvRew&&!document.querySelector('.lvup')&&busy()&&!lobbyScreenOpen())return;return _lu.apply(this,arguments)};
+ // a full-screen layer (trophy room, album, nest...) shows its level-up right away: that is the reward for what was just tapped there
+ function lobbyScreenOpen(){return ['arcade','tour','evhub','passScr','nestScr','achScr','houseScr','sbook'].some(id=>{const e=document.getElementById(id);return e&&!e.hidden})||W3.on}
+ const _en=eggNotify;eggNotify=function(){if(EGGQ.length&&state==='title'&&!document.querySelector('.egg-pop')&&(busy()||document.querySelector('.lvup'))){setTimeout(eggNotify,800);return}return _en.apply(this,arguments)};
+ let tm=0;new MutationObserver(ms=>{if(state!=='title')return;for(const m of ms)for(const n of m.removedNodes)if(n.nodeType===1&&n.matches&&n.matches(POPS)){clearTimeout(tm);tm=setTimeout(()=>{if(state==='title'&&!busy())updateLobby()},300);return}})
+   .observe(document.body,{childList:true,subtree:true})}
+// one day / one cookie: singular wording where a count can be 1
+{const ONE={dlStreak:1,miniDays:1,psLeft:1};const _t=t;t=function(k,v){if(v&&ONE[k]&&+v.n===1){const k1=k+'1';if(I18N[lang]&&I18N[lang][k1]!=null)return _t.call(this,k1,v)}return _t.apply(this,arguments)}}
+// album Hats chapter: hats sold only for money (starter-pack halo, premium-Pass star crown) are not needed to finish it;
+// they show up as extra stickers once owned
+{const P=STK_PAGES.find(p=>p.id==='hat');if(P){const _i=P.items;P.items=function(){return _i.apply(this,arguments).filter(it=>{const h=WHATX[it.id.slice(4)];return !(h&&(h.pack||h.pass))||it.n})}}}

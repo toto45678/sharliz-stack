@@ -34,3 +34,30 @@
 .save-code input{flex:1 1 56px;min-width:56px;width:auto;max-width:96px}
 .save-code .buy{white-space:nowrap}
 .opt-row>span{min-width:0}
+/* ---------- bug hunt 5 (Oct 9) ---------- */
+/* result card: the bottom of the card body fades while there is more below (v58.js scrolls new strips into view) */
+#card .card-body.more{-webkit-mask-image:linear-gradient(to bottom,#000 calc(100% - 30px),transparent);mask-image:linear-gradient(to bottom,#000 calc(100% - 30px),transparent)}
+/* in-game HUD: the sides keep their full width (hearts, score + pause), the level plaque takes what is left (v58.js shrinks its text) */
+.hud-top{grid-template-columns:minmax(max-content,1fr) minmax(0,auto) minmax(max-content,1fr)}
+.level-plaque{justify-self:center;min-width:0;max-width:100%;overflow:hidden}
+/* Japanese / Chinese / Korean: the small result-card buttons broke their words in the middle ('マッ/プ', 'もう/一度') */
+:lang(ja) .card .actions .btn span,:lang(zh) .card .actions .btn span,:lang(ko) .card .actions .btn span{white-space:nowrap}
+/* bonus result card: the booster names ran into each other ('Laser guide Extra heartGolden pack') */
+.bn-bos{gap:10px 24px;flex-wrap:wrap}
+.bn-bo{margin-bottom:30px}
+.bn-bo small{width:76px;white-space:normal;text-align:center;line-height:1.05}
+/* album: a finger swipe on the page was taken by the browser (pointercancel, the page never turned) */
+.sb-paperwrap{touch-action:pan-y}
+/* 'Open all' on a small phone: the top row of cards was centred above the scroll area's top edge and could never be seen */
+.sb-pk.many .pk-cards{align-content:start;align-content:safe center}
+/* German on a small phone: the 'next story' pill pushed into the page title, and the 'next pack' label squeezed the progress bar to '2/30' */
+@media (max-width:400px){.sb-head small.sb-snext{white-space:normal;max-width:6.4em;text-align:center;line-height:1.05}
+  .sb-foot .sb-packbtn span{white-space:normal;line-height:1}.sb-foot .sb-packbtn{max-width:46%}}
+/* ☰ contents: red dot on a section that holds new stickers */
+.tc-row{position:relative}
+.tc-row.nw::after{content:'';position:absolute;top:3px;inset-inline-start:44px;width:12px;height:12px;border-radius:50%;background:#ff3b5c;border:2px solid #fff;box-shadow:0 1px 0 rgba(0,0,0,.3)}
+/* bug hunt 5: My hero slot dot (new items inside), drawer slides in only when the screen opens, cost lines on paid offers */
+.cs-slot .dot{position:absolute;top:-6px;inset-inline-start:-6px;width:13px;height:13px;border-radius:50%;background:#ff3b5c;border:2px solid var(--ink)}
+.cs-drawer.still{animation:none}
+.st-it.hat small.cost,.st-pack.astro-pack .st-it.hat small.cost{color:#ffb3b3}
+.season-banner.narrow{white-space:normal;max-width:150px;padding:6px 16px 8px}.season-banner.narrow b{line-height:1}

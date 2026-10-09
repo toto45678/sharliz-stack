@@ -135,6 +135,9 @@ rep("const pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(env,.03).te
     "const regen=()=>{const pm=new T.PMREMGenerator(r);scene.environment=pm.fromScene(env,.03).texture;pm.dispose()};regen();r.domElement.addEventListener('webglcontextrestored',()=>setTimeout(()=>{try{regen()}catch(e){}},0));")
 # card animations kept drawing into the hidden card during the next level
 rep("(function loop(now){if(!c.isConnected)return;","(function loop(now){if(!c.isConnected||c.closest('[hidden]'))return;",2)
+# (bug hunt 5) ...but the card used to be built while the overlay was still hidden, so that guard stopped the hero on its very first
+# frame: every lose card and the endless/daily/duo/The End cards had an empty space where the Sharliz should dance
+rep("rerenderOverlay();ov.hidden=false;","ov.hidden=false;rerenderOverlay();")
 # ---- v37: bigger dancing hero on the victory popup
 # ---- lobby logo: painted title art (art/logo_he|en.webp, made in tools/brand) instead of the CSS text
 rep("function buildLogo(){bigText(document.getElementById('logo1'),t('name1'));bigText(document.getElementById('logo2'),t('name2'))}",
@@ -239,10 +242,19 @@ rep("await navigator.share({files:[file],title:'Sharliz Stack'});","await naviga
 rep("function popupToast(txt){const el=document.createElement('div');el.className='coin-toast';el.innerHTML=coinImg()+txt;document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}",
     "function toastSlot(el){const n=document.querySelectorAll('.coin-toast').length;if(n)el.style.top='calc(40% + '+Math.min(n,3)*64+'px)'}\nfunction popupToast(txt){const el=document.createElement('div');el.className='coin-toast';el.innerHTML=coinImg()+txt;toastSlot(el);document.body.appendChild(el);setTimeout(()=>el.remove(),1600)}")
 # hats without a 2D picture (all WHATX hats) asked for art/skin_<id>.webp on every launch → 404
-rep("const SKP={};function skinPic(id){if(!id||id==='none')return null;","const SKP={};function skinPic(id){if(!id||id==='none'||(typeof WHATX!=='undefined'&&WHATX[id]))return null;")
+# (bug hunt 5) only ask for pictures that exist: the first lobby is drawn before the modules fill WHATX, so a worn trophy/v48 hat 404'd on every launch
+SKIN_PICS=sorted(f[:-5] for f in os.listdir(P(ROOT,'art')) if re.match(r'(hat|skin)_.*\.webp$',f))
+rep("const SKP={};function skinPic(id){if(!id||id==='none')return null;","const SKP={},SKIN_PICS=new Set("+json.dumps(SKIN_PICS)+");function skinPic(id){if(!id||id==='none'||(typeof WHATX!=='undefined'&&WHATX[id])||!SKIN_PICS.has(hatPicId(id)))return null;")
 # the dice tip pointed at the old style screen's button (.wd-rand); v48 calls it .cs-rand
 rep("tipOnce('dice','#wardrobe .wd-rand','down',t('tipDice'),1400)}","tipOnce('dice','#wardrobe .cs-rand','down',t('tipDice'),1400)}")
 rep("if(!isBoss()&&!lv.cp&&fl>=Math.ceil(goal()/2)&&fl<goal()){lv.cp=fl;","if(mode==='levels'&&!isBoss()&&!lv.cp&&fl>=Math.ceil(goal()/2)&&fl<goal()){lv.cp=fl;")
+# ---- bug hunt 5 (Oct 9)
+# Daily Tower: the HUD stayed one floor (and its points) behind on the winning landing
+rep("  if(modeLanded())return;","  if(modeLanded()){updateHud();return}")
+# Daily Tower was picked from all 30 stages, so a new player could get a season-4 stage: pick from the worlds this player has opened
+rep("modeZi=m==='daily'?h%ZONES.length:0;","modeZi=m==='daily'?h%Math.max(1,Math.min(ZONES.length,Math.ceil((progress.unlocked||1)/LPZ))):0;")
+# wOwned('trail', …) threw (there is no WTAB.trail); trails and hats are both kept in progress.skins
+rep("const T0=WTAB[cat][id];if(!T0)return false;","if(!WTAB[cat])return wallet().skins.includes(id);const T0=WTAB[cat][id];if(!T0)return false;")
 # ---- inject module + css
 import glob as _g
 B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT,'art','b3d_*.json')))}
@@ -373,7 +385,10 @@ head='''<!doctype html><html lang="he" dir="ltr"><head><meta charset="utf-8">
 head=head.replace('</head><body>',LANG_HEAD+'</head><body>')
 tail='''
 <script>
-if('serviceWorker' in navigator){addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}))}
+if('serviceWorker' in navigator){addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{});
+  // the files loaded before the worker took over (first visit) are handed to it, so the next launch also works offline
+  const keep=()=>navigator.serviceWorker.ready.then(g=>{if(g.active)g.active.postMessage({t:'keep',urls:performance.getEntriesByType('resource').map(x=>x.name)})}).catch(()=>{});
+  try{performance.setResourceTimingBufferSize(1000)}catch(e){}setTimeout(keep,12000);setTimeout(keep,45000)})}
 (function(){try{const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),sa=navigator.standalone||matchMedia('(display-mode: standalone)').matches;
   if(!ios||sa||sessionStorage.getItem('pwaHint'))return;sessionStorage.setItem('pwaHint','1');
   const he=(typeof lang!=='undefined'?lang:'he')==='he',d=document.createElement('div');d.id='pwaHint';

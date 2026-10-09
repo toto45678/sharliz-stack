@@ -17,7 +17,7 @@
 .cs-sh{grid-column:1/-1;display:flex;justify-content:space-between;align-items:center;color:#c7b8ff;font-size:12.5px}
 .cs-sh .pv{color:#5ee85a;font-size:11.5px}
 .cs-row{display:grid;grid-template-columns:62px minmax(0,1fr) 38px;align-items:center;gap:6px}
-.cs-row .lb{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cs-row .lb{font-size:10.5px;line-height:1.02;overflow:hidden;overflow-wrap:break-word;hyphens:auto;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}
 .cs-row .bar{position:relative;height:9px;border-radius:5px;background:#2a2459;overflow:hidden}
 .cs-row .bar i.fill{position:absolute;top:0;bottom:0;inset-inline-start:0;background:var(--y1);border-radius:5px}
 .cs-row .bar i.delta{position:absolute;top:0;bottom:0;border-radius:5px}

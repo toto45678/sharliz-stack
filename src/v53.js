@@ -2,11 +2,11 @@
    Same challenge for everyone each week (seeded by the week number): one world + one twist (wind / fast / night / gold rush).
    3 hearts, build as high as you can, unlimited tries, best of the week counts. Medals at 10 / 20 / 35 floors pay coins + boosters
    once per week. No server yet → "challenge a friend" shares your best to WhatsApp. Design: ChatGPT (design/tournament/). */
-Object.assign(I18N.en,{tourTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
+Object.assign(I18N.en,{trInvite:'Come play the Sharliz weekly tournament with me! 🏆',tourTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
   trNew:'New record!',trMedal:'Medal unlocked!',trNext:'{n} more to {m}',trAllMedals:'All medals this week!',trTwist:'This week',
   tw_wind:'Strong wind',twd_wind:'The wind pushes twice as hard',tw_fast:'Speed week',twd_fast:'Everything swings faster',tw_night:'Night tower',twd_night:'Build in the dark',tw_gold:'Golden rush',twd_gold:'Lots of golden Sharliz',
   md_b:'Bronze',md_s:'Silver',md_g:'Gold',trShare:'I built {n} floors in the Sharliz weekly tournament! Can you beat me? 🏆',trModes:'Weekly',trGot:'Collected',trClose:'So close to your record!',trNice:'Nice run!',trPrizes:'Tournament prizes',trReached:'You reached the {m} prize!',trHow:'3 hearts · as high as you can'});
-Object.assign(I18N.he,{tourTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
+Object.assign(I18N.he,{trInvite:'בואו לשחק איתי בטורניר השבועי של שארליז! 🏆',tourTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
   trNew:'שיא חדש!',trMedal:'מדליה חדשה!',trNext:'עוד {n} קומות ל{m}',trAllMedals:'כל המדליות השבוע!',trTwist:'השבוע',
   tw_wind:'רוח חזקה',twd_wind:'הרוח דוחפת פי שניים',tw_fast:'שבוע מהיר',twd_fast:'הכל מתנדנד מהר יותר',tw_night:'מגדל לילה',twd_night:'בונים בחושך',tw_gold:'בהלת זהב',twd_gold:'הרבה שארליז מוזהבות',
   md_b:'ארד',md_s:'כסף',md_g:'זהב',trShare:'בניתי מגדל של {n} קומות בטורניר השבועי של שארליז! תצליחו לעבור אותי? 🏆',trModes:'שבועי',trGot:'נאסף',trClose:'כמעט שיא!',trNice:'סיבוב יפה!',trPrizes:'פרסי הטורניר',trReached:'הגעתם לפרס ה{m}!',trHow:'3 לבבות · כמה שיותר גבוה'});
@@ -38,7 +38,7 @@ function trScreen(){const N=trNow(),D=trData(),r=trRoot(),z=ZONES[N.zi],nx=TR_ME
   r.querySelector('.tr-nx').textContent=nx?t('trNext',{n:nx.f-D.best,m:t('md_'+nx.k)}):t('trAllMedals');
   r.querySelector('.tr-play span').textContent=t('trPlay');r.querySelector('.tr-play').onclick=()=>{sfx.click();trStart()};
   r.querySelector('.tr-share span').textContent=D.best?t('trChallenge')+' · '+t('trFloorsN',{n:D.best}):t('trChallenge');r.querySelector('.tr-share').onclick=()=>{sfx.click();trShare(D.best)}}
-function trShare(n){const url='https://sharliztower.com',txt=t('trShare',{n}); // the store app runs on localhost, and the Pages copy has every level open
+function trShare(n){const url='https://sharliztower.com',txt=n?t('trShare',{n}):t('trInvite'); // the store app runs on localhost, and the Pages copy has every level open
   if(navigator.share){navigator.share({text:txt,url}).catch(()=>{});return}
   try{window.open('https://wa.me/?text='+encodeURIComponent(txt+' '+url),'_blank')}catch(e){}}
 /* ---------- playing (mode 'tour') ---------- */
@@ -53,7 +53,7 @@ function trGauge(on){if(!trG){trG=document.createElement('div');trG.id='trGauge'
 {const _u=updateHud;updateHud=function(){_u.apply(this,arguments);if(mode!=='tour'||!TR){if(trG&&!trG.hidden)trG.hidden=true;return}trGauge(true);document.getElementById('gauge').hidden=true;const fl=Math.max(0,tower.length-1);
   trG.querySelector('.tube i').style.height=Math.min(1,fl/35)*100+'%';trG.querySelector('em').textContent=fl+'/35';{const nk=(TR_MEDALS.find(m=>fl<m.f)||{}).k;TR_MEDALS.forEach(m=>{const e=trG.querySelector('.m-'+m.k);e.classList.toggle('on',fl>=m.f);e.classList.toggle('nx',m.k===nk)})}}}
 {const _ml=modeLanded;modeLanded=function(){if(mode!=='tour'||!TR)return _ml.apply(this,arguments);const fl=tower.length-1;TR.floors=Math.max(TR.floors,fl);endless.floors=TR.floors;
-  const m=TR_MEDALS.find(m=>m.f===fl);if(m&&!TR.newMd.includes(m.k)){const D=trData();if(!D.got[m.k]){TR.newMd.push(m.k)}const d=document.createElement('div');d.className='tr-pop';d.innerHTML=`<img src="art/tr_medal_${m.k}.webp" alt=""><b>${t('md_'+m.k)}!</b>`;document.body.appendChild(d);setTimeout(()=>d.remove(),1400);sfx.flourish(2);vib([20,40,20])}
+  const m=TR_MEDALS.find(m=>m.f===fl);if(m&&!TR.newMd.includes(m.k)&&!trData().got[m.k]){TR.newMd.push(m.k);const d=document.createElement('div');d.className='tr-pop';d.innerHTML=`<img src="art/tr_medal_${m.k}.webp" alt=""><b>${t('md_'+m.k)}!</b>`;document.body.appendChild(d);setTimeout(()=>d.remove(),1400);sfx.flourish(2);vib([20,40,20])}
   updateHud();return false}}
 // twists
 {const _hk=hatK;hatK=function(k,d=1){const v=_hk.apply(this,arguments);if(mode!=='tour'||!TR)return v;if(TR.N.tw==='fast'&&k==='spd')return v*1.25;if(TR.N.tw==='wind'&&k==='wind')return v*2;return v}}

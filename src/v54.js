@@ -2,9 +2,9 @@
    XP from everything (levels, bosses, bonus stage, arcade, events, tournament) → player level (badge on the avatar)
    and the monthly Pass: 30 tiers × 100 XP, free track + premium track (test IAP 'pass' ₪19.90, bought per season).
    Pass-only items: galaxy colour, comet trail, star-crown hat. Design: ChatGPT (design/pass/). */
-Object.assign(I18N.en,{psTitle:'Sharliz Pass',psLeft:'{n} days left',psTier:'Tier {n}',psFree:'Free',psPrem:'Premium',psClaim:'Collect',psBuy:'Unlock Premium · {p}',psPremOn:'Premium unlocked!',psLocked:'Reach tier {n}',
+Object.assign(I18N.en,{psTitle:'Sharliz Pass',psLeft:'{n} days left',psLeft1:'1 day left',psTier:'Tier {n}',psFree:'Free',psPrem:'Premium',psClaim:'Collect',psBuy:'Unlock Premium · {p}',psPremOn:'Premium unlocked!',psLocked:'Reach tier {n}',
   lvShort:'Lv {n}',lvUp:'Level {n}!',lvReward:'Level reward',lvOk:'Yay!',xpGain:'+{n} XP',psItem:'Pass exclusive',psReady:'Rewards ready',psAll:'Collect all',psCoins:'Coins',psWhy:'Unlock every gold reward + 3 exclusive items',psBoost:'Boosters',lvUpTag:'Level up!',lvSub:'Great job! You reached a new level!'});
-Object.assign(I18N.he,{psTitle:'כרטיס שארליז',psLeft:'נותרו {n} ימים',psTier:'שלב {n}',psFree:'חינם',psPrem:'פרימיום',psClaim:'אסוף',psBuy:'פתחו פרימיום · {p}',psPremOn:'הפרימיום נפתח!',psLocked:'הגיעו לשלב {n}',
+Object.assign(I18N.he,{psTitle:'כרטיס שארליז',psLeft:'נותרו {n} ימים',psLeft1:'נותר יום אחד',psTier:'שלב {n}',psFree:'חינם',psPrem:'פרימיום',psClaim:'אסוף',psBuy:'פתחו פרימיום · {p}',psPremOn:'הפרימיום נפתח!',psLocked:'הגיעו לשלב {n}',
   lvShort:'רמה {n}',lvUp:'רמה {n}!',lvReward:'פרס רמה',lvOk:'יש!',xpGain:'+{n} XP',psItem:'בלעדי לכרטיס',psReady:'פרסים מחכים',psAll:'אסוף הכל',psCoins:'מטבעות',psWhy:'כל הפרסים הזהובים + 3 פריטים בלעדיים',psBoost:'חיזוקים',lvUpTag:'עליתם רמה!',lvSub:'כל הכבוד! הגעתם לרמה חדשה!'});
 // pass-only catalogue
 WCOL.galaxy={c:'#5b2bd6',p:1,pass:1,n:['Galaxy','גלקסיה']};
@@ -62,7 +62,7 @@ const PS_ART={galaxy:'ps_galaxy',t_comet:'ps_comet',starcrown:'ps_crown'};
 function psRewHTML(R){let img,amt='',lab;if(R.c){img='ps_coins';amt='×'+R.c;lab=t('psCoins')}else if(R.b){img='ps_boost';amt='×'+R.b;lab=t('psBoost')}
   else if(R.it){const [c,id]=R.it;img=PS_ART[id];lab=c==='trail'?t('sk_'+id):wName(c,id)}else return '';
   return `<span class="rw${R.it?' it':''}"><img src="art/${img}.webp" alt="">${amt?`<b>${amt}</b>`:''}</span><small class="lab"></small>`.replace('<small class="lab"></small>',`<small class="lab">${psEsc(lab)}</small>`)}
-function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}}
+function psGive(R){if(R.c){wallet().coins+=R.c}if(R.b){wallet();for(let i=0;i<R.b;i++){/* in turn, never random: the premium track is sold, and a random reward on it would count as a loot box */const k=progress.psBk=(progress.psBk||0)+1,b=['heart','shield','slow','laser'][(k-1)%4];progress.inv[b]=(progress.inv[b]||0)+1}}
   if(R.it){const [c,id]=R.it;if(c==='hat'||c==='trail'){if(!wallet().skins.includes(id))progress.skins.push(id)}else{progress.owned[c]=progress.owned[c]||[];if(!progress.owned[c].includes(id))progress.owned[c].push(id)}}}
 function psClaim(i,prem){const P=psData();const arr=prem?P.p:P.f;if(arr.includes(i)||i>=psTierOf(P.xp)||(prem&&!P.prem))return false;arr.push(i);psGive(PS_REW[i][prem?1:0]);return true}
 function psRender(scroll){const P=psData(),T=psTierOf(P.xp),r=PSEL,ready=psReady(),L0=r.querySelector('.ps-list'),y0=!scroll&&L0?L0.scrollTop:0;
