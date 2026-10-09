@@ -2,10 +2,10 @@
    first time (bought, hatched or paid; also once for players who already own one), a 4-page picture guide explains: your buddy
    flies with you, it has a power that works only while it's with you, how to switch it (Style tab → Buddy slot), and that eggs
    hatch new buddies and cookies evolve them. Reopen from the "?" in the nest and in My hero's buddy slot. progress.budGuide=1 */
-Object.assign(I18N.en,{bgT1:'Meet your buddy!',bgS1:'{b} flies next to you in every level and in the lobby.',bgT2:'Buddies have powers',bgS2:'The power works only while your buddy is with you. Every buddy has a different power!',
+Object.assign(I18N.en,{bgT1:'Meet your buddy!',bgS1:'{b} stays by your side in every level and in the lobby.',bgT2:'Buddies have powers',bgS2:'The power works only while your buddy is with you. Every buddy has a different power!',
   bgPw:'Power of {b}',bgT3:'Switch buddies anytime',bgS3:'Tap “{a}” at the bottom, then the “{b}” slot, and pick a buddy.',bgT4:'Collect and grow',
   bgS4a:'Wins hatch the eggs in your nest. New buddies come out!',bgS4b:'Cookies grow your buddy up to 3 stars. Every star gives more coins.',bgNext:'Next',bgBack:'Back',bgGo:'Got it!',bgHelp:'What are buddies?'});
-Object.assign(I18N.he,{bgT1:'זה החבר שלך!',bgS1:'{b} עף לידך בכל שלב ובלובי.',bgT2:'לכל חבר יש כוח',bgS2:'הכוח עובד רק כשהחבר איתך. לכל חבר כוח אחר!',
+Object.assign(I18N.he,{bgT1:'זה החבר שלך!',bgS1:'{b} תמיד לידך, בכל שלב ובלובי.',bgT2:'לכל חבר יש כוח',bgS2:'הכוח עובד רק כשהחבר איתך. לכל חבר כוח אחר!',
   bgPw:'הכוח של {b}',bgT3:'מחליפים חבר מתי שרוצים',bgS3:'לוחצים על "{a}" למטה, אחר כך על המשבצת "{b}", ובוחרים חבר.',bgT4:'אוספים ומגדלים',
   bgS4a:'ניצחונות מבקיעים את הביצים בקן, ומהן יוצאים חברים חדשים!',bgS4b:'עוגיות מגדלות את החבר עד 3 כוכבים, וכל כוכב נותן עוד מטבעות.',bgNext:'הבא',bgBack:'חזרה',bgGo:'הבנתי!',bgHelp:'מה זה חברים?'});
 function budOwnedList(){return Object.keys(WPET).filter(k=>k!=='none'&&(WPET[k].p||WPET[k].real)&&wOwned('pet',k))}
@@ -34,7 +34,7 @@ function openBudGuide(id){if(document.querySelector('.bg-guide'))return;id=id||(
 // the daily gift goes first (it pops once a day when the lobby is idle); it also never pops over the guide
 const dlPending=()=>typeof dlState==='function'&&!dlState().claimed&&progress.unlocked>=2&&dlShownOn!==dlDate(0);
 {const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector('.bg-guide')||_lo()}}
-function budGuideMaybe(id){if(progress.budGuide||!budOwnedList().length)return;setTimeout(()=>{if(progress.budGuide||document.querySelector('.egg-pop,.bg-guide')||(!W3.on&&dlPending()))return;
+function budGuideMaybe(id){if(progress.budGuide||!budOwnedList().length)return;setTimeout(()=>{if(progress.budGuide||document.querySelector('.egg-pop,.bg-guide,.lvup,.gd-rev,.hs-pop')||(!W3.on&&dlPending()))return;
   const ov=document.getElementById('overlay');if(state!=='title'||(ov&&!ov.hidden&&!W3.on))return;openBudGuide(id)},1200)}
 /* triggers: back in the lobby, after buying/wearing in My hero, after a hatch (nest re-renders when the hatch popup closes) */
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);if(state==='title')budGuideMaybe();return r}}

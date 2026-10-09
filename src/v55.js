@@ -2,8 +2,8 @@
    The old side columns stay in the DOM (hidden) so every module that updates their badges keeps working;
    the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby.
    The raised middle tab is MISSIONS (Tzach, Oct 8: a Home tab did nothing in the lobby); it left the small icon column. */
-Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
-Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
+Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniDays1:'1d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
+Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniDays1:'יום אחד',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
 const LT={tabs:[],mini:[]};
 function ltVisible(el,root){for(let e=el;e&&e!==root;e=e.parentElement)if(e.hidden)return false;return true}
 function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e.remove());if(!orig||orig.hidden)return;

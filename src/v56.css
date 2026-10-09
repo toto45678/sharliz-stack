@@ -37,7 +37,7 @@
 .ns-bud{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px 6px;border-radius:16px;border:3px solid #120d2b;background:linear-gradient(180deg,#6a52e0,#3a26a0);box-shadow:inset 0 3px 0 rgba(255,255,255,.2),0 3px 0 #120d2b}
 .ns-bud .th{width:70px;height:66px;display:grid;place-items:center}
 .ns-bud .th img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.4))}
-.ns-bud b{font:.85rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ns-bud b{font:.85rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;text-align:center;overflow-wrap:anywhere;hyphens:auto;max-width:100%}
 .ns-bud .sts,.egg-pop .sts{display:flex;gap:1px;font-style:normal}
 .ns-bud .sts em,.egg-pop .sts em{font-style:normal;font-size:.95rem;color:#2a1d66;-webkit-text-stroke:2px #120d2b;paint-order:stroke fill}
 .ns-bud .sts em.on,.egg-pop .sts em.on{color:#ffd23f}

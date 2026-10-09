@@ -103,3 +103,16 @@ let HUDH=0;
 {const _mi=maybeIntro;maybeIntro=function(){let p=null;try{p=hzPrimary()}catch(e){}
   if(!p||typeof hatImm!=='function'||!MECH[p]||!hatImm(p)||seenKey(p))return _mi.apply(this,arguments);
   progress.seen[p]=1;let r;try{r=_mi.apply(this,arguments)}finally{delete progress.seen[p];saveProgress()}return r}}
+// lobby pop-ups opened on top of each other (level-up + egg over the daily gift, starter offer under a level-up, buddy guide over a
+// level-up): each one checked a different list. They now all wait for the others, and when one closes the lobby looks again.
+{const POPS='.lvup,.egg-pop,.gd-rev,.bg-guide,.hs-pop';
+ const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector(POPS)||_lo.apply(this,arguments)};
+ const busy=()=>!document.getElementById('overlay').hidden||!!document.querySelector(POPS+',.pay-modal,#payModal');
+ const _lu=lvUpLater;lvUpLater=function(){if(state==='title'&&progress.lvRew&&!document.querySelector('.lvup')&&busy()&&!lobbyScreenOpen())return;return _lu.apply(this,arguments)};
+ // a full-screen layer (trophy room, album, nest...) shows its level-up right away: that is the reward for what was just tapped there
+ function lobbyScreenOpen(){return ['arcade','tour','evhub','passScr','nestScr','achScr','houseScr','sbook'].some(id=>{const e=document.getElementById(id);return e&&!e.hidden})||W3.on}
+ const _en=eggNotify;eggNotify=function(){if(EGGQ.length&&state==='title'&&!document.querySelector('.egg-pop')&&(busy()||document.querySelector('.lvup'))){setTimeout(eggNotify,800);return}return _en.apply(this,arguments)};
+ let tm=0;new MutationObserver(ms=>{if(state!=='title')return;for(const m of ms)for(const n of m.removedNodes)if(n.nodeType===1&&n.matches&&n.matches(POPS)){clearTimeout(tm);tm=setTimeout(()=>{if(state==='title'&&!busy())updateLobby()},300);return}})
+   .observe(document.body,{childList:true,subtree:true})}
+// one day / one cookie: singular wording where a count can be 1
+{const ONE={dlStreak:1,miniDays:1,psLeft:1};const _t=t;t=function(k,v){if(v&&ONE[k]&&+v.n===1){const k1=k+'1';if(I18N[lang]&&I18N[lang][k1]!=null)return _t.call(this,k1,v)}return _t.apply(this,arguments)}}

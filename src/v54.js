@@ -2,9 +2,9 @@
    XP from everything (levels, bosses, bonus stage, arcade, events, tournament) → player level (badge on the avatar)
    and the monthly Pass: 30 tiers × 100 XP, free track + premium track (test IAP 'pass' ₪19.90, bought per season).
    Pass-only items: galaxy colour, comet trail, star-crown hat. Design: ChatGPT (design/pass/). */
-Object.assign(I18N.en,{psTitle:'Sharliz Pass',psLeft:'{n} days left',psTier:'Tier {n}',psFree:'Free',psPrem:'Premium',psClaim:'Collect',psBuy:'Unlock Premium · {p}',psPremOn:'Premium unlocked!',psLocked:'Reach tier {n}',
+Object.assign(I18N.en,{psTitle:'Sharliz Pass',psLeft:'{n} days left',psLeft1:'1 day left',psTier:'Tier {n}',psFree:'Free',psPrem:'Premium',psClaim:'Collect',psBuy:'Unlock Premium · {p}',psPremOn:'Premium unlocked!',psLocked:'Reach tier {n}',
   lvShort:'Lv {n}',lvUp:'Level {n}!',lvReward:'Level reward',lvOk:'Yay!',xpGain:'+{n} XP',psItem:'Pass exclusive',psReady:'Rewards ready',psAll:'Collect all',psCoins:'Coins',psWhy:'Unlock every gold reward + 3 exclusive items',psBoost:'Boosters',lvUpTag:'Level up!',lvSub:'Great job! You reached a new level!'});
-Object.assign(I18N.he,{psTitle:'כרטיס שארליז',psLeft:'נותרו {n} ימים',psTier:'שלב {n}',psFree:'חינם',psPrem:'פרימיום',psClaim:'אסוף',psBuy:'פתחו פרימיום · {p}',psPremOn:'הפרימיום נפתח!',psLocked:'הגיעו לשלב {n}',
+Object.assign(I18N.he,{psTitle:'כרטיס שארליז',psLeft:'נותרו {n} ימים',psLeft1:'נותר יום אחד',psTier:'שלב {n}',psFree:'חינם',psPrem:'פרימיום',psClaim:'אסוף',psBuy:'פתחו פרימיום · {p}',psPremOn:'הפרימיום נפתח!',psLocked:'הגיעו לשלב {n}',
   lvShort:'רמה {n}',lvUp:'רמה {n}!',lvReward:'פרס רמה',lvOk:'יש!',xpGain:'+{n} XP',psItem:'בלעדי לכרטיס',psReady:'פרסים מחכים',psAll:'אסוף הכל',psCoins:'מטבעות',psWhy:'כל הפרסים הזהובים + 3 פריטים בלעדיים',psBoost:'חיזוקים',lvUpTag:'עליתם רמה!',lvSub:'כל הכבוד! הגעתם לרמה חדשה!'});
 // pass-only catalogue
 WCOL.galaxy={c:'#5b2bd6',p:1,pass:1,n:['Galaxy','גלקסיה']};

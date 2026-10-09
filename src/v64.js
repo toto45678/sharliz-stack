@@ -422,7 +422,7 @@ const GOLDS=[
 const STK3_ART=new Set(__STK3_ART__),has3=id=>STK3_ART.has(id);
 SHZ.forEach(s=>{if(!s[6])s[6]='classic'});SHZ.push(...SHZ3.filter(s=>has3(s[0])));
 Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold',sec_classic:'Classics',sec_short:'Short stories',stCh:'Chapter {n}',
-  sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stNext1:'Next part: win 1 more level',stLater:'Keep playing to see what happens next',stNew:'A new story card!',
+  sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stNext1:'Next part: win 1 more level',stKeep:'Keep playing to see what happens next',stNew:'A new story card!',
   gdTitle:'GOLD STICKER!',gdFeat:'Legendary feat',gdOk:'Wow!',gdAlbum:'To the album',
   gf_coins:'Have {n} coins at once',gf_s1:'3 stars on all {n} levels of the first 8 worlds',gf_combo:'{n} perfect landings in a row',
   gf_evo:'Evolve {n} buddies to 3 stars',gf_nh:'Beat {b} without losing a heart',gf_endless:'Reach floor {n} in {m}',
@@ -433,7 +433,7 @@ Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold
   gf_lv:'Reach player level {n}',gf_gift:'Finish the 7-day daily gift {n} times',gf_stk:'Collect {n} different Sharliz stickers',
   gf_cups:'Win all {n} gold cups in the trophy room',gf_3s:'3 stars on {n} levels',gf_sec:'Fill {n} album sections',gf_all:'Collect all the other gold stickers'});
 Object.assign(I18N.he,{pg_gold:'זהב',hint_gold:'משימה אגדית',sbRar_g:'זהב',sec_classic:'הקלאסיות',sec_short:'סיפורים קצרים',stCh:'פרק {n}',
-  sbToc:'תוכן העניינים',sbWhole:'כל הפרק',stNext:'להמשך הסיפור: עוד {n} ניצחונות בשלבים',stNext1:'להמשך הסיפור: עוד ניצחון אחד בשלב',stLater:'תמשיכו לשחק כדי לגלות מה קורה',stNew:'קלף סיפור חדש!',
+  sbToc:'תוכן העניינים',sbWhole:'כל הפרק',stNext:'להמשך הסיפור: עוד {n} ניצחונות בשלבים',stNext1:'להמשך הסיפור: עוד ניצחון אחד בשלב',stKeep:'תמשיכו לשחק כדי לגלות מה קורה',stNew:'קלף סיפור חדש!',
   gdTitle:'מדבקת זהב!',gdFeat:'משימה אגדית',gdOk:'וואו!',gdAlbum:'לאלבום',
   gf_coins:'להחזיק {n} מטבעות בבת אחת',gf_s1:'3 כוכבים בכל {n} השלבים של 8 העולמות הראשונים',gf_combo:'{n} נחיתות מושלמות ברצף',
   gf_evo:'לפתח {n} חברים ל-3 כוכבים',gf_nh:'לנצח את {b} בלי לאבד לב',gf_endless:'להגיע לקומה {n} ב{m}',
@@ -452,14 +452,14 @@ function sbSecSub(sec,PG){const pg=PG.n>1?t('sbPage',{a:PG.k+1,b:PG.n}):'';if(/^
 // chest per section; the old single-chapter chests became the first section's (migration in sbData)
 function sbRew(ck){if(ck==='shz:classic')return SB_REW.shz;if(ck==='rare:short')return SB_REW.rare;if(ck==='shz:all')return [3000,200];if(ck==='rare:all')return [2000,150];
   if(ck.includes(':'))return ck.startsWith('rare:')?[300,30]:[400,40];return SB_REW[ck]||[500,60]}
-function sbClaim(ck,after){const D=sbData();if(D.done[ck])return;const [c,x]=sbRew(ck);D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');after&&after()}
+function sbClaim(ck,after){const D=sbData();if(D.done[ck])return;const [c,x]=sbRew(ck);D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+'  +'+x+' XP');after&&after()}
 /* ☰ contents: every section with its progress and chest, tap → its first page; the whole-chapter chest at the bottom */
 function sbToc(P){const all=P.items().filter(x=>!x.soon),pages=sbPages(P,all),D=sbData(),m=document.createElement('div');m.className='sb-tocm';
   const draw=()=>{const secs=sbSecs(P),fullAll=all.every(x=>x.n),ak=P.id+':all';
     m.innerHTML=`<div class="tc-card" style="--c:${SB_COL[P.id]||'#b48cff'}"><div class="tc-hd"><b></b><button class="x-btn tc-x" aria-label="close"></button></div><div class="tc-list"></div>
       <div class="tc-all"><span><b></b><small>${all.filter(x=>x.n).length}/${all.length}</small></span><button class="sb-chest${fullAll&&!D.done[ak]?' can':''}${D.done[ak]?' got':''}"><img src="art/ic_chest${D.done[ak]?'_open':''}.webp" alt=""></button></div></div>`;
     m.querySelector('.tc-hd b').textContent=t('sbToc');m.querySelector('.tc-x').innerHTML=XSVG;m.querySelector('.tc-x').onclick=()=>{sfx.click();m.remove()};
-    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{sbPageView();draw();if(!m.isConnected)SB.el.appendChild(m)});else if(!D.done[ak]){sfx.locked();popupToast(t('sbFillAll',{n:sbRew(ak)[0]})+' 🪙')}};
+    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{sbPageView();draw();if(!m.isConnected)SB.el.appendChild(m)});else if(!D.done[ak]){sfx.locked();noteToast(t('sbFillAll',{n:sbRew(ak)[0]})+' 🪙')}};
     const L=m.querySelector('.tc-list');secs.forEach(sec=>{const a=all.filter(x=>x.sec===sec),g=a.filter(x=>x.n).length,ck=P.id+':'+sec,fst=a.find(x=>x.n)||a[0],row=document.createElement('button'),pi=pages.findIndex(p=>p.sec===sec);
       row.className='tc-row'+(pi===SB.pg||pages[SB.pg].sec===sec?' on':'')+(g===a.length?' full':'')+(a.some(x=>x.n&&!(progress.stkSeen||[]).includes(x.id))?' nw':'');
       row.innerHTML=`<span class="tc-th${fst.n?'':' no'}"><img alt="" loading="lazy"></span><span class="tc-t"><b></b><i><u style="width:${g/a.length*100}%"></u></i></span>${g===a.length&&!D.done[ck]?'<img class="tc-can" src="art/ic_chest.webp" alt="">':`<em>${D.done[ck]?'✓':g+'/'+a.length}</em>`}`;
@@ -473,7 +473,7 @@ function stOwn(){return Math.floor(stWins()/ST_PER)}
 function stOwnArt(){const n=stOwn();return STORY3.filter((s,i)=>i<n&&has3(s[0])).length}
 {const P=STK_PAGES.find(p=>p.id==='rare');if(P){const _it=P.items;P.items=()=>{const a=_it().map(x=>Object.assign(x,{sec:'short'})),own=stOwn(),L=lang==='he'?1:0;
   STORY3.forEach((s,i)=>{if(!has3(s[0]))return;a.push({id:'story:'+s[0],n:i<own?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1,sec:'c'+s[5],
-    hint:i===own?(ST_PER-stWins()%ST_PER===1?t('stNext1'):t('stNext',{n:ST_PER-stWins()%ST_PER})):t('stLater')})});return a}}}
+    hint:i===own?(ST_PER-stWins()%ST_PER===1?t('stNext1'):t('stNext',{n:ST_PER-stWins()%ST_PER})):t('stKeep')})});return a}}}
 /* ---------- GOLD: legendary feats ---------- */
 const S1W=['farm','city','desert','candy','snow','ocean','volcano','space'];
 const ST=()=>progress.stat=progress.stat||{};

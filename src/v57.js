@@ -3,10 +3,10 @@
    New chapter "Sharliz": 24 illustrated stickers that only come from STICKER PACKS (3 stickers each; common/rare/holo).
    Packs: every 3 won levels, the first win over each boss, or 150 coins. Duplicates → coins. A full chapter → a big reward. */
 Object.assign(I18N.en,{sbOpen:'Open',sbBack:'Back',sbPacks:'Packs: {n}',sbNext:'Next pack {n}/3',sbHow:'Packs come from wins, bosses, the daily gift, weekly missions, level-ups, the tournament, the Pass and events',psPack:'Sticker pack',dlPack:'+ pack',sbOpenPack:'Opening a pack!',sbOpenSub:'Which stickers are inside?',sbTap:'Tap to continue',sbTapPack:'Tap the pack!',sbNew:'New!',sbMore:'Open another ({n})',sbToBook:'To the album',sbAll:'Open all ({n})',sbOpenMany:'Opening {n} packs!',sbNewN:'{n} new stickers!',sbGold:'Golden pack',sbGoldGot:'+1 golden sticker pack!',sbGoldOpen:'Golden pack!',sbGoldSub:'A holo sticker inside for sure!',sbHowG:'Golden packs: the gold chest in the bonus stage, a tournament gold medal and day 7 of the daily gift',
-  sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbFillAll:'Collect them all to win {n}',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
+  sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbFillAll:'Collect them all to win {n}',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPacksGot:'+{n} sticker packs!',sbGoldsGot:'+{n} golden sticker packs!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
   sbHow_shz:'Comes from sticker packs',sbCover:'Collect · Discover · Complete!',ch_shz:'Sharliz',sbPage:'Page {a}/{b}'});
 Object.assign(I18N.he,{sbOpen:'פתחו',sbBack:'חזרה',sbPacks:'שקיות: {n}',sbNext:'שקית הבאה {n}/3',sbHow:'שקיות מקבלים מניצחונות, בוסים, המתנה היומית, משימות שבועיות, עליית רמה, הטורניר, ה-Pass ואירועים',psPack:'שקית מדבקות',dlPack:'+ שקית',sbOpenPack:'פותחים שקית!',sbOpenSub:'איזה מדבקות מחכות בפנים?',sbTap:'הקישו להמשיך',sbTapPack:'הקישו על השקית!',sbNew:'חדש!',sbMore:'פתחו עוד ({n})',sbToBook:'חזרה לאלבום',sbAll:'פתחו הכל ({n})',sbOpenMany:'פותחים {n} שקיות!',sbNewN:'{n} מדבקות חדשות!',sbGold:'שקית זהב',sbGoldGot:'+1 שקית מדבקות זהב!',sbGoldOpen:'שקית זהב!',sbGoldSub:'בטוח יש בפנים מדבקת הולוגרמה!',sbHowG:'שקיות זהב: תיבת הזהב בשלב הבונוס, מדליית זהב בטורניר ויום 7 במתנה היומית',
-  sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbFillAll:'אספו את כולן וזכו ב-{n}',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
+  sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbFillAll:'אספו את כולן וזכו ב-{n}',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPacksGot:'+{n} שקיות מדבקות!',sbGoldsGot:'+{n} שקיות מדבקות זהב!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
   sbHow_shz:'מגיעה בשקיות מדבקות',sbCover:'אספו · גלו · השלימו!',ch_shz:'שארליז',sbPage:'עמוד {a}/{b}'});
 /* the 24 Sharliz stickers: id, rarity, names, a fun line */
 const SHZ=[
@@ -48,11 +48,11 @@ function sbGive(n,g){if(!n)return;const D=sbData();if(g){D.gpacks+=n;SBQG+=n}els
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if((mode==='levels'||mode==='event')&&was!=='win'&&state==='win'){try{const D=sbData();D.w++;let n=0;if(D.w%3===0)n++;
     if(mode==='levels'&&lvInZone()===LPZ-1){const k=zone().sid||zone().id;if(!D.boss[k]){D.boss[k]=1;n++}}saveProgress();if(n)sbGive(n)}catch(e){}}return r}}
 function sbNotify(){if(!SBQ&&!SBQG)return;if(document.querySelector('.lvup')){setTimeout(sbNotify,500);return}const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
-  const items=[[SBQ,'sb_pack','sbPackGot'],[SBQG,'sb_gpack','sbGoldGot']].filter(x=>x[0]),txt=([n,,k])=>n>1?t(k).replace('+1','+'+n):t(k);
+  const items=[[SBQ,'sb_pack','sbPackGot'],[SBQG,'sb_gpack','sbGoldGot']].filter(x=>x[0]),txt=([n,,k])=>n>1?t(k==='sbPackGot'?'sbPacksGot':'sbGoldsGot',{n}):t(k);
   if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){SBQ=SBQG=0;items.forEach(it=>{const d=document.createElement('div');d.className='sb-strip'+(it[1]==='sb_gpack'?' gold':'');d.innerHTML=`<img src="art/${it[1]}.webp" alt=""><span><b></b><small></small></span>`;
     d.querySelector('b').textContent=txt(it);d.querySelector('small').textContent=t('sbPackSub');body.appendChild(d)})}
   else if(state==='win'||state==='over'){} // the result card opens a moment later and picks the queue up (showOverlay below)
-  else{SBQ=SBQG=0;popupToast(items.map(txt).join('  '))}}
+  else{SBQ=SBQG=0;noteToast(items.map(txt).join('  '))}}
 {const _s=showOverlay;showOverlay=function(){const r=_s.apply(this,arguments);if(SBQ||SBQG)setTimeout(sbNotify,160);return r}}
 /* more ways to EARN packs (Tzach, Oct 7). Packs are never sold, for coins or money: random stickers for purchase = a loot box (App Store). */
 // player level-up: a pack for every even player level
@@ -123,7 +123,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
     s.onclick=()=>{if(it.n){sfx.click();sbZoom(P,all,idx)}else{sfx.locked();noteToast(it.hint||t('hint_'+P.id))}};grid.appendChild(s)});
-  const ch=r.querySelector('.sb-chest'),rew=sbRew(ck);ch.onclick=()=>{if(done&&!claimed){const [c,x]=rew;D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbFillAll',{n:rew[0]})+' 🪙')}};
+  const ch=r.querySelector('.sb-chest'),rew=sbRew(ck);ch.onclick=()=>{if(done&&!claimed){const [c,x]=rew;D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+'  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();noteToast(t('sbFillAll',{n:rew[0]})+' 🪙')}};
   const pb=r.querySelector('.sb-packbtn');pb.querySelector('span').textContent=D.packs?t('sbPacks',{n:D.packs}):t('sbNext',{n:D.w%3});
   // packs are earned only (no buying with coins): random items for purchase would be a loot box (Apple odds disclosure, AU 16+)
   pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();noteToast(t('sbHow'))}};

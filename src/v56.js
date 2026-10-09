@@ -3,12 +3,12 @@
    hatches after N won levels → a buddy you don't own yet, otherwise cookies (treats). Cookies evolve buddies (3 stages:
    bigger, then a golden aura) and every evolved stage adds +5% coins on won levels. Golden eggs can hatch the egg-only baby dino.
    Trophy room (tap the profile pill): achievements with bronze/silver/gold cups that pay coins + XP. */
-Object.assign(I18N.en,{nestFull:'Nest is full! +5 cookies instead',nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',
+Object.assign(I18N.en,{nestFull:'Nest is full! +5 cookies instead',nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',nsNeedCk:'{n} more cookies needed',
   egg_c:'Egg',egg_r:'Rare egg',egg_g:'Golden egg',eggNew:'You found an egg!',eggNewSub:'It hatches after {n} wins',hatchNew:'New buddy!',hatchDup:'Cookies!',hatchDupSub:'You already have {b} — it turned into cookies',hatchOk:'Yay!',hatchWear:'Wear it',
   evoTitle:'{b} evolved!',evoSub:'Stage {n} · +{p}% coins on wins',evoBonus:'Evolved buddy',eggOnly:'Golden egg only',miniNest:'Nest',
   achTitle:'Trophy room',achClaim:'Collect',achDone:'All gold!',achNext:'{a}/{b}',
   ach_wins:'Levels won',ach_bosses:'Bosses beaten',ach_stars:'Stars',ach_tower:'Tallest endless tower',ach_perf:'Perfect drops',ach_stk:'Stickers',ach_eggs:'Eggs hatched',ach_lv:'Player level',ach_bud:'Buddies',ach_medal:'Tournament medals'});
-Object.assign(I18N.he,{nestFull:'הקן מלא! קיבלתם 5 עוגיות במקום',nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',
+Object.assign(I18N.he,{nestFull:'הקן מלא! קיבלתם 5 עוגיות במקום',nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',nsNeedCk:'חסרות עוד {n} עוגיות',
   egg_c:'ביצה',egg_r:'ביצה נדירה',egg_g:'ביצת זהב',eggNew:'מצאתם ביצה!',eggNewSub:'היא תבקע אחרי {n} ניצחונות',hatchNew:'חבר חדש!',hatchDup:'עוגיות!',hatchDupSub:'{b} כבר אצלכם — הוא הפך לעוגיות',hatchOk:'יש!',hatchWear:'לשים עליי',
   evoTitle:'{b} התפתח!',evoSub:'שלב {n} · ‎+{p}%‎ מטבעות בניצחון',evoBonus:'חבר מפותח',eggOnly:'רק מביצת זהב',miniNest:'קן',
   achTitle:'חדר הגביעים',achClaim:'אסוף',achDone:'הכל זהב!',achNext:'{a}/{b}',
@@ -97,7 +97,7 @@ function nestRender(){const N=nest(),r=NEL,C=N.cur,E=C&&EGG[C.t],ready=eggReady(
     c.innerHTML=`<span class="th"><img alt=""></span><b></b><i class="sts">${[1,2,3].map(k=>`<em class="${own&&k<=st?'on':''}">★</em>`).join('')}</i>`;
     const im=c.querySelector('img');try{im.src=wThumb('pet',id)||''}catch(e){}c.querySelector('b').textContent=wName('pet',id);
     if(own&&st<3){const cost=EVO_COST[st],bt=document.createElement('button');bt.className='ns-evo'+(N.treats>=cost?' can':'');bt.innerHTML=`<span></span><em><img src="art/ns_cookie.webp" alt="">${cost}</em>`;bt.querySelector('span').textContent=t('nestEvolve');
-      bt.onclick=()=>{if(budEvolve(id)){sfx.flourish(3);vib([30,40,30]);evoPop(id)}else{sfx.locked();bt.classList.remove('nope');void bt.offsetWidth;bt.classList.add('nope')}};c.appendChild(bt)}
+      bt.onclick=()=>{if(budEvolve(id)){sfx.flourish(3);vib([30,40,30]);evoPop(id)}else{sfx.locked();bt.classList.remove('nope');void bt.offsetWidth;bt.classList.add('nope');if(budSt(id)<3)noteToast(t('nsNeedCk',{n:EVO_COST[budSt(id)]-nest().treats}))}};c.appendChild(bt)}
     else if(own){const s=document.createElement('span');s.className='ns-max';s.textContent=t('nestMax');c.appendChild(s)}
     else{const s=document.createElement('span');s.className='ns-lock';s.textContent=WPET[id].egg?(typeof eggGateTxt==='function'?eggGateTxt(id):t('eggOnly')):'🔒';c.appendChild(s)}
     g.appendChild(c)})}
@@ -146,8 +146,8 @@ function achRender(){const r=ACEL;r.innerHTML=`<div class="ps-top"><button class
       b.onclick=()=>{achClaim(A,g);saveProgress();sfx.coin(4);vib(15);achRender()};row.querySelector('.ac-ln').appendChild(b)}
     L.appendChild(row)});
   const n=achReady();if(n>1){const f=document.createElement('div');f.className='ac-foot';const b=document.createElement('button');b.className='btn green';b.innerHTML='<span></span>';b.querySelector('span').textContent=t('psAll')+' ('+n+')';
-    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();lvUpLater();sfx.coin(5);popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
-function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;lvUpLater();popupToast('+'+c+' 🪙  +'+x+' XP')}return [c,x]}
+    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();lvUpLater();sfx.coin(5);popupToast('+'+c+'  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
+function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;lvUpLater();popupToast('+'+c+'  +'+x+' XP')}return [c,x]}
 // profile pill → trophy room, with a red dot when a cup is waiting
 {const pr=document.querySelector('#title .profile');if(pr){pr.style.cursor='pointer';pr.addEventListener('click',()=>openTrophy());const d=document.createElement('i');d.className='badge ac-dot';d.hidden=true;d.textContent='!';pr.appendChild(d)}}
 /* ---------- lobby: nest icon in the mini column ---------- */
