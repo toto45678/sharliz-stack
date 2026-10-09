@@ -7,8 +7,10 @@
 const PET3D_META=__PET3D__,PET3D={};
 function pet3dLoad(id){const M=PET3D_META[id];if(!M||PET3D[id])return;PET3D[id]='loading';
   fetch('art/pet_'+id+'.wasm?'+M.bytes).then(r=>{if(!r.ok)throw new Error('http '+r.status);return r.arrayBuffer()}).then(buf=>{PET3D[id]=buf;
-    try{petRefresh(id);if(typeof W3!=='undefined'&&W3.on)renderWardrobe();if(typeof NEL!=='undefined'&&NEL&&NEL.isConnected)nestRender()}catch(e){}})
+    try{petRefresh(id);pet3dUi()}catch(e){}})
   .catch(e=>{console.warn('pet3d',id,e);setTimeout(()=>{PET3D[id]=null},8000)})}
+// the open screens redraw once after a burst of buddy models arrives (it used to be once per model: 21 rebuilds on opening My hero)
+let P3UI=0;function pet3dUi(){clearTimeout(P3UI);P3UI=setTimeout(()=>{try{if(typeof W3!=='undefined'&&W3.on)renderWardrobe();if(typeof NEL!=='undefined'&&NEL&&NEL.isConnected)nestRender()}catch(e){}},300)}
 function pet3dAll(){for(const id in PET3D_META)pet3dLoad(id)}
 // outline: back faces pushed out along the normal (works for any shape, unlike scaling around the centre)
 const INK3={};

@@ -56,7 +56,7 @@ document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD
    wrapping, so nothing can be pushed out of its card. Runs on whatever the game adds or shows, one frame later. */
 {const CJK=/^(ja|zh|ko)/,seen=new WeakSet;let q=new Set,raf=0;
  const lines=rg=>new Set([...rg.getClientRects()].map(r=>Math.round(r.top))).size;
- const fit=e=>{if(seen.has(e)||!e.isConnected)return;const cs=getComputedStyle(e),fs=parseFloat(cs.fontSize);if(fs<20||cs.display==='none')return;
+ const fit=e=>{if(seen.has(e)||!e.isConnected)return;const cs=getComputedStyle(e),fs=parseFloat(cs.fontSize);if((fs<20&&!e.matches('.shop-tabs button'))||cs.display==='none')return;
    for(const n of e.childNodes){if(n.nodeType!==3||n.textContent.trim().length<2)continue;const rg=document.createRange();rg.selectNodeContents(n);
      if(!rg.getClientRects().length)return;// not shown yet: try again when it shows
      seen.add(e);if(lines(rg)<2)return;

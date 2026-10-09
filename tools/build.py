@@ -253,6 +253,8 @@ rep("if(!isBoss()&&!lv.cp&&fl>=Math.ceil(goal()/2)&&fl<goal()){lv.cp=fl;","if(mo
 rep("  if(modeLanded())return;","  if(modeLanded()){updateHud();return}")
 # Daily Tower was picked from all 30 stages, so a new player could get a season-4 stage: pick from the worlds this player has opened
 rep("modeZi=m==='daily'?h%ZONES.length:0;","modeZi=m==='daily'?h%Math.max(1,Math.min(ZONES.length,Math.ceil((progress.unlocked||1)/LPZ))):0;")
+# wOwned('trail', …) threw (there is no WTAB.trail); trails and hats are both kept in progress.skins
+rep("const T0=WTAB[cat][id];if(!T0)return false;","if(!WTAB[cat])return wallet().skins.includes(id);const T0=WTAB[cat][id];if(!T0)return false;")
 # ---- inject module + css
 import glob as _g
 B3D={os.path.basename(f)[4:-5]:json.load(open(f)) for f in sorted(_g.glob(P(ROOT,'art','b3d_*.json')))}

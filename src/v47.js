@@ -139,6 +139,6 @@ const astroOwned=()=>wOwned('outfit','astro');
 function astroCard(onBuy){const P=IAP.products.astro,d=document.createElement('div');d.className='st-pack astro-pack';
   const th=(typeof wThumb==='function'&&wThumb('outfit','astro'))||'art/ic_gift.webp';
   d.innerHTML=`<b class="st-t"></b><div class="st-items"><div class="st-it hat"><i class="st-th"><img src="${th}" alt=""></i><span></span><small></small></div></div><button class="st-buy"><em>${P.price}</em></button>`;
-  d.querySelector('.st-t').textContent='🚀 '+t('astroTitle');d.querySelector('.hat span').textContent=t('astroTitle');d.querySelector('.hat small').textContent='▲ '+t('astroDesc');
+  d.querySelector('.st-t').textContent='🚀 '+t('astroTitle');d.querySelector('.hat span').textContent=t('astroTitle');d.querySelector('.hat small').textContent='▲ '+t('astroDesc');{const c=document.createElement('small');c.className='cost';c.textContent='▼ '+t('ng_heart1');d.querySelector('.hat small').after(c)}
   d.querySelector('.st-buy').onclick=()=>IAP.buy('astro',t('astroTitle')).then(ok=>{if(!ok)return;try{setHero3DSkin();rebakeIfNeeded()}catch(e){}popupToast(t('thanks'));onBuy&&onBuy()});return d}
 {const _sb=shopBody;shopBody=function(card){_sb(card);if(shopTab!=='coins'||astroOwned())return;const list=card.querySelector('.shop-list.packs');if(list){const c=astroCard(()=>rerenderOverlay&&rerenderOverlay());const st=list.querySelector('.st-pack');st?st.after(c):list.prepend(c)}}}

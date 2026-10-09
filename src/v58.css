@@ -56,3 +56,7 @@
 /* ☰ contents: red dot on a section that holds new stickers */
 .tc-row{position:relative}
 .tc-row.nw::after{content:'';position:absolute;top:3px;inset-inline-start:44px;width:12px;height:12px;border-radius:50%;background:#ff3b5c;border:2px solid #fff;box-shadow:0 1px 0 rgba(0,0,0,.3)}
+/* bug hunt 5: My hero slot dot (new items inside), drawer slides in only when the screen opens, cost lines on paid offers */
+.cs-slot .dot{position:absolute;top:-6px;inset-inline-start:-6px;width:13px;height:13px;border-radius:50%;background:#ff3b5c;border:2px solid var(--ink)}
+.cs-drawer.still{animation:none}
+.st-it.hat small.cost,.st-pack.astro-pack .st-it.hat small.cost{color:#ffb3b3}
