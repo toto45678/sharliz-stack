@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "Moedas a cada pouso no frenesi: +{n}",
   "hsp_balloons": "O balão de moedas aparece {n}% mais vezes",
   "hsDesign": "Design",
-  "hsNewLook": "Novo visual: {x}!"
+  "hsNewLook": "Novo visual: {x}!",
+  "hsDesLock": "Melhore para ★{n} para abrir este design"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

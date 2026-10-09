@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "+{n} koin tiap mendarat saat Heboh",
   "hsp_balloons": "Balon koin muncul {n}% lebih sering",
   "hsDesign": "Desain",
-  "hsNewLook": "Tampilan baru: {x}!"
+  "hsNewLook": "Tampilan baru: {x}!",
+  "hsDesLock": "Tingkatkan ke ★{n} untuk membuka desain ini"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

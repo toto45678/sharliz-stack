@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "Monedas por cada aterrizaje en frenesí: +{n}",
   "hsp_balloons": "El globo de monedas sale un {n}% más seguido",
   "hsDesign": "Diseño",
-  "hsNewLook": "¡Nuevo aspecto: {x}!"
+  "hsNewLook": "¡Nuevo aspecto: {x}!",
+  "hsDesLock": "Mejora a ★{n} para abrir este diseño"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

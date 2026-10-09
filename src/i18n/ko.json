@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "피버 중 착지마다 코인 +{n}",
   "hsp_balloons": "코인 풍선이 {n}% 더 자주 와",
   "hsDesign": "디자인",
-  "hsNewLook": "새 디자인: {x}!"
+  "hsNewLook": "새 디자인: {x}!",
+  "hsDesLock": "★{n}로 업그레이드하면 이 디자인이 열려요"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

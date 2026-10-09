@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "狂热中每次落地+{n}金币",
   "hsp_balloons": "金币气球出现频率+{n}%",
   "hsDesign": "款式",
-  "hsNewLook": "新款式：{x}！"
+  "hsNewLook": "新款式：{x}！",
+  "hsDesLock": "升级到★{n}即可解锁这个设计"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

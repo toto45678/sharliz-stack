@@ -60,9 +60,11 @@
 .hs-sel .hs-unsel{position:static;width:38px;height:38px}
 /* designs: one button per picture, the one in use is green, the others show their coin price until bought */
 .hs-sty{grid-column:1/-1;display:flex;align-items:center;gap:8px;min-width:0}
+.hs-sbs{display:flex;gap:7px;flex:1;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:5px 5px 11px}.hs-sbs::-webkit-scrollbar{display:none}
 .hs-sty span{font-weight:900;font-size:.8rem;margin-inline-end:2px}
 .hs-sb{position:relative;width:58px;height:58px;flex:none;border-radius:14px;border:3px solid #120d2b;background:#fff;padding:3px;cursor:pointer;box-shadow:0 3px 0 #120d2b}
 .hs-sb img{width:100%;height:100%;object-fit:contain;display:block}
+.hs-sb.lock img{filter:grayscale(.75) brightness(.7);opacity:.75}.hs-sb.lock{background:#d9d3ea}
 .hs-sb.on{background:linear-gradient(180deg,#e8f9e0,#b8f5a6);outline:3px solid #ffe24d;outline-offset:1px}
 .hs-sb em{position:absolute;inset-inline:-4px;bottom:-8px;display:flex;align-items:center;justify-content:center;gap:2px;font:900 .66rem/1 Rubik,system-ui,sans-serif;font-style:normal;
   background:#fff3c4;border:2px solid #120d2b;border-radius:999px;padding:2px 3px;color:#120d2b}

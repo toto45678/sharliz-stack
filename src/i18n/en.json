@@ -911,6 +911,7 @@
   "hsMini": "House",
   "hsDesign": "Design",
   "hsNewLook": "New look: {x}!",
+  "hsDesLock": "Upgrade to ★{n} to open this design",
   "hsBonus": "House bonus",
   "hsOven": "Cookie oven: +1 buddy cookie!",
   "hsFridge": "Fridge: a free booster!",

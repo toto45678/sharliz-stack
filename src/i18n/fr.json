@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "Pièces par atterrissage en Frénésie : +{n}",
   "hsp_balloons": "Le ballon à pièces vient {n} % plus souvent",
   "hsDesign": "Style",
-  "hsNewLook": "Nouveau look : {x} !"
+  "hsNewLook": "Nouveau look : {x} !",
+  "hsDesLock": "Améliore à ★{n} pour ouvrir ce design"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",

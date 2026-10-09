@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "Monete per ogni atterraggio in frenesia: +{n}",
   "hsp_balloons": "Il palloncino moneta arriva il {n}% più spesso",
   "hsDesign": "Stile",
-  "hsNewLook": "Nuovo look: {x}!"
+  "hsNewLook": "Nuovo look: {x}!",
+  "hsDesLock": "Migliora a ★{n} per aprire questo design"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

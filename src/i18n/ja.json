@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "フィーバー中の着地ごとにコイン+{n}",
   "hsp_balloons": "コインふうせんが{n}%よく来る",
   "hsDesign": "デザイン",
-  "hsNewLook": "新しいデザイン：{x}！"
+  "hsNewLook": "新しいデザイン：{x}！",
+  "hsDesLock": "★{n}にアップグレードするとこのデザインが開きます"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",

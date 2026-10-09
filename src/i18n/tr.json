@@ -1000,7 +1000,8 @@
   "hsp_trampoline": "Çılgınlıktaki her iniş için +{n} jeton",
   "hsp_balloons": "Jeton balonu %{n} daha sık gelir",
   "hsDesign": "Tasarım",
-  "hsNewLook": "Yeni görünüm: {x}!"
+  "hsNewLook": "Yeni görünüm: {x}!",
+  "hsDesLock": "Bu tasarımı açmak için ★{n} seviyesine yükselt"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
