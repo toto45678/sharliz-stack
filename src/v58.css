@@ -61,3 +61,5 @@
 .cs-drawer.still{animation:none}
 .st-it.hat small.cost,.st-pack.astro-pack .st-it.hat small.cost{color:#ffb3b3}
 .season-banner.narrow{white-space:normal;max-width:150px;padding:6px 16px 8px}.season-banner.narrow b{line-height:1}
+/* nightly Oct 10: a season banner scrolled over the map's top bar (back button + title) - it now passes under it like the pins */
+.season-banner{z-index:2}
