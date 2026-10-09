@@ -998,7 +998,9 @@
   "hsp_birdhouse": "Biscoitos quando um ovo choca: +{n}",
   "hsp_flowers": "+{n}% pontos a cada perfeito",
   "hsp_trampoline": "Moedas a cada pouso no frenesi: +{n}",
-  "hsp_balloons": "O balão de moedas aparece {n}% mais vezes"
+  "hsp_balloons": "O balão de moedas aparece {n}% mais vezes",
+  "hsDesign": "Design",
+  "hsNewLook": "Novo visual: {x}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

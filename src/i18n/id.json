@@ -998,7 +998,9 @@
   "hsp_birdhouse": "+{n} kue saat telur menetas",
   "hsp_flowers": "+{n}% poin tiap Sempurna",
   "hsp_trampoline": "+{n} koin tiap mendarat saat Heboh",
-  "hsp_balloons": "Balon koin muncul {n}% lebih sering"
+  "hsp_balloons": "Balon koin muncul {n}% lebih sering",
+  "hsDesign": "Desain",
+  "hsNewLook": "Tampilan baru: {x}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

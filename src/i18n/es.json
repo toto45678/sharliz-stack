@@ -998,7 +998,9 @@
   "hsp_birdhouse": "Galletas cuando se incuba un huevo: +{n}",
   "hsp_flowers": "+{n}% puntos por cada perfecto",
   "hsp_trampoline": "Monedas por cada aterrizaje en frenesí: +{n}",
-  "hsp_balloons": "El globo de monedas sale un {n}% más seguido"
+  "hsp_balloons": "El globo de monedas sale un {n}% más seguido",
+  "hsDesign": "Diseño",
+  "hsNewLook": "¡Nuevo aspecto: {x}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

@@ -998,7 +998,9 @@
   "hsp_birdhouse": "孵蛋时饼干+{n}",
   "hsp_flowers": "完美得分+{n}%",
   "hsp_trampoline": "狂热中每次落地+{n}金币",
-  "hsp_balloons": "金币气球出现频率+{n}%"
+  "hsp_balloons": "金币气球出现频率+{n}%",
+  "hsDesign": "款式",
+  "hsNewLook": "新款式：{x}！"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

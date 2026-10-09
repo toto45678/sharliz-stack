@@ -998,7 +998,9 @@
   "hsp_birdhouse": "Yumurta çatlayınca +{n} kurabiye",
   "hsp_flowers": "Her mükemmel için +%{n} puan",
   "hsp_trampoline": "Çılgınlıktaki her iniş için +{n} jeton",
-  "hsp_balloons": "Jeton balonu %{n} daha sık gelir"
+  "hsp_balloons": "Jeton balonu %{n} daha sık gelir",
+  "hsDesign": "Tasarım",
+  "hsNewLook": "Yeni görünüm: {x}!"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

@@ -998,7 +998,9 @@
   "hsp_birdhouse": "Biscotti quando un uovo si schiude: +{n}",
   "hsp_flowers": "+{n}% punti per ogni perfetto",
   "hsp_trampoline": "Monete per ogni atterraggio in frenesia: +{n}",
-  "hsp_balloons": "Il palloncino moneta arriva il {n}% più spesso"
+  "hsp_balloons": "Il palloncino moneta arriva il {n}% più spesso",
+  "hsDesign": "Stile",
+  "hsNewLook": "Nuovo look: {x}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

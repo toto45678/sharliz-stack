@@ -998,7 +998,9 @@
   "hsp_birdhouse": "Kekse, wenn ein Ei schlüpft: +{n}",
   "hsp_flowers": "+{n}% Punkte für jedes Perfekt",
   "hsp_trampoline": "Münzen für jede Landung im Fieber: +{n}",
-  "hsp_balloons": "Der Münzballon kommt {n}% öfter"
+  "hsp_balloons": "Der Münzballon kommt {n}% öfter",
+  "hsDesign": "Design",
+  "hsNewLook": "Neuer Look: {x}!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
