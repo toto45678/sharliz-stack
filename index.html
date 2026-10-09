@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009020208"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009022921"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -2096,14 +2096,16 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .hs-skinbtn i{font-style:normal;font-size:16px}
 /* the strip under the house: fixed height, so the house keeps its size */
 /* a picked item: the strip grows over the bottom of the house (the canvas keeps its size, the camera re-centres on what is still visible) */
-.hs-panel.sel{height:auto;min-height:clamp(172px,24vh,224px);max-height:66%}
-.hs-panel{flex:none;height:clamp(172px,24vh,224px);overflow-y:auto;overflow-x:hidden;padding:8px 10px 10px;border-top:3px solid #120d2b;border-radius:20px 20px 0 0;
+.hs-panel.sel{height:auto;min-height:clamp(182px,24vh,224px);max-height:66%}
+.hs-panel{flex:none;height:clamp(182px,24vh,224px);overflow-y:auto;overflow-x:hidden;padding:8px 10px 10px;border-top:3px solid #120d2b;border-radius:20px 20px 0 0;
   background:linear-gradient(180deg,#3b1f7c,#241250);box-shadow:0 -4px 0 rgba(18,13,43,.35)}
 .hs-grid{display:flex;align-items:stretch;gap:9px;height:100%;box-sizing:border-box;overflow-x:auto;overflow-y:hidden;padding:2px 2px 6px;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain}
 .hs-grid::-webkit-scrollbar{display:none}
 .hs-grid .hs-card{flex:none;width:152px;scroll-snap-align:start;box-sizing:border-box;grid-template-rows:auto auto 1fr auto}
 .hs-grid .hs-card p{align-self:start}
 .hs-lockb+.hs-grid{height:calc(100% - 40px)}
+/* a locked room: the banner already says when it opens, so the cards drop their lock buttons (on iPhone SE they were cut off under the banner) */
+.hs-lockb+.hs-grid .hs-bb{display:none}
 .hs-lockb{margin:0 0 7px;padding:6px 10px;border-radius:12px;border:2.5px solid #120d2b;background:#fff3c4;color:#120d2b;font-weight:800;font-size:.8rem;line-height:1.25;text-align:center}
 .hs-card{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto auto auto;column-gap:8px;row-gap:2px;align-items:center;padding:8px;border-radius:16px;
   border:3px solid #120d2b;background:linear-gradient(180deg,#fffaf0,#ffe9c4);color:#120d2b;box-shadow:0 4px 0 #120d2b}
@@ -2111,7 +2113,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .hs-card.max{background:linear-gradient(180deg,#fff7c8,#ffd84a)}
 .hs-card .hs-ic{grid-row:1/3}
 .hs-card b{font-weight:800;font-size:.86rem;line-height:1.15;min-width:0;overflow:hidden}
-.hs-card p{grid-column:1/3;margin:2px 0 0;font-size:.74rem;line-height:1.25;font-weight:600;color:#4a3f66;min-height:2.5em}
+.hs-card p{grid-column:1/3;margin:2px 0 0;font-size:.74rem;line-height:1.2;font-weight:600;color:#4a3f66;min-height:2.5em}
 .hs-card .btn{grid-column:1/3}
 .hs-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:26px;line-height:1;background:color-mix(in srgb,var(--c,#ffd36b) 40%,#fff);border:2.5px solid #120d2b}
 .hs-ic{position:relative;overflow:hidden}.hs-ic img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:contain}

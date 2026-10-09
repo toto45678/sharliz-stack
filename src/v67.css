@@ -19,14 +19,16 @@
 .hs-skinbtn i{font-style:normal;font-size:16px}
 /* the strip under the house: fixed height, so the house keeps its size */
 /* a picked item: the strip grows over the bottom of the house (the canvas keeps its size, the camera re-centres on what is still visible) */
-.hs-panel.sel{height:auto;min-height:clamp(172px,24vh,224px);max-height:66%}
-.hs-panel{flex:none;height:clamp(172px,24vh,224px);overflow-y:auto;overflow-x:hidden;padding:8px 10px 10px;border-top:3px solid #120d2b;border-radius:20px 20px 0 0;
+.hs-panel.sel{height:auto;min-height:clamp(182px,24vh,224px);max-height:66%}
+.hs-panel{flex:none;height:clamp(182px,24vh,224px);overflow-y:auto;overflow-x:hidden;padding:8px 10px 10px;border-top:3px solid #120d2b;border-radius:20px 20px 0 0;
   background:linear-gradient(180deg,#3b1f7c,#241250);box-shadow:0 -4px 0 rgba(18,13,43,.35)}
 .hs-grid{display:flex;align-items:stretch;gap:9px;height:100%;box-sizing:border-box;overflow-x:auto;overflow-y:hidden;padding:2px 2px 6px;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain}
 .hs-grid::-webkit-scrollbar{display:none}
 .hs-grid .hs-card{flex:none;width:152px;scroll-snap-align:start;box-sizing:border-box;grid-template-rows:auto auto 1fr auto}
 .hs-grid .hs-card p{align-self:start}
 .hs-lockb+.hs-grid{height:calc(100% - 40px)}
+/* a locked room: the banner already says when it opens, so the cards drop their lock buttons (on iPhone SE they were cut off under the banner) */
+.hs-lockb+.hs-grid .hs-bb{display:none}
 .hs-lockb{margin:0 0 7px;padding:6px 10px;border-radius:12px;border:2.5px solid #120d2b;background:#fff3c4;color:#120d2b;font-weight:800;font-size:.8rem;line-height:1.25;text-align:center}
 .hs-card{position:relative;display:grid;grid-template-columns:44px minmax(0,1fr);grid-template-rows:auto auto auto auto;column-gap:8px;row-gap:2px;align-items:center;padding:8px;border-radius:16px;
   border:3px solid #120d2b;background:linear-gradient(180deg,#fffaf0,#ffe9c4);color:#120d2b;box-shadow:0 4px 0 #120d2b}
@@ -34,7 +36,7 @@
 .hs-card.max{background:linear-gradient(180deg,#fff7c8,#ffd84a)}
 .hs-card .hs-ic{grid-row:1/3}
 .hs-card b{font-weight:800;font-size:.86rem;line-height:1.15;min-width:0;overflow:hidden}
-.hs-card p{grid-column:1/3;margin:2px 0 0;font-size:.74rem;line-height:1.25;font-weight:600;color:#4a3f66;min-height:2.5em}
+.hs-card p{grid-column:1/3;margin:2px 0 0;font-size:.74rem;line-height:1.2;font-weight:600;color:#4a3f66;min-height:2.5em}
 .hs-card .btn{grid-column:1/3}
 .hs-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:26px;line-height:1;background:color-mix(in srgb,var(--c,#ffd36b) 40%,#fff);border:2.5px solid #120d2b}
 .hs-ic{position:relative;overflow:hidden}.hs-ic img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:contain}
