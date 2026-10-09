@@ -99,17 +99,18 @@ function hsPic(name){if(!HS_ART.has(name))return null;if(HS_IMG[name]!==undefine
    progress.house.fpos[id]={x: centre, y: bottom edge (both fractions of the room), m: mirrored}. A room picture fills the room
    (4:3, HF_CAL = where its floor starts); an item is HF_SZ wide, its height follows its picture. */
 // [width, height] as fractions of the room's width / height (the height is only used until the item has a picture)
-const HF_SZ={piggy:[.13,.14],sofa:[.36,.22],clock:[.12,.5],fireplace:[.27,.32],aquarium:[.27,.3],books:[.23,.2],tv:[.25,.25],
+// living room = the graphics sample (Oct 9): widths measured on its sheet, at the mock's scale (wall height 783 px = .67 of the room)
+const HF_SZ={piggy:[.105,.22],sofa:[.44,.26],clock:[.108,.41],fireplace:[.214,.28],aquarium:[.165,.28],books:[.187,.17],tv:[.154,.28],
   oven:[.2,.3],fridge:[.18,.5],candyjar:[.1,.15],table:[.32,.2],sink:[.24,.29],toaster:[.12,.13],
   bed:[.42,.25],nightlight:[.1,.2],toychest:[.18,.16],wardrobe:[.25,.52],trophies:[.27,.16],telescope:[.14,.36],
   vane:[.12,.56],mailbox:[.1,.3],birdhouse:[.12,.42],flowers:[.3,.12],trampoline:[.34,.16],balloons:[.14,.56]};
 const HF_WALL=new Set(['books','trophies']); // hang on the wall; everything else stands on the floor
 // where a new item goes the first time: [x, y] (the middle front stays free for the Sharliz)
-const HF_SPOT={fireplace:[.5,.76],books:[.22,.44],clock:[.08,.77],aquarium:[.85,.77],sofa:[.27,.94],tv:[.76,.92],piggy:[.55,.96],
+const HF_SPOT={aquarium:[.13,.73],fireplace:[.42,.7],clock:[.66,.71],piggy:[.84,.75],books:[.17,.42],sofa:[.43,.9],tv:[.8,.93],
   fridge:[.1,.76],oven:[.3,.76],sink:[.53,.76],toaster:[.72,.77],candyjar:[.9,.78],table:[.5,.94],
   wardrobe:[.12,.76],trophies:[.5,.4],bed:[.42,.9],nightlight:[.76,.77],telescope:[.9,.8],toychest:[.79,.95],
   vane:[.08,.76],birdhouse:[.28,.77],flowers:[.52,.78],balloons:[.92,.77],mailbox:[.74,.82],trampoline:[.44,.94]};
-const HF_FT=.7,HF_FF=.975,HF_CAL={}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
+const HF_FT=.67,HF_FF=.975,HF_CAL={}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
 const hfFT=(room=hs().room)=>HF_CAL['hf_room_'+hsSkin().id+'_'+room]||HF_FT;
 const HSV={ord:{},focus:{},peek:null,pop:null,up:null,lockB:null,cam:0,camT:0,pan:null,RW:0,RH:0,RX:0,SP:0,TW:0,el:null,cv:null,g:null,dpr:1,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
 // the house is the 4 rooms stacked top to bottom (living, kitchen, bedroom, yard); the canvas is a window (W x H) on it and the camera
@@ -161,7 +162,7 @@ function hsRect(id,p=hsPos(id)){const v=HSV,[w0,h0]=HF_SZ[id],im=hsItemPic(id),w
   return {x:v.RX+p.x*v.RW-w/2,y:p.y*v.RH-h,w,h,im,m:!!p.m}}
 // keep an item inside the room: a floor item on the floor band, a wall item on the wall
 function hsClamp(id,x,y){const v=HSV;if(!v.RW)return {x,y};const r=hsRect(id,{x,y}),wf=r.w/v.RW/2,hf=r.h/v.RH,ft=hfFT(HSF[id].room);x=Math.max(wf+.005,Math.min(1-wf-.005,x));
-  y=HF_WALL.has(id)?Math.min(ft-.03,Math.max(hf+.04,y)):Math.max(ft+.03,Math.min(HF_FF,y));return {x,y}}
+  y=HF_WALL.has(id)?Math.min(ft-.03,Math.max(hf+.09,y)):Math.max(ft+.03,Math.min(HF_FF,y));return {x,y}}
 function hsDrawItem(g,id){const v=HSV,L=hsLv(id),r=hsRect(id),sel=v.sel===id,drag=v.drag&&v.drag.id===id&&v.drag.moved,f=HSF[id],wall=HF_WALL.has(id);
   const pop=v.pop&&v.pop.id===id?(performance.now()-v.pop.t0)/480:1,pk=hsPeek(id),bx=r.x+r.w/2,by=r.y+r.h;
   // a soft shadow under a floor item (bigger while you lift it)
@@ -176,7 +177,7 @@ function hsDrawItem(g,id){const v=HSV,L=hsLv(id),r=hsRect(id),sel=v.sel===id,dra
     const fs=Math.min(w*.62,h*.62);g.font=`${Math.round(fs)}px "Apple Color Emoji","Noto Color Emoji",sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillText(f.em,0,-h*.48)}
   g.restore();
   if(L>=5){for(let k=0;k<3;k++){const ph=HSV.last/400+k*2.1;g.fillStyle='#ffe24d';g.globalAlpha=.55+.45*Math.sin(ph);hsStar(g,bx+Math.cos(ph)*r.w*.4,r.y+r.h*.15+Math.sin(ph*1.3)*v.RH*.04,v.TW*.07)}g.globalAlpha=1}
-  if(L){const s='★'+L,lx=r.x+r.w-v.TW*.05,ly=by-v.TW*.12;g.font=`900 ${Math.round(v.TW*.24)}px Rubik,system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';
+  if(L&&sel){const s='★'+L,lx=r.x+r.w-v.TW*.05,ly=by-v.TW*.12; // the level only on the picked item (the room stays clean, the cards show the stars)g.font=`900 ${Math.round(v.TW*.24)}px Rubik,system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';
     g.lineWidth=3;g.strokeStyle='#120d2b';g.strokeText(s,lx,ly);g.fillStyle=L>=5?'#ffe24d':'#fff';g.fillText(s,lx,ly)}
   if(sel){g.save();g.strokeStyle='#ffe24d';g.lineWidth=3;g.setLineDash([6,5]);g.lineDashOffset=-HSV.last/40;hsRR(g,r.x-4,r.y-4-(drag?v.RH*.025:0),r.w+8,r.h+8,10);g.stroke();g.restore()}}
 function hsStar(g,x,y,r){g.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?r*.45:r;g.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}g.closePath();g.fill()}
@@ -186,7 +187,7 @@ const hsDepth=id=>HF_WALL.has(id)?-1:hsPos(id).y;
 // a new item goes to its own spot (overlapping is fine, so there is always room)
 function hsAutoPlace(id){const H=hs();if(!H.fpos[id]){const S=HF_SPOT[id]||[.5,.9],c=hsClamp(id,S[0],S[1]);H.fpos[id]={x:c.x,y:c.y,m:0}}return true}
 // the Sharliz walks around the floor band
-function hsHeroTick(dt){const v=HSV,ft=hfFT();let h=v.hero;if(!h)h=v.hero={s:arcHeroSpriteSafe(),x:.5,y:.9,tx:.5,ty:.9,wait:1,hop:0,dir:1};
+function hsHeroTick(dt){const v=HSV,ft=hfFT();let h=v.hero;if(!h)h=v.hero={s:arcHeroSpriteSafe(),x:.15,y:.93,tx:.15,ty:.93,wait:1,hop:0,dir:1};
   const ax=(h.tx-h.x)*v.RW,ay=(h.ty-h.y)*v.RH,d=Math.hypot(ax,ay);
   if(d>1){const st=Math.min(d,dt*v.RW*.16);h.x+=ax/d*st/v.RW;h.y+=ay/d*st/v.RH;h.hop+=dt*9;h.dir=ax>0?1:-1}
   else if((h.wait-=dt)<=0){h.wait=1.2+Math.random()*2.2;h.tx=.12+Math.random()*.76;h.ty=ft+.1+Math.random()*(HF_FF-ft-.1)}
