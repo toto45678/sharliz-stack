@@ -7,10 +7,11 @@ usage:
   python3 -I tools/house_flat.py import [/mnt/project-files/graphics/house/flat] [--all]
       rooms/room_<skin>_<room>.png  -> art/hf_room_<skin>_<room>.webp  (cropped to 4:3 from the middle, 1024x768)
       furniture/f_<id>.png          -> art/hf_<id>.webp                 (trimmed, max 520 px wide)
-      furniture/f_<id>_d<N>.png     -> art/hf_<id>_d<N>.webp            (designs 2..10)
+      furniture/f_<id>_d<N>.png     -> art/hf_<id>_d<N>.webp            (designs 2..10, scaled so the item's body is as wide as in
+                                                                         hf_<id>.webp: the game draws a design im.width/design1.width wide)
   Only files newer than their webp are converted (--all redoes everything). An item switches to its flat pictures in the game as soon as
   art/hf_<id>.webp exists; a room picture's floor line goes in HF_CAL (src/v67.js) when it isn't at 70% of the height."""
-import sys,os,glob
+import sys,os,glob,re
 import numpy as np
 from PIL import Image
 from scipy import ndimage as nd
@@ -27,9 +28,12 @@ def bg_mask(im):
 def cut(sheet,ids,out):
     im=Image.open(sheet).convert('RGBA');bg=bg_mask(im);fg=~bg;H,W=fg.shape
     # join the bits of one item (bubbles, sparkles, a lamp's string) before splitting the sheet into items
-    joined=nd.binary_dilation(fg,iterations=max(3,W//150));lab,n=nd.label(joined)
-    objs=[(s,(lab[s]==k+1)&fg[s]) for k,s in enumerate(nd.find_objects(lab))]
-    objs=[o for o in objs if o[1].sum()>fg.sum()*.004]
+    # (items drawn close together get joined too: then try again with a smaller reach)
+    for it in (max(3,W//150),max(2,W//300),1,0):
+        joined=nd.binary_dilation(fg,iterations=it) if it else fg;lab,n=nd.label(joined)
+        objs=[(s,(lab[s]==k+1)&fg[s]) for k,s in enumerate(nd.find_objects(lab))]
+        objs=[o for o in objs if o[1].sum()>fg.sum()*.004]
+        if len(objs)>=len(ids):break
     if len(objs)!=len(ids):print(f'WARNING: found {len(objs)} items on the sheet, expected {len(ids)}')
     # reading order: rows, then left to right. Items in a row stand on one line, so rows are found by their bottom edges
     # (a tall item like a balloon post has its middle between the rows, its bottom is still on its row's line)
@@ -51,6 +55,14 @@ def trim(im,maxw):
     if im.width>maxw:im=im.resize((maxw,round(im.height*maxw/im.width)),Image.LANCZOS)
     return im
 
+def core_w(im):
+    """width of an item's footprint: its bottom 30%, counting only the parts that make up at least 5% of it (sparkles and stars
+    around a fancy design don't count, nor do a crown or ice spikes higher up: the stool / legs / base stay the same size)"""
+    a=np.asarray(im.getchannel('A'))>100;lab,n=nd.label(a,structure=np.ones((3,3)))
+    if not n:return im.width
+    areas=nd.sum(a,lab,range(1,n+1));m=np.isin(lab,[k+1 for k in range(n) if areas[k]>=a.sum()*.05])
+    rows=np.where(m.any(1))[0];y0=rows[-1]-int((rows[-1]-rows[0])*.3);cols=np.where(m[y0:].any(0))[0];return cols[-1]-cols[0]+1
+
 def imp(src,all_):
     n=0
     for f in sorted(glob.glob(os.path.join(src,'rooms','room_*.png'))):
@@ -63,7 +75,12 @@ def imp(src,all_):
     for f in sorted(glob.glob(os.path.join(src,'furniture','f_*.png'))):
         o=os.path.join(ART,'hf_'+os.path.basename(f)[2:-4]+'.webp')
         if not all_ and os.path.exists(o) and os.path.getmtime(o)>=os.path.getmtime(f):continue
-        im=trim(Image.open(f),520);im.save(o,'WEBP',quality=86,method=6);n+=1;print(os.path.basename(o),im.size,os.path.getsize(o)//1024,'KB')
+        im=trim(Image.open(f),520);base=re.match(r'f_(.+)_d\d+\.png$',os.path.basename(f));k=''
+        if base and os.path.exists(os.path.join(ART,f'hf_{base[1]}.webp')):
+            # a design is drawn at its item's scale: its body as wide as design 1's body (the game draws it im.width/design1.width wide)
+            b=Image.open(os.path.join(ART,f'hf_{base[1]}.webp')).convert('RGBA');im=trim(Image.open(f),4000);sc=core_w(b)/core_w(im)
+            im=im.resize((max(1,round(im.width*sc)),max(1,round(im.height*sc))),Image.LANCZOS);k=f'  x{sc:.2f} (design 1 is {b.width} px)'
+        im.save(o,'WEBP',quality=86,method=6);n+=1;print(os.path.basename(o),im.size,os.path.getsize(o)//1024,'KB'+k)
     print(n,'converted')
 
 if __name__=='__main__':

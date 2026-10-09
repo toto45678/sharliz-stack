@@ -101,6 +101,7 @@ function hsPic(name){if(!HS_ART.has(name))return null;if(HS_IMG[name]!==undefine
 // [width, height] as fractions of the room's width / height (the height is only used until the item has a picture)
 // widths = the item's width on the graphics sheet (all 4 sheets share one scale) × .000615 (measured on the approved living-room mock:
 // wall height 783 px = .67 of the room); the height (2nd number) is only used until the item has a picture
+// = design 1; designs 2..10 are drawn im.width/design1.width as wide (tools/house_flat.py import scales each so its footprint matches design 1)
 const HF_SZ={piggy:[.105,.22],sofa:[.44,.26],clock:[.108,.41],fireplace:[.214,.28],aquarium:[.165,.28],books:[.187,.17],tv:[.154,.28],
   oven:[.212,.26],fridge:[.177,.44],candyjar:[.136,.22],table:[.461,.27],sink:[.171,.3],toaster:[.14,.28],
   bed:[.346,.36],nightlight:[.132,.29],toychest:[.22,.23],wardrobe:[.2,.45],trophies:[.29,.17],telescope:[.177,.32],
@@ -161,7 +162,7 @@ function hsLockTag(g,R){const v=HSV,s=v.TW*.95,B=v.lockB,p=B&&B.room===R.id?(per
 function hsPos(id){const d=HSV.drag;if(d&&d.id===id&&d.p)return d.p;const P=hs().fpos[id];if(P){const c=hsClamp(id,P.x,P.y);return {x:c.x,y:c.y,m:P.m}}const S=HF_SPOT[id]||[.5,.9],c=hsClamp(id,S[0],S[1]);return {x:c.x,y:c.y,m:0}}
 function hsItemPic(id){const pk=hsPeek(id);return pk&&hsPic(hsDN(id,pk))||hsPic(hsFN(id))}
 // the item's box on screen in the room's coordinates (its picture fills it; mirrored when turned)
-function hsRect(id,p=hsPos(id)){const v=HSV,[w0,h0]=HF_SZ[id],im=hsItemPic(id),w=w0*v.RW,h=im?w*im.height/im.width:h0*v.RH;
+function hsRect(id,p=hsPos(id)){const v=HSV,[w0,h0]=HF_SZ[id],im=hsItemPic(id),b=im&&hsPic('hf_'+id),w=w0*v.RW*(b&&im!==b?im.width/b.width:1),h=im?w*im.height/im.width:h0*v.RH;
   return {x:v.RX+p.x*v.RW-w/2,y:p.y*v.RH-h,w,h,im,m:!!p.m}}
 // keep an item inside the room: a floor item on the floor band, a wall item on the wall
 function hsClamp(id,x,y){const v=HSV;if(!v.RW)return {x,y};const r=hsRect(id,{x,y}),wf=r.w/v.RW/2,hf=r.h/v.RH,ft=hfFT(HSF[id].room);x=Math.max(wf+.005,Math.min(1-wf-.005,x));
