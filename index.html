@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009142701"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261009143659"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -1420,7 +1420,7 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .ns-bud{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:6px 4px 6px;border-radius:16px;border:3px solid #120d2b;background:linear-gradient(180deg,#6a52e0,#3a26a0);box-shadow:inset 0 3px 0 rgba(255,255,255,.2),0 3px 0 #120d2b}
 .ns-bud .th{width:70px;height:66px;display:grid;place-items:center}
 .ns-bud .th img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(10,8,40,.4))}
-.ns-bud b{font:.85rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ns-bud b{font:.85rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill;text-align:center;overflow-wrap:anywhere;hyphens:auto;max-width:100%}
 .ns-bud .sts,.egg-pop .sts{display:flex;gap:1px;font-style:normal}
 .ns-bud .sts em,.egg-pop .sts em{font-style:normal;font-size:.95rem;color:#2a1d66;-webkit-text-stroke:2px #120d2b;paint-order:stroke fill}
 .ns-bud .sts em.on,.egg-pop .sts em.on{color:#ffd23f}
@@ -5656,8 +5656,8 @@ function winBurst(){const card=document.getElementById('card');if(!card||!card.c
   try{if(typeof b3Drop==='function'&&B3.r){const z=typeof bossArt==='function'?bossArt():zone().id;b3Drop([z]);if(mode==='levels')b3Load(z)}}catch(e){}return r}}
 
 /* ===== v38: daily login gift — 7-day streak calendar, pops up once a day in the lobby ===== */
-Object.assign(I18N.en,{dlTitle:'Daily gift',dlDay:'Day {n}',dlClaim:'Collect!',dlSub:'Come back every day — day 7 is a big chest!',dlStreak:'Streak: {n} days',dlBoost:'+ booster',dlBoost2:'+ 2 boosters'});
-Object.assign(I18N.he,{dlTitle:'מתנה יומית',dlDay:'יום {n}',dlClaim:'לקחת!',dlSub:'חוזרים כל יום, וביום 7 מחכה תיבה גדולה!',dlStreak:'רצף: {n} ימים',dlBoost:'+ בוסטר',dlBoost2:'+ 2 בוסטרים'});
+Object.assign(I18N.en,{dlTitle:'Daily gift',dlDay:'Day {n}',dlClaim:'Collect!',dlSub:'Come back every day — day 7 is a big chest!',dlStreak:'Streak: {n} days',dlStreak1:'Streak: 1 day',dlBoost:'+ booster',dlBoost2:'+ 2 boosters'});
+Object.assign(I18N.he,{dlTitle:'מתנה יומית',dlDay:'יום {n}',dlClaim:'לקחת!',dlSub:'חוזרים כל יום, וביום 7 מחכה תיבה גדולה!',dlStreak:'רצף: {n} ימים',dlStreak1:'רצף: יום אחד',dlBoost:'+ בוסטר',dlBoost2:'+ 2 בוסטרים'});
 
 // coins per streak day; b = boosters added on top
 const DL_REWARDS=[{c:50},{c:80},{c:100,b:1,pk:1},{c:120},{c:150,b:1},{c:200},{c:400,b:2,gpk:1}];  // pk = sticker packs, gpk = golden sticker pack (v57)
@@ -7259,9 +7259,9 @@ function runBank(){try{
    XP from everything (levels, bosses, bonus stage, arcade, events, tournament) → player level (badge on the avatar)
    and the monthly Pass: 30 tiers × 100 XP, free track + premium track (test IAP 'pass' ₪19.90, bought per season).
    Pass-only items: galaxy colour, comet trail, star-crown hat. Design: ChatGPT (design/pass/). */
-Object.assign(I18N.en,{psTitle:'Sharliz Pass',psLeft:'{n} days left',psTier:'Tier {n}',psFree:'Free',psPrem:'Premium',psClaim:'Collect',psBuy:'Unlock Premium · {p}',psPremOn:'Premium unlocked!',psLocked:'Reach tier {n}',
+Object.assign(I18N.en,{psTitle:'Sharliz Pass',psLeft:'{n} days left',psLeft1:'1 day left',psTier:'Tier {n}',psFree:'Free',psPrem:'Premium',psClaim:'Collect',psBuy:'Unlock Premium · {p}',psPremOn:'Premium unlocked!',psLocked:'Reach tier {n}',
   lvShort:'Lv {n}',lvUp:'Level {n}!',lvReward:'Level reward',lvOk:'Yay!',xpGain:'+{n} XP',psItem:'Pass exclusive',psReady:'Rewards ready',psAll:'Collect all',psCoins:'Coins',psWhy:'Unlock every gold reward + 3 exclusive items',psBoost:'Boosters',lvUpTag:'Level up!',lvSub:'Great job! You reached a new level!'});
-Object.assign(I18N.he,{psTitle:'כרטיס שארליז',psLeft:'נותרו {n} ימים',psTier:'שלב {n}',psFree:'חינם',psPrem:'פרימיום',psClaim:'אסוף',psBuy:'פתחו פרימיום · {p}',psPremOn:'הפרימיום נפתח!',psLocked:'הגיעו לשלב {n}',
+Object.assign(I18N.he,{psTitle:'כרטיס שארליז',psLeft:'נותרו {n} ימים',psLeft1:'נותר יום אחד',psTier:'שלב {n}',psFree:'חינם',psPrem:'פרימיום',psClaim:'אסוף',psBuy:'פתחו פרימיום · {p}',psPremOn:'הפרימיום נפתח!',psLocked:'הגיעו לשלב {n}',
   lvShort:'רמה {n}',lvUp:'רמה {n}!',lvReward:'פרס רמה',lvOk:'יש!',xpGain:'+{n} XP',psItem:'בלעדי לכרטיס',psReady:'פרסים מחכים',psAll:'אסוף הכל',psCoins:'מטבעות',psWhy:'כל הפרסים הזהובים + 3 פריטים בלעדיים',psBoost:'חיזוקים',lvUpTag:'עליתם רמה!',lvSub:'כל הכבוד! הגעתם לרמה חדשה!'});
 // pass-only catalogue
 WCOL.galaxy={c:'#5b2bd6',p:1,pass:1,n:[T_('Galaxy'),'גלקסיה']};
@@ -7361,8 +7361,8 @@ const psItem=(c,id)=>PS_REW.some(r=>r[1].it&&r[1].it[0]===c&&r[1].it[1]===id);
    The old side columns stay in the DOM (hidden) so every module that updates their badges keeps working;
    the new buttons are proxies that click the originals and copy their badges/visibility on every updateLobby.
    The raised middle tab is MISSIONS (Tzach, Oct 8: a Home tab did nothing in the lobby); it left the small icon column. */
-Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
-Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
+Object.assign(I18N.en,{tabHome:'Home',tabModes:'Modes',miniDays:'{n}d',miniDays1:'1d',miniMis:'Missions',miniOffer:'Offer',arcSubModes:'{n} coin plays today',md_duo:'Two players, one phone'});
+Object.assign(I18N.he,{tabHome:'בית',tabModes:'מצבים',miniDays:'{n} ימים',miniDays1:'יום אחד',miniMis:'משימות',miniOffer:'מבצע',arcSubModes:'{n} משחקים היום',md_duo:'שניים על טלפון אחד'});
 const LT={tabs:[],mini:[]};
 function ltVisible(el,root){for(let e=el;e&&e!==root;e=e.parentElement)if(e.hidden)return false;return true}
 function ltCloneBadges(orig,proxy){proxy.querySelectorAll('.lt-bd').forEach(e=>e.remove());if(!orig||orig.hidden)return;
@@ -7403,12 +7403,12 @@ setTimeout(()=>{try{if(state==='title')updateLobby()}catch(e){}},0);
    hatches after N won levels → a buddy you don't own yet, otherwise cookies (treats). Cookies evolve buddies (3 stages:
    bigger, then a golden aura) and every evolved stage adds +5% coins on won levels. Golden eggs can hatch the egg-only baby dino.
    Trophy room (tap the profile pill): achievements with bronze/silver/gold cups that pay coins + XP. */
-Object.assign(I18N.en,{nestFull:'Nest is full! +5 cookies instead',nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',
+Object.assign(I18N.en,{nestFull:'Nest is full! +5 cookies instead',nestTitle:'Buddy nest',nestSub:'Hatch, collect and evolve!',nestWinsW:'wins',nestWins:'{a}/{b} wins',nestHatch:'Hatch!',nestEmpty:'No egg yet — win mid-world levels and bosses to find eggs',nestQueue:'Next eggs',nestBuddies:'My buddies',nestEvolve:'Evolve',nestMax:'Super!',nestTreats:'Cookies',nsNeedCk:'{n} more cookies needed',
   egg_c:'Egg',egg_r:'Rare egg',egg_g:'Golden egg',eggNew:'You found an egg!',eggNewSub:'It hatches after {n} wins',hatchNew:'New buddy!',hatchDup:'Cookies!',hatchDupSub:'You already have {b} — it turned into cookies',hatchOk:'Yay!',hatchWear:'Wear it',
   evoTitle:'{b} evolved!',evoSub:'Stage {n} · +{p}% coins on wins',evoBonus:'Evolved buddy',eggOnly:'Golden egg only',miniNest:'Nest',
   achTitle:'Trophy room',achClaim:'Collect',achDone:'All gold!',achNext:'{a}/{b}',
   ach_wins:'Levels won',ach_bosses:'Bosses beaten',ach_stars:'Stars',ach_tower:'Tallest endless tower',ach_perf:'Perfect drops',ach_stk:'Stickers',ach_eggs:'Eggs hatched',ach_lv:'Player level',ach_bud:'Buddies',ach_medal:'Tournament medals'});
-Object.assign(I18N.he,{nestFull:'הקן מלא! קיבלתם 5 עוגיות במקום',nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',
+Object.assign(I18N.he,{nestFull:'הקן מלא! קיבלתם 5 עוגיות במקום',nestTitle:'קן החברים',nestSub:'בקעו, אספו והתפתחו!',nestWinsW:'ניצחונות',nestWins:'{a}/{b} ניצחונות',nestHatch:'לבקוע!',nestEmpty:'עוד אין ביצה — נצחו בשלב 5 של כל עולם ובבוסים כדי למצוא ביצים',nestQueue:'הביצים הבאות',nestBuddies:'החברים שלי',nestEvolve:'התפתח',nestMax:'סופר!',nestTreats:'עוגיות',nsNeedCk:'חסרות עוד {n} עוגיות',
   egg_c:'ביצה',egg_r:'ביצה נדירה',egg_g:'ביצת זהב',eggNew:'מצאתם ביצה!',eggNewSub:'היא תבקע אחרי {n} ניצחונות',hatchNew:'חבר חדש!',hatchDup:'עוגיות!',hatchDupSub:'{b} כבר אצלכם — הוא הפך לעוגיות',hatchOk:'יש!',hatchWear:'לשים עליי',
   evoTitle:'{b} התפתח!',evoSub:'שלב {n} · ‎+{p}%‎ מטבעות בניצחון',evoBonus:'חבר מפותח',eggOnly:'רק מביצת זהב',miniNest:'קן',
   achTitle:'חדר הגביעים',achClaim:'אסוף',achDone:'הכל זהב!',achNext:'{a}/{b}',
@@ -7497,7 +7497,7 @@ function nestRender(){const N=nest(),r=NEL,C=N.cur,E=C&&EGG[C.t],ready=eggReady(
     c.innerHTML=`<span class="th"><img alt=""></span><b></b><i class="sts">${[1,2,3].map(k=>`<em class="${own&&k<=st?'on':''}">★</em>`).join('')}</i>`;
     const im=c.querySelector('img');try{im.src=wThumb('pet',id)||''}catch(e){}c.querySelector('b').textContent=wName('pet',id);
     if(own&&st<3){const cost=EVO_COST[st],bt=document.createElement('button');bt.className='ns-evo'+(N.treats>=cost?' can':'');bt.innerHTML=`<span></span><em><img src="art/ns_cookie.webp" alt="">${cost}</em>`;bt.querySelector('span').textContent=t('nestEvolve');
-      bt.onclick=()=>{if(budEvolve(id)){sfx.flourish(3);vib([30,40,30]);evoPop(id)}else{sfx.locked();bt.classList.remove('nope');void bt.offsetWidth;bt.classList.add('nope')}};c.appendChild(bt)}
+      bt.onclick=()=>{if(budEvolve(id)){sfx.flourish(3);vib([30,40,30]);evoPop(id)}else{sfx.locked();bt.classList.remove('nope');void bt.offsetWidth;bt.classList.add('nope');if(budSt(id)<3)noteToast(t('nsNeedCk',{n:EVO_COST[budSt(id)]-nest().treats}))}};c.appendChild(bt)}
     else if(own){const s=document.createElement('span');s.className='ns-max';s.textContent=t('nestMax');c.appendChild(s)}
     else{const s=document.createElement('span');s.className='ns-lock';s.textContent=WPET[id].egg?(typeof eggGateTxt==='function'?eggGateTxt(id):t('eggOnly')):'🔒';c.appendChild(s)}
     g.appendChild(c)})}
@@ -7546,8 +7546,8 @@ function achRender(){const r=ACEL;r.innerHTML=`<div class="ps-top"><button class
       b.onclick=()=>{achClaim(A,g);saveProgress();sfx.coin(4);vib(15);achRender()};row.querySelector('.ac-ln').appendChild(b)}
     L.appendChild(row)});
   const n=achReady();if(n>1){const f=document.createElement('div');f.className='ac-foot';const b=document.createElement('button');b.className='btn green';b.innerHTML='<span></span>';b.querySelector('span').textContent=t('psAll')+' ('+n+')';
-    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();lvUpLater();sfx.coin(5);popupToast('+'+c+' 🪙  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
-function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;lvUpLater();popupToast('+'+c+' 🪙  +'+x+' XP')}return [c,x]}
+    b.onclick=()=>{let c=0,x=0;ACH.forEach(A=>{let g=achGot(A.id);while(g<3&&A.v()>=A.T[g]){const P=achClaim(A,g,true);c+=P[0];x+=P[1];g++}});addXP(x);XPQ=null;saveProgress();lvUpLater();sfx.coin(5);popupToast('+'+c+'  +'+x+' XP');achRender()};f.appendChild(b);r.appendChild(f)}}
+function achClaim(A,g,quiet){progress.ach=progress.ach||{};progress.ach[A.id]=g+1;const [c,x]=ACH_PAY[g];wallet().coins+=c;if(!quiet){addXP(x);XPQ=null;lvUpLater();popupToast('+'+c+'  +'+x+' XP')}return [c,x]}
 // profile pill → trophy room, with a red dot when a cup is waiting
 {const pr=document.querySelector('#title .profile');if(pr){pr.style.cursor='pointer';pr.addEventListener('click',()=>openTrophy());const d=document.createElement('i');d.className='badge ac-dot';d.hidden=true;d.textContent='!';pr.appendChild(d)}}
 /* ---------- lobby: nest icon in the mini column ---------- */
@@ -7567,10 +7567,10 @@ nestRender=keepScroll(nestRender,()=>NEL,'.ns-scroll');achRender=keepScroll(achR
    New chapter "Sharliz": 24 illustrated stickers that only come from STICKER PACKS (3 stickers each; common/rare/holo).
    Packs: every 3 won levels, the first win over each boss, or 150 coins. Duplicates → coins. A full chapter → a big reward. */
 Object.assign(I18N.en,{sbOpen:'Open',sbBack:'Back',sbPacks:'Packs: {n}',sbNext:'Next pack {n}/3',sbHow:'Packs come from wins, bosses, the daily gift, weekly missions, level-ups, the tournament, the Pass and events',psPack:'Sticker pack',dlPack:'+ pack',sbOpenPack:'Opening a pack!',sbOpenSub:'Which stickers are inside?',sbTap:'Tap to continue',sbTapPack:'Tap the pack!',sbNew:'New!',sbMore:'Open another ({n})',sbToBook:'To the album',sbAll:'Open all ({n})',sbOpenMany:'Opening {n} packs!',sbNewN:'{n} new stickers!',sbGold:'Golden pack',sbGoldGot:'+1 golden sticker pack!',sbGoldOpen:'Golden pack!',sbGoldSub:'A holo sticker inside for sure!',sbHowG:'Golden packs: the gold chest in the bonus stage, a tournament gold medal and day 7 of the daily gift',
-  sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbFillAll:'Collect them all to win {n}',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
+  sbRar_c:'Common',sbRar_r:'Rare',sbRar_h:'Holo',sbHave:'You have {n}',sbNone:'Not found yet',sbDone:'Page complete!',sbFillAll:'Collect them all to win {n}',sbClaim:'Collect',sbGot:'Collected',sbPackGot:'+1 sticker pack!',sbPacksGot:'+{n} sticker packs!',sbGoldsGot:'+{n} golden sticker packs!',sbPackSub:'Open it in the sticker album',sbNoCoins:'Not enough coins',
   sbHow_shz:'Comes from sticker packs',sbCover:'Collect · Discover · Complete!',ch_shz:'Sharliz',sbPage:'Page {a}/{b}'});
 Object.assign(I18N.he,{sbOpen:'פתחו',sbBack:'חזרה',sbPacks:'שקיות: {n}',sbNext:'שקית הבאה {n}/3',sbHow:'שקיות מקבלים מניצחונות, בוסים, המתנה היומית, משימות שבועיות, עליית רמה, הטורניר, ה-Pass ואירועים',psPack:'שקית מדבקות',dlPack:'+ שקית',sbOpenPack:'פותחים שקית!',sbOpenSub:'איזה מדבקות מחכות בפנים?',sbTap:'הקישו להמשיך',sbTapPack:'הקישו על השקית!',sbNew:'חדש!',sbMore:'פתחו עוד ({n})',sbToBook:'חזרה לאלבום',sbAll:'פתחו הכל ({n})',sbOpenMany:'פותחים {n} שקיות!',sbNewN:'{n} מדבקות חדשות!',sbGold:'שקית זהב',sbGoldGot:'+1 שקית מדבקות זהב!',sbGoldOpen:'שקית זהב!',sbGoldSub:'בטוח יש בפנים מדבקת הולוגרמה!',sbHowG:'שקיות זהב: תיבת הזהב בשלב הבונוס, מדליית זהב בטורניר ויום 7 במתנה היומית',
-  sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbFillAll:'אספו את כולן וזכו ב-{n}',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
+  sbRar_c:'רגילה',sbRar_r:'נדירה',sbRar_h:'הולוגרמה',sbHave:'יש לך {n}',sbNone:'עוד לא נמצאה',sbDone:'העמוד מלא!',sbFillAll:'אספו את כולן וזכו ב-{n}',sbClaim:'אסוף',sbGot:'נאסף',sbPackGot:'+1 שקית מדבקות!',sbPacksGot:'+{n} שקיות מדבקות!',sbGoldsGot:'+{n} שקיות מדבקות זהב!',sbPackSub:'פותחים אותה באלבום המדבקות',sbNoCoins:'אין מספיק מטבעות',
   sbHow_shz:'מגיעה בשקיות מדבקות',sbCover:'אספו · גלו · השלימו!',ch_shz:'שארליז',sbPage:'עמוד {a}/{b}'});
 /* the 24 Sharliz stickers: id, rarity, names, a fun line */
 const SHZ=[
@@ -7612,11 +7612,11 @@ function sbGive(n,g){if(!n)return;const D=sbData();if(g){D.gpacks+=n;SBQG+=n}els
 {const _w=win;win=function(){const was=state;const r=_w.apply(this,arguments);if((mode==='levels'||mode==='event')&&was!=='win'&&state==='win'){try{const D=sbData();D.w++;let n=0;if(D.w%3===0)n++;
     if(mode==='levels'&&lvInZone()===LPZ-1){const k=zone().sid||zone().id;if(!D.boss[k]){D.boss[k]=1;n++}}saveProgress();if(n)sbGive(n)}catch(e){}}return r}}
 function sbNotify(){if(!SBQ&&!SBQG)return;if(document.querySelector('.lvup')){setTimeout(sbNotify,500);return}const ov=document.getElementById('overlay'),body=document.querySelector('#card .card-body');
-  const items=[[SBQ,'sb_pack','sbPackGot'],[SBQG,'sb_gpack','sbGoldGot']].filter(x=>x[0]),txt=([n,,k])=>n>1?t(k).replace('+1','+'+n):t(k);
+  const items=[[SBQ,'sb_pack','sbPackGot'],[SBQG,'sb_gpack','sbGoldGot']].filter(x=>x[0]),txt=([n,,k])=>n>1?t(k==='sbPackGot'?'sbPacksGot':'sbGoldsGot',{n}):t(k);
   if(ov&&!ov.hidden&&body&&(state==='win'||state==='over')){SBQ=SBQG=0;items.forEach(it=>{const d=document.createElement('div');d.className='sb-strip'+(it[1]==='sb_gpack'?' gold':'');d.innerHTML=`<img src="art/${it[1]}.webp" alt=""><span><b></b><small></small></span>`;
     d.querySelector('b').textContent=txt(it);d.querySelector('small').textContent=t('sbPackSub');body.appendChild(d)})}
   else if(state==='win'||state==='over'){} // the result card opens a moment later and picks the queue up (showOverlay below)
-  else{SBQ=SBQG=0;popupToast(items.map(txt).join('  '))}}
+  else{SBQ=SBQG=0;noteToast(items.map(txt).join('  '))}}
 {const _s=showOverlay;showOverlay=function(){const r=_s.apply(this,arguments);if(SBQ||SBQG)setTimeout(sbNotify,160);return r}}
 /* more ways to EARN packs (Tzach, Oct 7). Packs are never sold, for coins or money: random stickers for purchase = a loot box (App Store). */
 // player level-up: a pack for every even player level
@@ -7687,7 +7687,7 @@ function sbPageView(dir){SB.view='page';const r=SB.el,P=sbChapters()[SB.ch],all=
     const img=s.querySelector('img'),src=it.src||(it.img?it.img():'');if(src)img.src=src;else img.remove();
     if(it.n&&!seen.includes(it.id)){s.classList.add('new');s.style.animationDelay=(.2+fresh.length*.2)+'s';fresh.push(it.id)}
     s.onclick=()=>{if(it.n){sfx.click();sbZoom(P,all,idx)}else{sfx.locked();noteToast(it.hint||t('hint_'+P.id))}};grid.appendChild(s)});
-  const ch=r.querySelector('.sb-chest'),rew=sbRew(ck);ch.onclick=()=>{if(done&&!claimed){const [c,x]=rew;D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();popupToast(t('sbFillAll',{n:rew[0]})+' 🪙')}};
+  const ch=r.querySelector('.sb-chest'),rew=sbRew(ck);ch.onclick=()=>{if(done&&!claimed){const [c,x]=rew;D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+'  +'+x+' XP');sbPageView()}else if(!done){sfx.locked();noteToast(t('sbFillAll',{n:rew[0]})+' 🪙')}};
   const pb=r.querySelector('.sb-packbtn');pb.querySelector('span').textContent=D.packs?t('sbPacks',{n:D.packs}):t('sbNext',{n:D.w%3});
   // packs are earned only (no buying with coins): random items for purchase would be a loot box (Apple odds disclosure, AU 16+)
   pb.onclick=()=>{if(D.packs){sbPack()}else{sfx.locked();noteToast(t('sbHow'))}};
@@ -7854,15 +7854,28 @@ let HUDH=0;
 {const _mi=maybeIntro;maybeIntro=function(){let p=null;try{p=hzPrimary()}catch(e){}
   if(!p||typeof hatImm!=='function'||!MECH[p]||!hatImm(p)||seenKey(p))return _mi.apply(this,arguments);
   progress.seen[p]=1;let r;try{r=_mi.apply(this,arguments)}finally{delete progress.seen[p];saveProgress()}return r}}
+// lobby pop-ups opened on top of each other (level-up + egg over the daily gift, starter offer under a level-up, buddy guide over a
+// level-up): each one checked a different list. They now all wait for the others, and when one closes the lobby looks again.
+{const POPS='.lvup,.egg-pop,.gd-rev,.bg-guide,.hs-pop';
+ const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector(POPS)||_lo.apply(this,arguments)};
+ const busy=()=>!document.getElementById('overlay').hidden||!!document.querySelector(POPS+',.pay-modal,#payModal');
+ const _lu=lvUpLater;lvUpLater=function(){if(state==='title'&&progress.lvRew&&!document.querySelector('.lvup')&&busy()&&!lobbyScreenOpen())return;return _lu.apply(this,arguments)};
+ // a full-screen layer (trophy room, album, nest...) shows its level-up right away: that is the reward for what was just tapped there
+ function lobbyScreenOpen(){return ['arcade','tour','evhub','passScr','nestScr','achScr','houseScr','sbook'].some(id=>{const e=document.getElementById(id);return e&&!e.hidden})||W3.on}
+ const _en=eggNotify;eggNotify=function(){if(EGGQ.length&&state==='title'&&!document.querySelector('.egg-pop')&&(busy()||document.querySelector('.lvup'))){setTimeout(eggNotify,800);return}return _en.apply(this,arguments)};
+ let tm=0;new MutationObserver(ms=>{if(state!=='title')return;for(const m of ms)for(const n of m.removedNodes)if(n.nodeType===1&&n.matches&&n.matches(POPS)){clearTimeout(tm);tm=setTimeout(()=>{if(state==='title'&&!busy())updateLobby()},300);return}})
+   .observe(document.body,{childList:true,subtree:true})}
+// one day / one cookie: singular wording where a count can be 1
+{const ONE={dlStreak:1,miniDays:1,psLeft:1};const _t=t;t=function(k,v){if(v&&ONE[k]&&+v.n===1){const k1=k+'1';if(I18N[lang]&&I18N[lang][k1]!=null)return _t.call(this,k1,v)}return _t.apply(this,arguments)}}
 
 /* ===== v59: BUDDY GUIDE — Tzach: kids of 9 who just started must understand buddies. When the player owns a buddy for the
    first time (bought, hatched or paid; also once for players who already own one), a 4-page picture guide explains: your buddy
    flies with you, it has a power that works only while it's with you, how to switch it (Style tab → Buddy slot), and that eggs
    hatch new buddies and cookies evolve them. Reopen from the "?" in the nest and in My hero's buddy slot. progress.budGuide=1 */
-Object.assign(I18N.en,{bgT1:'Meet your buddy!',bgS1:'{b} flies next to you in every level and in the lobby.',bgT2:'Buddies have powers',bgS2:'The power works only while your buddy is with you. Every buddy has a different power!',
+Object.assign(I18N.en,{bgT1:'Meet your buddy!',bgS1:'{b} stays by your side in every level and in the lobby.',bgT2:'Buddies have powers',bgS2:'The power works only while your buddy is with you. Every buddy has a different power!',
   bgPw:'Power of {b}',bgT3:'Switch buddies anytime',bgS3:'Tap “{a}” at the bottom, then the “{b}” slot, and pick a buddy.',bgT4:'Collect and grow',
   bgS4a:'Wins hatch the eggs in your nest. New buddies come out!',bgS4b:'Cookies grow your buddy up to 3 stars. Every star gives more coins.',bgNext:'Next',bgBack:'Back',bgGo:'Got it!',bgHelp:'What are buddies?'});
-Object.assign(I18N.he,{bgT1:'זה החבר שלך!',bgS1:'{b} עף לידך בכל שלב ובלובי.',bgT2:'לכל חבר יש כוח',bgS2:'הכוח עובד רק כשהחבר איתך. לכל חבר כוח אחר!',
+Object.assign(I18N.he,{bgT1:'זה החבר שלך!',bgS1:'{b} תמיד לידך, בכל שלב ובלובי.',bgT2:'לכל חבר יש כוח',bgS2:'הכוח עובד רק כשהחבר איתך. לכל חבר כוח אחר!',
   bgPw:'הכוח של {b}',bgT3:'מחליפים חבר מתי שרוצים',bgS3:'לוחצים על "{a}" למטה, אחר כך על המשבצת "{b}", ובוחרים חבר.',bgT4:'אוספים ומגדלים',
   bgS4a:'ניצחונות מבקיעים את הביצים בקן, ומהן יוצאים חברים חדשים!',bgS4b:'עוגיות מגדלות את החבר עד 3 כוכבים, וכל כוכב נותן עוד מטבעות.',bgNext:'הבא',bgBack:'חזרה',bgGo:'הבנתי!',bgHelp:'מה זה חברים?'});
 function budOwnedList(){return Object.keys(WPET).filter(k=>k!=='none'&&(WPET[k].p||WPET[k].real)&&wOwned('pet',k))}
@@ -7891,7 +7904,7 @@ function openBudGuide(id){if(document.querySelector('.bg-guide'))return;id=id||(
 // the daily gift goes first (it pops once a day when the lobby is idle); it also never pops over the guide
 const dlPending=()=>typeof dlState==='function'&&!dlState().claimed&&progress.unlocked>=2&&dlShownOn!==dlDate(0);
 {const _lo=lobbyLayerOpen;lobbyLayerOpen=function(){return !!document.querySelector('.bg-guide')||_lo()}}
-function budGuideMaybe(id){if(progress.budGuide||!budOwnedList().length)return;setTimeout(()=>{if(progress.budGuide||document.querySelector('.egg-pop,.bg-guide')||(!W3.on&&dlPending()))return;
+function budGuideMaybe(id){if(progress.budGuide||!budOwnedList().length)return;setTimeout(()=>{if(progress.budGuide||document.querySelector('.egg-pop,.bg-guide,.lvup,.gd-rev,.hs-pop')||(!W3.on&&dlPending()))return;
   const ov=document.getElementById('overlay');if(state!=='title'||(ov&&!ov.hidden&&!W3.on))return;openBudGuide(id)},1200)}
 /* triggers: back in the lobby, after buying/wearing in My hero, after a hatch (nest re-renders when the hatch popup closes) */
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);if(state==='title')budGuideMaybe();return r}}
@@ -8539,7 +8552,7 @@ const GOLDS=[
 const STK3_ART=new Set(["g01", "g02", "g03", "g04", "g05", "g06", "g07", "g08", "g09", "g10", "g11", "g12", "g13", "g14", "g15", "g16", "g17", "g18", "g19", "g20", "g21", "g22", "g23", "g24", "g25", "g26", "g27", "g28", "g29", "g30", "s025", "s026", "s027", "s028", "s029", "s030", "s031", "s032", "s033", "s034", "s035", "s036", "s037", "s038", "s039", "s040", "s041", "s042", "s043", "s044", "s045", "s046", "s047", "s048", "s049", "s050", "s051", "s052", "s053", "s054", "s055", "s056", "s057", "s058", "s059", "s060", "s061", "s062", "s063", "s064", "s065", "s066", "s067", "s068", "s069", "s070", "s071", "s072", "s073", "s074", "s075", "s076", "s077", "s078", "s079", "s080", "s081", "s082", "s083", "s084", "s085", "s086", "s087", "s088", "s089", "s090", "s091", "s092", "s093", "s094", "s095", "s096", "s097", "s098", "s099", "s100", "s101", "s102", "s103", "s104", "s105", "s106", "s107", "s108", "s109", "s110", "s111", "s112", "s113", "s114", "s115", "s116", "s117", "s118", "s119", "s120", "s121", "s122", "s123", "s124", "s125", "s126", "s127", "s128", "s129", "s130", "s131", "s132", "s133", "s134", "s135", "s136", "s137", "s138", "s139", "s140", "s141", "s142", "s143", "s144", "s145", "s146", "s147", "s148", "s149", "s150", "s151", "s152", "s153", "s154", "s155", "s156", "s157", "s158", "s159", "s160", "s161", "s162", "s163", "s164", "s165", "s166", "s167", "s168", "s169", "s170", "s171", "s172", "s173", "s174", "s175", "s176", "s177", "s178", "s179", "s180", "s181", "s182", "s183", "s184", "s185", "s186", "s187", "s188", "s189", "s190", "s191", "s192", "s193", "s194", "s195", "s196", "s197", "s198", "s199", "s200", "s201", "s202", "s203", "s204", "s205", "s206", "s207", "s208", "s209", "s210", "s211", "s212", "s213", "s214", "s215", "s216", "s217", "s218", "s219", "s220", "s221", "s222", "s223", "s224", "s225", "s226", "s227", "s228", "s229", "s230", "s231", "s232", "s233", "s234", "s235", "s236", "s237", "s238", "s239", "s240", "s241", "s242", "s243", "s244", "s245", "s246", "s247", "s248", "s249", "s250", "s251", "s252", "s253", "s254", "s255", "s256", "s257", "s258", "s259", "s260", "s261", "s262", "s263", "s264", "s265", "s266", "s267", "s268", "s269", "s270", "s271", "s272", "st01", "st02", "st03", "st04", "st05", "st06", "st07", "st08", "st09", "st10", "st100", "st101", "st102", "st103", "st104", "st105", "st106", "st107", "st108", "st109", "st11", "st110", "st111", "st112", "st113", "st114", "st115", "st116", "st117", "st118", "st12", "st13", "st14", "st15", "st16", "st17", "st18", "st19", "st20", "st21", "st22", "st23", "st24", "st25", "st26", "st27", "st28", "st29", "st30", "st31", "st32", "st33", "st34", "st35", "st36", "st37", "st38", "st39", "st40", "st41", "st42", "st43", "st44", "st45", "st46", "st47", "st48", "st49", "st50", "st51", "st52", "st53", "st54", "st55", "st56", "st57", "st58", "st59", "st60", "st61", "st62", "st63", "st64", "st65", "st66", "st67", "st68", "st69", "st70", "st71", "st72", "st73", "st74", "st75", "st76", "st77", "st78", "st79", "st80", "st81", "st82", "st83", "st84", "st85", "st86", "st87", "st88", "st89", "st90", "st91", "st92", "st93", "st94", "st95", "st96", "st97", "st98", "st99"]),has3=id=>STK3_ART.has(id);
 SHZ.forEach(s=>{if(!s[6])s[6]='classic'});SHZ.push(...SHZ3.filter(s=>has3(s[0])));
 Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold',sec_classic:'Classics',sec_short:'Short stories',stCh:'Chapter {n}',
-  sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stNext1:'Next part: win 1 more level',stLater:'Keep playing to see what happens next',stNew:'A new story card!',
+  sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stNext1:'Next part: win 1 more level',stKeep:'Keep playing to see what happens next',stNew:'A new story card!',
   gdTitle:'GOLD STICKER!',gdFeat:'Legendary feat',gdOk:'Wow!',gdAlbum:'To the album',
   gf_coins:'Have {n} coins at once',gf_s1:'3 stars on all {n} levels of the first 8 worlds',gf_combo:'{n} perfect landings in a row',
   gf_evo:'Evolve {n} buddies to 3 stars',gf_nh:'Beat {b} without losing a heart',gf_endless:'Reach floor {n} in {m}',
@@ -8550,7 +8563,7 @@ Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold
   gf_lv:'Reach player level {n}',gf_gift:'Finish the 7-day daily gift {n} times',gf_stk:'Collect {n} different Sharliz stickers',
   gf_cups:'Win all {n} gold cups in the trophy room',gf_3s:'3 stars on {n} levels',gf_sec:'Fill {n} album sections',gf_all:'Collect all the other gold stickers'});
 Object.assign(I18N.he,{pg_gold:'זהב',hint_gold:'משימה אגדית',sbRar_g:'זהב',sec_classic:'הקלאסיות',sec_short:'סיפורים קצרים',stCh:'פרק {n}',
-  sbToc:'תוכן העניינים',sbWhole:'כל הפרק',stNext:'להמשך הסיפור: עוד {n} ניצחונות בשלבים',stNext1:'להמשך הסיפור: עוד ניצחון אחד בשלב',stLater:'תמשיכו לשחק כדי לגלות מה קורה',stNew:'קלף סיפור חדש!',
+  sbToc:'תוכן העניינים',sbWhole:'כל הפרק',stNext:'להמשך הסיפור: עוד {n} ניצחונות בשלבים',stNext1:'להמשך הסיפור: עוד ניצחון אחד בשלב',stKeep:'תמשיכו לשחק כדי לגלות מה קורה',stNew:'קלף סיפור חדש!',
   gdTitle:'מדבקת זהב!',gdFeat:'משימה אגדית',gdOk:'וואו!',gdAlbum:'לאלבום',
   gf_coins:'להחזיק {n} מטבעות בבת אחת',gf_s1:'3 כוכבים בכל {n} השלבים של 8 העולמות הראשונים',gf_combo:'{n} נחיתות מושלמות ברצף',
   gf_evo:'לפתח {n} חברים ל-3 כוכבים',gf_nh:'לנצח את {b} בלי לאבד לב',gf_endless:'להגיע לקומה {n} ב{m}',
@@ -8569,14 +8582,14 @@ function sbSecSub(sec,PG){const pg=PG.n>1?t('sbPage',{a:PG.k+1,b:PG.n}):'';if(/^
 // chest per section; the old single-chapter chests became the first section's (migration in sbData)
 function sbRew(ck){if(ck==='shz:classic')return SB_REW.shz;if(ck==='rare:short')return SB_REW.rare;if(ck==='shz:all')return [3000,200];if(ck==='rare:all')return [2000,150];
   if(ck.includes(':'))return ck.startsWith('rare:')?[300,30]:[400,40];return SB_REW[ck]||[500,60]}
-function sbClaim(ck,after){const D=sbData();if(D.done[ck])return;const [c,x]=sbRew(ck);D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+' 🪙  +'+x+' XP');after&&after()}
+function sbClaim(ck,after){const D=sbData();if(D.done[ck])return;const [c,x]=sbRew(ck);D.done[ck]=1;wallet().coins+=c;saveProgress();addXP(x);XPQ=null;lvUpLater();sfx.flourish(4);vib([30,40,30]);popupToast('+'+c+'  +'+x+' XP');after&&after()}
 /* ☰ contents: every section with its progress and chest, tap → its first page; the whole-chapter chest at the bottom */
 function sbToc(P){const all=P.items().filter(x=>!x.soon),pages=sbPages(P,all),D=sbData(),m=document.createElement('div');m.className='sb-tocm';
   const draw=()=>{const secs=sbSecs(P),fullAll=all.every(x=>x.n),ak=P.id+':all';
     m.innerHTML=`<div class="tc-card" style="--c:${SB_COL[P.id]||'#b48cff'}"><div class="tc-hd"><b></b><button class="x-btn tc-x" aria-label="close"></button></div><div class="tc-list"></div>
       <div class="tc-all"><span><b></b><small>${all.filter(x=>x.n).length}/${all.length}</small></span><button class="sb-chest${fullAll&&!D.done[ak]?' can':''}${D.done[ak]?' got':''}"><img src="art/ic_chest${D.done[ak]?'_open':''}.webp" alt=""></button></div></div>`;
     m.querySelector('.tc-hd b').textContent=t('sbToc');m.querySelector('.tc-x').innerHTML=XSVG;m.querySelector('.tc-x').onclick=()=>{sfx.click();m.remove()};
-    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{sbPageView();draw();if(!m.isConnected)SB.el.appendChild(m)});else if(!D.done[ak]){sfx.locked();popupToast(t('sbFillAll',{n:sbRew(ak)[0]})+' 🪙')}};
+    m.querySelector('.tc-all b').textContent=t('sbWhole');m.querySelector('.tc-all .sb-chest').onclick=()=>{if(fullAll&&!D.done[ak])sbClaim(ak,()=>{sbPageView();draw();if(!m.isConnected)SB.el.appendChild(m)});else if(!D.done[ak]){sfx.locked();noteToast(t('sbFillAll',{n:sbRew(ak)[0]})+' 🪙')}};
     const L=m.querySelector('.tc-list');secs.forEach(sec=>{const a=all.filter(x=>x.sec===sec),g=a.filter(x=>x.n).length,ck=P.id+':'+sec,fst=a.find(x=>x.n)||a[0],row=document.createElement('button'),pi=pages.findIndex(p=>p.sec===sec);
       row.className='tc-row'+(pi===SB.pg||pages[SB.pg].sec===sec?' on':'')+(g===a.length?' full':'')+(a.some(x=>x.n&&!(progress.stkSeen||[]).includes(x.id))?' nw':'');
       row.innerHTML=`<span class="tc-th${fst.n?'':' no'}"><img alt="" loading="lazy"></span><span class="tc-t"><b></b><i><u style="width:${g/a.length*100}%"></u></i></span>${g===a.length&&!D.done[ck]?'<img class="tc-can" src="art/ic_chest.webp" alt="">':`<em>${D.done[ck]?'✓':g+'/'+a.length}</em>`}`;
@@ -8590,7 +8603,7 @@ function stOwn(){return Math.floor(stWins()/ST_PER)}
 function stOwnArt(){const n=stOwn();return STORY3.filter((s,i)=>i<n&&has3(s[0])).length}
 {const P=STK_PAGES.find(p=>p.id==='rare');if(P){const _it=P.items;P.items=()=>{const a=_it().map(x=>Object.assign(x,{sec:'short'})),own=stOwn(),L=lang==='he'?1:0;
   STORY3.forEach((s,i)=>{if(!has3(s[0]))return;a.push({id:'story:'+s[0],n:i<own?1:0,src:'art/stk_'+s[0]+'.webp',name:L?s[2]:s[1],line:L?s[4]:s[3],rar:'h',card:1,sec:'c'+s[5],
-    hint:i===own?(ST_PER-stWins()%ST_PER===1?t('stNext1'):t('stNext',{n:ST_PER-stWins()%ST_PER})):t('stLater')})});return a}}}
+    hint:i===own?(ST_PER-stWins()%ST_PER===1?t('stNext1'):t('stNext',{n:ST_PER-stWins()%ST_PER})):t('stKeep')})});return a}}}
 /* ---------- GOLD: legendary feats ---------- */
 const S1W=['farm','city','desert','candy','snow','ocean','volcano','space'];
 const ST=()=>progress.stat=progress.stat||{};
