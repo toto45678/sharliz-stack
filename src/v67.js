@@ -111,7 +111,7 @@ const HF_SPOT={aquarium:[.13,.73],fireplace:[.42,.7],clock:[.66,.71],piggy:[.84,
   fridge:[.09,.71],oven:[.27,.71],sink:[.45,.71],toaster:[.6,.72],candyjar:[.76,.74],table:[.5,.93],
   wardrobe:[.12,.7],trophies:[.3,.4],bed:[.47,.85],nightlight:[.74,.72],telescope:[.88,.89],toychest:[.2,.95],
   vane:[.1,.7],mailbox:[.3,.72],birdhouse:[.5,.7],balloons:[.9,.71],flowers:[.68,.78],trampoline:[.42,.93]};
-const HF_FT=.67,HF_FF=.975,HF_CAL={hf_room_cottage_bedroom:.652,hf_room_cottage_yard:.635}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
+const HF_FT=.67,HF_FF=.975,HF_CAL={hf_room_cottage_bedroom:.652,hf_room_cottage_yard:.635,hf_room_candy_yard:.65}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
 const hfFT=(room=hs().room)=>HF_CAL['hf_room_'+hsSkin().id+'_'+room]||HF_FT;
 const HSV={ord:{},focus:{},peek:null,pop:null,up:null,lockB:null,cam:0,camT:0,pan:null,RW:0,RH:0,RX:0,SP:0,TW:0,el:null,cv:null,g:null,dpr:1,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
 // the house is the 4 rooms stacked top to bottom (living, kitchen, bedroom, yard); the canvas is a window (W x H) on it and the camera
@@ -353,8 +353,8 @@ function hsSkinSheet(){const H=hs(),m=document.createElement('div');m.className=
   m.innerHTML=`<div class="hs-sh"><div class="hs-shh"><b></b><button class="x-btn" aria-label="close"></button></div><div class="hs-skins"></div></div>`;
   m.querySelector('b').textContent=t('hsSkins');const x=m.querySelector('.x-btn');x.innerHTML=XSVG;x.onclick=()=>{sfx.click();m.remove()};m.onclick=e=>{if(e.target===m)m.remove()};
   const box=m.querySelector('.hs-skins');HS_SKINS.forEach(K=>{const own=H.skins.includes(K.id),c=document.createElement('div');c.className='hs-skin'+(H.skin===K.id?' on':'');
-    const pic=hsSrc('hs_house_'+K.id);
-    c.innerHTML=`<span class="sw">${pic?`<img src="${pic}" alt="">`:`<i style="--w:${K.wall};--w2:${K.wall2};--f:${K.floor};--t:${K.trim}"></i>`}</span><b></b><button class="btn"></button>`;c.querySelector('b').textContent=t('hss_'+K.id);
+    const fl=hsSrc('hf_room_'+K.id+'_living'),pic=fl||hsSrc('hs_house_'+K.id);
+    c.innerHTML=`<span class="sw${fl?' flat':''}">${pic?`<img src="${pic}" alt="">`:`<i style="--w:${K.wall};--w2:${K.wall2};--f:${K.floor};--t:${K.trim}"></i>`}</span><b></b><button class="btn"></button>`;c.querySelector('b').textContent=t('hss_'+K.id);
     const b=c.querySelector('button');if(H.skin===K.id){b.textContent=t('hsUsing');b.disabled=true}else if(own){b.textContent=t('hsUse');b.className+=' primary'}
     else{b.innerHTML=`${coinImg()}<em>${K.p.toLocaleString()}</em>`;if((progress.coins||0)<K.p)b.className+=' poor'}
     b.onclick=()=>{if(H.skin===K.id)return;if(!own){if((progress.coins||0)<K.p){sfx.locked();popupToast(t('needCoins'));return}progress.coins-=K.p;H.skins.push(K.id);sfx.flourish&&sfx.flourish(3);updateWalletUI()}else sfx.click();
