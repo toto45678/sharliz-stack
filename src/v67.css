@@ -31,9 +31,9 @@
 .hs-skinbtn .chev{width:7px;height:7px;border:solid #120d2b;border-width:0 3px 3px 0;transform:rotate(-45deg);margin-inline-start:2px}
 [dir=rtl] .hs-skinbtn .chev{transform:rotate(135deg)}
 /* arrows beside the room: the next / previous room */
-.hs-arr{position:absolute;z-index:1;width:42px;height:52px;padding:0;display:grid;place-items:center;border-radius:16px;border:3px solid #120d2b;cursor:pointer;
+.hs-arr{position:absolute;z-index:1;width:34px;height:46px;padding:0;display:grid;place-items:center;border-radius:16px;border:3px solid #120d2b;cursor:pointer;
   background:linear-gradient(180deg,#8a64e0,#4d2c9e);box-shadow:0 0 0 2.5px #ffd21f,0 3px 0 #120d2b}
-.hs-arr svg{width:24px;height:24px}
+.hs-arr svg{width:21px;height:21px}
 .hs-arr.l{left:6px}.hs-arr.r{right:6px}.hs-arr.r svg{transform:scaleX(-1)}
 .hs-arr[hidden],.hs-hassel .hs-arr{display:none}
 .hs-arr:active{transform:translateY(2px)}

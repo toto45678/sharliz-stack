@@ -1,15 +1,16 @@
 /* ===== v67: THE SHARLIZ HOUSE (Tzach, Oct 8; proposal https://claude.ai/artifact/7t4WduxuWDC1aZxkGcKEMt) =====
-   Opens at player level 10 (house icon in the lobby's small column). ISOMETRIC rooms that open with the player level
-   (living 10, kitchen 13, bedroom 16, yard 20). 25 furniture items, bought with coins only, 5 levels each (a level also
+   Opens at player level 10 (house icon in the lobby's small column). FLAT front-view rooms (Toca Boca style, Tzach Oct 9) that open
+   with the player level (living 10, kitchen 13, bedroom 16, yard 20). 25 furniture items, bought with coins only, 5 levels each (a level also
    needs a player level, HS_GATE), each one gives a small power in the game (hsVal + the hooks at the bottom). No hearts,
-   nothing random. Drag an item with a finger to move it (snaps to the floor tiles), the turn button mirrors it.
-   House SKINS (6) are looks only. Art comes from the graphics department (spec /mnt/project-files/game/house/art-spec.md):
-   art/hs_room_<skin>_<room>.webp + HS_CAL (floor corners), art/hs_house_<skin>.webp, art/hs_f_<id>.webp. Until a picture
-   exists the room and the item are drawn by code (iso boxes + emoji).
-   art/hs_f_<id>_d2..d10.webp = designs 2..10 of an item (each upgrade level opens 2).
+   nothing random. Drag an item with a finger to move it anywhere on the floor (wall items on the wall), the turn button mirrors it.
+   House SKINS (6) are looks only. Art comes from the graphics department (spec /mnt/project-files/game/house/art-spec.md,
+   flat look: flat-spec.md):
+   art/hf_room_<skin>_<room>.webp (4:3, HF_CAL = floor line), art/hs_house_<skin>.webp, art/hf_<id>.webp (front view). Until a picture
+   exists the room is drawn by code and the item uses its old isometric picture (art/hs_f_<id>) or a drawn box + emoji.
+   art/hf_<id>_d2..d10.webp = designs 2..10 of an item (each upgrade level opens 2).
    Screen (Tzach approved the ChatGPT design, Oct 9): room tab bar, one big furniture card in a carousel under the house, the picked item's sheet
    (now → next, 10 designs, turn, upgrade); gold buttons spend coins.
-   progress.house={lv:{id:1..5},pos:{id:{i,j,f}},sty:{id:design 1..10, absent = newest open},skin,skins:[],cnt:{oven,fridge,bed,fb},room,intro} */
+   progress.house={lv:{id:1..5},fpos:{id:{x,y,m}},sty:{id:design 1..10, absent = newest open},skin,skins:[],cnt:{oven,fridge,bed,fb},room,intro} */
 Object.assign(I18N.en,{hsTitle:'Sharliz House',hsSub:'Furniture with powers',hsLocked:'Opens at player level {n}',hsLvl:'Level {n}',hsBuy:'Buy',hsUp:'Upgrade',hsMax:'Max level!',
   hsNeedLv:'Player level {n}',hsNow:'Now',hsNext:'Next level',hsTurn:'Turn',hsDrag:'Drag it with your finger to move it',hsSkins:'House skins',hsUse:'Use',hsUsing:'In use',
   hsOpenT:'Your house is open!',hsOpenP:'Buy furniture, decorate it, and every piece makes your Sharliz stronger.',hsGo:'To the house',hsBought:'{x}: level {n}!',hsRoomLock:'This room opens at player level {n}',
@@ -45,7 +46,7 @@ Object.assign(I18N.he,{hsTitle:'בית השארליזים',hsSub:'רהיטים �
   hsp_telescope:'נפילה איטית יותר ב-{n}% בעולמות חלל',hsp_vane:'רוח חלשה יותר ב-{n}%',hsp_mailbox:'עוד {n}% מטבעות במתנה היומית',hsp_birdhouse:'עוגיות נוספות כשביצה בוקעת: {n}',
   hsp_flowers:'עוד {n}% נקודות על פרפקט',hsp_trampoline:'מטבעות נוספים על כל נחיתה בפרנזי: {n}',hsp_balloons:'בלון המטבעות מגיע יותר ב-{n}%'});
 
-const HS_G=6,HS_OPEN=10,HS_PRICE=[250,400,600,900,1300],HS_GATE=[0,12,15,19,24];
+const HS_OPEN=10,HS_PRICE=[250,400,600,900,1300],HS_GATE=[0,12,15,19,24];
 const HS_ROOMS=[{id:'living',lv:10,ic:'🛋️'},{id:'kitchen',lv:13,ic:'🍳'},{id:'bedroom',lv:16,ic:'🛏️'},{id:'yard',lv:20,ic:'🌳'}];
 // [id, room, footprint [along i, along j], wall item, height in tiles (drawn box), colour, emoji (until the picture arrives), z0 (mounted on the wall)]
 const HS_F=[['piggy','living',[1,1],0,.7,'#ff9ec7','🐷'],['sofa','living',[2,1],0,.6,'#8f6be8','🛋️'],['clock','living',[1,1],0,1.9,'#b8743a','🕰️'],
@@ -69,7 +70,7 @@ function hsVal(id,L){if(HS_N[id])return HS_N[id][L-1];
   const per={piggy:1.5,sofa:1,clock:1,fireplace:5,aquarium:6,books:3,tv:4,candyjar:5,table:1,sink:8,toaster:1,toychest:10,wardrobe:2,trophies:3,telescope:4,vane:4,mailbox:10,birdhouse:1,flowers:4,trampoline:1,balloons:10}[id];
   return id==='nightlight'?L+1:per*L}
 const hsTxt=(id,L)=>t('hsp_'+id,{n:+hsVal(id,Math.max(1,L)).toFixed(1)});
-function hs(){const H=progress.house=progress.house||{};H.lv=H.lv||{};H.pos=H.pos||{};H.skins=H.skins||['cottage'];if(!H.skins.includes('cottage'))H.skins.push('cottage');
+function hs(){const H=progress.house=progress.house||{};H.lv=H.lv||{};H.fpos=H.fpos||{};H.skins=H.skins||['cottage'];if(!H.skins.includes('cottage'))H.skins.push('cottage');
   H.skin=H.skin||'cottage';H.cnt=H.cnt||{};H.room=H.room||'living';return H}
 const hsLv=id=>{const H=progress.house;return H&&H.lv&&H.lv[id]||0};
 const hsPlayerLv=()=>typeof xpLevel==='function'?xpLevel(progress.xp||0).lv:1;
@@ -82,181 +83,163 @@ function hsK(k){if(typeof mode!=='undefined'&&mode==='duo')return 1;
 /* ---------- art (pictures from the graphics department when they exist) ---------- */
 const HS_IMG={},HS_ART=new Set(__HS_ART__);
 const hsSrc=name=>HS_ART.has(name)?'art/'+name+'.webp':'';
-// 10 designs per item, each fancier than the one before (design 1 = hs_f_<id>, 2..10 = hs_f_<id>_d<n>); every upgrade level opens 2 more
+// 10 designs per item, each fancier than the one before (design 1 = hf_<id>, 2..10 = hf_<id>_d<n>); every upgrade level opens 2 more
 // (level L: designs 1..2L). Upgrading switches to the newest design by itself; the player can pick any open one for free. Looks only.
-const HS_DN=10,hsDN=(id,k)=>k>1?'hs_f_'+id+'_d'+k:'hs_f_'+id,hsDHas=(id,k)=>k===1||HS_ART.has(hsDN(id,k)),hsDOpen=(id,k)=>k<=2*Math.max(1,hsLv(id));
+// An item uses its flat pictures (hf_) once its flat design 1 exists; until then the old isometric ones (hs_f_) stand in.
+const HS_DN=10,hsDN=(id,k)=>(HS_ART.has('hf_'+id)?'hf_':'hs_f_')+id+(k>1?'_d'+k:''),hsDHas=(id,k)=>k===1||HS_ART.has(hsDN(id,k)),hsDOpen=(id,k)=>k<=2*Math.max(1,hsLv(id));
 function hsStyOf(id){const S=progress.house&&progress.house.sty,k=S&&S[id];if(k>1&&hsDHas(id,k)&&hsDOpen(id,k))return k;
   if(k===1)return 1;for(let n=Math.min(HS_DN,2*hsLv(id));n>1;n--)if(hsDHas(id,n))return n;return 1}
 const hsFN=(id,k=hsStyOf(id))=>hsDN(id,k);
 const hsPeek=id=>{const P=HSV.peek;return P&&P.id===id&&performance.now()<P.t?P.k:0};
 const hsStyles=id=>[...Array(HS_DN)].map((_,n)=>n+1).filter(k=>hsDHas(id,k));
 function hsPic(name){if(!HS_ART.has(name))return null;if(HS_IMG[name]!==undefined)return HS_IMG[name];HS_IMG[name]=null;const im=new Image();im.onload=()=>{HS_IMG[name]=im;HSV.dirty=true};im.onerror=()=>{HS_IMG[name]=false};im.src='art/'+name+'.webp';return null}
-// floor corners of every room picture in its own px: [top, right, bottom, left] (check with tools/house_cal.py; AI art is never an
-// exact 2:1 diamond, so the picture is fitted to the floor grid by least squares per axis)
-// floor corners [top,right,bottom,left] in the picture's px; every room picture shares the cottage living room's floor (graphics spec)
-const HS_CAL0=[[510,416],[939,629],[499,870],[90,626]],HS_CAL={};
-
-/* ---------- isometric view ---------- */
-const HSV={ord:{},focus:{},peek:null,pop:null,up:null,lockB:null,cam:0,camT:0,pan:null,RH:0,SP:0,rect:{},el:null,cv:null,g:null,dpr:1,TW:0,TH:0,VZ:0,WH:0,ox:0,oy:0,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
-// the house is the 4 rooms stacked top to bottom (living, kitchen, bedroom, yard); the canvas is a window (W x H) on it and
-// the camera (cam = house y at the window's top) glides to the room you pick. Room k's own coordinates start at house y k*SP.
-function hsGeom(){const v=HSV;v.TW=Math.min(v.W/(HS_G+1),v.H/6.5);v.TH=v.TW/2;v.VZ=v.TW*.62;v.WH=v.TW*1.6;v.ox=v.W/2;v.oy=v.TW*2.15;v.RH=v.oy+HS_G*v.TH+v.TW*.4;v.SP=v.RH+v.TW*.5}
+/* ---------- flat view (Tzach, Oct 9: "flat like Toca Boca", one sample room first; spec /mnt/project-files/game/house/flat-spec.md) ----------
+   Every room is a dollhouse room seen straight from the front: a back wall and a floor band at the bottom. A floor item stands anywhere on
+   the band (the one further forward covers the one behind), a wall item hangs anywhere on the wall; things may overlap, nothing snaps.
+   progress.house.fpos[id]={x: centre, y: bottom edge (both fractions of the room), m: mirrored}. A room picture fills the room
+   (4:3, HF_CAL = where its floor starts); an item is HF_SZ wide, its height follows its picture. */
+// [width, height] as fractions of the room's width / height (the height is only used until the item has a picture)
+const HF_SZ={piggy:[.13,.14],sofa:[.36,.22],clock:[.12,.5],fireplace:[.27,.32],aquarium:[.27,.3],books:[.23,.2],tv:[.25,.25],
+  oven:[.2,.3],fridge:[.18,.5],candyjar:[.1,.15],table:[.32,.2],sink:[.24,.29],toaster:[.12,.13],
+  bed:[.42,.25],nightlight:[.1,.2],toychest:[.18,.16],wardrobe:[.25,.52],trophies:[.27,.16],telescope:[.14,.36],
+  vane:[.12,.56],mailbox:[.1,.3],birdhouse:[.12,.42],flowers:[.3,.12],trampoline:[.34,.16],balloons:[.14,.56]};
+const HF_WALL=new Set(['books','trophies']); // hang on the wall; everything else stands on the floor
+// where a new item goes the first time: [x, y] (the middle front stays free for the Sharliz)
+const HF_SPOT={fireplace:[.5,.76],books:[.22,.44],clock:[.08,.77],aquarium:[.85,.77],sofa:[.27,.94],tv:[.76,.92],piggy:[.55,.96],
+  fridge:[.1,.76],oven:[.3,.76],sink:[.53,.76],toaster:[.72,.77],candyjar:[.9,.78],table:[.5,.94],
+  wardrobe:[.12,.76],trophies:[.5,.4],bed:[.42,.9],nightlight:[.76,.77],telescope:[.9,.8],toychest:[.79,.95],
+  vane:[.08,.76],birdhouse:[.28,.77],flowers:[.52,.78],balloons:[.92,.77],mailbox:[.74,.82],trampoline:[.44,.94]};
+const HF_FT=.7,HF_FF=.975,HF_CAL={}; // floor band: from the wall's foot (HF_FT, or HF_CAL[picture]) to the front edge
+const hfFT=(room=hs().room)=>HF_CAL['hf_room_'+hsSkin().id+'_'+room]||HF_FT;
+const HSV={ord:{},focus:{},peek:null,pop:null,up:null,lockB:null,cam:0,camT:0,pan:null,RW:0,RH:0,RX:0,SP:0,TW:0,el:null,cv:null,g:null,dpr:1,W:0,H:0,raf:0,last:0,sel:null,drag:null,dirty:true,hero:null,fx:[],skinOpen:false};
+// the house is the 4 rooms stacked top to bottom (living, kitchen, bedroom, yard); the canvas is a window (W x H) on it and the camera
+// (cam = house y at the window's top) glides to the room you pick. Room k's own coordinates: x from the canvas' left, y from its top (house y k*SP).
+function hsGeom(){const v=HSV;v.RW=Math.min(v.W-16,v.H*.86/.75);v.RH=v.RW*.75;v.RX=(v.W-v.RW)/2;v.SP=v.RH+v.RW*.075;v.TW=v.RW/7}
 const hsRI=room=>Math.max(0,HS_ROOMS.findIndex(R=>R.id===room));
 // the room you are in sits near the top of the stage (under the skins button) and the next room peeks out below it
-const hsTop=()=>Math.min(Math.max(0,(HSV.H-HSV.RH)/2),HSV.TW*.3),hsCamFor=k=>k*HSV.SP-hsTop();
+const hsTop=()=>Math.min(Math.max(0,(HSV.H-HSV.RH)/2),40),hsCamFor=k=>k*HSV.SP-hsTop();
 const hsCamClamp=c=>Math.max(hsCamFor(0)-HSV.H*.2,Math.min(hsCamFor(HS_ROOMS.length-1)+HSV.H*.2,c));
-const hsP=(i,j,z=0)=>[HSV.ox+(i-j)*HSV.TW/2,HSV.oy+(i+j)*HSV.TH/2-z*HSV.VZ];
-function hsInv(x,y){const a=(x-HSV.ox)/(HSV.TW/2),b=(y-HSV.oy)/(HSV.TH/2);return [(a+b)/2,(b-a)/2]}
 const hsShade=(c,k)=>{const n=parseInt(c.slice(1),16),r=n>>16,g=n>>8&255,b=n&255,f=x=>Math.max(0,Math.min(255,Math.round(x*k)));return `rgb(${f(r)},${f(g)},${f(b)})`};
-function hsPoly(g,pts,fill,stroke){g.beginPath();pts.forEach(([x,y],i)=>i?g.lineTo(x,y):g.moveTo(x,y));g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.strokeStyle=stroke;g.lineWidth=Math.max(1,HSV.TW*.035);g.lineJoin='round';g.stroke()}}
 function hsSkin(){return HS_SKINS.find(s=>s.id===hs().skin)||HS_SKINS[0]}
-function hsDrawRoom(g,room,dim){const v=HSV,K=hsSkin(),G=HS_G,yard=room==='yard';
-  const name='hs_room_'+K.id+'_'+room,im=hsPic(name);if(dim&&!im)g.globalAlpha=.4;
-  if(im){const C=HS_CAL[name]||HS_CAL0,D=[hsP(0,0),hsP(G,0),hsP(G,G),hsP(0,G)],fit=a=>{const n=4,X=C.map(c=>c[a]),Y=D.map(d=>d[a]),mx=X.reduce((p,q)=>p+q)/n,my=Y.reduce((p,q)=>p+q)/n;
-      let sxy=0,sxx=0;for(let k=0;k<n;k++){sxy+=(X[k]-mx)*(Y[k]-my);sxx+=(X[k]-mx)**2}const sc=sxy/sxx;return [sc,my-sc*mx]};
-    const [sx,ox]=fit(0),[sy,oy]=fit(1);g.drawImage(dim?hsDim(name,im):im,ox,oy,im.width*sx,im.height*sy);return}
-  if(yard){g.fillStyle='#bfe8ff';g.fillRect(0,0,v.W,v.oy+G*v.TH/2)}
-  // floor tiles
-  for(let i=0;i<G;i++)for(let j=0;j<G;j++){const c=yard?((i+j)%2?'#7fcf5f':'#74c455'):((i+j)%2?K.floor:K.floor2);hsPoly(g,[hsP(i,j),hsP(i+1,j),hsP(i+1,j+1),hsP(i,j+1)],c)}
-  hsPoly(g,[hsP(0,0),hsP(G,0),hsP(G,G),hsP(0,G)],null,'#120d2b');
-  const zW=v.WH/v.VZ;
-  if(yard){// a low fence on the two back sides
-    const fz=zW*.32;for(let k=0;k<=G;k+=.5){for(const [a,b] of [[0,k],[k,0]]){const [x,y]=hsP(a,b),[,y2]=hsP(a,b,fz);g.fillStyle='#fff6e3';g.fillRect(x-v.TW*.05,y2,v.TW*.1,y-y2);g.strokeStyle='#120d2b';g.lineWidth=1;g.strokeRect(x-v.TW*.05,y2,v.TW*.1,y-y2)}}
-    for(const zz of [fz*.45,fz*.85]){hsPoly(g,[hsP(0,G,zz),hsP(0,0,zz),hsP(G,0,zz),hsP(G,0,zz-.05),hsP(0,0,zz-.05),hsP(0,G,zz-.05)],'#fff6e3','#120d2b')}
-    return}
-  // two back walls
-  hsPoly(g,[hsP(0,0),hsP(0,G),hsP(0,G,zW),hsP(0,0,zW)],K.wall2,'#120d2b');
-  hsPoly(g,[hsP(0,0),hsP(G,0),hsP(G,0,zW),hsP(0,0,zW)],K.wall,'#120d2b');
-  // wainscot line + a window on each wall
-  g.strokeStyle=K.trim;g.lineWidth=Math.max(1.5,v.TW*.05);for(const [a,b] of [[[0,G],[0,0]],[[0,0],[G,0]]]){const p=hsP(...a,zW*.32),q=hsP(...b,zW*.32);g.beginPath();g.moveTo(...p);g.lineTo(...q);g.stroke()}
-  const win=(L)=>{const pts=L?[hsP(0,2.2,zW*.5),hsP(0,3.8,zW*.5),hsP(0,3.8,zW*.88),hsP(0,2.2,zW*.88)]:[hsP(2.2,0,zW*.5),hsP(3.8,0,zW*.5),hsP(3.8,0,zW*.88),hsP(2.2,0,zW*.88)];
-    hsPoly(g,pts,K.id==='space'?'#0b1030':K.id==='ocean'?'#2f9fd6':'#9fdcff',K.trim)};win(1);win(0);
-  // wall top rim
-  hsPoly(g,[hsP(0,G,zW),hsP(0,0,zW),hsP(G,0,zW),hsP(G,0,zW+.08),hsP(0,0,zW+.08),hsP(0,G,zW+.08)],K.trim,'#120d2b')}
-const HS_DIM={};function hsDim(name,im){let c=HS_DIM[name];if(c)return c;c=document.createElement('canvas');const k=Math.min(1,512/im.width);c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);
-  const x=c.getContext('2d');x.drawImage(im,0,0,c.width,c.height);x.globalCompositeOperation='source-atop';x.fillStyle='rgba(36,18,80,.6)';x.fillRect(0,0,c.width,c.height);return HS_DIM[name]=c}
 function hsRR(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
-// a locked room: a lock badge and the player level it opens at, high on the back wall so it shows while the room only peeks out
+const hsRoomPath=g=>hsRR(g,HSV.RX,0,HSV.RW,HSV.RH,HSV.RW*.035);
+// the room: its picture, or (until it exists) a wall with a window, a wainscot and a plank floor drawn by code; the yard = sky, fence, grass
+function hsDrawRoom(g,room,dim){const v=HSV,K=hsSkin(),X=v.RX,RW=v.RW,RH=v.RH,yard=room==='yard',name='hf_room_'+K.id+'_'+room,im=hsPic(name),ft=(HF_CAL[name]||HF_FT)*RH;
+  g.save();hsRoomPath(g);g.clip();
+  if(im)g.drawImage(im,X,0,RW,RH);
+  else if(yard){const sk=g.createLinearGradient(0,0,0,ft);sk.addColorStop(0,'#8fd3ff');sk.addColorStop(1,'#d8f2ff');g.fillStyle=sk;g.fillRect(X,0,RW,ft);
+    g.fillStyle='#fff';for(const [cx,cy,s] of [[.2,.17,1],[.68,.1,.8],[.88,.3,.6]]){const r=RW*.05*s;g.beginPath();g.arc(X+cx*RW,cy*RH,r,0,7);g.arc(X+cx*RW+r,cy*RH-r*.4,r*1.1,0,7);g.arc(X+cx*RW+r*2.1,cy*RH,r*.85,0,7);g.fill()}
+    const fh=RH*.2,pw=RW*.045;g.lineWidth=2;g.strokeStyle='#120d2b';for(const yy of [ft-fh*.7,ft-fh*.32]){g.fillStyle='#fff6e3';g.fillRect(X,yy,RW,fh*.12);g.strokeRect(X,yy,RW,fh*.12)}
+    for(let x=X+pw*.4;x<X+RW;x+=pw*1.7){g.beginPath();g.moveTo(x,ft);g.lineTo(x,ft-fh+pw*.5);g.lineTo(x+pw/2,ft-fh);g.lineTo(x+pw,ft-fh+pw*.5);g.lineTo(x+pw,ft);g.closePath();g.fillStyle='#fff6e3';g.fill();g.stroke()}
+    g.fillStyle='#7fcf5f';g.fillRect(X,ft,RW,RH-ft);g.fillStyle='#74c455';for(let k=0;k<6;k++)g.fillRect(X,ft+(RH-ft)*(k/6),RW,(RH-ft)/12);
+    g.strokeStyle='#120d2b';g.lineWidth=2.5;g.beginPath();g.moveTo(X,ft);g.lineTo(X+RW,ft);g.stroke()}
+  else{g.fillStyle=K.wall;g.fillRect(X,0,RW,ft);g.fillStyle=K.wall2;g.globalAlpha=.35;for(let x=X;x<X+RW;x+=RW/9)g.fillRect(x,0,RW/18,ft);g.globalAlpha=1;
+    const wy=ft*.66;g.fillStyle=K.wall2;g.fillRect(X,wy,RW,ft-wy);g.fillStyle=K.trim;g.fillRect(X,wy-RH*.012,RW,RH*.024);
+    // window
+    const wx=X+RW*.38,ww=RW*.24,wt=RH*.1,wh=ft*.42;hsRR(g,wx,wt,ww,wh,ww*.08);g.fillStyle=K.id==='space'?'#0b1030':K.id==='ocean'?'#2f9fd6':'#9fdcff';g.fill();g.lineWidth=RW*.016;g.strokeStyle=K.trim;g.stroke();
+    g.beginPath();g.moveTo(wx+ww/2,wt);g.lineTo(wx+ww/2,wt+wh);g.moveTo(wx,wt+wh/2);g.lineTo(wx+ww,wt+wh/2);g.lineWidth=RW*.012;g.stroke();
+    // floor planks + baseboard
+    g.fillStyle=K.floor;g.fillRect(X,ft,RW,RH-ft);const n=5,ph=(RH-ft)/n;g.strokeStyle=K.floor2;g.lineWidth=2;
+    for(let k=1;k<n;k++){g.beginPath();g.moveTo(X,ft+k*ph);g.lineTo(X+RW,ft+k*ph);g.stroke()}
+    for(let k=0;k<n;k++)for(let x=X+((k*37)%60)/60*RW*.22;x<X+RW;x+=RW*.22){g.beginPath();g.moveTo(x,ft+k*ph);g.lineTo(x,ft+(k+1)*ph);g.stroke()}
+    g.fillStyle=K.trim;g.fillRect(X,ft-RH*.03,RW,RH*.03);g.strokeStyle='#120d2b';g.lineWidth=2;g.beginPath();g.moveTo(X,ft);g.lineTo(X+RW,ft);g.stroke()}
+  if(dim){g.fillStyle='rgba(36,18,80,.6)';g.fillRect(X,0,RW,RH)}
+  g.restore();hsRoomPath(g);g.lineWidth=Math.max(3,RW*.012);g.strokeStyle='#120d2b';g.stroke()}
+// a locked room: a lock badge and the player level it opens at, high on the wall so it shows while the room only peeks out
 // below the one you are in; it wobbles when you tap the locked room
 function hsLockTag(g,R){const v=HSV,s=v.TW*.95,B=v.lockB,p=B&&B.room===R.id?(performance.now()-B.t0)/650:1,k=p<1?Math.sin(p*Math.PI*4)*(1-p):0;
-  g.save();g.translate(v.W/2,v.oy*.8);g.rotate(k*.22);g.scale(1+Math.abs(k)*.18,1+Math.abs(k)*.18);
+  g.save();g.translate(v.W/2,v.RH*.26);g.rotate(k*.22);g.scale(1+Math.abs(k)*.18,1+Math.abs(k)*.18);
   hsRR(g,-s*.5,-s*.62,s,s*.98,s*.3);g.fillStyle='rgba(36,18,80,.9)';g.fill();g.lineWidth=3;g.strokeStyle='#ffe9a8';g.stroke();
   g.textAlign='center';g.textBaseline='middle';g.font=`${Math.round(s*.6)}px "Apple Color Emoji","Noto Color Emoji",sans-serif`;g.fillStyle='#fff';g.fillText('🔒',0,-s*.12);
   const txt=t('hsLvl',{n:R.lv});g.font=`900 ${Math.round(s*.3)}px Rubik,system-ui,sans-serif`;const w=g.measureText(txt).width+s*.5,h=s*.46;
   hsRR(g,-w/2,s*.3,w,h,h/2);g.fillStyle='#241250';g.fill();g.lineWidth=2.5;g.strokeStyle='#ffe9a8';g.stroke();g.fillStyle='#fff';g.fillText(txt,0,s*.3+h/2+1);g.restore()}
-// footprint: f=0 → as drawn (floor items face down-left; wall items hang on the right back wall j=0), f=1 → turned (wall items on the left wall i=0)
-function hsFoot(id){const p=hs().pos[id];if(!p)return null;return hsFootAt(id,p.i,p.j,p.f)}
-function hsFootAt(id,i,j,fl){const f=HSF[id];fl=fl?1:0;return {i,j,f:fl,di:fl?f.fd:f.fw,dj:fl?f.fw:f.fd}}
-function hsBox(g,i,j,di,dj,z0,h,col,a=1){g.globalAlpha=a;const top=[hsP(i,j,z0+h),hsP(i+di,j,z0+h),hsP(i+di,j+dj,z0+h),hsP(i,j+dj,z0+h)];
-  hsPoly(g,[hsP(i,j+dj,z0),hsP(i+di,j+dj,z0),hsP(i+di,j+dj,z0+h),hsP(i,j+dj,z0+h)],hsShade(col,.78),'#120d2b');
-  hsPoly(g,[hsP(i+di,j,z0),hsP(i+di,j+dj,z0),hsP(i+di,j+dj,z0+h),hsP(i+di,j,z0+h)],hsShade(col,.9),'#120d2b');
-  hsPoly(g,top,col,'#120d2b');g.globalAlpha=1;return top}
-function hsDrawItem(g,id,ghost){const v=HSV,f=HSF[id],F=ghost||hsFoot(id);if(!F)return;const L=hsLv(id),p=hs().pos[id]||{},sel=v.sel===id&&!ghost;
-  // wall items stand against the wall: a thin box along the wall row
-  let {i,j,di,dj}=F;if(f.wall){if(F.f)di=.5;else dj=.5}
-  const a=ghost?(ghost.ok?.75:.45):1,[cx,cy]=hsP(i+di/2,j+dj/2,f.z0);
-  // soft shadow
-  if(!f.z0){g.globalAlpha=.25*a;g.fillStyle='#120d2b';g.beginPath();g.ellipse(cx,cy,(di+dj)*v.TW*.3,(di+dj)*v.TH*.3,0,0,7);g.fill();g.globalAlpha=1}
-  const pk=!ghost&&hsPeek(id),im=pk&&hsPic(hsDN(id,pk))||hsPic(hsFN(id)),pop=!ghost&&v.pop&&v.pop.id===id?(performance.now()-v.pop.t0)/480:1;
-  if(im){const w=(F.di+F.dj)*v.TW/2*1.08*Math.min(1,im.width/(f.fw+f.fd>2?512:256)),h=w*im.height/im.width,[bx,by]=hsP(i+di,j+dj,f.z0);
-    if(!ghost)v.rect[id]={x:cx-w/2,y:by+v.TH*.12-h,w,h,im,fl:f.wall?!F.f:F.f};g.save();g.globalAlpha=pk?.72+.28*Math.sin(performance.now()/90):a;g.translate(cx,by+v.TH*.12);
-    if(pop<1){const k=Math.sin(pop*Math.PI*2)*(1-pop);g.scale(1+.13*k,1-.16*k)} // squash and pop after an upgrade or a new design
-    if(f.wall?!F.f:F.f)g.scale(-1,1);g.drawImage(im,-w/2,-h,w,h);g.restore()}
-  else{const top=hsBox(g,i,j,di,dj,f.z0,f.h,ghost&&!ghost.ok?'#ff6b6b':f.col,a);const [tx,ty]=hsP(i+di/2,j+dj/2,f.z0+f.h),fs=v.TW*(f.fw+f.fd>2?.62:.5);
-    g.globalAlpha=a;g.font=`${fs}px "Apple Color Emoji","Noto Color Emoji",sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillText(f.em,tx,ty-fs*.15);g.globalAlpha=1}
-  if(L>=5&&!ghost){const r=im&&v.rect[id];let [sx,sy]=hsP(i+di/2,j+dj/2,f.z0+f.h+.35);if(r)sy=r.y-v.TH*.15;for(let k=0;k<3;k++){const ph=HSV.last/400+k*2.1;g.fillStyle='#ffe24d';g.globalAlpha=.55+.45*Math.sin(ph);hsStar(g,sx+Math.cos(ph)*v.TW*.35,sy+Math.sin(ph*1.3)*v.TH*.3,v.TW*.07)}g.globalAlpha=1}
-  if(L&&!ghost){const [lx,ly]=hsP(i+di,j+dj,f.z0);g.font=`900 ${Math.round(v.TW*.24)}px Rubik,system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';
-    const s='★'+L;g.lineWidth=3;g.strokeStyle='#120d2b';g.strokeText(s,lx,ly-v.TH*.1);g.fillStyle=L>=5?'#ffe24d':'#fff';g.fillText(s,lx,ly-v.TH*.1)}
-  if(sel){g.save();g.strokeStyle='#ffe24d';g.lineWidth=3;g.setLineDash([6,5]);g.lineDashOffset=-HSV.last/40;hsPoly(g,[hsP(F.i,F.j),hsP(F.i+F.di,F.j),hsP(F.i+F.di,F.j+F.dj),hsP(F.i,F.j+F.dj)],null,null);g.stroke();g.restore()}}
+// where an item is (while you drag it: where your finger has it)
+function hsPos(id){const d=HSV.drag;if(d&&d.id===id&&d.p)return d.p;const P=hs().fpos[id];if(P)return P;const S=HF_SPOT[id]||[.5,.9],c=hsClamp(id,S[0],S[1]);return {x:c.x,y:c.y,m:0}}
+function hsItemPic(id){const pk=hsPeek(id);return pk&&hsPic(hsDN(id,pk))||hsPic(hsFN(id))}
+// the item's box on screen in the room's coordinates (its picture fills it; mirrored when turned)
+function hsRect(id,p=hsPos(id)){const v=HSV,[w0,h0]=HF_SZ[id],im=hsItemPic(id),w=w0*v.RW,h=im?w*im.height/im.width:h0*v.RH;
+  return {x:v.RX+p.x*v.RW-w/2,y:p.y*v.RH-h,w,h,im,m:!!p.m}}
+// keep an item inside the room: a floor item on the floor band, a wall item on the wall
+function hsClamp(id,x,y){const v=HSV;if(!v.RW)return {x,y};const r=hsRect(id,{x,y}),wf=r.w/v.RW/2,hf=r.h/v.RH,ft=hfFT(HSF[id].room);x=Math.max(wf+.005,Math.min(1-wf-.005,x));
+  y=HF_WALL.has(id)?Math.min(ft-.03,Math.max(hf+.04,y)):Math.max(ft+.03,Math.min(HF_FF,y));return {x,y}}
+function hsDrawItem(g,id){const v=HSV,L=hsLv(id),r=hsRect(id),sel=v.sel===id,drag=v.drag&&v.drag.id===id&&v.drag.moved,f=HSF[id],wall=HF_WALL.has(id);
+  const pop=v.pop&&v.pop.id===id?(performance.now()-v.pop.t0)/480:1,pk=hsPeek(id),bx=r.x+r.w/2,by=r.y+r.h;
+  // a soft shadow under a floor item (bigger while you lift it)
+  if(!wall){g.globalAlpha=drag?.3:.22;g.fillStyle='#120d2b';g.beginPath();g.ellipse(bx,by-v.RH*.004,r.w*(drag?.5:.44),v.RH*(drag?.04:.028),0,0,7);g.fill();g.globalAlpha=1}
+  g.save();g.translate(bx,by-(drag?v.RH*.025:0));if(drag)g.scale(1.05,1.05);
+  if(pop<1){const k=Math.sin(pop*Math.PI*2)*(1-pop);g.scale(1+.13*k,1-.16*k)} // squash and pop after an upgrade, a new design or a turn
+  if(r.m)g.scale(-1,1);if(pk)g.globalAlpha=.72+.28*Math.sin(performance.now()/90);
+  if(r.im)g.drawImage(r.im,-r.w/2,-r.h,r.w,r.h);
+  else{// no picture yet: a front-view cabinet in the item's colour with its emoji
+    const w=r.w,h=r.h;hsRR(g,-w/2,-h,w,h,Math.min(w,h)*.16);g.fillStyle=f.col;g.fill();g.lineWidth=Math.max(2,v.RW*.008);g.strokeStyle='#120d2b';g.stroke();
+    hsRR(g,-w/2+w*.08,-h+h*.06,w*.84,h*.16,h*.06);g.fillStyle=hsShade(f.col,1.12);g.fill();
+    const fs=Math.min(w*.62,h*.62);g.font=`${Math.round(fs)}px "Apple Color Emoji","Noto Color Emoji",sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillText(f.em,0,-h*.48)}
+  g.restore();
+  if(L>=5){for(let k=0;k<3;k++){const ph=HSV.last/400+k*2.1;g.fillStyle='#ffe24d';g.globalAlpha=.55+.45*Math.sin(ph);hsStar(g,bx+Math.cos(ph)*r.w*.4,r.y+r.h*.15+Math.sin(ph*1.3)*v.RH*.04,v.TW*.07)}g.globalAlpha=1}
+  if(L){const s='★'+L,lx=r.x+r.w-v.TW*.05,ly=by-v.TW*.12;g.font=`900 ${Math.round(v.TW*.24)}px Rubik,system-ui,sans-serif`;g.textAlign='center';g.textBaseline='middle';
+    g.lineWidth=3;g.strokeStyle='#120d2b';g.strokeText(s,lx,ly);g.fillStyle=L>=5?'#ffe24d':'#fff';g.fillText(s,lx,ly)}
+  if(sel){g.save();g.strokeStyle='#ffe24d';g.lineWidth=3;g.setLineDash([6,5]);g.lineDashOffset=-HSV.last/40;hsRR(g,r.x-4,r.y-4-(drag?v.RH*.025:0),r.w+8,r.h+8,10);g.stroke();g.restore()}}
 function hsStar(g,x,y,r){g.beginPath();for(let k=0;k<10;k++){const a=-Math.PI/2+k*Math.PI/5,rr=k%2?r*.45:r;g.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}g.closePath();g.fill()}
-function hsItemsIn(room){return HS_F.filter(f=>f.room===room&&hsLv(f.id)&&hs().pos[f.id])}
-function hsCells(id,F){const c=[];for(let a=0;a<F.di;a++)for(let b=0;b<F.dj;b++)c.push((F.i+a)+','+(F.j+b));return c}
-function hsFits(id,F,room){const f=HSF[id];if(F.i<0||F.j<0||F.i+F.di>HS_G||F.j+F.dj>HS_G)return false;if(f.wall&&(F.f?F.i!==0:F.j!==0))return false;
-  const mine=new Set(hsCells(id,F));for(const o of hsItemsIn(room)){if(o.id===id)continue;if(hsCells(o.id,hsFoot(o.id)).some(c=>mine.has(c)))return false}return true}
-// a new item goes to its own spot in a furnished room (i, j, turned) — the middle stays free for the Sharliz;
-// if the player moved something there, to the free spot farthest from the other furniture
-const HS_SPOT={piggy:[5,0,0],sofa:[1,3,0],clock:[0,0,0],fireplace:[2,0,0],aquarium:[0,4,1],books:[1,0,0],tv:[5,3,1],
-  oven:[1,0,0],fridge:[0,0,0],candyjar:[5,0,0],table:[2,3,0],sink:[3,0,0],toaster:[2,0,0],
-  bed:[1,0,0],nightlight:[0,0,0],toychest:[0,5,0],wardrobe:[0,2,1],trophies:[3,0,0],telescope:[5,0,0],
-  vane:[0,0,0],mailbox:[5,3,0],birdhouse:[0,3,0],flowers:[1,0,0],trampoline:[2,2,0],balloons:[5,0,0]};
-function hsAutoPlace(id){const f=HSF[id],H=hs(),S=HS_SPOT[id];
-  if(S){const F=hsFootAt(id,S[0],S[1],S[2]);if(hsFits(id,F,f.room)){H.pos[id]={i:F.i,j:F.j,f:F.f};return true}}
-  const others=hsItemsIn(f.room).filter(o=>o.id!==id).map(o=>{const F=hsFoot(o.id);return [F.i+F.di/2,F.j+F.dj/2]}),cand=[];
-  for(const fl of [0,1])for(let i=0;i<HS_G;i++)for(let j=0;j<HS_G;j++){const F=hsFootAt(id,i,j,fl);if(f.wall&&(fl?i!==0:j!==0))continue;cand.push(F)}
-  const sc=F=>{const cx=F.i+F.di/2,cy=F.j+F.dj/2,near=others.length?Math.min(...others.map(([a,b])=>Math.hypot(a-cx,b-cy))):3;
-    return -Math.min(near,3)+(f.wall?0:(Math.abs(cx-3)<1.5&&Math.abs(cy-3)<1.5?1.2:0))+F.f*.05};
-  cand.sort((a,b)=>sc(a)-sc(b));
-  for(const F of cand)if(hsFits(id,F,f.room)){H.pos[id]={i:F.i,j:F.j,f:F.f};return true}return false}
-// hero walks between free tiles
-function hsHeroTick(dt){const v=HSV,room=hs().room;let h=v.hero;if(!h){h=v.hero={s:arcHeroSpriteSafe(),i:2.5,j:3.5,ti:2.5,tj:3.5,wait:1,hop:0}}
-  const busy=new Set();hsItemsIn(room).forEach(o=>hsCells(o.id,hsFoot(o.id)).forEach(c=>busy.add(c)));
-  const free=(i,j)=>!busy.has(Math.floor(i)+','+Math.floor(j));
-  if(!free(h.i,h.j)){let best=null,bd=1e9;for(let a=0;a<HS_G;a++)for(let b=0;b<HS_G;b++)if(free(a+.5,b+.5)){const d=Math.hypot(a+.5-h.i,b+.5-h.j);if(d<bd){bd=d;best=[a+.5,b+.5]}}if(best){h.i=h.ti=best[0];h.j=h.tj=best[1]}}
-  const dx=h.ti-h.i,dy=h.tj-h.j,d=Math.hypot(dx,dy);
-  if(d>.02){const st=Math.min(d,dt*1.3),ni=h.i+dx/d*st,nj=h.j+dy/d*st;if(free(ni,nj)){h.i=ni;h.j=nj;h.hop+=dt*9}else{h.ti=h.i;h.tj=h.j}}
-  else if((h.wait-=dt)<=0){h.wait=1.2+Math.random()*2.2;for(let k=0;k<12;k++){const a=Math.floor(Math.random()*HS_G)+.5,b=Math.floor(Math.random()*HS_G)+.5;let ok=true;
-      for(let s=0;s<=10&&ok;s++){if(!free(h.i+(a-h.i)*s/10,h.j+(b-h.j)*s/10))ok=false}if(ok){h.ti=a;h.tj=b;break}}}
-  if(h.s){h.s.blink=(h.s.blink||0)+dt;if(typeof jigStep==='function'){}}}
+function hsItemsIn(room){return HS_F.filter(f=>f.room===room&&hsLv(f.id))}
+// drawing order: wall items first, then the floor items from the back to the front (the Sharliz walks among them)
+const hsDepth=id=>HF_WALL.has(id)?-1:hsPos(id).y;
+// a new item goes to its own spot (overlapping is fine, so there is always room)
+function hsAutoPlace(id){const H=hs();if(!H.fpos[id]){const S=HF_SPOT[id]||[.5,.9],c=hsClamp(id,S[0],S[1]);H.fpos[id]={x:c.x,y:c.y,m:0}}return true}
+// the Sharliz walks around the floor band
+function hsHeroTick(dt){const v=HSV,ft=hfFT();let h=v.hero;if(!h)h=v.hero={s:arcHeroSpriteSafe(),x:.5,y:.9,tx:.5,ty:.9,wait:1,hop:0,dir:1};
+  const ax=(h.tx-h.x)*v.RW,ay=(h.ty-h.y)*v.RH,d=Math.hypot(ax,ay);
+  if(d>1){const st=Math.min(d,dt*v.RW*.16);h.x+=ax/d*st/v.RW;h.y+=ay/d*st/v.RH;h.hop+=dt*9;h.dir=ax>0?1:-1}
+  else if((h.wait-=dt)<=0){h.wait=1.2+Math.random()*2.2;h.tx=.12+Math.random()*.76;h.ty=ft+.1+Math.random()*(HF_FF-ft-.1)}
+  if(h.s)h.s.blink=(h.s.blink||0)+dt}
 function arcHeroSpriteSafe(){try{return Object.assign(makeSharliz(),{color:CHARS.hero?'hero':'#06a2ba',mood:null})}catch(e){return null}}
-function hsDrawHero(g){const v=HSV,h=v.hero;if(!h||!h.s)return;const [x,y]=hsP(h.i,h.j),sz=v.TW*.62,hop=Math.abs(Math.sin(h.hop))*v.TH*.35;
-  g.globalAlpha=.25;g.fillStyle='#120d2b';g.beginPath();g.ellipse(x,y,sz*.42,sz*.16,0,0,7);g.fill();g.globalAlpha=1;
-  try{withCtx(g,sz,()=>drawSharliz(h.s,x,y-sz*.72-hop,0,null,{x:(h.ti-h.i)-(h.tj-h.j)>0?.4:-.4,y:0}))}catch(e){}}
+function hsDrawHero(g){const v=HSV,h=v.hero;if(!h||!h.s)return;const x=v.RX+h.x*v.RW,y=h.y*v.RH,sz=v.RH*.15,hop=Math.abs(Math.sin(h.hop))*v.RH*.03;
+  g.globalAlpha=.22;g.fillStyle='#120d2b';g.beginPath();g.ellipse(x,y,sz*.42,sz*.14,0,0,7);g.fill();g.globalAlpha=1;
+  try{withCtx(g,sz,()=>drawSharliz(h.s,x,y-sz*.72-hop,0,null,{x:h.dir*.4,y:0}))}catch(e){}}
 function hsDraw(dt=1/60){const v=HSV,g=v.g;if(!g)return;const cur=hs().room,d=v.dpr;g.setTransform(d,0,0,d,0,0);g.clearRect(0,0,v.W,v.H);
   v.fx=v.fx.filter(p=>(p.t+=dt)<1);
   HS_ROOMS.forEach((R,k)=>{const y0=k*v.SP-v.cam;if(y0>v.H||y0+v.RH<0)return;g.setTransform(d,0,0,d,0,d*y0);const open=hsRoomOpen(R.id);
-    if(R.id===cur){const [gx,gy]=hsP(HS_G/2,HS_G/2),gr=g.createRadialGradient(gx,gy-v.TW,v.TW,gx,gy-v.TW,v.W*.62);gr.addColorStop(0,'rgba(255,226,160,.32)');gr.addColorStop(1,'rgba(255,226,160,0)');
+    if(R.id===cur){const gr=g.createRadialGradient(v.W/2,v.RH*.45,v.TW,v.W/2,v.RH*.45,v.W*.62);gr.addColorStop(0,'rgba(255,226,160,.32)');gr.addColorStop(1,'rgba(255,226,160,0)');
       g.fillStyle=gr;g.fillRect(0,-v.TW,v.W,v.RH+v.TW*2)}
-    hsDrawRoom(g,R.id,!open);g.globalAlpha=1;if(!open){hsLockTag(g,R);return}
-    const list=hsItemsIn(R.id).map(f=>{const F=hsFoot(f.id);return {k:(F.i+F.di)+(F.j+F.dj)+(f.wall?-1.5:0),fn:()=>hsDrawItem(g,f.id)}});
-    if(R.id===cur){if(v.hero&&v.hero.s)list.push({k:v.hero.i+v.hero.j+.6,fn:()=>hsDrawHero(g)});
-      if(v.drag&&v.drag.moved&&v.drag.F)list.push({k:99,fn:()=>hsDrawItem(g,v.drag.id,v.drag.F)})}
+    hsDrawRoom(g,R.id,!open);if(!open){hsLockTag(g,R);return}
+    g.save();hsRoomPath(g);g.clip();
+    const list=hsItemsIn(R.id).map(f=>({id:f.id,k:hsDepth(f.id),fn:()=>hsDrawItem(g,f.id)}));
+    if(R.id===cur){if(v.hero&&v.hero.s)list.push({k:v.hero.y,fn:()=>hsDrawHero(g)});if(v.drag&&v.drag.moved)list.forEach(o=>{if(o.id===v.drag.id)o.k=99})}
     list.sort((a,b)=>a.k-b.k).forEach(o=>o.fn());
     if(R.id===cur){for(const p of v.fx){g.globalAlpha=1-p.t;g.fillStyle=p.c;hsStar(g,p.x+p.vx*p.t,p.y+p.vy*p.t+80*p.t*p.t,v.TW*.08*(1-p.t*.5))}g.globalAlpha=1}
-    else{g.globalCompositeOperation='source-atop';g.fillStyle='rgba(36,18,80,.36)';g.fillRect(0,-v.TW*.3,v.W,v.RH+v.TW*.3);g.globalCompositeOperation='source-over'}});
+    else{g.fillStyle='rgba(36,18,80,.36)';g.fillRect(v.RX,0,v.RW,v.RH)}
+    g.restore();hsRoomPath(g);g.lineWidth=Math.max(3,v.RW*.012);g.strokeStyle='#120d2b';g.stroke()});
   g.setTransform(d,0,0,d,0,0)}
-function hsBurst(id){const F=hsFoot(id);if(!F)return;const [x,y]=hsP(F.i+F.di/2,F.j+F.dj/2,HSF[id].z0+HSF[id].h);for(let k=0;k<22;k++){const a=Math.random()*7,s=40+Math.random()*90;HSV.fx.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-60,t:0,c:pick(['#ffe24d','#ff7ab8','#7ae0ff','#fff'])})}}
+function hsBurst(id){const r=hsRect(id),x=r.x+r.w/2,y=r.y+r.h*.3;for(let k=0;k<22;k++){const a=Math.random()*7,s=40+Math.random()*90;HSV.fx.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-60,t:0,c:pick(['#ffe24d','#ff7ab8','#7ae0ff','#fff'])})}}
 function hsLoop(now){const v=HSV;if(!v.el||v.el.hidden){v.raf=0;return}const dt=Math.min(.05,(now-(v.last||now))/1000);v.last=now;
   if(!v.pan){v.cam+=(v.camT-v.cam)*Math.min(1,dt*7);if(Math.abs(v.camT-v.cam)<.3)v.cam=v.camT}
   if(!document.hidden){if(hsRoomOpen(hs().room))hsHeroTick(dt);hsDraw(dt)}v.raf=requestAnimationFrame(hsLoop)}
-/* ---------- touch: tap = select, drag = move ---------- */
+/* ---------- touch: tap = select, drag = move anywhere (a floor item on the floor, a wall item on the wall) ---------- */
 function hsVP(e){const r=HSV.cv.getBoundingClientRect();return [(e.clientX-r.left)*HSV.W/r.width,(e.clientY-r.top)*HSV.H/r.height]}
 // a point in the coordinates of the room you are in
 function hsPt(e){const [x,y]=hsVP(e);return [x,y+HSV.cam-hsRI(hs().room)*HSV.SP]}
 function hsRoomAt(vy){const v=HSV,k=Math.floor((vy+v.cam+(v.SP-v.RH)/2)/v.SP);return HS_ROOMS[Math.max(0,Math.min(HS_ROOMS.length-1,k))].id}
-// the item's outline on screen (the six corners of its box), front-most item first
 const HS_AM={};function hsAlphaAt(im,u,v){let m=HS_AM[im.src];if(!m){const w=64,h=Math.max(1,Math.round(64*im.height/im.width)),c=document.createElement('canvas');c.width=w;c.height=h;const g=c.getContext('2d');g.drawImage(im,0,0,w,h);
   try{m={w,h,d:g.getImageData(0,0,w,h).data}}catch(_){m={w:0}}HS_AM[im.src]=m}if(!m.w)return true;const a=Math.floor(u*m.w),b=Math.floor(v*m.h);return a>=0&&b>=0&&a<m.w&&b<m.h&&m.d[(b*m.w+a)*4+3]>60}
-function hsInPoly(x,y,P){let c=false;for(let a=0,b=P.length-1;a<P.length;b=a++){const [xa,ya]=P[a],[xb,yb]=P[b];if((ya>y)!==(yb>y)&&x<(xb-xa)*(y-ya)/(yb-ya)+xa)c=!c}return c}
-function hsHit(x,y){const room=hs().room,list=hsItemsIn(room).map(f=>({f,F:hsFoot(f.id)})).sort((a,b)=>(b.F.i+b.F.di+b.F.j+b.F.dj+(b.f.wall?-1.5:0))-(a.F.i+a.F.di+a.F.j+a.F.dj+(a.f.wall?-1.5:0)));
-  for(const {f,F} of list){const r=HSV.rect[f.id];if(r&&hsPic(hsFN(f.id))){if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){const u=(x-r.x)/r.w;if(hsAlphaAt(r.im,r.fl?1-u:u,(y-r.y)/r.h))return f.id}continue}
-    let {i,j,di,dj}=F;if(f.wall){if(F.f)di=.5;else dj=.5}const z0=f.z0,z1=f.z0+Math.max(f.h,.5);
-    const P=[hsP(i,j+dj,z0),hsP(i+di,j+dj,z0),hsP(i+di,j,z0),hsP(i+di,j,z1),hsP(i,j,z1),hsP(i,j+dj,z1)];if(hsInPoly(x,y,P))return f.id}
-  // a tap on a free floor tile picks nothing (so it unselects); a near miss elsewhere still picks the closest item
-  const [ti,tj]=hsInv(x,y);if(ti>=0&&tj>=0&&ti<HS_G&&tj<HS_G){const busy=new Set();list.forEach(({f,F})=>hsCells(f.id,F).forEach(c=>busy.add(c)));if(!busy.has(Math.floor(ti)+','+Math.floor(tj)))return null}
-  let best=null,bd=HSV.TW*.35;for(const {f,F} of list){const [cx,cy]=hsP(F.i+F.di/2,F.j+F.dj/2,f.z0+f.h/2),d=Math.hypot(cx-x,cy-y)-HSV.TW*.4*(F.di+F.dj)/2;if(d<bd){bd=d;best=f.id}}return best}
-function hsDown(e){const v=HSV,[vx,vy]=hsVP(e),[x,y]=hsPt(e),cur=hs().room,id=y>=0&&y<=v.RH&&hsRoomOpen(cur)?hsHit(x,y):null;
+// the front-most item under the finger (its picture's painted pixels); a near miss still picks a small item close by
+function hsHit(x,y){const list=hsItemsIn(hs().room).map(f=>f.id).sort((a,b)=>hsDepth(b)-hsDepth(a)),pad=HSV.TW*.25;
+  for(const id of list){const r=hsRect(id);if(x>=r.x&&x<=r.x+r.w&&y>=r.y&&y<=r.y+r.h){if(!r.im)return id;const u=(x-r.x)/r.w;if(hsAlphaAt(r.im,r.m?1-u:u,(y-r.y)/r.h))return id}}
+  let best=null,bd=pad;for(const id of list){const r=hsRect(id),dx=Math.max(r.x-x,0,x-r.x-r.w),dy=Math.max(r.y-y,0,y-r.y-r.h),d=Math.hypot(dx,dy);if(d<bd){bd=d;best=id}}return best}
+function hsDown(e){const v=HSV,[vx,vy]=hsVP(e),[x,y]=hsPt(e),cur=hs().room,id=y>=0&&y<=v.RH&&x>=v.RX&&x<=v.RX+v.RW&&hsRoomOpen(cur)?hsHit(x,y):null;
   if(!id){v.pan={x0:vx,y0:vy,c0:v.cam,moved:false,v:0,ly:vy,lt:performance.now(),room:hsRoomAt(vy)};try{v.cv.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault();return}
-  const F=hsFoot(id),[pi,pj]=hsInv(x,y);
-  v.drag={id,gi:pi-F.i,gj:pj-F.j,x0:x,y0:y,moved:false,F:null};try{v.cv.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()}
+  const p=hsPos(id);v.drag={id,gx:x/v.RW-p.x,gy:y/v.RH-p.y,x0:x,y0:y,moved:false,p:null};try{v.cv.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()}
 function hsMove(e){const P=HSV.pan;if(P){const [vx,vy]=hsVP(e);if(P.side||!P.moved&&Math.abs(vx-P.x0)>14&&Math.abs(vx-P.x0)>Math.abs(vy-P.y0)*1.4){P.side=vx-P.x0;e.preventDefault();return}
     if(!P.moved&&Math.abs(vy-P.y0)<8)return;P.moved=true;const now=performance.now(),dtm=Math.max(1,now-P.lt);
     P.v=P.v*.6+(vy-P.ly)/dtm*1000*.4;P.ly=vy;P.lt=now;HSV.cam=hsCamClamp(P.c0-(vy-P.y0));e.preventDefault();return}
-  const d=HSV.drag;if(!d)return;const [x,y]=hsPt(e);if(!d.moved&&Math.hypot(x-d.x0,y-d.y0)<8)return;d.moved=true;const [pi,pj]=hsInv(x,y),F0=hsFoot(d.id);
-  let F;if(HSF[d.id].wall){const left=pi<pj,fl=left?1:0,F1=hsFootAt(d.id,0,0,fl);F=left?hsFootAt(d.id,0,Math.round(pj-F1.dj/2),1):hsFootAt(d.id,Math.round(pi-F1.di/2),0,0)}
-  else F=hsFootAt(d.id,Math.round(pi-d.gi),Math.round(pj-d.gj),F0.f);
-  F.ok=hsFits(d.id,F,hs().room);d.F=F;e.preventDefault()}
+  const d=HSV.drag;if(!d)return;const [x,y]=hsPt(e);if(!d.moved&&Math.hypot(x-d.x0,y-d.y0)<8)return;d.moved=true;
+  const c=hsClamp(d.id,x/HSV.RW-d.gx,y/HSV.RH-d.gy);d.p={x:c.x,y:c.y,m:hsPos(d.id).m};e.preventDefault()}
 function hsUp(){const P=HSV.pan;if(P){HSV.pan=null;if(P.side){if(Math.abs(P.side)>40)hsStep((P.side<0?1:-1)*(I18N[lang]._dir==='rtl'?-1:1));return}
     if(!P.moved){if(P.room!==hs().room)hsFocus(P.room);else if(HSV.sel){HSV.sel=null;hsPanel()}return}
     // let go: glide to the room nearest to where the flick is heading
     const aim=HSV.cam-P.v*.25;let best=0,bd=1e9;HS_ROOMS.forEach((R,k)=>{const dd=Math.abs(hsCamFor(k)-aim);if(dd<bd){bd=dd;best=k}});hsFocus(HS_ROOMS[best].id);return}
-  const d=HSV.drag;HSV.drag=null;if(!d)return;if(!d.moved){sfx.click();HSV.sel=d.id;hsPanel();return}
-  if(d.F&&d.F.ok){const p=hs().pos[d.id];p.i=d.F.i;p.j=d.F.j;p.f=d.F.f;saveProgress();sfx.pop();vib(10);HSV.sel=d.id;hsPanel()}else sfx.locked()}
-function hsTurn(id){const f=HSF[id],p=hs().pos[id];if(!p)return;
-  // a wall item moves to the other wall, a floor item turns in place
-  // (if that spot is taken, the nearest free spot that way round)
-  const fl=p.f?0:1,ci=f.wall?p.j:p.i,cj=f.wall?p.i:p.j,cand=[];
-  for(let i=0;i<HS_G;i++)for(let j=0;j<HS_G;j++){const F=hsFootAt(id,i,j,fl);if(hsFits(id,F,f.room))cand.push([Math.hypot(i-ci,j-cj),F])}
-  if(!cand.length){sfx.locked();noteToast(t('hsNoRoom'));return}cand.sort((a,b)=>a[0]-b[0]);const F=cand[0][1];p.i=F.i;p.j=F.j;p.f=F.f;saveProgress();sfx.pop()}
+  const d=HSV.drag;if(!d)return;if(!d.moved||!d.p){HSV.drag=null;sfx.click();HSV.sel=d.id;hsPanel();return}
+  hs().fpos[d.id]={x:d.p.x,y:d.p.y,m:d.p.m?1:0};HSV.drag=null;saveProgress();sfx.pop();vib(10);HSV.sel=d.id;hsPanel()}
+// turn = mirror it where it stands
+function hsTurn(id){const H=hs(),p=hsPos(id);H.fpos[id]={x:p.x,y:p.y,m:p.m?0:1};HSV.pop={id,t0:performance.now()};saveProgress();sfx.pop()}
 
 /* ---------- screen ---------- */
 function hsFocus(room,quiet){const v=HSV,H=hs(),R=HS_ROOMS.find(x=>x.id===room),open=hsRoomOpen(room);
@@ -265,8 +248,8 @@ function hsFocus(room,quiet){const v=HSV,H=hs(),R=HS_ROOMS.find(x=>x.id===room),
   hsTabs();hsPanel();hsArrows();if(!open&&!quiet){const b=v.el.querySelector(`.hs-room[data-room="${room}"]`);if(b)b.classList.add('shake')}}
 // the arrows beside the room and a sideways swipe: the next / previous room (d=1 = towards the yard)
 function hsStep(d){const k=hsRI(hs().room)+d;if(k>=0&&k<HS_ROOMS.length)hsFocus(HS_ROOMS[k].id)}
-function hsArrows(){const r=HSV.el;if(!r)return;const k=hsRI(hs().room),rtl=I18N[lang]._dir==='rtl',top=Math.round(hsTop()+HSV.oy+HS_G*HSV.TH/2-24);
-  const st=r.querySelector('.hs-stage'),off=Math.max(0,((st&&st.clientWidth)-HSV.W)/2)+6+'px'; // beside the house, also on a wide iPad
+function hsArrows(){const r=HSV.el;if(!r)return;const k=hsRI(hs().room),rtl=I18N[lang]._dir==='rtl',top=Math.round(hsTop()+HSV.RH*.2-23);
+  const st=r.querySelector('.hs-stage'),off=Math.max(0,((st&&st.clientWidth)-HSV.W)/2)+Math.max(0,HSV.RX-17)+'px'; // on the room's edge, high on the wall where it's emptiest (also on a wide iPad)
   r.querySelectorAll('.hs-arr').forEach(b=>{const l=b.classList.contains('l'),d=(l?-1:1)*(rtl?-1:1),n=k+d;b.dataset.d=d;b.style.top=top+'px';b.style[l?'left':'right']=off;b.hidden=n<0||n>=HS_ROOMS.length})}
 // the room tabs: one bar; the room you are in is gold, a locked room shows a lock and the level it opens at, an open one its stars (3/35★)
 function hsTabs(){const r=HSV.el,H=hs(),rooms=r&&r.querySelector('.hs-rooms');if(!rooms)return;rooms.innerHTML='';
@@ -347,7 +330,7 @@ function hsPanel(){const r=HSV.el;if(!r)return;const p=r.querySelector('.hs-pane
   let raf=0;grid.onscroll=()=>{if(!raf)raf=requestAnimationFrame(()=>{raf=0;hsStripSync(grid)})};hsCoins();hsFit(p.querySelectorAll('.hs-card b'));hsFit(p.querySelectorAll('.hs-card .btn span'),10);hsVis()}
 // how much of the house shows above the strip: the camera stays on the room, and only moves up when a picked item would hide behind the strip
 function hsVis(){const v=HSV,st=v.el&&v.el.querySelector('.hs-stage');if(!st||!v.H)return;v.vis=Math.min(v.H,st.clientHeight||v.H);const k=hsRI(hs().room);let c=hsCamFor(k);
-  const F=v.sel&&hsFoot(v.sel);if(F&&v.vis<v.H){const [,y]=hsP(F.i+F.di,F.j+F.dj);c=Math.max(c,k*v.SP+y+v.TH*.5-v.vis+8)}v.camT=c}
+  if(v.sel&&v.vis<v.H){const r=hsRect(v.sel);c=Math.max(c,k*v.SP+r.y+r.h+v.RH*.03-v.vis+8)}v.camT=c}
 // pick one of the open designs (free, looks only); a locked one says which upgrade opens it
 function hsSetSty(id,k){const H=hs();H.sty=H.sty||{};if(!hsDOpen(id,k)){sfx.locked();noteToast(t('hsDesLock',{n:Math.ceil(k/2)}));HSV.peek={id,k,t:performance.now()+1800};hsPanel();
     setTimeout(()=>{if(HSV.peek&&HSV.peek.k===k&&HSV.sel===id){HSV.peek=null;hsPanel()}},1850);return}if(hsStyOf(id)===k)return;
