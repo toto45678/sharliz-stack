@@ -365,8 +365,10 @@ const HSQ=[];function hsNote(s){HSQ.push(s);setTimeout(()=>{const m=HSQ.shift();
     if(hsLv('oven')){C.oven=(C.oven||0)+1;if(C.oven>=hsVal('oven',hsLv('oven'))){C.oven=0;if(typeof nest==='function'){nest().treats+=1;hsNote(t('hsOven'))}}}
     if(hsLv('fridge')){C.fridge=(C.fridge||0)+1;if(C.fridge>=hsVal('fridge',hsLv('fridge'))){C.fridge=0;const b=['shield','slow','laser','heart'][(C.fb=(C.fb||0)+1)%4],inv=wallet().inv;inv[b]=(inv[b]||0)+1;hsNote(t('hsFridge'))}}
     saveProgress()}}catch(e){}return r}}
-{const _sl=startLevel;startLevel=function(){const r=_sl.apply(this,arguments);try{const L=hsLv('bed');if(L&&mode!=='duo'&&mode!=='bonus'){const C=hs().cnt;C.bed=(C.bed||0)+1;
-    if(C.bed>=hsVal('bed',L)){C.bed=0;boost.shield=true;try{renderBoosterBar()}catch(e){}setTimeout(()=>noteToast(t('hsBed')),1300)}saveProgress()}}catch(e){}return r}}
+{const _w=win;win=function(){const was=state,r=_w.apply(this,arguments);try{const L=hsLv('bed');if(L&&was!=='win'&&state==='win'&&(mode==='levels'||mode==='event')){const C=hs().cnt;C.bed=(C.bed||0)+1;
+    if(C.bed>=hsVal('bed',L)){C.bed=0;C.bedOn=1}saveProgress()}}catch(e){}return r}}
+{const _sl=startLevel;startLevel=function(){const r=_sl.apply(this,arguments);try{const C=progress.house&&hs().cnt;if(C&&C.bedOn&&hsLv('bed')&&mode!=='duo'&&mode!=='bonus'){C.bedOn=0;
+    boost.shield=true;try{renderBoosterBar()}catch(e){}setTimeout(()=>noteToast(t('hsBed')),1300);saveProgress()}}catch(e){}return r}}
 let hsWD=0;for(const fn of ['wBuy','csBuy','buyWithCoins'])if(typeof window[fn]==='function'){const _b=window[fn];window[fn]=function(){const c0=progress.coins||0;let r;hsWD++;try{r=_b.apply(this,arguments)}finally{hsWD--}const L=hsLv('wardrobe'),spent=c0-(progress.coins||0);
   if(L&&spent>0&&!hsWD){const back=Math.ceil(spent*hsVal('wardrobe',L)/100);progress.coins+=back;saveProgress();updateWalletUI();setTimeout(()=>noteToast(t('hsWard',{n:back})),700)}return r}}
 if(typeof dlClaim==='function'){const _d=dlClaim;dlClaim=function(){const c0=progress.coins||0;const r=_d.apply(this,arguments);const L=hsLv('mailbox'),got=(progress.coins||0)-c0;

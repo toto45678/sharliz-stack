@@ -322,8 +322,8 @@
   "hint_rare": "줄에 매달린 희귀 Sharliz를 잡아",
   "hint_boss": "보스 격파",
   "hint_world": "월드 완료",
-  "hint_buddy": "꾸미기 → 단짝",
-  "hint_hat": "꾸미기 → 모자",
+  "hint_buddy": "스타일 → 단짝, 또는 알 부화",
+  "hint_hat": "스타일 → 모자",
   "hint_special": "곧 공개",
   "newSticker": "새 스티커!",
   "dShort": "{d}일 {h}시간",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "코인 풍선이 {n}% 더 자주 와",
   "hsDesign": "디자인",
   "hsNewLook": "새 디자인: {x}!",
-  "hsDesLock": "★{n}로 업그레이드하면 이 디자인이 열려요"
+  "hsDesLock": "★{n}로 업그레이드하면 이 디자인이 열려요",
+  "sbFillAll": "모두 모으면 {n} 획득",
+  "stNext1": "다음 이야기: 레벨 1개 더 이기기"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

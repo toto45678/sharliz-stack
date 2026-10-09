@@ -322,8 +322,8 @@
   "hint_rare": "ロープのレアSharlizをゲット",
   "hint_boss": "ボスをたおす",
   "hint_world": "ワールドをクリア",
-  "hint_buddy": "きせかえ → バディ",
-  "hint_hat": "きせかえ → ぼうし",
+  "hint_buddy": "スタイル → バディ、またはタマゴをかえそう",
+  "hint_hat": "スタイル → ぼうし",
   "hint_special": "近日登場",
   "newSticker": "新しいシール!",
   "dShort": "{d}日{h}時間",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "コインふうせんが{n}%よく来る",
   "hsDesign": "デザイン",
   "hsNewLook": "新しいデザイン：{x}！",
-  "hsDesLock": "★{n}にアップグレードするとこのデザインが開きます"
+  "hsDesLock": "★{n}にアップグレードするとこのデザインが開きます",
+  "sbFillAll": "ぜんぶ集めて{n}ゲット",
+  "stNext1": "次のお話:あと1レベル勝とう"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",

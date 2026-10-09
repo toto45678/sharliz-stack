@@ -67,3 +67,39 @@ document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD
  new MutationObserver(ms=>{for(const m of ms)q.add(m.target);if(!raf)raf=requestAnimationFrame(run)})
    .observe(document.body,{childList:true,subtree:true,attributes:true,attributeFilter:['hidden','class']});
  q.add(document.body);raf=requestAnimationFrame(run)}
+
+/* ---------- bug hunt 5 (Oct 9) ---------- */
+// result card: the XP / egg / sticker-pack strips are added inside the scrolling card body after the card opens. On a phone they
+// landed below its visible part (the scrollbar is hidden), so nobody saw them. The body now glides to the newest strip, and its
+// bottom edge fades while there is more below.
+{const card=document.getElementById('card');
+ const more=b=>b.classList.toggle('more',b.scrollHeight-b.clientHeight-b.scrollTop>6);
+ const hook=b=>{if(b._more)return;b._more=1;b.addEventListener('scroll',()=>more(b),{passive:true});b.addEventListener('load',()=>more(b),true)};
+ const reveal=el=>setTimeout(()=>{const b=el.isConnected&&el.parentElement;if(!b||!b.classList.contains('card-body'))return;const B=b.getBoundingClientRect(),E=el.getBoundingClientRect();
+   if(E.bottom>B.bottom-2)b.scrollTo({top:b.scrollTop+E.bottom-B.bottom+8,behavior:reduceMotion?'auto':'smooth'});more(b)},650);
+ if(card)new MutationObserver(ms=>{const b=card.querySelector('.card-body');if(b){hook(b);more(b)}
+   for(const m of ms)if(m.target===b)for(const n of m.addedNodes)if(n.nodeType===1&&/-strip\b/.test(n.className))reveal(n)}).observe(card,{childList:true,subtree:true})}
+// in-game HUD on a 375 px phone: with a 3-digit level and a 4-5 digit score the pause button was pushed off the screen (the
+// middle plaque had a fixed half of the row on each side). The plaque now takes what is left and shrinks its text to fit;
+// if even that is too small the word 'Level' is dropped and only the number stays.
+{const fitPlaque=()=>{const p=document.querySelector('.level-plaque');if(!p||!p.offsetParent)return;const w=p.querySelector('[data-i18n]');
+   p.style.fontSize='';if(w)w.style.display='';if(p.scrollWidth<=p.clientWidth+1)return;
+   let fs=parseFloat(getComputedStyle(p).fontSize);const min=fs*.72;while(p.scrollWidth>p.clientWidth+1&&fs>min){fs-=.5;p.style.fontSize=fs+'px'}
+   if(p.scrollWidth>p.clientWidth+1&&w&&w.textContent){w.style.display='none';p.style.fontSize=''}};
+ let key='';const _u=updateHud;updateHud=function(){const r=_u.apply(this,arguments);try{const p=document.querySelector('.level-plaque'),s=document.getElementById('score'),k=(p?p.textContent:'')+'|'+(s?s.textContent.length:0)+'|'+innerWidth;
+   if(k!==key){key=k;fitPlaque()}}catch(e){}return r};
+ addEventListener('resize',()=>{key=''})}
+// hearts in the HUD: a level that starts with fewer than 3 hearts (duo = 1, ballerina / astronaut / king = 2) showed black
+// 'lost' hearts from the very first second. The row now has as many hearts as the level started with (more if a booster adds one).
+let HUDH=0;
+{const _sl=startLevel;startLevel=function(){HUDH=0;const r=_sl.apply(this,arguments);queueMicrotask(()=>{HUDH=Math.max(1,hearts);try{updateHud()}catch(e){}});return r}}
+{const _u=updateHud;updateHud=function(){const r=_u.apply(this,arguments);try{if(HUDH){if(hearts>HUDH)HUDH=hearts;const n=Math.max(hearts,HUDH),el=document.getElementById('hearts');
+   if(el&&el.children.length!==n)el.innerHTML=Array.from({length:n},(_,i)=>heartSvg(i<hearts)).join('')}}catch(e){}return r}}
+// the Language buttons reload the page: in the Pause menu that threw the running level away without a word. Language is
+// changed from the home screen's Settings only.
+{const _sr=settingsRows;settingsRows=function(card){const r=_sr.apply(this,arguments);try{if(state==='paused')card.querySelectorAll('.opt-row').forEach(rw=>{const l=rw.firstElementChild;if(l&&l.textContent===t('language')&&rw.querySelector('.toggle'))rw.remove()})}catch(e){}return r}}
+// a trophy hat that makes you immune to this stage's mechanic still showed that mechanic's intro card (and marked it as
+// seen, so without the hat the real intro never came). The card is skipped and stays unseen.
+{const _mi=maybeIntro;maybeIntro=function(){let p=null;try{p=hzPrimary()}catch(e){}
+  if(!p||typeof hatImm!=='function'||!MECH[p]||!hatImm(p)||seenKey(p))return _mi.apply(this,arguments);
+  progress.seen[p]=1;let r;try{r=_mi.apply(this,arguments)}finally{delete progress.seen[p];saveProgress()}return r}}

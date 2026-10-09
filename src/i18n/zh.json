@@ -322,8 +322,8 @@
   "hint_rare": "抓住绳上的稀有Sharliz",
   "hint_boss": "打败Boss",
   "hint_world": "通关这个世界",
-  "hint_buddy": "装扮 → 伙伴",
-  "hint_hat": "装扮 → 帽子",
+  "hint_buddy": "风格 → 伙伴，或孵化蛋",
+  "hint_hat": "风格 → 帽子",
   "hint_special": "敬请期待",
   "newSticker": "新贴纸！",
   "dShort": "{d}天{h}时",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "金币气球出现频率+{n}%",
   "hsDesign": "款式",
   "hsNewLook": "新款式：{x}！",
-  "hsDesLock": "升级到★{n}即可解锁这个设计"
+  "hsDesLock": "升级到★{n}即可解锁这个设计",
+  "sbFillAll": "全部集齐可得{n}",
+  "stNext1": "下一段：再赢1关"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

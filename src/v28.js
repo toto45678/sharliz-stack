@@ -9,7 +9,7 @@ Object.assign(I18N.en,{
   perk:'Perk',pk_coins10:'+10% coins every level',pk_sticky:'Landing zones 12% wider',pk_ghost:'Saves your first lost heart each level',pk_bee:'+2 coins for every perfect',pk_fever:'Fever lasts 50% longer',pk_combo:'Combo coins ×2',pk_aim:'Aim line always on',pk_coins25:'+25% coins every level',pk_heart:'Start every level with 4 hearts',
   buddyBonus:'Buddy bonus',ghostSave:'Ghost saved you!',premium:'Premium',
   albumBook:'Sticker book',stkCount:'{a}/{b}',pg_rare:'Rare Sharliz',pg_boss:'Boss trophies',pg_world:'Worlds',pg_buddy:'Buddies',pg_hat:'Hats',pg_special:'Specials',
-  hint_rare:'Spot it on the rope',hint_boss:'Beat the boss',hint_world:'Finish the world',hint_buddy:'Wardrobe → Buddy',hint_hat:'Wardrobe → Hats',hint_special:'Coming soon',newSticker:'New sticker!',
+  hint_rare:'Spot it on the rope',hint_boss:'Beat the boss',hint_world:'Finish the world',hint_buddy:'Style → Buddy, or hatch an egg',hint_hat:'Style → Hat',hint_special:'Coming soon',newSticker:'New sticker!',
   dShort:'{d}d {h}h',hShort:'{h}h {m}m'});
 Object.assign(I18N.he,{
   daily:'יומיות',weekly:'שבועיות',resetsIn:'חדשות בעוד {t}',weeklyChest:'תיבת־על שבועית',weeklyChestSub:'מסיימים את כל הארבע ופותחים',d_stars3:'לנצח ב־{n} שלבים עם 3 כוכבים',
@@ -17,7 +17,7 @@ Object.assign(I18N.he,{
   perk:'יכולת',pk_coins10:'+10% מטבעות בכל שלב',pk_sticky:'אזורי נחיתה רחבים ב־12%',pk_ghost:'מציל את הלב הראשון שנופל בכל שלב',pk_bee:'+2 מטבעות על כל מושלם',pk_fever:'הפיבר נמשך 50% יותר',pk_combo:'מטבעות קומבו ×2',pk_aim:'קו כיוון תמיד דלוק',pk_coins25:'+25% מטבעות בכל שלב',pk_heart:'כל שלב מתחיל עם 4 לבבות',
   buddyBonus:'בונוס חבר',ghostSave:'הרוח הצילה אותך!',premium:'פרימיום',
   albumBook:'אלבום המדבקות',stkCount:'{a}/{b}',pg_rare:'שארליזים נדירים',pg_boss:'גביעי בוסים',pg_world:'עולמות',pg_buddy:'חברים',pg_hat:'כובעים',pg_special:'מיוחדים',
-  hint_rare:'לגלות על החבל',hint_boss:'לנצח את הבוס',hint_world:'לסיים את העולם',hint_buddy:'ארון ← חבר',hint_hat:'ארון ← כובעים',hint_special:'בקרוב',newSticker:'מדבקה חדשה!',
+  hint_rare:'לגלות על החבל',hint_boss:'לנצח את הבוס',hint_world:'לסיים את העולם',hint_buddy:'עיצוב ← חבר, או לבקוע ביצה',hint_hat:'עיצוב ← כובע',hint_special:'בקרוב',newSticker:'מדבקה חדשה!',
   dShort:'{d} ימ׳ {h} שע׳',hShort:'{h} שע׳ {m} דק׳'});
 
 /* ---------- store: test mode now, real billing later ----------

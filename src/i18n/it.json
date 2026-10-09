@@ -322,8 +322,8 @@
   "hint_rare": "Acchiappa uno Sharliz raro sulla corda",
   "hint_boss": "Batti il boss",
   "hint_world": "Completa il mondo",
-  "hint_buddy": "Guardaroba → Amichetto",
-  "hint_hat": "Guardaroba → Cappelli",
+  "hint_buddy": "Stile → Amichetto, o schiudi un uovo",
+  "hint_hat": "Stile → Cappello",
   "hint_special": "In arrivo",
   "newSticker": "Nuova figurina!",
   "dShort": "{d}g {h}h",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "Il palloncino moneta arriva il {n}% più spesso",
   "hsDesign": "Stile",
   "hsNewLook": "Nuovo look: {x}!",
-  "hsDesLock": "Migliora a ★{n} per aprire questo design"
+  "hsDesLock": "Migliora a ★{n} per aprire questo design",
+  "sbFillAll": "Raccoglile tutte e vinci {n}",
+  "stNext1": "Prossima parte: vinci ancora 1 livello"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

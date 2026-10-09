@@ -322,8 +322,8 @@
   "hint_rare": "Pegue um Sharliz raro na corda",
   "hint_boss": "Derrote o chefão",
   "hint_world": "Conclua o mundo",
-  "hint_buddy": "Personalizar → Mascote",
-  "hint_hat": "Personalizar → Chapéus",
+  "hint_buddy": "Estilo → Mascote, ou choque um ovo",
+  "hint_hat": "Estilo → Chapéu",
   "hint_special": "Em breve",
   "newSticker": "Nova figurinha!",
   "dShort": "{d}d {h}h",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "O balão de moedas aparece {n}% mais vezes",
   "hsDesign": "Design",
   "hsNewLook": "Novo visual: {x}!",
-  "hsDesLock": "Melhore para ★{n} para abrir este design"
+  "hsDesLock": "Melhore para ★{n} para abrir este design",
+  "sbFillAll": "Junte todas e ganhe {n}",
+  "stNext1": "Próxima parte: vença mais 1 fase"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

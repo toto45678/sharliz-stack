@@ -322,8 +322,8 @@
   "hint_rare": "Atrapa un Sharliz raro en la cuerda",
   "hint_boss": "Vence al jefe",
   "hint_world": "Termina el mundo",
-  "hint_buddy": "Armario → Mascota",
-  "hint_hat": "Armario → Sombreros",
+  "hint_buddy": "Estilo → Mascota, o abre un huevo",
+  "hint_hat": "Estilo → Sombrero",
   "hint_special": "Muy pronto",
   "newSticker": "¡Nuevo sticker!",
   "dShort": "{d}d {h}h",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "El globo de monedas sale un {n}% más seguido",
   "hsDesign": "Diseño",
   "hsNewLook": "¡Nuevo aspecto: {x}!",
-  "hsDesLock": "Mejora a ★{n} para abrir este diseño"
+  "hsDesLock": "Mejora a ★{n} para abrir este diseño",
+  "sbFillAll": "Consíguelas todas y gana {n}",
+  "stNext1": "Siguiente parte: gana 1 nivel más"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

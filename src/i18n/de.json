@@ -322,8 +322,8 @@
   "hint_rare": "Fang einen seltenen Sharliz am Seil",
   "hint_boss": "Besiege den Boss",
   "hint_world": "Schaffe die Welt",
-  "hint_buddy": "Kleiderschrank → Kumpel",
-  "hint_hat": "Kleiderschrank → Hüte",
+  "hint_buddy": "Style → Kumpel, oder brüte ein Ei aus",
+  "hint_hat": "Style → Hut",
   "hint_special": "Bald verfügbar",
   "newSticker": "Neuer Sticker!",
   "dShort": "{d}T {h}h",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "Der Münzballon kommt {n}% öfter",
   "hsDesign": "Design",
   "hsNewLook": "Neuer Look: {x}!",
-  "hsDesLock": "Verbessere auf ★{n}, um dieses Design zu öffnen"
+  "hsDesLock": "Verbessere auf ★{n}, um dieses Design zu öffnen",
+  "sbFillAll": "Sammle alle und gewinne {n}",
+  "stNext1": "Nächster Teil: Gewinne noch 1 Level"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

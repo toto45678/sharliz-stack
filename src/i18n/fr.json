@@ -322,8 +322,8 @@
   "hint_rare": "Attrape un Sharliz rare sur la corde",
   "hint_boss": "Bats le boss",
   "hint_world": "Termine le monde",
-  "hint_buddy": "Garde-robe → Compagnon",
-  "hint_hat": "Garde-robe → Chapeaux",
+  "hint_buddy": "Style → Compagnon, ou fais éclore un œuf",
+  "hint_hat": "Style → Chapeau",
   "hint_special": "Bientôt",
   "newSticker": "Nouveau sticker !",
   "dShort": "{d} j {h} h",
@@ -1001,7 +1001,9 @@
   "hsp_balloons": "Le ballon à pièces vient {n} % plus souvent",
   "hsDesign": "Style",
   "hsNewLook": "Nouveau look : {x} !",
-  "hsDesLock": "Améliore à ★{n} pour ouvrir ce design"
+  "hsDesLock": "Améliore à ★{n} pour ouvrir ce design",
+  "sbFillAll": "Récupère-les toutes pour gagner {n}",
+  "stNext1": "Prochaine partie : gagne encore 1 niveau"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
