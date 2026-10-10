@@ -15,18 +15,22 @@
         const C=window.CdvPurchase;if(!C||!C.store){res(false);return}
         const {store,ProductType,Platform}=C;
         platform=window.Capacitor.getPlatform()==='ios'?Platform.APPLE_APPSTORE:Platform.GOOGLE_PLAY;
-        const skus=Object.keys(IAP.products);
+        const later=Object.keys(window.PAID_LATER||{}),skus=Object.keys(IAP.products).concat(later);
         store.register(skus.map(id=>({id,platform,type:CONSUMABLE(id)?ProductType.CONSUMABLE:ProductType.NON_CONSUMABLE})));
         store.when()
           .approved(tx=>{
-            for(const p of tx.products){const sku=p.id;
+            for(const p of tx.products){const sku=p.id;if(window.PAID_LATER&&PAID_LATER[sku])window.paidLaterOn(sku);
               if(pending[sku]){const r=pending[sku];delete pending[sku];r(true)}          // IAP.buy grants it
               else if(CONSUMABLE(sku)||!owned(sku)){try{IAP.grant(sku);popupToast(t('thanks'))}catch(e){}} // restore / delayed approval
             }
             tx.finish()})
           .productUpdated(p=>{const P=IAP.products[p.id];if(P&&p.pricing&&p.pricing.price)P.price=p.pricing.price});
         store.error(e=>{for(const k in pending){pending[k](false);delete pending[k]}});
-        store.initialize([platform]).then(()=>res(true)).catch(()=>res(false))};
+        store.initialize([platform]).then(()=>{
+          // products added after 1.0 (PAID_LATER, v61) are sold for money only once the store knows them
+          for(const sku of later){const p=store.get(sku,platform);if(p&&p.getOffer()&&window.paidLaterOn){const P=window.paidLaterOn(sku);
+            if(P&&p.pricing&&p.pricing.price)P.price=p.pricing.price}}
+          res(true)}).catch(()=>res(false))};
       if(window.CdvPurchase)go();else document.addEventListener('deviceready',go,{once:true});
       setTimeout(()=>res(false),15000)});
     return ready}
