@@ -64,13 +64,18 @@ def trim(im,maxw):
     if im.width>maxw:im=im.resize((maxw,round(im.height*maxw/im.width)),Image.LANCZOS)
     return im
 
-def core_w(im):
-    """width of an item's footprint: its bottom 30%, counting only the parts that make up at least 5% of it (sparkles and stars
-    around a fancy design don't count, nor do a crown or ice spikes higher up: the stool / legs / base stay the same size)"""
+# how a design is matched to design 1: 'foot' = the width of its bottom 30% (stool, legs, base: most items),
+# 'h' = its height (tall posts whose base changes a lot between designs), 'w' = its whole width (a trampoline seen from above)
+MATCH={'balloons':'h','mailbox':'h','birdhouse':'h','vane':'h','trampoline':'w'}
+def core(im,how='foot'):
+    """an item's size, counting only the parts that make up at least 5% of it (sparkles and stars around a fancy design
+    don't count; with 'foot' neither do a crown or ice spikes higher up: the stool / legs / base stay the same size)"""
     a=np.asarray(im.getchannel('A'))>100;lab,n=nd.label(a,structure=np.ones((3,3)))
-    if not n:return im.width
+    if not n:return im.height if how=='h' else im.width
     areas=nd.sum(a,lab,range(1,n+1));m=np.isin(lab,[k+1 for k in range(n) if areas[k]>=a.sum()*.05])
-    rows=np.where(m.any(1))[0];y0=rows[-1]-int((rows[-1]-rows[0])*.3);cols=np.where(m[y0:].any(0))[0];return cols[-1]-cols[0]+1
+    rows=np.where(m.any(1))[0]
+    if how=='h':return rows[-1]-rows[0]+1
+    y0=rows[-1]-int((rows[-1]-rows[0])*.3) if how=='foot' else rows[0];cols=np.where(m[y0:].any(0))[0];return cols[-1]-cols[0]+1
 
 def imp(src,all_):
     n=0
@@ -87,8 +92,8 @@ def imp(src,all_):
         im=trim(Image.open(f),520);base=re.match(r'f_(.+)_d\d+\.png$',os.path.basename(f));k=''
         if base and os.path.exists(os.path.join(ART,f'hf_{base[1]}.webp')):
             # a design is drawn at its item's scale: its body as wide as design 1's body (the game draws it im.width/design1.width wide)
-            b=Image.open(os.path.join(ART,f'hf_{base[1]}.webp')).convert('RGBA');im=trim(Image.open(f),4000);sc=core_w(b)/core_w(im)
-            im=im.resize((max(1,round(im.width*sc)),max(1,round(im.height*sc))),Image.LANCZOS);k=f'  x{sc:.2f} (design 1 is {b.width} px)'
+            b=Image.open(os.path.join(ART,f'hf_{base[1]}.webp')).convert('RGBA');im=trim(Image.open(f),4000);how=MATCH.get(base[1],'foot');sc=core(b,how)/core(im,how)
+            im=im.resize((max(1,round(im.width*sc)),max(1,round(im.height*sc))),Image.LANCZOS);k=f'  x{sc:.2f} by {how} (design 1 is {b.width} px)'
         im.save(o,'WEBP',quality=86,method=6);n+=1;print(os.path.basename(o),im.size,os.path.getsize(o)//1024,'KB'+k)
     print(n,'converted')
 
