@@ -13,11 +13,14 @@ const NEW_BUD_FX={penguin:{wind:.75},firefly:{light:1.4},kitten:{fall:.8},octopu
 for(const id in NEW_BUD_FX){PERKS[id]='x_'+id;PET_FX['x_'+id]=NEW_BUD_FX[id]}
 Object.assign(IAP.products,{buddy_robodog:{price:'₪9.90',pet:'robodog'},buddy_whale:{price:'₪14.90',pet:'whale'},buddy_griffin:{price:'₪19.90',pet:'griffin'}});
 Object.assign(COIN_ALT.pet,{robodog:4000,whale:5000,griffin:6000});
-// store build: an Apple/Google reviewer who taps Buy on a product that isn't in the store yet rejects the app. Until
-// buddy_robodog/whale/griffin exist in App Store Connect + Play (set NEW_PAID_LIVE=1 then), they are coin-only there.
-const NEW_PAID_LIVE=0;
-if(!NEW_PAID_LIVE&&window.SharlizPay&&SharlizPay.native)for(const id of ['robodog','whale','griffin']){const W=WPET[id];
-  delete IAP.products[W.real];delete W.real;W.p=COIN_ALT.pet[id];delete COIN_ALT.pet[id]}
+// store build: an Apple/Google reviewer who taps Buy on a product that isn't in the store yet rejects the app. So in the
+// store app buddy_robodog/whale/griffin start coin-only; native.js still asks the store for them (PAID_LATER) and turns
+// each one back into a real-money buddy (paidLaterOn) once the store returns it (sandbox, App Review, or approved).
+window.PAID_LATER={};
+if(window.SharlizPay&&SharlizPay.native)for(const id of ['robodog','whale','griffin']){const W=WPET[id],sku=W.real;
+  PAID_LATER[sku]={id,P:IAP.products[sku],c:COIN_ALT.pet[id]};delete IAP.products[sku];delete W.real;W.p=COIN_ALT.pet[id];delete COIN_ALT.pet[id]}
+window.paidLaterOn=sku=>{const L=PAID_LATER[sku];if(!L)return null;delete PAID_LATER[sku];const W=WPET[L.id];
+  IAP.products[sku]=L.P;W.real=sku;W.p=0;COIN_ALT.pet[L.id]=L.c;return L.P};
 for(const id of ['firefly','cloudy','phoenix','whale','griffin'])PETFLY[id]=1;
 // eggs: new buddies join the pools; a golden egg gives the baby dino or the baby phoenix first
 EGG.c.pool.push('cloudy');EGG.r.pool.push('monkey','bunny');EGG.g.pool.push('phoenix');
