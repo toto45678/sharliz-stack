@@ -34,6 +34,15 @@ def cut(sheet,ids,out):
         objs=[(s,(lab[s]==k+1)&fg[s]) for k,s in enumerate(nd.find_objects(lab))]
         objs=[o for o in objs if o[1].sum()>fg.sum()*.004]
         if len(objs)>=len(ids):break
+    # a stray bit (a sparkle drawn far from its item) joins the nearest item
+    def box(o):return o[0][0].start,o[0][0].stop,o[0][1].start,o[0][1].stop
+    while len(objs)>len(ids):
+        k=min(range(len(objs)),key=lambda i:objs[i][1].sum());y0,y1,x0,x1=box(objs[k]);rest=[o for i,o in enumerate(objs) if i!=k]
+        gap=lambda o:max(0,box(o)[0]-y1,y0-box(o)[1])+max(0,box(o)[2]-x1,x0-box(o)[3])
+        t=min(rest,key=gap);Y0,Y1,X0,X1=box(t);s=(slice(min(y0,Y0),max(y1,Y1)),slice(min(x0,X0),max(x1,X1)))
+        m=np.zeros((s[0].stop-s[0].start,s[1].stop-s[1].start),bool)
+        for q in (objs[k],t):a,b,c,d=box(q);m[a-s[0].start:b-s[0].start,c-s[1].start:d-s[1].start]|=q[1]
+        print(f'joined a stray bit ({x1-x0}x{y1-y0} px) to the item at x={X0}');objs=[o for o in rest if o is not t]+[(s,m)]
     if len(objs)!=len(ids):print(f'WARNING: found {len(objs)} items on the sheet, expected {len(ids)}')
     # reading order: rows, then left to right. Items in a row stand on one line, so rows are found by their bottom edges
     # (a tall item like a balloon post has its middle between the rows, its bottom is still on its row's line)
@@ -55,13 +64,18 @@ def trim(im,maxw):
     if im.width>maxw:im=im.resize((maxw,round(im.height*maxw/im.width)),Image.LANCZOS)
     return im
 
-def core_w(im):
-    """width of an item's footprint: its bottom 30%, counting only the parts that make up at least 5% of it (sparkles and stars
-    around a fancy design don't count, nor do a crown or ice spikes higher up: the stool / legs / base stay the same size)"""
+# how a design is matched to design 1: 'foot' = the width of its bottom 30% (stool, legs, base: most items),
+# 'h' = its height (tall posts whose base changes a lot between designs), 'w' = its whole width (a trampoline seen from above)
+MATCH={'balloons':'h','mailbox':'h','birdhouse':'h','vane':'h','trampoline':'w'}
+def core(im,how='foot'):
+    """an item's size, counting only the parts that make up at least 5% of it (sparkles and stars around a fancy design
+    don't count; with 'foot' neither do a crown or ice spikes higher up: the stool / legs / base stay the same size)"""
     a=np.asarray(im.getchannel('A'))>100;lab,n=nd.label(a,structure=np.ones((3,3)))
-    if not n:return im.width
+    if not n:return im.height if how=='h' else im.width
     areas=nd.sum(a,lab,range(1,n+1));m=np.isin(lab,[k+1 for k in range(n) if areas[k]>=a.sum()*.05])
-    rows=np.where(m.any(1))[0];y0=rows[-1]-int((rows[-1]-rows[0])*.3);cols=np.where(m[y0:].any(0))[0];return cols[-1]-cols[0]+1
+    rows=np.where(m.any(1))[0]
+    if how=='h':return rows[-1]-rows[0]+1
+    y0=rows[-1]-int((rows[-1]-rows[0])*.3) if how=='foot' else rows[0];cols=np.where(m[y0:].any(0))[0];return cols[-1]-cols[0]+1
 
 def imp(src,all_):
     n=0
@@ -78,8 +92,8 @@ def imp(src,all_):
         im=trim(Image.open(f),520);base=re.match(r'f_(.+)_d\d+\.png$',os.path.basename(f));k=''
         if base and os.path.exists(os.path.join(ART,f'hf_{base[1]}.webp')):
             # a design is drawn at its item's scale: its body as wide as design 1's body (the game draws it im.width/design1.width wide)
-            b=Image.open(os.path.join(ART,f'hf_{base[1]}.webp')).convert('RGBA');im=trim(Image.open(f),4000);sc=core_w(b)/core_w(im)
-            im=im.resize((max(1,round(im.width*sc)),max(1,round(im.height*sc))),Image.LANCZOS);k=f'  x{sc:.2f} (design 1 is {b.width} px)'
+            b=Image.open(os.path.join(ART,f'hf_{base[1]}.webp')).convert('RGBA');im=trim(Image.open(f),4000);how=MATCH.get(base[1],'foot');sc=core(b,how)/core(im,how)
+            im=im.resize((max(1,round(im.width*sc)),max(1,round(im.height*sc))),Image.LANCZOS);k=f'  x{sc:.2f} by {how} (design 1 is {b.width} px)'
         im.save(o,'WEBP',quality=86,method=6);n+=1;print(os.path.basename(o),im.size,os.path.getsize(o)//1024,'KB'+k)
     print(n,'converted')
 
