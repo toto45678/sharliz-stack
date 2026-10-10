@@ -34,6 +34,15 @@ def cut(sheet,ids,out):
         objs=[(s,(lab[s]==k+1)&fg[s]) for k,s in enumerate(nd.find_objects(lab))]
         objs=[o for o in objs if o[1].sum()>fg.sum()*.004]
         if len(objs)>=len(ids):break
+    # a stray bit (a sparkle drawn far from its item) joins the nearest item
+    def box(o):return o[0][0].start,o[0][0].stop,o[0][1].start,o[0][1].stop
+    while len(objs)>len(ids):
+        k=min(range(len(objs)),key=lambda i:objs[i][1].sum());y0,y1,x0,x1=box(objs[k]);rest=[o for i,o in enumerate(objs) if i!=k]
+        gap=lambda o:max(0,box(o)[0]-y1,y0-box(o)[1])+max(0,box(o)[2]-x1,x0-box(o)[3])
+        t=min(rest,key=gap);Y0,Y1,X0,X1=box(t);s=(slice(min(y0,Y0),max(y1,Y1)),slice(min(x0,X0),max(x1,X1)))
+        m=np.zeros((s[0].stop-s[0].start,s[1].stop-s[1].start),bool)
+        for q in (objs[k],t):a,b,c,d=box(q);m[a-s[0].start:b-s[0].start,c-s[1].start:d-s[1].start]|=q[1]
+        print(f'joined a stray bit ({x1-x0}x{y1-y0} px) to the item at x={X0}');objs=[o for o in rest if o is not t]+[(s,m)]
     if len(objs)!=len(ids):print(f'WARNING: found {len(objs)} items on the sheet, expected {len(ids)}')
     # reading order: rows, then left to right. Items in a row stand on one line, so rows are found by their bottom edges
     # (a tall item like a balloon post has its middle between the rows, its bottom is still on its row's line)
