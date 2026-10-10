@@ -162,3 +162,5 @@
 @media (prefers-reduced-motion:reduce){.hs-pop .rays,.hs-pop .hs-house{animation:none}}
 #houseScr .ps-title{min-width:0}
 #houseScr .ps-title b{white-space:nowrap;max-width:100%}
+/* nightly Oct 10: a side card's buttons only slide it to the middle (its edge at the screen side bought or upgraded the item) */
+.hs-card:not(.focus) .hs-ca{pointer-events:none}
