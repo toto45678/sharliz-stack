@@ -15,6 +15,7 @@
 <link rel="canonical" href="https://sharliztower.com/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Sharliz Tower","url":"https://sharliztower.com/","image":"https://sharliztower.com/img/og.jpg","description":"A colorful tower-stacking game: 300 levels, 14 worlds, 30 epic bosses, buddies to hatch, a giant sticker album and your own Sharliz House.","genre":["Casual","Family","Arcade"],"gamePlatform":["iOS","Android"],"operatingSystem":"iOS, Android","applicationCategory":"Game","playMode":["SinglePlayer","MultiPlayer"],"inLanguage":["en","he","es","pt","fr","de","it","ru","tr","ar","ja","ko","zh","id"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"sameAs":["https://www.instagram.com/sharliztower/","https://www.tiktok.com/@user7229470580885"]}</script>
 <meta name="theme-color" content="#2a0f5c">
+<link rel="alternate" type="application/rss+xml" title="Sharliz Tower news" href="feed.xml">
 <link rel="icon" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preload" as="image" href="img/lobby.webp">
@@ -93,6 +94,9 @@ a{color:inherit}
 .thanks{display:none;text-align:center;padding:8px 0}
 .thanks .title{font-size:26px;color:var(--yellow);margin:6px 0}
 .thanks img{width:72px;margin:0 auto;animation:pop .6s cubic-bezier(.2,1.6,.4,1)}
+.share{margin-top:12px}.share b{display:block;font-size:15px;color:#fff;margin-bottom:8px}
+.share-btns{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.share-btns>*{font:800 15px Nunito,system-ui,sans-serif;background:rgba(255,255,255,.14);color:#fff;border:2px solid rgba(255,255,255,.25);border-radius:999px;padding:8px 14px;text-decoration:none;cursor:pointer}
 .done .form-in{display:none}.done .thanks{display:block}
 
 /* phone + demo */
@@ -260,6 +264,7 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
 .diary ul{list-style:none;margin:0;padding:0}
 .diary li{display:flex;gap:14px;padding:8px 0;border-top:1px solid rgba(255,255,255,.1);font-size:15.5px;color:var(--soft)}
 .diary li:first-child{border-top:0}
+.diary h3 .all{float:right;font-size:15px;color:#fff;text-decoration:none;margin-top:6px}
 .diary time{flex:none;width:58px;font-family:"Titan One";color:#fff}
 .extras{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px}
 
@@ -358,7 +363,7 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
           <p class="err" role="alert"></p>
           <p class="fine">No spam, ever. Unsubscribe in one click. <a href="privacy.html">Privacy</a></p>
         </div>
-        <div class="thanks" role="status"><img src="img/ic_star.webp" alt=""><div class="title">You're on the list!</div><p class="fine">We'll email you the moment Sharliz Tower launches. Sneak peeks: <a href="https://www.instagram.com/sharliztower/" target="_blank" rel="noopener">@sharliztower</a></p></div>
+        <div class="thanks" role="status"><img src="img/ic_star.webp" alt=""><div class="title">You're on the list!</div><p class="fine">We'll email you the moment Sharliz Tower launches. Sneak peeks: <a href="https://www.instagram.com/sharliztower/" target="_blank" rel="noopener">@sharliztower</a></p><div class="share"><b>Tell a friend who loves games</b><div class="share-btns"><button type="button" class="sh-native">📤 Share</button><a class="sh-wa" href="https://wa.me/?text=Sharliz%20Tower%20is%20coming%20soon!%20Stack%20the%20Sharliz%20and%20beat%2030%20bosses%3A%20https%3A%2F%2Fsharliztower.com" target="_blank" rel="noopener">💬 WhatsApp</a><button type="button" class="sh-copy">🔗 Copy link</button></div></div></div>
       </form>
       <div class="stores"><a class="store" href="#signup"><span class="si" aria-hidden="true">🍎</span><span><small>Coming soon on the</small>App Store</span></a><a class="store" href="#signup"><span class="si" aria-hidden="true">🤖</span><span><small>Coming soon on</small>Google Play</span></a></div>
       <div class="chips"><span class="pill">⭐ Free to play</span><span class="pill">🌍 14 languages</span><span class="pill">✈️ Plays offline</span></div>
@@ -523,8 +528,9 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
       </div>
       <div class="extras"><span class="pill">♾️ Sky Tower endless mode</span><span class="pill">📅 Daily Tower</span><span class="pill">👫 2 players, 1 phone</span><span class="pill">🏆 Trophy room</span><span class="pill">🌍 14 languages</span></div>
       <div class="diary">
-        <h3>Dev diary</h3>
+        <h3>Dev diary <a class="all" href="news.html">All news →</a></h3>
         <ul>
+          <li><time datetime="2026-10-11">Oct 11</time> Meet the cast: Bobby, Lulu, Mimi, Timmy, Nunu and Rocky got their names.</li>
           <li><time datetime="2026-10-10">Oct 10</time> The Sharliz House is finished: 225 furniture designs to choose from.</li>
           <li><time datetime="2026-10-08">Oct 8</time> The sticker album grew to over 400 stickers, with a super-rare gold chapter.</li>
           <li><time datetime="2026-10-08">Oct 8</time> Two new arcade games: Sling Shot and Who's in the Shadow?</li>
@@ -564,7 +570,7 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
 
 <footer>
   <div class="follow"><b>Follow the Sharliz</b><a class="soc" href="https://www.instagram.com/sharliztower/" target="_blank" rel="noopener" aria-label="Sharliz Tower on Instagram"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8C2.4 3.9 4 2.4 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg><span>Instagram</span></a><a class="soc tt" href="https://www.tiktok.com/@user7229470580885" target="_blank" rel="noopener" aria-label="Sharliz Tower on TikTok"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M16.6 5.8A4.3 4.3 0 0 1 15.5 3h-3.1v12.4a2.6 2.6 0 1 1-1.8-2.5V9.7a5.7 5.7 0 1 0 4.9 5.7V9a7.3 7.3 0 0 0 4.3 1.4V7.3a4.3 4.3 0 0 1-3.2-1.5z"/></svg><span>TikTok</span></a></div>
-  <nav><a href="#more">Features</a><a href="#bosses">Bosses</a><a href="#parents">For parents</a><a href="press.html">Press kit</a><a href="privacy.html">Privacy</a><a href="mailto:hello@sharliztower.com">Support &amp; contact</a></nav>
+  <nav><a href="#more">Features</a><a href="news.html">News</a><a href="#bosses">Bosses</a><a href="#parents">For parents</a><a href="press.html">Press kit</a><a href="privacy.html">Privacy</a><a href="mailto:hello@sharliztower.com">Support &amp; contact</a></nav>
   © 2026 Sharliz Tower
 </footer>
 
@@ -593,6 +599,12 @@ document.getElementById('join2').appendChild(form2);
   sticky.classList.remove('on');
   confetti();
 }));
+// share after signup: native share sheet when the phone has one, else copy the link
+const SHARE = {title:'Sharliz Tower', text:'Sharliz Tower is coming soon! Stack the Sharliz and beat 30 bosses:', url:'https://sharliztower.com'};
+document.querySelectorAll('.sh-native').forEach(b => { if (!navigator.share) b.remove(); else b.onclick = () => navigator.share(SHARE).catch(() => {}); });
+document.querySelectorAll('.sh-copy').forEach(b => b.onclick = async () => {
+  try { await navigator.clipboard.writeText(SHARE.url); b.textContent = '✅ Copied!'; } catch (_) { b.textContent = SHARE.url; }
+});
 
 // ---------- top bar + sticky CTA ----------
 const topBar = document.getElementById('top'), sticky = document.getElementById('sticky');
