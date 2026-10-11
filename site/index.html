@@ -15,7 +15,7 @@
 <link rel="canonical" href="https://sharliztower.com/">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"VideoGame","name":"Sharliz Tower","url":"https://sharliztower.com/","image":"https://sharliztower.com/img/og.jpg","description":"A colorful tower-stacking game: 300 levels, 14 worlds, 30 epic bosses, buddies to hatch, a giant sticker album and your own Sharliz House.","genre":["Casual","Family","Arcade"],"gamePlatform":["iOS","Android"],"operatingSystem":"iOS, Android","applicationCategory":"Game","playMode":["SinglePlayer","MultiPlayer"],"inLanguage":["en","he","es","pt","fr","de","it","ru","tr","ar","ja","ko","zh","id"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"sameAs":["https://www.instagram.com/sharliztower/","https://www.tiktok.com/@user7229470580885"]}</script>
 <meta name="theme-color" content="#2a0f5c">
-<link rel="icon" href="img/icon.png">
+<link rel="icon" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preload" as="image" href="img/lobby.webp">
 <link rel="preload" as="image" href="img/logo.webp">
@@ -64,7 +64,13 @@ a{color:inherit}
 .tagline{font-family:"Titan One";font-size:clamp(28px,4.2vw,46px);line-height:1.1;margin:4px 0 8px;color:var(--yellow);
   text-shadow:0 4px 0 #b2346f,0 8px 20px rgba(0,0,0,.45);-webkit-text-stroke:1.5px #7a1d55}
 .sub{font-size:19px;margin:0 0 20px;max-width:480px;text-shadow:0 2px 8px rgba(0,0,0,.6)}
-.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.stores{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.stores.center{justify-content:center;margin-top:22px}
+.store{display:inline-flex;align-items:center;gap:10px;min-width:176px;padding:9px 16px 9px 12px;border-radius:14px;background:#0d0820;border:2px solid rgba(255,255,255,.35);color:#fff;text-decoration:none;line-height:1.1;font-family:"Titan One";font-size:19px;transition:transform .15s,border-color .15s}
+.store:hover{transform:translateY(-2px);border-color:#fff}
+.store small{display:block;font-family:Nunito;font-weight:800;font-size:11.5px;letter-spacing:.2px;opacity:.85;margin-bottom:2px}
+.store .si{font-size:26px;line-height:1}
 .pill{background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.28);border-radius:999px;padding:5px 14px;font-size:14px;display:inline-flex;gap:6px;align-items:center}
 
 /* signup card */
@@ -264,7 +270,7 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
   .logo{margin:0 auto;width:min(380px,84%)}
   .sub{margin:0 auto 4px}
   .signup{margin:0 auto;text-align:left}
-  .chips{justify-content:center}
+  .chips,.stores{justify-content:center}
   .hero .phone{width:min(300px,78vw)}
   .play{grid-template-columns:1fr}
   .play h2{text-align:center!important}
@@ -354,7 +360,8 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
         </div>
         <div class="thanks" role="status"><img src="img/ic_star.webp" alt=""><div class="title">You're on the list!</div><p class="fine">We'll email you the moment Sharliz Tower launches. Sneak peeks: <a href="https://www.instagram.com/sharliztower/" target="_blank" rel="noopener">@sharliztower</a></p></div>
       </form>
-      <div class="chips"><span class="pill">🍎 iPhone</span><span class="pill">🤖 Android</span><span class="pill">⭐ Free to play</span><span class="pill">🌍 14 languages</span></div>
+      <div class="stores"><a class="store" href="#signup"><span class="si" aria-hidden="true">🍎</span><span><small>Coming soon on the</small>App Store</span></a><a class="store" href="#signup"><span class="si" aria-hidden="true">🤖</span><span><small>Coming soon on</small>Google Play</span></a></div>
+      <div class="chips"><span class="pill">⭐ Free to play</span><span class="pill">🌍 14 languages</span><span class="pill">✈️ Plays offline</span></div>
     </div>
   </div>
 </div>
@@ -364,7 +371,7 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
     <div class="wrap">
       <h2>Watch the trailer</h2>
       <div class="tv tall" id="tv">
-        <video id="trailer" poster="img/trailer_poster_tall.jpg" preload="none" playsinline controls aria-label="Sharliz Tower trailer"></video>
+        <video id="trailer" poster="img/trailer_poster_tall.webp" preload="none" playsinline controls aria-label="Sharliz Tower trailer"></video>
         <button class="playbig" id="playbig" type="button" aria-label="Play the trailer with sound"><span>▶</span></button>
       </div>
     </div>
@@ -372,7 +379,7 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
 
   <section>
     <div class="wrap play">
-      <div class="phone"><div class="screen"><video id="clip" data-src="img/clip.mp4" poster="img/clip_poster.jpg" preload="none" muted loop playsinline aria-label="Gameplay clip"></video></div></div>
+      <div class="phone"><div class="screen"><video id="clip" data-src="img/clip.mp4" poster="img/clip_poster.webp" preload="none" muted loop playsinline aria-label="Gameplay clip"></video></div></div>
       <div>
         <h2 style="text-align:left">Tap. Drop. Stack!</h2>
         <p style="color:var(--soft);margin:0 0 22px;text-align:inherit">Easy to learn, impossible to put down. One tap is all it takes.</p>
@@ -550,6 +557,7 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
       <h2>Be first to stack!</h2>
       <p class="lead">Coming soon, free on iPhone and Android.</p>
       <div id="join2"></div>
+      <div class="stores center"><a class="store" href="#signup"><span class="si" aria-hidden="true">🍎</span><span><small>Coming soon on the</small>App Store</span></a><a class="store" href="#signup"><span class="si" aria-hidden="true">🤖</span><span><small>Coming soon on</small>Google Play</span></a></div>
     </div>
   </section>
 </main>
@@ -565,8 +573,8 @@ footer nav{display:flex;gap:8px 20px;justify-content:center;flex-wrap:wrap;margi
 
 <script>
 // ---------- signup ----------
-// FORM_URL is filled in once a mailing-list service is chosen; until then submissions are not stored.
-const FORM_URL = '';
+// Waitlist = a Google Form in the owner's Google account (answers land in a Google Sheet).
+const FORM_URL = '', FORM_EMAIL = '', FORM_ADULT = '';
 const form1 = document.getElementById('signup');
 const form2 = form1.cloneNode(true); form2.id = 'signup2';
 form2.querySelector('input[type=email]').id = 'em2'; form2.querySelector('label.sr').htmlFor = 'em2';
@@ -577,7 +585,10 @@ document.getElementById('join2').appendChild(form2);
   if (!f.email.value || !f.email.checkValidity()) { err.textContent = 'Please type a real email address.'; f.email.focus(); return; }
   if (!f.adult.checked) { err.textContent = 'Please ask a grown-up to sign up for you.'; return; }
   err.textContent = '';
-  if (FORM_URL) { try { await fetch(FORM_URL, {method:'POST', body:new FormData(f), mode:'no-cors'}); } catch (_) {} }
+  if (FORM_URL) {
+    const body = new URLSearchParams(); body.set(FORM_EMAIL, f.email.value.trim()); if (FORM_ADULT) body.set(FORM_ADULT, 'yes');
+    try { await fetch(FORM_URL, {method:'POST', body, mode:'no-cors'}); } catch (_) {}
+  }
   [form1, form2].forEach(x => x.classList.add('done'));
   sticky.classList.remove('on');
   confetti();
