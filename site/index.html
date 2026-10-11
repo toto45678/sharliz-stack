@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Sharliz Tower – How high can you stack?</title>
-<meta name="description" content="Sharliz Tower is a colorful tower-stacking game. Drop wobbly Sharliz, build sky-high towers across 300 levels and beat 30 epic bosses. Coming soon to iPhone and Android.">
+<meta name="description" content="Sharliz Tower is a colorful tower-stacking game. Drop wobbly Sharliz, build sky-high towers across 300 levels, beat 30 epic bosses, hatch buddies, fill a giant sticker album and decorate your own house. Coming soon to iPhone and Android.">
 <meta property="og:title" content="Sharliz Tower – How high can you stack?">
 <meta property="og:description" content="Stack wobbly Sharliz, explore 14 worlds and beat 30 epic bosses. Try the mini demo!">
 <meta property="og:image" content="img/og.jpg">
@@ -206,6 +206,42 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
 
 #confetti{position:fixed;inset:0;pointer-events:none;z-index:80}
 
+/* so much more inside */
+.more{background:linear-gradient(180deg,#2a0f5c,#3a1574)}
+.bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.box{position:relative;border-radius:26px;padding:18px 20px 20px;overflow:hidden;border:2px solid rgba(255,255,255,.16);
+  background:linear-gradient(160deg,var(--c1),var(--c2));box-shadow:0 12px 28px rgba(0,0,0,.3);transition:transform .2s}
+.box:hover{transform:translateY(-4px) rotate(-.4deg)}
+.box h3{margin:0;font-size:24px;line-height:1.15;text-shadow:0 2px 0 rgba(0,0,0,.25)}
+.box p{margin:6px 0 0;color:#fff;opacity:.92;font-size:16px;font-weight:700}
+.box .art{height:150px;display:flex;align-items:flex-end;justify-content:center;gap:6px;margin:-4px 0 12px;position:relative}
+.box .art img{max-height:100%;width:auto;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.35))}
+.box .tag{position:absolute;top:14px;right:14px;z-index:3;background:var(--yellow);color:#5a2a00;font:400 13px "Titan One";padding:3px 10px;border-radius:999px;box-shadow:0 3px 0 #b27400}
+.b-house{grid-column:1/-1;display:grid;grid-template-columns:1.25fr 1fr;align-items:center;gap:22px;--c1:#ff8a3d;--c2:#d6336c;padding:22px 26px}
+.b-house .art{height:auto;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:4px 10px;align-items:end}
+.b-house .art img{width:100%;height:auto;animation:bob 3.4s ease-in-out infinite;animation-delay:calc(var(--i)*-.55s)}
+.b-house h3{font-size:clamp(26px,3vw,34px)}
+.b-house p{font-size:17px}
+.b-buddy{--c1:#38c98b;--c2:#127a6a}.b-album{--c1:#ff5fa8;--c2:#8a2bd1}.b-arcade{--c1:#3b8cff;--c2:#4b1bb0}
+.b-tour{--c1:#ffb21f;--c2:#d9480f}.b-event{--c1:#7c3aed;--c2:#1e0b46}.b-bonus{--c1:#33c3f0;--c2:#2563eb}
+.b-buddy .nest{position:relative;width:62%}
+.b-buddy .nest img{width:100%}
+.b-buddy .nest .egg{position:absolute;left:50%;bottom:34%;width:44%;transform:translateX(-50%);animation:wiggle 2.6s ease-in-out infinite}
+.b-buddy .card{width:31%;transform:rotate(7deg);border-radius:10px}
+.box .fan img{width:31%;border-radius:10px;box-shadow:0 6px 14px rgba(0,0,0,.3)}
+.fan img:nth-child(1){transform:rotate(-10deg) translate(14px,6px)}
+.fan img:nth-child(2){transform:translateY(-8px);z-index:2}
+.fan img:nth-child(3){transform:rotate(10deg) translate(-14px,6px)}
+.box .tiles img{width:30%;border-radius:16px;border:3px solid rgba(255,255,255,.7)}
+.tiles img:nth-child(2){transform:translateY(-10px)}
+.b-tour .art img:first-child{height:100%}
+.b-tour .art img:not(:first-child){height:58%}
+.b-event .art img:first-child{height:100%;animation:pulse 2.4s ease-in-out infinite}
+.b-event .art img.bat{height:34%;align-self:flex-start;animation:bob 2s ease-in-out infinite}
+.b-event .art img.bat:last-child{transform:scaleX(-1);animation-delay:-1s}
+.b-bonus .art img{height:100%;animation:bob 3s ease-in-out infinite}
+.extras{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:26px}
+
 /* responsive */
 @media (max-width:900px){
   .hero{padding-top:72px;text-align:center}
@@ -232,6 +268,16 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
   .bz .fig{height:92px}
   .brand span{display:none}
   .swipe{display:block!important}
+  .bento{grid-template-columns:1fr;gap:14px}
+  .box{padding:14px 16px 16px}
+  .box .art{height:128px;margin:0 0 10px}
+  .box h3{font-size:21px}.box p{font-size:15px}
+  .b-house{display:block;padding:16px}
+  .b-house .art{height:auto;margin:0 0 12px;gap:2px 8px}
+  .b-house h3{font-size:25px}
+  .box .fan img{width:auto;height:100%}
+  .tiles{align-items:center}.box .tiles img{width:30%;height:auto}
+  .box .tag{top:10px;right:10px}
 }
 .swipe{display:none;text-align:center;color:var(--soft);font-size:14px;margin-top:6px}
 
@@ -317,7 +363,7 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
           <div class="feat"><img src="img/ic_star.webp" alt=""><h3>Perfect drops</h3><p>Land it just right for combos, sparkles and big points.</p></div>
           <div class="feat"><img src="img/ic_map.webp" alt=""><h3>300 levels</h3><p>14 worlds across 4 seasons: day, night, storm and brand-new lands.</p></div>
           <div class="feat"><img src="img/ic_boss.webp" alt=""><h3>Boss battles</h3><p>Stack fast to knock out a giant boss in every world.</p></div>
-          <div class="feat"><img src="img/ic_hats.webp" alt=""><h3>Silly hats</h3><p>Every hat gives your Sharliz a different power.</p></div>
+          <div class="feat"><img src="img/ic_hats.webp" alt=""><h3>Dress up</h3><p>Hats, outfits and glasses, and each one gives your Sharliz a different power.</p></div>
         </div>
       </div>
     </div>
@@ -416,6 +462,40 @@ footer nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bo
           <li class="bz" style="--i:29"><div class="fig"><img src="img/bosses/crystal.webp" alt="" width="274" height="320" loading="lazy"></div><b>Crystal Golem</b></li>
         </ul>
       </div>
+    </div>
+  </section>
+
+  <section class="more" id="more">
+    <div class="wrap">
+      <h2>So much more inside!</h2>
+      <p class="lead">Stacking is just the start. Here's what else is waiting in Sharliz Tower.</p>
+      <div class="bento">
+        <div class="box b-house"><span class="tag">New</span>
+          <div class="art">
+            <img src="img/more/hs_house_cottage.webp" alt="Cottage house" loading="lazy" style="--i:0">
+            <img src="img/more/hs_house_candy.webp" alt="Candy house" loading="lazy" style="--i:1">
+            <img src="img/more/hs_house_castle.webp" alt="Castle house" loading="lazy" style="--i:2">
+            <img src="img/more/hs_house_ocean.webp" alt="Ocean house" loading="lazy" style="--i:3">
+            <img src="img/more/hs_house_jungle.webp" alt="Jungle house" loading="lazy" style="--i:4">
+            <img src="img/more/hs_house_space.webp" alt="Space house" loading="lazy" style="--i:5">
+          </div>
+          <div><h3>Your own Sharliz House</h3>
+            <p>Decorate 4 rooms with 25 pieces of furniture, and every piece gives your Sharliz a power, like a piggy bank that earns extra coins. Choose from 10 designs for each piece and 6 house styles, from a cozy cottage to a candy house.</p></div>
+        </div>
+        <div class="box b-buddy"><div class="art"><div class="nest"><img src="img/more/ns_nest.webp" alt="" loading="lazy"><img class="egg" src="img/more/egg_g.webp" alt="" loading="lazy"></div><img class="card" src="img/more/stk_p_dragon.webp" alt="" loading="lazy"></div>
+          <h3>Hatch cute buddies</h3><p>Win levels to hatch eggs, collect over 20 buddies and feed them cookies to evolve. Every buddy helps in its own way.</p></div>
+        <div class="box b-album"><div class="art fan"><img src="img/more/stk_st30.webp" alt="" loading="lazy"><img src="img/more/stk_g01.webp" alt="" loading="lazy"><img src="img/more/stk_p_unicorn.webp" alt="" loading="lazy"></div>
+          <h3>A giant sticker album</h3><p>Over 400 stickers to collect: funny faces, a whole picture story and a super-rare gold chapter.</p></div>
+        <div class="box b-arcade"><div class="art tiles"><img src="img/more/arc_sling.webp" alt="" loading="lazy"><img src="img/more/arc_whack.webp" alt="" loading="lazy"><img src="img/more/arc_rain.webp" alt="" loading="lazy"></div>
+          <h3>Arcade mini-games</h3><p>5 quick games: Coin Rain, Boss Memory, Bonk the Monster, Sling Shot and Who's in the Shadow?</p></div>
+        <div class="box b-tour"><div class="art"><img src="img/more/tr_medal_s.webp" alt="" loading="lazy"><img src="img/more/tr_trophy.webp" alt="" loading="lazy"><img src="img/more/tr_medal_b.webp" alt="" loading="lazy"></div>
+          <h3>Weekly tournament</h3><p>A new twist every week: windy, super fast, in the dark or a gold rush. Stack high for a gold, silver or bronze medal.</p></div>
+        <div class="box b-event"><div class="art"><img class="bat" src="img/more/ev_bat.webp" alt="" loading="lazy"><img src="img/more/ev_boss_halloween.webp" alt="" loading="lazy"><img class="bat" src="img/more/ev_bat.webp" alt="" loading="lazy"></div>
+          <h3>Holiday events</h3><p>Special events with their own map, shop and boss. Halloween is first!</p></div>
+        <div class="box b-bonus"><div class="art"><img src="img/more/bn_chest_gold_open.webp" alt="" loading="lazy"></div>
+          <h3>Treasure in the Clouds</h3><p>Beat a boss to unlock a bonus stage: 45 seconds of stacking to reach the gold chest.</p></div>
+      </div>
+      <div class="extras"><span class="pill">♾️ Sky Tower endless mode</span><span class="pill">📅 Daily Tower</span><span class="pill">👫 2 players, 1 phone</span><span class="pill">🏆 Trophy room</span><span class="pill">🌍 14 languages</span></div>
     </div>
   </section>
 
@@ -604,7 +684,7 @@ function confetti() {
     if (n > best) { best = n; try { localStorage.setItem('sharlizDemoBest', best); } catch (_) {} }
     bestEl.textContent = 'Best ' + best;
     document.getElementById('overTitle').textContent = 'You stacked ' + n + '!';
-    document.getElementById('overSub').textContent = beat && n > beat ? 'You beat your friend\'s ' + beat + '! 🎉' : beat ? 'Your friend stacked ' + beat + '. Try again!' : n >= 10 ? 'Amazing! Wait till you meet the bosses.' : 'The full game has 80 levels and 8 bosses!';
+    document.getElementById('overSub').textContent = beat && n > beat ? 'You beat your friend\'s ' + beat + '! 🎉' : beat ? 'Your friend stacked ' + beat + '. Try again!' : n >= 10 ? 'Amazing! Wait till you meet the bosses.' : 'The full game has 300 levels and 30 bosses!';
     shareBtn.hidden = n < 1;
     state = 'over'; over.classList.add('show');
   }
