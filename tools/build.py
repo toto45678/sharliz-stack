@@ -192,6 +192,10 @@ rep("30+zi*6","30+Math.round(etOf(zi)*6)")
 rep("const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level),HZ_ORDER.length-1)];","const hzPrimary=()=>HZ_ORDER[Math.min(zoneIdx(level)%8,HZ_ORDER.length-1)];")
 # map: 30 stage panels — keep the canvas under iOS's area limit, tint night / storm panels
 rep("const dpr=Math.min(1.5,window.devicePixelRatio||1);mc.width=W*dpr;mc.height=mapH*dpr;","const dpr=Math.min(1.5,window.devicePixelRatio||1,Math.sqrt(12e6/(W*mapH)));mc.width=W*dpr;mc.height=mapH*dpr;")
+# the map is drawn into strips no taller than 4096 device px (mapSlices in v42.js): one canvas taller than the GPU's
+# texture limit is drawn without the GPU on Android, and the map froze for seconds (tester on a Galaxy S22+, Oct 19)
+rep("mc.width=W*dpr;mc.height=mapH*dpr;mc.style.width=W+'px';mc.style.height=mapH+'px';\n  const g=mc.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);",
+    "const g=mapSlices(mc,W,mapH,dpr);")
 rep("if(lk)g.filter='blur(5px) saturate(.55) brightness(1.08)';g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';",
     "{const f=((lk?'blur(5px) saturate(.55) brightness(1.08) ':'')+(z.ownMap?'':(z.mapf||SEASON_MAPF[z.season]||''))).trim();g.filter=f||'none'}g.drawImage(pic('mapn_'+z.id),0,y0,W,ph+1);g.filter='none';if(!z.ownMap&&SEASON_TINT[z.season]){g.fillStyle=SEASON_TINT[z.season];g.fillRect(0,y0,W,ph+1);if(z.season===2){const rs=mulberry(i*53+1);g.fillStyle='#fff7d6';for(let k=0;k<60;k++){g.globalAlpha=.35+rs()*.6;g.fillRect(rs()*W,y0+rs()*ph*.5,1.6,1.6)}g.globalAlpha=1}}")
 # in-game season look: background tint + foreground (night darkness / storm rain) under the popups

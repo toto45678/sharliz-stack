@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261019183747"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261019184701"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -4749,8 +4749,7 @@ function buildMap2D(animateFrom){
   const panels=ZONES.every(z=>pic('map_'+z.id));
   const inner=document.getElementById('mapInner'),mc=document.getElementById('mapCanvas');
   inner.style.height=mapH+'px';inner.querySelectorAll('.pin,.pin-stars,.map-ribbon,.pin-gate,.map-chest,.fog-badge,.fog-lift').forEach(e=>e.remove());
-  const dpr=Math.min(1.5,window.devicePixelRatio||1,Math.sqrt(12e6/(W*mapH)));mc.width=W*dpr;mc.height=mapH*dpr;mc.style.width=W+'px';mc.style.height=mapH+'px';
-  const g=mc.getContext('2d');g.setTransform(dpr,0,0,dpr,0,0);
+  const dpr=Math.min(1.5,window.devicePixelRatio||1,Math.sqrt(12e6/(W*mapH)));const g=mapSlices(mc,W,mapH,dpr);
   const pts=[{x:(mapNew()?MAPROAD.farm.path[0][0]*W:W/2-Math.min(W*.18,90)),y:mapH-110}];for(let i=0;i<TOTAL;i++)pts.push(pinPos(i));
   const bandTop=z=>z===ZONES.length-1?0:(pinPos(z*LPZ+LPZ-1).y+pinPos(z*LPZ+LPZ).y)/2;
   const bandBot=z=>z===0?mapH:(pinPos(z*LPZ-1).y+pinPos(z*LPZ).y)/2;
@@ -5946,6 +5945,21 @@ for(const z of ZONES)if(z.sid&&z.sid!==z.id){const k='b'+z.sid[0].toUpperCase()+
 /* map look per season (canvas filter on the world panel); season-4 worlds borrow S1 art until their own art ships */
 const SEASON_MAPF={2:'brightness(.62) saturate(.8)',3:'brightness(.8) saturate(.55) contrast(1.08)'};
 const SEASON_TINT={2:'rgba(16,20,88,.5)',3:'rgba(52,62,80,.28)'};
+// map strips: buildMap2D draws through one context that repeats every call on each strip (each strip's transform
+// starts at its own top), so no canvas is taller than 4096 device px. create*/measure calls run once (gradients and
+// patterns work on any canvas)
+const MAPSL={cv:[]};
+function mapSlices(mc,w,h,d){
+  const sh=Math.max(256,Math.floor(4096/d)),n=Math.ceil(h/sh);
+  while(MAPSL.cv.length<n){const c=document.createElement('canvas');c.className='map-slice';c.setAttribute('aria-hidden','true');(MAPSL.cv[MAPSL.cv.length-1]||mc).after(c);MAPSL.cv.push(c)}
+  MAPSL.cv.splice(n).forEach(c=>c.remove());
+  const cx=MAPSL.cv.map((c,k)=>{const top=k*sh,ch=Math.min(sh,h-top);c.width=Math.ceil(w*d);c.height=Math.ceil(ch*d);c.style.cssText=`position:absolute;left:0;top:${top}px;width:${w}px;height:${ch}px;display:block`;
+    const g=c.getContext('2d');g.setTransform(d,0,0,d,0,-top*d);return g});
+  mc.width=1;mc.height=1;mc.style.width='0';mc.style.height='0';
+  const one=/^(create|measure|get|isPoint)/;
+  return new Proxy(cx[0],{get(t,p){const v=t[p];if(typeof v!=='function')return v;
+      return one.test(p)?(...a)=>t[p](...a):(...a)=>{let r;for(const g of cx)r=g[p](...a);return r}},
+    set(t,p,v){for(const g of cx)g[p]=v;return true}})}
 const S4_MAPF={jungle:'hue-rotate(-28deg) saturate(1.45)',castle:'hue-rotate(230deg) brightness(.72) saturate(.8)',clouds:'hue-rotate(170deg) brightness(1.12) saturate(.7)',
   dino:'hue-rotate(55deg) saturate(1.25)',factory:'hue-rotate(150deg) saturate(.6) brightness(.9)',crystal:'hue-rotate(110deg) saturate(1.35)'};
 for(const z of ZONES)if(z.season===4)z.mapf=S4_MAPF[z.sid];
