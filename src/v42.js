@@ -19,6 +19,21 @@ for(const z of ZONES)if(z.sid&&z.sid!==z.id){const k='b'+z.sid[0].toUpperCase()+
 /* map look per season (canvas filter on the world panel); season-4 worlds borrow S1 art until their own art ships */
 const SEASON_MAPF={2:'brightness(.62) saturate(.8)',3:'brightness(.8) saturate(.55) contrast(1.08)'};
 const SEASON_TINT={2:'rgba(16,20,88,.5)',3:'rgba(52,62,80,.28)'};
+// map strips: buildMap2D draws through one context that repeats every call on each strip (each strip's transform
+// starts at its own top), so no canvas is taller than 4096 device px. create*/measure calls run once (gradients and
+// patterns work on any canvas)
+const MAPSL={cv:[]};
+function mapSlices(mc,w,h,d){
+  const sh=Math.max(256,Math.floor(4096/d)),n=Math.ceil(h/sh);
+  while(MAPSL.cv.length<n){const c=document.createElement('canvas');c.className='map-slice';c.setAttribute('aria-hidden','true');(MAPSL.cv[MAPSL.cv.length-1]||mc).after(c);MAPSL.cv.push(c)}
+  MAPSL.cv.splice(n).forEach(c=>c.remove());
+  const cx=MAPSL.cv.map((c,k)=>{const top=k*sh,ch=Math.min(sh,h-top);c.width=Math.ceil(w*d);c.height=Math.ceil(ch*d);c.style.cssText=`position:absolute;left:0;top:${top}px;width:${w}px;height:${ch}px;display:block`;
+    const g=c.getContext('2d');g.setTransform(d,0,0,d,0,-top*d);return g});
+  mc.width=1;mc.height=1;mc.style.width='0';mc.style.height='0';
+  const one=/^(create|measure|get|isPoint)/;
+  return new Proxy(cx[0],{get(t,p){const v=t[p];if(typeof v!=='function')return v;
+      return one.test(p)?(...a)=>t[p](...a):(...a)=>{let r;for(const g of cx)r=g[p](...a);return r}},
+    set(t,p,v){for(const g of cx)g[p]=v;return true}})}
 const S4_MAPF={jungle:'hue-rotate(-28deg) saturate(1.45)',castle:'hue-rotate(230deg) brightness(.72) saturate(.8)',clouds:'hue-rotate(170deg) brightness(1.12) saturate(.7)',
   dino:'hue-rotate(55deg) saturate(1.25)',factory:'hue-rotate(150deg) saturate(.6) brightness(.9)',crystal:'hue-rotate(110deg) saturate(1.35)'};
 for(const z of ZONES)if(z.season===4)z.mapf=S4_MAPF[z.sid];
