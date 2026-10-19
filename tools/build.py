@@ -220,7 +220,9 @@ rep("const hid='h_'+zone().id;","const hid='h_'+zone().sid;")
 rep('h.innerHTML=`<img src="art/${hatPicId(lv.newHat)}.webp" alt=""><span></span>`;','h.innerHTML=`<img src="${hatThumbSrc(lv.newHat)}" alt=""><span></span>`;')
 # ---- v48: character-sheet style screen — hero sits higher (slots around it, power bars + drawer below)
 rep("b.onclick=()=>{if(k==='skins'){hideOverlay();if(state==='title')openWardrobe();","b.onclick=()=>{if(k==='skins'||k==='style'){if(k==='style')W3.cat='trail';hideOverlay();if(state==='title')openWardrobe();")
-rep("G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.47}):G0;","G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.385}):G0;")
+rep("G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.47}):G0;","G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.385-(window.csHeroFit?csHeroFit()[0]:0)}):G0;")
+# the style drawer pulls up (v48 csBig): the hero rises and shrinks with the stage
+rep("const size=WD?Math.min(W*.33,H*.16,170):heroSize()","const size=WD?Math.min(W*.33,H*.16,170)*(window.csHeroFit?csHeroFit()[1]:1):heroSize()")
 # ---- v50: bug hunt 2
 # a piece that lands after the last heart is gone (lava / hazard during the fall) used to pull the game out of 'over' -> played on with 0 hearts
 rep("function resolveLanding(){\n  const d=dropping;dropping=null;","function resolveLanding(){\n  const d=dropping;dropping=null;if(state==='over'){bodies.push({s:d,x:xOf(d.xs),y:yOf(tower.length),vx:0,vy:-BH,rot:0,vr:3,mood:'scared'});return}")

@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261019181831"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261019184701"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -804,6 +804,23 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 .cs-sets{grid-template-columns:1fr;align-content:start}.cs-sets .wd-set{grid-column:auto}
 .cs-sets .wd-set .wd-th{width:76px;height:80px;flex:none;display:grid;place-items:center}.cs-sets .wd-set .wd-th img{width:84px;height:84px}
 .cs-sets .wd-set .col{flex-direction:row;flex-wrap:wrap;align-items:center}.cs-sets .wd-set .col b{flex:1 0 100%}.cs-sets .wd-set .col button{flex:1}
+/* the drawer pulls up (Oct 19, Android beta tester: "more room to see the designs"). --k (0 = as before, 1 = pulled up) is tweened by
+   csBig() in v48.js: the power panel folds away, the stage + slots shrink (the 3D hero follows, csHeroFit) and the grid gets the room */
+#wardrobe.cs{--k:0}
+.cs-stage{flex:0 0 calc(34% + var(--k)*(max(170px,22%) - 34%))}
+.cs-slot{transform:translate(-50%,-50%) scale(calc(1 - var(--k)*.2))}
+#wardrobe.cs-k .cs-stats{max-height:calc((1 - var(--k))*var(--sh,260px));opacity:calc(1 - var(--k)*1.6);overflow:hidden;
+  padding-top:calc((1 - var(--k))*7px);padding-bottom:calc((1 - var(--k))*8px);border-width:calc((1 - var(--k))*2px)}
+#wardrobe.cs-k .cs-drawer{margin-top:calc((1 - var(--k))*8px)}
+#wardrobe.big .cs-stats{visibility:hidden}
+.cs-drawer{position:relative;padding-top:17px}
+.cs-grab{position:absolute;top:0;left:50%;transform:translateX(-50%);width:96px;height:17px;padding:0;border:0;background:none;display:grid;place-items:center;z-index:1}
+.cs-grab svg{display:block;opacity:.85;transition:transform .25s;filter:drop-shadow(0 1.5px 0 rgba(18,13,43,.6))}
+#wardrobe.big .cs-grab svg{transform:rotate(180deg)}
+.cs-drawer:not(.still) .cs-grab svg{animation:csBob .6s ease-in-out .6s 3}
+@keyframes csBob{50%{translate:0 -4px}}
+@media (max-height:720px){.cs-stage{flex-basis:calc(30% + var(--k)*(max(170px,22%) - 30%))}
+  #wardrobe.cs-k .cs-stats{padding-top:calc((1 - var(--k))*5px);padding-bottom:calc((1 - var(--k))*6px)}}
 
 .cs-act{gap:8px}.cs-act .cs-buy{flex:1 1 0;min-width:0}.cs-act .cs-coinalt{--g1:#ffe066;--g2:#f5a300}
 
@@ -4272,7 +4289,7 @@ function lobbyGeo(){
   return {k,dw,dh,ox,oy,stageY:oy+dh*.655,stageX:ox+dw*.5,stageW:dw*.38}}
 function drawTitleArt(){
   const c=tCv.getContext('2d');c.setTransform(DPR,0,0,DPR,0,0);
-  const G0=lobbyGeo(),WD=W3.on,G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.385}):G0;
+  const G0=lobbyGeo(),WD=W3.on,G=WD?Object.assign({},G0,{stageX:W/2,stageY:H*.385-(window.csHeroFit?csHeroFit()[0]:0)}):G0;
   if(LOBIMG.complete&&LOBIMG.naturalWidth)c.drawImage(LOBIMG,G0.ox,G0.oy,G0.dw,G0.dh);
   else{const g=c.createLinearGradient(0,0,0,H);g.addColorStop(0,'#2a1680');g.addColorStop(1,'#7b3cf0');c.fillStyle=g;c.fillRect(0,0,W,H)}
   // soft rotating light behind the hero
@@ -4285,7 +4302,7 @@ function drawTitleArt(){
   c.save();c.globalCompositeOperation='lighter';for(const p of LOB.spark){const y=((p.y-time*p.v)%1+1)%1*H,a=.35+.35*Math.sin(time*3+p.p);c.fillStyle=`rgba(255,240,200,${a})`;c.beginPath();c.arc(p.x*W,y,p.r,0,7);c.fill()}c.restore();
   if(WD){c.fillStyle='rgba(20,10,60,.35)';c.fillRect(0,0,W,H);const pr=c.createRadialGradient(G.stageX,G.stageY,4,G.stageX,G.stageY,W*.42);pr.addColorStop(0,'rgba(255,240,255,.75)');pr.addColorStop(.45,'rgba(200,170,255,.35)');pr.addColorStop(1,'rgba(160,120,255,0)');c.fillStyle=pr;c.beginPath();c.ellipse(G.stageX,G.stageY,W*.42,W*.11,0,0,7);c.fill()}
   // hero on the stage
-  const size=WD?Math.min(W*.33,H*.16,170):heroSize(),bh=size*1.5,jt=time-LOB.jump,three=H3.state==='ready',jd=three?.75:.6,jumpY=jt<jd?Math.sin(jt/jd*Math.PI)*bh*(three?.5:.32):0;
+  const size=WD?Math.min(W*.33,H*.16,170)*(window.csHeroFit?csHeroFit()[1]:1):heroSize(),bh=size*1.5,jt=time-LOB.jump,three=H3.state==='ready',jd=three?.75:.6,jumpY=jt<jd?Math.sin(jt/jd*Math.PI)*bh*(three?.5:.32):0;
   const bounce=Math.abs(Math.sin(ft*Math.PI*1.1)),sq=jt<.6?-.25:(.18-bounce*.3),baseY=G.stageY-size*.06;
   c.save();c.fillStyle='rgba(20,8,60,.45)';c.beginPath();c.ellipse(cx,baseY+2,size*(.56-jumpY/bh*.3),size*.14,0,0,7);c.fill();c.restore();
   if(three&&drawHero3D(G,size))return;if(WD)return;
@@ -6871,6 +6888,35 @@ const PAT_SCALE=1.3;
 {const _rw=renderWardrobe;renderWardrobe=function(){const key=()=>CS.slot+'/'+W3.cat+'/'+CS.filter,G='#wardrobe .cs-grid,#wardrobe .cs-sets',g=document.querySelector(G),y=g&&g.dataset.k===key()?g.scrollTop:0;
   const r=_rw.apply(this,arguments);const n=document.querySelector(G);if(n){n.dataset.k=key();if(y)n.scrollTop=y}return r}}
 I18N.en.style='Effects';I18N.he.style='אפקטים'; // the shop had two tabs called 'Style'; this one opens the Effects slot
+/* ---- the drawer pulls up (Oct 19, Android beta tester on a Galaxy S22+: "would be happy if there were more room to see the designs";
+   the grid showed about one and a half rows). Swipe the items up, swipe the drawer, or tap the arrow on top of it: the power panel folds
+   away, the slots and the hero shrink and the grid gets about two more rows. Swipe down (list at its top) or tap the arrow to go back.
+   The screen always opens with the power panel showing. --k on #wardrobe drives the CSS (end of v48.css); csHeroFit() moves the 3D hero. */
+CS.big=false;CS.k=0;
+function csApplyK(){const el=document.getElementById('wardrobe');if(!el)return;el.style.setProperty('--k',CS.k.toFixed(3));el.classList.toggle('cs-k',CS.k>0);el.classList.toggle('big',CS.big);
+  const g=el.querySelector('.cs-grab');if(g)g.setAttribute('aria-expanded',String(CS.big))}
+function csBig(on){if(CS.big===on||!W3.on)return;CS.big=on;sfx.click();const el=document.getElementById('wardrobe'),sp=el&&el.querySelector('.cs-stats');
+  if(sp)el.style.setProperty('--sh',(sp.scrollHeight+24)+'px');
+  cancelAnimationFrame(CS.raf);const k0=CS.k,k1=on?1:0,t0=performance.now(),D=reduceMotion?1:280;
+  const step=now=>{const u=Math.min(1,(now-t0)/D),e=1-Math.pow(1-u,3);CS.k=k0+(k1-k0)*e;csApplyK();if(u<1)CS.raf=requestAnimationFrame(step)};CS.raf=requestAnimationFrame(step)}
+// [lift px, size factor] for the 3D hero: it rises with the stage's bottom and shrinks to fit under the top bar (k=0 → [0,1], no layout read)
+function csHeroFit(){if(!CS.k||!W3.on)return [0,1];const key=CS.k+'|'+W+'|'+H;if(CS.fitKey===key)return CS.fit;
+  const el=document.getElementById('wardrobe'),top=el&&el.querySelector('.cs-top');if(!top)return [0,1];
+  const Hw=el.clientHeight,h0=Hw*(matchMedia('(max-height:720px)').matches?.30:.34),h1=Math.max(170,Hw*.22),lift=Math.max(0,h0-h1),T=top.getBoundingClientRect().bottom,
+    s0=Math.min(W*.33,H*.16,170),s1=Math.min(s0,Math.max(40,(H*.385-lift-T-4)/1.7));
+  CS.fitKey=key;return CS.fit=[lift*CS.k,1-CS.k*(1-s1/s0)]}
+function csGest(dr){let P=null;const grid=()=>dr.querySelector('.cs-grid,.cs-sets'),more=g=>!!g&&g.scrollHeight>g.clientHeight+4;
+  dr.addEventListener('touchstart',e=>{if(e.touches.length!==1){P=null;return}const t=e.touches[0],g=grid();P={x:t.clientX,y:t.clientY,g:!!g&&g.contains(e.target),st:g?g.scrollTop:0}},{passive:true});
+  dr.addEventListener('touchmove',e=>{if(!P)return;const t=e.touches[0],dx=t.clientX-P.x,dy=t.clientY-P.y;if(Math.abs(dy)<22||Math.abs(dy)<Math.abs(dx)*1.3)return;
+    if(dy<0&&!CS.big&&(!P.g||more(grid()))){P=null;csBig(true)}else if(dy>0&&CS.big&&(!P.g||P.st<=1)){P=null;csBig(false)}},{passive:true});
+  const end=()=>{P=null};dr.addEventListener('touchend',end,{passive:true});dr.addEventListener('touchcancel',end,{passive:true});
+  dr.addEventListener('wheel',e=>{const g=grid();if(e.deltaY>0&&!CS.big&&more(g))csBig(true);else if(e.deltaY<0&&CS.big&&(!g||g.scrollTop<=0))csBig(false)},{passive:true})}
+{const _rw=renderWardrobe;renderWardrobe=function(){const r=_rw.apply(this,arguments);const el=document.getElementById('wardrobe'),dr=el&&el.querySelector('.cs-drawer');
+  if(dr&&!dr._grab){dr._grab=1;const g=document.createElement('button');g.className='cs-grab';g.setAttribute('aria-label','more room');
+    g.innerHTML='<svg viewBox="0 0 26 11" width="30" height="13"><path d="M3 9 L13 2.5 L23 9" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    g.onclick=()=>csBig(!CS.big);dr.prepend(g);csGest(dr)}
+  const sp=el&&el.querySelector('.cs-stats');if(sp)el.style.setProperty('--sh',(sp.scrollHeight+24)+'px');csApplyK();return r}}
+{const _ow=openWardrobe;openWardrobe=function(...a){cancelAnimationFrame(CS.raf);CS.big=false;CS.k=0;CS.fitKey='';return _ow(...a)}}
 
 /* ===== v49: fair powers — "different, not stronger" (Tzach) for everything that can be bought =====
    - Premium buddies get a cost too (dragon falls faster, unicorn: more wind, cyborg: faster swing).
