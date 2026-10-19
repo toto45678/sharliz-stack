@@ -280,3 +280,32 @@ const PAT_SCALE=1.3;
 {const _rw=renderWardrobe;renderWardrobe=function(){const key=()=>CS.slot+'/'+W3.cat+'/'+CS.filter,G='#wardrobe .cs-grid,#wardrobe .cs-sets',g=document.querySelector(G),y=g&&g.dataset.k===key()?g.scrollTop:0;
   const r=_rw.apply(this,arguments);const n=document.querySelector(G);if(n){n.dataset.k=key();if(y)n.scrollTop=y}return r}}
 I18N.en.style='Effects';I18N.he.style='אפקטים'; // the shop had two tabs called 'Style'; this one opens the Effects slot
+/* ---- the drawer pulls up (Oct 19, Android beta tester on a Galaxy S22+: "would be happy if there were more room to see the designs";
+   the grid showed about one and a half rows). Swipe the items up, swipe the drawer, or tap the arrow on top of it: the power panel folds
+   away, the slots and the hero shrink and the grid gets about two more rows. Swipe down (list at its top) or tap the arrow to go back.
+   The screen always opens with the power panel showing. --k on #wardrobe drives the CSS (end of v48.css); csHeroFit() moves the 3D hero. */
+CS.big=false;CS.k=0;
+function csApplyK(){const el=document.getElementById('wardrobe');if(!el)return;el.style.setProperty('--k',CS.k.toFixed(3));el.classList.toggle('cs-k',CS.k>0);el.classList.toggle('big',CS.big);
+  const g=el.querySelector('.cs-grab');if(g)g.setAttribute('aria-expanded',String(CS.big))}
+function csBig(on){if(CS.big===on||!W3.on)return;CS.big=on;sfx.click();const el=document.getElementById('wardrobe'),sp=el&&el.querySelector('.cs-stats');
+  if(sp)el.style.setProperty('--sh',(sp.scrollHeight+24)+'px');
+  cancelAnimationFrame(CS.raf);const k0=CS.k,k1=on?1:0,t0=performance.now(),D=reduceMotion?1:280;
+  const step=now=>{const u=Math.min(1,(now-t0)/D),e=1-Math.pow(1-u,3);CS.k=k0+(k1-k0)*e;csApplyK();if(u<1)CS.raf=requestAnimationFrame(step)};CS.raf=requestAnimationFrame(step)}
+// [lift px, size factor] for the 3D hero: it rises with the stage's bottom and shrinks to fit under the top bar (k=0 → [0,1], no layout read)
+function csHeroFit(){if(!CS.k||!W3.on)return [0,1];const key=CS.k+'|'+W+'|'+H;if(CS.fitKey===key)return CS.fit;
+  const el=document.getElementById('wardrobe'),top=el&&el.querySelector('.cs-top');if(!top)return [0,1];
+  const Hw=el.clientHeight,h0=Hw*(matchMedia('(max-height:720px)').matches?.30:.34),h1=Math.max(170,Hw*.22),lift=Math.max(0,h0-h1),T=top.getBoundingClientRect().bottom,
+    s0=Math.min(W*.33,H*.16,170),s1=Math.min(s0,Math.max(40,(H*.385-lift-T-4)/1.7));
+  CS.fitKey=key;return CS.fit=[lift*CS.k,1-CS.k*(1-s1/s0)]}
+function csGest(dr){let P=null;const grid=()=>dr.querySelector('.cs-grid,.cs-sets'),more=g=>!!g&&g.scrollHeight>g.clientHeight+4;
+  dr.addEventListener('touchstart',e=>{if(e.touches.length!==1){P=null;return}const t=e.touches[0],g=grid();P={x:t.clientX,y:t.clientY,g:!!g&&g.contains(e.target),st:g?g.scrollTop:0}},{passive:true});
+  dr.addEventListener('touchmove',e=>{if(!P)return;const t=e.touches[0],dx=t.clientX-P.x,dy=t.clientY-P.y;if(Math.abs(dy)<22||Math.abs(dy)<Math.abs(dx)*1.3)return;
+    if(dy<0&&!CS.big&&(!P.g||more(grid()))){P=null;csBig(true)}else if(dy>0&&CS.big&&(!P.g||P.st<=1)){P=null;csBig(false)}},{passive:true});
+  const end=()=>{P=null};dr.addEventListener('touchend',end,{passive:true});dr.addEventListener('touchcancel',end,{passive:true});
+  dr.addEventListener('wheel',e=>{const g=grid();if(e.deltaY>0&&!CS.big&&more(g))csBig(true);else if(e.deltaY<0&&CS.big&&(!g||g.scrollTop<=0))csBig(false)},{passive:true})}
+{const _rw=renderWardrobe;renderWardrobe=function(){const r=_rw.apply(this,arguments);const el=document.getElementById('wardrobe'),dr=el&&el.querySelector('.cs-drawer');
+  if(dr&&!dr._grab){dr._grab=1;const g=document.createElement('button');g.className='cs-grab';g.setAttribute('aria-label','more room');
+    g.innerHTML='<svg viewBox="0 0 26 11" width="30" height="13"><path d="M3 9 L13 2.5 L23 9" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    g.onclick=()=>csBig(!CS.big);dr.prepend(g);csGest(dr)}
+  const sp=el&&el.querySelector('.cs-stats');if(sp)el.style.setProperty('--sh',(sp.scrollHeight+24)+'px');csApplyK();return r}}
+{const _ow=openWardrobe;openWardrobe=function(...a){cancelAnimationFrame(CS.raf);CS.big=false;CS.k=0;CS.fitKey='';return _ow(...a)}}

@@ -69,3 +69,20 @@
 .cs-sets{grid-template-columns:1fr;align-content:start}.cs-sets .wd-set{grid-column:auto}
 .cs-sets .wd-set .wd-th{width:76px;height:80px;flex:none;display:grid;place-items:center}.cs-sets .wd-set .wd-th img{width:84px;height:84px}
 .cs-sets .wd-set .col{flex-direction:row;flex-wrap:wrap;align-items:center}.cs-sets .wd-set .col b{flex:1 0 100%}.cs-sets .wd-set .col button{flex:1}
+/* the drawer pulls up (Oct 19, Android beta tester: "more room to see the designs"). --k (0 = as before, 1 = pulled up) is tweened by
+   csBig() in v48.js: the power panel folds away, the stage + slots shrink (the 3D hero follows, csHeroFit) and the grid gets the room */
+#wardrobe.cs{--k:0}
+.cs-stage{flex:0 0 calc(34% + var(--k)*(max(170px,22%) - 34%))}
+.cs-slot{transform:translate(-50%,-50%) scale(calc(1 - var(--k)*.2))}
+#wardrobe.cs-k .cs-stats{max-height:calc((1 - var(--k))*var(--sh,260px));opacity:calc(1 - var(--k)*1.6);overflow:hidden;
+  padding-top:calc((1 - var(--k))*7px);padding-bottom:calc((1 - var(--k))*8px);border-width:calc((1 - var(--k))*2px)}
+#wardrobe.cs-k .cs-drawer{margin-top:calc((1 - var(--k))*8px)}
+#wardrobe.big .cs-stats{visibility:hidden}
+.cs-drawer{position:relative;padding-top:17px}
+.cs-grab{position:absolute;top:0;left:50%;transform:translateX(-50%);width:96px;height:17px;padding:0;border:0;background:none;display:grid;place-items:center;z-index:1}
+.cs-grab svg{display:block;opacity:.85;transition:transform .25s;filter:drop-shadow(0 1.5px 0 rgba(18,13,43,.6))}
+#wardrobe.big .cs-grab svg{transform:rotate(180deg)}
+.cs-drawer:not(.still) .cs-grab svg{animation:csBob .6s ease-in-out .6s 3}
+@keyframes csBob{50%{translate:0 -4px}}
+@media (max-height:720px){.cs-stage{flex-basis:calc(30% + var(--k)*(max(170px,22%) - 30%))}
+  #wardrobe.cs-k .cs-stats{padding-top:calc((1 - var(--k))*5px);padding-bottom:calc((1 - var(--k))*6px)}}
