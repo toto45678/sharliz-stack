@@ -5,6 +5,10 @@
 # Output files are in the run's "Artifacts" box on GitHub (Actions tab -> this run).
 # iOS secrets: APP_STORE_CONNECT_KEY_ID, APP_STORE_CONNECT_ISSUER_ID, APP_STORE_CONNECT_PRIVATE_KEY, APPLE_TEAM_ID
 name: Build store apps
+# The store version (iPhone "Version" / Android versionName). Raise it for every new store release:
+# once Apple approves a version, uploads with the same version are refused.
+env:
+  APP_VERSION: '1.1'
 on:
   workflow_dispatch:
   push:
@@ -33,7 +37,7 @@ jobs:
           sed -i -E 's/(targetSdkVersion\s*=\s*)[0-9]+/\136/; s/(compileSdkVersion\s*=\s*)[0-9]+/\136/' android/variables.gradle
           grep -E 'targetSdk|compileSdk|minSdk' android/variables.gradle
           # Google Play needs a higher versionCode on every upload: the run number (same as the iOS build number)
-          sed -i -E 's/versionCode [0-9]+/versionCode ${{ github.run_number }}/; s/versionName "[^"]*"/versionName "1.0"/' android/app/build.gradle
+          sed -i -E 's/versionCode [0-9]+/versionCode ${{ github.run_number }}/; s/versionName "[^"]*"/versionName "${{ env.APP_VERSION }}"/' android/app/build.gradle
           grep -E 'versionCode|versionName' android/app/build.gradle
           npx cap sync android
       - name: Build APK (test) + AAB (store)
@@ -94,10 +98,10 @@ jobs:
           i=0; for L in en he es pt fr de it ru tr ar ja ko zh-Hans id; do /usr/libexec/PlistBuddy -c "Add :CFBundleLocalizations:$i string $L" $PL; i=$((i+1)); done
           /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Sharliz" $PL || /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string Sharliz" $PL
           npx cap sync ios
-      - name: Version 1.0, build number = run number
+      - name: Version APP_VERSION, build number = run number
         working-directory: app/ios/App
         run: |
-          sed -i '' -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = 1.0;/; s/CURRENT_PROJECT_VERSION = [^;]+;/CURRENT_PROJECT_VERSION = ${{ github.run_number }};/" App.xcodeproj/project.pbxproj
+          sed -i '' -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = ${{ env.APP_VERSION }};/; s/CURRENT_PROJECT_VERSION = [^;]+;/CURRENT_PROJECT_VERSION = ${{ github.run_number }};/" App.xcodeproj/project.pbxproj
           grep -E 'MARKETING_VERSION|CURRENT_PROJECT_VERSION|PRODUCT_BUNDLE_IDENTIFIER' App.xcodeproj/project.pbxproj
       - name: Sign + upload to TestFlight
         working-directory: app/ios/App
