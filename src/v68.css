@@ -1,0 +1,10 @@
+/* v68 old iPhones (iOS 15): fallbacks for color-mix() and container units, switched on by v68.js (html.no-cmix / html.no-cq) */
+html.no-cmix .sb-paper{background:radial-gradient(circle at 18% 22%,rgba(120,90,60,.05) 0 1px,transparent 1.5px) 0 0/7px 7px,radial-gradient(circle,rgba(120,90,200,.13) 1.2px,transparent 1.6px) 0 0/18px 18px,linear-gradient(180deg,#fffaf0,#fbf1df)}
+html.no-cmix .sb-paper::after,html.no-cmix .sb-head::after{color:var(--c)}
+html.no-cmix .hs-ic{background:radial-gradient(circle at 50% 40%,#fff,#fff3dc)}
+html.no-cmix .wd-th .sw{background:radial-gradient(circle at 35% 30%,#fff,var(--c) 45%,var(--c))}
+html.no-cq .wh-in{bottom:calc(var(--cqh,1px)*2 + var(--cqw,1px)*30)}
+html.no-cq .wh-pop{bottom:calc(var(--cqw,1px)*-90);height:calc(var(--cqw,1px)*84)}
+html.no-cq .wh-hole.up .wh-pop{bottom:calc(var(--cqw,1px)*-16)}
+/* slow phones painted the lobby's raw HTML (old side buttons, empty Play button, 0 coins) for 1-2 s before the script ran: keep it hidden until v68.js says the game is up */
+html:not(.booted) #title>*{visibility:hidden}
