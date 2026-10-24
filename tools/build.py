@@ -180,19 +180,20 @@ const etOf=zi=>typeof mode!=='undefined'&&mode==='event'?1.5:zi<8?zi:4+(zi-8)*.1
 // landing windows in Sharliz widths (perfect / great minimum, miss = how far off a piece may land and still stay) and the floor goal.
 // Smart difficulty (Tzach, Oct 24: "the game is really easy"): levels mode is faster from the start with a narrower perfect and longer goals
 // (end of season 1 about as before). DIFF0 = the values before, still used by the tutorial levels 1-3 and every other mode (events,
-// tournament, daily, endless, duo, bonus); level 4 sits half way. The per-player part (progress.skill, v70): skK() on the speed
+// tournament, daily, endless, duo, bonus); level 4 sits half way. The per-player part (progress.skill, v70): skK() on the speed (skUp/skDn = ×(1+skUp) at skill +1,
+// ×(1-skDn) at -1), skLo() gives a struggling player the old perfect window back; skW = skill change after a win with 0/1/more hearts lost, skL after a loss
 const DIFF0={sp0:1.45,spW:.14,spL:.035,spF:.035,pMin:.09,gMin:.2,miss:.5,goal0:6,goalW:2,step:[0,1,2,2,3,4,4,5,6]};
-const DIFF=Object.assign({},DIFF0,{sp0:1.9,spW:.08,pMin:.06,goal0:8,goalW:1.6});
+const DIFF=Object.assign({},DIFF0,{sp0:1.9,spW:.08,pMin:.06,goal0:8,goalW:1.6,skUp:.2,skDn:.2,skW:[.2,.05,-.1],skL:-.3});
 const dfMix=n=>typeof mode!=='undefined'&&mode!=='levels'||n<=3?0:n===4?.5:1,dfK=(key,n)=>DIFF0[key]+(DIFF[key]-DIFF0[key])*dfMix(n);
 const skOn=()=>mode==='levels'&&level>3,skS=()=>skOn()?Math.max(-1,Math.min(1,+progress.skill||0)):0;
-const skK=()=>{const s=skS();return s>0?1+.2*s:1+.1*s};
+const skK=()=>{const s=skS();return 1+s*(s>0?DIFF.skUp:DIFF.skDn)},skLo=()=>Math.max(0,-skS());
 const lvStep=k=>DIFF.step[k]||0,lvGoal=(zi,k)=>{const n=zi*LPZ+k+1;return Math.round(dfK('goal0',n)+dfK('goalW',n)*etOf(zi))+lvStep(k)};
 const TOTAL=ZONES.length*LPZ;""")
 rep("6+2*zoneIdx(level)+2*lvInZone()","lvGoal(zoneIdx(level),lvInZone())")
 rep("(1.45+zoneIdx(level)*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)","(dfK('sp0',level)+etOf(zoneIdx(level))*dfK('spW',level)+lvInZone()*DIFF.spL)*(1+Math.min(tower.length-1,12)*DIFF.spF)*skK()")
 rep("lv=.5+.5*(level-1)/(TOTAL-1)","lv=.5+.5*Math.min(1,(etOf(zoneIdx(level))*LPZ+lvInZone())/79)")
 rep("hp=3*(5+zi);","hp=3*(5+Math.round(etOf(zi)))+3*((ZONES[zi].season||1)-1);")
-rep("let p=Math.max(.09,sp*(55-zi*1.4)/2000),g=Math.max(.2,sp*(120-zi*3)/2000),m=.5;","let p=Math.max(dfK('pMin',level),sp*(55-etOf(zi)*1.4)/2000),g=Math.max(DIFF.gMin,sp*(120-etOf(zi)*3)/2000),m=DIFF.miss;")
+rep("let p=Math.max(.09,sp*(55-zi*1.4)/2000),g=Math.max(.2,sp*(120-zi*3)/2000),m=.5;","const pm=dfK('pMin',level);let p=Math.max(pm+(DIFF0.pMin-pm)*skLo(),sp*(55-etOf(zi)*1.4)/2000),g=Math.max(DIFF.gMin,sp*(120-etOf(zi)*3)/2000),m=DIFF.miss;")
 rep("g=6+2*zi+2*k;","g=lvGoal(zi,k);")
 rep("const bossReach=()=>4+Math.floor(zoneIdx(level)/2);","const bossReach=()=>4+Math.floor(etOf(zoneIdx(level))/2);")
 rep("BOSS_NAMES[zone().id]","(BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])",3)
