@@ -574,13 +574,13 @@
     const br=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3([new T.Vector3(-.07,yB-.01,zB),new T.Vector3(0,yB+.015,zB+.012),new T.Vector3(.07,yB-.01,zB)]),20,o.bw||.016,8),fm);s.add(br);
     if(o.bar){const b2=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3([new T.Vector3(-.12,B_EY+B_ERY*k*.62,zB+.01),new T.Vector3(0,B_EY+B_ERY*k*.66,zB+.03),new T.Vector3(.12,B_EY+B_ERY*k*.62,zB+.01)]),20,.011,8),fm);s.add(b2)}
     if(o.noArms)return fm;
-    const am=o.arm?wm(o.arm,{roughness:.3,clearcoat:.8}):fm;
-    for(const sx of[-1,1]){const y=B_EY+.06,c=[];const x0=sx*(B_EX+B_ERX*k*.98),a0=Math.atan2(x0,surfZ(x0,y)+.1);
+    temples(P,o.arm?wm(o.arm,{roughness:.3,clearcoat:.8}):fm,fm,B_EX+B_ERX*k*.98,o.aw);return fm}
+  function temples(P,am,fm,X,aw){const T=P.T,s=P.glassSlot;
+    for(const sx of[-1,1]){const y=B_EY+.06,c=[];const x0=sx*X,a0=Math.atan2(x0,surfZ(x0,y)+.1);
       c.push(new T.Vector3(x0,y,surfZ(Math.min(Math.abs(x0),bodyR(y/.75)*.98),y)+.08));
       for(let i=1;i<=6;i++){const a=Math.abs(a0)+(i/6)*(1.75-Math.abs(a0)),R=bodyR(y/.75)+.025;c.push(new T.Vector3(sx*Math.sin(a)*R,y+.0,Math.cos(a)*R))}
-      s.add(new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(c),40,o.aw||.015,8),am));
-      const h=new T.Mesh(new T.SphereGeometry(.022,12,10),fm);h.position.copy(c[0]);s.add(h)}
-    return fm}
+      s.add(new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(c),40,aw||.015,8),am));
+      const h=new T.Mesh(new T.SphereGeometry(.022,12,10),fm);h.position.copy(c[0]);s.add(h)}}
   // a wide piece bent around the face (ski goggles, sport visor, 3D glasses)
   function bent(geo,R,y0){const p=geo.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),a=x/R;p.setXYZ(i,Math.sin(a)*(R+z),p.getY(i)+y0,Math.cos(a)*(R+z))}geo.computeVertexNormals();return geo}
   const FR=()=>Math.hypot(B_EX,surfZ(B_EX,B_EY)+B_ERZ)+.06;
@@ -592,39 +592,38 @@
     nerd:P=>{const fm=pair(P,{shape:'rect',frame:'#17141f',fo:{roughness:.18,clearcoat:1},w:.2,d:.06,bw:.024,aw:.022,lens:lensM('#e8f4ff',.12)});
       for(const sx of[-1,1]){const st=wmesh(new THREE.SphereGeometry(.014,10,8),'#d9dde6',{metalness:.9,roughness:.2});const x=sx*(B_EX+B_ERX*1.22*.9);st.position.set(x,B_EY+B_ERY*1.22*.68,surfZ(Math.min(Math.abs(x),.4),B_EY+.15)+.12);P.glassSlot.add(st)}},
     sun:P=>pair(P,{shape:'sun',frame:'#f1b630',fo:GLD,w:.1,d:.035,lens:lensM('#0c0a14',.94,{roughness:.02})}),
-    heart:P=>pair(P,{shape:'heart',frame:'#ff5fa8',fo:{roughness:.15,clearcoat:1},w:.15,d:.045,k:1.3,lens:lensM('#ff9cc8',.5),by:.14}),
-    star:P=>pair(P,{shape:'star',frame:'#f6b820',fo:GLD,w:.15,d:.045,k:1.45,lens:lensM('#ffe36a',.55,{emissive:'#ffcc33',emissiveIntensity:.15}),by:.12}),
+    heart:P=>pair(P,{shape:'heart',frame:'#ff5fa8',fo:{roughness:.15,clearcoat:1},w:.15,d:.045,k:1.3,lens:lensM('#ff6fae',.72),by:.14}),
+    star:P=>pair(P,{shape:'star',frame:'#f6b820',fo:GLD,w:.15,d:.045,k:1.45,lens:lensM('#ffc21a',.8,{emissive:'#ffaa00',emissiveIntensity:.15}),by:.12}),
     goggles:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.2,hh=B_ERY*1.22;
       const fs=wideShape(hw,hh,.38),ho=wideShape(hw*.86,hh*.8,.42);fs.holes.push(new T.Path(ho.getPoints(64).reverse()));
       const fg=bent(new T.ExtrudeGeometry(fs,{depth:.05,bevelEnabled:true,bevelThickness:.025,bevelSize:.025,bevelSegments:5,curveSegments:24}),R+.02,B_EY);
       P.glassSlot.add(new T.Mesh(fg,wm('#2f6fe0',{roughness:.18,clearcoat:1})));
-      const lt=canvasTex('skilens',256,128,(c,w,h)=>{const g=c.createLinearGradient(0,0,w,h);['#7a3cff','#2fa8ff','#2fe0c0','#7cff6a','#ffd23a'].forEach((s,i)=>g.addColorStop(i/4,s));c.fillStyle=g;c.fillRect(0,0,w,h)});
+      const lt=canvasTex('skilens',256,128,(c,w,h)=>{const g=c.createLinearGradient(0,0,w,h);['#4a1ad0','#1a6ae0','#18b0c0','#3ad060','#e0a020'].forEach((s,i)=>g.addColorStop(i/4,s));c.fillStyle=g;c.fillRect(0,0,w,h)});
       const lg=new T.ShapeGeometry(ho,24),uv=lg.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)/(2*hw)+.5,uv.getY(i)/(2*hh)+.5);bent(lg,R+.035,B_EY);
-      P.glassSlot.add(new T.Mesh(lg,new T.MeshPhysicalMaterial({map:lt,roughness:.05,metalness:.6,clearcoat:1,iridescence:.8,transparent:true,opacity:.9,side:T.DoubleSide})));strap(P,'#23263a',.1)},
+      P.glassSlot.add(new T.Mesh(lg,new T.MeshPhysicalMaterial({map:lt,roughness:.05,metalness:.6,clearcoat:1,iridescence:.8,transparent:true,opacity:.97,side:T.DoubleSide})));strap(P,'#23263a',.1)},
     monocle:P=>{const T=P.T,fm=pair(P,{shape:'circle',frame:'#f1b630',fo:GLD,w:.11,d:.035,one:1,k:1.2,lens:lensM('#e8f4ff',.18)}),e=P.eyes[1],x0=e.position.x+B_ERX*1.15,y0=B_EY-B_ERY*.6;
       const cu=new T.CatmullRomCurve3([new T.Vector3(x0,y0,surfZ(Math.min(x0,.42),y0)+.12),new T.Vector3(x0+.05,y0-.12,surfZ(Math.min(x0+.05,.44),y0-.12)+.1),new T.Vector3(x0+.03,y0-.3,surfZ(Math.min(x0+.03,.44),y0-.3)+.08)]);
       for(let i=0;i<=26;i++){const p=cu.getPointAt(i/26),b=new T.Mesh(new T.SphereGeometry(.009,8,6),fm);b.position.copy(p);P.glassSlot.add(b)}},
     aviator:P=>pair(P,{shape:'avi',frame:'#e0aa30',fo:GLD,w:.07,d:.025,bar:1,arm:'#7a4a25',lens:sx=>lensM('#ffffff',.9,{map:gradTex('avil',['#2a1608','#6a3c18','#c99060'])})}),
     pinkround:P=>pair(P,{shape:'circle',frame:'#ff6fb5',fo:{roughness:.15,clearcoat:1},w:.17,d:.05,lens:lensM('#ffe8f4',.14)}),
     visor:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.25,hh=B_ERY*.95;
-      const ls=wideShape(hw,hh,.55),lg=new T.ShapeGeometry(ls,24),uv=lg.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)/(2*hw)+.5,uv.getY(i)/(2*hh)+.5);bent(lg,R+.03,B_EY-.02);
+      const ls=wideShape(hw,hh,.32),lg=new T.ShapeGeometry(ls,24),uv=lg.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)/(2*hw)+.5,uv.getY(i)/(2*hh)+.5);bent(lg,R+.08,B_EY-.02);
       const lt=canvasTex('visorlens',256,64,(c,w,h)=>{const g=c.createLinearGradient(0,0,0,h);['#ff3a7a','#ff8a1f','#ffe23a','#3ad0ff','#7a3cff'].forEach((s,i)=>g.addColorStop(i/4,s));c.fillStyle=g;c.fillRect(0,0,w,h)});
       P.glassSlot.add(new T.Mesh(lg,new T.MeshPhysicalMaterial({map:lt,metalness:.5,roughness:.06,clearcoat:1,iridescence:.5,side:T.DoubleSide})));
       const top=new T.Shape();top.moveTo(-hw,0);top.lineTo(hw,0);top.lineTo(hw*.98,.06);top.lineTo(-hw*.98,.06);top.closePath();
-      const tg=bent(new T.ExtrudeGeometry(top,{depth:.04,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:3}),R+.035,B_EY-.02+hh*.8);P.glassSlot.add(new T.Mesh(tg,wm('#f6f7fb',{roughness:.2,clearcoat:1})));
-      const ns=wmesh(new T.TorusGeometry(.05,.012,8,20,Math.PI),'#f6f7fb',{roughness:.2,clearcoat:1});ns.rotation.z=Math.PI;ns.position.set(0,B_EY-hh*.38,R+.06);P.glassSlot.add(ns);
-      pair(P,{shape:'circle',frame:'#f6f7fb',noLens:1,k:0,w:.1,d:.001,by:.3,bw:.001})},
+      const tg=bent(new T.ExtrudeGeometry(top,{depth:.04,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:3}),R+.085,B_EY-.02+hh*.8);P.glassSlot.add(new T.Mesh(tg,wm('#f6f7fb',{roughness:.2,clearcoat:1})));
+      {const wm2=wm('#f6f7fb',{roughness:.2,clearcoat:1});temples(P,wm2,wm2,hw*.97,.02)}},
     threed:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.28,hh=B_ERY*1.05,fs=new T.Shape();fs.moveTo(-hw,-hh);fs.lineTo(hw,-hh);fs.lineTo(hw,hh);fs.lineTo(-hw,hh);fs.closePath();
       const holes=[];for(const sx of[-1,1]){const cx=sx*B_EX,p=new T.Path(),a=B_ERX*1.0,b=B_ERY*.78;p.moveTo(cx-a,-b);p.lineTo(cx-a,b);p.lineTo(cx+a,b);p.lineTo(cx+a,-b);p.closePath();fs.holes.push(p);holes.push([cx,a,b,sx])}
       const nb=new T.Path();nb.absarc(0,-hh,.06,0,Math.PI,false);fs.holes.push(nb);
       P.glassSlot.add(new T.Mesh(bent(new T.ExtrudeGeometry(fs,{depth:.04,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:3,curveSegments:16}),R+.02,B_EY),wm('#f6f7fb',{roughness:.25,clearcoat:.8})));
-      for(const [cx,a,b,sx] of holes){const g=new T.PlaneGeometry(2*a,2*b,8,4);g.translate(cx,0,0);P.glassSlot.add(new T.Mesh(bent(g,R+.035,B_EY),lensM(sx<0?'#1f6fff':'#ff1f2a',.82,{side:T.DoubleSide})))}
-      pair(P,{shape:'circle',frame:'#f6f7fb',k:0,w:.1,d:.001,by:.3,bw:.001,aw:.02})},
+      for(const [cx,a,b,sx] of holes){const g=new T.PlaneGeometry(2*a,2*b,8,4);g.translate(cx,0,0);P.glassSlot.add(new T.Mesh(bent(g,R+.035,B_EY),lensM(sx<0?'#1f5fff':'#ff1424',.93,{side:T.DoubleSide})))}
+      {const wm2=wm('#f6f7fb',{roughness:.25,clearcoat:.8});temples(P,wm2,wm2,hw*.97,.022)}},
     night:P=>{const T=P.T,M={metalness:.5,roughness:.35,clearcoat:.5},H='#1c1e24';strap(P,'#1c1e24',.11);
       for(const e of P.eyes){const gp=new T.Group();gp.position.copy(e.position);gp.rotation.y=e.rotation.y;P.glassSlot.add(gp);
         const tb=wmesh(new T.CylinderGeometry(.15,.17,.2,40),H,M);tb.rotation.x=Math.PI/2;tb.position.z=B_ERZ+.12;gp.add(tb);
         const rg=wmesh(new T.TorusGeometry(.15,.018,10,40),'#32353e',M);rg.position.z=B_ERZ+.22;gp.add(rg);
-        const ln=wmesh(new T.SphereGeometry(.13,32,16,0,Math.PI*2,0,Math.PI/2),'#3cff6a',{emissive:'#1aff4a',emissiveIntensity:1.3,roughness:.05,clearcoat:1});ln.rotation.x=Math.PI/2;ln.scale.y=.4;ln.position.z=B_ERZ+.215;gp.add(ln)}
+        const ln=wmesh(new T.SphereGeometry(.13,32,16,0,Math.PI*2,0,Math.PI/2),'#18c040',{emissive:'#10e040',emissiveIntensity:.9,roughness:.05,clearcoat:1});ln.rotation.x=Math.PI/2;ln.scale.y=.4;ln.position.z=B_ERZ+.215;gp.add(ln)}
       const bx=wmesh(new T.BoxGeometry(.2,.16,.14,2,2,2),H,M);bx.position.set(0,B_EY+.02,surfZ(0,B_EY)+.12);P.glassSlot.add(bx);
       const mt=wmesh(new T.BoxGeometry(.16,.1,.1),'#2a2d35',M);mt.position.set(0,B_EY+.2,surfZ(0,B_EY+.2)+.06);P.glassSlot.add(mt);const mt2=wmesh(new T.BoxGeometry(.06,.14,.06),'#2a2d35',M);mt2.position.set(0,B_EY+.12,surfZ(0,B_EY+.12)+.1);P.glassSlot.add(mt2)},
     scope:P=>{const T=P.T,e=P.eyes[1],gp=new T.Group(),M={metalness:.6,roughness:.3,clearcoat:.5};gp.position.copy(e.position);gp.rotation.y=e.rotation.y;P.glassSlot.add(gp);
@@ -635,6 +634,6 @@
       const tr=wmesh(new T.CylinderGeometry(.05,.05,.08,24),'#2a2d33',M);tr.rotation.z=Math.PI/2;tr.position.set(.24,.02,B_ERZ+.09);gp.add(tr);const kn=wmesh(new T.CylinderGeometry(.055,.055,.03,24),'#f1b630',GLD);kn.rotation.z=Math.PI/2;kn.position.set(.29,.02,B_ERZ+.09);gp.add(kn);
       const tp=wmesh(new T.CylinderGeometry(.035,.035,.07,20),'#2a2d33',M);tp.position.set(0,.24,B_ERZ+.09);gp.add(tp);const mb=wmesh(new T.BoxGeometry(.1,.08,.12),'#2a2d33',M);mb.position.set(0,-.23,B_ERZ+.06);gp.add(mb);
       strap(P,'#23252b',.07)},
-    lucky:P=>pair(P,{shape:'clover',frame:'#f1b630',fo:GLD,w:.1,d:.035,k:1.3,arm:'#2a9a3a',lens:lensM('#1fae3a',.78,{emissive:'#0a6a1a',emissiveIntensity:.2})})};
+    lucky:P=>pair(P,{shape:'clover',frame:'#f1b630',fo:GLD,w:.1,d:.035,k:1.3,arm:'#2a9a3a',lens:lensM('#12902e',.92,{emissive:'#0a5a18',emissiveIntensity:.15})})};
   const _bg=buildGlasses;buildGlasses=function(P,kind){const f=G[kind];if(!f)return _bg(P,kind);f(P)};
 })();
