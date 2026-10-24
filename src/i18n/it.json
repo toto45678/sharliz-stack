@@ -1037,7 +1037,8 @@
   "stKeep": "Continua a giocare per scoprire cosa succede",
   "arcZero": "Nessun punto questa volta, quindi la partita a monete non è stata usata",
   "trInvite": "Vieni a giocare con me al torneo settimanale di Sharliz! 🏆",
-  "evWinFirst": "Prima vinci la tappa {n}"
+  "evWinFirst": "Prima vinci la tappa {n}",
+  "trSkill": "Difficoltà intelligente"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",
