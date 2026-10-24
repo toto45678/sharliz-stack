@@ -51,14 +51,14 @@ h1{font-size:30px;line-height:1.1;margin:8px 0 4px;color:var(--yellow);text-shad
   <h1>Will your tower hold?</h1>
   <p class="sub">Drop the wobbly jelly Sharliz and stack them sky high.</p>
   <div class="phone"><video src="img/clip.mp4" poster="img/clip_poster.webp" autoplay muted loop playsinline aria-label="Sharliz Tower gameplay"></video></div>
-  <a class="store" id="get" href="https://apps.apple.com/app/apple-store/id6819720504?pt=129570131&amp;ct=meta_w1_caau&amp;mt=8" rel="noopener">
+  <a class="store" id="get" href="/go?ct=meta_w1_caau">
     <span class="si" aria-hidden="true">📱</span><span><small>Download free on the</small>App Store</span></a>
   <p class="fine">Free to play · optional in-app purchases · no loot boxes<br>iPhone and iPad</p>
   <div class="chips"><span class="chip">300 levels</span><span class="chip">30 bosses</span><span class="chip">14 worlds</span><span class="chip">4 seasons</span></div>
   <p class="more"><a href="/">More about the game</a> · <a href="privacy.html">Privacy</a></p>
 </main>
 <script>
-// a different campaign can reuse this page: /play?ct=<name> swaps the App Store campaign token (letters, digits, _ and -, max 30)
+// a different campaign can reuse this page: /play?ct=<name> swaps the App Store campaign token (letters, digits, _ and -, max 30); /go counts the tap and forwards to the store
 (function(){try{var c=new URLSearchParams(location.search).get('ct');if(c&&/^[\w-]{1,30}$/.test(c)){var a=document.getElementById('get');a.href=a.href.replace(/ct=[^&]*/,'ct='+c)}}catch(e){}})();
 </script>
 </body>
