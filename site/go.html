@@ -12,8 +12,9 @@
 <p>Opening the App Store…<br><a id="to" href="https://apps.apple.com/app/apple-store/id6819720504?pt=129570131&amp;ct=meta_w1_caau&amp;mt=8">Tap here if nothing happens</a></p>
 <script>
 (function(){var a=document.getElementById('to');try{var c=new URLSearchParams(location.search).get('ct');if(c&&/^[\w-]{1,30}$/.test(c))a.href=a.href.replace(/ct=[^&]*/,'ct='+c)}catch(e){}
-// short pause so the analytics beacon is sent before we leave
-setTimeout(function(){location.replace(a.href)},600)})();
+// leave only after the page has loaded, so Cloudflare's deferred analytics beacon (injected at the end of body) has sent the view; 2.5 s at most
+var gone=false;function go(){if(!gone){gone=true;location.replace(a.href)}}
+window.addEventListener('load',function(){setTimeout(go,400)});setTimeout(go,2500)})();
 </script>
 </body>
 </html>
