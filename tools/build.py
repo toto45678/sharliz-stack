@@ -176,14 +176,25 @@ rep("const TOTAL=ZONES.length*LPZ;",r"""{const B=ZONES.slice();for(const z of B)
   for(const [sid,art,key] of [['jungle','farm','zJungle'],['castle','city','zCastle'],['clouds','snow','zClouds'],['dino','desert','zDino'],['factory','space','zFactory'],['crystal','candy','zCrystal']]){const b=B.find(z=>z.id===art);ZONES.push(Object.assign({},b,{sid,season:4,key}))}}
 const etOf=zi=>typeof mode!=='undefined'&&mode==='event'?1.5:zi<8?zi:4+(zi-8)*.18;
 // floors added by the level's place in its world: +1 per level, with a 'rest' level now and then (+0) (Tzach, Oct 6; was +2 per level)
-const lvStep=k=>[0,1,2,2,3,4,4,5,6][k]||0;
+// DIFF = every difficulty knob in one place: swing speed (base + per world tier + per level in the world + per floor, up to 12 floors),
+// landing windows in Sharliz widths (perfect / great minimum, miss = how far off a piece may land and still stay) and the floor goal.
+// Smart difficulty (Tzach, Oct 24: "the game is really easy"): levels mode is faster from the start with a narrower perfect and longer goals
+// (end of season 1 about as before). DIFF0 = the values before, still used by the tutorial levels 1-3 and every other mode (events,
+// tournament, daily, endless, duo, bonus); level 4 sits half way. The per-player part (progress.skill, v70): skK() on the speed (skUp/skDn = ×(1+skUp) at skill +1,
+// ×(1-skDn) at -1), skLo() gives a struggling player the old perfect window back; skW = skill change after a win with 0/1/more hearts lost, skL after a loss
+const DIFF0={sp0:1.45,spW:.14,spL:.035,spF:.035,pMin:.09,gMin:.2,miss:.5,goal0:6,goalW:2,step:[0,1,2,2,3,4,4,5,6]};
+const DIFF=Object.assign({},DIFF0,{sp0:1.9,spW:.08,pMin:.06,goal0:8,goalW:1.6,skUp:.2,skDn:.2,skW:[.2,.05,-.1],skL:-.3});
+const dfMix=n=>typeof mode!=='undefined'&&mode!=='levels'||n<=3?0:n===4?.5:1,dfK=(key,n)=>DIFF0[key]+(DIFF[key]-DIFF0[key])*dfMix(n);
+const skOn=()=>mode==='levels'&&level>3,skS=()=>skOn()?Math.max(-1,Math.min(1,+progress.skill||0)):0;
+const skK=()=>{const s=skS();return 1+s*(s>0?DIFF.skUp:DIFF.skDn)},skLo=()=>Math.max(0,-skS());
+const lvStep=k=>DIFF.step[k]||0,lvGoal=(zi,k)=>{const n=zi*LPZ+k+1;return Math.round(dfK('goal0',n)+dfK('goalW',n)*etOf(zi))+lvStep(k)};
 const TOTAL=ZONES.length*LPZ;""")
-rep("6+2*zoneIdx(level)+2*lvInZone()","6+Math.round(2*etOf(zoneIdx(level)))+lvStep(lvInZone())")
-rep("(1.45+zoneIdx(level)*.14","(1.45+etOf(zoneIdx(level))*.14")
+rep("6+2*zoneIdx(level)+2*lvInZone()","lvGoal(zoneIdx(level),lvInZone())")
+rep("(1.45+zoneIdx(level)*.14+lvInZone()*.035)*(1+Math.min(tower.length-1,12)*.035)","(dfK('sp0',level)+etOf(zoneIdx(level))*dfK('spW',level)+lvInZone()*DIFF.spL)*(1+Math.min(tower.length-1,12)*DIFF.spF)*skK()")
 rep("lv=.5+.5*(level-1)/(TOTAL-1)","lv=.5+.5*Math.min(1,(etOf(zoneIdx(level))*LPZ+lvInZone())/79)")
 rep("hp=3*(5+zi);","hp=3*(5+Math.round(etOf(zi)))+3*((ZONES[zi].season||1)-1);")
-rep("let p=Math.max(.09,sp*(55-zi*1.4)/2000),g=Math.max(.2,sp*(120-zi*3)/2000)","let p=Math.max(.09,sp*(55-etOf(zi)*1.4)/2000),g=Math.max(.2,sp*(120-etOf(zi)*3)/2000)")
-rep("g=6+2*zi+2*k;","g=6+Math.round(2*etOf(zi))+lvStep(k);")
+rep("let p=Math.max(.09,sp*(55-zi*1.4)/2000),g=Math.max(.2,sp*(120-zi*3)/2000),m=.5;","const pm=dfK('pMin',level);let p=Math.max(pm+(DIFF0.pMin-pm)*skLo(),sp*(55-etOf(zi)*1.4)/2000),g=Math.max(DIFF.gMin,sp*(120-etOf(zi)*3)/2000),m=DIFF.miss;")
+rep("g=6+2*zi+2*k;","g=lvGoal(zi,k);")
 rep("const bossReach=()=>4+Math.floor(zoneIdx(level)/2);","const bossReach=()=>4+Math.floor(etOf(zoneIdx(level))/2);")
 rep("BOSS_NAMES[zone().id]","(BOSS_NAMES[zone().sid]||BOSS_NAMES[zone().id])",3)
 rep("lv.firstBoss=!progress.beat[zone().id];progress.beat[zone().id]=1;","lv.firstBoss=!progress.beat[zone().sid];progress.beat[zone().sid]=1;")
@@ -243,7 +254,7 @@ rep("function win(){\n  state='win';","function win(){\n  cv.style.transform='';
 rep("if(hearts<=0){state='over';renderBoosterBar();","if(hearts<=0){state='over';cv.style.transform='';renderBoosterBar();")
 # ---- bug hunt 3: the pre-level card still used the old goal / hazard formulas (level 5 said 14 floors, real goal 9; level 81+ listed the classic hazards)
 rep("const hz2=HZ_ORDER.slice(0,zi+1).map(h=>t('hz_'+h)).join(' · ');","const hz2=(()=>{const L0=level;level=lvN;try{return hzList()}finally{level=L0}})().map(h=>t('hz_'+h)).join(' · ');")
-rep("t('preBossTxt',{n:4+Math.floor(zi/2)}):t('floorsN',{n:6+2*zi+2*k})","t('preBossTxt',{n:4+Math.floor(etOf(zi)/2)}):t('floorsN',{n:6+Math.round(2*etOf(zi))+lvStep(k)})")
+rep("t('preBossTxt',{n:4+Math.floor(zi/2)}):t('floorsN',{n:6+2*zi+2*k})","t('preBossTxt',{n:4+Math.floor(etOf(zi)/2)}):t('floorsN',{n:lvGoal(zi,k)})")
 # ---- bug hunt 4: the photo share sheet still said the old name
 rep("await navigator.share({files:[file],title:'Sharliz Stack'});","await navigator.share({files:[file],title:'Sharliz Tower'});")
 # two reward toasts at the same moment (daily gift + sticker pack, trophy + pack) sat exactly on top of each other: stack them
@@ -350,7 +361,7 @@ rep("function bakeChars(){B3OPT=B3GAME;let job;","function bakeChars(){H3.baking
 rep("if(!col){r.dispose();try{r.forceContextLoss()}catch(e){}H3.baked=true;","if(!col){r.dispose();try{r.forceContextLoss()}catch(e){}H3.baked=true;H3.baking=false;")
 rep("bakePut(col,bakeSig(col,L,hat),sheet,cells);return true}}","bakePut(col,bakeSig(col,L,hat),sheet,cells);return true}}\n{const _sl=startLevel;startLevel=function(){if(H3.bakeGo&&!H3.baked)H3.bakeGo();return _sl.apply(this,arguments)}}")
 rep("},'image/webp',.92)})}\nfunction bakeCols()","},'image/png')})}\nfunction bakeCols()")
-js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')+'\n'+rd('v51.js')+'\n'+rd('v52.js')+'\n'+rd('v53.js')+'\n'+rd('v54.js')+'\n'+rd('v55.js')+'\n'+rd('v56.js')+'\n'+rd('v57.js')+'\n'+rd('v58.js')+'\n'+rd('v59.js')+'\n'+rd('v60.js').replace('__PET3D__',json.dumps(PET3D,separators=(',',':')))+'\n'+rd('v61.js').replace('__STK_BUD_ART__',json.dumps(sorted(os.path.basename(f)[6:-5] for f in _g.glob(P(ROOT,'art','stk_p_*.webp')))))+'\n'+rd('v62.js').replace('__MV_LIST__',json.dumps(sorted(f[3:-4] for f in os.listdir(P(ROOT,'art')) if f.startswith('mv_') and f.endswith('.mp4'))))+'\n'+rd('v63.js')+'\n'+rd('v64.js').replace('__STK3_ART__',json.dumps(sorted(f[4:-5] for f in os.listdir(P(ROOT,'art')) if re.fullmatch(r'stk_(s\d{3}|st\d{2,3}|g\d\d)\.webp',f))))+'\n'+rd('v65.js')+'\n'+rd('v66.js')+'\n'+rd('v67.js').replace('__HS_ART__',json.dumps(sorted(f[:-5] for f in os.listdir(P(ROOT,'art')) if f.startswith(('hs_','hf_')) and f.endswith('.webp'))))+'\n'+rd('v68.js')
+js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')+'\n'+rd('v33.js').replace('__B3D_META__',json.dumps(B3D,separators=(',',':')))+'\n'+rd('v36.js')+'\n'+rd('v38.js')+'\n'+rd('v39.js')+'\n'+rd('v40.js')+'\n'+rd('v41.js')+'\n'+rd('v42.js')+'\n'+rd('v43.js')+'\n'+rd('v44.js')+'\n'+rd('v45.js')+'\n'+rd('v46.js').replace('__ART_OWN__',json.dumps(ART_OWN)).replace('__ART_CAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'w3c_{i}.webp'))])).replace('__ART_MAP__',json.dumps([i for i in ART_OWN if os.path.exists(P(ROOT,'art',f'mapn_{i}.webp'))]))+'\n'+rd('v47.js')+'\n'+rd('v48.js')+'\n'+rd('v49.js')+'\n'+rd('v50.js')+'\n'+rd('v51.js')+'\n'+rd('v52.js')+'\n'+rd('v53.js')+'\n'+rd('v54.js')+'\n'+rd('v55.js')+'\n'+rd('v56.js')+'\n'+rd('v57.js')+'\n'+rd('v58.js')+'\n'+rd('v59.js')+'\n'+rd('v60.js').replace('__PET3D__',json.dumps(PET3D,separators=(',',':')))+'\n'+rd('v61.js').replace('__STK_BUD_ART__',json.dumps(sorted(os.path.basename(f)[6:-5] for f in _g.glob(P(ROOT,'art','stk_p_*.webp')))))+'\n'+rd('v62.js').replace('__MV_LIST__',json.dumps(sorted(f[3:-4] for f in os.listdir(P(ROOT,'art')) if f.startswith('mv_') and f.endswith('.mp4'))))+'\n'+rd('v63.js')+'\n'+rd('v64.js').replace('__STK3_ART__',json.dumps(sorted(f[4:-5] for f in os.listdir(P(ROOT,'art')) if re.fullmatch(r'stk_(s\d{3}|st\d{2,3}|g\d\d)\.webp',f))))+'\n'+rd('v65.js')+'\n'+rd('v66.js')+'\n'+rd('v67.js').replace('__HS_ART__',json.dumps(sorted(f[:-5] for f in os.listdir(P(ROOT,'art')) if f.startswith(('hs_','hf_')) and f.endswith('.webp'))))+'\n'+rd('v68.js')+'\n'+rd('v70.js')
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')+'\n'+rd('v51.css')+'\n'+rd('v52.css')+'\n'+rd('v53.css')+'\n'+rd('v54.css')+'\n'+rd('v55.css')+'\n'+rd('v56.css')+'\n'+rd('v57.css')+'\n'+rd('v58.css')+'\n'+rd('v59.css')+'\n'+rd('v62.css')+'\n'+rd('v63.css')+'\n'+rd('v64.css')+'\n'+rd('v65.css')+'\n'+rd('v67.css')+'\n'+rd('v68.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]

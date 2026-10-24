@@ -1037,7 +1037,8 @@
   "stKeep": "Neler olacağını görmek için oynamaya devam et",
   "arcZero": "Bu sefer puan yok, bu yüzden altınlı oyun hakkın kullanılmadı",
   "trInvite": "Benimle Sharliz haftalık turnuvasında oyna! 🏆",
-  "evWinFirst": "Önce {n}. aşamayı kazan"
+  "evWinFirst": "Önce {n}. aşamayı kazan",
+  "trSkill": "Akıllı zorluk"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
