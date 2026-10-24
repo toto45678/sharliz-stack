@@ -58,8 +58,8 @@
   function fluff(T,r,seed=1){const g=new T.SphereGeometry(r,56,40),p=g.attributes.position,v=new T.Vector3();
     for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i).normalize();const n=Math.sin(v.x*23+seed)*Math.sin(v.y*21+seed*2)*Math.sin(v.z*25+seed*3)+.5*Math.sin(v.x*41-v.z*37+seed)*Math.sin(v.y*43);v.multiplyScalar(r*(1+.07*n));p.setXYZ(i,v.x,v.y,v.z)}
     g.computeVertexNormals();return g}
-  function starGeo(T,R,r,d,n=5){const sh=new T.Shape();for(let k=0;k<n*2;k++){const a=Math.PI/2+k*Math.PI/n,rr=k%2?r:R;k?sh.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):sh.moveTo(Math.cos(a)*rr,Math.sin(a)*rr)}
-    const g=new T.ExtrudeGeometry(sh,{depth:d,bevelEnabled:true,bevelSize:d*.8,bevelThickness:d*.8,bevelSegments:3});g.translate(0,0,-d/2);return g}
+  function starGeo(T,R,r,d,n=5,bv=.8){const sh=new T.Shape();for(let k=0;k<n*2;k++){const a=Math.PI/2+k*Math.PI/n,rr=k%2?r:R;k?sh.lineTo(Math.cos(a)*rr,Math.sin(a)*rr):sh.moveTo(Math.cos(a)*rr,Math.sin(a)*rr)}
+    const g=new T.ExtrudeGeometry(sh,{depth:d,bevelEnabled:true,bevelSize:d*bv,bevelThickness:d*bv,bevelSegments:3});g.translate(0,0,-d/2);return g}
   function moonGeo(T,R,d){const sh=new T.Shape();sh.absarc(0,0,R,Math.PI*.35,Math.PI*1.65,false);sh.absarc(R*.45,0,R*.78,Math.PI*1.55,Math.PI*.45,true);
     const g=new T.ExtrudeGeometry(sh,{depth:d,bevelEnabled:true,bevelSize:d*.7,bevelThickness:d*.7,bevelSegments:3,curveSegments:24});g.translate(0,0,-d/2);return g}
   const dmesh=(geo,c,o)=>wmesh(geo,c,Object.assign({side:THREE.DoubleSide},o));
@@ -268,73 +268,126 @@
     // big red fur pompom
     const pm=furBall(.115,'#a8101a','ppBeanie5',{len:.055,layers:20,rep:[2,1.2],emi:.15,stroke:[.1,.06],gv:[[0,KA(.38)],[.3,KA(0)],[1,WA(.06)]]});pm.position.y=.4;g.add(pm)},
   /* batch 2 (graphics sheet acc/hats2.png) */
-  bow(P,g){const T=P.T,o={roughness:.22,clearcoat:1,clearcoatRoughness:.08,sheen:.8,sheenRoughness:.3,sheenColor:new T.Color('#ffd0e6')},C='#ff6fae';
-    for(const sx of[-1,1]){const l=wmesh(new T.SphereGeometry(.1,28,18),C,o);l.scale.set(1.2,.85,.5);l.position.set(sx*.115,.0,0);l.rotation.z=sx*.28;g.add(l);const fd=wmesh(new T.SphereGeometry(.04,16,10),'#e8478d',o);fd.scale.set(1.4,.5,.3);fd.position.set(sx*.08,0,.045);fd.rotation.z=sx*.28;g.add(fd);
-      const t=taper(T,[new T.Vector3(sx*.02,-.02,.03),new T.Vector3(sx*.06,-.08,.05),new T.Vector3(sx*.1,-.14,.06)],.032,.022,20,12);const tm=wmesh(t.g,C,o);tm.scale.z=.45;g.add(tm)}
-    const k=wmesh(new T.SphereGeometry(.045,20,14),'#ff4f98',o);k.scale.set(1,1.15,.75);g.add(k);g.position.set(0,.12,.06);g.rotation.x=-.25;g.scale.setScalar(1.25)},
-  cap(P,g){const T=P.T,o={roughness:.42,clearcoat:.4};
-    // SphereGeometry: front (+z) is phi = pi/2; the two front panels are white
-    const red=wmesh(new T.SphereGeometry(.31,40,20,Math.PI/2+Math.PI/3,Math.PI*4/3,0,Math.PI/2),'#e3242f',o),wh=wmesh(new T.SphereGeometry(.31,24,20,Math.PI/2-Math.PI/3,Math.PI*2/3,0,Math.PI/2),'#f6f4ef',o);
-    for(const m of[red,wh]){m.position.y=-.02;m.scale.y=.92;g.add(m)}
-    const vis=shell(40,8,(u,v)=>{const a=(u-.5)*2,r=.29+v*.24*(1-Math.pow(Math.abs(u-.5)*2,2.5)*.8);return [Math.sin(a)*r,-.03-.07*v*v+.012*Math.cos(a),Math.cos(a)*r]},.02);
-    g.add(dmesh(vis,'#e3242f',o));const bt=wmesh(new T.SphereGeometry(.03,16,10),'#e3242f',o);bt.position.y=.265;bt.scale.y=.6;g.add(bt)},
-  paper(P,g){const T=P.T,tx=canvasTex('news',512,256,(c,w,h)=>{c.fillStyle='#f1f0ec';c.fillRect(0,0,w,h);c.fillStyle='#8d8c88';
-      for(let col=0;col<6;col++)for(let r=0;r<22;r++){if(col===3&&r>4&&r<14)continue;const x=8+col*84,y=10+r*11;c.fillRect(x,y,60+((r*7+col*3)%14),4)}
-      c.fillStyle='#5c5b58';c.fillRect(8,2,200,7);c.fillStyle='#9a9995';c.fillRect(260,58,64,96);c.fillStyle='#6a6966';c.beginPath();c.arc(292,92,16,0,7);c.fill();c.fillRect(272,112,40,40)});
-    const m=wm('#ffffff',{map:tx,roughness:.85,clearcoat:0,side:T.DoubleSide,flatShading:true}),pos=[],uv=[],tri=(a,b,c)=>{for(const q of[a,b,c]){pos.push(q[0],q[1],q[2]);uv.push(.5+q[0]*1.4,.15+q[1]*1.6+q[2]*.3)}};
-    const X=.33,Z=.22,B=-.03,Y=.08,AY=.33;
-    for(const sz of[-1,1]){tri([-X,Y,sz*Z],[X,Y,sz*Z],[0,AY,sz*.015]);tri([-X,B,sz*Z*1.05],[X,B,sz*Z*1.05],[X,Y,sz*Z]);tri([-X,B,sz*Z*1.05],[X,Y,sz*Z],[-X,Y,sz*Z])}
-    for(const sx of[-1,1]){tri([sx*X,B,-Z*1.05],[sx*X,B,Z*1.05],[sx*X*1.06,Y+.02,0]);tri([sx*X,Y,-Z],[sx*X,Y,Z],[0,AY,0])}
+  bow(P,g){const T=P.T,C='#f8689a',PK=a=>`rgba(255,215,232,${a})`;// drawing's satin pink (sampled #fb77a0); satin = painted maps (edges dark, light centre band, AO at the knot) + pink sheen, slight self-light so the colour does not sink
+    const sat=(key,gu,gv,lines)=>canvasTex(key,256,128,(c,w,h)=>{c.fillStyle=C;c.fillRect(0,0,w,h);if(lines)for(let i=0;i<lines;i++){const x=w*(.1+.8*i/(lines-1));const gr=c.createLinearGradient(x-9,0,x+9,0);gr.addColorStop(0,KA(0));gr.addColorStop(.5,KA(.14));gr.addColorStop(1,KA(0));c.fillStyle=gr;c.fillRect(x-9,0,18,h)}bakeLight(c,w,h,{gu,gv})});
+    const M=(key,gu,gv,lines)=>{const m=wm('#ffffff',{map:sat(key,gu,gv,lines),roughness:.42,clearcoat:.2,clearcoatRoughness:.3,sheen:.5,sheenRoughness:.4,sheenColor:new T.Color('#ff9ec8'),envMapIntensity:.35,emissive:'#ffffff',emissiveIntensity:.14});m.emissiveMap=m.map;return m};
+    const EDGE=[[0,KA(.1)],[.18,KA(0)],[.42,PK(.1)],[.58,PK(.1)],[.82,KA(0)],[1,KA(.1)]];// soft edges: no outline on the .008 ribbon rim
+    const loopM=M('bowLoop2',[[0,KA(.3)],[.12,KA(0)],[.22,PK(.14)],[.45,PK(.06)],[.85,KA(0)],[1,KA(.3)]],EDGE),tailM=M('bowTail2',[[0,KA(.45)],[.2,KA(0)],[.55,PK(.08)],[1,KA(.08)]],EDGE),knotM=M('bowKnot2',[[0,KA(.1)],[.3,PK(.12)],[.6,KA(0)],[1,KA(.25)]],[[0,KA(.45)],[.2,KA(0)],[.8,KA(0)],[1,KA(.45)]],3);
+    const top=new T.Group();top.position.set(0,.13,.0);top.rotation.x=-.22;g.add(top);
+    // loops: one ribbon strip per side, out from the knot along the front face, round the far end and back (u), width across = y (v); puffy in z at mid width, pinched at the knot; thin shell for the ribbon's edge
+    for(const sx of[-1,1]){const lp=shell(56,14,(u,v)=>{const th=Math.PI*u,s=Math.sin(th),q=2*v-1,hh=.04+.16*Math.pow(Math.sin(s*Math.PI*.72),.9);return [sx*(.045+.27*s*(1-.22*q*q*Math.pow(s,4))),q*hh-.02*s,Math.cos(th)*(.04+.09*(1-q*q)*Math.sqrt(s))]},.008);top.add(wmesh(lp,loopM));
+      // tails: hang from the knot down the front of the head (surface-following via headZ), swinging outward, V-notched end
+      const tl=shell(20,8,(u,v)=>{const q=2*v-1,ue=u*(1-.14*(1-Math.abs(q))),x=sx*(.03+.14*ue+.03*Math.sin(ue*Math.PI))+q*.05*.9,y=.13-.26*ue+sx*q*.05*.42;return [x,y,headZ(x,y,.02+.012*Math.sin(ue*Math.PI))]},.006);g.add(wmesh(tl,tailM))}
+    const kp=[];for(let k=0;k<=10;k++){const t=k/10;kp.push(V2(.065+.018*Math.sin(t*Math.PI),t*.13-.065))}const kn=wmesh(new T.LatheGeometry(kp,32),knotM);kn.rotation.z=Math.PI/2;kn.scale.z=.85;kn.position.z=.015;top.add(kn)},
+  cap(P,g){const T=P.T,RD='#c91c25',WT='#fbf9f7',o={roughness:.45,clearcoat:.3,clearcoatRoughness:.2,envMapIntensity:.4};// drawing's red (#d72931 sampled; a hair deeper so the studio light does not lift it to salmon) and off-white front panels
+    // 6 panels on one dome (sphere u: .25 = front): the two FRONT panels white (u .25 +- 1/6), the rest red; seam = soft dark groove + light piping, each panel slightly darker at its edges (puffy); AO at the rim (v .5) over the sweatband, soft key light top-left
+    const tx=canvasTex('capDome1',1024,512,(c,w,h)=>{for(let i=0;i<6;i++){const u0=.25-1/6+i/6,C=i<2?WT:RD,e=i<2?.5:1;for(const off of[0,-1,1]){const x0=(u0+off)*w,x1=x0+w/6;if(x1<0||x0>w)continue;const gr=c.createLinearGradient(x0,0,x1,0);gr.addColorStop(0,shade(C,-.22*e));gr.addColorStop(.04,shade(C,.12));gr.addColorStop(.1,C);gr.addColorStop(.5,shade(C,.03));gr.addColorStop(.9,C);gr.addColorStop(.96,shade(C,-.06*e));gr.addColorStop(1,shade(C,-.22*e));c.fillStyle=gr;c.fillRect(x0,0,w/6+1,h)}}
+      grain(c,w,h,1600,.02,4);bakeLight(c,w,h,{gv:[[0,KA(0)],[.5,KA(.25)],[.56,KA(0)],[1,WA(.06)]],gu:[[0,WA(.05)],[.15,WA(0)],[.4,KA(.08)],[.6,KA(.03)],[.85,WA(.1)],[1,WA(.05)]]})});
+    const dm=wm('#ffffff',Object.assign({map:tx,emissive:'#ff3a3a',emissiveIntensity:.06},o));dm.emissiveMap=dm.map;const dome=wmesh(new T.SphereGeometry(.335,72,32,0,Math.PI*2,0,Math.PI/2),dm);dome.scale.y=1.05;dome.position.y=-.02;g.add(dome);
+    const rim=wmesh(new T.TorusGeometry(.333,.007,10,72),shade(RD,-.15),o);rim.rotation.x=Math.PI/2;rim.position.y=-.02;g.add(rim);
+    // visor (propeller approach, AD round 1): opaque shelf projecting FORWARD from under the cap's front rim, ~17 deg below level, sides curling down a little; root tucked under the rim (no light slit) and every vertex clamped outside the head surface (headZ at its own height) so it never passes through the face; .022 thickness
+    const vtx=canvasTex('capVisor1',256,128,(c,w,h)=>{c.fillStyle=RD;c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KA(.3)],[.25,KA(0)],[.85,WA(.04)],[1,KA(.08)]],gu:[[0,KA(.1)],[.3,WA(.06)],[.6,WA(0)],[1,KA(.12)]]});c.strokeStyle=KA(.35);c.lineWidth=2;c.setLineDash([5,4]);for(const v of[.8,.9]){c.beginPath();c.moveTo(0,h*(1-v));c.lineTo(w,h*(1-v));c.stroke()}});
+    const vis=shell(32,10,(u,v)=>{const q=u*2-1,x=q*.235*(1-.15*v),y=-.03-.06*v-.03*q*q*v,z0=Math.sqrt(Math.max(0,.1109-x*x)),z=Math.max(z0+.25*v*(1-.5*q*q*q*q),headZ(x,y,.012));return [x,y,z]},.022);/* root ON the rim's front edge (z .333) so the shelf leaves above the head bulge below the rim (bodyR grows downward), ~14 deg down */;g.add(wmesh(vis,wm('#ffffff',Object.assign({map:vtx},o))));
+    const bt=wmesh(new T.SphereGeometry(.032,16,10),RD,o);bt.position.y=.33;bt.scale.y=.55;g.add(bt)},
+  paper(P,g){const T=P.T,PW='#f1f0ec',PG='#aaa6a2',PD='#5e5b59';// drawing's newsprint white / print grey / dark headline (sampled)
+    // newsprint map: bold columns of text rows (read at 1/4), a headline on the crown; the photo block and the dashed bold column only in the HULL region (canvas y 300-500 = hull v .02-.42; the crown uses y 25-230, text only); paper tone darkens toward the bottom (fold AO), subtle key light
+    const tx=canvasTex('news6',1024,512,(c,w,h)=>{c.fillStyle=PW;c.fillRect(0,0,w,h);let sd=5;const R=()=>(sd=(sd*16807)%2147483647)/2147483647;
+      for(let col=0;col<10;col++){const x=14+col*102;for(let r=0;r<20;r++){const y=40+r*11;if(y>250)break;if(col===7&&r<1)continue;c.fillStyle=R()<.1?PD:PG;c.fillRect(x,y,54+R()*34,4)}for(let r=0;r<9;r++){const y=300+r*22;if(col===6&&r>1&&r<7)continue;if(col===3&&r>1&&r<8)continue;c.fillStyle=R()<.12?PD:PG;c.fillRect(x,y,50+R()*36,9)}}
+      c.fillStyle=PD;c.fillRect(14,12,420,18);c.fillRect(728,12,270,18);c.fillStyle=PW;c.fillRect(290,100,440,34);c.fillStyle=PD;c.fillRect(300,108,420,18);c.fillStyle=PG;c.fillRect(620,330,110,80);c.fillStyle='#8f8781';c.beginPath();c.arc(675,355,16,0,7);c.fill();c.fillRect(650,372,50,38);c.fillStyle=PW;c.fillRect(656,382,12,8);
+      for(let r=0;r<6;r++){c.fillStyle=PD;c.fillRect(320,340+r*16,80,9)}grain(c,w,h,1200,.025,8);bakeLight(c,w,h,{gv:[[0,KA(.22)],[.3,KA(0)],[1,WA(.08)]],gu:[[0,WA(.06)],[.3,WA(0)],[.55,KA(.08)],[.8,WA(.06)],[1,WA(.06)]]})});
+    const m=wm('#ffffff',{map:tx,roughness:.85,clearcoat:0,side:T.DoubleSide,envMapIntensity:.4,emissive:'#ffffff',emissiveIntensity:.1});m.emissiveMap=m.map;
+    // hull band: pointed at the ends (superellipse top view), the top edge rising at the ends, the bottom slightly narrower; one thin sheet
+    const X=.37,Z=.2,hull=surf(96,8,(u,v)=>{const a=u*Math.PI*2,ca=Math.cos(a),sa=Math.sin(a),k=.88+.12*v,x=X*Math.sign(ca)*Math.pow(Math.abs(ca),.7)*k,z=Z*Math.sign(sa)*Math.pow(Math.abs(sa),1.25)*k;return [x,v*(.11+.07*Math.pow(Math.abs(ca),3)),z]},1);
+    {const uv=hull.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)*1.6,.02+uv.getY(i)*.4)}g.add(new T.Mesh(hull,m));
+    // crown: front and back triangles with a vertical centre crease (two half-triangles each, the crease edge pushed out), meeting at the top ridge, plus the two small side triangles
+    const pos=[],uv=[],tri=(A,B,C)=>{const side=A[0]===B[0]&&B[0]===C[0];for(const q of[A,B,C]){pos.push(q[0],q[1],q[2]);uv.push(.5+(side?q[2]:q[0])*.9,side?.44+(q[1]-Y)*.15:.55+q[1]*.9+q[2]*.3)}}/* side faces (constant x): u from z, v inside the blank strip between the thin rows and the bold rows (canvas y 256-300) -> plain opaque off-white */,Y=.1,AY=.36,CX=.3;
+    for(const sz of[-1,1]){const zb=sz*Z*.86,zc=sz*Z*.94;tri([-CX,Y,zb],[0,Y,zc],[0,AY,sz*.01]);tri([0,Y,zc],[CX,Y,zb],[0,AY,sz*.01])}
+    for(const sx of[-1,1])tri([sx*CX,Y,-Z*.86],[sx*CX,Y,Z*.86],[0,AY,0]);
     const geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute(pos,3));geo.setAttribute('uv',new T.Float32BufferAttribute(uv,2));geo.computeVertexNormals();
-    g.add(new T.Mesh(geo,m));g.position.y=.04},
-  antenna(P,g){const T=P.T,o={roughness:.25,clearcoat:.8},pts=[];for(let k=0;k<=24;k++){const t=k/24,a=(t-.5)*Math.PI*.92,y=Math.cos(a)*.1-.12,r=bodyR((.66+y)/.75)+.018;pts.push(new T.Vector3(Math.sign(a)*Math.max(.001,r*Math.abs(Math.sin(a))/Math.max(.001,Math.abs(Math.sin(a)))),y,0))}
-    const band=[];for(let k=0;k<=30;k++){const t=k/30,a=(t-.5)*2.4,y=-.16+.26*Math.cos(a*1.25)/1;const yy=Math.min(.095,y),x=Math.sign(a)*(bodyR(Math.min(.999,(.66+yy)/.75))+.022);band.push(new T.Vector3(Math.abs(a)<.05?0:x,yy+.0,0))}
-    const cu=[];for(let k=0;k<=28;k++){const t=k/28,ang=(t-.5)*Math.PI*.95,y0=-.17;const yy=y0+(.095-y0)*Math.cos(ang)**1.3;const r=bodyR(Math.min(.997,(.66+yy)/.75))+.02;cu.push(new T.Vector3(Math.sin(ang)>=0?r*Math.min(1,Math.abs(Math.sin(ang))*4):-r*Math.min(1,Math.abs(Math.sin(ang))*4),yy+.01,0))}
-    g.add(wmesh(new T.TubeGeometry(new T.CatmullRomCurve3(cu),64,.022,10),'#4cc233',o));
-    for(const sx of[-1,1]){const x0=sx*.13,y0=.06,hp=[];for(let k=0;k<=80;k++){const t=k/80,a=t*Math.PI*2*7;hp.push(new T.Vector3(x0+sx*t*.07+Math.cos(a)*.016,y0+t*.2,Math.sin(a)*.016))}
-      g.add(wmesh(new T.TubeGeometry(new T.CatmullRomCurve3(hp),240,.0045,6),'#9aa0aa',{metalness:.85,roughness:.25}));
-      const st=wmesh(new T.CylinderGeometry(.009,.009,.06,8),'#4cc233',o);st.position.set(x0,y0-.02,0);g.add(st);
-      const b=wmesh(new T.SphereGeometry(.058,24,16),'#9cff4a',{roughness:.1,clearcoat:1,emissive:'#6aff2a',emissiveIntensity:.55});b.position.set(x0+sx*.075,y0+.26,0);g.add(b)}},
-  headphones(P,g){const T=P.T,o={roughness:.3,clearcoat:.7},yc=-.22,rc=bodyR((.66+yc)/.75);
-    const Rx=rc+.07,cu=[];for(let k=0;k<=40;k++){const ang=(k/40-.5)*Math.PI;cu.push(new T.Vector3(Math.sin(ang)*Rx,yc+.07+(.17-yc-.07)*Math.cos(ang),0))}
-    const bd=wmesh(new T.TubeGeometry(new T.CatmullRomCurve3(cu),64,.032,12),'#1f4ccf',o);bd.scale.z=1.6;g.add(bd);
-    for(const sx of[-1,1]){const cg=new T.Group();cg.position.set(sx*(rc+.06),yc,0);cg.rotation.z=sx*Math.PI/2;g.add(cg);
-      const shell_=wmesh(new T.CylinderGeometry(.115,.13,.08,40),'#1f4ccf',o);cg.add(shell_);
-      const ring=wmesh(new T.TorusGeometry(.105,.018,10,40),'#ffc81e',o);ring.rotation.x=Math.PI/2;ring.position.y=sx*.0+.04*-1*-1;ring.position.y=.042;cg.add(ring);
-      const cap=wmesh(new T.CylinderGeometry(.075,.08,.02,32),'#ffc81e',o);cap.position.y=.05;cg.add(cap);
-      const cush=wmesh(new T.TorusGeometry(.09,.035,12,40),'#1a2f8a',{roughness:.7,clearcoat:.1});cush.rotation.x=Math.PI/2;cush.position.y=-.05;cg.add(cush);
-      const sl=wmesh(new T.BoxGeometry(.05,.07,.06),'#ffc81e',o);sl.position.set(sx*(rc+.05),yc+.15,0);g.add(sl)}},
-  flowerpin(P,g){const T=P.T,f=new T.Group(),x=.2,y=.0,z=.17;face(f,x,y,z,.3);f.scale.setScalar(1.6);g.add(f);
-    for(let k=0;k<10;k++){const b=k/10*Math.PI*2,p=wmesh(new T.SphereGeometry(.04,18,12),'#ffffff',{roughness:.3,clearcoat:.6});p.scale.set(1.45,.62,.42);p.position.set(Math.cos(b)*.06,Math.sin(b)*.06,0);p.rotation.z=b;f.add(p)}
-    const c=wmesh(new T.SphereGeometry(.04,20,14),'#ffc21a',{roughness:.25,clearcoat:.8});c.scale.z=.6;c.position.z=.015;f.add(c);
-    const cl=wmesh(new T.CapsuleGeometry(.016,.13,6,10),'#ff7ac1',{roughness:.3,clearcoat:.8});cl.rotation.z=Math.PI/2+.5;cl.position.set(-.07,-.03,-.025);cl.scale.z=.5;f.add(cl)},
-  hardhat(P,g){const T=P.T,C='#ffc21a',o={roughness:.25,clearcoat:.9,clearcoatRoughness:.1};
-    const d=wmesh(new T.SphereGeometry(.31,48,24,0,Math.PI*2,0,Math.PI/2),C,o);d.scale.set(1,1.02,1.06);d.position.y=-.01;g.add(d);const sk=wmesh(new T.CylinderGeometry(.31,.312,.05,48,1,true),C,o);sk.scale.z=1.06;sk.position.y=-.035;g.add(sk);
-    for(const [ry,sc] of[[0,1],[.32,.96],[-.32,.96]]){const r=wmesh(new T.TorusGeometry(.316,.022,10,48,Math.PI),C,o);r.rotation.y=Math.PI/2+ry;r.scale.set(1.06,1.02*sc,1);r.position.y=-.01;g.add(r)}
-    const brim=shell(80,8,(u,v)=>{const a=u*Math.PI*2,fr=Math.pow(Math.max(0,Math.cos(a)),2),r=.3+v*(.045+.12*fr);return [Math.sin(a)*r,-.03-.04*v*v*fr+.012*v*(1-fr),Math.cos(a)*r*1.06]},.02);g.add(dmesh(brim,C,o));g.position.y=.02},
-  royal(P,g){const T=P.T,Gd={metalness:.75,roughness:.2,clearcoat:.4},R=.255;
-    const fur=wmesh(fluff(T,1,7),'#fbfaf6',{roughness:.95,clearcoat:0,sheen:1,sheenColor:new T.Color('#ffffff')});fur.scale.set(R+.05,.06,R+.05);fur.position.y=.0;
-    const ft=new T.TorusGeometry(R+.01,.05,20,72);{const p=ft.attributes.position,v=new T.Vector3();for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i);const n=Math.sin(v.x*60)*Math.sin(v.y*55)*Math.sin(v.z*60);v.multiplyScalar(1+.012*n);p.setXYZ(i,v.x,v.y,v.z)}ft.computeVertexNormals()}
-    const fm=wmesh(ft,'#fbfaf6',{roughness:.95,clearcoat:0,sheen:1,sheenColor:new T.Color('#ffffff')});fm.rotation.x=Math.PI/2;g.add(fm);
-    for(let i=0;i<12;i++){const a=i/12*Math.PI*2+(i%2)*.1,s=wmesh(new T.SphereGeometry(.012,8,6),'#1c1824');s.scale.set(1,1.6,.5);face(s,Math.sin(a)*(R+.058),.012*((i%3)-1),Math.cos(a)*(R+.058));g.add(s)}
-    const rim=wmesh(new T.CylinderGeometry(R+.005,R+.012,.06,64,1,true),'#f1b630',Object.assign({side:T.DoubleSide},Gd));rim.position.y=.07;g.add(rim);
-    for(let i=0;i<8;i++){const a=i/8*Math.PI*2,c=['#d11a2a','#1f4fd8','#1fae5a'][i%3],gm=wmesh(new T.SphereGeometry(.019,12,10),c,{roughness:.05,clearcoat:1,emissive:c,emissiveIntensity:.2});gm.scale.z=.6;face(gm,Math.sin(a)*(R+.016),.07,Math.cos(a)*(R+.016));g.add(gm)}
-    const cap=wmesh(new T.SphereGeometry(R-.01,40,20,0,Math.PI*2,0,Math.PI/2),'#b3122f',{roughness:.75,clearcoat:.05,sheen:1,sheenRoughness:.4,sheenColor:new T.Color('#ff6a7c')});cap.scale.y=.95;cap.position.y=.09;g.add(cap);
-    for(let i=0;i<8;i++){const a=i/8*Math.PI*2,big=i%2===0;const o=wmesh(big?(()=>{const sh=new T.Shape();sh.moveTo(-.022,0);sh.lineTo(-.022,.04);sh.lineTo(-.045,.05);sh.lineTo(-.045,.085);sh.lineTo(-.012,.075);sh.lineTo(-.012,.11);sh.lineTo(.012,.11);sh.lineTo(.012,.075);sh.lineTo(.045,.085);sh.lineTo(.045,.05);sh.lineTo(.022,.04);sh.lineTo(.022,0);return new T.ExtrudeGeometry(sh,{depth:.012,bevelEnabled:true,bevelSize:.004,bevelThickness:.004,bevelSegments:2})})():new T.SphereGeometry(.022,14,10),'#f1b630',Gd);
-      face(o,Math.sin(a)*(R+.01),big?.1:.12,Math.cos(a)*(R+.01));g.add(o);if(big){const gm=wmesh(new T.SphereGeometry(.013,10,8),'#d11a2a',{roughness:.05,clearcoat:1});gm.position.set(0,.06,.02);o.add(gm)}}
-    for(const ry of[0,Math.PI/2]){const ar=wmesh(new T.TorusGeometry(R+.005,.016,10,48,Math.PI),'#f1b630',Gd);ar.rotation.y=ry;ar.scale.y=1.15;ar.position.y=.1;g.add(ar);
-      for(let k=1;k<10;k++){const t=k/10*Math.PI,pe=wmesh(new T.SphereGeometry(.012,10,8),'#fff8ee',{roughness:.15,clearcoat:1});pe.position.set(Math.cos(t)*(R+.022)*Math.cos(ry),.1+Math.sin(t)*(R+.022)*1.15,-Math.cos(t)*(R+.022)*Math.sin(ry));g.add(pe)}}
-    const orb=wmesh(new T.SphereGeometry(.04,20,14),'#f1b630',Gd);orb.position.y=.1+R*1.15+.04;g.add(orb);
-    const cx=new T.Group();cx.position.y=orb.position.y+.07;g.add(cx);for(const [w,h] of[[.022,.1],[.075,.022]]){const b=wmesh(new T.BoxGeometry(w,h,.02),'#f1b630',Gd);cx.add(b)}
-    const cg=wmesh(new T.SphereGeometry(.014,10,8),'#d11a2a',{roughness:.05,clearcoat:1});cg.position.z=.012;cx.add(cg)},
-  cloudhat(P,g){const T=P.T,o={roughness:.92,clearcoat:0,sheen:1,sheenRoughness:.5,sheenColor:new T.Color('#ffffff'),emissive:'#ffffff',emissiveIntensity:.06};
-    [[-.17,.05,.02,.15],[.16,.05,.03,.15],[0,.12,.03,.19],[-.07,.04,.15,.13],[.09,.04,.14,.13],[0,.05,-.12,.16],[.22,.02,-.06,.11],[-.22,.02,-.06,.11]].forEach(([x,y,z,r],i)=>{const m=wmesh(fluff(T,r,i+3),'#ffffff',o);m.position.set(x,y,z);g.add(m)});
-    const cols=['#e8283f','#ff8a1f','#ffd21f','#3cbf4a','#2f7de1','#8b4fd8'],rb=new T.Group();rb.position.set(.13,.1,-.08);rb.rotation.y=-.5;g.add(rb);
-    cols.forEach((c,i)=>{const t=wmesh(new T.TorusGeometry(.2-i*.022,.012,10,40,Math.PI),c,{roughness:.25,clearcoat:.8});t.scale.z=1.6;rb.add(t)})},
-  halo(P,g){const T=P.T,G={metalness:.6,roughness:.18,emissive:'#ffb000',emissiveIntensity:.35},R=.3,y=.3;
-    const ring=wmesh(new T.TorusGeometry(R,.01,8,72),'#ffd23f',G);ring.rotation.x=Math.PI/2;ring.position.y=y;g.add(ring);
-    for(let i=0;i<12;i++){const a=i/12*Math.PI*2,s=i%2?.75:1,st=wmesh(starGeo(T,.05*s,.022*s,.012),'#ffd23f',G);st.position.set(Math.sin(a)*R,y,Math.cos(a)*R);st.rotation.y=a;st.rotation.z=i*.5;g.add(st)}
-    g.rotation.x=.12}  ,
+    const cm=m.clone();cm.flatShading=true;g.add(new T.Mesh(geo,cm));g.position.y=.05},
+  antenna(P,g){const T=P.T,GR='#80e03a',LM='#b6fa40',o={roughness:.3,clearcoat:.6,clearcoatRoughness:.15,envMapIntensity:.5};// drawing's band green (#72cd33 sampled) and lime balls (#bbfa4f)
+    // thick green band over the head (tube u along the band, v around: lit on top, dark underneath), slightly self-lit so it stays green in the studio light
+    const btx=canvasTex('antBand3',512,64,(c,w,h)=>{c.fillStyle=GR;c.fillRect(0,0,w,h);const gv=c.createLinearGradient(0,0,0,h);for(const[p,q]of[[0,KA(.14)],[.25,KA(0)],[.5,WA(.1)],[.75,KA(0)],[1,KA(.14)]])gv.addColorStop(p,q);c.fillStyle=gv;c.fillRect(0,0,w,h);const gu=c.createLinearGradient(0,0,w,0);for(const[p,q]of[[0,KA(.12)],[.2,KA(0)],[.4,WA(.08)],[.7,KA(0)],[1,KA(.12)]])gu.addColorStop(p,q);c.fillStyle=gu;c.fillRect(0,0,w,h)});
+    const bm=wm('#ffffff',Object.assign({map:btx,emissiveIntensity:.3,emissive:'#ffffff'},o));bm.emissiveMap=bm.map;const hb=hband(T,bm,null,.034,.024,.75);hb.scale.z=1.15;g.add(hb);// rounder tube than the default 1.5 flattening
+    for(const sx of[-1,1]){const x=sx*.17,by=bandY(x),sl=(bandY(x+.02)-bandY(x-.02))/.04,tilt=Math.atan(sl)-sx*.12,a=new T.Group();a.position.set(x,by+.01,0);a.rotation.z=tilt;g.add(a);
+      // green collar on the band, short fat steel coil (5 turns), big glowing lime ball on top
+      const col=wmesh(new T.CylinderGeometry(.04,.046,.05,20),GR,o);col.position.y=.02;a.add(col);
+      const hp=[];for(let k=0;k<=120;k++){const t=k/120,an=t*Math.PI*2*5;hp.push(new T.Vector3(Math.cos(an)*.04,.045+t*.11,Math.sin(an)*.04))}
+      a.add(wmesh(new T.TubeGeometry(new T.CatmullRomCurve3(hp),240,.011,8),'#bfc3c8',{metalness:.6,roughness:.4,envMapIntensity:.5,emissive:'#60666e',emissiveIntensity:.12}));
+      const b=wmesh(new T.SphereGeometry(.11,32,20),'#2f6a00',{roughness:.7,clearcoat:0,emissive:'#9cff00',emissiveIntensity:1,envMapIntensity:0});/* pre-tonemap colour pushed past the drawing's #bcfa51 because ACES lifts the blue channel *//* vivid lime, self-lit hot core */b.position.y=.16+.1;a.add(b)}},
+  headphones(P,g){const T=P.T,BL='#2550bd',YL='#f4b422',DK='#1b3a8f',o={roughness:.32,clearcoat:.6,clearcoatRoughness:.15,envMapIntensity:.45},B=Object.assign({emissive:BL,emissiveIntensity:.14},o),Y=Object.assign({},o,{emissive:'#c07a00',emissiveIntensity:.14,envMapIntensity:.3});// drawing's blue #254eb6 / yellow #edb230 (sampled)
+    // fat blue band sitting on the head (hband, off .03), yellow slider blocks at its ends, big cups: blue shell, yellow outer plate with a blue ring and a yellow centre disc (facing out), dark-blue cushion pressed on the head
+    g.add(hband(T,BL,B,.042,.03,1));const yc=-.2,rc=bodyR((.66+yc)/.75);
+    for(const sx of[-1,1]){const cg=new T.Group();cg.position.set(sx*(rc+.06),yc,0);cg.rotation.set(0,-sx*.65,-sx*Math.PI/2);g.add(cg);// local +y = outward, turned ~37 deg toward the camera so the yellow face reads from the front
+      cg.add(wmesh(new T.CylinderGeometry(.15,.16,.1,48),BL,B));
+      const pl=wmesh(new T.CylinderGeometry(.143,.15,.024,48),YL,Y);pl.position.y=.06;cg.add(pl);
+      const rg=wmesh(new T.TorusGeometry(.105,.026,12,48),BL,B);rg.rotation.x=Math.PI/2;rg.position.y=.072;cg.add(rg);
+      const cd=wmesh(new T.CylinderGeometry(.075,.075,.014,32),YL,Y);cd.position.y=.078;cg.add(cd);
+      const cu=wmesh(new T.TorusGeometry(.11,.042,12,48),DK,{roughness:.75,clearcoat:.05,envMapIntensity:.3});cu.rotation.x=Math.PI/2;cu.position.y=-.06;cg.add(cu);
+      const cc=wmesh(new T.CylinderGeometry(.08,.08,.012,32),DK,{roughness:.8,envMapIntensity:.3});cc.position.y=-.06;cg.add(cc);
+      // yoke: yellow slider block on the band end, short blue stem down to the cup
+      const sl=wmesh(new T.BoxGeometry(.055,.1,.085),YL,Y);sl.position.set(sx*.39,-.065,0);sl.rotation.z=-sx*.38;g.add(sl);const st=wmesh(new T.CylinderGeometry(.03,.03,.09,16),BL,B);st.position.set(sx*(rc+.03),-.08,0);st.rotation.z=-sx*.3;g.add(st)}},
+  flowerpin(P,g){const T=P.T,PK='#f768a3',WT='#f7f4f1',f=new T.Group(),x=.09,y=.04,z=headZ(x,y,.012);face(f,x,y,z,.3);f.scale.setScalar(1.3);g.add(f);// drawing's pink clip (#fa7ead sampled), white daisy, yellow centre (#f8ca30)
+    // petal map over the petal sphere's u (tip at u .5): dark root at the centre (AO under the yellow dome), lit tip, edges a little darker; slight self-light so the white stays white in the shade
+    const petM=wm('#ffffff',{map:canvasTex('fpPetal2',128,32,(c,w,h)=>{const gr=c.createLinearGradient(0,0,w,0);gr.addColorStop(0,shade(WT,-.35));gr.addColorStop(.2,shade(WT,-.1));gr.addColorStop(.5,'#ffffff');gr.addColorStop(.8,shade(WT,-.04));gr.addColorStop(1,shade(WT,-.35));c.fillStyle=gr;c.fillRect(0,0,w,h);const gv=c.createLinearGradient(0,h,0,0);gv.addColorStop(0,KA(.2));gv.addColorStop(.5,KA(0));gv.addColorStop(1,WA(.1));c.fillStyle=gv;c.fillRect(0,0,w,h)}),roughness:.38,clearcoat:.5,envMapIntensity:.45,emissive:'#ffffff',emissiveIntensity:.12});petM.emissiveMap=petM.map;
+    for(let k=0;k<10;k++){const b=k/10*Math.PI*2+Math.PI/2,p=new T.Mesh(new T.SphereGeometry(.05,20,14),petM);p.scale.set(1.3,.74,.42);p.position.set(Math.cos(b)*.08,Math.sin(b)*.08,0);p.rotation.z=b;f.add(p)}
+    const cen=wm('#ffffff',{map:canvasTex('fpCenter2',64,64,(c,w,h)=>{const gr=c.createRadialGradient(w*.4,h*.35,2,w/2,h/2,w*.5);gr.addColorStop(0,'#ffe066');gr.addColorStop(.55,'#f8ca30');gr.addColorStop(1,'#c58a10');c.fillStyle=gr;c.fillRect(0,0,w,h)}),roughness:.3,clearcoat:.7,envMapIntensity:.5,emissive:'#f8ca30',emissiveIntensity:.12}),ce=new T.Mesh(new T.SphereGeometry(.055,24,16),cen);ce.scale.z=.65;ce.position.z=.022;f.add(ce);
+    // snap clip: pink stadium bar with a slot, extruded, slanting down to the side and bent back toward the head so its far end neither floats nor sinks; gold rivet at the end
+    const stad=(P_,x0,x1,r)=>{P_.moveTo(x0,r);P_.lineTo(x1,r);P_.absarc(x1,0,r,Math.PI/2,-Math.PI/2,true);P_.lineTo(x0,-r);P_.absarc(x0,0,r,-Math.PI/2,Math.PI/2,true)},sh=new T.Shape();stad(sh,0,.27,.034);const ho=new T.Path();stad(ho,.05,.22,.012);sh.holes.push(ho);
+    const cge=new T.ExtrudeGeometry(sh,{depth:.014,bevelEnabled:true,bevelSize:.006,bevelThickness:.006,bevelSegments:3,curveSegments:16}),cg=new T.Group();cg.position.set(.02,-.015,0);cg.rotation.z=-.22;f.add(cg);f.updateMatrix();cg.updateMatrix();
+    // the clip is laid out flat in the flower's frame, then every vertex is projected radially onto the head surface at its own height (the head is an egg, wider below the flower) + its own thickness: it hugs the head, nothing floats or sinks
+    const M=f.matrix.clone().multiply(cg.matrix),vv=new T.Vector3(),proj=(x,y,zl)=>{vv.set(x,y,0).applyMatrix4(M);const an=Math.atan2(vv.x,vv.z),R=bodyR(Math.min(.999,(.66+vv.y)/.75))+.01+zl*1.3;return [R*Math.sin(an),vv.y,R*Math.cos(an)]};
+    {const p=cge.attributes.position;for(let i=0;i<p.count;i++){const q=proj(p.getX(i),p.getY(i),p.getZ(i));p.setXYZ(i,q[0],q[1],q[2])}cge.computeVertexNormals()}f.remove(cg);
+    g.add(wmesh(cge,PK,{roughness:.28,clearcoat:.7,clearcoatRoughness:.1,envMapIntensity:.5,emissive:PK,emissiveIntensity:.1}));const rv=wmesh(new T.SphereGeometry(.014,12,8),'#f1b630',GOLD);rv.position.set(...proj(.24,0,.018));g.add(rv)},
+  hardhat(P,g){const T=P.T,C='#ffb800',o={roughness:.5,clearcoat:.05,clearcoatRoughness:.4,envMapIntensity:.05,emissive:'#ff8800',emissiveIntensity:.32},KO=a=>`rgba(150,70,0,${a})`;// drawing's lemon-amber, shadows baked yellow-orange (KO) not brown// drawing's safety yellow (#fdca2c sampled; the studio light lifts it, so a hair deeper)
+    // painted shell: same-hue key light top-left (warm, <= .12), AO at the rim over the brim, faint seam shadows beside the central ridge; the brim darker inside (under the shell) and lit at its lip
+    const WK=a=>`rgba(255,240,200,${a})`,stx=canvasTex('hhShell7',1024,512,(c,w,h)=>{c.fillStyle=C;c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KO(0)],[.5,KO(.2)],[.58,KO(0)],[1,WK(.06)]],gu:[[0,WK(.04)],[.15,WK(0)],[.4,KO(.1)],[.6,KO(.03)],[.85,WK(.08)],[1,WK(.04)]]})});
+    const btx=canvasTex('hhBrim7',256,64,(c,w,h)=>{c.fillStyle=C;c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KO(.3)],[.35,KO(0)],[.85,WK(.04)],[1,WK(.08)]],gu:[[0,WK(.04)],[.15,WK(0)],[.4,KO(.08)],[.6,KO(.03)],[.85,WK(.08)],[1,WK(.04)]]})});
+    const sm=wm('#ffffff',Object.assign({map:stx},o)),bm=wm('#ffffff',Object.assign({map:btx,side:T.DoubleSide},o));
+    const d=wmesh(new T.SphereGeometry(.31,64,32,0,Math.PI*2,0,Math.PI/2),sm);d.scale.set(1,1.02,1.06);d.position.y=-.01;g.add(d);const sk=wmesh(new T.CylinderGeometry(.31,.314,.06,64,1,true),sm);sk.scale.z=1.06;sk.position.y=-.04;g.add(sk);
+    // wide central ridge front-to-back (flat top with a shallow slot), two low side ribs
+    const rG=new T.Group();rG.scale.set(1.9,1,1);g.add(rG);const rg=wmesh(new T.TorusGeometry(.305,.022,12,48,Math.PI*.86),C,o);rg.rotation.y=Math.PI/2;rg.rotation.z=Math.PI*.07;rg.scale.set(1.03,1.0,1);rg.position.y=-.012;rG.add(rg);// wide low central ridge (~.015 proud)
+    for(const ry of[.42,-.42]){const r=wmesh(new T.TorusGeometry(.312,.018,10,48,Math.PI*.8),C,o);r.rotation.y=Math.PI/2+ry;r.rotation.z=Math.PI*.1;r.scale.set(1.06,1.0,1);r.position.y=-.01;g.add(r)}
+    // brim all round with a longer front peak and a raised lip; three accessory slots (front + both sides) sitting on the brim
+    const brim=shell(96,10,(u,v)=>{const a=u*Math.PI*2,fr=Math.pow(Math.max(0,Math.cos(a)),2),r=.3+v*(.05+.13*fr),lip=v>.85?.012*(v-.85)/.15:0;return [Math.sin(a)*r,-.045-.035*v*v*fr+.01*v*(1-fr)+lip,Math.cos(a)*r*1.06]},.022);g.add(wmesh(brim,bm));
+    for(const[a,sz]of[[0,1],[1.25,.85],[-1.25,.85]]){const b=wmesh(new T.BoxGeometry(.07*sz,.03,.045*sz),C,o);const r=.3+.045+.07*Math.pow(Math.max(0,Math.cos(a)),2);b.position.set(Math.sin(a)*r,-.03-.02*Math.pow(Math.cos(a),2),Math.cos(a)*r*1.06);b.rotation.y=a;g.add(b)}g.position.y=.02},
+  royal(P,g){const T=P.T,R=.255,GD='#ffc63a',G=Object.assign({},GOLD,{metalness:.8,roughness:.2,emissive:'#b07410',emissiveIntensity:.25,envMapIntensity:1}),RD='#a0020e';// drawing's gold #e8ae2f, velvet red #a0020e, ermine white with black tails (sampled)
+    // ermine band: shell fur on a torus; map (u around the band, v around the tube: v 0/1 = outer face, .25 top lit, .75 underside dark) with a row of black oblong tails on the outer face
+    const fm=wm('#ffffff',{map:canvasTex('royalFur2',1024,128,(c,w,h)=>{c.fillStyle='#fbfaf6';c.fillRect(0,0,w,h);let sd=3;const Rn=()=>(sd=(sd*16807)%2147483647)/2147483647;for(let i=0;i<1800;i++){const x=Rn()*w,y=Rn()*h,l=6+Rn()*10;c.strokeStyle=Rn()<.5?KA(.05):WA(.1);c.lineWidth=1;c.beginPath();c.moveTo(x,y);c.lineTo(x+(Rn()-.5)*4,y-l);c.stroke()}
+      const gv=c.createLinearGradient(0,0,0,h);for(const[p,q]of[[0,WA(.1)],[.25,WA(.0)],[.5,KA(.0)],[.75,KA(.16)],[1,KA(.08)]])gv.addColorStop(p,q);c.fillStyle=gv;c.fillRect(0,0,w,h);
+      c.fillStyle='#1a1620';for(let i=0;i<12;i++){const x=(i+.5)/12*w;c.beginPath();c.ellipse(x,h*.1,6,7,0,0,7);c.fill();c.beginPath();c.ellipse(x+w/28,h*.9,6,7,0,0,7);c.fill()}}),/* two staggered rows of round spots on the outer face */emissive:'#ffffff',emissiveIntensity:.3,roughness:.95,clearcoat:0,sheen:.3,sheenRoughness:.5,sheenColor:new T.Color('#ffffff')});fm.emissiveMap=fm.map;
+    const ft=new T.TorusGeometry(R+.015,.07,24,96);ft.rotateX(Math.PI/2);const fur=furShells(ft,fm,{len:.026,rep:[10,1.2],layers:16,ramp:[.88,.2],at:[.1,.5],hair:'hairD',sheenI:.3});fur.position.y=-.005;g.add(fur);const kg=new T.Group();kg.position.y=.045;g.add(kg);// crown body lifted above the fur's hair tips
+    // red velvet cap: matte, darker toward the band (AO), same-hue self-light so it stays deep red not pink
+    const ctx=canvasTex('royalVelvet1',256,128,(c,w,h)=>{c.fillStyle=RD;c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KA(0)],[.5,KA(.35)],[.62,KA(0)],[1,`rgba(255,120,120,.1)`]],gu:[[0,`rgba(255,120,120,.06)`],[.15,KA(0)],[.4,KA(.14)],[.6,KA(.04)],[.85,`rgba(255,120,120,.1)`],[1,`rgba(255,120,120,.06)`]]})}),cm=wm('#ffffff',{map:ctx,roughness:.85,clearcoat:0,sheen:.6,sheenRoughness:.5,sheenColor:new T.Color('#ff5a5a'),envMapIntensity:.3,emissive:'#ff2020',emissiveIntensity:.08});
+    const cap=wmesh(new T.SphereGeometry(R-.005,48,24,0,Math.PI*2,0,Math.PI/2),cm);cap.scale.y=1.0;cap.position.y=.08;kg.add(cap);
+    // gold base band (AO at its edges, lit top-left) with big faceted gems in gold bezels (red front, blue sides, green back) and pearls between
+    const gtx=canvasTex('royalGold2',512,64,(c,w,h)=>{c.fillStyle='#ffd23a';c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KA(.3)],[.25,KA(0)],[.55,WA(.1)],[.85,KA(0)],[1,KA(.2)]],gu:[[0,WA(.1)],[.15,WA(0)],[.4,KA(.1)],[.6,KA(.04)],[.85,WA(.2)],[1,WA(.1)]]})});
+    const bd=[];for(let k=0;k<=8;k++){const t=k/8;bd.push(V2(R+.012+.01*Math.sin(t*Math.PI),.04+t*.1))}kg.add(wmesh(new T.LatheGeometry(bd,64),wm('#ffffff',Object.assign({map:gtx},G))));
+    for(const y of[.045,.135]){const t=wmesh(new T.TorusGeometry(R+.022,.012,10,72),GD,G);t.rotation.x=Math.PI/2;t.position.y=y;kg.add(t)}
+    const gem=(a,y,c,sz,r=R+.03)=>{const m=wmesh(new T.IcosahedronGeometry(.045*sz,0),c,{roughness:.06,clearcoat:1,clearcoatRoughness:.05,flatShading:true,emissive:c,emissiveIntensity:.35});m.scale.set(.9,1.15,.5);face(m,Math.sin(a)*r,y,Math.cos(a)*r);kg.add(m);const st=wmesh(new T.TorusGeometry(.048*sz,.009,8,6),'#ffe070',G);st.scale.set(.95,1.2,1);face(st,Math.sin(a)*(r-.006),y,Math.cos(a)*(r-.006));st.rotateZ(Math.PI/6);kg.add(st)};
+    gem(0,.09,'#d8101e',1.3);gem(Math.PI/2,.09,'#1f5ae8',1);gem(-Math.PI/2,.09,'#1f5ae8',1);gem(Math.PI,.09,'#1fae5a',1);
+    for(let i=0;i<8;i++){const a=(i+.5)/8*Math.PI*2,pe=wmesh(new T.SphereGeometry(.017,12,10),'#fff8ee',{roughness:.15,clearcoat:1,emissive:'#fff0e0',emissiveIntensity:.15});pe.position.set(Math.sin(a)*(R+.03),.09,Math.cos(a)*(R+.03));kg.add(pe)}
+    // crest on the rim: 4 big crosses (at the arch roots) with a red gem, 4 trefoil balls between; two pearl-studded arches, orb and cross with a red gem
+    const crossG=(()=>{const sh=new T.Shape();sh.moveTo(-.024,0);sh.lineTo(-.024,.045);sh.lineTo(-.05,.055);sh.lineTo(-.05,.095);sh.lineTo(-.014,.085);sh.lineTo(-.014,.125);sh.lineTo(.014,.125);sh.lineTo(.014,.085);sh.lineTo(.05,.095);sh.lineTo(.05,.055);sh.lineTo(.024,.045);sh.lineTo(.024,0);return new T.ExtrudeGeometry(sh,{depth:.014,bevelEnabled:true,bevelSize:.004,bevelThickness:.004,bevelSegments:2})})();
+    for(let i=0;i<8;i++){const a=i/8*Math.PI*2,big=i%2===0;if(big){const o=wmesh(crossG,GD,G);face(o,Math.sin(a)*(R+.015),.135,Math.cos(a)*(R+.015));kg.add(o);const gm=wmesh(new T.SphereGeometry(.014,10,8),'#d8101e',{roughness:.05,clearcoat:1,emissive:'#d8101e',emissiveIntensity:.3});gm.position.set(0,.07,.02);o.add(gm)}
+      else{const o=wmesh(new T.SphereGeometry(.024,14,10),GD,G);o.position.set(Math.sin(a)*(R+.015),.16,Math.cos(a)*(R+.015));kg.add(o)}}
+    for(const ry of[0,Math.PI/2]){const ar=wmesh(new T.TorusGeometry(R+.005,.018,10,48,Math.PI),GD,G);ar.rotation.y=ry;ar.scale.y=1.05;ar.position.y=.14;kg.add(ar);
+      for(let k=1;k<9;k++){const t=k/9*Math.PI,pe=wmesh(new T.SphereGeometry(.015,10,8),'#fff8ee',{roughness:.15,clearcoat:1,emissive:'#fff0e0',emissiveIntensity:.15});pe.position.set(Math.cos(t)*(R+.026)*Math.cos(ry),.14+Math.sin(t)*(R+.026)*1.05,-Math.cos(t)*(R+.026)*Math.sin(ry));kg.add(pe)}}
+    const orb=wmesh(new T.SphereGeometry(.045,20,14),GD,G);orb.position.y=.14+R*1.05+.04;kg.add(orb);
+    const cx=new T.Group();cx.position.y=orb.position.y+.08;kg.add(cx);for(const [w,h] of[[.026,.12],[.09,.026]]){const b=wmesh(new T.BoxGeometry(w,h,.022),GD,G);cx.add(b)}
+    const cg=wmesh(new T.SphereGeometry(.018,10,8),'#d8101e',{roughness:.05,clearcoat:1,emissive:'#d8101e',emissiveIntensity:.3});cg.position.z=.014;cx.add(cg)},
+  cloudhat(P,g){const T=P.T;// drawing: smooth puffy white cloud (overlapping round puffs, soft grey-blue underside) with a big six-band rainbow standing behind it on the right
+    const ptx=canvasTex('cloudPuff2',64,128,(c,w,h)=>{const gr=c.createLinearGradient(0,h,0,0);gr.addColorStop(0,'#d8dce4');gr.addColorStop(.4,'#f6f6f8');gr.addColorStop(.7,'#ffffff');gr.addColorStop(1,'#ffffff');c.fillStyle=gr;c.fillRect(0,0,w,h);const gu=c.createLinearGradient(0,0,w,0);for(const[p,q]of[[0,WA(0)],[.4,KA(.08)],[.6,KA(.02)],[.85,WA(.08)],[1,WA(0)]])gu.addColorStop(p,q);c.fillStyle=gu;c.fillRect(0,0,w,h)});
+    const pm=wm('#ffffff',{map:ptx,roughness:.95,clearcoat:0,sheen:.5,sheenRoughness:.6,sheenColor:new T.Color('#ffffff'),envMapIntensity:.2,emissive:'#ffffff',emissiveIntensity:.2});pm.emissiveMap=pm.map;
+    [[0,.1,.05,.21],[-.19,.05,.04,.14],[.18,.05,.05,.14],[-.09,.02,.17,.15],[.09,.02,.17,.15],[0,.06,-.12,.15],[-.28,0,-.02,.1],[.27,0,-.02,.1],[.34,-.02,.0,.11]].forEach(([x,y,z,r])=>{const m=new T.Mesh(new T.SphereGeometry(r,32,24),pm);m.position.set(x,y,z);g.add(m)});
+    const base=new T.Mesh(new T.SphereGeometry(.3,40,24),pm);base.scale.y=.45;base.position.set(0,.02,.04);g.add(base);// flattened body the puffs sit in
+    // rainbow: six flat bands (tori, flattened in depth) in one upright arc behind the cloud, turned a little toward the camera; ends buried in the puffs
+    const cols=['#ef3535','#ff8a1a','#ffd21f','#3cbf4a','#2f7de1','#8b4fd8'],rb=new T.Group();rb.position.set(.03,.13,-.05);rb.rotation.y=-.45;g.add(rb);// feet of all six bands buried in the side puffs (extra puff under the right foot), arc high enough that the blue/purple bands clear the centre puff
+    cols.forEach((c,i)=>{const t=wmesh(new T.TorusGeometry(.3-i*.028,.019,8,56,Math.PI),c,{roughness:.45,clearcoat:.3,emissive:c,emissiveIntensity:.12,envMapIntensity:.45});t.scale.z=.7;rb.add(t)})},
+  halo(P,g){const T=P.T,GD='#ffc000',G={metalness:.1,roughness:.5,clearcoat:.2,emissive:'#f09000',emissiveIntensity:.5,envMapIntensity:.15},R=.3,y=.26;// drawing's gold #eeb839 (sampled): a tilted thin ring hovering over the head with puffy 5-point stars, big ones in front, small at the back
+    const ring=wmesh(new T.TorusGeometry(R,.012,8,80),GD,G);ring.rotation.x=Math.PI/2;ring.position.y=y;g.add(ring);
+    for(let i=0;i<10;i++){const a=i/10*Math.PI*2,f=(Math.cos(a)+1)/2,s=.62+.38*Math.pow(f,1.5),sz=.058*s,st=wmesh(starGeo(T,sz,sz*.48,.03*s,5,.4),GD,G);st.position.set(Math.sin(a)*R,y,Math.cos(a)*R);g.add(st)}// every star billboarded to the camera (+z), evenly spaced, smaller toward the back; puffy: depth .03 with a .4 bevel
+    g.rotation.x=.42;g.position.y=.03}  ,
   /* batch 3 (graphics sheet acc/hats3.png) */
   pumpkin(P,g){const T=P.T,O='#ff7a1a',o={roughness:.38,clearcoat:.6,clearcoatRoughness:.2};
     const brim=shell(72,6,(u,v)=>{const a=u*Math.PI*2,r=.26+v*.12;return [Math.sin(a)*r,-.02*v*v,Math.cos(a)*r]},.022);g.add(dmesh(brim,'#f26a12',o));
