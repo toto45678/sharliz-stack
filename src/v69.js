@@ -1399,7 +1399,7 @@
   // a rounded-square end (u 1, half height h1, superellipse pe), front puff tf (thin at the knot, full from u .55), flat back tb; nf radial folds as relief (the lines of constant y/H fan out from the knot) + o.dent = a crease along the middle (a folded loop);
   // uv u along the lobe, v across (.5 = the middle line), so a painted map's horizontal streaks run with the folds; the back seam sits on the flat back; sx -1 = the left lobe (mirrored, winding flipped)
   function lobeGeo(o){const T=THREE,NU=o.nu||26,NT=o.nt||40,P=[],U=[],I=[],sx=o.sx||1,pe=o.pe||5,nf=o.nf||3,fa=o.fa===undefined?.25:o.fa;
-    for(let i=0;i<=NU;i++){const u=i/NU,e=Math.pow(1-Math.pow(u,pe),1/pe),q=Math.min(1,u/(o.um||.8)),H=(o.h0+(o.h1-o.h0)*(1-(1-q)*(1-q)))*e,Tf=o.tf*(.42+.58*sm(0,.55,u))*Math.sqrt(e),Tb=o.tb*Math.sqrt(e);
+    for(let i=0;i<=NU;i++){const u=i/NU,e=Math.pow(1-Math.pow(u,pe),1/pe),q=Math.min(1,u/(o.um||.8)),H=(o.h0+(o.h1-o.h0)*(1-(1-q)*(1-q)))*e,Tf=o.tf*((o.tr||.42)+(1-(o.tr||.42))*sm(0,.55,u))*Math.sqrt(e),Tb=o.tb*Math.sqrt(e);
       for(let j=0;j<=NT;j++){const th=-PI/2+j/NT*TAU,c=Math.cos(th),s=Math.sin(th);let z=Tb*s;
         if(s>0){const f=.5-.5*Math.cos(c*PI*nf);z=Tf*s*(1-fa*f*(1-.7*u))-(o.dent||0)*Tf*Math.exp(-c*c*14)*sm(.12,.45,u)*s}
         P.push(sx*((o.x0||0)+u*o.L),H*c+(o.lift||0)*u*u,z);U.push(u,.5+.5*c)}}
@@ -1417,7 +1417,8 @@
         for(const ck of[-1/3,1/3])k-=.36*(1-.55*u)*ex(cc-ck,.07);for(const ck of[-2/3,0,2/3])l+=.16*(1-.45*u)*ex(cc-ck,.09);
         const o=(y*w+x)*4;for(let i=0;i<3;i++){const b=R[i]*k;A[o+i]=Math.min(255,b+(([255,130,118][i])-b)*Math.min(1,l))}A[o+3]=255}c.putImageData(d,0,0)});
     const M=mapNrm('satin',tx,'ou_bow',.8,{k:1.05});
-    for(const sx of[-1,1])s.add(new T.Mesh(onSkin(lobeGeo({sx,L:.27,x0:.035,h0:.042,h1:.13,um:.72,pe:3.2,tf:.09,tb:.02,nf:3,fa:.3,lift:.012}),yc,.026),M));
+    // O5 (AD o4, minor): at 3/4 a thin teal sliver showed between the knot band (front .12 over the skin) and the near lobe's thin root (.064): o.tr = the root's share of the front puff, .42 -> .8, so the root rises to the knot
+    for(const sx of[-1,1])s.add(new T.Mesh(onSkin(lobeGeo({sx,L:.27,x0:.035,h0:.042,h1:.13,um:.72,pe:3.2,tf:.09,tb:.02,nf:3,fa:.3,lift:.012,tr:.8}),yc,.026),M));
     const kx=T2('ou_bowk',64,64,(c,w,h)=>{const d=c.createImageData(w,h),A=d.data;for(let y=0;y<h;y++)for(let x=0;x<w;x++){const v=(y+.5)/h,uu=(x+.5)/w;const ex=(q,s)=>Math.exp(-(q/s)*(q/s));let k=1-.3*ex(v-.3,.07)-.3*ex(v-.7,.07)-.25*Math.pow(Math.abs(v-.5)*2,3)+.12*ex(v-.5,.1)-.15*ex(uu-.5,.2);const o=(y*w+x)*4;for(let i=0;i<3;i++)A[o+i]=Math.min(255,R[i]*k);A[o+3]=255}c.putImageData(d,0,0)});
     const kg=new T.CylinderGeometry(1,1,1,28,8,true);kg.rotateZ(PI/2);{const p=kg.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),b=(1+.14*(1-4*x*x))*(1-.3*Math.pow(2*Math.abs(x),6));p.setXYZ(i,x*.125,p.getY(i)*.075*b,p.getZ(i)*.055*b)}}
     s.add(new T.Mesh(onSkin(kg,yc,.064),mapNrm('satin',kx,'ou_bowk',.7,{k:1.0})));
@@ -1426,12 +1427,14 @@
   scarf(P,s){const T=P.T,RED='#c4141b',CRM='#f3dcc0';/* O2: cream #f3dcc0 (the ring read white at #fbe8cf k 1.3) */
     const tx=T2('ou_knit',256,128,(c,w,h)=>{for(let i=0;i<8;i++){c.fillStyle=i%2?CRM:RED;c.fillRect(i*w/8,0,w/8+1,h)}c.globalAlpha=.22;for(let r=0;r<18;r++)for(let q=0;q<36;q++){const x=(q+(r%2)*.5)*w/36,y=r*h/18;c.fillStyle=(r*2+q)%3?'#000':'#fff';c.beginPath();c.moveTo(x,y);c.lineTo(x+w/72,y+h/18);c.lineTo(x+w/36,y);c.lineTo(x+w/48,y);c.lineTo(x+w/72,y+h/27);c.lineTo(x+w/144,y);c.closePath();c.fill()}c.globalAlpha=1});
     const NM=hNormal('ou_knit',128,64,knitH,6),mk=()=>{const m=mcMap('rubber_matte',tx,1.3)/* measured at 1/4: cream #beb09f vs the drawing's #f8debe at k 1 */;m.normalMap=NM;m.normalScale.set(.9,.9);return m},M=mk();
-    for(const[y,r,sy]of[[-.12,.075,.9],[-.235,.085,.95]]){const t=ring(s,y,.025,r,M);t.scale.z=sy;uvScaleT(t.geometry,1.75,1);}
+    // O5 (AD o4: the ring top at -.056 touched the smile and the eye whites in the sprite, and the scared face's eyes/scream ran into it): both wraps dropped .08 (upper ring centre -.12 -> -.2: top -.2 + .9 x .075 = -.13,
+    // in line with the bowtie -.126 / lei -.144), the lower one -.235 -> -.315; the tails start under it (-.27 -> -.35) and are .08 shorter, so their fringe ends where it did
+    for(const[y,r,sy]of[[-.2,.075,.9],[-.315,.085,.95]]){const t=ring(s,y,.025,r,M);t.scale.z=sy;uvScaleT(t.geometry,1.75,1);}
     const FM=mk();FM.map=T2('ou_knit2',256,64,(c,w,h)=>{for(let i=0;i<4;i++){c.fillStyle=i%2?CRM:RED;c.fillRect(0,i*h/4,w,h/4+1)}});
     FM.side=DS;// two tails: a knitted strip each, stripes across, cream fringe tufts at the end
     // O4 (Tzach: 'the tails shouldn't wrap onto the Sharliz but fall straight down'): the tails were planes laid ON the egg (wrapAt: bent round the body sideways and down its curve); now each is a flat knitted band (an elliptic tube .22 x .04, seam on its edge)
     // hanging STRAIGHT DOWN from under the lower wrap (top y -.27, tucked under the ring), turned only to face out of the egg where it hangs (rotation y = its angle), the back one swinging out .06 rad; the fringe hangs straight under each
-    for(const[x,yt,tl,rz]of[[-.31,-.27,.34,-.06],[-.15,-.27,.4,.025]]){const W=.22,TM=new T.Matrix4().makeTranslation(x,yt,surfZ(x,yt)+.035).multiply(new T.Matrix4().makeRotationY(Math.asin(x/bR(yt)))).multiply(new T.Matrix4().makeRotationZ(rz));
+    for(const[x,yt,tl,rz]of[[-.31,-.35,.26,-.06],[-.15,-.35,.32,.025]]){const W=.22,TM=new T.Matrix4().makeTranslation(x,yt,surfZ(x,yt)+.035).multiply(new T.Matrix4().makeRotationY(Math.asin(x/bR(yt)))).multiply(new T.Matrix4().makeRotationZ(rz));
       const ge=new T.CylinderGeometry(1,1,tl,20,10,true,PI/2);ge.translate(0,-tl/2,0);ge.scale(W/2,1,.02);uvScaleT(ge,1,tl*4);ge.applyMatrix4(TM);s.add(new T.Mesh(ge,FM));
       const fr=[];for(let i=0;i<9;i++){const q=new T.CylinderGeometry(.01,.006,.12,6);q.translate((i-4)*.024,-tl-.055,0);fr.push([q,TM])}s.add(new T.Mesh(mergeGeo(fr),rubber(CRM,1)))}},
   // BELT: brown leather band (grain + stitched edge + holes) with a square gold buckle in front and a red gem stud each side. drawing brown #8c3411 (lit #a44d26), gold #ec9a1a
@@ -1472,11 +1475,12 @@
         let k=1-.38*Math.exp(-u/.09)-.25*sm(.84,1,u)-.2*sm(-.35,-1,cc)-.3*(1-.5*u)*(ex(cc-.5,.09)+ex(cc+.5,.09))-.22*ex(cc,.07)*sm(.1,.4,u),l=.26*ex(u-.55,.3)*ex(cc-.62,.25)+.14*(ex(cc-.22,.08)+ex(cc+.75,.08));
         const o=(y*w+x)*4;for(let i=0;i<3;i++){const b0=PKB[i]*k;A[o+i]=Math.min(255,b0+(([255,205,228][i])-b0)*Math.min(1,l))}A[o+3]=255}c.putImageData(d,0,0)});
     const BL=mapNrm('satin',btx,'ou_tbow',.7,{k:1.0}),BM=mcMap('satin',T2('ou_ttail',32,64,(c,w,h)=>{const d=c.createImageData(w,h),A=d.data;for(let y=0;y<h;y++)for(let x=0;x<w;x++){const u=(x+.5)/w,k=.82-.32*Math.pow(Math.abs(u-.5)*2,2)+.16*Math.exp(-Math.pow((u-.38)/.1,2))-.12*Math.exp(-Math.pow((u-.6)/.06,2)),o=(y*w+x)*4;for(let i=0;i<3;i++)A[o+i]=Math.min(255,PKB[i]*k);A[o+3]=255}c.putImageData(d,0,0)}),.92);BM.side=DS;// the tails: darker satin pink than the ruffles (they read apart), shaded edges, a lit fold and a crease along them
-    for(const sx of[-1,1])s.add(new T.Mesh(onSkin(lobeGeo({sx,L:.15,x0:.025,h0:.028,h1:.068,um:.75,pe:3,tf:.05,tb:.012,nf:2,fa:.32,dent:.4,lift:.012,nu:20,nt:32}),yb,.042),BL));
+    // O5 (AD o4, optional): the bow 1.3x (the drawing's bow spans about a third of the waistband, ours was a fifth): loops L .15 -> .195, heights .028/.068 -> .036/.088, puff .05 -> .065; tails + heart 1.15x
+    for(const sx of[-1,1])s.add(new T.Mesh(onSkin(lobeGeo({sx,L:.195,x0:.03,h0:.036,h1:.088,um:.75,pe:3,tf:.065,tb:.014,nf:2,fa:.32,dent:.4,lift:.015,nu:20,nt:32}),yb,.042),BL));
     const tierOff=y=>{const v=clamp((y+.47)/.17,0,1);return .22*(1-v)*(1-v)*.9+.22*(1-v)*.1+(1-v)*.035};
-    for(const sx of[-1,1]){const W=.064,L=.17,ge=new T.PlaneGeometry(W,L,2,10),p=ge.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i);let y=p.getY(i)-L/2;if(y<-L+.001&&Math.abs(x)<.001)y+=.032;p.setXYZ(i,x,y,.01*(1-Math.pow(2*x/W,2)))}
+    for(const sx of[-1,1]){const W=.074,L=.195,ge=new T.PlaneGeometry(W,L,2,10),p=ge.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i);let y=p.getY(i)-L/2;if(y<-L+.001&&Math.abs(x)<.001)y+=.032;p.setXYZ(i,x,y,.01*(1-Math.pow(2*x/W,2)))}
       ge.rotateZ(sx*.5);ge.translate(sx*.02,0,0);s.add(new T.Mesh(onSkin(ge,yb-.02,0,(x,y)=>Math.max(.048,tierOff(y)+.03)),BM))}
-    decal(s,'heart','heart',0,yb,surfZ(0,yb)+.062,.125,{rim:0,k:.9});sparkle(s,-.02,yb+.023,surfZ(0,yb)+.069,.009)},
+    decal(s,'heart','heart',0,yb,surfZ(0,yb)+.07,.145,{rim:0,k:.9});sparkle(s,-.023,yb+.027,surfZ(0,yb)+.077,.01)},
   // CAPE: a red satin cape hanging from an orange-brown collar roll, around the back and sides, wavy gold hem, gold edges, a gold star brooch at the throat. drawing red #d01017 (shade #890309), collar #c8622a, gold #f7af2a
   // O4 (Tzach: 'the collar should also be like a necklace and not close up so near the mouth and the eyes'): the collar roll was a level ring at y -.1 (its top at -.03, right at the mouth); now it hangs like a necklace on a dipping line
   // yc(a) = -.235 - .06 cos(a): -.295 at the front centre (the brooch hangs there), -.235 at the sides, -.175 at the back (roll radius .052); the cape's top row follows the same line (dy) so it hangs from the roll
@@ -1573,11 +1577,27 @@
   // BALLERINA: a purple satin leotard (sheen + painted folds) with a pink-gold trim at the top, a pink pleated tutu in three tiers, a pink satin bow on the waist with the drawing's pink gem. drawing purple #ce7adf (lit #df97ed), pink #fb93bf (lit #fdb4d5)
   ballet(P,s){const T=P.T,PU='#d07bdf',PK='#f876ad';/* O1 measured at 1/4: purple #b973c1 vs #d07bdf with #c86fd8 k 1, #c98fcf with #d684e8 k 1.15; O2 #d07bdf k 1.25 */
     const lt=clothMap('ballet',PU,{w:512,h:256,folds:8,fk:.14,fl:.12,jit:1,aoTop:.1,aoK:.35,draw:(c,w,h)=>{const gr=c.createRadialGradient(w*.5,h*.55,0,w*.5,h*.55,w*.45);gr.addColorStop(0,'rgba(255,220,255,.2)');gr.addColorStop(1,'rgba(60,0,80,.2)');c.fillStyle=gr;c.fillRect(0,0,w,h)}});
-    // O4 (Tzach: 'the top of the dress should be a kind of tank top, not reaching so close to the eyes and the mouth'): a SINGLET neckline: a deep scoop in front (y -.27 at the centre, mouth bottom -.036, eye bottoms -.11),
-    // a strap at each side (the edge rises to -.07 between a 1.2 and 1.95 rad, beside the silhouette, clear of the eyes' outer ends) and a lower scoop at the back (-.17); was -.03 - .08 cos(a) (front -.11, at the mouth line)
-    const nk=a=>{const c=Math.abs(Math.atan2(Math.sin(a),Math.cos(a))),st=sm(.92,1.2,c)*(1-sm(1.95,2.25,c)),b=c<PI/2?-.27+.27*(1-Math.cos(c)):-.2+.2*(1-Math.cos(PI-c));return b+st*(-.07-b)};// the patch's top row follows it (dy), the gold edge runs along it, a pink piping under the front scoop
-    const LM=mapNrm('satin',lt,'ou_ballet',.5,{k:1.25});s.add(new T.Mesh(patch(-.42,-.07,-PI,PI,.02,{ny:12,na:160,dy:(a,v)=>v*(nk(a)+.07)}),LM));
-    const G=goldMC();{const e=[];for(let i=0;i<=160;i++){const a=-PI+TAU*i/160;e.push(onBody(a,nk(a),.028))}s.add(tube(e,.013,true,G,320));const v=[];for(let i=0;i<=32;i++){const a=-.85+1.7*i/32;v.push(onBody(a,nk(a)-.03,.026))}s.add(tube(v,.009,false,satin('#f565a8',1.05),64))}
+    // O5 (AD o4: 'the sides still climb beside the eyes, no straps can be seen, a loose pink seam'): a real TANK TOP (O4 was one wide U rising to -.07 at the sides = a scoop-neck bib). c = |angle| from the front (x = bR sin c, z > 0 for c < PI/2).
+    // nF: a sweetheart scoop in front (-.28 at the centre notch, -.245 on the humps, -.2 at c .62 = |x| .29 where the strap leaves it); su: each STRAP's inner edge rises from there to its top -.143 at c .95 (|x| .41) and then runs
+    // round the side LOWERING to -.16 at the silhouette (the lobby camera looks down, so a point at the silhouette shows ~.09 higher than one on the front: a level strap read as points beside the eyes) and on to a lower back
+    // scoop nB (-.195 at c 2.25, -.27 at the back, so from the side the strap reads apart from the back panel). Under each strap an ARMHOLE from c .9 (|x| .39, so it shows in the front view) to c 1.62: the strap's outer edge
+    // sl (rounded top, -.237 at its highest: the strap is ~.088 wide) and the bodice's armhole sides hb that drop straight into the waistband (the armhole is open down to the pink band, no purple sliver under it: a closed hole
+    // read as a window cut in the cloth). Gold piping = one CLOSED loop along the neckline + both straps, and one piping per armhole whose two ends go into the waistband (nothing curls over the silhouette); the pink seam is gone.
+    // hm(keys) = a smooth curve through [c, y] keys, lin = piecewise linear; skin(nu,nv,f,off,uvf): a sheet on the egg, f(u,v) -> [angle, y] (r = bR(y) + off, so no air at any height); each strap = a ruled band between its edges
+    const hm=K=>c=>{let i=0;while(i<K.length-2&&c>K[i+1][0])i++;const sl_=j=>j<=0?(K[1][1]-K[0][1])/(K[1][0]-K[0][0]):j>=K.length-1?(K[j][1]-K[j-1][1])/(K[j][0]-K[j-1][0]):(K[j+1][1]-K[j-1][1])/(K[j+1][0]-K[j-1][0]);
+      const [x0,y0]=K[i],[x1,y1]=K[i+1],h=x1-x0,t=clamp((c-x0)/h,0,1),t2=t*t,t3=t2*t;return(2*t3-3*t2+1)*y0+(t3-2*t2+t)*h*sl_(i)+(-2*t3+3*t2)*y1+(t3-t2)*h*sl_(i+1)};
+    const lin=(K,t)=>{let i=0;while(i<K.length-2&&t>K[i+1][0])i++;const [a0,b0]=K[i],[a1,b1]=K[i+1];return b0+(b1-b0)*clamp((t-a0)/(a1-a0),0,1)};
+    const cI=.62,cB=2.25,cO=.9,cQ=1.62,nF=c=>-.255+.055*(1-Math.cos(c/cI*PI/2))-.025*Math.exp(-c*c/.01),nB=c=>-.27+.075*sm(PI,cB,c),
+      su=hm([[cI,-.2],[.8,-.16],[.95,-.143],[1.15,-.147],[1.57,-.16],[1.95,-.172],[cB,-.195]]),ae=(c,p)=>Math.pow(Math.max(0,1-Math.pow(Math.abs((c-(cO+cQ)/2)/((cQ-cO)/2)),p)),1/p),sl=c=>-.293+.056*ae(c,2.4),hb=c=>-.293-.095*ae(c,4),
+      top=c=>c<=cI?nF(c):c<cO?nF(cI)+(sl(cO)-nF(cI))*(c-cI)/(cO-cI):c<=cQ?hb(c):c<cB?hb(cQ)+(nB(cB)-hb(cQ))*(c-cQ)/(cB-cQ):nB(c),
+      neck=c=>c<=cI?nF(c):c<cB?su(c):nB(c),tIn=[[0,cI],[.25,.95],[.55,1.45],[.8,1.85],[1,cB]],tOut=[[0,cO],[.25,1.1],[.55,1.35],[.8,1.5],[1,cQ]];
+    const skin=(nu,nv,f,off,uvf)=>{const P2=[],U2=[],I2=[];for(let i=0;i<=nv;i++)for(let j=0;j<=nu;j++){const u=j/nu,v=i/nv,[a,y]=f(u,v),r=bR(y)+off;P2.push(Math.sin(a)*r,y,Math.cos(a)*r);U2.push(...(uvf?uvf(a,v):[u,v]))}
+      for(let i=0;i<nv;i++)for(let j=0;j<nu;j++){const p=i*(nu+1)+j,q=p+nu+1;I2.push(p,p+1,q,p+1,q+1,q)}const g=new T.BufferGeometry();g.setAttribute('position',new T.Float32BufferAttribute(P2,3));g.setAttribute('uv',new T.Float32BufferAttribute(U2,2));g.setIndex(I2);g.computeVertexNormals();return g};
+    const LM=mapNrm('satin',lt,'ou_ballet',.5,{k:1.25});s.add(new T.Mesh(skin(240,12,(u,v)=>{const a=-PI+TAU*u,c=Math.abs(a);return[a,-.42+(top(c)+.42)*v]},.02),LM));
+    for(const sx of[-1,1])s.add(new T.Mesh(skin(40,4,(u,v)=>{const t=sx>0?u:1-u,ci=lin(tIn,t),co=lin(tOut,t);return[sx*(co+(ci-co)*v),sl(co)+(su(ci)-sl(co))*v]},.02,(a,v)=>[(a+PI)/TAU,.9+.08*v]),LM));
+    const G=goldMC();{const e=[];for(let i=0;i<240;i++){const a=-PI+TAU*i/240;e.push(onBody(a,neck(Math.abs(a)),.028))}s.add(tube(e,.013,true,G,480));
+      for(const sx of[-1,1]){const h=[],at=th=>{const c=(cO+cQ)/2-(cQ-cO)/2*Math.cos(th);return[c,Math.sin(th)>=0?sl(c):hb(c)]};let c0=0,c1=0;
+        for(let i=0;i<=144;i++){const th=-PI/2+i/144*TAU,[c,y]=at(th);if(y<-.362)continue;if(!h.length)c0=c;c1=c;h.push(onBody(sx*c,y,.028))}h.unshift(onBody(sx*c0,-.372,.028));h.push(onBody(sx*c1,-.372,.028));s.add(tube(h,.011,false,G,120))}}
     const tx=T2('ou_tutu2',512,128,(c,w,h)=>{c.fillStyle=PK;c.fillRect(0,0,w,h);for(let i=0;i<28;i++){const x=i/28*w,ww=w/28,gr=c.createLinearGradient(x,0,x+ww,0);gr.addColorStop(0,'rgba(160,30,90,.28)');gr.addColorStop(.4,'rgba(255,225,240,.15)');gr.addColorStop(1,'rgba(160,30,90,.28)');c.fillStyle=gr;c.fillRect(x,0,ww+1,h)}
       const gr=c.createLinearGradient(0,0,0,h);gr.addColorStop(0,'rgba(255,235,245,.55)');gr.addColorStop(.1,'rgba(0,0,0,0)');gr.addColorStop(.85,'rgba(0,0,0,0)');gr.addColorStop(1,'rgba(120,0,60,.4)');c.fillStyle=gr;c.fillRect(0,0,w,h)});
     const NM=hNormal('ou_pleat',128,32,(u,v)=>.5+.5*Math.sin(u*TAU*28),10),M=mcMap('satin',tx,1.08);M.normalMap=NM;M.normalScale.set(.6,.6);M.side=DS;
