@@ -28,7 +28,7 @@
 })();
 /* MORE FACES (Tzach, Oct 25: "angry, nauseous and so on, all with the eyelids"): no pupils and no brows, so the eyelids carry the feeling.
    FACES3 entries may add tilt (top lids, + = inner corner down = angry, − = outer corner down = sad), lt (lower lids, same sign rule),
-   kE/lE (per eye [left,right] top/lower closing, overrides k/low) and the new mouths frown + wavy. */
+   kE/lE (per eye [left,right] top/lower closing, overrides k/low), esE (per eye size), sy (eye height), mx (mouth sideways), ms (mouth size), arc (^ crease on closed lids) and the new mouths frown + wavy. */
 (()=>{Object.assign(FACES3,{
     8:{k:.4,low:.14,tilt:.45,mouth:'frown'},                       // angry
     9:{k:.48,low:.3,tilt:.7,lt:-.2,es:.96,mouth:'flat'},          // furious
@@ -41,10 +41,15 @@
   const sf0=setFace3;setFace3=function(P,f,blinkK=0){sf0.apply(this,arguments);const F=FACES3[f]||FACES3[0];
     P.eyes.forEach((e,i)=>{const sx=e.userData.sx||1,k=Math.max(F.kE?F.kE[i]:F.k||0,blinkK),lo=F.lE?F.lE[i]:F.low||0,L=P.lids[i],D=P.lows[i];
       L.rotation.order=D.rotation.order='ZXY';L.rotation.x=Math.PI/2+Math.PI*k*.98;L.rotation.z=sx*(F.tilt||0)*(1-blinkK);
-      D.rotation.x=-Math.PI/2-Math.PI*lo*(1-k);D.rotation.z=-sx*(F.lt||0)*(1-blinkK)})};
+      D.rotation.x=-Math.PI/2-Math.PI*lo*(1-k);D.rotation.z=-sx*(F.lt||0)*(1-blinkK);
+      if(F.esE||F.sy){const s=(F.es||1)*(F.esE?F.esE[i]:1);e.scale.set(B_ERX*s,B_ERY*s*(F.sy||1),B_ERZ)}});
+    for(const n in P.mouths){const o=P.mouths[n];if(o.userData.x0===undefined)o.userData.x0=o.position.x;o.position.x=o.userData.x0+(F.mx||0);if(F.ms||o.userData.ms){o.scale.setScalar(F.ms||1);o.userData.ms=F.ms}}
+    if(P.arcs)P.arcs.forEach(a=>a.visible=!!F.arc&&!blinkK)};
   const b0=buildSharliz3D;buildSharliz3D=function(T){const P=b0.apply(this,arguments);try{const sm=P.mouths.smile,m=sm.parent;
       const fr=new T.Mesh(sm.geometry,sm.material);fr.position.copy(sm.position);fr.position.y-=.03;fr.visible=false;m.add(fr);P.mouths.frown=fr;
       const pts=[];for(let i=0;i<=24;i++){const u=i/24;pts.push(new T.Vector3((u-.5)*.1*B3OPT.mouth,Math.sin(u*Math.PI*3)*.01,0))}
       const wv=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3(pts),40,.009*Math.sqrt(B3OPT.mouth),8,false),sm.material);
-      wv.position.set(0,B_MY+.004,sm.position.z+.002);wv.visible=false;m.add(wv);P.mouths.wavy=wv}catch(e){console.warn('faces',e)}return P};
+      wv.position.set(0,B_MY+.004,sm.position.z+.002);wv.visible=false;m.add(wv);P.mouths.wavy=wv;
+      // laughing eyes: a happy ^ crease on each closed lid (F.arc)
+      P.arcs=P.eyes.map(e=>{const a=new T.Mesh(new T.TorusGeometry(.42,.07,8,24,Math.PI),sm.material);a.position.set(0,-.12,1.07);a.scale.z=.3;a.visible=false;e.add(a);return a})}catch(e){console.warn('faces',e)}return P};
 })();
