@@ -287,24 +287,24 @@ function sickPose(P,g,size,cw,ch,left,top){if(!SPIN.phase){sickTint(P,SPIN.green
   const sickProj=()=>{H3.scene.updateMatrixWorld(true);const v=new T.Vector3();P.mouths.smile.getWorldPosition(v);v.project(H3.cam);
     const hv=new T.Vector3();P.hatSlot.getWorldPosition(hv);hv.project(H3.cam);SPIN.mouth=[left+(v.x+1)/2*cw,top+(1-v.y)/2*ch,left+(hv.x+1)/2*cw,top+(1-hv.y)/2*ch,size]};
   if(!SPIN.mouth)sickProj();const [mx,my,tx,ty]=SPIN.mouth;
-  if(ph==='woozy'){const w=Math.sin(e*7);g.rotation.z=w*.22;g.rotation.x+=Math.sin(e*5)*.12;g.position.x+=Math.sin(e*3.5)*size*.08;setFace3(P,7);sickEyes(P,1);
+  if(ph==='woozy'){const w=Math.sin(e*7);g.rotation.z=w*.22;g.rotation.x+=Math.sin(e*5)*.12;g.position.x+=Math.sin(e*3.5)*size*.08;setFace3(P,10);sickEyes(P,1);
     if(e>SICK.woozy-.45){setFace3(P,4);const s=1+Math.sin(e*30)*.12;P.mouths.o.scale.setScalar(s)}}
   else if(ph==='act'){
     if(K==='sweet'){// she cries, wobbles and faints
       const f=clamp((e-.9)/.5,0,1),back=clamp((e-2.1)/.4,0,1);const lay=(f-back)*(SPIN.dir||1);g.rotation.z=lay*1.3+Math.sin(e*8)*.05*(1-f);g.position.x-=lay*size*.12;g.position.y+=Math.abs(lay)*size*.46;
-      setFace3(P,f>.5&&back<.5?1:6);sickEyes(P,f>.5&&back<.5?0:1);if(e<1.2&&Math.random()<.5)sickFx('tear',mx,my);if(f>.5&&back<.5&&Math.random()<.25)sickFx('star',tx,ty);green=.55;
+      setFace3(P,f>.5&&back<.5?1:11);sickEyes(P,f>.5&&back<.5?0:1);if(e<1.2&&Math.random()<.5)sickFx('tear',mx,my);if(f>.5&&back<.5&&Math.random()<.25)sickFx('star',tx,ty);green=.55;
       if(SPIN.n===0){SPIN.n=1;if(sfx.ok()){wah(392,.3,0);wah(349,.3,.3);wah(311,.6,.6)}}}
     else if(K==='nervous'){// hiccups up green bubbles
       const k=Math.floor(e/.62),u=(e%.62)/.62;if(k>SPIN.n-1&&k<4){SPIN.n=k+1;if(sfx.ok())tone({f:420,f2:980,d:.09,type:'square',v:.05,filter:1600});for(let i=0;i<6;i++)sickFx('bubble',mx,my)}
-      g.position.y+=Math.sin(Math.min(1,u*2.2)*Math.PI)*size*.18*(k<4?1:0);g.rotation.z=Math.sin(e*40)*.03;setFace3(P,u<.3?4:6);sickEyes(P,1);if(u<.3)P.mouths.o.scale.setScalar(1.25)}
+      g.position.y+=Math.sin(Math.min(1,u*2.2)*Math.PI)*size*.18*(k<4?1:0);g.rotation.z=Math.sin(e*40)*.03;setFace3(P,u<.3?4:14);sickEyes(P,1);if(u<.3)P.mouths.o.scale.setScalar(1.25)}
     else{// goofy / grumpy / diva: the big one
       const pulse=e<1.9?Math.max(0,Math.sin(e*Math.PI*2.1)):0,lean=Math.min(1,e*3)*(e<1.9?1:Math.max(0,1-(e-1.9)*2));
-      g.rotation.x+=lean*.45;g.position.y-=lean*size*.05;setFace3(P,e<1.9?3:(K==='grumpy'?7:2));sickEyes(P,e<1.9?1:0);
+      g.rotation.x+=lean*.45;g.position.y-=lean*size*.05;setFace3(P,e<1.9?3:(K==='grumpy'?8:2));sickEyes(P,e<1.9?1:0);
       if(e<1.9){P.mouths.scream.scale.set(1+pulse*.2,1+pulse*.35,1);const n=K==='diva'?5:4;for(let i=0;i<n;i++)sickFx(K==='goofy'?'rainbow':K==='diva'?'glitter':'goo',mx,my,pulse)}
       if(SPIN.n===0){SPIN.n=1;blargh();setTimeout(blargh,600);setTimeout(blargh,1150)}
       if(K==='grumpy'&&e>1.9&&Math.random()<.35)sickFx('steam',tx,ty);if(K==='diva'&&e>1.9){green=.3;if(SPIN.n===1){SPIN.n=2;sfx.perfect(4)}if(Math.random()<.4)sickFx('spark',tx,ty+size*.6)}
       if(K==='goofy'&&e>1.9){g.rotation.y+=Math.sin(e*10)*.3;if(SPIN.n===1){SPIN.n=2;if(sfx.ok()){tone({f:660,f2:990,d:.12,type:'triangle',v:.06});tone({f:880,f2:1320,d:.14,type:'triangle',v:.06,delay:.14})}}}}}
-  else{const u=e/SICK.recover;g.rotation.z=Math.sin(e*5)*.08*(1-u);setFace3(P,K==='grumpy'?7:2);sickEyes(P,0)}
+  else{const u=e/SICK.recover;g.rotation.z=Math.sin(e*5)*.08*(1-u);setFace3(P,K==='grumpy'?8:2);sickEyes(P,0)}
   sickProj();sickTint(P,green)}
 function sickTint(P,k){const M=P.bodyMat;if(k<=.001){if(P._tinted){P._tinted=false;P.lookKey=null;applyLook(P,heroLook())}return}
   if(!P._tinted){P._tinted=true;P._base=M.color.clone();P._baseL=P.lidMat.color.clone()}const gr=new P.T.Color('#8fd14f');M.color.copy(P._base).lerp(gr,k);P.lidMat.color.copy(P._baseL).lerp(gr,k)}
