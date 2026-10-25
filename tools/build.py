@@ -22,7 +22,7 @@ rep("const e=settings.easy?1.25:1;return [p*e,g*e,m]","const e=(settings.easy?1.
 rep("function track(id,amt=1){if(mode==='duo')return;","function track(id,amt=1){if(mode==='duo')return;trackW(id,amt);")
 rep("renderBoosterBar();track('wins');","renderBoosterBar();track('wins');if(lv.starsNow>=3)track('stars3');")
 # ---- bake: personality features per colour
-rep("const BAKE_V='b27';","const BAKE_V='b31';")  # b31: v69 series look + rim light. bump to b32 when series-look merges (every hat/glasses sprite changed)
+rep("const BAKE_V='b27';","const BAKE_V='b32';")  # b32: v69 series look + rim light + 3D-team accessories (every hat/glasses/outfit sprite changed)
 rep("if(col==='hero')applyLook(P,Object.assign({},L,{hat}));else applyLook(P,Object.assign({},LOOK0,{colorHex:col,color:'_',hat}));",
     "if(col==='hero'){applyLook(P,Object.assign({},L,{hat}));persBake(P,'hero')}else{applyLook(P,Object.assign({},LOOK0,{colorHex:col,color:'_',hat},PERS_LOOKX[PERS[col]]||{}));persBake(P,col)}")
 rep("for(let f=0;f<faces;f++){setFace3(P,f);r.render(scene,cam);","for(let f=0;f<faces;f++){setFace3(P,f);persFace(P,f);r.render(scene,cam);")
