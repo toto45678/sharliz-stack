@@ -354,6 +354,8 @@ js=rd('v28.js')+'\n'+rd('v29.js').replace('__BSP_META__','{}')+'\n'+rd('v31.js')
 css=rd('v28.css')+'\n'+rd('v36.css')+'\n'+rd('v38.css')+'\n'+rd('v39.css')+'\n'+rd('v40.css')+'\n'+rd('v42.css')+'\n'+rd('v43.css')+'\n'+rd('v48.css')+'\n'+rd('v49.css')+'\n'+rd('v50.css')+'\n'+rd('v51.css')+'\n'+rd('v52.css')+'\n'+rd('v53.css')+'\n'+rd('v54.css')+'\n'+rd('v55.css')+'\n'+rd('v56.css')+'\n'+rd('v57.css')+'\n'+rd('v58.css')+'\n'+rd('v59.css')+'\n'+rd('v62.css')+'\n'+rd('v63.css')+'\n'+rd('v64.css')+'\n'+rd('v65.css')+'\n'+rd('v67.css')+'\n'+rd('v68.css')
 i=src.rindex('requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});')
 src=src[:i]+js+'\n'+src[i:]
+# v69 series-look hats: the list of art/acc pictures that exist, so hatTex() never requests a missing one (no 404 at boot; king_tex etc. switch on by themselves once the file is committed)
+rep("const ACC_ART=__ACC_ART__;","const ACC_ART="+json.dumps(sorted(f[:-5] for f in os.listdir(P(ROOT,'art','acc')) if f.endswith('.webp')))+";")
 i=src.index('</style>')
 src=src[:i]+css+'\n'+src[i:]
 _H=re.compile('[֐-׿]');_T=list(re.finditer(r"""'((?:[^'\\\n]|\\.)*)'|"((?:[^"\\\n]|\\.)*)\"""",src));_out=[];_last=0;_nw=0
