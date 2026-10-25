@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261024234017"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261025051022"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -9661,6 +9661,42 @@ document.documentElement.classList.add('booted');
   // soft feather plume (AD batch-4 r1): a sheet L long, W half-wide at the vane's widest, quill narrow at the root, rounded tip, slightly asymmetric (right side fuller), a few notched splits along each edge, bent backward along its length and cupped; uv u across / v root->tip so a painted map (root gradient, rim light, quill) lands directly
   const plumeGeo=(L,W,seed=0)=>{const nt=(v,c)=>1-.35*Math.exp(-Math.pow((v-c)/.022,2));return surf(14,36,(u,v)=>{const q=u*2-1,side=q<0?.85:1.15,hw=W*(.12+.88*Math.sin(Math.PI*Math.pow(v,.85)))*(1-Math.pow(v,10))*side*(q<0?nt(v,.42+seed*.03)*nt(v,.66)*nt(v,.84):nt(v,.54)*nt(v,.76+seed*.02));return [q*hw,v*L,-.14*L*v*v-.3*W*q*q*Math.pow(v,.5)]},0)};
   const onHead=(an,y,off=0)=>{const R=bodyR(Math.min(.999,(.66+y)/.75))+off;return [R*Math.sin(an),y,R*Math.cos(an)]};
+  /* DRAWING-PROJECTED COLOUR MAP (Tzach's review of the 54 hats, Oct 25: "a colour map more faithful to the drawing's own lighting"): the hat's own ChatGPT drawing
+     (art/acc/<name>.webp: the crop with the white keyed out and the edge colours spread outward, made by /home/user/3d-team/hats/projtex.py) is planar-projected onto the
+     hat from the drawing's camera (o.yaw = how far the drawing turns the hat, o.pitch = how far its camera looks down), so the painted light, shade, gems, skull... land
+     where the drawing has them; the back of the hat reuses the same pixels (a plane projection is its own mirror). projMap(g,meshes,name,o) fits the drawing to the
+     projected bounding box of o.fit||meshes, writes the UVs and returns ONE shared material: plain o.color until the picture arrives, then map + faint emissiveMap
+     (o.emi .25, so the painted shadows don't go muddy under the scene light), roughness .6, no metal/clearcoat, env .08; o.nrm = a sobel normal map built from the
+     map's luminance (lumNormal), normalScale o.nrm; o.uv = the patch of the picture to use ([u0,v0,u1,v1], a decal seen head-on from its own yaw); o.keyOut(r,g,b) = pixels to paint out of this material's copy of the picture (deriveTex, nearest colour), o.keyId names that copy. hatTex(name) loads + caches a picture (TextureLoader, sRGB); hatTexReady() = promise for every picture requested
+     so far: the sprite bake and hats/pair.js wait for it, the lobby hero redraws by itself (rAF), style thumbnails are re-rendered on load (csThumb wrapper below). */
+  const HTX={},HAT_PIC={king:'king',pirate:'pirate'};// hat id -> art/acc picture (the bake preloads the worn hat's picture)
+  function hatTex(name){if(HTX[name])return HTX[name];const T=THREE,e={ready:false,err:false,mats:[],fns:[]};e.p=new Promise(r=>e.res=r);
+    const done=ok=>{e.ready=true;for(const m of e.mats)e.apply(m);e.mats.length=0;for(const f of e.fns)try{f(ok)}catch(x){console.warn('hatTex',x)}e.fns.length=0;e.res(ok)};
+    e.tex=new T.TextureLoader().load('art/acc/'+name+'.webp',()=>done(true),undefined,()=>{e.err=true;done(false)});
+    e.tex.colorSpace=T.SRGBColorSpace;e.tex.wrapS=e.tex.wrapT=T.ClampToEdgeWrapping;e.tex.anisotropy=8;
+    e.apply=m=>{if(e.err)return;const K=m.userData.keyOut,tx=K?deriveTex(e.tex,name+(m.userData.keyId||''),K):e.tex;m.map=tx;m.color.set('#ffffff');m.emissive.set('#ffffff');m.emissiveMap=tx;m.emissiveIntensity=m.userData.emi;if(m.userData.nrm){m.normalMap=lumNormal(tx,name+(m.userData.keyId||''));m.normalScale.set(m.userData.nrm,m.userData.nrm)}m.needsUpdate=true};
+    return HTX[name]=e}
+  function hatTexReady(){return Promise.all(Object.values(HTX).map(e=>e.p))}window.hatTexReady=hatTexReady;
+  // normal map from a loaded picture: 3x3-blurred luminance as height, sobel -> tangent-space normal (x right, y up in uv space), linear colour space
+  function lumNormal(tex,name){const im=tex.image,w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;const t=canvasTex('nrm_'+name,w,h,(c)=>{c.drawImage(im,0,0,w,h);const d=c.getImageData(0,0,w,h),a=d.data,L=new Float32Array(w*h),B=new Float32Array(w*h);
+      for(let i=0;i<w*h;i++)L[i]=(a[i*4]*.3+a[i*4+1]*.59+a[i*4+2]*.11)/255;const at=(x,y)=>L[Math.min(h-1,Math.max(0,y))*w+Math.min(w-1,Math.max(0,x))];
+      for(let y=0;y<h;y++)for(let x=0;x<w;x++){let s=0;for(let j=-1;j<=1;j++)for(let i=-1;i<=1;i++)s+=at(x+i,y+j);B[y*w+x]=s/9}const bt=(x,y)=>B[Math.min(h-1,Math.max(0,y))*w+Math.min(w-1,Math.max(0,x))],k=2.5;
+      for(let y=0;y<h;y++)for(let x=0;x<w;x++){const gx=(bt(x+1,y-1)+2*bt(x+1,y)+bt(x+1,y+1)-bt(x-1,y-1)-2*bt(x-1,y)-bt(x-1,y+1))/8,gy=(bt(x-1,y+1)+2*bt(x,y+1)+bt(x+1,y+1)-bt(x-1,y-1)-2*bt(x,y-1)-bt(x+1,y-1))/8;
+        const al=a[(y*w+x)*4+3]/255;let nx=-gx*k*al,ny=gy*k*al,nz=1;const l=Math.hypot(nx,ny,nz);nx/=l;ny/=l;nz/=l;const o=(y*w+x)*4;a[o]=nx*127.5+127.5;a[o+1]=ny*127.5+127.5;a[o+2]=nz*127.5+127.5;a[o+3]=255}c.putImageData(d,0,0)});
+    t.colorSpace=THREE.NoColorSpace;t.wrapS=t.wrapT=THREE.ClampToEdgeWrapping;t.needsUpdate=true;return t}
+  function deriveTex(tex,name,test){const im=tex.image,w=im.naturalWidth||im.width,h=im.naturalHeight||im.height;return canvasTex('key_'+name,w,h,c=>{c.drawImage(im,0,0,w,h);const d=c.getImageData(0,0,w,h),a=d.data,n=w*h,bad=new Uint8Array(n);
+      for(let i=0;i<n;i++)if(a[i*4+3]&&test(a[i*4],a[i*4+1],a[i*4+2]))bad[i]=1;
+      {const b2=bad.slice();for(let y=0;y<h;y++)for(let x=0;x<w;x++){if(!bad[y*w+x])continue;for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){const xx=x+dx,yy=y+dy;if(xx>=0&&yy>=0&&xx<w&&yy<h)b2[yy*w+xx]=1}}bad.set(b2)}
+      for(let pass=0;pass<16;pass++){let ch=0;const nb=bad.slice();for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=y*w+x;if(!bad[i])continue;let r=0,g=0,b=0,k=0;for(let dy=-2;dy<=2;dy++)for(let dx=-2;dx<=2;dx++){const xx=x+dx,yy=y+dy;if(xx<0||yy<0||xx>=w||yy>=h)continue;const j=yy*w+xx;if(bad[j])continue;r+=a[j*4];g+=a[j*4+1];b+=a[j*4+2];k++}
+        if(k){a[i*4]=r/k;a[i*4+1]=g/k;a[i*4+2]=b/k;nb[i]=0;ch++}}bad.set(nb);if(!ch)break}c.putImageData(d,0,0)})}
+  function projMap(g,meshes,name,o={}){const T=THREE,yaw=o.yaw||0,pt=o.pitch||0,cy=Math.cos(yaw),sy=Math.sin(yaw),cp=Math.cos(pt),sp=Math.sin(pt),v=new T.Vector3(),M=new T.Matrix4();
+    const S=p=>{const x1=p.x*cy+p.z*sy,z1=-p.x*sy+p.z*cy;return [x1,p.y*cp-z1*sp]},mat=m=>{M.identity();let n=m;while(n&&n!==g){n.updateMatrix();M.premultiply(n.matrix);n=n.parent}return M};
+    let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;for(const m of(o.fit||meshes)){const Mm=mat(m),p=m.geometry.attributes.position;for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i).applyMatrix4(Mm);const[x,y]=S(v);if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}}
+    if(o.box){[x0,y0,x1,y1]=o.box}const pad=o.pad||0;x0-=pad;x1+=pad;y0-=pad;y1+=pad;const seen=new Set(),[U0,V0,U1,V1]=o.uv||[0,0,1,1];
+    for(const m of meshes){if(seen.has(m.geometry))m.geometry=m.geometry.clone();seen.add(m.geometry);const Mm=mat(m),p=m.geometry.attributes.position,uv=new Float32Array(p.count*2);
+      for(let i=0;i<p.count;i++){v.fromBufferAttribute(p,i).applyMatrix4(Mm);const[x,y]=S(v);uv[i*2]=U0+(U1-U0)*(x-x0)/(x1-x0);uv[i*2+1]=V0+(V1-V0)*(y-y0)/(y1-y0)}m.geometry.setAttribute('uv',new T.BufferAttribute(uv,2))}
+    const m=wm(o.color||'#ffffff',Object.assign({roughness:o.rough===undefined?.6:o.rough,metalness:0,clearcoat:0,clearcoatRoughness:.5,envMapIntensity:o.env===undefined?.08:o.env,sheen:0,specularIntensity:.4},o.mat||{}));m.userData.emi=o.emi===undefined?.25:o.emi;m.userData.nrm=o.nrm||0;m.userData.keyOut=o.keyOut;m.userData.keyId=o.keyId;
+    const e=hatTex(name);if(e.ready)e.apply(m);else e.mats.push(m);for(const ms of meshes)ms.material=m;return m}
   const H={
   party(P,g){const T=P.T,cs=[[221,28,33],[250,200,42],[27,115,236],[72,192,64]];// drawing's red / yellow / blue / green (sampled)
     // continuous spiral: band index f = v*N + u*4 (4 = one colour cycle per turn, so the seam at u 0/1 is continuous); each band one solid colour, edges slightly darker; subtle key light, rim AO at the bottom, contact shadow under the pompom
@@ -9753,7 +9789,20 @@ document.documentElement.classList.add('booted');
     const G={roughness:.35,clearcoat:.5,emissive:'#ffb400',emissiveIntensity:.25,envMapIntensity:.4};
     [[-.5,.19,1.15],[.55,.25,1.1],[0,.36,.95],[-.25,.47,.8]].forEach(([a,y,s])=>{const v=y/H0,r=.235*(1-v)+.014,st=wmesh(starGeo(T,.05*s,.022*s,.01),'#ffcb3c',G);face(st,Math.sin(a)*r+.26*Math.pow(v,2.6),y,Math.cos(a)*r,.0);g.add(st)});
     {const a=.32,y=.15,v=y/H0,r=.235*(1-v)+.014,m=wmesh(moonGeo(T,.058,.01),'#ffcb3c',G);face(m,Math.sin(a)*r,y,Math.cos(a)*r);g.add(m)}g.position.y=.06},
-  pirate(P,g,O={}){const T=P.T,o={roughness:.42,clearcoat:.5,sheen:.3,sheenColor:new T.Color('#5a5070'),envMapIntensity:.5},WC=O.wall||'#231d2c',LC=O.line||'#c0202f',K=O.k||'';// O: wall/line colours + key suffix (h_snowS admiral reuses this builder in navy/gold)
+  // PIRATE from the drawing (Oct 25 sample of the projected map; Tzach: "the whole shape is wrong; make the skull a map, not geometry"): a bicorne bowl that flares out
+  // (top wider than the bottom), one tall hump per flap (.36 at the front/back centre, .1 at the side tips where the red lining shows), the bottom edge a boat hull dipping
+  // at the front/back; the black leather, the skull & crossbones and their painted light come from art/acc/pirate.webp projected from the drawing's camera (yaw -.5,
+  // pitch .3) onto the wall, plus a sobel normal map of the skull (nrm .3); red lining and gold edge stay geometry. h_snowS keeps the old builder (pirate0).
+  pirate(P,g,O={}){if(O.wall)return H.pirate0(P,g,O);const T=P.T,lineTx=canvasTex('prLine2',256,64,(c,w,h)=>{c.fillStyle='#c0202f';c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KA(.6)],[.6,KA(.2)],[1,KA(0)]],gu:[[0,KA(0)],[.5,KA(.15)],[1,KA(0)]]})});
+    const A=.42,B=.27,R0=a=>1/Math.hypot(Math.sin(a)/A,Math.cos(a)/B),Hh=a=>.2+.22*Math.pow(Math.cos(a)*Math.cos(a),.8),Yb=a=>-.05*Math.pow(Math.abs(Math.cos(a)),1.5),
+      pt=(a,v)=>{const r=R0(a)*(1+.18*v),y=Yb(a)+Hh(a)*v;return [Math.sin(a)*r,y,Math.cos(a)*r]};
+    const wall=dmesh(shell(120,12,(u,v)=>pt(u*Math.PI*2,v),.02),'#231d2c');g.add(wall);
+    const dk={roughness:.6,clearcoat:0,envMapIntensity:.08},dome=wmesh(new T.SphereGeometry(.28,40,20,0,Math.PI*2,0,Math.PI/2),'#1a1522',dk);dome.scale.set(1,.95,.85);dome.position.y=.03;g.add(dome);
+    const bt=[];for(let i=0;i<120;i++){const q=pt(i/120*Math.PI*2,0);bt.push(new T.Vector3(q[0]*.99,q[1]+.012,q[2]*.99))}g.add(wmesh(new T.TubeGeometry(new T.CatmullRomCurve3(bt,true),240,.018,8,true),'#1a1522',dk));
+    g.add(wmesh(surf(120,12,(u,v)=>{const q=pt(u*Math.PI*2,v);return [q[0]*.97,q[1]+.002,q[2]*.97]},1),wm('#ffffff',{map:lineTx,roughness:.6,side:T.BackSide,envMapIntensity:.3})));
+    const ed=[];for(let i=0;i<120;i++){const q=pt(i/120*Math.PI*2,1);ed.push(new T.Vector3(q[0],q[1]+.006,q[2]))}const edge=wmesh(new T.TubeGeometry(new T.CatmullRomCurve3(ed,true),240,.02,8,true),'#e8b23c',Object.assign({},GOLD,{emissive:'#6a4a08',emissiveIntensity:.12}));g.add(edge);
+    projMap(g,[wall],'pirate',{yaw:-.5,pitch:.3,fit:[wall,edge],nrm:.3,color:'#231d2c',keyId:'w',keyOut:(r,g,b)=>(r>90&&r-b>45&&g-b>15)||(r>90&&g<75&&b<75&&r-g>50)});g.position.y=.03},// the drawing's gold rim + red lining are keyed out of the wall (the model has them as geometry)
+  pirate0(P,g,O={}){const T=P.T,o={roughness:.42,clearcoat:.5,sheen:.3,sheenColor:new T.Color('#5a5070'),envMapIntensity:.5},WC=O.wall||'#231d2c',LC=O.line||'#c0202f',K=O.k||'';// O: wall/line colours + key suffix (h_snowS admiral reuses this builder in navy/gold)
     // painted black leather (lit top-left, AO over the dome at the wall root, lighter rolled top edge) and the red lining (dark inside, lighter at the rim)
     const wallTx=canvasTex('prWall2'+K,512,128,(c,w,h)=>{c.fillStyle=WC;c.fillRect(0,0,w,h);grain(c,w,h,900,.018,7);bakeLight(c,w,h,{gv:[[0,KA(.55)],[.3,KA(0)],[.85,WA(.06)],[1,WA(.16)]],gu:[[0,WA(.12)],[.15,WA(0)],[.4,KA(.3)],[.6,KA(.1)],[.85,WA(.3)],[1,WA(.12)]]})});
     const lineTx=canvasTex('prLine2'+K,256,64,(c,w,h)=>{c.fillStyle=LC;c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KA(.6)],[.6,KA(.2)],[1,KA(0)]],gu:[[0,KA(0)],[.5,KA(.15)],[1,KA(0)]]})});
@@ -9771,19 +9820,20 @@ document.documentElement.classList.add('booted');
       const ang=sx*.85,bn=wmesh(new T.CapsuleGeometry(.009,.13,4,8),'#f4f0e6',W);bn.rotation.z=ang;bn.position.set(0,-.025,-.012);sk.add(bn);
       for(const e2 of[-1,1]){const kn=wmesh(new T.SphereGeometry(.013,10,8),'#f4f0e6',W);kn.position.set(-Math.sin(ang)*.072*e2,-.025+Math.cos(ang)*.072*e2,-.012);sk.add(kn)}}
     const ns=wmesh(new T.ConeGeometry(.006,.012,6),'#1c1824',{roughness:.8});ns.position.set(0,-.004,.02);ns.rotation.x=.3;sk.add(ns);for(let i=-1;i<=1;i++){const t=wmesh(new T.BoxGeometry(.004,.008,.004),'#cfc8ba',{roughness:.7});t.position.set(i*.007,-.03,.012);sk.add(t)}g.position.y=.03},
-  king(P,g){const T=P.T,R=.25,pk=a=>Math.pow((Math.cos(5*a)+1)/2,1.8),hgt=a=>.15+.33*pk(a),G=Object.assign({},GOLD,{metalness:.8,roughness:.18,emissive:'#b07410',emissiveIntensity:.22,envMapIntensity:1.1});
-    // painted gold: rich yellow, AO at the base band over the head, lit top-left, lighter toward the points
-    const gtx=canvasTex('kgGold7',512,128,(c,w,h)=>{c.fillStyle='#f6b228';c.fillRect(0,0,w,h);bakeLight(c,w,h,{gv:[[0,KA(.35)],[.14,KA(0)],[.6,WA(.1)],[1,WA(.28)]],gu:[[0,WA(.14)],[.15,WA(0)],[.4,KA(.16)],[.6,KA(.1)],[.85,WA(.3)],[1,WA(.14)]]})});
-    const wall=shell(150,14,(u,v)=>{const a=u*Math.PI*2,y=v*hgt(a),r=R+.03*y/.48;return [Math.sin(a)*r,y,Math.cos(a)*r]},.02);g.add(wmesh(wall,wm('#ffffff',Object.assign({map:gtx},G))));
-    for(const y of[.0,.115]){const t=wmesh(new T.TorusGeometry(R+.022+y*.11,.017,10,72),'#f3ac28',G);t.rotation.x=Math.PI/2;t.position.y=y+.008;g.add(t)}
-    for(let i=0;i<18;i++){const a=i/18*Math.PI*2,b=wmesh(new T.SphereGeometry(.014,10,8),'#f6b830',G);b.position.set(Math.sin(a)*(R+.04),.008,Math.cos(a)*(R+.04));g.add(b)}
-    // big balls on the five points, small ones in the dips
-    for(let i=0;i<5;i++){const a=i/5*Math.PI*2,r=R+.035+.022;const b=wmesh(new T.SphereGeometry(.045,18,12),'#f3ac28',G);b.position.set(Math.sin(a)*r,.5,Math.cos(a)*r);g.add(b);
-      const a2=a+Math.PI/5,b2=wmesh(new T.SphereGeometry(.026,14,10),'#f3ac28',G);b2.position.set(Math.sin(a2)*(R+.03),.2,Math.cos(a2)*(R+.03));g.add(b2)}
-    // faceted gems in hexagonal gold bezels on the band: big red in front, blue at the sides, green at the back
-    const gem=(a,c,s)=>{const m=wmesh(new T.IcosahedronGeometry(.055*s,0),c,{roughness:.06,clearcoat:1,clearcoatRoughness:.05,flatShading:true,emissive:c,emissiveIntensity:.35});const y=.068;m.scale.set(.9,1.2,.5);face(m,Math.sin(a)*(R+.045),y,Math.cos(a)*(R+.045));g.add(m);
-      const set=wmesh(new T.TorusGeometry(.058*s,.011,8,6),'#f6b830',G);set.scale.set(.95,1.2,1);face(set,Math.sin(a)*(R+.04),y,Math.cos(a)*(R+.04));set.rotateZ(Math.PI/6);g.add(set)};
-    gem(0,'#e01828',1.45);gem(-.9,'#1f5ae8',1.05);gem(.9,'#1f5ae8',1.05);gem(Math.PI,'#1fae5a',1.0)},
+  // KING from the drawing (Oct 25 sample of the projected map; Tzach: "the shape was not kept at all"): proportions measured on art/acc/king.webp (band = 46% of the
+  // height, 5 short triangular points with big balls, small balls sitting in the 5 valleys, 18 rivets on a bottom lip, a red hexagonal gem in front and two blue ones at
+  // +-60 deg, where the drawing paints them on the band). Every gold part (wall, lips, rivets, balls) and the three gem plates share ONE material with the drawing projected from its camera (pitch .18): the gold
+  // is the drawing's painted gold with its own light and shade, not a metal material; the gems are flat hexagonal plates that pick up the painted jewels.
+  king(P,g){const T=P.T,R=.25,BH=.22,PH=.12,pk=a=>Math.pow((Math.cos(6*a)+1)/2,1.6),hgt=a=>BH+PH*pk(a),gold=[];// 6 points: from the front the drawing shows 3 big balls + 2 valley balls, the back ones hide behind them
+    const wall=dmesh(shell(150,14,(u,v)=>{const a=u*Math.PI*2,y=v*hgt(a),r=R+.02*Math.min(1,y/BH);return [Math.sin(a)*r,y,Math.cos(a)*r]},.02),'#f0b22a');g.add(wall);gold.push(wall);
+    for(const [y,rr] of[[.006,.012],[BH-.01,.008]]){const t=wmesh(new T.TorusGeometry(R+.02*Math.min(1,y/BH)+.01,rr,10,72),'#f0b22a');t.rotation.x=Math.PI/2;t.position.y=y;g.add(t);gold.push(t)}
+    for(let i=0;i<18;i++){const a=(i+.5)/18*Math.PI*2,b=wmesh(new T.SphereGeometry(.013,10,8),'#f0b22a');b.position.set(Math.sin(a)*(R+.018),.03,Math.cos(a)*(R+.018));g.add(b);gold.push(b)}
+    for(let i=0;i<6;i++){const a=i/6*Math.PI*2,r=R+.02+.016;const b=wmesh(new T.SphereGeometry(.042,18,12),'#f0b22a');b.position.set(Math.sin(a)*r,BH+PH+.03,Math.cos(a)*r);g.add(b);gold.push(b);
+      if(i%3===1)continue;const a2=a+Math.PI/6,b2=wmesh(new T.SphereGeometry(.026,14,10),'#f0b22a');b2.position.set(Math.sin(a2)*(R+.012),BH+.022,Math.cos(a2)*(R+.012));g.add(b2);gold.push(b2)}
+    // gems = flat hexagonal plates (point up) standing .02 proud of the band; the projected drawing paints the jewel + its gold bezel on them
+    const gem=(a,s)=>{const m=wmesh(new T.CylinderGeometry(.06*s,.06*s,.022,6),'#f0b22a');m.scale.set(1,1,1.12);face(m,Math.sin(a)*(R+.028),BH*.5,Math.cos(a)*(R+.028));m.rotateX(Math.PI/2);m.rotateY(Math.PI/6);g.add(m);return m};
+    gold.push(gem(0,1.05));projMap(g,gold,'king',{pitch:.18,color:'#f0b22a'});
+    for(const [a,u0,u1] of[[-1.05,8,36],[1.05,246,282]])projMap(g,[gem(a,1)],'king',{yaw:-a,uv:[u0/291,1-202/272,u1/291,1-141/272],color:'#2a5ae0'})},// blue gems: the drawing's own (px rects of king.webp), seen head-on
   beanie(P,g){const T=P.T,RC='#c81720',KM={roughness:.9,clearcoat:0,sheen:.3,sheenRoughness:.6,sheenColor:new T.Color('#ff6a6a'),envMapIntensity:.3},lit=m=>{m.emissive=new T.Color('#ffffff');m.emissiveMap=m.map;m.emissiveIntensity=.15;return m};
     // painted chunky knit: vertical ribs (dark grooves, lit ridges) with stitch rows, AO on the dome just above the cuff and under the cuff's edges, key light top-left
     const knit=(key,w,h,ribs,gv)=>canvasTex(key,w,h,(c,W,H)=>{c.fillStyle=RC;c.fillRect(0,0,W,H);for(let x=0;x<W;x++){const ph=x/W*Math.PI*2*ribs,k=(Math.cos(ph)+1)/2;c.fillStyle=KA(.3*Math.pow(1-k,2.2));c.fillRect(x,0,1,H);c.fillStyle=`rgba(255,120,110,${(.12*k*k).toFixed(3)})`;c.fillRect(x,0,1,H)}
@@ -10467,6 +10517,10 @@ document.documentElement.classList.add('booted');
     if(met>=.3||m.transparent||(glow>=.4&&!m.emissiveMap))continue;
     if(L<.3||(S>.55&&L<.7)){m.envMapIntensity=Math.min(m.envMapIntensity,.08);m.clearcoat=Math.min(m.clearcoat||0,.08);if(m.specularIntensity!==undefined)m.specularIntensity=Math.min(m.specularIntensity,.4);if(m.sheen&&!m.emissiveMap)m.sheen=0;m.needsUpdate=true}}})};
   const hp=buildHat;buildHat=function(P,id){const f=H[id];if(!f)return hp.apply(this,arguments);const g=new P.T.Group();f(P,g);if(id!=='h_cityN')try{polishMats(g)}catch(e){console.warn('polish',e)}P.hatSlot.add(g)};
+  // projected maps: the in-game sprite bake must not start before the worn hat's picture is on the GPU (else the sheet keeps the plain colour); 6 s cap so a 404 never blocks it
+  if(typeof bakeChars==='function'){const bk=bakeChars;bakeChars=function(){const n=HAT_PIC[progress.skin];if(n)hatTex(n);if(!Object.values(HTX).some(e=>!e.ready))return bk.apply(this,arguments);const a=arguments;Promise.race([hatTexReady(),new Promise(r=>setTimeout(r,6000))]).then(()=>bk.apply(this,a))}}
+  // a style-screen thumbnail rendered before its picture arrived is drawn again (the cached data URL is dropped) once it is in
+  if(typeof csThumb==='function'){const ct=csThumb;csThumb=function(c,id,img){const n=c==='hat'&&HAT_PIC[id];if(n){const e=hatTex(n);if(!e.ready)e.fns.push(()=>{if(typeof W3!=='undefined'&&W3.thumbCache){delete W3.thumbCache['hat|'+id+'|'];delete W3.thumbCache['hat:'+id]}if(img&&img.isConnected&&typeof wThumb==='function'){const u=wThumb('hat',id);if(u)img.src=u}})}return ct.apply(this,arguments)}}
 })();
 /* series look: the 14 glasses rebuilt in code from the graphics sheet acc/glasses.png */
 (function(){
