@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Sharliz Tower – Will your tower hold?</title>
-<meta name="description" content="Stack wobbly jelly Sharliz as high as you can. 300 levels, 30 bosses, 14 worlds. Free to play on iPhone and iPad, optional in-app purchases.">
+<title>Will it hold? – Sharliz Tower</title>
+<meta name="description" content="Will your wobbly Sharliz tower hold? Find out, free on iPhone and iPad. No loot boxes, nothing random for sale.">
 <meta name="robots" content="noindex">
-<meta property="og:title" content="Sharliz Tower – Will your tower hold?">
-<meta property="og:description" content="Stack wobbly Sharliz, beat 30 bosses, explore 14 worlds. Free on iPhone and iPad.">
+<meta property="og:title" content="Will it hold? – Sharliz Tower">
+<meta property="og:description" content="Stack wobbly Sharliz and find out if your tower holds. Free on iPhone and iPad.">
 <meta property="og:image" content="https://sharliztower.com/img/og.jpg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://sharliztower.com/play">
@@ -15,51 +15,75 @@
 <meta name="theme-color" content="#230b4f">
 <link rel="icon" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preload" as="image" href="img/logo.webp">
+<link rel="preload" as="image" href="img/hold_poster.webp" fetchpriority="high">
 <link rel="preload" href="fonts/titanone-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link href="fonts/fonts.css" rel="stylesheet">
 <style>
-/* ad landing page (Meta Traffic ads can't link straight to the App Store): one screen, one button, the button carries the ad's campaign link */
-:root{--deep:#230b4f;--purple:#4b1b94;--pink:#ff4fa3;--yellow:#ffd23f;--ink:#fff;--soft:#eadffe}
+/* ad landing page (Meta Traffic ads can't link straight to the App Store): one screen, no scroll, one badge through /go (counts the tap, keeps the campaign token). The clip loads only after the page has loaded. */
+:root{--deep:#230b4f;--yellow:#ffd23f;--soft:#eadffe}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100vh;background:radial-gradient(120% 70% at 50% 0%,#5a24b0 0%,var(--deep) 62%);color:var(--ink);font:700 17px/1.45 Nunito,system-ui,sans-serif;text-align:center;overflow-x:hidden}
-h1,h2,.store,.chip{font-family:"Titan One",system-ui,sans-serif;font-weight:400;letter-spacing:.4px}
-img,video{display:block;max-width:100%}
-.wrap{max-width:460px;margin:0 auto;padding:max(14px,env(safe-area-inset-top)) 16px max(26px,env(safe-area-inset-bottom))}
-.logo{width:min(300px,78%,32svh);height:auto;margin:0 auto;filter:drop-shadow(0 10px 22px rgba(0,0,0,.4))}
-h1{font-size:30px;line-height:1.1;margin:8px 0 4px;color:var(--yellow);text-shadow:0 3px 0 rgba(0,0,0,.35)}
-.sub{margin:0 0 14px;color:var(--soft);font-size:16px}
-.phone{width:clamp(140px,calc((100svh - 400px)*.5625),min(250px,64vw));margin:0 auto 18px;border-radius:30px;padding:8px;background:#0d0820;box-shadow:0 0 0 3px rgba(255,255,255,.18),0 18px 40px rgba(0,0,0,.45)}
-.phone video{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:23px;background:#1a0b3a}
-.store{display:inline-flex;align-items:center;justify-content:center;gap:12px;width:100%;max-width:340px;padding:14px 18px;border-radius:18px;background:#000;border:3px solid var(--yellow);color:#fff;text-decoration:none;font-size:24px;line-height:1.1;box-shadow:0 0 0 4px rgba(255,210,63,.25),0 10px 24px rgba(0,0,0,.4);animation:pulse 2.2s ease-in-out infinite}
-.store small{display:block;font-family:Nunito;font-weight:800;font-size:13px;opacity:.85;margin-bottom:2px;text-align:left}
-.store .si{font-size:30px;line-height:1}
-.store:focus-visible{outline:3px solid #fff;outline-offset:4px}
-@keyframes pulse{50%{transform:scale(1.035)}}
-@media (prefers-reduced-motion:reduce){.store{animation:none}}
-.fine{margin:10px 0 18px;font-size:13.5px;color:var(--soft);opacity:.9}
-.chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 18px}
-.chip{background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.25);border-radius:999px;padding:6px 14px;font-size:15px}
-.more{font-size:14px;color:var(--soft)}
-.more a{color:var(--yellow)}
+body{margin:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,#5a24b0 0%,var(--deep) 62%);color:#fff;font:700 15px/1.4 Nunito,system-ui,sans-serif;text-align:center}
+.wrap{height:100vh;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:max(10px,env(safe-area-inset-top)) 16px max(12px,env(safe-area-inset-bottom))}
+.clip{position:relative;flex:0 0 auto;height:calc(100vh - 250px);height:calc(100svh - 250px);max-height:560px;min-height:160px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#e9b6e8;box-shadow:0 0 0 3px rgba(255,255,255,.2),0 16px 36px rgba(0,0,0,.45)}
+.clip img,.clip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.clip video{opacity:0;transition:opacity .25s}
+.clip video.on{opacity:1}
+.side{display:flex;flex-direction:column;align-items:center;gap:12px}
+h1{margin:0;font:400 clamp(26px,7.4vw,34px)/1.08 "Titan One",system-ui,sans-serif;letter-spacing:.3px;color:var(--yellow);text-shadow:0 3px 0 rgba(0,0,0,.35)}
+h1 span{display:block;color:#fff;font-size:.72em}
+.badge{display:block;line-height:0;border-radius:12px}
+.badge img{height:62px;width:auto}
+.badge:focus-visible,.desk a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.fine{margin:0;color:var(--soft);font-size:13.5px}
+.fine a{color:var(--soft)}
+.fine span{white-space:nowrap}
+.desk{display:none}
+/* computers: scan the QR with a phone instead of tapping the badge */
+@media (hover:hover) and (pointer:fine) and (min-width:700px){
+  .wrap{flex-direction:row;gap:48px}
+  .clip{height:calc(100vh - 60px);max-height:640px}
+  .side{gap:14px;max-width:340px}
+  .tap{display:none}
+  .desk{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .qr{width:180px;height:180px;padding:6px;background:#fff;border-radius:14px;box-shadow:0 10px 26px rgba(0,0,0,.4)}
+  .qr svg{display:block;width:100%;height:100%}
+  .desk p{margin:0;color:var(--soft)}
+  .desk a{color:var(--yellow);font-size:13.5px}
+}
+/* phones held sideways */
+@media (max-height:520px) and (orientation:landscape){.wrap{flex-direction:row;gap:28px}.clip{height:calc(100vh - 24px);height:calc(100svh - 24px)}}
 </style>
 </head>
 <body>
 <main class="wrap">
-  <img class="logo" src="img/logo.webp" alt="Sharliz Tower" width="900" height="564" fetchpriority="high">
-  <h1>Will your tower hold?</h1>
-  <p class="sub">Drop the wobbly jelly Sharliz and stack them sky high.</p>
-  <div class="phone"><video src="img/clip.mp4" poster="img/clip_poster.webp" autoplay muted loop playsinline aria-label="Sharliz Tower gameplay"></video></div>
-  <a class="store" id="get" href="/go?ct=meta_w1_caau">
-    <span class="si" aria-hidden="true">📱</span><span><small>Download free on the</small>App Store</span></a>
-  <p class="fine">Free to play · optional in-app purchases · no loot boxes<br>iPhone and iPad</p>
-  <div class="chips"><span class="chip">300 levels</span><span class="chip">30 bosses</span><span class="chip">14 worlds</span><span class="chip">4 seasons</span></div>
-  <p class="more"><a href="/">More about the game</a> · <a href="privacy.html">Privacy</a></p>
+  <div class="clip"><img src="img/hold_poster.webp" alt="A wobbly Sharliz tower in the candy world: will it hold?" width="540" height="960" fetchpriority="high"></div>
+  <div class="side">
+    <h1>Will it hold?<span>Find out, free</span></h1>
+    <a class="badge tap" id="get" href="/go?ct=meta_w1_caau"><img src="img/appstore_badge.svg" alt="Download on the App Store" width="186" height="62"></a>
+    <div class="desk">
+      <div class="qr"><svg role="img" aria-label="QR code: open Sharliz Tower on the App Store" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#230b4f" d="M2 2.5h7m4 0h1m2 0h2m1 0h5m1 0h1m2 0h7m-33 1h1m5 0h1m1 0h5m2 0h1m2 0h1m1 0h4m2 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m4 0h1m3 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h2m1 0h1m2 0h3m1 0h1m2 0h1m1 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h4m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m-24 1h3m1 0h2m3 0h1m3 0h2m1 0h3m1 0h1m1 0h1m6 0h2m-29 1h1m1 0h1m1 0h1m1 0h5m1 0h1m2 0h2m1 0h3m2 0h2m1 0h2m1 0h1m-31 1h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h2m-32 1h2m1 0h2m3 0h3m6 0h1m4 0h1m3 0h1m1 0h1m2 0h1m-33 1h2m1 0h1m2 0h1m2 0h1m1 0h4m1 0h1m1 0h1m2 0h2m2 0h1m2 0h2m1 0h2m-33 1h1m4 0h1m1 0h1m2 0h3m5 0h1m1 0h5m6 0h1m-31 1h2m1 0h4m5 0h2m3 0h5m1 0h1m1 0h1m1 0h3m-31 1h1m3 0h1m3 0h4m2 0h1m3 0h1m1 0h2m2 0h3m2 0h2m-30 1h2m3 0h1m1 0h2m2 0h1m2 0h4m2 0h6m1 0h3m-29 1h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m1 0h2m1 0h2m-32 1h2m3 0h1m1 0h1m2 0h1m1 0h6m1 0h1m1 0h1m2 0h4m1 0h1m-30 1h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m2 0h2m-33 1h1m1 0h1m1 0h5m1 0h5m1 0h1m1 0h4m5 0h1m1 0h2m1 0h1m-33 1h1m3 0h1m3 0h1m1 0h1m1 0h2m4 0h4m1 0h1m2 0h1m2 0h1m2 0h1m-31 1h2m2 0h2m1 0h2m2 0h2m1 0h1m1 0h1m3 0h2m2 0h3m1 0h3m-32 1h1m1 0h1m4 0h6m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-33 1h1m3 0h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h6m2 0h1m-25 1h1m1 0h8m1 0h1m3 0h2m3 0h2m-30 1h7m2 0h1m1 0h1m2 0h1m1 0h1m2 0h6m1 0h1m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h6m3 0h5m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h3m1 0h9m1 0h2m-32 1h1m1 0h3m1 0h1m1 0h8m2 0h1m1 0h3m4 0h1m1 0h4m-33 1h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h2m1 0h1m-30 1h1m5 0h1m1 0h4m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h5m3 0h1m-33 1h7m2 0h5m3 0h5m1 0h1m4 0h1m1 0h1"/></svg></div>
+      <p>Scan with your iPhone camera</p>
+      <a id="getd" href="/go?ct=meta_w1_caau">or open the App Store page</a>
+    </div>
+    <p class="fine"><span>iPhone &amp; iPad</span> · <span>No loot boxes.</span> <span>Nothing random for sale.</span><br><a href="privacy.html">Privacy</a></p>
+  </div>
 </main>
 <script>
-// a different campaign can reuse this page: /play?ct=<name> swaps the App Store campaign token (letters, digits, _ and -, max 30); /go counts the tap and forwards to the store
-(function(){try{var c=new URLSearchParams(location.search).get('ct');if(c&&/^[\w-]{1,30}$/.test(c)){var a=document.getElementById('get');a.href=a.href.replace(/ct=[^&]*/,'ct='+c)}}catch(e){}})();
+(function(){
+// a different campaign can reuse this page: /play?ct=<name> swaps the token on the badge and the link (letters, digits, _ and -, max 30); the QR always carries meta_w1_caau
+try{var c=new URLSearchParams(location.search).get('ct');if(c&&/^[\w-]{1,30}$/.test(c))['get','getd'].forEach(function(i){var a=document.getElementById(i);a.href=a.href.replace(/ct=[^&]*/,'ct='+c)})}catch(e){}
+// the muted loop starts loading only after the page (and the poster) has loaded, and fades in once it plays; skipped for reduced motion and data saver
+function clip(){
+  try{if(matchMedia('(prefers-reduced-motion: reduce)').matches||(navigator.connection&&navigator.connection.saveData))return}catch(e){}
+  var v=document.createElement('video');v.muted=true;v.defaultMuted=true;v.loop=true;v.playsInline=true;v.autoplay=true;v.preload='auto';
+  v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('aria-hidden','true');
+  v.addEventListener('playing',function(){v.className='on'},{once:true});
+  v.src='img/hold_loop.mp4';document.querySelector('.clip').appendChild(v);
+  var p=v.play();if(p&&p.catch)p.catch(function(){});
+}
+if(document.readyState==='complete')setTimeout(clip,150);else window.addEventListener('load',function(){setTimeout(clip,150)});
+})();
 </script>
 </body>
 </html>
