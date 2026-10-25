@@ -1,0 +1,43 @@
+/* ===== v72: home backgrounds (shop tab, win-card strip, live preview) ===== */
+.shop-tabs .bg-tab{position:relative}
+/* the base .badge sets right:-2px; in RTL an inset-inline-end would add left too and stretch it over the whole tab */
+.shop-tabs .bg-tab .badge{top:-11px;right:-7px;left:auto;min-width:20px;height:20px;padding:0 4px;font-size:.72rem;-webkit-text-stroke:2px var(--ink)}
+[dir=rtl] .shop-tabs .bg-tab .badge{right:auto;left:-7px}
+/* five tabs: a little smaller, each tab as wide as its word (short words give room to long ones); bgFitTabs shrinks what still overflows */
+.shop-tabs.t5 button{flex:1 1 auto;font-size:.82rem;padding-inline:3px;letter-spacing:0;white-space:nowrap}
+.shop-tabs.t5 .coins-tab .coin-i{width:1.05em;height:1.05em}
+.shop-list.bg-list{display:block}
+.bg-hint{margin:0 2px 6px;font-weight:800;font-size:.8rem;opacity:.85;text-align:center}
+.bg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:4px 0 10px}
+.bg-it{position:relative;display:flex;flex-direction:column;align-items:stretch;gap:3px;padding:5px 5px 6px;min-width:0;background:linear-gradient(180deg,var(--tile1),var(--tile2));border:3px solid var(--ink);border-radius:14px;box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 4px 0 rgba(8,10,40,.55);cursor:pointer;font-family:var(--gf);color:#fff;-webkit-text-stroke:3px var(--ink);paint-order:stroke fill;text-shadow:0 2px 0 var(--ink);line-height:1.1}
+.bg-it img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:9px;border:2px solid var(--ink);background:#2a1680}
+.bg-it span{font-size:.78rem;text-align:center;min-width:0;min-height:2.2em;display:flex;align-items:center;justify-content:center}
+.bg-it em{font-style:normal;font-size:.8rem;color:var(--y1);display:flex;align-items:center;justify-content:center;gap:1px;white-space:nowrap;min-width:0}
+.bg-it em.lk{white-space:normal;font-size:.68rem;color:#d9d2ff;text-align:center;-webkit-text-stroke:2px var(--ink)}
+.bg-it em .coin-i{width:1.3em;height:1.3em;margin:-5px 0}
+.bg-it.locked:not(.sp) img{filter:grayscale(.85) brightness(.55)}
+.bg-it.locked:not(.sp)::after{content:"";position:absolute;top:calc(5px + 33%);left:50%;width:30px;height:30px;transform:translate(-50%,-50%);background:url(art/ic_lock.webp) center/contain no-repeat}
+.bg-it.sp{border-color:#7a4b00;background:linear-gradient(180deg,#ffcf4a,#e08a00)}
+.bg-it.sp img{border-color:#7a4b00}
+.bg-it.on{background:linear-gradient(180deg,var(--g1),var(--g2));box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 4px 0 rgba(8,10,40,.55),0 0 0 3px #fff}
+.bg-it.new::before{content:"NEW";position:absolute;top:-7px;inset-inline-start:-5px;z-index:1;padding:1px 6px;border-radius:8px;background:#ff3ea5;border:2px solid var(--ink);font-size:.7rem;-webkit-text-stroke:0;text-shadow:none;transform:rotate(-8deg)}
+/* boss win card */
+.bg-strip{display:flex;align-items:center;gap:10px;margin:10px 4px 2px;padding:6px 8px 6px 6px;border-radius:16px;border:3px solid #ffd23f;background:linear-gradient(180deg,#5b2bb8,#3a1680);box-shadow:0 3px 0 #120d2b;animation:arcIn .5s cubic-bezier(.3,1.6,.5,1)}
+.bg-strip img{width:38px;height:57px;object-fit:cover;border-radius:7px;border:2px solid #120d2b;margin-block:-4px;transform:rotate(-4deg)}
+.bg-strip span{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.15;text-align:start}
+.bg-strip b{font:1.05rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#ffe066;-webkit-text-stroke:3px #120d2b;paint-order:stroke fill}
+.bg-strip small{font-weight:800;font-size:.75rem;overflow-wrap:anywhere}
+.bg-strip .buy{flex:none;padding:6px 12px;font-size:.9rem}
+.bg-strip .buy:disabled{opacity:.75}
+/* preview */
+.bg-pv{position:fixed;inset:0;z-index:70;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;background:rgba(12,6,40,.82)}
+.bg-pv.live{background:transparent}
+.bg-pv-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.bg-pv-bar{position:relative;width:min(420px,calc(100% - 24px));margin-bottom:max(16px,env(safe-area-inset-bottom));padding:10px 12px 12px;border:3px solid var(--ink);border-radius:20px;background:linear-gradient(180deg,#5b2bb8,#3a1680);box-shadow:0 5px 0 rgba(8,10,40,.6);text-align:center;animation:arcIn .4s cubic-bezier(.3,1.6,.5,1)}
+.bg-pv-bar>b{display:block;margin-bottom:8px;font:1.3rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#fff;-webkit-text-stroke:3.5px #120d2b;paint-order:stroke fill;overflow-wrap:anywhere}
+.bg-pv-btns{display:flex;gap:8px}
+.bg-pv-btns .btn{flex:1;min-width:0}
+.bg-pv-btns .btn span{display:inline-flex;align-items:center;gap:2px;justify-content:center}
+.bg-pv-btns .btn .coin-i{width:1.3em;height:1.3em;margin:-5px 0}
+.bg-pv-btns .btn.lk span{font-size:.8rem;white-space:normal}
+body.bg-pv-on #title>:not(canvas):not(.logo){visibility:hidden}

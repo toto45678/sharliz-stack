@@ -1038,7 +1038,25 @@
   "arcZero": "Kali ini tanpa poin, jadi jatah main koinmu tidak terpakai",
   "trInvite": "Ayo main turnamen mingguan Sharliz bareng aku! 🏆",
   "evWinFirst": "Menangkan tahap {n} dulu",
-  "trSkill": "Kesulitan pintar"
+  "trSkill": "Kesulitan pintar",
+  "bgTab": "Latar",
+  "bgUse": "Pakai",
+  "bgOn": "Dipakai",
+  "bgNew": "Latar baru!",
+  "bgBeatBoss": "Kalahkan bos",
+  "bgClassic": "Klasik",
+  "bgBoss": "Latar bos",
+  "bgSpecial": "Latar spesial",
+  "bgHint": "Ketuk latar untuk mencobanya di layar utama",
+  "bgNewSub": "{n} · untuk layar utama",
+  "sp_treasure": "Ruang harta",
+  "sp_galaxy": "Galaksi",
+  "sp_coral": "Istana karang",
+  "sp_disco": "Panggung disko",
+  "sp_fairy": "Hutan peri",
+  "sp_aurora": "Istana aurora",
+  "sp_pirate": "Kapal bajak laut",
+  "sp_sakura": "Taman sakura"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
@@ -2078,6 +2096,8 @@
   "Pirouette power": "Kekuatan pirouette",
   "Twirl! Poof! Bye-bye, bats!": "Berputar! Puf! Dadah, kelelawar!",
   "Home sweet home": "Rumahku istanaku",
-  "My house, my sofa, my rules!": "Rumahku, sofaku, aturanku!"
+  "My house, my sofa, my rules!": "Rumahku, sofaku, aturanku!",
+  "New backdrop": "Latar baru",
+  "Ta-da! Look what's behind me now!": "Tadaa! Lihat apa yang ada di belakangku sekarang!"
  }
 }

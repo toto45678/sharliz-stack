@@ -1038,7 +1038,25 @@
   "arcZero": "이번엔 점수가 없어서 코인 플레이를 쓰지 않았어",
   "trInvite": "나랑 같이 Sharliz 주간 토너먼트 하자! 🏆",
   "evWinFirst": "먼저 {n}단계를 깨야 해",
-  "trSkill": "스마트 난이도"
+  "trSkill": "스마트 난이도",
+  "bgTab": "배경",
+  "bgUse": "사용",
+  "bgOn": "사용 중",
+  "bgNew": "새 배경!",
+  "bgBeatBoss": "보스를 물리쳐요",
+  "bgClassic": "클래식",
+  "bgBoss": "보스 배경",
+  "bgSpecial": "특별 배경",
+  "bgHint": "배경을 누르면 홈 화면에서 미리 볼 수 있어요",
+  "bgNewSub": "{n} · 홈 화면용",
+  "sp_treasure": "보물 창고",
+  "sp_galaxy": "은하수",
+  "sp_coral": "산호 궁전",
+  "sp_disco": "디스코 무대",
+  "sp_fairy": "요정의 숲",
+  "sp_aurora": "오로라 궁전",
+  "sp_pirate": "해적선",
+  "sp_sakura": "벚꽃 정원"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",
@@ -2078,6 +2096,8 @@
   "Pirouette power": "피루엣 파워",
   "Twirl! Poof! Bye-bye, bats!": "빙글! 펑! 박쥐야, 안녕!",
   "Home sweet home": "즐거운 나의 집",
-  "My house, my sofa, my rules!": "내 집, 내 소파, 내 규칙!"
+  "My house, my sofa, my rules!": "내 집, 내 소파, 내 규칙!",
+  "New backdrop": "새 배경",
+  "Ta-da! Look what's behind me now!": "짜잔! 내 뒤를 봐!"
  }
 }

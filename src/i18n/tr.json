@@ -1038,7 +1038,25 @@
   "arcZero": "Bu sefer puan yok, bu yüzden altınlı oyun hakkın kullanılmadı",
   "trInvite": "Benimle Sharliz haftalık turnuvasında oyna! 🏆",
   "evWinFirst": "Önce {n}. aşamayı kazan",
-  "trSkill": "Akıllı zorluk"
+  "trSkill": "Akıllı zorluk",
+  "bgTab": "Arka planlar",
+  "bgUse": "Kullan",
+  "bgOn": "Kullanılıyor",
+  "bgNew": "Yeni arka plan!",
+  "bgBeatBoss": "Boss'u yen",
+  "bgClassic": "Klasik",
+  "bgBoss": "Boss arka planları",
+  "bgSpecial": "Özel arka planlar",
+  "bgHint": "Ana ekranında denemek için bir arka plana dokun",
+  "bgNewSub": "{n} · ana ekranın için",
+  "sp_treasure": "Hazine odası",
+  "sp_galaxy": "Galaksi",
+  "sp_coral": "Mercan sarayı",
+  "sp_disco": "Disko sahnesi",
+  "sp_fairy": "Peri ormanı",
+  "sp_aurora": "Kutup ışıkları sarayı",
+  "sp_pirate": "Korsan gemisi",
+  "sp_sakura": "Kiraz bahçesi"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
@@ -2078,6 +2096,8 @@
   "Pirouette power": "Piruet gücü",
   "Twirl! Poof! Bye-bye, bats!": "Dön! Puf! Güle güle yarasalar!",
   "Home sweet home": "Evim güzel evim",
-  "My house, my sofa, my rules!": "Benim evim, benim kanepem, benim kurallarım!"
+  "My house, my sofa, my rules!": "Benim evim, benim kanepem, benim kurallarım!",
+  "New backdrop": "Yeni arka plan",
+  "Ta-da! Look what's behind me now!": "Tataa! Bak arkamda şimdi ne var!"
  }
 }

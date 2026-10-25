@@ -1038,7 +1038,25 @@
   "arcZero": "Pas de points cette fois, ta partie à pièces n’a pas été utilisée",
   "trInvite": "Viens jouer avec moi au tournoi hebdo de Sharliz ! 🏆",
   "evWinFirst": "Gagne d’abord l’étape {n}",
-  "trSkill": "Difficulté intelligente"
+  "trSkill": "Difficulté intelligente",
+  "bgTab": "Décors",
+  "bgUse": "Choisir",
+  "bgOn": "Choisi",
+  "bgNew": "Nouveau décor !",
+  "bgBeatBoss": "Bats le boss",
+  "bgClassic": "Classique",
+  "bgBoss": "Décors des boss",
+  "bgSpecial": "Décors spéciaux",
+  "bgHint": "Touche un décor pour l’essayer sur ton écran d’accueil",
+  "bgNewSub": "{n} · pour ton écran d’accueil",
+  "sp_treasure": "Salle au trésor",
+  "sp_galaxy": "Galaxie",
+  "sp_coral": "Palais de corail",
+  "sp_disco": "Scène disco",
+  "sp_fairy": "Forêt des fées",
+  "sp_aurora": "Palais de l’aurore",
+  "sp_pirate": "Bateau pirate",
+  "sp_sakura": "Jardin des cerisiers"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
@@ -2078,6 +2096,8 @@
   "Pirouette power": "Pouvoir pirouette",
   "Twirl! Poof! Bye-bye, bats!": "Tourne ! Pouf ! Bye-bye, les chauves-souris !",
   "Home sweet home": "Home sweet home",
-  "My house, my sofa, my rules!": "Ma maison, mon canapé, mes règles !"
+  "My house, my sofa, my rules!": "Ma maison, mon canapé, mes règles !",
+  "New backdrop": "Nouveau décor",
+  "Ta-da! Look what's behind me now!": "Tadaa ! Regarde ce qu’il y a derrière moi !"
  }
 }
