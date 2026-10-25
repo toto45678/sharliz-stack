@@ -2452,7 +2452,10 @@ function drawTitleArt(){
   // hero on the stage
   const size=WD?Math.min(W*.33,H*.16,170):heroSize(),bh=size*1.5,jt=time-LOB.jump,three=H3.state==='ready',jd=three?.75:.6,jumpY=jt<jd?Math.sin(jt/jd*Math.PI)*bh*(three?.5:.32):0;
   const bounce=Math.abs(Math.sin(ft*Math.PI*1.1)),sq=jt<.6?-.25:(.18-bounce*.3),baseY=G.stageY-size*.06;
-  c.save();c.fillStyle='rgba(20,8,60,.45)';c.beginPath();c.ellipse(cx,baseY+2,size*(.56-jumpY/bh*.3),size*.14,0,0,7);c.fill();c.restore();
+  if(three){// the 3D hero hovers (Tzach, Oct 25): a soft shadow that breathes with the float (drawHero3D HOV) and shrinks on a jump
+    const k=(1-.1*Math.sin(time*Math.PI*.75))*(1-jumpY/bh*.7),R=size*.6*k;c.save();c.translate(cx,baseY+2);c.scale(1,.24);const gr=c.createRadialGradient(0,0,0,0,0,R);
+    gr.addColorStop(0,`rgba(20,8,60,${.8*k})`);gr.addColorStop(.5,`rgba(20,8,60,${.5*k})`);gr.addColorStop(1,'rgba(20,8,60,0)');c.fillStyle=gr;c.beginPath();c.arc(0,0,R,0,7);c.fill();c.restore()}
+  else{c.save();c.fillStyle='rgba(20,8,60,.45)';c.beginPath();c.ellipse(cx,baseY+2,size*(.56-jumpY/bh*.3),size*.14,0,0,7);c.fill();c.restore()}
   if(three&&drawHero3D(G,size))return;if(WD)return;
   const h=LOB.hero;h.blink+=1/60;
   withCtx(c,size,()=>{drawSharliz(h,cx,baseY-bh/2-jumpY-bounce*bh*.04,Math.sin(ft*2.2)*.05,jt<1.2?'happy':null,{x:Math.sin(time*.7)*.4,y:-.2,forced:true},sq)});
@@ -2776,9 +2779,10 @@ function drawHero3D(G,size){
   H3.cv.style.left=left+'px';H3.cv.style.top=top+'px';
   const g=H3.g,baseY=-ch/2+size*.32,hx=pet?size*.45:0;
   const jt=time-LOB.jump,jumping=jt<.75,je=clamp(jt/.75,0,1);
-  const hop=Math.abs(Math.sin(time*Math.PI*1.05)),land=Math.pow(1-hop,6);
-  let sy=1+.035*Math.sin(time*Math.PI*2.1)-land*.07,y=baseY+hop*size*.05;
-  if(jumping){y=baseY+Math.sin(je*Math.PI)*size*.75;sy=je<.12?1-.18*(1-je/.12):je>.88?1-.15*((je-.88)/.12):1.08}
+  // hover like the ghosts in the series (Tzach, Oct 25): floats HOV body-heights above the stage and bobs softly (soft shadow in the lobby draw above)
+  const HOV=.17,fl=Math.sin(time*Math.PI*.75);
+  let sy=1+.022*Math.sin(time*Math.PI*1.5+.6),y=baseY+size*(HOV+.045*fl);
+  if(jumping){y=baseY+size*HOV+Math.sin(je*Math.PI)*size*.75;sy=je<.12?1-.18*(1-je/.12):je>.88?1-.15*((je-.88)/.12):1.08}
   g.position.set(hx,y,0);g.scale.set(size*(2-sy)**.5,size*sy,size*(2-sy)**.5);
   g.rotation.y=H3.yaw+(jumping?Math.sin(time*.6)*.35+je*Math.PI*2:Math.sin(time*.6)*.35+Math.sin(time*1.7)*.05);
   g.rotation.z=Math.sin(time*1.3)*.045;g.rotation.x=.06+Math.sin(time*.9)*.03;

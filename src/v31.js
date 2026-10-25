@@ -59,7 +59,7 @@ function g3Sfx(kind){if(!sfx.ok())return;
 
 function g3Pose(gg,dt){const {P,P2,sk}=G3,t=gg.t,D=gg.dir;
   if(gg.name==='bleh'||gg.name==='blehT'){const rainbow=gg.name==='blehT';
-    if(t<.75){const u=t/.75;P.g.rotation.z=Math.sin(t*7)*.16;P.g.position.x=Math.sin(t*3.6)*.05;g3Face(P,7);sickEyes(P,1);g3Tint(P,'#8fd14f',.5*u);
+    if(t<.75){const u=t/.75;P.g.rotation.z=Math.sin(t*7)*.16;P.g.position.x=Math.sin(t*3.6)*.05;g3Face(P,10);sickEyes(P,1);g3Tint(P,'#8fd14f',.5*u);
       if(t>.5){g3Face(P,4);P.mouths.o.scale.setScalar(1+Math.sin(t*34)*.15);sickEyes(P,1)}}
     else if(t<1.95){const e=t-.75,lean=Math.min(1,e*4)*(e<1.05?1:Math.max(0,1-(e-1.05)*7));P.g.rotation.z=-D*.38*lean;P.g.rotation.y=D*.55*lean;P.g.position.x=0;
       g3Face(P,3);sickEyes(P,1);g3Tint(P,'#8fd14f',.6);const pulse=Math.max(0,Math.sin(e*Math.PI*2.4));P.mouths.scream.scale.set(1+pulse*.2,1+pulse*.4,1);
@@ -68,7 +68,7 @@ function g3Pose(gg,dt){const {P,P2,sk}=G3,t=gg.t,D=gg.dir;
         c:rainbow?`hsl(${(t*600+rnd(0,70))%360},90%,60%)`:pick(['#9be15d','#7cc83d','#b6f07a','#6aa832'])})}}
     else{const e=t-1.95,u=Math.min(1,e/.85),s=u*u*(3-2*u),wob=Math.sin(e*16)*.06*(1-u);
       if(gg.n===1){gg.n=2;g3Sfx('melt')}
-      P.g.rotation.set(.05+s*.25,0,Math.sin(e*9)*.05*(1-u));P.g.scale.set(1+s*.7+wob,1-s*.74,1+s*.5);g3Face(P,s>.5?1:7);sickEyes(P,0);g3Tint(P,'#8fd14f',.6-s*.25);
+      P.g.rotation.set(.05+s*.25,0,Math.sin(e*9)*.05*(1-u));P.g.scale.set(1+s*.7+wob,1-s*.74,1+s*.5);g3Face(P,s>.5?1:10);sickEyes(P,0);g3Tint(P,'#8fd14f',.6-s*.25);
       if(e<.9&&Math.random()<.5)g3Fx({kind:'drip',x:rnd(-.5,.5)*(1+s*.7),y:rnd(.1,.6)*(1-s),vx:0,vy:-.5,grav:-6,life:.6,sz:rnd(.04,.07),c:'#'+P.bodyMat.color.getHexString()})}}
   else if(gg.name==='bones'||gg.name==='bonesP'){
     if(t<.45){P.g.position.x=Math.sin(t*60)*.03;g3Face(P,3)}
