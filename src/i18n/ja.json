@@ -1038,7 +1038,25 @@
   "arcZero": "今回は0点だったので、コインプレイは使われなかったよ",
   "trInvite": "いっしょにSharlizの週間トーナメントで遊ぼう! 🏆",
   "evWinFirst": "先にステージ{n}をクリアしよう",
-  "trSkill": "スマート難易度"
+  "trSkill": "スマート難易度",
+  "bgTab": "背景",
+  "bgUse": "使う",
+  "bgOn": "使用中",
+  "bgNew": "新しい背景！",
+  "bgBeatBoss": "ボスをたおそう",
+  "bgClassic": "クラシック",
+  "bgBoss": "ボスの背景",
+  "bgSpecial": "とくべつな背景",
+  "bgHint": "背景をタップするとホーム画面でためせるよ",
+  "bgNewSub": "{n} · ホーム画面用",
+  "sp_treasure": "宝物庫",
+  "sp_galaxy": "ギャラクシー",
+  "sp_coral": "サンゴの宮殿",
+  "sp_disco": "ディスコステージ",
+  "sp_fairy": "妖精の森",
+  "sp_aurora": "オーロラ宮殿",
+  "sp_pirate": "海賊船",
+  "sp_sakura": "桜の庭"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
@@ -2078,6 +2096,8 @@
   "Pirouette power": "ピルエットパワー",
   "Twirl! Poof! Bye-bye, bats!": "くるっ！ポン！コウモリさん、バイバイ！",
   "Home sweet home": "わが家がいちばん",
-  "My house, my sofa, my rules!": "わたしの家、わたしのソファ、わたしのルール！"
+  "My house, my sofa, my rules!": "わたしの家、わたしのソファ、わたしのルール！",
+  "New backdrop": "新しい背景",
+  "Ta-da! Look what's behind me now!": "じゃーん！うしろを見て！"
  }
 }

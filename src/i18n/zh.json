@@ -1038,7 +1038,25 @@
   "arcZero": "这次没有得分，所以金币次数没有用掉",
   "trInvite": "来和我一起玩Sharliz每周锦标赛吧！🏆",
   "evWinFirst": "先赢下第{n}关",
-  "trSkill": "智能难度"
+  "trSkill": "智能难度",
+  "bgTab": "背景",
+  "bgUse": "使用",
+  "bgOn": "使用中",
+  "bgNew": "新背景！",
+  "bgBeatBoss": "打败首领",
+  "bgClassic": "经典",
+  "bgBoss": "首领背景",
+  "bgSpecial": "特别背景",
+  "bgHint": "点一个背景，在主页上试试看",
+  "bgNewSub": "{n} · 主页背景",
+  "sp_treasure": "藏宝库",
+  "sp_galaxy": "银河",
+  "sp_coral": "珊瑚宫殿",
+  "sp_disco": "迪斯科舞台",
+  "sp_fairy": "仙子森林",
+  "sp_aurora": "极光宫殿",
+  "sp_pirate": "海盗船",
+  "sp_sakura": "樱花庭院"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",
@@ -2078,6 +2096,8 @@
   "Pirouette power": "旋转魔力",
   "Twirl! Poof! Bye-bye, bats!": "转一圈！噗！蝙蝠，拜拜！",
   "Home sweet home": "甜蜜的家",
-  "My house, my sofa, my rules!": "我的家，我的沙发，我做主！"
+  "My house, my sofa, my rules!": "我的家，我的沙发，我做主！",
+  "New backdrop": "新背景",
+  "Ta-da! Look what's behind me now!": "当当！看看我身后是什么！"
  }
 }

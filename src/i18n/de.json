@@ -1038,7 +1038,25 @@
   "arcZero": "Diesmal keine Punkte, also wurde dein Münzspiel nicht verbraucht",
   "trInvite": "Spiel mit mir das Sharliz-Wochenturnier! 🏆",
   "evWinFirst": "Gewinne zuerst Etappe {n}",
-  "trSkill": "Intelligente Schwierigkeit"
+  "trSkill": "Intelligente Schwierigkeit",
+  "bgTab": "Hintergründe",
+  "bgUse": "Nutzen",
+  "bgOn": "Aktiv",
+  "bgNew": "Neuer Hintergrund!",
+  "bgBeatBoss": "Besiege den Boss",
+  "bgClassic": "Klassisch",
+  "bgBoss": "Boss-Hintergründe",
+  "bgSpecial": "Spezial-Hintergründe",
+  "bgHint": "Tippe auf einen Hintergrund, um ihn auf deinem Startbildschirm auszuprobieren",
+  "bgNewSub": "{n} · für deinen Startbildschirm",
+  "sp_treasure": "Schatzkammer",
+  "sp_galaxy": "Galaxie",
+  "sp_coral": "Korallenpalast",
+  "sp_disco": "Disco-Bühne",
+  "sp_fairy": "Feenwald",
+  "sp_aurora": "Polarlicht-Palast",
+  "sp_pirate": "Piratenschiff",
+  "sp_sakura": "Kirschblüten-Garten"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -2078,6 +2096,8 @@
   "Pirouette power": "Pirouetten-Power",
   "Twirl! Poof! Bye-bye, bats!": "Dreh! Puff! Tschüss, Fledermäuse!",
   "Home sweet home": "Trautes Heim",
-  "My house, my sofa, my rules!": "Mein Haus, mein Sofa, meine Regeln!"
+  "My house, my sofa, my rules!": "Mein Haus, mein Sofa, meine Regeln!",
+  "New backdrop": "Neuer Hintergrund",
+  "Ta-da! Look what's behind me now!": "Tadaa! Schau mal, was jetzt hinter mir ist!"
  }
 }
