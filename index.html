@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261025121217"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261025123210"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -9661,7 +9661,7 @@ document.documentElement.classList.add('booted');
      map's luminance (lumNormal), normalScale o.nrm; o.uv = the patch of the picture to use ([u0,v0,u1,v1], a decal seen head-on from its own yaw); o.keyOut(r,g,b) = pixels to paint out of this material's copy of the picture (deriveTex, nearest colour), o.keyId names that copy. hatTex(name) loads + caches a picture (TextureLoader, sRGB); hatTexReady() = promise for every picture requested
      so far: the sprite bake and hats/pair.js wait for it, the lobby hero redraws by itself (rAF), style thumbnails are re-rendered on load (csThumb wrapper below). */
   const HTX={},HAT_PIC={flowers:['leaf','matcap_plastic_gloss'],pumpkin:['leaf','matcap_plastic_gloss'],/* n3: the shared leaf picture + the plastic-gloss sheen */cowboy:['matcap_gold'],paper:['mat_news'],cap:['matcap_satin'],h_farm:['matcap_gold','feather_black','matcap_rubber_matte'],h_snowN:['matcap_gold','matcap_glass_crystal','matcap_plastic_gloss'],king:['matcap_gold','gem_red','gem_blue'],pirate:['skull','matcap_gold','matcap_satin'],h_snowS:['matcap_gold','matcap_satin','laurel_gold','matcap_plastic_gloss'],viking:['matcap_gold','matcap_silver','matcap_bone_ivory'],wizard:['matcap_satin','matcap_plastic_gloss','moon_stars'],h_desert:['matcap_gold','matcap_felt_matte','matcap_satin','matcap_plastic_gloss','gem_h_desert'],tophat:['matcap_satin'],h_gold:['matcap_gold','matcap_satin'],starcrown:['matcap_gold','matcap_plastic_gloss','gem_starcrown'],h_volcano:['matcap_lava_glow','matcap_plastic_gloss'],h_candyN:['matcap_plastic_gloss','matcap_gold','matcap_satin'],h_candyS:['matcap_rubber_matte','matcap_plastic_gloss','matcap_gold','gem_h_candyS'],h_castle:['matcap_plastic_gloss','matcap_gold','gem_h_castle'],h_cityS:['matcap_plastic_gloss','matcap_satin','matcap_gold','matcap_glass_crystal'],h_clouds:['matcap_plastic_gloss','matcap_gold','matcap_glass_crystal'],h_crystal:['matcap_plastic_gloss','matcap_glass_crystal','matcap_gold','gem_h_crystal','crystal'],h_desertN:['matcap_plastic_gloss','matcap_gold','matcap_glass_crystal','gem_h_desertN'],h_desertS:['matcap_satin','matcap_plastic_gloss','matcap_rubber_matte','matcap_gold','matcap_glass_crystal'],/* catalogue n1: */propeller:['matcap_gold','matcap_satin'],flowerpin:['matcap_gold'],royal:['matcap_gold','matcap_velvet'],h_city:['matcap_gold','matcap_leather_soft'],h_spaceN:['matcap_gold'],h_cityN:['matcap_gold'],h_oceanN:['matcap_gold'],h_farmN:['matcap_gold','matcap_glass_crystal','matcap_plastic_gloss','gem_h_farmN','leaf'],h_farmS:['matcap_gold','matcap_glass_crystal'],h_jungle:['matcap_gold','matcap_glass_crystal','leaf','matcap_plastic_gloss'],h_oceanS:['matcap_gold'],h_spaceS:['matcap_gold'],h_volcanoN:['matcap_gold'],h_volcanoS:['matcap_gold'],h_dino:['matcap_gold','matcap_glass_crystal'],h_factory:['matcap_gold'],h_snow:['matcap_ice','matcap_plastic_gloss','ice'],/* B5 (owner-approved shapes on the shared matcaps): */party:['matcap_plastic_gloss'],bow:['matcap_satin'],beanie:['matcap_rubber_matte'],antenna:['matcap_plastic_gloss','matcap_silver'],headphones:['matcap_plastic_gloss','matcap_rubber_matte'],hardhat:['matcap_plastic_gloss'],cloudhat:['matcap_satin','matcap_plastic_gloss'],halo:['matcap_gold'],witch:['matcap_satin','matcap_plastic_gloss','matcap_gold'],h_candy:['matcap_plastic_gloss','matcap_satin']};// hat id -> art/acc picture(s) (the bake preloads the worn hat's pictures)
-  const ACC_ART=["crystal", "feather_black", "gem_blue", "gem_h_candyS", "gem_h_castle", "gem_h_crystal", "gem_h_desert", "gem_h_desertN", "gem_h_farmN", "gem_red", "gem_starcrown", "ice", "laurel_gold", "leaf", "mat_news", "matcap_bone_ivory", "matcap_felt_matte", "matcap_glass_crystal", "matcap_gold", "matcap_ice", "matcap_lava_glow", "matcap_leather_soft", "matcap_metal_chrome", "matcap_plastic_gloss", "matcap_rubber_matte", "matcap_satin", "matcap_silver", "matcap_velvet", "matcap_wood", "moon_stars", "skull"];// basenames of art/acc/*.webp, injected by tools/build.py: a picture that is not in the list is never fetched (hatTex resolves at once with err), so a hat can name a future picture (king_tex) without a 404
+  const ACC_ART=["crystal", "feather_black", "gem_blue", "gem_h_candyS", "gem_h_castle", "gem_h_crystal", "gem_h_desert", "gem_h_desertN", "gem_h_farmN", "gem_red", "gem_starcrown", "gl_aviator", "gl_goggles", "gl_heart", "gl_lucky", "gl_night", "gl_scope", "gl_star", "gl_sun", "gl_threed", "gl_visor", "ice", "laurel_gold", "leaf", "mat_news", "matcap_bone_ivory", "matcap_felt_matte", "matcap_glass_crystal", "matcap_gold", "matcap_ice", "matcap_lava_glow", "matcap_leather_soft", "matcap_metal_chrome", "matcap_plastic_gloss", "matcap_rubber_matte", "matcap_satin", "matcap_silver", "matcap_velvet", "matcap_wood", "moon_stars", "skull"];// basenames of art/acc/*.webp, injected by tools/build.py: a picture that is not in the list is never fetched (hatTex resolves at once with err), so a hat can name a future picture (king_tex) without a 404
   function hatTex(name,tile){if(HTX[name])return HTX[name];const T=THREE,e={ready:false,err:false,mats:[],fns:[]};e.p=new Promise(r=>e.res=r);// tile: a seamless material picture (RepeatWrapping)
     if(ACC_ART.indexOf(name)<0){e.tex=new T.Texture();e.ready=true;e.err=true;e.apply=()=>{};e.res(false);return HTX[name]=e}
     const done=ok=>{e.ready=true;for(const m of e.mats)e.apply(m);e.mats.length=0;for(const f of e.fns)try{f(ok)}catch(x){console.warn('hatTex',x)}e.fns.length=0;e.res(ok)};
@@ -10636,37 +10636,67 @@ document.documentElement.classList.add('booted');
   if(typeof bakeChars==='function'){const bk=bakeChars;bakeChars=function(){const n=HAT_PIC[progress.skin];if(n)[].concat(n).forEach(x=>hatTex(x,/^mat_/.test(x)));if(!Object.values(HTX).some(e=>!e.ready))return bk.apply(this,arguments);const a=arguments;Promise.race([hatTexReady(),new Promise(r=>setTimeout(r,6000))]).then(()=>bk.apply(this,a))}}
   // a style-screen thumbnail rendered before its picture arrived is drawn again (the cached data URL is dropped) once it is in
   if(typeof csThumb==='function'){const ct=csThumb;csThumb=function(c,id,img){const n=c==='hat'&&HAT_PIC[id];if(n)for(const x of[].concat(n)){const e=hatTex(x,/^mat_/.test(x));if(!e.ready)e.fns.push(()=>{if(typeof W3!=='undefined'&&W3.thumbCache){delete W3.thumbCache['hat|'+id+'|'];delete W3.thumbCache['hat:'+id]}if(img&&img.isConnected&&typeof wThumb==='function'){const u=wThumb('hat',id);if(u)img.src=u}})}return ct.apply(this,arguments)}}
+  // G1 (25.10): the shared material helpers for the glasses IIFE below (same textures, same programs: one matcap per material in the whole game)
+  window.SL_H={MC,goldMC,mcT,mcGlow,mcMap,mcGem,unlitMC,mcPic,mcDome,hatTex,HTX,HAT_PIC,sparkle,mergeGeo,hatEnvOn,polishMats,lumNormal};
 })();
-/* series look: the 14 glasses rebuilt in code from the graphics sheet acc/glasses.png */
+/* series look: the 14 glasses rebuilt in code from the graphics sheet acc/glasses.png.
+   G1 (25.10, 3D team): every material on the SHARED matcaps (gold = goldMC, coloured plastic = plastic_gloss tinted, dark plastic = mcPow (the matcap raised to a power so black keeps a white highlight), straps = rubber_matte, metal = silver),
+   tinted/mirrored lenses = the drawing's own lens cropped as an UNLIT picture art/acc/gl_<id>.webp (two lenses side by side, uv = the lens outline's box, toneMapped:false so the painted reflections ARE the lighting) + a faint additive plastic-gloss sheen,
+   clear lenses = a translucent plastic-gloss matcap; wire frames are tubes along the lens outline (round normals sample the whole matcap), plastic frames stay extruded + bevelled. GLS_PIC lists each pair's pictures for the bake / thumbnails (nothing new downloads at boot). */
 (function(){
-  const GLD={metalness:.8,roughness:.2,clearcoat:.5};
+  const S=window.SL_H,MC=S.MC,goldMC=S.goldMC,mcT=S.mcT,hatTex=S.hatTex,sparkle=S.sparkle,mergeGeo=S.mergeGeo,hatEnvOn=S.hatEnvOn;
+  const GLS_PIC={round:['matcap_gold','matcap_plastic_gloss'],nerd:['matcap_plastic_gloss','matcap_gold'],sun:['matcap_gold','matcap_plastic_gloss','gl_sun'],heart:['matcap_plastic_gloss','gl_heart'],star:['matcap_gold','matcap_plastic_gloss','gl_star'],
+    goggles:['matcap_plastic_gloss','matcap_rubber_matte','gl_goggles'],monocle:['matcap_gold','matcap_plastic_gloss'],aviator:['matcap_gold','matcap_plastic_gloss','gl_aviator'],pinkround:['matcap_plastic_gloss'],visor:['matcap_plastic_gloss','gl_visor'],
+    threed:['matcap_plastic_gloss','gl_threed'],night:['matcap_plastic_gloss','matcap_rubber_matte','matcap_silver','gl_night'],scope:['matcap_plastic_gloss','matcap_silver','matcap_gold','matcap_rubber_matte','gl_scope'],lucky:['matcap_gold','matcap_plastic_gloss','gl_lucky']};
+  // mcPow(name,hex,p): a dark glossy plastic on the shared matcap: the matcap is raised to the power p (uniform, one shared program), so black plastic keeps a near-white highlight (the plain matcap's mid-to-highlight range is only x3.7); tint = the drawing's mid colour / mid^p
+  const MCP={plastic_gloss:.27,rubber_matte:.32,silver:.156,satin:.228};
+  const mcPow=(name,hex,p=2.2,k=1)=>{const m=MC('matcap_'+name,new THREE.Color(hex).multiplyScalar(k/Math.pow(MCP[name]||.25,p))),u={value:p};m.onBeforeCompile=s=>{s.uniforms.mcPow=u;s.fragmentShader=s.fragmentShader.replace('#include <common>','#include <common>\nuniform float mcPow;').replace('vec3 outgoingLight = diffuseColor.rgb * matcapColor.rgb;','vec3 outgoingLight = diffuseColor.rgb * pow(max(matcapColor.rgb,vec3(0.)),vec3(mcPow));')};m.customProgramCacheKey=()=>'mcpow';return m};
+  const BLACK=()=>mcPow('plastic_gloss','#1f1e1f',2.2,1.3);// nerd / sun temples / night / scope housings (drawing #1f1e1f, highlights #87858b)
+  // clear lens: a translucent plastic-gloss matcap (soft studio highlight top-left over the white eye, no env sheen)
+  const clearM=()=>{const m=mcT('plastic_gloss','#e4f1fb',1);m.transparent=true;m.opacity=.22;m.depthWrite=false;return m};
+  // picLens(pic,o): the drawing's lens as an unlit picture (toneMapped:false, x o.k linear so its luma matches the drawing), hidden until it is in; o.op < 1 = translucent (heart, star)
+  const picLens=(pic,o={})=>{const T=THREE,k=o.k===undefined?.86:o.k,m=new T.MeshBasicMaterial({color:new T.Color(k,k,k),toneMapped:false,transparent:true,opacity:o.op===undefined?1:o.op,depthWrite:!(o.op<1),visible:false,side:o.side||T.FrontSide,polygonOffset:true,polygonOffsetFactor:-1});
+    const e=hatTex(pic),set=()=>{if(e.err)return;m.map=e.tex;m.visible=true;m.needsUpdate=true};if(e.ready)set();else e.fns.push(ok=>{if(ok)set()});return m};
+  let SHN;const sheenM=()=>SHN=SHN||new THREE.MeshMatcapMaterial({matcap:hatTex('matcap_plastic_gloss').tex,transparent:true,opacity:.07,blending:THREE.AdditiveBlending,depthWrite:false,polygonOffset:true,polygonOffsetFactor:-2});
+  // bbUV(geo,sx,n,mir): uv = the geometry's own xy box -> the picture (n=2: the left eye (sx<0) takes the left half); mir = the mesh will be mirrored by a negative x scale
+  const bbUV=(g,sx,n,mir)=>{const p=g.attributes.position,uv=g.attributes.uv;let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i);if(x<x0)x0=x;if(x>x1)x1=x;if(y<y0)y0=y;if(y>y1)y1=y}
+    for(let i=0;i<p.count;i++){let xn=(p.getX(i)-x0)/(x1-x0||1);const yn=(p.getY(i)-y0)/(y1-y0||1);if(mir)xn=1-xn;uv.setXY(i,n===2?(sx<0?xn*.5:.5+xn*.5):xn,yn)}return g};
   const sup=(e,ax,ay)=>t=>{const a=t*Math.PI*2,c=Math.cos(a),s=Math.sin(a);return [ax*Math.sign(c)*Math.pow(Math.abs(c),2/e),ay*Math.sign(s)*Math.pow(Math.abs(s),2/e)]};
   const SH={
     circle:sup(2,1,1),rect:sup(4.5,1.05,.82),sun:sup(2.4,1.02,.95),shield:sup(3,1,.9),
     heart:t=>{const a=t*Math.PI*2,x=16*Math.pow(Math.sin(a),3),y=13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a);return [x/16,(y+2)/15]},
-    star:t=>{const a=Math.PI/2+t*Math.PI*2,k=(t*10)%2,f=1-Math.abs(k-1),r=.48+.6*Math.pow(1-f,1.6);return [Math.cos(a)*r,Math.sin(a)*r]},
+    star:t=>{const a=Math.PI/2+t*Math.PI*2,k=(t*10)%2,f=1-Math.abs(k-1),r=.5+.58*Math.pow(1-f,1.5);return [Math.cos(a)*r,Math.sin(a)*r]},
     avi:t=>{const a=t*Math.PI*2,c=Math.cos(a),s=Math.sin(a);let x=c*1.02,y=s*(s>0?.72:1.0);x+=.16*Math.max(0,-s)*Math.max(0,c);return [x,y+.1]},
     clover:t=>{const a=t*Math.PI*2+Math.PI/4,r=.55+.45*Math.pow(Math.abs(Math.cos(2*a)),.6);return [Math.cos(a-Math.PI/4)*r,Math.sin(a-Math.PI/4)*r]}};
   const pts=(f,n=128,k=1)=>{const o=[];for(let i=0;i<n;i++){const p=f(i/n);o.push(new THREE.Vector2(p[0]*k,p[1]*k))}return o};
   const GC={};
+  // smooth(geo): an ExtrudeGeometry is non-indexed (flat facets, which a matcap shows as a crumpled bevel): weld equal positions and average the normals
+  const smooth=g=>{const T=THREE,p=g.attributes.position,uv=g.attributes.uv,map={},idx=[],P=[],U=[];let c=0;for(let i=0;i<p.count;i++){const x=p.getX(i),y=p.getY(i),z=p.getZ(i),k=Math.round(x*1e4)+','+Math.round(y*1e4)+','+Math.round(z*1e4);let j=map[k];if(j===undefined){j=map[k]=c++;P.push(x,y,z);if(uv)U.push(uv.getX(i),uv.getY(i))}idx.push(j)}
+    const o=new T.BufferGeometry();o.setAttribute('position',new T.Float32BufferAttribute(P,3));if(uv)o.setAttribute('uv',new T.Float32BufferAttribute(U,2));o.setIndex(idx);o.computeVertexNormals();return o};
+  const xtr=(sh,o)=>smooth(new THREE.ExtrudeGeometry(sh,o));
   function rimGeo(key,w,depth){const id=key+w+depth;if(GC[id])return GC[id];const T=THREE,f=SH[key],sh=new T.Shape(pts(f)),ho=new T.Path(pts(f,128,1-w).reverse());sh.holes.push(ho);
-    const g=new T.ExtrudeGeometry(sh,{depth,bevelEnabled:true,bevelThickness:depth*.45,bevelSize:w*.32,bevelSegments:4,curveSegments:8});g.translate(0,0,-depth/2);g.computeVertexNormals();return GC[id]=g}
+    const g=xtr(sh,{depth,bevelEnabled:true,bevelThickness:depth*.5,bevelSize:w*.42,bevelSegments:5,curveSegments:8});g.translate(0,0,-depth/2);return GC[id]=g}
+  // rimTube(key,r): a wire frame = a round tube along the lens outline (outer extent 1), its normals turn all the way round, so a metal matcap shows its whole studio ring on it
+  function rimTube(key,r){const id='t'+key+r;if(GC[id])return GC[id];const T=THREE,f=SH[key],s=1-r,cu=new T.Curve();cu.getPoint=(t,o)=>{const p=f(((t%1)+1)%1);return (o||new T.Vector3()).set(p[0]*s,p[1]*s,0)};return GC[id]=new T.TubeGeometry(cu,220,r,12,true)}
   function lensGeo(key,w){const T=THREE,g=new T.ShapeGeometry(new T.Shape(pts(SH[key],128,1-w*.5)));const uv=g.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,(uv.getX(i)+1.2)/2.4,(uv.getY(i)+1.2)/2.4);return g}
   const lensM=(c,op,o={})=>new THREE.MeshPhysicalMaterial(Object.assign({color:c,transparent:true,opacity:op,roughness:.04,clearcoat:1,depthWrite:false,envMapIntensity:B3OPT.env*1.4},o));
-  const gradTex=(key,stops)=>canvasTex(key,64,128,(c,w,h)=>{const g=c.createLinearGradient(0,0,0,h);stops.forEach((s,i)=>g.addColorStop(i/(stops.length-1),s));c.fillStyle=g;c.fillRect(0,0,w,h)});
-  // one frame per eye, a bridge and two temples that follow the head
-  function pair(P,o){const T=P.T,s=P.glassSlot,k=o.k||1.22,eyes=o.one?[P.eyes[1]]:P.eyes;
-    const fm=typeof o.frame==='string'?wm(o.frame,o.fo||{roughness:.25,clearcoat:.9}):o.frame;
+  const matOf=(c,o)=>typeof c==='string'?wm(c,o||{roughness:.25,clearcoat:.9}):c;
+  // one frame per eye, a bridge and two temples that follow the head. o.frame = colour|material, o.tube = wire radius (else an extruded rim of width o.w), o.lens = material|fn(sx), o.pic = the lens picture (art/acc/gl_<id>) with o.po options, o.arm = temple colour|material
+  function pair(P,o){const T=P.T,s=P.glassSlot,k=o.k||1.22,eyes=o.one?[P.eyes[1]]:P.eyes,w=o.w||.14;
+    const fm=matOf(o.frame,o.fo),pm=o.pic?picLens(o.pic,o.po||{}):null;
     for(const e of eyes){const gp=new T.Group();gp.position.copy(e.position);gp.rotation.y=e.rotation.y;s.add(gp);const sx=Math.sign(e.position.x)||1;
-      const r=new T.Mesh(rimGeo(o.shape,o.w||.14,o.d||.035),fm);r.scale.set(B_ERX*k*sx,B_ERY*k*(o.ky||1),1);r.position.z=B_ERZ+.04;gp.add(r);
-      if(o.lens){const lm=typeof o.lens==='function'?o.lens(sx):o.lens;const l=new T.Mesh(lensGeo(o.shape,o.w||.14),lm);l.scale.set(B_ERX*k*sx,B_ERY*k*(o.ky||1),1);l.position.z=B_ERZ+.036;gp.add(l)}
+      const r=new T.Mesh(o.tube?rimTube(o.shape,o.tube):rimGeo(o.shape,w,o.d||.035),fm);r.scale.set(B_ERX*k*sx,B_ERY*k*(o.ky||1),o.tube?Math.min(B_ERX,B_ERY)*k:1);r.position.z=B_ERZ+.04;gp.add(r);
+      const lw=o.tube?o.tube*1.2:w;
+      if(o.lens){const lm=typeof o.lens==='function'?o.lens(sx):o.lens;const l=new T.Mesh(lensGeo(o.shape,lw),lm);l.scale.set(B_ERX*k*sx,B_ERY*k*(o.ky||1),1);l.position.z=B_ERZ+.036;gp.add(l)}
+      if(pm){const g=bbUV(new T.ShapeGeometry(new T.Shape(pts(SH[o.shape],128,1-lw*.5))),sx,o.pn||2,sx<0),l=new T.Mesh(g,pm);l.scale.set(B_ERX*k*sx,B_ERY*k*(o.ky||1),1);l.position.z=B_ERZ+.036;gp.add(l);
+        if(o.sheen!==false){const s2=new T.Mesh(g,sheenM());s2.scale.copy(l.scale);s2.position.z=B_ERZ+.0365;gp.add(s2)}}
       if(o.each)o.each(gp,sx,k)}
     if(o.one)return fm;
     const yB=B_EY+(o.by||.1),zB=surfZ(0,yB)+.07;
     const br=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3([new T.Vector3(-.07,yB-.01,zB),new T.Vector3(0,yB+.015,zB+.012),new T.Vector3(.07,yB-.01,zB)]),20,o.bw||.016,8),fm);s.add(br);
     if(o.bar){const b2=new T.Mesh(new T.TubeGeometry(new T.CatmullRomCurve3([new T.Vector3(-.12,B_EY+B_ERY*k*.62,zB+.01),new T.Vector3(0,B_EY+B_ERY*k*.66,zB+.03),new T.Vector3(.12,B_EY+B_ERY*k*.62,zB+.01)]),20,.011,8),fm);s.add(b2)}
     if(o.noArms)return fm;
-    temples(P,o.arm?wm(o.arm,{roughness:.3,clearcoat:.8}):fm,fm,B_EX+B_ERX*k*.98,o.aw);return fm}
+    temples(P,o.arm?matOf(o.arm,{roughness:.3,clearcoat:.8}):fm,o.hinge||fm,B_EX+B_ERX*k*.98,o.aw);return fm}
   function temples(P,am,fm,X,aw){const T=P.T,s=P.glassSlot;
     for(const sx of[-1,1]){const y=B_EY+.06,c=[];const x0=sx*X,a0=Math.atan2(x0,surfZ(x0,y)+.1);
       c.push(new T.Vector3(x0,y,surfZ(Math.min(Math.abs(x0),bodyR(y/.75)*.98),y)+.08));
@@ -10676,58 +10706,66 @@ document.documentElement.classList.add('booted');
   // a wide piece bent around the face (ski goggles, sport visor, 3D glasses)
   function bent(geo,R,y0){const p=geo.attributes.position;for(let i=0;i<p.count;i++){const x=p.getX(i),z=p.getZ(i),a=x/R;p.setXYZ(i,Math.sin(a)*(R+z),p.getY(i)+y0,Math.cos(a)*(R+z))}geo.computeVertexNormals();return geo}
   const FR=()=>Math.hypot(B_EX,surfZ(B_EX,B_EY)+B_ERZ)+.06;
-  function strap(P,c,w=.06){const T=P.T,R=bodyR(B_EY/.75)+.015,g=new T.CylinderGeometry(R,R,w,64,1,true,Math.PI*.3,Math.PI*1.4);const m=new T.Mesh(g,wm(c,{roughness:.6,clearcoat:.2,side:T.DoubleSide}));m.position.y=B_EY;m.rotation.y=Math.PI;P.glassSlot.add(m)}
+  function strap(P,c,w=.06){const T=P.T,R=bodyR(B_EY/.75)+.015,g=new T.CylinderGeometry(R,R,w,64,1,true,Math.PI*.3,Math.PI*1.4);const m=new T.Mesh(g,mcT('rubber_matte',c,1));m.material.side=T.DoubleSide;m.position.y=B_EY;m.rotation.y=Math.PI;P.glassSlot.add(m)}
   function wideShape(hw,hh,notch){const T=THREE,sh=new T.Shape(),n=64,o=[];for(let i=0;i<=n;i++){const a=i/n*Math.PI*2,c=Math.cos(a),s=Math.sin(a);let x=hw*Math.sign(c)*Math.pow(Math.abs(c),2/3.2),y=hh*Math.sign(s)*Math.pow(Math.abs(s),2/3.2);
       if(notch&&s<0)y+=notch*Math.exp(-Math.pow(x/(hw*.16),2))*hh;o.push(new T.Vector2(x,y))}sh.setFromPoints(o);return sh}
+  const rrect=(x,y,a,b,r)=>{const p=new THREE.Path();p.moveTo(x-a+r,y-b);p.lineTo(x+a-r,y-b);p.quadraticCurveTo(x+a,y-b,x+a,y-b+r);p.lineTo(x+a,y+b-r);p.quadraticCurveTo(x+a,y+b,x+a-r,y+b);p.lineTo(x-a+r,y+b);p.quadraticCurveTo(x-a,y+b,x-a,y+b-r);p.lineTo(x-a,y-b+r);p.quadraticCurveTo(x-a,y-b,x-a+r,y-b);p.closePath();return p};
+  const WHITE='#ebe7ec',PINK='#ec5f98';
   const G={
-    round:P=>pair(P,{shape:'circle',frame:'#f1b630',fo:GLD,w:.1,d:.03,lens:lensM('#e8f4ff',.12)}),
-    nerd:P=>{const fm=pair(P,{shape:'rect',frame:'#17141f',fo:{roughness:.18,clearcoat:1},w:.2,d:.06,bw:.024,aw:.022,lens:lensM('#e8f4ff',.12)});
-      for(const sx of[-1,1]){const st=wmesh(new THREE.SphereGeometry(.014,10,8),'#d9dde6',{metalness:.9,roughness:.2});const x=sx*(B_EX+B_ERX*1.22*.9);st.position.set(x,B_EY+B_ERY*1.22*.68,surfZ(Math.min(Math.abs(x),.4),B_EY+.15)+.12);P.glassSlot.add(st)}},
-    sun:P=>pair(P,{shape:'sun',frame:'#f1b630',fo:GLD,w:.1,d:.035,lens:lensM('#0c0a14',.94,{roughness:.02})}),
-    heart:P=>pair(P,{shape:'heart',frame:'#ff5fa8',fo:{roughness:.15,clearcoat:1},w:.15,d:.045,k:1.3,lens:lensM('#ff6fae',.72),by:.14}),
-    star:P=>pair(P,{shape:'star',frame:'#f6b820',fo:GLD,w:.15,d:.045,k:1.45,lens:lensM('#ffc21a',.8,{emissive:'#ffaa00',emissiveIntensity:.15}),by:.12}),
+    round:P=>pair(P,{shape:'circle',frame:goldMC(),tube:.05,lens:clearM(),bw:.014,aw:.013}),
+    nerd:P=>{const fm=BLACK();pair(P,{shape:'rect',frame:fm,w:.17,d:.05,bw:.026,aw:.022,lens:clearM()});
+      for(const sx of[-1,1]){const st=new THREE.Mesh(new THREE.SphereGeometry(.014,10,8),goldMC());const x=sx*(B_EX+B_ERX*1.22*.9);st.position.set(x,B_EY+B_ERY*1.22*.68,surfZ(Math.min(Math.abs(x),.4),B_EY+.15)+.12);st.scale.z=.6;P.glassSlot.add(st)}},
+    sun:P=>pair(P,{shape:'sun',frame:goldMC(),tube:.045,k:1.3,pic:'gl_sun',po:{k:.9},arm:BLACK(),aw:.02,bw:.014}),
+    heart:P=>pair(P,{shape:'heart',frame:mcT('plastic_gloss',PINK,1),tube:.075,k:1.32,pic:'gl_heart',po:{op:.86,k:.92},by:.14,aw:.018}),
+    star:P=>pair(P,{shape:'star',frame:goldMC(),tube:.085,k:1.45,pic:'gl_star',po:{op:.92,k:.9},by:.12,aw:.02,bw:.02}),
     goggles:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.2,hh=B_ERY*1.22;
       const fs=wideShape(hw,hh,.38),ho=wideShape(hw*.86,hh*.8,.42);fs.holes.push(new T.Path(ho.getPoints(64).reverse()));
-      const fg=bent(new T.ExtrudeGeometry(fs,{depth:.05,bevelEnabled:true,bevelThickness:.025,bevelSize:.025,bevelSegments:5,curveSegments:24}),R+.02,B_EY);
-      P.glassSlot.add(new T.Mesh(fg,wm('#2f6fe0',{roughness:.18,clearcoat:1})));
-      const lt=canvasTex('skilens',256,128,(c,w,h)=>{const g=c.createLinearGradient(0,0,w,h);['#4a1ad0','#1a6ae0','#18b0c0','#3ad060','#e0a020'].forEach((s,i)=>g.addColorStop(i/4,s));c.fillStyle=g;c.fillRect(0,0,w,h)});
-      const lg=new T.ShapeGeometry(ho,24),uv=lg.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)/(2*hw)+.5,uv.getY(i)/(2*hh)+.5);bent(lg,R+.035,B_EY);
-      P.glassSlot.add(new T.Mesh(lg,new T.MeshPhysicalMaterial({map:lt,roughness:.05,metalness:.6,clearcoat:1,iridescence:.8,transparent:true,opacity:.97,side:T.DoubleSide})));strap(P,'#23263a',.1)},
-    monocle:P=>{const T=P.T,fm=pair(P,{shape:'circle',frame:'#f1b630',fo:GLD,w:.11,d:.035,one:1,k:1.2,lens:lensM('#e8f4ff',.18)}),e=P.eyes[1],x0=e.position.x+B_ERX*1.15,y0=B_EY-B_ERY*.6;
-      const cu=new T.CatmullRomCurve3([new T.Vector3(x0,y0,surfZ(Math.min(x0,.42),y0)+.12),new T.Vector3(x0+.05,y0-.12,surfZ(Math.min(x0+.05,.44),y0-.12)+.1),new T.Vector3(x0+.03,y0-.3,surfZ(Math.min(x0+.03,.44),y0-.3)+.08)]);
-      for(let i=0;i<=26;i++){const p=cu.getPointAt(i/26),b=new T.Mesh(new T.SphereGeometry(.009,8,6),fm);b.position.copy(p);P.glassSlot.add(b)}},
-    aviator:P=>pair(P,{shape:'avi',frame:'#e0aa30',fo:GLD,w:.07,d:.025,bar:1,arm:'#7a4a25',lens:sx=>lensM('#ffffff',.9,{map:gradTex('avil',['#2a1608','#6a3c18','#c99060'])})}),
-    pinkround:P=>pair(P,{shape:'circle',frame:'#ff6fb5',fo:{roughness:.15,clearcoat:1},w:.17,d:.05,lens:lensM('#ffe8f4',.14)}),
-    visor:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.25,hh=B_ERY*.95;
-      const ls=wideShape(hw,hh,.32),lg=new T.ShapeGeometry(ls,24),uv=lg.attributes.uv;for(let i=0;i<uv.count;i++)uv.setXY(i,uv.getX(i)/(2*hw)+.5,uv.getY(i)/(2*hh)+.5);bent(lg,R+.08,B_EY-.02);
-      const lt=canvasTex('visorlens',256,64,(c,w,h)=>{const g=c.createLinearGradient(0,0,0,h);['#ff3a7a','#ff8a1f','#ffe23a','#3ad0ff','#7a3cff'].forEach((s,i)=>g.addColorStop(i/4,s));c.fillStyle=g;c.fillRect(0,0,w,h)});
-      P.glassSlot.add(new T.Mesh(lg,new T.MeshPhysicalMaterial({map:lt,metalness:.5,roughness:.06,clearcoat:1,iridescence:.5,side:T.DoubleSide})));
-      const top=new T.Shape();top.moveTo(-hw,0);top.lineTo(hw,0);top.lineTo(hw*.98,.06);top.lineTo(-hw*.98,.06);top.closePath();
-      const tg=bent(new T.ExtrudeGeometry(top,{depth:.04,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:3}),R+.085,B_EY-.02+hh*.8);P.glassSlot.add(new T.Mesh(tg,wm('#f6f7fb',{roughness:.2,clearcoat:1})));
-      {const wm2=wm('#f6f7fb',{roughness:.2,clearcoat:1});temples(P,wm2,wm2,hw*.97,.02)}},
-    threed:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.28,hh=B_ERY*1.05,fs=new T.Shape();fs.moveTo(-hw,-hh);fs.lineTo(hw,-hh);fs.lineTo(hw,hh);fs.lineTo(-hw,hh);fs.closePath();
-      const holes=[];for(const sx of[-1,1]){const cx=sx*B_EX,p=new T.Path(),a=B_ERX*1.0,b=B_ERY*.78;p.moveTo(cx-a,-b);p.lineTo(cx-a,b);p.lineTo(cx+a,b);p.lineTo(cx+a,-b);p.closePath();fs.holes.push(p);holes.push([cx,a,b,sx])}
+      const fg=bent(xtr(fs,{depth:.05,bevelEnabled:true,bevelThickness:.03,bevelSize:.03,bevelSegments:6,curveSegments:24}),R+.02,B_EY);
+      P.glassSlot.add(new T.Mesh(fg,mcT('plastic_gloss','#3f7df2',1)));
+      const lg=bbUV(new T.ShapeGeometry(ho,24),1,1,false);bent(lg,R+.035,B_EY);const pm=picLens('gl_goggles',{k:.9});pm.side=T.DoubleSide;P.glassSlot.add(new T.Mesh(lg,pm));const s2=new T.Mesh(lg,sheenM());s2.scale.setScalar(1.001);P.glassSlot.add(s2);
+      strap(P,'#3a3650',.1)},
+    monocle:P=>{const T=P.T,GM=goldMC(),fm=pair(P,{shape:'circle',frame:GM,tube:.06,one:1,k:1.2,lens:clearM()}),e=P.eyes[1],x0=e.position.x+B_ERX*1.14,y0=B_EY-B_ERY*.35;
+      // the chain: small gold links (tori, every other one turned 90 deg) along a curve from the ring's right side down the cheek, merged into ONE mesh
+      const cu=new T.CatmullRomCurve3([new T.Vector3(x0,y0,surfZ(Math.min(x0,.42),y0)+.1),new T.Vector3(x0+.04,y0-.14,surfZ(Math.min(x0+.04,.44),y0-.14)+.09),new T.Vector3(x0+.03,y0-.3,surfZ(Math.min(x0+.03,.44),y0-.3)+.08),new T.Vector3(x0+.005,y0-.44,surfZ(Math.min(x0+.005,.45),y0-.44)+.07)]);
+      const parts=[],lk=new T.TorusGeometry(.015,.0042,6,12),n=30,up=new T.Vector3(0,1,0);for(let i=0;i<=n;i++){const t=i/n,p=cu.getPointAt(t),tg=cu.getTangentAt(t),M=new T.Matrix4().lookAt(new T.Vector3(),tg,up);const Mr=new T.Matrix4().makeRotationZ(Math.PI/2).premultiply(new T.Matrix4().makeRotationY(Math.PI/2+(i%2)*Math.PI/2));M.multiply(Mr).setPosition(p);parts.push([lk,M])}
+      const ch=new T.Mesh(mergeGeo(parts),GM);P.glassSlot.add(ch);const lp=new T.Mesh(new T.TorusGeometry(.02,.005,8,16),GM);lp.position.copy(cu.getPointAt(0));lp.position.y+=.012;P.glassSlot.add(lp)},
+    aviator:P=>pair(P,{shape:'avi',frame:goldMC(),tube:.04,bar:1,arm:mcT('plastic_gloss','#7a4a33',1),hinge:goldMC(),pic:'gl_aviator',po:{k:.9},aw:.016,bw:.013}),
+    pinkround:P=>pair(P,{shape:'circle',frame:mcT('plastic_gloss',PINK,1),tube:.095,lens:clearM(),bw:.03,aw:.022}),
+    visor:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.25,hh=B_ERY*.95,WM=mcT('plastic_gloss',WHITE,1);
+      const ls=wideShape(hw,hh,.32),lg=bbUV(new T.ShapeGeometry(ls,24),1,1,false);bent(lg,R+.08,B_EY-.02);const pm=picLens('gl_visor',{k:.92});pm.side=T.DoubleSide;P.glassSlot.add(new T.Mesh(lg,pm));const s2=new T.Mesh(lg,sheenM());P.glassSlot.add(s2);
+      const top=new T.Shape();top.moveTo(-hw,0);top.lineTo(hw,0);top.lineTo(hw*.97,.07);top.lineTo(-hw*.97,.07);top.closePath();
+      const tg=bent(xtr(top,{depth:.045,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:3}),R+.085,B_EY-.02+hh*.8);P.glassSlot.add(new T.Mesh(tg,WM));
+      const ns=new T.Shape();ns.moveTo(-.09,-hh*.98);ns.lineTo(-.03,-hh*.55);ns.lineTo(.03,-hh*.55);ns.lineTo(.09,-hh*.98);ns.lineTo(.055,-hh*.98);ns.lineTo(0,-hh*.72);ns.lineTo(-.055,-hh*.98);ns.closePath();
+      const ng=bent(xtr(ns,{depth:.03,bevelEnabled:true,bevelThickness:.008,bevelSize:.008,bevelSegments:2}),R+.095,B_EY-.02);P.glassSlot.add(new T.Mesh(ng,WM));// the white nose piece of the drawing
+      for(const sx of[-1,1]){const d=new T.Mesh(new T.SphereGeometry(.02,10,8),mcT('plastic_gloss','#2b58c9',1));const a=sx*hw*.99/(R+.08);d.position.set(Math.sin(a)*(R+.1),B_EY-.02-hh*.1,Math.cos(a)*(R+.1));P.glassSlot.add(d)}// blue hinge dots
+      temples(P,WM,WM,hw*.97,.02)},
+    threed:P=>{const T=P.T,R=FR(),hw=B_EX+B_ERX*1.28,hh=B_ERY*1.05,WM=mcT('plastic_gloss',WHITE,1),fs=new T.Shape();fs.moveTo(-hw,-hh);fs.lineTo(hw,-hh);fs.lineTo(hw,hh);fs.lineTo(-hw,hh);fs.closePath();
+      const holes=[];for(const sx of[-1,1]){const cx=sx*B_EX,a=B_ERX*1.0,b=B_ERY*.78;fs.holes.push(rrect(cx,0,a,b,.06));holes.push([cx,a,b,sx])}
       const nb=new T.Path();nb.absarc(0,-hh,.06,0,Math.PI,false);fs.holes.push(nb);
-      P.glassSlot.add(new T.Mesh(bent(new T.ExtrudeGeometry(fs,{depth:.04,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:3,curveSegments:16}),R+.02,B_EY),wm('#f6f7fb',{roughness:.25,clearcoat:.8})));
-      for(const [cx,a,b,sx] of holes){const g=new T.PlaneGeometry(2*a,2*b,8,4);g.translate(cx,0,0);P.glassSlot.add(new T.Mesh(bent(g,R+.035,B_EY),lensM(sx<0?'#1f5fff':'#ff1424',.93,{side:T.DoubleSide})))}
-      {const wm2=wm('#f6f7fb',{roughness:.25,clearcoat:.8});temples(P,wm2,wm2,hw*.97,.022)}},
-    night:P=>{const T=P.T,M={metalness:.5,roughness:.35,clearcoat:.5},H='#1c1e24';strap(P,'#1c1e24',.11);
-      for(const e of P.eyes){const gp=new T.Group();gp.position.copy(e.position);gp.rotation.y=e.rotation.y;P.glassSlot.add(gp);
-        const tb=wmesh(new T.CylinderGeometry(.15,.17,.2,40),H,M);tb.rotation.x=Math.PI/2;tb.position.z=B_ERZ+.12;gp.add(tb);
-        const rg=wmesh(new T.TorusGeometry(.15,.018,10,40),'#32353e',M);rg.position.z=B_ERZ+.22;gp.add(rg);
-        const ln=wmesh(new T.SphereGeometry(.13,32,16,0,Math.PI*2,0,Math.PI/2),'#18c040',{emissive:'#10e040',emissiveIntensity:.9,roughness:.05,clearcoat:1});ln.rotation.x=Math.PI/2;ln.scale.y=.4;ln.position.z=B_ERZ+.215;gp.add(ln)}
-      const bx=wmesh(new T.BoxGeometry(.2,.16,.14,2,2,2),H,M);bx.position.set(0,B_EY+.02,surfZ(0,B_EY)+.12);P.glassSlot.add(bx);
-      const mt=wmesh(new T.BoxGeometry(.16,.1,.1),'#2a2d35',M);mt.position.set(0,B_EY+.2,surfZ(0,B_EY+.2)+.06);P.glassSlot.add(mt);const mt2=wmesh(new T.BoxGeometry(.06,.14,.06),'#2a2d35',M);mt2.position.set(0,B_EY+.12,surfZ(0,B_EY+.12)+.1);P.glassSlot.add(mt2)},
-    scope:P=>{const T=P.T,e=P.eyes[1],gp=new T.Group(),M={metalness:.6,roughness:.3,clearcoat:.5};gp.position.copy(e.position);gp.rotation.y=e.rotation.y;P.glassSlot.add(gp);
-      const tb=wmesh(new T.CylinderGeometry(.2,.21,.16,48),'#1e2024',M);tb.rotation.x=Math.PI/2;tb.position.z=B_ERZ+.09;gp.add(tb);
-      const rg=wmesh(new T.TorusGeometry(.2,.02,10,48),'#3a3e46',M);rg.position.z=B_ERZ+.17;gp.add(rg);
-      const rt=canvasTex('reticle',256,256,(c,w,h)=>{const g=c.createRadialGradient(w/2,h/2,10,w/2,h/2,w/2);g.addColorStop(0,'#2a8a3a');g.addColorStop(1,'#0a3a14');c.fillStyle=g;c.fillRect(0,0,w,h);c.strokeStyle='#8aff8a';c.lineWidth=5;c.beginPath();c.moveTo(w/2,14);c.lineTo(w/2,h-14);c.moveTo(14,h/2);c.lineTo(w-14,h/2);c.stroke();c.lineWidth=3;c.beginPath();c.arc(w/2,h/2,46,0,7);c.stroke();for(let i=-3;i<=3;i++){if(!i)continue;c.beginPath();c.moveTo(w/2+i*24,h/2-8);c.lineTo(w/2+i*24,h/2+8);c.moveTo(w/2-8,h/2+i*24);c.lineTo(w/2+8,h/2+i*24);c.stroke()}});
-      const ln=new T.Mesh(new T.CircleGeometry(.19,48),new T.MeshPhysicalMaterial({map:rt,emissive:'#ffffff',emissiveMap:rt,emissiveIntensity:.8,roughness:.05,clearcoat:1}));ln.position.z=B_ERZ+.172;gp.add(ln);
-      const tr=wmesh(new T.CylinderGeometry(.05,.05,.08,24),'#2a2d33',M);tr.rotation.z=Math.PI/2;tr.position.set(.24,.02,B_ERZ+.09);gp.add(tr);const kn=wmesh(new T.CylinderGeometry(.055,.055,.03,24),'#f1b630',GLD);kn.rotation.z=Math.PI/2;kn.position.set(.29,.02,B_ERZ+.09);gp.add(kn);
-      const tp=wmesh(new T.CylinderGeometry(.035,.035,.07,20),'#2a2d33',M);tp.position.set(0,.24,B_ERZ+.09);gp.add(tp);const mb=wmesh(new T.BoxGeometry(.1,.08,.12),'#2a2d33',M);mb.position.set(0,-.23,B_ERZ+.06);gp.add(mb);
-      strap(P,'#23252b',.07)},
-    lucky:P=>pair(P,{shape:'clover',frame:'#f1b630',fo:GLD,w:.1,d:.035,k:1.3,arm:'#2a9a3a',lens:lensM('#12902e',.92,{emissive:'#0a5a18',emissiveIntensity:.15})})};
-  const _bg=buildGlasses;buildGlasses=function(P,kind){const f=G[kind];if(!f)return _bg(P,kind);f(P)};
+      P.glassSlot.add(new T.Mesh(bent(xtr(fs,{depth:.04,bevelEnabled:true,bevelThickness:.015,bevelSize:.015,bevelSegments:3,curveSegments:16}),R+.02,B_EY),WM));
+      const pm=picLens('gl_threed',{k:.9});pm.side=T.DoubleSide;for(const [cx,a,b,sx] of holes){const g=new T.PlaneGeometry(2*a,2*b,8,4);bbUV(g,sx,2,false);g.translate(cx,0,0);const l=new T.Mesh(bent(g,R+.035,B_EY),pm);P.glassSlot.add(l);const s2=new T.Mesh(l.geometry,sheenM());P.glassSlot.add(s2)}
+      temples(P,WM,WM,hw*.97,.022)},
+    night:P=>{const T=P.T,BM=BLACK(),SM=MC('matcap_silver','#80808a'),pm=picLens('gl_night',{k:1});strap(P,'#2a2a33',.11);
+      for(const e of P.eyes){const gp=new T.Group();gp.position.copy(e.position);gp.rotation.y=e.rotation.y;P.glassSlot.add(gp);const sx=Math.sign(e.position.x)||1;
+        const tb=new T.Mesh(new T.CylinderGeometry(.19,.2,.22,40),BM);tb.rotation.x=Math.PI/2;tb.position.z=B_ERZ+.13;gp.add(tb);
+        const rg=new T.Mesh(new T.TorusGeometry(.185,.022,10,40),SM);rg.position.z=B_ERZ+.24;gp.add(rg);
+        const rg2=new T.Mesh(new T.TorusGeometry(.2,.016,8,40),BM);rg2.position.z=B_ERZ+.1;gp.add(rg2);
+        const ln=new T.Mesh(bbUV(new T.CircleGeometry(.165,40),sx,2,false),pm);ln.position.z=B_ERZ+.243;gp.add(ln);const s2=new T.Mesh(ln.geometry,sheenM());s2.position.z=B_ERZ+.2435;gp.add(s2)}
+      const bx=new T.Mesh(new T.BoxGeometry(.22,.17,.16,2,2,2),BM);bx.position.set(0,B_EY+.02,surfZ(0,B_EY)+.13);P.glassSlot.add(bx);
+      const mt=new T.Mesh(new T.BoxGeometry(.18,.1,.12),mcPow('plastic_gloss','#34323a'));mt.position.set(0,B_EY+.23,surfZ(0,B_EY+.2)+.08);P.glassSlot.add(mt);const mt2=new T.Mesh(new T.BoxGeometry(.07,.16,.07),mcPow('plastic_gloss','#34323a'));mt2.position.set(0,B_EY+.14,surfZ(0,B_EY+.12)+.12);P.glassSlot.add(mt2)},
+    scope:P=>{const T=P.T,e=P.eyes[1],gp=new T.Group(),BM=BLACK(),SM=MC('matcap_silver','#74747e'),GM=goldMC();gp.position.copy(e.position);gp.rotation.y=e.rotation.y;P.glassSlot.add(gp);
+      const tb=new T.Mesh(new T.CylinderGeometry(.21,.22,.18,48),BM);tb.rotation.x=Math.PI/2;tb.position.z=B_ERZ+.1;gp.add(tb);
+      const rg=new T.Mesh(new T.TorusGeometry(.208,.022,10,48),SM);rg.position.z=B_ERZ+.19;gp.add(rg);const rg2=new T.Mesh(new T.TorusGeometry(.218,.014,8,48),SM);rg2.position.z=B_ERZ+.06;gp.add(rg2);
+      const ln=new T.Mesh(bbUV(new T.CircleGeometry(.19,48),1,1,false),picLens('gl_scope',{k:1}));ln.position.z=B_ERZ+.193;gp.add(ln);const s2=new T.Mesh(ln.geometry,sheenM());s2.position.z=B_ERZ+.1935;gp.add(s2);
+      const tr=new T.Mesh(new T.CylinderGeometry(.05,.05,.08,24),BM);tr.rotation.z=Math.PI/2;tr.position.set(.25,.03,B_ERZ+.1);gp.add(tr);const kn=new T.Mesh(new T.CylinderGeometry(.06,.06,.04,24),GM);kn.rotation.z=Math.PI/2;kn.position.set(.31,.03,B_ERZ+.1);gp.add(kn);
+      const tp=new T.Mesh(new T.CylinderGeometry(.04,.04,.07,20),BM);tp.position.set(0,.25,B_ERZ+.1);gp.add(tp);const tp2=new T.Mesh(new T.CylinderGeometry(.05,.05,.025,20),SM);tp2.position.set(0,.29,B_ERZ+.1);gp.add(tp2);
+      const mb=new T.Mesh(new T.BoxGeometry(.1,.08,.14),BM);mb.position.set(0,-.24,B_ERZ+.07);gp.add(mb);
+      strap(P,'#2a2a33',.07)},
+    lucky:P=>pair(P,{shape:'clover',frame:goldMC(),tube:.055,k:1.32,arm:mcT('plastic_gloss','#1d8f24',1),hinge:goldMC(),pic:'gl_lucky',po:{k:.9},aw:.018,bw:.014})};
+  const _bg=buildGlasses;buildGlasses=function(P,kind){const f=G[kind];if(!f)return _bg(P,kind);f(P);try{hatEnvOn(P.glassSlot)}catch(e){console.warn('glsEnv',e)}};
+  // the in-game sprite bake waits for the worn glasses' pictures too (the hats' bakeChars wrapper waits for every picture requested so far), and a style thumbnail drawn before its picture was in is drawn again
+  if(typeof bakeChars==='function'){const bk=bakeChars;bakeChars=function(){try{const n=GLS_PIC[lookNow().glasses];if(n)n.forEach(x=>hatTex(x))}catch(e){}return bk.apply(this,arguments)}}
+  if(typeof csThumb==='function'){const ct=csThumb;csThumb=function(c,id,img){const n=c==='glasses'&&GLS_PIC[id];if(n)for(const x of n){const e=hatTex(x);if(!e.ready)e.fns.push(()=>{if(typeof W3!=='undefined'&&W3.thumbCache){for(const k in W3.thumbCache)if(k.indexOf('glasses|'+id+'|')===0||k==='glasses:'+id)delete W3.thumbCache[k]}if(img&&img.isConnected&&typeof wThumb==='function'){const u=wThumb('glasses',id);if(u)img.src=u}})}return ct.apply(this,arguments)}}
 })();
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
