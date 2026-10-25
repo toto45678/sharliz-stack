@@ -1014,7 +1014,8 @@
   "hsp_birdhouse": "Cookies when an egg hatches: +{n}",
   "hsp_flowers": "+{n}% points for a perfect",
   "hsp_trampoline": "Coins for every frenzy landing: +{n}",
-  "hsp_balloons": "Coin balloon comes {n}% more often"
+  "hsp_balloons": "Coin balloon comes {n}% more often",
+  "trSkill": "Smart difficulty"
  },
  "pairs": [
   "3D boss models (season 1)",

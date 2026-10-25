@@ -1037,7 +1037,8 @@
   "stKeep": "遊びつづけると、つづきがわかるよ",
   "arcZero": "今回は0点だったので、コインプレイは使われなかったよ",
   "trInvite": "いっしょにSharlizの週間トーナメントで遊ぼう! 🏆",
-  "evWinFirst": "先にステージ{n}をクリアしよう"
+  "evWinFirst": "先にステージ{n}をクリアしよう",
+  "trSkill": "スマート難易度"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
