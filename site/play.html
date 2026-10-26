@@ -25,7 +25,7 @@
 html{-webkit-text-size-adjust:100%}
 body{margin:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,#5a24b0 0%,var(--deep) 62%);color:#fff;font:700 15px/1.4 Nunito,system-ui,sans-serif;text-align:center}
 .wrap{height:100vh;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:max(10px,env(safe-area-inset-top)) 16px max(12px,env(safe-area-inset-bottom))}
-.clip{position:relative;flex:0 0 auto;height:calc(100vh - 250px);height:calc(100svh - 250px);max-height:560px;min-height:160px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#e9b6e8;box-shadow:0 0 0 3px rgba(255,255,255,.2),0 16px 36px rgba(0,0,0,.45)}
+.clip{position:relative;flex:0 0 auto;height:calc(100vh - 296px);height:calc(100svh - 296px);max-height:560px;min-height:160px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;background:#e9b6e8;box-shadow:0 0 0 3px rgba(255,255,255,.2),0 16px 36px rgba(0,0,0,.45)}
 .clip img,.clip video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .clip video{opacity:0;transition:opacity .25s}
 .clip video.on{opacity:1}
@@ -38,6 +38,8 @@ h1 span{display:block;color:#fff;font-size:.72em}
 .fine{margin:0;color:var(--soft);font-size:13.5px}
 .fine a{color:var(--soft)}
 .fine span{white-space:nowrap}
+.gift{margin:0;max-width:340px;padding:6px 14px;border-radius:16px;background:rgba(255,210,63,.16);border:2px solid rgba(255,210,63,.55);color:#fff;font-size:14px;line-height:1.3}
+.gift b{color:var(--yellow)}
 .desk{display:none}
 /* computers: scan the QR with a phone instead of tapping the badge */
 @media (hover:hover) and (pointer:fine) and (min-width:700px){
@@ -61,6 +63,7 @@ h1 span{display:block;color:#fff;font-size:.72em}
   <div class="side">
     <h1>Will it hold?<span>Find out, free</span></h1>
     <a class="badge tap" id="get" href="/go?ct=meta_w1_caau"><img src="img/appstore_badge.svg" alt="Download on the App Store" width="186" height="62"></a>
+    <p class="gift">🎁 <b>Free gift every day</b> – up to 400 coins + a chest in your first week</p>
     <div class="desk">
       <div class="qr"><svg role="img" aria-label="QR code: open Sharliz Tower on the App Store" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#230b4f" d="M2 2.5h7m4 0h1m2 0h2m1 0h5m1 0h1m2 0h7m-33 1h1m5 0h1m1 0h5m2 0h1m2 0h1m1 0h4m2 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m4 0h1m3 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h2m1 0h1m2 0h3m1 0h1m2 0h1m1 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h4m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m-24 1h3m1 0h2m3 0h1m3 0h2m1 0h3m1 0h1m1 0h1m6 0h2m-29 1h1m1 0h1m1 0h1m1 0h5m1 0h1m2 0h2m1 0h3m2 0h2m1 0h2m1 0h1m-31 1h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h2m-32 1h2m1 0h2m3 0h3m6 0h1m4 0h1m3 0h1m1 0h1m2 0h1m-33 1h2m1 0h1m2 0h1m2 0h1m1 0h4m1 0h1m1 0h1m2 0h2m2 0h1m2 0h2m1 0h2m-33 1h1m4 0h1m1 0h1m2 0h3m5 0h1m1 0h5m6 0h1m-31 1h2m1 0h4m5 0h2m3 0h5m1 0h1m1 0h1m1 0h3m-31 1h1m3 0h1m3 0h4m2 0h1m3 0h1m1 0h2m2 0h3m2 0h2m-30 1h2m3 0h1m1 0h2m2 0h1m2 0h4m2 0h6m1 0h3m-29 1h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m1 0h2m1 0h2m-32 1h2m3 0h1m1 0h1m2 0h1m1 0h6m1 0h1m1 0h1m2 0h4m1 0h1m-30 1h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m2 0h2m-33 1h1m1 0h1m1 0h5m1 0h5m1 0h1m1 0h4m5 0h1m1 0h2m1 0h1m-33 1h1m3 0h1m3 0h1m1 0h1m1 0h2m4 0h4m1 0h1m2 0h1m2 0h1m2 0h1m-31 1h2m2 0h2m1 0h2m2 0h2m1 0h1m1 0h1m3 0h2m2 0h3m1 0h3m-32 1h1m1 0h1m4 0h6m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-33 1h1m3 0h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h6m2 0h1m-25 1h1m1 0h8m1 0h1m3 0h2m3 0h2m-30 1h7m2 0h1m1 0h1m2 0h1m1 0h1m2 0h6m1 0h1m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h6m3 0h5m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h3m1 0h9m1 0h2m-32 1h1m1 0h3m1 0h1m1 0h8m2 0h1m1 0h3m4 0h1m1 0h4m-33 1h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h2m1 0h1m-30 1h1m5 0h1m1 0h4m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h5m3 0h1m-33 1h7m2 0h5m3 0h5m1 0h1m4 0h1m1 0h1"/></svg></div>
       <p>Scan with your iPhone camera</p>
