@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Opening the App Store… – Sharliz Tower</title>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#230b4f;color:#fff;font:16px system-ui,sans-serif;text-align:center}a{color:#ffd23f}</style>
+</head>
+<body>
+<!-- /go-rt = /go for the retargeting ad, on its own path so Cloudflare Web Analytics counts its clicks apart from /play taps. Default token meta_rt; /go-rt?ct=<name> overrides it. -->
+<p>Opening the App Store…<br><a id="to" href="https://apps.apple.com/app/apple-store/id6819720504?pt=129570131&amp;ct=meta_rt&amp;mt=8">Tap here if nothing happens</a></p>
+<script>
+(function(){var a=document.getElementById('to');try{var c=new URLSearchParams(location.search).get('ct');if(c&&/^[\w-]{1,30}$/.test(c))a.href=a.href.replace(/ct=[^&]*/,'ct='+c)}catch(e){}
+// leave only after the page has loaded, so Cloudflare's deferred analytics beacon (injected at the end of body) has sent the view; 2.5 s at most
+var gone=false;function go(){if(!gone){gone=true;location.replace(a.href)}}
+window.addEventListener('load',function(){setTimeout(go,400)});setTimeout(go,2500)})();
+</script>
+</body>
+</html>
