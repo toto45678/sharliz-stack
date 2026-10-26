@@ -1056,7 +1056,23 @@
   "sp_fairy": "Peri ormanı",
   "sp_aurora": "Kutup ışıkları sarayı",
   "sp_pirate": "Korsan gemisi",
-  "sp_sakura": "Kiraz bahçesi"
+  "sp_sakura": "Kiraz bahçesi",
+  "cpRow": "Hediye kodu",
+  "cpEnter": "Gir",
+  "cpTitle": "Hediye kodu",
+  "cpSub": "Gizli bir kodun mu var? Buraya yaz, hediyeni al!",
+  "cpGo": "Hediyemi al!",
+  "cpBad": "Hmm, bu kod çalışmıyor. Harfleri kontrol edip tekrar dene.",
+  "cpUsed": "Bu kodun hediyesini zaten aldın.",
+  "cpOld": "Bu kodun süresi doldu.",
+  "cpWait": "Çok fazla deneme. Bir dakika bekleyip tekrar dene.",
+  "cpYay": "Hediyen!",
+  "cpCollect": "Topla!",
+  "cpPacks": "çıkartma paketi",
+  "cpGPacks": "altın paket",
+  "cpCookies": "kurabiye",
+  "cpEgg": "yumurta",
+  "cpBoost": "her güçlendiriciden"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
@@ -2098,6 +2114,8 @@
   "Home sweet home": "Evim güzel evim",
   "My house, my sofa, my rules!": "Benim evim, benim kanepem, benim kurallarım!",
   "New backdrop": "Yeni arka plan",
-  "Ta-da! Look what's behind me now!": "Tataa! Bak arkamda şimdi ne var!"
+  "Ta-da! Look what's behind me now!": "Tataa! Bak arkamda şimdi ne var!",
+  "Secret code": "Gizli kod",
+  "Psst... I know the magic word!": "Pst... sihirli kelimeyi biliyorum!"
  }
 }

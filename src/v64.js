@@ -248,6 +248,7 @@ const SHZ3=[
 ['s271','h','Pirouette power','כוח הפירואט','Twirl! Poof! Bye-bye, bats!','סיבוב! פוף! ביי ביי, עטלפים!','game'],
 ['s272','r','Home sweet home','בית חם','My house, my sofa, my rules!','הבית שלי, הספה שלי, החוקים שלי!','game'],
 ['s273','r','New backdrop','רקע חדש','Ta-da! Look what\'s behind me now!','טה-דה! תראו מה יש מאחוריי עכשיו!','game'],
+['s274','r','Secret code','קוד סודי','Psst... I know the magic word!','פססט... אני יודעת את מילת הקסם!','game'],
  ['s245','r','Little fairy','פיה קטנה','Sprinkle, sparkle, wish!','פיזור, נצנוץ, משאלה!','fantasy'],
  ['s246','h','Lamp genie','השד מהמנורה','Three wishes? Make them towers!','שלוש משאלות? שיהיו מגדלים!','fantasy'],
  ['s247','c','Alien','חייזרית','Take me to your tower.','קחו אותי אל המגדל שלכם.','fantasy'],
