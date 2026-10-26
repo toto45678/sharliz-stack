@@ -56,6 +56,7 @@ const bgUnseen=()=>bgS().own.filter(id=>bgHas(id)&&!bgS().seen.includes(id)).len
   b.onclick=()=>{shopTab='bg';sfx.click();rerenderOverlay()};tabs.appendChild(b);tabs.classList.add('t5');requestAnimationFrame(()=>bgFitTabs(tabs));
   if(tab!=='bg')return;tabs.querySelectorAll('button').forEach(x=>{if(x!==b)x.setAttribute('aria-pressed','false')});
   const list=card.querySelector('.shop-list');list.className='shop-list bg-list';list.innerHTML='';
+  list.style.setProperty('--bg-new',JSON.stringify(t('bnNew')));   // the NEW tag on a tile is CSS content: give it the word in this language
   const hint=document.createElement('p');hint.className='bg-hint';hint.textContent=t('bgHint');list.appendChild(hint);
   const head=k=>{const h=document.createElement('div');h.className='shop-head';h.textContent=t(k);list.appendChild(h)};
   const tile=id=>{const own=bgOwned(id),on=(bgS().on||null)===(id||null)&&own,sp=!!BG_SP[id],price=BG_SP[id]||0;
