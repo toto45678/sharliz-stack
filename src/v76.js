@@ -287,7 +287,7 @@ function spUpsRender(){const r=SPEL,U=r.querySelector('.sp-ups');U.innerHTML='';
         const n=r.querySelectorAll('.sp-up')[SP_UP.findIndex(u=>u[0]===id)];if(n){n.classList.add('pop');}}}
     U.appendChild(c)})}
 function spEarnRender(nw){const r=SPEL,E=r.querySelector('.sp-earn');E.innerHTML='';
-  SP_EARN.forEach(id=>{const own=spHas(id),p=spEarnProg(id),c=document.createElement('div');c.className='sp-er'+(own?' own':'')+((nw||[]).includes(id)?' new':'');
+  SP_EARN.forEach(id=>{const own=spHas(id),p=spEarnProg(id),c=document.createElement('div');c.className='sp-er'+(own?' got':'')+((nw||[]).includes(id)?' new':'');
     c.innerHTML=`<span class="ic">${SP_EIC[id]==='svg'?SP_DRONE:`<img src="art/${SP_EIC[id]}.webp" alt="">`}<i class="lk">🔒</i></span><span class="tx"><b></b><small class="ef"></small><small class="hw"></small>${!own&&p?`<span class="bar"><i style="width:${Math.round(100*p.a/p.b)}%"></i><em></em></span>`:''}</span>${own?'<span class="ok">✓</span>':''}`;
     c.querySelector('b').textContent=t('er_'+id);c.querySelector('.ef').textContent=t('ed_'+id);c.querySelector('.hw').textContent=own?t('spYours'):t('eh_'+id);if(!own&&p)c.querySelector('.bar em').textContent=t('spProg',{a:p.a,b:p.b});E.appendChild(c)});
   if(nw&&nw.length){popupToast(t('spNew'));sfx.flourish&&sfx.flourish(3)}}
