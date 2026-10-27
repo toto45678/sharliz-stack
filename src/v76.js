@@ -47,7 +47,9 @@ const SP_ART=__SP_ART__,SP_CAP=80;
 // straight / banking left / banking right; its glass dome is drawn empty and SP_DOME[name]={x,y,r} (fractions of the picture width/height) says where the Sharliz sits
 const SP_DOME=__SP_DOME__;
 function spShipPic(o){const h=o.gold?'gold':'h'+Math.min(2,o.hull||0),b='sp_ship_g'+Math.min(5,o.gun||0)+'_'+h,tl=o.tilt||0,v=b+(tl<-.35?'_l':tl>.35?'_r':'');
-  const n=SP_ART.includes(v)?v:SP_ART.includes(b)?b:null;return n&&hzPic(n)?n:null}
+  // until the per-upgrade ships exist: the hull look's ship (graphics batch 1: sp_ship / _blue / _pink / _gold)
+  const base=o.gold?'sp_ship_gold':['sp_ship','sp_ship_blue','sp_ship_pink'][Math.min(2,o.hull||0)];
+  const n=SP_ART.includes(v)?v:SP_ART.includes(b)?b:SP_ART.includes(base)?base:null;return n&&hzPic(n)?n:null}
 // space levels: the level before every boss, from level 90 on (89, 99, … 299, and on into any later seasons)
 const SP_LVS=[];for(let L=89;L<=TOTAL;L++)if((L-1)%LPZ===LPZ-2)SP_LVS.push(L);
 const SP_N=SP_LVS.length,SP_OPEN=SP_LVS[0];
@@ -175,8 +177,11 @@ function spHub(){spStop();spHubStop();const r=spRoot(),D=spD();r.className='sp-h
   // hangar canvas: the ship idles
   const c=r.querySelector('.sp-hangar canvas'),g=c.getContext('2d'),H={dead:false,t:0,last:performance.now()};SPH=H;
   const fit=()=>{const d=Math.min(2,devicePixelRatio||1),b=c.getBoundingClientRect();H.W=b.width;H.H=b.height;c.width=Math.round(b.width*d);c.height=Math.round(b.height*d);H.d=d};fit();addEventListener('resize',fit);H.off=()=>removeEventListener('resize',fit);
-  const loop=now=>{if(H.dead)return;const dt=Math.min(.05,(now-H.last)/1000);H.last=now;H.t+=dt;if(!H.W)fit();g.setTransform(H.d,0,0,H.d,0,0);spSky(H,g,dt*.4);
-    const s=Math.min(H.W*.2,H.H*.32);spDrawShip(g,H.W/2,H.H*.5+Math.sin(H.t*1.6)*6,s,spShipLook(H.t,{tilt:Math.sin(H.t*.8)*.25,shield:spHas('xmasShield')?1:0}));H.raf=requestAnimationFrame(loop)};H.raf=requestAnimationFrame(loop)}
+  const loop=now=>{if(H.dead)return;const dt=Math.min(.05,(now-H.last)/1000);H.last=now;H.t+=dt;if(!H.W)fit();g.setTransform(H.d,0,0,H.d,0,0);
+    // the hangar picture (cover fit, its landing pad at 58% / 75%), else the starfield
+    const hg=SP_ART.includes('sp_hangar')&&hzPic('sp_hangar');let px=H.W/2,py=H.H*.5;
+    if(hg){const k=Math.max(H.W/hg.naturalWidth,H.H/hg.naturalHeight),iw=hg.naturalWidth*k,ih=hg.naturalHeight*k,ix=(H.W-iw)/2,iy=(H.H-ih)*.7;g.drawImage(hg,ix,iy,iw,ih);px=ix+iw*.58;py=Math.min(H.H*.62,iy+ih*.75-H.H*.16)}else spSky(H,g,dt*.4);
+    const s=Math.min(H.W*.2,H.H*.32);spDrawShip(g,px,py+Math.sin(H.t*1.6)*6,s,spShipLook(H.t,{tilt:Math.sin(H.t*.8)*.25,shield:spHas('xmasShield')?1:0}));H.raf=requestAnimationFrame(loop)};H.raf=requestAnimationFrame(loop)}
 function spShipLook(T,o){return Object.assign({t:T,gun:spLv('gun'),hull:spLv('hull'),gold:spHas('gold'),drones:spHas('drones'),rainbow:spHas('rainbow')},o||{})}
 function spSecInfo(){const r=SPEL;if(!r)return;const k=SPV.sel;r.querySelector('.sp-secname b').textContent=t('spSector',{n:spLvOf(k)});r.querySelector('.sp-secname small').textContent=t(ZONES[Math.floor((spLvOf(k)-1)/LPZ)].key)}
 function spUpsRender(){const r=SPEL,U=r.querySelector('.sp-ups');U.innerHTML='';
@@ -226,7 +231,7 @@ function spPause(G){if(G.over)return;G.pause=true;const p=document.createElement
 function spBanner(G,a,b,dur){const o=G.r.querySelector('.sp-ban');if(o)o.remove();const d=document.createElement('div');d.className='sp-ban';d.innerHTML='<b></b><small></small>';d.querySelector('b').textContent=a;d.querySelector('small').textContent=b||'';G.st.appendChild(d);setTimeout(()=>d.remove(),(dur||1.6)*1000)}
 function spHUD(G){const r=G.r,h=r.querySelector('.sp-hearts');let s='';for(let i=0;i<G.maxH;i++)s+=`<img class="${i<G.hearts?'':'off'}" src="art/ic_heart.webp" alt="">`;if(h.dataset.k!==s){h.dataset.k=s;h.innerHTML=s}
   r.querySelector('.sp-coins b').textContent=G.coins;const w=G.waves[G.wi],wv=r.querySelector('.sp-wave'),txt=w&&w.f==='boss'?t('spBossW'):t('spWave',{a:Math.max(1,G.wi+1),b:G.waves.length-1});if(wv.textContent!==txt)wv.textContent=txt;wv.classList.toggle('boss',!!(w&&w.f==='boss'))}
-function spMon(G,k,x,y,o){const T=G.T,kind=1+(k%4),hp=1+Math.floor(T*2.5)+(kind===4?1:0);return Object.assign({k:'mon',pic:'arc_mon'+kind,x,y,hp,max:hp,r:G.u*.055,t:0,hit:0},o)}
+function spMon(G,k,x,y,o){const T=G.T,kind=1+(k%4),hp=1+Math.floor(T*2.5)+(kind===4?1:0);return Object.assign({k:'mon',pic:(SP_ART.includes('sp_mon'+kind)?'sp_mon':'arc_mon')+kind,x,y,hp,max:hp,r:G.u*.055,t:0,hit:0},o)}
 // the world's mini-boss: its own picture once the graphics department draws it (sp_mini_<sid>_n), else a big minion
 function spMiniBoss(G,i){const n=1+(i%2),own=SP_ART.includes('sp_mini_'+G.sid+'_'+n),hp=Math.round(10+G.T*28);
   return{k:'mboss',pic:own?'sp_mini_'+G.sid+'_'+n:'arc_mon'+(1+(G.k+i)%4),own,x:G.W*(i%2?.75:.25),y:-60,gy:G.H*(.14+.06*i),hp,max:hp,r:G.u*.1,t:0,hit:0,ph:i*3,fireT:1.5+i*.6}}
@@ -311,7 +316,7 @@ function spDraw(G){const g=G.g,W=G.W,H=G.H;g.setTransform(G.d,0,0,G.d,0,0);spSky
       g.fillStyle='rgba(18,13,43,.8)';spRR(g,-r*.7,r*1.05,r*1.4,7,3.5);g.fill();g.fillStyle='#ff5a7a';spRR(g,-r*.7+1,r*1.05+1,(r*1.4-2)*Math.max(0,e.hp/e.max),5,2.5);g.fill();g.restore();continue}const im=hzPic(e.pic),r=e.r*1.25;g.save();g.translate(e.x,e.y);g.rotate(Math.sin(e.t*3)*.12);if(e.hit>0){g.globalAlpha=.6}
     if(im)g.drawImage(im,-r,-r,r*2,r*2);else{g.fillStyle='#7a4af0';g.beginPath();g.arc(0,0,e.r,0,7);g.fill()}
     // tiny space helmet on every minion
-    g.globalAlpha=1;g.fillStyle='rgba(170,220,255,.13)';g.strokeStyle='rgba(220,240,255,.55)';g.lineWidth=2;g.beginPath();g.arc(0,0,r*1.02,0,7);g.fill();g.stroke();g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=3;g.beginPath();g.arc(0,0,r*.8,3.7,4.4);g.stroke();g.restore()}
+    g.globalAlpha=1;if(/^sp_/.test(e.pic)){g.restore();continue}g.fillStyle='rgba(170,220,255,.13)';g.strokeStyle='rgba(220,240,255,.55)';g.lineWidth=2;g.beginPath();g.arc(0,0,r*1.02,0,7);g.fill();g.stroke();g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=3;g.beginPath();g.arc(0,0,r*.8,3.7,4.4);g.stroke();g.restore()}
   if(G.boss)spDrawBoss(g,G.boss,G.el);
   for(const b of G.eb){g.fillStyle=b.c;g.strokeStyle='#201c24';g.lineWidth=2;g.beginPath();if(b.goo)g.ellipse(b.x,b.y,b.r*.85,b.r*1.15,0,0,7);else g.arc(b.x,b.y,b.r,0,7);g.fill();g.stroke();g.fillStyle='rgba(255,255,255,.7)';g.beginPath();g.arc(b.x-b.r*.3,b.y-b.r*.3,b.r*.3,0,7);g.fill()}
   for(const b of G.bul){const rb=spHas('rainbow');g.fillStyle=b.dr?'#4ee6ff':rb?`hsl(${(b.y*.8)%360},95%,70%)`:'#fff6a8';g.shadowColor=b.dr?'#4ee6ff':'#ffd23f';g.shadowBlur=8;spRR(g,b.x-2.5,b.y-9,5,18,2.5);g.fill()}g.shadowBlur=0;
