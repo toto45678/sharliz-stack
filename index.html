@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261026235825"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261027111539"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -2342,6 +2342,26 @@ html:not(.booted) #title>*{visibility:hidden}
 .bg-pv-btns .btn .coin-i{width:1.3em;height:1.3em;margin:-5px 0}
 .bg-pv-btns .btn.lk span{font-size:.8rem;white-space:normal}
 body.bg-pv-on #title>:not(canvas):not(.logo){visibility:hidden}
+
+/* v73: gift codes */
+.cp-box{width:100%;display:flex;flex-direction:column;align-items:center;gap:6px;margin:2px 0 4px}
+.cp-ic{width:74px;height:74px;object-fit:contain;animation:dlBob 1.6s ease-in-out infinite;filter:drop-shadow(0 4px 0 rgba(8,10,40,.35))}
+.cp-sub{text-align:center;font-size:.92rem;margin:0}
+.cp-in{width:min(100%,290px);box-sizing:border-box;border:3px solid var(--ink);border-radius:14px;padding:10px 8px;font-family:var(--gf);font-size:1.35rem;letter-spacing:.08em;text-align:center;text-transform:uppercase;background:#fff;color:var(--ink);box-shadow:inset 0 3px 0 rgba(0,0,0,.08)}
+.cp-in::placeholder{color:#b6b9cf;letter-spacing:.05em}
+.cp-in:focus{outline:none;border-color:#f0a400;box-shadow:0 0 0 3px rgba(255,216,74,.55)}
+.cp-msg{min-height:1.3em;margin:0;text-align:center;font-weight:800;font-size:.86rem}
+.cp-msg.err{color:#ff8a8a;animation:cpShake .35s}
+@keyframes cpShake{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+.cp-chest{width:96px;height:96px;object-fit:contain;animation:cpPop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes cpPop{from{transform:scale(.3);opacity:0}}
+.cp-gifts{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.cp-tile{width:78px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:7px 3px 8px;border-radius:14px;background:linear-gradient(180deg,#ffd84a,#f08700);border:3px solid var(--ink);box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 3px 0 rgba(8,10,40,.55);color:#fff;animation:cpPop .45s cubic-bezier(.3,1.6,.5,1) backwards}
+.cp-tile:nth-child(2){animation-delay:.08s}.cp-tile:nth-child(3){animation-delay:.16s}.cp-tile:nth-child(4){animation-delay:.24s}.cp-tile:nth-child(n+5){animation-delay:.32s}
+.cp-tile img{width:40px;height:40px;object-fit:contain}
+.cp-tile b{font-family:var(--gf);font-weight:400;font-size:1.15rem;line-height:1;text-shadow:0 2px 0 var(--ink)}
+.cp-tile small{font-family:var(--body);font-weight:800;font-size:.6rem;line-height:1.1;text-align:center;min-height:0}
+.cp-tile small:empty{display:none}
 
 </style>
 
@@ -8605,6 +8625,7 @@ const SHZ3=[
 ['s271','h',T_('Pirouette power'),'כוח הפירואט',T_('Twirl! Poof! Bye-bye, bats!'),'סיבוב! פוף! ביי ביי, עטלפים!','game'],
 ['s272','r',T_('Home sweet home'),'בית חם',T_('My house, my sofa, my rules!'),'הבית שלי, הספה שלי, החוקים שלי!','game'],
 ['s273','r',T_('New backdrop'),'רקע חדש',T_('Ta-da! Look what\'s behind me now!'),'טה-דה! תראו מה יש מאחוריי עכשיו!','game'],
+['s274','r',T_('Secret code'),'קוד סודי',T_('Psst... I know the magic word!'),'פססט... אני יודעת את מילת הקסם!','game'],
  ['s245','r',T_('Little fairy'),'פיה קטנה',T_('Sprinkle, sparkle, wish!'),'פיזור, נצנוץ, משאלה!','fantasy'],
  ['s246','h',T_('Lamp genie'),'השד מהמנורה',T_('Three wishes? Make them towers!'),'שלוש משאלות? שיהיו מגדלים!','fantasy'],
  ['s247','c',T_('Alien'),'חייזרית',T_('Take me to your tower.'),'קחו אותי אל המגדל שלכם.','fantasy'],
@@ -8777,7 +8798,7 @@ const GOLDS=[
  ['g28',T_('Golden Landing'),'נחיתת הזהב',T_('The perfect landing, forever in gold.'),'הנחיתה המושלמת, לנצח בזהב.'],
  ['g29',T_('Golden Album'),'אלבום הזהב',T_('For the greatest collector of all.'),'לאספן הגדול מכולם.'],
  ['g30',T_('Golden Egg'),'ביצת הזהב',T_('Something legendary is about to hatch...'),'משהו אגדי עומד לבקוע...']];
-const STK3_ART=new Set(["g01", "g02", "g03", "g04", "g05", "g06", "g07", "g08", "g09", "g10", "g11", "g12", "g13", "g14", "g15", "g16", "g17", "g18", "g19", "g20", "g21", "g22", "g23", "g24", "g25", "g26", "g27", "g28", "g29", "g30", "s025", "s026", "s027", "s028", "s029", "s030", "s031", "s032", "s033", "s034", "s035", "s036", "s037", "s038", "s039", "s040", "s041", "s042", "s043", "s044", "s045", "s046", "s047", "s048", "s049", "s050", "s051", "s052", "s053", "s054", "s055", "s056", "s057", "s058", "s059", "s060", "s061", "s062", "s063", "s064", "s065", "s066", "s067", "s068", "s069", "s070", "s071", "s072", "s073", "s074", "s075", "s076", "s077", "s078", "s079", "s080", "s081", "s082", "s083", "s084", "s085", "s086", "s087", "s088", "s089", "s090", "s091", "s092", "s093", "s094", "s095", "s096", "s097", "s098", "s099", "s100", "s101", "s102", "s103", "s104", "s105", "s106", "s107", "s108", "s109", "s110", "s111", "s112", "s113", "s114", "s115", "s116", "s117", "s118", "s119", "s120", "s121", "s122", "s123", "s124", "s125", "s126", "s127", "s128", "s129", "s130", "s131", "s132", "s133", "s134", "s135", "s136", "s137", "s138", "s139", "s140", "s141", "s142", "s143", "s144", "s145", "s146", "s147", "s148", "s149", "s150", "s151", "s152", "s153", "s154", "s155", "s156", "s157", "s158", "s159", "s160", "s161", "s162", "s163", "s164", "s165", "s166", "s167", "s168", "s169", "s170", "s171", "s172", "s173", "s174", "s175", "s176", "s177", "s178", "s179", "s180", "s181", "s182", "s183", "s184", "s185", "s186", "s187", "s188", "s189", "s190", "s191", "s192", "s193", "s194", "s195", "s196", "s197", "s198", "s199", "s200", "s201", "s202", "s203", "s204", "s205", "s206", "s207", "s208", "s209", "s210", "s211", "s212", "s213", "s214", "s215", "s216", "s217", "s218", "s219", "s220", "s221", "s222", "s223", "s224", "s225", "s226", "s227", "s228", "s229", "s230", "s231", "s232", "s233", "s234", "s235", "s236", "s237", "s238", "s239", "s240", "s241", "s242", "s243", "s244", "s245", "s246", "s247", "s248", "s249", "s250", "s251", "s252", "s253", "s254", "s255", "s256", "s257", "s258", "s259", "s260", "s261", "s262", "s263", "s264", "s265", "s266", "s267", "s268", "s269", "s270", "s271", "s272", "s273", "st01", "st02", "st03", "st04", "st05", "st06", "st07", "st08", "st09", "st10", "st100", "st101", "st102", "st103", "st104", "st105", "st106", "st107", "st108", "st109", "st11", "st110", "st111", "st112", "st113", "st114", "st115", "st116", "st117", "st118", "st12", "st13", "st14", "st15", "st16", "st17", "st18", "st19", "st20", "st21", "st22", "st23", "st24", "st25", "st26", "st27", "st28", "st29", "st30", "st31", "st32", "st33", "st34", "st35", "st36", "st37", "st38", "st39", "st40", "st41", "st42", "st43", "st44", "st45", "st46", "st47", "st48", "st49", "st50", "st51", "st52", "st53", "st54", "st55", "st56", "st57", "st58", "st59", "st60", "st61", "st62", "st63", "st64", "st65", "st66", "st67", "st68", "st69", "st70", "st71", "st72", "st73", "st74", "st75", "st76", "st77", "st78", "st79", "st80", "st81", "st82", "st83", "st84", "st85", "st86", "st87", "st88", "st89", "st90", "st91", "st92", "st93", "st94", "st95", "st96", "st97", "st98", "st99"]),has3=id=>STK3_ART.has(id);
+const STK3_ART=new Set(["g01", "g02", "g03", "g04", "g05", "g06", "g07", "g08", "g09", "g10", "g11", "g12", "g13", "g14", "g15", "g16", "g17", "g18", "g19", "g20", "g21", "g22", "g23", "g24", "g25", "g26", "g27", "g28", "g29", "g30", "s025", "s026", "s027", "s028", "s029", "s030", "s031", "s032", "s033", "s034", "s035", "s036", "s037", "s038", "s039", "s040", "s041", "s042", "s043", "s044", "s045", "s046", "s047", "s048", "s049", "s050", "s051", "s052", "s053", "s054", "s055", "s056", "s057", "s058", "s059", "s060", "s061", "s062", "s063", "s064", "s065", "s066", "s067", "s068", "s069", "s070", "s071", "s072", "s073", "s074", "s075", "s076", "s077", "s078", "s079", "s080", "s081", "s082", "s083", "s084", "s085", "s086", "s087", "s088", "s089", "s090", "s091", "s092", "s093", "s094", "s095", "s096", "s097", "s098", "s099", "s100", "s101", "s102", "s103", "s104", "s105", "s106", "s107", "s108", "s109", "s110", "s111", "s112", "s113", "s114", "s115", "s116", "s117", "s118", "s119", "s120", "s121", "s122", "s123", "s124", "s125", "s126", "s127", "s128", "s129", "s130", "s131", "s132", "s133", "s134", "s135", "s136", "s137", "s138", "s139", "s140", "s141", "s142", "s143", "s144", "s145", "s146", "s147", "s148", "s149", "s150", "s151", "s152", "s153", "s154", "s155", "s156", "s157", "s158", "s159", "s160", "s161", "s162", "s163", "s164", "s165", "s166", "s167", "s168", "s169", "s170", "s171", "s172", "s173", "s174", "s175", "s176", "s177", "s178", "s179", "s180", "s181", "s182", "s183", "s184", "s185", "s186", "s187", "s188", "s189", "s190", "s191", "s192", "s193", "s194", "s195", "s196", "s197", "s198", "s199", "s200", "s201", "s202", "s203", "s204", "s205", "s206", "s207", "s208", "s209", "s210", "s211", "s212", "s213", "s214", "s215", "s216", "s217", "s218", "s219", "s220", "s221", "s222", "s223", "s224", "s225", "s226", "s227", "s228", "s229", "s230", "s231", "s232", "s233", "s234", "s235", "s236", "s237", "s238", "s239", "s240", "s241", "s242", "s243", "s244", "s245", "s246", "s247", "s248", "s249", "s250", "s251", "s252", "s253", "s254", "s255", "s256", "s257", "s258", "s259", "s260", "s261", "s262", "s263", "s264", "s265", "s266", "s267", "s268", "s269", "s270", "s271", "s272", "s273", "s274", "st01", "st02", "st03", "st04", "st05", "st06", "st07", "st08", "st09", "st10", "st100", "st101", "st102", "st103", "st104", "st105", "st106", "st107", "st108", "st109", "st11", "st110", "st111", "st112", "st113", "st114", "st115", "st116", "st117", "st118", "st12", "st13", "st14", "st15", "st16", "st17", "st18", "st19", "st20", "st21", "st22", "st23", "st24", "st25", "st26", "st27", "st28", "st29", "st30", "st31", "st32", "st33", "st34", "st35", "st36", "st37", "st38", "st39", "st40", "st41", "st42", "st43", "st44", "st45", "st46", "st47", "st48", "st49", "st50", "st51", "st52", "st53", "st54", "st55", "st56", "st57", "st58", "st59", "st60", "st61", "st62", "st63", "st64", "st65", "st66", "st67", "st68", "st69", "st70", "st71", "st72", "st73", "st74", "st75", "st76", "st77", "st78", "st79", "st80", "st81", "st82", "st83", "st84", "st85", "st86", "st87", "st88", "st89", "st90", "st91", "st92", "st93", "st94", "st95", "st96", "st97", "st98", "st99"]),has3=id=>STK3_ART.has(id);
 SHZ.forEach(s=>{if(!s[6])s[6]='classic'});SHZ.push(...SHZ3.filter(s=>has3(s[0])));
 Object.assign(I18N.en,{pg_gold:'Gold',hint_gold:'A legendary feat',sbRar_g:'Gold',sec_classic:'Classics',sec_short:'Short stories',stCh:'Chapter {n}',
   sbToc:'Contents',sbWhole:'The whole chapter',stNext:'Next part: win {n} more levels',stNext1:'Next part: win 1 more level',stKeep:'Keep playing to see what happens next',stNew:'A new story card!',
@@ -11368,6 +11389,96 @@ function bgPreview(id){
 /* ---------- lobby badge: new backgrounds show on the shop button (set before v55 copies the badges to the tab bar) ---------- */
 {const _ul=updateLobby;updateLobby=function(){const b=document.getElementById('lobShop');if(b){let d=b.querySelector('.bg-dot');const n=bgUnseen();
   if(n&&!d){d=document.createElement('i');d.className='badge bg-dot';b.appendChild(d)}if(d){if(n)d.textContent=n;else d.remove()}}return _ul.apply(this,arguments)}}
+
+/* ===== v73: GIFT CODES (Tzach, Oct 26: "a place to type a coupon code that gives you gifts, so we can treat people now and then").
+   Settings → Gift code. Works offline (no network call, nothing leaves the device): the gift is written INSIDE the code and
+   the code carries a 24-bit signature, so new codes never need a store update. Make codes with tools/coupons/make.py
+   (same format as cpDecode below). Each code works once per device (progress.coupon.used). Named codes (CP_NAMED) ship
+   with the build. The first code ever redeemed also gives album sticker s274 (once its art is in). ===== */
+Object.assign(I18N.en,{cpRow:'Gift code',cpEnter:'Enter',cpTitle:'Gift code',cpSub:'Got a secret code? Type it here for a gift!',cpGo:'Get my gift!',
+  cpBad:'Hmm, that code doesn\'t work. Check the letters and try again.',cpUsed:'You already got the gift from this code.',cpOld:'This code has expired.',
+  cpWait:'Too many tries. Wait a minute and try again.',cpYay:'Your gift!',cpCollect:'Collect!',cpPacks:'sticker packs',cpGPacks:'golden packs',cpCookies:'cookies',cpEgg:'egg',cpBoost:'of each booster'});
+Object.assign(I18N.he,{cpRow:'קוד מתנה',cpEnter:'הכנסה',cpTitle:'קוד מתנה',cpSub:'יש לך קוד סודי? כתבו אותו כאן וקבלו מתנה!',cpGo:'לקבל מתנה!',
+  cpBad:'אופס, הקוד לא עובד. בדקו את האותיות ונסו שוב.',cpUsed:'כבר קיבלת את המתנה מהקוד הזה.',cpOld:'הקוד הזה כבר לא בתוקף.',
+  cpWait:'יותר מדי ניסיונות. חכו דקה ונסו שוב.',cpYay:'המתנה שלך!',cpCollect:'לקחת!',cpPacks:'חבילות מדבקות',cpGPacks:'חבילות זהב',cpCookies:'עוגיות',cpEgg:'ביצה',cpBoost:'מכל בוסטר'});
+
+// ---- code format (keep in sync with tools/coupons/make.py) ----
+// 12 Crockford base-32 chars = 60 bits = 36 payload bits + 24 signature bits (first 3 bytes of HMAC-SHA256(key, payload as 5 bytes))
+// payload, high bit first: ver 2 | coins 4 | boosters 3 (n of each) | packs 3 | golden packs 2 | egg 2 (c r g) | cookies 3 | expiry 9 (weeks after CP_T0, 0 = never) | serial 8
+const CP_COINS=[0,50,100,150,200,300,500,750,1000,1500,2000,3000,5000,7500,10000,20000],CP_COOK=[0,3,5,10,15,20,30,50],CP_EGG=[null,'c','r','g'];
+const CP_T0=Date.UTC(2026,9,26),CP_ABC='0123456789ABCDEFGHJKMNPQRSTVWXYZ';
+const CP_NAMED={SHARLIZ:{c:300,pk:1}};   // easy codes for posts; changing these needs a new build
+const CP_K=[0xd4,0x47,0xa8,0x7c,0x93,0x63,0x1c,0xa1,0x68,0x66,0x52,0x7f,0x03,0x1b,0x21,0x74].map((b,i)=>b^((i*73+41)&255));
+function cpSha(bytes){const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19],L=bytes.length,n=((L+9+63)>>6)<<6,m=new Uint8Array(n);m.set(bytes);m[L]=0x80;
+  const bl=L*8;m[n-4]=bl>>>24;m[n-3]=bl>>>16&255;m[n-2]=bl>>>8&255;m[n-1]=bl&255;const w=new Array(64),r=(x,k)=>x>>>k|x<<(32-k);
+  for(let o=0;o<n;o+=64){for(let i=0;i<16;i++)w[i]=m[o+i*4]<<24|m[o+i*4+1]<<16|m[o+i*4+2]<<8|m[o+i*4+3];
+    for(let i=16;i<64;i++){const a=w[i-15],b=w[i-2];w[i]=(w[i-16]+(r(a,7)^r(a,18)^a>>>3)+w[i-7]+(r(b,17)^r(b,19)^b>>>10))|0}
+    let [a,b,c,d,e,f,g,h]=H;for(let i=0;i<64;i++){const t1=(h+(r(e,6)^r(e,11)^r(e,25))+(e&f^~e&g)+K[i]+w[i])|0,t2=((r(a,2)^r(a,13)^r(a,22))+(a&b^a&c^b&c))|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0}
+    H[0]=H[0]+a|0;H[1]=H[1]+b|0;H[2]=H[2]+c|0;H[3]=H[3]+d|0;H[4]=H[4]+e|0;H[5]=H[5]+f|0;H[6]=H[6]+g|0;H[7]=H[7]+h|0}
+  const out=new Uint8Array(32);H.forEach((v,i)=>{out[i*4]=v>>>24;out[i*4+1]=v>>>16&255;out[i*4+2]=v>>>8&255;out[i*4+3]=v&255});return out}
+function cpMac(msg){const k=new Uint8Array(64);k.set(CP_K);const ip=new Uint8Array(64+msg.length),op=new Uint8Array(96);
+  for(let i=0;i<64;i++){ip[i]=k[i]^0x36;op[i]=k[i]^0x5c}ip.set(msg,64);op.set(cpSha(ip),64);return cpSha(op)}
+function cpNorm(s){return String(s||'').toUpperCase().replace(/[\s\-_.]/g,'').replace(/O/g,'0').replace(/[IL]/g,'1')}
+// → {gift, exp, key} or {err:'bad'|'old'}
+function cpDecode(raw){const s=cpNorm(raw),nm=String(raw||'').toUpperCase().replace(/[\s\-_.]/g,'');
+  if(CP_NAMED[nm])return {gift:CP_NAMED[nm],key:'n:'+nm};
+  if(s.length!==12||[...s].some(ch=>CP_ABC.indexOf(ch)<0))return {err:'bad'};
+  let bits='';for(const ch of s)bits+=CP_ABC.indexOf(ch).toString(2).padStart(5,'0');
+  const pay=bits.slice(0,36),sig=bits.slice(36),msg=new Uint8Array(5),pb=('0000'+pay);
+  for(let i=0;i<5;i++)msg[i]=parseInt(pb.slice(i*8,i*8+8),2);
+  const mac=cpMac(msg),ms=[mac[0],mac[1],mac[2]].map(b=>b.toString(2).padStart(8,'0')).join('');
+  if(ms!==sig)return {err:'bad'};
+  let p=0;const take=n=>{const v=parseInt(pay.slice(p,p+n),2);p+=n;return v};
+  const ver=take(2);if(ver!==1)return {err:'bad'};
+  const g={c:CP_COINS[take(4)],b:take(3),pk:take(3),gpk:take(2),egg:CP_EGG[take(2)],ck:CP_COOK[take(3)]},wk=take(9);take(8);
+  if(wk&&Date.now()>CP_T0+wk*7*864e5)return {err:'old'};
+  return {gift:g,key:'s:'+s}}
+function cpState(){const C=progress.coupon=progress.coupon||{};C.used=C.used||{};C.n=C.n||0;return C}
+function cpGive(g){const W=wallet();if(g.c)W.coins+=g.c;
+  if(g.b)['slow','laser','shield','heart'].forEach(b=>W.inv[b]=(W.inv[b]||0)+g.b);
+  if(g.ck&&typeof nest==='function')nest().treats+=g.ck;
+  // packs + egg pop their own 'you got' notes, so they are handed over when the gift card closes (cpPend; kept in the save until then)
+  if(g.pk||g.gpk||g.egg)cpState().pend={pk:g.pk,gpk:g.gpk,egg:g.egg};
+  saveProgress();
+  if(g.c){sfx.coin(4);coinShower(g.c)}else sfx.coin(2);
+  try{sfx.flourish(2)}catch(e){}updateWalletUI();try{updateLobby()}catch(e){}}
+// the album sticker for the first gift code (it shows up by itself once art/stk_s274.webp is in)
+function cpPend(){const C=cpState(),P=C.pend;if(!P)return;delete C.pend;saveProgress();
+  if(P.pk&&typeof sbGive==='function')sbGive(P.pk);if(P.gpk&&typeof sbGive==='function')sbGive(P.gpk,1);
+  if(P.egg&&typeof eggGive==='function')eggGive(P.egg)}
+function cpSticker(){try{const C=cpState();if(!C.n||C.stk||typeof has3!=='function'||!has3('s274'))return;const D=sbData();D.got.s274=(D.got.s274||0)+1;C.stk=1;saveProgress();try{stkBadge()}catch(e){}
+  const s=SHZ.find(x=>x[0]==='s274');if(s)noteToast((lang==='he'?s[3]:s[2])+' ★')}catch(e){}}
+let CPV={txt:'',msg:'',err:0,gift:null};
+function cpTry(){const C=cpState(),now=Date.now();
+  if(C.lock&&now<C.lock){CPV.msg=t('cpWait');CPV.err=1;return}
+  const r=cpDecode(CPV.txt);
+  if(r.err){C.miss=(C.miss||0)+1;if(C.miss>=8){C.miss=0;C.lock=now+60000}saveProgress();CPV.msg=t(r.err==='old'?'cpOld':'cpBad');CPV.err=1;vib(40);return}
+  if(C.used[r.key]){CPV.msg=t('cpUsed');CPV.err=1;return}
+  C.used[r.key]=now;C.n++;C.miss=0;cpGive(r.gift);CPV.gift=r.gift;CPV.msg='';CPV.err=0}
+function cpTiles(g){const L=[];const add=(img,big,small)=>L.push({img,big,small});
+  if(g.c)add('ic_coin',g.c,'');if(g.b)['slow','laser','shield','heart'].forEach(b=>add('ic_'+b,'×'+g.b,''));
+  if(g.pk)add('sb_pack','×'+g.pk,t('cpPacks'));if(g.gpk)add('sb_gpack','×'+g.gpk,t('cpGPacks'));
+  if(g.egg)add('egg_'+g.egg,'×1',t('cpEgg'));if(g.ck)add('ns_cookie','×'+g.ck,t('cpCookies'));return L}
+function openCoupon(){sfx.click();CPV={txt:'',msg:'',err:0,gift:null};
+  showOverlay(()=>{const won=CPV.gift;return {title:won?t('cpYay'):t('cpTitle'),extra:card=>{
+    const box=document.createElement('div');box.className='cp-box'+(won?' won':'');
+    if(won){const g=document.createElement('div');g.className='cp-gifts';
+      cpTiles(won).forEach(T=>{const el=document.createElement('div');el.className='cp-tile';el.innerHTML=`<img src="art/${T.img}.webp" alt=""><b></b><small></small>`;el.querySelector('b').textContent=T.big;el.querySelector('small').textContent=T.small;g.appendChild(el)});
+      box.innerHTML='<img class="cp-chest" src="art/ic_chest_open.webp" alt="">';box.appendChild(g)}
+    else{box.innerHTML='<img class="cp-ic" src="art/ic_gift.webp" alt=""><p class="cp-sub"></p><input class="cp-in" maxlength="20" autocomplete="off" autocorrect="off" autocapitalize="characters" spellcheck="false" enterkeyhint="go" dir="ltr" placeholder="XXXX-XXXX-XXXX"><p class="cp-msg" aria-live="polite"></p>';
+      box.querySelector('.cp-sub').textContent=t('cpSub');const inp=box.querySelector('.cp-in'),msg=box.querySelector('.cp-msg');inp.value=CPV.txt;msg.textContent=CPV.msg;msg.classList.toggle('err',!!CPV.err);
+      inp.oninput=()=>{CPV.txt=inp.value;if(CPV.msg){CPV.msg='';msg.textContent=''}};
+      inp.onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();const b=document.querySelector('#card .cp-go');if(b)b.click()}}}
+    card.appendChild(box)},
+    actions:won?[{label:t('cpCollect'),primary:true,fn:()=>{hideOverlay();setTimeout(()=>{cpPend();cpSticker()},250)}}]
+      :[{label:t('cpGo'),primary:true,fn:()=>{const inp=document.querySelector('#card .cp-in');if(inp)CPV.txt=inp.value;if(!cpNorm(CPV.txt))return;cpTry();rerenderOverlay();cpMark()}},
+        {label:t('close'),fn:()=>{hideOverlay();openSettings()}}]}},true);cpMark()}
+// tag the primary button so Enter on the keyboard can press it
+function cpMark(){const all=[...document.querySelectorAll('#card button')];const go=all.find(x=>x.textContent.trim()===t('cpGo'));if(go)go.classList.add('cp-go')}
+{const _sr3=settingsRows;settingsRows=function(card){_sr3(card);if(state==='paused')return;
+  const r=document.createElement('div');r.className='opt-row';const l=document.createElement('span');l.textContent=t('cpRow');const b=document.createElement('button');b.className='buy';b.textContent=t('cpEnter');b.onclick=openCoupon;r.appendChild(l);r.appendChild(b);card.appendChild(r)}}
+cpPend();cpSticker();   // a gift card closed by quitting the app
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});

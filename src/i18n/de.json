@@ -1056,7 +1056,23 @@
   "sp_fairy": "Feenwald",
   "sp_aurora": "Polarlicht-Palast",
   "sp_pirate": "Piratenschiff",
-  "sp_sakura": "Kirschblüten-Garten"
+  "sp_sakura": "Kirschblüten-Garten",
+  "cpRow": "Geschenkcode",
+  "cpEnter": "Eingeben",
+  "cpTitle": "Geschenkcode",
+  "cpSub": "Du hast einen Geheimcode? Tipp ihn hier ein und hol dir ein Geschenk!",
+  "cpGo": "Geschenk holen!",
+  "cpBad": "Hmm, der Code funktioniert nicht. Prüf die Buchstaben und versuch es nochmal.",
+  "cpUsed": "Das Geschenk von diesem Code hast du schon bekommen.",
+  "cpOld": "Dieser Code ist abgelaufen.",
+  "cpWait": "Zu viele Versuche. Warte eine Minute und versuch es nochmal.",
+  "cpYay": "Dein Geschenk!",
+  "cpCollect": "Einsammeln!",
+  "cpPacks": "Stickerpacks",
+  "cpGPacks": "goldene Packs",
+  "cpCookies": "Kekse",
+  "cpEgg": "Ei",
+  "cpBoost": "von jedem Booster"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -2098,6 +2114,8 @@
   "Home sweet home": "Trautes Heim",
   "My house, my sofa, my rules!": "Mein Haus, mein Sofa, meine Regeln!",
   "New backdrop": "Neuer Hintergrund",
-  "Ta-da! Look what's behind me now!": "Tadaa! Schau mal, was jetzt hinter mir ist!"
+  "Ta-da! Look what's behind me now!": "Tadaa! Schau mal, was jetzt hinter mir ist!",
+  "Secret code": "Geheimcode",
+  "Psst... I know the magic word!": "Psst... ich kenne das Zauberwort!"
  }
 }

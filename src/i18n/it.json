@@ -1056,7 +1056,23 @@
   "sp_fairy": "Bosco delle fate",
   "sp_aurora": "Palazzo dell’aurora",
   "sp_pirate": "Nave pirata",
-  "sp_sakura": "Giardino dei ciliegi"
+  "sp_sakura": "Giardino dei ciliegi",
+  "cpRow": "Codice regalo",
+  "cpEnter": "Inserisci",
+  "cpTitle": "Codice regalo",
+  "cpSub": "Hai un codice segreto? Scrivilo qui e ricevi un regalo!",
+  "cpGo": "Voglio il regalo!",
+  "cpBad": "Mmm, questo codice non funziona. Controlla le lettere e riprova.",
+  "cpUsed": "Hai già ricevuto il regalo di questo codice.",
+  "cpOld": "Questo codice è scaduto.",
+  "cpWait": "Troppi tentativi. Aspetta un minuto e riprova.",
+  "cpYay": "Il tuo regalo!",
+  "cpCollect": "Prendi!",
+  "cpPacks": "bustine di adesivi",
+  "cpGPacks": "bustine d'oro",
+  "cpCookies": "biscotti",
+  "cpEgg": "uovo",
+  "cpBoost": "di ogni potenziamento"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",
@@ -2098,6 +2114,8 @@
   "Home sweet home": "Casa dolce casa",
   "My house, my sofa, my rules!": "La mia casa, il mio divano, le mie regole!",
   "New backdrop": "Nuovo sfondo",
-  "Ta-da! Look what's behind me now!": "Ta-dà! Guarda cosa c’è dietro di me!"
+  "Ta-da! Look what's behind me now!": "Ta-dà! Guarda cosa c’è dietro di me!",
+  "Secret code": "Codice segreto",
+  "Psst... I know the magic word!": "Psst... conosco la parola magica!"
  }
 }

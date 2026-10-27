@@ -1056,7 +1056,23 @@
   "sp_fairy": "妖精の森",
   "sp_aurora": "オーロラ宮殿",
   "sp_pirate": "海賊船",
-  "sp_sakura": "桜の庭"
+  "sp_sakura": "桜の庭",
+  "cpRow": "ギフトコード",
+  "cpEnter": "入力",
+  "cpTitle": "ギフトコード",
+  "cpSub": "ひみつのコードを持ってる？ここに入力してプレゼントをもらおう！",
+  "cpGo": "プレゼントをもらう！",
+  "cpBad": "うーん、このコードは使えないよ。文字を確かめてもう一度ためしてね。",
+  "cpUsed": "このコードのプレゼントはもうもらったよ。",
+  "cpOld": "このコードは期限切れです。",
+  "cpWait": "ためしすぎだよ。1分待ってからもう一度ためしてね。",
+  "cpYay": "プレゼントだよ！",
+  "cpCollect": "受け取る！",
+  "cpPacks": "ステッカーパック",
+  "cpGPacks": "ゴールドパック",
+  "cpCookies": "クッキー",
+  "cpEgg": "たまご",
+  "cpBoost": "各ブースター"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
@@ -2098,6 +2114,8 @@
   "Home sweet home": "わが家がいちばん",
   "My house, my sofa, my rules!": "わたしの家、わたしのソファ、わたしのルール！",
   "New backdrop": "新しい背景",
-  "Ta-da! Look what's behind me now!": "じゃーん！うしろを見て！"
+  "Ta-da! Look what's behind me now!": "じゃーん！うしろを見て！",
+  "Secret code": "ひみつのコード",
+  "Psst... I know the magic word!": "ないしょ…まほうの言葉を知ってるの！"
  }
 }
