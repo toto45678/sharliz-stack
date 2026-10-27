@@ -170,9 +170,11 @@ function spDrawBoss(g,B,T){if(B.own){const im=hzPic('sp_help_'+B.sid),s=B.s;if(!
 /* enemy shots + rocks as pictures (Tzach, Oct 27: 'graphics for everything that flies at you'): sp_eb_<zap|goo|fire|star> for the monsters' shots,
    sp_eb_<sid> for that world's big helper (else the generic one), sp_rock_<sid> / sp_rock_1..3 for rocks. Code shapes until the art exists. */
 const SP_EBK={'#ff5ad0':'zap','#ff8a3d':'fire','#ffd23f':'star'};
-function spEbPic(g,G,b){const k=b.goo?'goo':SP_EBK[b.c]||'zap',n=(b.bs&&SP_ART.includes('sp_eb_'+G.sid))?'sp_eb_'+G.sid:'sp_eb_'+k;if(!SP_ART.includes(n))return false;const im=hzPic(n);if(!im)return false;
+// per-world art is drawn per BASE world (graphics: farmN/farmS use sp_eb_farm / sp_rock_farm); own-sid art wins when it exists
+function spWArt(pre,sid){if(!sid)return null;if(SP_ART.includes(pre+sid))return pre+sid;const b=sid.replace(/[NS]$/,'');return SP_ART.includes(pre+b)?pre+b:null}
+function spEbPic(g,G,b){const k=b.goo?'goo':SP_EBK[b.c]||'zap',n=(b.bs&&spWArt('sp_eb_',G.sid))||'sp_eb_'+k;if(!SP_ART.includes(n))return false;const im=hzPic(n);if(!im)return false;
   const S=b.r*4.2,a=Math.atan2(b.vy,b.vx)-Math.PI/2;g.save();g.translate(b.x,b.y);g.rotate(k==='star'?(G.el||0)*6:a);g.drawImage(im,-S/2,-S/2*im.height/im.width,S,S*im.height/im.width);g.restore();return true}
-function spRockPic(g,e){const sid=SPG&&SPG.sid,n=sid&&SP_ART.includes('sp_rock_'+sid)?'sp_rock_'+sid:'sp_rock_'+(1+(e.pts.length%3));if(!SP_ART.includes(n))return false;const im=hzPic(n);if(!im)return false;
+function spRockPic(g,e){const n=spWArt('sp_rock_',SPG&&SPG.sid)||'sp_rock_'+(1+(e.pts.length%3));if(!SP_ART.includes(n))return false;const im=hzPic(n);if(!im)return false;
   const S=e.r*2.3;g.save();g.translate(e.x,e.y);g.rotate(e.rot);if(e.hit>0)g.globalAlpha=.75;g.drawImage(im,-S/2,-S/2,S,S);g.restore();return true}
 function spRock(g,e){if(spRockPic(g,e))return;g.save();g.translate(e.x,e.y);g.rotate(e.rot);g.fillStyle=e.hit>0?'#d8c8b8':'#8a7a6e';g.strokeStyle='#201c24';g.lineWidth=3;g.beginPath();e.pts.forEach((p,i)=>{const a=i/e.pts.length*6.283;g.lineTo(Math.cos(a)*e.r*p,Math.sin(a)*e.r*p)});g.closePath();g.fill();g.stroke();
   g.fillStyle='rgba(0,0,0,.18)';g.beginPath();g.arc(e.r*.25,-e.r*.2,e.r*.22,0,7);g.arc(-e.r*.3,e.r*.25,e.r*.15,0,7);g.fill();g.restore()}
