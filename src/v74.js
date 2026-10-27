@@ -1,4 +1,4 @@
-/* ===== v73: CHRISTMAS EVENT (Tzach, Oct 27: "Christmas is coming, its mini-game should open on the right date", then "it must be much
+/* ===== v74: CHRISTMAS EVENT (Tzach, Oct 27: "Christmas is coming, its mini-game should open on the right date", then "it must be much
    harder, or open a few tries a day with an option to buy more"; on a card he chose both) =====
    Dec 15-26 on the v52 event system: the day snow world (boss Yeti Freezy, in a Santa hat on the path), candy canes, 4 items sold only here.
    HARDER: 60% of the way to the harder levels-mode DIFF (E.hard → dfMix: faster swing, narrower perfect), tiers 1.5 → 2.3 (E.et → etOf) and
@@ -82,7 +82,7 @@ function evPrizeRow(E,got){const d=document.createElement('div');d.className='ev
   const r=_f.apply(this,arguments);
   try{const body=document.querySelector('#card .card-body.ev-res');
     if(first&&evData(E.id).done>=10){evPrizeGive(E);saveProgress();if(body){const p=evPrizeRow(E,true);p.classList.add('ev-new');const at=body.querySelector('.ev-rows');body.insertBefore(p,at);sfx.flourish&&sfx.flourish(4)}}
-    if(E&&E.tries&&!won&&body){const p=document.createElement('p');p.className='ev-tryleft';p.textContent=t('evTryLeft',{n:evTryN(E)});const al=body.querySelector('.ev-almost');if(al)al.after(p);else body.prepend(p)}}catch(e){console.warn('evFinish v73',e)}
+    if(E&&E.tries&&!won&&body){const p=document.createElement('p');p.className='ev-tryleft';p.textContent=t('evTryLeft',{n:evTryN(E)});const al=body.querySelector('.ev-almost');if(al)al.after(p);else body.prepend(p)}}catch(e){console.warn('evFinish v74',e)}
   return r}}
 /* ---------- candy-cane pattern + snowflake trail ---------- */
 {const _pt=patternTex;patternTex=function(id,base){if(id!=='cane')return _pt(id,base);

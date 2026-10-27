@@ -205,7 +205,7 @@ const SHZ3=[
  ['s202','c','Cozy scarf','צעיף חמים','Scarf, cocoa and falling leaves.','צעיף, שוקו ועלים נושרים.','holiday'],
  ['s203','c','Chilly day','יום קר','Brrr! Look, my breath is a cloud!','ברררר! יוצא לי ענן מהפה!','holiday'],
  ['s204','c','Surprise gift','מתנת הפתעה','It\'s exactly what I wished for!','בדיוק מה שרציתי!','holiday'],
-['s274','r','Christmas surprise','הפתעת כריסמס','Ho ho ho! Look who\'s in the box!','הו הו הו! תראו מי בקופסה!','holiday'],
+['s275','r','Christmas surprise','הפתעת כריסמס','Ho ho ho! Look who\'s in the box!','הו הו הו! תראו מי בקופסה!','holiday'],
  ['s205','r','Balloon trip','טיול בכדור פורח','Hello down there! Bye down there!','שלום למטה! ביי למטה!','travel'],
  ['s206','h','Rocket ride','טיסת טיל','I said a SLOW rocket! SLOW!','ביקשתי טיל איטי! איטי!','travel'],
  ['s207','c','Choo choo!','צ׳ו צ׳ו!','All aboard the jelly express!','כולם לעלות לרכבת הג׳לי!','travel'],

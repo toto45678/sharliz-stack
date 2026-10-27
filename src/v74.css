@@ -1,4 +1,4 @@
-/* ===== v73: Christmas event (snowy night-blue screen, red + green accents) ===== */
+/* ===== v74: Christmas event (snowy night-blue screen, red + green accents) ===== */
 #evhub.ev-christmas{background:radial-gradient(120% 70% at 50% 0%,#2f63c2 0%,#183476 55%,#0b1638 100%)}
 #evhub.ev-christmas::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,24,64,.55),rgba(12,24,64,.1) 30%,rgba(12,24,64,.1) 62%,rgba(10,18,48,.6)),url(art/ev_bg_christmas.webp) center/cover no-repeat;pointer-events:none}
 .ev-christmas .ev-title b{color:#fff;text-shadow:0 0 16px rgba(255,60,80,.85),0 4px 0 #120d2b}
