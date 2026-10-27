@@ -7,6 +7,8 @@
      at level 401. sbChapters() returns the chapters of the open book (SB.book), so numbering and pages are per book.
    - Until a new stage's own pictures ship, its sticker cards / boss picture fall back to the borrowed world's (V81_ART). */
 const V81_ART=new Set(__V81_ART__);
+// own map roads for S5/S6 worlds whose map panel arrived (tools/worlds/road.py traces the white road)
+if(typeof MAPROAD!=='undefined')Object.assign(MAPROAD,__V81_ROADS__);
 const S56_IDS=S56.map(q=>q[0]),S6_IDS=S56_IDS.slice(10),zSeason=sid=>{const z=ZONES.find(z=>(z.sid||z.id)===sid);return z?z.season||1:1};
 
 /* ---------- trophy hats ---------- */
