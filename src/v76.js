@@ -385,15 +385,15 @@ function spTick(G,dt){const W=G.W,H=G.H;G.el+=dt;
     else if(e.sw){e.y+=e.vy*dt;e.x=e.cx+e.side*Math.sin(e.t*1.4+e.ph)*e.amp*.9;e.fireT-=dt;if(e.fireT<=0&&e.y>0&&e.y<H*.6){e.fireT=Math.max(1.1,2.6-G.T*.8);const dx=G.sx-e.x,dy=G.sy-e.y,L=Math.hypot(dx,dy),v=G.u*(.34+G.T*.17);G.eb.push({x:e.x,y:e.y,vx:dx/L*v,vy:dy/L*v,r:G.u*.018,c:'#ff5ad0'})}if(e.y>H+50)e.gone=1}
     else if(e.k==='rock'){e.y+=e.vy*dt;e.x+=e.vx*dt;e.rot+=e.vr*dt;if(e.y>H+60)e.gone=1}
     if(e.k==='mboss'){if(e.y<e.gy)e.y+=(e.gy-e.y+20)*Math.min(1,dt*1.5);e.x=G.W/2+Math.sin(e.t*.8+e.ph)*G.W*.3;e.fireT-=dt;
-      if(e.fireT<=0&&e.y>0){e.fireT=Math.max(1,2-G.T*.45);const a0=Math.atan2(G.sy-e.y,G.sx-e.x),v=G.u*(.32+G.T*.15);for(let i=-1;i<=1;i++){const a=a0+i*.22;G.eb.push({x:e.x,y:e.y+e.r*.5,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff8a3d'})}}}
+      if(e.fireT<=0&&e.y>0){e.fireT=Math.max(1,2-G.T*.45);const a0=Math.atan2(G.sy-e.y,G.sx-e.x),v=G.u*(.32+G.T*.15);for(let i=-1;i<=1;i++){const a=a0+i*.45;G.eb.push({x:e.x,y:e.y+e.r*.5,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff8a3d'})}}}
     if(e.k==='mini'){e.y+=e.vy*dt;e.x+=Math.sin(e.t*3)*e.vx*dt;if(e.y>H+50)e.gone=1}
     if(!e.gone&&Math.hypot(e.x-G.sx,e.y-G.sy)<e.r+G.s*.6){if(G.inv<=0){spHurt(G);e.hp=0;spKill(G,e);e.gone=1}}}
   // boss
   const B=G.boss;if(B){B.t+=dt;if(B.hurt>0)B.hurt-=dt;const ph2=B.hp<B.max/2;
     if(B.in>0){B.in-=dt*.6;B.y+=(H*.2-B.y)*Math.min(1,dt*2.5)}else{B.x=W/2+Math.sin(B.t*(ph2?.95:.65))*Math.max(0,W/2-B.s*.6);B.y=H*.2+Math.sin(B.t*1.3)*G.u*.03;
       B.atk-=dt;if(B.atk<=0){B.atk=Math.max(1,(2.1-G.T*.55)*(ph2?.75:1));const p=B.pat++%4,v=G.u*(.31+G.T*.15)*(ph2?1.12:1);
-        if(p===0){const a0=Math.atan2(G.sy-B.y,G.sx-B.x),n=ph2?7:5;for(let i=0;i<n;i++){const a=a0+(i-(n-1)/2)*.16;G.eb.push({x:B.x,y:B.y+B.s*.3,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff5ad0',bs:1})}}
-        else if(p===1){const n=ph2?12:10,o=B.t;for(let i=0;i<n;i++){const a=o+i/n*6.283;G.eb.push({x:B.x,y:B.y,vx:Math.cos(a)*v*.8,vy:Math.sin(a)*v*.8,r:G.u*.02,c:'#ffd23f',bs:1})}}
+        if(p===0){const a0=Math.atan2(G.sy-B.y,G.sx-B.x),n=ph2?5:3;for(let i=0;i<n;i++){const a=a0+(i-(n-1)/2)*.42;G.eb.push({x:B.x,y:B.y+B.s*.3,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff5ad0',bs:1})}}
+        else if(p===1){const n=ph2?9:7,o=B.t;for(let i=0;i<n;i++){const a=o+i/n*6.283;G.eb.push({x:B.x,y:B.y,vx:Math.cos(a)*v*.8,vy:Math.sin(a)*v*.8,r:G.u*.02,c:'#ffd23f',bs:1})}}
         else if(p===2){for(let i=0;i<6;i++)G.eb.push({x:W*(.1+i*.16)+Math.random()*20,y:-10-i*30,vx:0,vy:v*.9,r:G.u*.024,c:'#7ef05a',goo:1,bs:1})}
         else if(G.en.length<4){for(let i=0;i<3;i++)G.en.push(spMon(G,i+G.k,B.x+(i-1)*B.s*.5,B.y+B.s*.3,{k:'mini',vy:G.u*(.2+G.T*.1),vx:G.u*.6,hp:1,max:1}))}
         if(sfx.ok())tone({f:220,f2:140,d:.18,type:'sawtooth',v:.04,filter:900})}}
@@ -511,7 +511,14 @@ function spBeamSet(G){const o=spWOf(spLv('gun')+G.pw);if(!spBeamW(o.w))return nu
   else if(o.l===2)for(const i of[-1,0,1]){B.push({dx:i*s*.3,a:0,w:G.u*.009,dps:D*2.1});B.push({dx:0,a:-.3-i*.12,w:G.u*.009,dps:D*1.2});B.push({dx:0,a:.3+i*.12,w:G.u*.009,dps:D*1.2})}
   else B.push({dx:0,a:0,w:G.u*.11,dps:D*11,big:1});
   return{o,B}}
-function spBeams(G,dt){if(!G.run||G.over||G.pause)return;const S=spBeamSet(G);G.beams=S;if(!S)return;const x0=G.sx,y0=G.sy-G.s*.9,Bo=G.boss;
+// giant shots and the giant beam (weapon level 4) wipe out the enemy shots they touch (Tzach, Oct 27 10:25: 'else you can't see anything')
+function spEatShots(G){const S=G.beams,gb=S&&S.B.find(b=>b.big),x0=G.sx,y0=G.sy-G.s*.9;let n=0;
+  for(const e of G.eb){if(e.gone)continue;let hit=false;
+    for(const b of G.bul)if(b.big&&Math.hypot(e.x-b.x,e.y-b.y)<Math.max(b.rad||0,G.u*.09)+e.r){hit=true;break}
+    if(!hit&&gb&&e.y<y0&&Math.abs(e.x-(x0+gb.dx))<gb.w*1.9+e.r)hit=true;
+    if(hit){e.gone=1;if(n++<4)spBurst(G,e.x,e.y,['#fff','#7ff3ff'],5)}}
+  if(n)G.eb=G.eb.filter(e=>!e.gone)}
+function spBeams(G,dt){if(!G.run||G.over||G.pause)return;spEatShots(G);const S=spBeamSet(G);G.beams=S;if(!S)return;const x0=G.sx,y0=G.sy-G.s*.9,Bo=G.boss;
   for(const b of S.B){const ax=x0+b.dx,dx=Math.sin(b.a),dy=-Math.cos(b.a);
     const hit=(px,py,r)=>{const vx=px-ax,vy=py-y0,along=vx*dx+vy*dy;if(along<0)return false;return Math.abs(vx*dy-vy*dx)<r+b.w/2};
     for(const e of G.en){if(e.gone||e.hp<=0||(e.f&&e.enter>0&&e.y<0))continue;if(hit(e.x,e.y,e.r)){e.hp-=b.dps*dt;e.hit=.05;if(Math.random()<dt*8)spAnim(G,'sp_hit_',3,e.x,e.y+e.r*.5,G.u*.06,.18);if(e.hp<=0){e.gone=1;spKill(G,e)}}}
