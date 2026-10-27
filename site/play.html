@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Will it hold? – Sharliz Tower</title>
-<meta name="description" content="Will your wobbly Sharliz tower hold? Drop two and see, then find out in the full game, free on iPhone and iPad.">
+<meta name="description" content="Will your wobbly Sharliz tower hold? Tap to drop and find out, then get the full game free on iPhone and iPad.">
 <meta name="robots" content="noindex">
 <meta property="og:title" content="Will it hold? – Sharliz Tower">
 <meta property="og:description" content="Stack wobbly Sharliz and find out if your tower holds. Free on iPhone and iPad.">
@@ -15,63 +15,77 @@
 <meta name="theme-color" content="#230b4f">
 <link rel="icon" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-<link rel="preload" as="image" href="img/hold_poster.webp" fetchpriority="high">
+<link rel="preload" as="image" href="img/world_candy.webp" fetchpriority="high">
 <link rel="preload" href="fonts/titanone-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link href="fonts/fonts.css" rel="stylesheet">
 <style>
-/* ad landing page (Meta Traffic ads can't link straight to the App Store). Final version for week 1-2, frozen until 5.11 (roundtable 27.10, approved by Tzach):
-   opens on a frame of the "Will it hold?" ad, the player drops two Sharliz, then the tower freezes mid-wobble with no answer and the App Store bar pulses.
-   The bar pinned to the bottom is the whole tap target; every store link goes through /go (counts the tap, keeps the campaign token). One screen, no scroll. */
+/* ad landing page (Meta Traffic ads can't link straight to the App Store). The ad asks "Will it hold?", so the page lets people find out:
+   a tap-to-drop mini game (the homepage demo, trimmed) with a flashing "TRY ME!" until 20 drops (Tzach 27.10: the frozen two-drop version felt bad),
+   the full-width App Store bar always on screen (pulses when a round ends), and a bigger badge when the tower falls or reaches 20.
+   Every store link goes through /go (counts the tap, keeps the campaign token). One screen, no scroll. */
 :root{--deep:#230b4f;--yellow:#ffd23f;--soft:#eadffe}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,#5a24b0 0%,var(--deep) 62%);color:#fff;font:700 15px/1.4 Nunito,system-ui,sans-serif;text-align:center;-webkit-tap-highlight-color:transparent}
-.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .wrap{height:100vh;height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:max(10px,env(safe-area-inset-top)) 16px calc(86px + env(safe-area-inset-bottom))}
-.screen{position:relative;flex:0 0 auto;height:calc(100vh - 210px);height:calc(100svh - 210px);max-height:620px;min-height:220px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;
-  background:#e9b6e8;box-shadow:0 0 0 3px rgba(255,255,255,.2),0 16px 36px rgba(0,0,0,.45)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+h1{margin:0;font:400 clamp(26px,7.4vw,34px)/1.05 "Titan One",system-ui,sans-serif;letter-spacing:.3px;color:var(--yellow);text-shadow:0 3px 0 rgba(0,0,0,.35)}
+h1 span{display:block;color:#fff;font-size:.6em;margin-top:2px}
+.screen{position:relative;flex:0 0 auto;height:calc(100vh - 210px);height:calc(100svh - 210px);max-height:620px;min-height:200px;aspect-ratio:9/16;border-radius:22px;overflow:hidden;
+  background:#ffd6ec url(img/world_candy.webp) center 100%/178% auto no-repeat;box-shadow:0 0 0 3px rgba(255,255,255,.2),0 16px 36px rgba(0,0,0,.45)}
 .screen canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:manipulation;cursor:pointer;display:block}
-.snd{position:absolute;right:10px;top:10px;z-index:1;width:36px;height:36px;border-radius:50%;border:0;background:rgba(35,11,79,.7);color:#fff;font-size:16px;cursor:pointer;display:grid;place-items:center}
-/* opening: a frame of the ad video, "Your turn." */
-.intro{position:absolute;inset:0;z-index:2;cursor:pointer;background:#e9b6e8 url(img/hold_poster.webp) center/cover;transition:opacity .25s}
-.intro.gone{opacity:0;pointer-events:none}
-.intro .yt{position:absolute;left:0;right:0;bottom:12%;font:400 30px/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100vh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100svh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 #7a1d55,0 0 14px rgba(0,0,0,.45)}
-.intro .yt span{display:block;color:#fff;font-size:.62em;margin-top:6px;animation:pulse 1.2s ease-in-out infinite}
-/* the end: tower frozen mid-wobble, no answer */
-.cap{position:absolute;left:0;right:0;top:16%;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s;font:400 30px/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100vh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100svh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 #7a1d55,0 0 14px rgba(0,0,0,.45)}
-.cap span{display:block;color:#fff;font-size:.55em;margin-top:8px}
-.cap.on{opacity:1}
+.snd{position:absolute;right:10px;top:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(35,11,79,.7);color:#fff;font-size:16px;cursor:pointer;display:grid;place-items:center}
+.hint{position:absolute;left:10px;right:52px;top:14px;pointer-events:none;white-space:nowrap;text-align:left;font:400 18px "Titan One",sans-serif;font-size:clamp(14px,4.6vw,20px);color:var(--yellow);text-shadow:0 3px 0 #7a1d55,0 0 12px rgba(0,0,0,.4);animation:blink .8s ease-in-out infinite;transform-origin:left center}
+.hint.big{transform-origin:center;left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(35,11,79,.28);font-size:44px;font-size:clamp(30px,11vw,52px);line-height:1}
+.hint.big span{display:block;margin-top:10px;color:#fff;font-size:22px}
+.hint span{display:none}
+@keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.06)}}
 @keyframes pulse{50%{transform:scale(1.07)}}
-.gift{margin:0;max-width:340px;padding:6px 14px;border-radius:16px;background:rgba(255,210,63,.16);border:2px solid rgba(255,210,63,.55);color:#fff;font-size:14px;line-height:1.3}
-.gift b{color:var(--yellow)}
-.fine{margin:0;color:var(--soft);font-size:13px}
-.fine a{color:var(--soft)}
-.side{display:flex;flex-direction:column;align-items:center;gap:8px}
-/* the always-on App Store bar, pinned to the bottom of phone screens; the whole bar is the tap target */
+@media (prefers-reduced-motion:reduce){.hint{animation:none}}
+.over{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:18px;background:rgba(35,11,79,.84)}
+.over.show{display:flex;animation:fade .3s}
+.over.wait{pointer-events:none}   /* the box ignores taps for a moment, so a fast drop-tap doesn't land on the App Store badge by accident */
+@keyframes fade{from{opacity:0}}
+.over .t{font:400 40px/1 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 #7a1d55}
+.over p{margin:0;color:var(--soft)}
+.over .badge img{height:68px}
+.again{font:400 17px "Titan One",sans-serif;color:#fff;background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.3);border-radius:999px;padding:8px 20px;cursor:pointer}
+.badge{display:block;line-height:0;border-radius:12px}
+.badge img{height:58px;width:auto}
+/* the always-on App Store bar, pinned to the bottom of phone screens; the whole bar is the tap target (Tzach found the badge small and hard to tap) */
 .bar{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;align-items:center;justify-content:center;gap:12px;min-height:56px;padding:9px 12px calc(9px + env(safe-area-inset-bottom));background:rgba(20,6,48,.95);border-top:2px solid rgba(255,210,63,.6);box-shadow:0 -8px 24px rgba(0,0,0,.35);color:#fff;text-decoration:none;text-align:left}
 .bar .bt{font:400 14px/1.2 "Titan One",system-ui,sans-serif;text-shadow:0 2px 0 rgba(0,0,0,.35)}
 .bar .bt b{display:block;font-weight:400;font-size:18px;color:var(--yellow)}
 .bar img{height:56px;width:auto;display:block;flex:0 0 auto}
-.bar:focus-visible{outline:3px solid #fff;outline-offset:-5px}
 .bar.go{animation:barpulse 1.1s ease-in-out infinite}
 .bar.go img{animation:pulse 1.1s ease-in-out infinite}
 @keyframes barpulse{50%{background:rgba(70,22,140,.97);border-top-color:var(--yellow);box-shadow:0 -8px 30px rgba(255,210,63,.45)}}
-@media (prefers-reduced-motion:reduce){.intro .yt span,.bar.go,.bar.go img{animation:none}}
+@media (prefers-reduced-motion:reduce){.bar.go,.bar.go img{animation:none}}
+@media (max-width:340px){.bar .bt{font-size:12.5px}.bar .bt b{font-size:16px}.bar img{height:50px}}
+.bar:focus-visible{outline:3px solid #fff;outline-offset:-5px}
+.badge:focus-visible,.again:focus-visible,.desk a:focus-visible{outline:3px solid #fff;outline-offset:4px}
+.fine{margin:0;color:var(--soft);font-size:13.5px}
+.fine span{white-space:nowrap}
+.gift{margin:0;max-width:340px;padding:6px 14px;border-radius:16px;background:rgba(255,210,63,.16);border:2px solid rgba(255,210,63,.55);color:#fff;font-size:14px;line-height:1.3}
+.gift b{color:var(--yellow)}
+.fine a{color:var(--soft)}
+.side{display:flex;flex-direction:column;align-items:center;gap:10px}
 .desk{display:none}
-/* short phone screens (in-app browsers with toolbars): tighter text so the game keeps its size above the bar */
+/* short phone screens (in-app browsers with toolbars): tighter text so the game keeps its size above the App Store bar */
 @media (max-height:620px) and (orientation:portrait){
   .wrap{gap:7px}
-  .side{gap:6px}
+  h1{font-size:24px}h1 span{font-size:.62em}
+  .side{gap:7px}
   .gift{font-size:12.5px;padding:4px 10px}
-  .fine{font-size:12px}
+  .fine{font-size:12px;line-height:1.35}.fine br{display:none}.fine a{margin-left:4px}
   .screen{height:calc(100vh - 182px);height:calc(100svh - 182px)}
 }
-@media (max-width:340px){.bar .bt{font-size:12.5px}.bar .bt b{font-size:16px}.bar img{height:50px}}
-/* computers: scan the QR with a phone instead of tapping the bar */
+/* computers: scan the QR with a phone instead of tapping the badge */
 @media (hover:hover) and (pointer:fine) and (min-width:700px){
-  .wrap{display:grid;grid-template-columns:auto 340px;align-content:center;justify-content:center;column-gap:48px;padding-bottom:12px}
-  .screen{height:calc(100vh - 60px);max-height:660px}
-  .side{gap:14px}
+  .wrap{display:grid;grid-template-columns:auto 340px;grid-template-rows:auto auto;align-content:center;justify-content:center;column-gap:48px;row-gap:14px;padding-bottom:12px}
+  h1{grid-column:2;align-self:end}
+  .screen{grid-column:1;grid-row:1/3;height:calc(100vh - 60px);max-height:660px}
+  .side{grid-column:2;align-self:start;gap:14px}
   .tap{display:none}
   .desk{display:flex;flex-direction:column;align-items:center;gap:8px}
   .desk h2{margin:0 0 6px;font:400 30px/1.1 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 rgba(0,0,0,.35)}
@@ -83,53 +97,61 @@ body{margin:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,#5a2
 }
 /* phones held sideways */
 @media (max-height:520px) and (orientation:landscape){
-  .wrap{flex-direction:row;gap:28px;padding-bottom:12px}
-  .screen{height:calc(100vh - 24px);height:calc(100svh - 24px)}
-  .bar{position:static;min-height:0;padding:0;background:none;border:0;box-shadow:none}
+  .wrap{display:grid;grid-template-columns:auto auto;justify-content:center;align-content:center;column-gap:28px;row-gap:10px;padding-bottom:12px}
+  .hint{font-size:14px}.hint.big{font-size:32px}
+  .bar{position:static;min-height:0;padding:0;background:none;border:0;box-shadow:none}.bar img{height:52px}
+  h1{grid-column:2;align-self:end}.screen{grid-column:1;grid-row:1/3;height:calc(100vh - 24px);height:calc(100svh - 24px)}.side{grid-column:2;align-self:start}
 }
 </style>
 </head>
 <body>
 <main class="wrap">
-  <h1 class="vh">Will it hold? Your turn.</h1>
+  <h1 class="vh">Will it hold? Tap to drop. Find out!</h1>
   <div class="screen">
-    <canvas id="demo" aria-label="Mini game: tap to drop a Sharliz on the tower"></canvas>
+    <canvas id="demo" aria-label="Mini game: tap to drop a Sharliz and stack them as high as you can"></canvas>
     <button class="snd" id="snd" type="button" aria-label="Sound on" aria-pressed="true">🔊</button>
-    <div class="intro" id="intro"><div class="yt">Your turn.<span>Tap to drop!</span></div></div>
-    <div class="cap" id="cap" aria-live="polite">Will it hold?<span>Find out in the game</span></div>
+    <div class="hint big" id="hint">TRY ME!<span>Tap to drop</span></div>
+    <div class="over" id="over">
+      <div class="t" id="overT">NOPE!</div>
+      <p id="overSub">You stacked 0. The full game has 300 levels and 30 bosses.</p>
+      <a class="badge" href="/go?ct=meta_w1_caau"><img src="img/appstore_badge.svg" alt="Download on the App Store" width="174" height="58"></a>
+      <button class="again" id="again" type="button">Try again</button>
+    </div>
   </div>
   <div class="side">
     <a class="bar tap" id="bar" href="/go?ct=meta_w1_caau"><span class="bt"><b>Will it hold?</b>Find out on iPhone. Free</span><img src="img/appstore_badge.svg" alt="Download on the App Store" width="168" height="56"></a>
+    <p class="gift">🎁 <b>Free gift every day</b> – up to 400 coins + a chest in your first week</p>
     <div class="desk">
       <h2>Will it hold?<span>Find out on iPhone. Free</span></h2>
       <div class="qr"><svg role="img" aria-label="QR code: open Sharliz Tower on the App Store" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 37"><path fill="#fff" d="M0 0h37v37h-37z"/><path class="qrline" stroke="#230b4f" d="M2 2.5h7m4 0h1m2 0h2m1 0h5m1 0h1m2 0h7m-33 1h1m5 0h1m1 0h5m2 0h1m2 0h1m1 0h4m2 0h1m5 0h1m-33 1h1m1 0h3m1 0h1m1 0h2m1 0h2m1 0h2m1 0h1m2 0h1m3 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m1 0h2m4 0h1m3 0h1m2 0h1m1 0h3m1 0h1m-33 1h1m1 0h3m1 0h1m3 0h2m1 0h1m1 0h1m1 0h1m2 0h3m1 0h1m1 0h1m1 0h3m1 0h1m-33 1h1m5 0h1m2 0h2m1 0h1m2 0h3m1 0h1m2 0h1m1 0h1m1 0h1m5 0h1m-33 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-24 1h4m1 0h2m1 0h2m1 0h1m1 0h1m1 0h1m-24 1h3m1 0h2m3 0h1m3 0h2m1 0h3m1 0h1m1 0h1m6 0h2m-29 1h1m1 0h1m1 0h1m1 0h5m1 0h1m2 0h2m1 0h3m2 0h2m1 0h2m1 0h1m-31 1h3m1 0h1m1 0h1m2 0h2m1 0h2m1 0h1m2 0h1m2 0h1m1 0h1m1 0h3m1 0h2m-32 1h2m1 0h2m3 0h3m6 0h1m4 0h1m3 0h1m1 0h1m2 0h1m-33 1h2m1 0h1m2 0h1m2 0h1m1 0h4m1 0h1m1 0h1m2 0h2m2 0h1m2 0h2m1 0h2m-33 1h1m4 0h1m1 0h1m2 0h3m5 0h1m1 0h5m6 0h1m-31 1h2m1 0h4m5 0h2m3 0h5m1 0h1m1 0h1m1 0h3m-31 1h1m3 0h1m3 0h4m2 0h1m3 0h1m1 0h2m2 0h3m2 0h2m-30 1h2m3 0h1m1 0h2m2 0h1m2 0h4m2 0h6m1 0h3m-29 1h1m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m1 0h2m1 0h2m-32 1h2m3 0h1m1 0h1m2 0h1m1 0h6m1 0h1m1 0h1m2 0h4m1 0h1m-30 1h1m1 0h1m1 0h1m2 0h1m1 0h1m1 0h3m1 0h1m1 0h1m3 0h2m1 0h2m1 0h1m2 0h2m-33 1h1m1 0h1m1 0h5m1 0h5m1 0h1m1 0h4m5 0h1m1 0h2m1 0h1m-33 1h1m3 0h1m3 0h1m1 0h1m1 0h2m4 0h4m1 0h1m2 0h1m2 0h1m2 0h1m-31 1h2m2 0h2m1 0h2m2 0h2m1 0h1m1 0h1m3 0h2m2 0h3m1 0h3m-32 1h1m1 0h1m4 0h6m5 0h1m2 0h1m1 0h1m1 0h1m1 0h1m3 0h1m-33 1h1m3 0h1m1 0h3m1 0h1m2 0h1m1 0h1m2 0h1m3 0h1m1 0h6m2 0h1m-25 1h1m1 0h8m1 0h1m3 0h2m3 0h2m-30 1h7m2 0h1m1 0h1m2 0h1m1 0h1m2 0h6m1 0h1m1 0h1m-29 1h1m5 0h1m1 0h1m1 0h1m1 0h2m2 0h2m1 0h6m3 0h5m-33 1h1m1 0h3m1 0h1m2 0h1m1 0h1m4 0h3m1 0h9m1 0h2m-32 1h1m1 0h3m1 0h1m1 0h8m2 0h1m1 0h3m4 0h1m1 0h4m-33 1h1m1 0h3m1 0h1m1 0h3m2 0h1m1 0h1m1 0h2m1 0h1m1 0h1m3 0h2m1 0h1m-30 1h1m5 0h1m1 0h4m1 0h1m2 0h1m1 0h1m1 0h1m1 0h1m1 0h5m3 0h1m-33 1h7m2 0h5m3 0h5m1 0h1m4 0h1m1 0h1"/></svg></div>
       <p>Scan with your iPhone camera</p>
       <a href="/go?ct=meta_w1_caau">or open the App Store page</a>
     </div>
-    <p class="gift">🎁 <b>Free gift every day</b> – up to 400 coins + a chest in your first week</p>
     <p class="fine">Free on iPhone &amp; iPad · <a href="privacy.html">Privacy</a></p>
   </div>
 </main>
 <script>
-// campaign token pass-through: /play?ct=<name> sends every store link to /go?ct=<name> (letters, digits, _ and -, max 30); default meta_w1_caau. The QR always carries meta_w1_caau.
+// a different campaign can reuse this page: /play?ct=<name> swaps the token on every store link (letters, digits, _ and -, max 30); the QR always carries meta_w1_caau
 try{var c=new URLSearchParams(location.search).get('ct');if(c&&/^[\w-]{1,30}$/.test(c))document.querySelectorAll('a[href^="/go"]').forEach(function(a){a.href=a.href.replace(/ct=[^&]*/,'ct='+c)})}catch(e){}
 
 // funnel steps for Cloudflare Web Analytics, no cookies: each step loads /p/<step> once per visit in a hidden frame, which counts as a view of that path.
-// started = first tap, stopped = the tower froze after the 2nd Sharliz (the bar starts pulsing), stay5/stay15 = seconds actually on screen. App Store taps are /go.
+// /p/stay5 and /p/stay15 = still here after 5 s / 15 s, started = first drop, stopped = first round over (the tower fell or reached 20), again = first "Try again". App Store taps stay on /go.
 var step=(function(){var sent={};return function(s){if(sent[s])return;sent[s]=1;try{var f=document.createElement('iframe');f.src='/p/'+s;f.title='';f.tabIndex=-1;f.setAttribute('aria-hidden','true');f.style.cssText='position:absolute;width:1px;height:1px;border:0;left:-9px;top:-9px;visibility:hidden';document.body.appendChild(f)}catch(e){}}})();
+// stay steps count seconds the page was actually on screen (not prerendered, not in a background tab)
 var seen=0,seenT=setInterval(function(){if(document.visibilityState!=='visible')return;seen++;if(seen===5)step('stay5');if(seen>=15){step('stay15');clearInterval(seenT)}},1000);
 
-// ---------- mini game: two drops, then the tower freezes mid-wobble ----------
+// ---------- mini game (the homepage demo, trimmed: no best score, no share) ----------
 (function(){
   var cv=document.getElementById('demo'),g=cv.getContext('2d');
-  var W=360,H=640,PW=84,PH=PW*1.2,STEP=PH*.74,BASE_Y=560,DROPS=2;
+  var W=360,H=640,PW=84,PH=PW*1.2,STEP=PH*.74,BASE_Y=560;
   function load(s){var i=new Image();i.src=s;return i}
-  // the opening frame covers the game, so the game art waits for the load event and the page stays fast
-  var bodies=[],hats=[],bg={};
-  function later(){bg=load('img/world_candy.webp');bodies.push(load('img/sh_lulu.webp'),load('img/sh_mimi.webp'));['party','wizard'].forEach(function(h){hats.push(load('img/skin_'+h+'.webp'))})}
+  // the first Sharliz and the backdrop load with the page; the rest wait for the load event so the page stays fast
+  var names=['lulu','mimi','bobby','timmy','nunu'],bodies=[load('img/sh_lulu.webp')],hats=[];
+  var bg=load('img/world_candy.webp');
+  function later(){names.slice(1).forEach(function(n){bodies.push(load('img/sh_'+n+'.webp'))});['party','pirate','wizard','king'].forEach(function(h){hats.push(load('img/skin_'+h+'.webp'))})}
   if(document.readyState==='complete')later();else addEventListener('load',later);
-  var intro=document.getElementById('intro'),cap=document.getElementById('cap'),bar=document.getElementById('bar');
-  var tower=[{x:W/2}],cur,t=0,state='intro',pops=[],lean=0,leanT=0,raf=0;
+  var MAX=20,hint=document.getElementById('hint'),over=document.getElementById('over'),bar=document.getElementById('bar');
+  var tower,cur,cam,camT,t,state,pops,shake,started=false;
   function rr(x,y,w,h,r){g.beginPath();if(g.roundRect)g.roundRect(x,y,w,h,r);else g.rect(x,y,w,h)}   // roundRect is missing on iOS 15
 
   // sounds are synthesized, so nothing extra to download
@@ -148,80 +170,80 @@ var seen=0,seenT=setInterval(function(){if(document.visibilityState!=='visible')
     }catch(e){}
   }
   var sfx={drop:function(){tone(520,380,.12,'triangle',.12)},land:function(n){tone(260+n*18,140+n*10,.16,'sine',.35)},
-    creak:function(){tone(170,120,.5,'triangle',.14);tone(150,95,.6,'sine',.1,.25)}};
+    perfect:function(){tone(880,880,.1,'square',.08);tone(1175,1175,.14,'square',.08,.09);tone(1568,1568,.2,'square',.08,.18)},
+    fail:function(){tone(300,70,.6,'sawtooth',.12)}};
 
-  function fit(){var r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);cv.width=Math.max(1,r.width*d);cv.height=Math.max(1,r.height*d);if(state==='frozen')draw()}
-  function newPiece(){var n=tower.length;return{k:(n-1)%2,hat:n===2?0:-1,x:W/2,y:-cam()+205,vy:0,falling:false,phase:Math.random()*6,spd:1.7,amp:110}}
-  function cam(){return 0}
+  function fit(){var r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);cv.width=Math.max(1,r.width*d);cv.height=Math.max(1,r.height*d)}
+  function newPiece(){var n=tower.length;return{k:n%5,hat:Math.random()<.35?(Math.random()*4|0):-1,x:W/2,y:0,vy:0,falling:false,phase:Math.random()*6,spd:1.6+Math.min(n,20)*.09,amp:110,rot:0}}
+  function reset(){tower=[{x:W/2}];cam=camT=0;t=0;pops=[];shake=0;state='play';cur=newPiece();over.classList.remove('show');bar.classList.remove('go');showHint()}
+  // TRY ME keeps blinking until the 20th drop: big before the first tap, then small with the count
+  function showHint(){var n=tower.length-1;hint.style.display=n>=MAX?'none':'';if(started){hint.classList.remove('big');hint.textContent='TRY ME! '+n+'/'+MAX}}
   function landY(){return BASE_Y-(tower.length-1)*STEP}
   function drop(){
-    if(state==='intro'){state='play';intro.classList.add('gone');step('started')}
-    if(state==='frozen'){nudge();return}
     if(state!=='play'||cur.falling)return;
+    if(!started){started=true;showHint();step('started')}
     cur.falling=true;cur.vy=2;sfx.drop();
   }
-  // both drops land (the offset is kept, capped, so the tower looks shaky); after the 2nd the tower starts to lean, then freezes
   function land(){
-    var topP=tower[tower.length-1],off=Math.max(-PW*.42,Math.min(PW*.42,cur.x-topP.x));
-    tower.push({x:topP.x+off,k:cur.k,hat:cur.hat,squash:1});
-    var n=tower.length-1;sfx.land(n);
-    pops.push({txt:['Nice!','Whoa!'][n-1]||'Wow!',x:W/2,y:landY()-40,life:1});
-    if(n>=DROPS){state='lean';leanT=0;cur=null;setTimeout(sfx.creak,250)}else cur=newPiece();
+    // the first three drops always land (the offset is capped), so a first-timer sees the tower grow before it can wobble over
+    var topP=tower[tower.length-1],off=cur.x-topP.x;
+    if(tower.length<4)off=Math.max(-PW*.42,Math.min(PW*.42,off));
+    if(Math.abs(off)<PW*.55){
+      var perfect=Math.abs(off)<7;
+      tower.push({x:perfect?topP.x:topP.x+off,k:cur.k,hat:cur.hat,squash:1});
+      var n=tower.length-1;showHint();
+      perfect?sfx.perfect():sfx.land(n);
+      pops.push({txt:perfect?'PERFECT!':['Nice!','Great!','Wow!'][Math.random()*3|0],x:W/2,y:landY()-40,life:1,col:perfect?'#ffd23f':'#fff'});
+      camT=Math.max(0,(n-3)*STEP);if(n>=MAX){state='won';setTimeout(gameOver,700)}else cur=newPiece();
+    }else{cur.fallOff=off>0?1:-1;state='fail';shake=12;sfx.fail();setTimeout(gameOver,900)}
   }
-  function stop(){
-    state='frozen';cancelAnimationFrame(raf);
-    cap.classList.add('on');bar.classList.add('go');step('stopped');
+  function gameOver(){
+    var n=tower.length-1;
+    document.getElementById('overT').textContent=n>=MAX?'IT HELD!':n>=8?'WOW!':'NOPE!';
+    document.getElementById('overSub').textContent=(n>=MAX?'All '+MAX+'! ':n>=8?'You stacked '+n+'! ':'It didn’t hold. ')+'The full game has 300 levels and 30 bosses.';
+    state='over';hint.style.display='none';over.classList.add('show','wait');setTimeout(function(){over.classList.remove('wait')},800);bar.classList.add('go');step('stopped');
   }
-  function nudge(){bar.classList.remove('go');void bar.offsetWidth;bar.classList.add('go')}
-  function drawPiece(p,x,y,sq,rot){
+  function drawPiece(p,x,y,sq){
     var img=bodies[p.k]||bodies[0],s=sq||0,w=PW*(1+s*.18),h=PH*(1-s*.15);
-    g.save();g.translate(x,y);if(rot)g.rotate(rot);
-    if(img&&img.complete&&img.naturalWidth)g.drawImage(img,-w/2,-h,w,h);
-    var hi=hats[p.hat];if(hi&&hi.complete&&hi.naturalWidth){var hw=PW*.7,hh=hw*hi.naturalHeight/hi.naturalWidth;g.drawImage(hi,-hw/2,-h-hh*.62,hw,hh)}
-    g.restore();
-  }
-  function draw(){
-    g.setTransform(cv.width/W,0,0,cv.height/H,0,0);
-    var low=[190,228,255],sky=g.createLinearGradient(0,-420,0,0);sky.addColorStop(0,'rgb(120,190,255)');sky.addColorStop(1,'rgb('+low+')');
-    g.fillStyle=sky;g.fillRect(0,0,W,H);
-    if(bg.complete&&bg.naturalWidth){
-      g.drawImage(bg,(W-H)/2,0,H,H);
-      var f=g.createLinearGradient(0,-2,0,H*.5);f.addColorStop(0,'rgba('+low+',1)');f.addColorStop(1,'rgba('+low+',0)');
-      g.fillStyle=f;g.fillRect(0,-2,W,H*.5+2);
-    }
-    g.fillStyle='#e8298a';rr(W/2-80,BASE_Y,160,30,14);g.fill();
-    g.fillStyle='#ff8cc6';rr(W/2-80,BASE_Y,160,12,[14,14,0,0]);g.fill();
-    // the tower: a gentle wobble while playing, then a growing lean that stops at its widest point
-    var n=tower.length,wob=state==='play'||state==='intro'?Math.sin(t*2.2)*Math.min(n,14)*.6:0;
-    for(var i=1;i<n;i++){
-      var p=tower[i];if(p.squash)p.squash*=.85;
-      var k=i/(n-1||1),lx=wob*(i/n)+lean*k*k*50,rot=lean*k*.26;
-      drawPiece(p,p.x+lx,BASE_Y-(i-1)*STEP,p.squash,rot);
-    }
-    if(cur){
-      if(!cur.falling){cur.x=W/2+Math.sin(t*cur.spd+cur.phase)*cur.amp;cur.y=205}
-      if(state==='play'&&!cur.falling){g.strokeStyle='rgba(255,255,255,.6)';g.lineWidth=2;g.setLineDash([4,7]);g.beginPath();g.moveTo(cur.x,cur.y+4);g.lineTo(cur.x,landY()-PH);g.stroke();g.setLineDash([])}
-      drawPiece(cur,cur.x,cur.y);
-    }
-    g.textAlign='center';g.font='28px "Titan One", sans-serif';g.lineWidth=6;g.strokeStyle='#7a1d55';g.lineJoin='round';
-    pops.forEach(function(p){g.globalAlpha=Math.min(1,p.life*2);var y=p.y-(1-p.life)*40;g.strokeText(p.txt,p.x,y);g.fillStyle='#fff';g.fillText(p.txt,p.x,y)});
-    g.globalAlpha=1;
+    if(img.complete&&img.naturalWidth)g.drawImage(img,x-w/2,y-h,w,h);
+    var hi=hats[p.hat];if(hi&&hi.complete&&hi.naturalWidth){var hw=PW*.7,hh=hw*hi.naturalHeight/hi.naturalWidth;g.drawImage(hi,x-hw/2,y-h-hh*.62,hw,hh)}
   }
   function frame(){
-    t+=1/60;
-    if(cur&&cur.falling){cur.vy+=.9;cur.y+=cur.vy;if(cur.y>=landY()){cur.y=landY();land()}}
-    if(state==='lean'){leanT+=1/60;var e=Math.min(1,leanT/1.2);lean=Math.sin(e*Math.PI*2.5)*e;   // sways left-right, growing, and ends at its widest swing
-      if(e>=1)lean=1}
+    t+=1/60;cam+=(camT-cam)*.08;
+    g.setTransform(cv.width/W,0,0,cv.height/H,0,0);
+    // sky gets darker the higher the tower climbs
+    var bgY=cam*.25,k=Math.min(1,cam/1400);function mix(a,b){return Math.round(a+(b-a)*k)}
+    var low=[mix(190,90),mix(228,40),mix(255,160)],top=[mix(120,30),mix(190,10),mix(255,80)];
+    var sky=g.createLinearGradient(0,bgY-420,0,bgY);sky.addColorStop(0,'rgb('+top+')');sky.addColorStop(1,'rgb('+low+')');
+    g.fillStyle=sky;g.fillRect(0,0,W,H);
+    if(bg.complete&&bg.naturalWidth){
+      g.drawImage(bg,(W-H)/2,bgY,H,H);
+      var f=g.createLinearGradient(0,bgY-2,0,bgY+H*.5);f.addColorStop(0,'rgba('+low+',1)');f.addColorStop(1,'rgba('+low+',0)');
+      g.fillStyle=f;g.fillRect(0,bgY-2,W,H*.5+2);
+    }
+    var sx=shake?(Math.random()-.5)*shake:0;shake*=.85;if(shake<.5)shake=0;
+    g.save();g.translate(sx,cam);
+    g.fillStyle='#e8298a';rr(W/2-80,BASE_Y,160,30,14);g.fill();
+    g.fillStyle='#ff8cc6';rr(W/2-80,BASE_Y,160,12,[14,14,0,0]);g.fill();
+    var n=tower.length,wob=Math.sin(t*2.2)*Math.min(n,14)*.6;
+    for(var i=1;i<n;i++){var p=tower[i];if(p.squash)p.squash*=.85;drawPiece(p,p.x+wob*(i/n),BASE_Y-(i-1)*STEP,p.squash)}
+    if(state!=='over'&&state!=='won'){
+      if(!cur.falling){cur.x=W/2+Math.sin(t*cur.spd+cur.phase)*cur.amp;cur.y=-cam+205}
+      else if(state==='play'){cur.vy+=.9;cur.y+=cur.vy;if(cur.y>=landY()){cur.y=landY();land()}}
+      else{cur.vy+=.9;cur.y+=cur.vy;cur.x+=cur.fallOff*3;cur.rot+=cur.fallOff*.08}
+      if(state==='play'&&!cur.falling){g.strokeStyle='rgba(255,255,255,.6)';g.lineWidth=2;g.setLineDash([4,7]);g.beginPath();g.moveTo(cur.x,cur.y+4);g.lineTo(cur.x,landY()-PH);g.stroke();g.setLineDash([])}
+      g.save();g.translate(cur.x,cur.y);g.rotate(cur.rot);drawPiece(cur,0,0);g.restore();
+    }
+    g.textAlign='center';g.font='28px "Titan One", sans-serif';g.lineWidth=6;g.strokeStyle='#7a1d55';g.lineJoin='round';
     pops=pops.filter(function(p){return(p.life-=.02)>0});
-    draw();
-    if(state==='lean'&&leanT>=1.2&&!pops.length){stop();return}
-    raf=requestAnimationFrame(frame);
+    pops.forEach(function(p){g.globalAlpha=Math.min(1,p.life*2);var y=p.y-(1-p.life)*40;g.strokeText(p.txt,p.x,y);g.fillStyle=p.col;g.fillText(p.txt,p.x,y)});
+    g.globalAlpha=1;g.restore();
+    requestAnimationFrame(frame);
   }
-  cur=newPiece();
   cv.addEventListener('pointerdown',function(e){e.preventDefault();drop()});
-  intro.addEventListener('pointerdown',function(e){e.preventDefault();drop()});
   cv.tabIndex=0;cv.addEventListener('keydown',function(e){if(e.code==='Space'||e.code==='Enter'){e.preventDefault();drop()}});
-  addEventListener('resize',fit);fit();raf=requestAnimationFrame(frame);
+  document.getElementById('again').addEventListener('click',function(){step('again');reset()});
+  addEventListener('resize',fit);fit();reset();requestAnimationFrame(frame);
 })();
 </script>
 </body>
