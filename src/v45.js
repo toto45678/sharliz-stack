@@ -2,7 +2,7 @@
    own 2D picture (art/boss_<sid>.webp), own name. bossArt() picks the stage's model when it exists, else the art world's. ===== */
 Object.assign(I18N.en,{bFarmN:'Scarecrow King',bVolcanoN:'Fire Imp',bSpaceN:'Moon Rabbit',bCityS:'Rat King',bSnowS:'Penguin General',bOceanS:'Storm Shark',bClouds:'Angry Unicorn',bDino:'Triceratops'});
 Object.assign(I18N.he,{bFarmN:'מלך הדחלילים',bVolcanoN:'שד האש',bSpaceN:'ארנב הירח',bCityS:'מלך העכברושים',bSnowS:'גנרל הפינגווינים',bOceanS:'כריש הסערה',bClouds:'חד-הקרן הזועם',bDino:'טריצרטופס'});
-const bossArt=zz=>{zz=zz||zone();return zz&&B3D_META[zz.sid]?zz.sid:zz.id};
+const bossArt=zz=>{zz=zz||zone();return zz&&(B3D_META[zz.sid]||window.BOSS_OWN2D&&BOSS_OWN2D.has(zz.sid))?zz.sid:zz.id}; // v81: a new stage with only its own 2D picture shows that picture, not the art world's 3D boss
 // rig per new boss (regions of the normalised mesh: height 1, feet at y=0) + signature attack style (b3Draw: jump/spin/lunge/shake/flap)
 Object.assign(B3D_RIG,{
   farmN:{head:{y0:.66,py:.62,amp:.07},yaw:-.32,bob:.015,atk:'shake'},
