@@ -20,7 +20,7 @@
 <link href="fonts/fonts.css" rel="stylesheet">
 <style>
 /* ad landing page (Meta Traffic ads can't link straight to the App Store). The ad asks "Will it hold?", so the page lets people find out:
-   a tap-to-drop mini game (the homepage demo, trimmed) with a flashing "TRY ME!" until 20 drops (Tzach 27.10: the frozen two-drop version felt bad),
+   a tap-to-drop mini game (the homepage demo, trimmed) with a flashing "TRY ME!" until 20 drops (the limit isn't shown) (Tzach 27.10: the frozen two-drop version felt bad),
    the full-width App Store bar always on screen (pulses when a round ends), and a bigger badge when the tower falls or reaches 20.
    Every store link goes through /go (counts the tap, keeps the campaign token). One screen, no scroll. */
 :root{--deep:#230b4f;--yellow:#ffd23f;--soft:#eadffe}
@@ -176,8 +176,8 @@ var seen=0,seenT=setInterval(function(){if(document.visibilityState!=='visible')
   function fit(){var r=cv.getBoundingClientRect(),d=Math.min(devicePixelRatio||1,2);cv.width=Math.max(1,r.width*d);cv.height=Math.max(1,r.height*d)}
   function newPiece(){var n=tower.length;return{k:n%5,hat:Math.random()<.35?(Math.random()*4|0):-1,x:W/2,y:0,vy:0,falling:false,phase:Math.random()*6,spd:1.6+Math.min(n,20)*.09,amp:110,rot:0}}
   function reset(){tower=[{x:W/2}];cam=camT=0;t=0;pops=[];shake=0;state='play';cur=newPiece();over.classList.remove('show');bar.classList.remove('go');showHint()}
-  // TRY ME keeps blinking until the 20th drop: big before the first tap, then small with the count
-  function showHint(){var n=tower.length-1;hint.style.display=n>=MAX?'none':'';if(started){hint.classList.remove('big');hint.textContent='TRY ME! '+n+'/'+MAX}}
+  // TRY ME keeps blinking until the 20th drop: big before the first tap, then small. No count on screen, so the stop at 20 is a surprise (Tzach 27.10)
+  function showHint(){var n=tower.length-1;hint.style.display=n>=MAX?'none':'';if(started){hint.classList.remove('big');hint.textContent='TRY ME!'}}
   function landY(){return BASE_Y-(tower.length-1)*STEP}
   function drop(){
     if(state!=='play'||cur.falling)return;
