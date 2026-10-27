@@ -43,6 +43,11 @@ Object.assign(I18N.he,{spName:'סיירת החלל',spShort:'חלל',spLvl:'של
   spWin:'שלב החלל עבר!',spLose:'החללית נפגעה!',spCollected:'מטבעות שנאספו',spFirst:'בונוס ניצחון ראשון',spHangar:'המוסך',spRetry:'שוב',
   spTipUp:'טיפ: שדרגו את החללית במוסך',spGoal:'עוברים 4 גלים של מפלצות ומנצחים את {b}',spSt1:'לעבור את שלב החלל',spSt2:'לאבד לכל היותר לב אחד',spSt3:'בלי לאבד לב',spPause:'הפסקה',spResume:'ממשיכים',spLeave:'יוצאים מהטיסה',spHowTo:'גוררים כדי לטוס. החללית יורה לבד!',spLocked:'נפתח בשלב {n}'});
 const SP_ART=__SP_ART__,SP_CAP=80;
+// ship sprites from the graphics department (tools/space/ship_import.py): sp_ship_g<gun 0-5>_<h0|h1|h2|gold>[_l|_r] = the whole ship for that blaster level and hull look,
+// straight / banking left / banking right; its glass dome is drawn empty and SP_DOME[name]={x,y,r} (fractions of the picture width/height) says where the Sharliz sits
+const SP_DOME=__SP_DOME__;
+function spShipPic(o){const h=o.gold?'gold':'h'+Math.min(2,o.hull||0),b='sp_ship_g'+Math.min(5,o.gun||0)+'_'+h,tl=o.tilt||0,v=b+(tl<-.35?'_l':tl>.35?'_r':'');
+  const n=SP_ART.includes(v)?v:SP_ART.includes(b)?b:null;return n&&hzPic(n)?n:null}
 // space levels: the level before every boss, from level 90 on (89, 99, … 299, and on into any later seasons)
 const SP_LVS=[];for(let L=89;L<=TOTAL;L++)if((L-1)%LPZ===LPZ-2)SP_LVS.push(L);
 const SP_N=SP_LVS.length,SP_OPEN=SP_LVS[0];
@@ -74,6 +79,11 @@ function spDrawShip(g,x,y,s,o){const T=o.t||0,K='#201c24';g.save();g.translate(x
   // engine flame
   const fl=(o.flame==null?1:o.flame)*(1+Math.sin(T*40)*.12);{const gr=g.createLinearGradient(0,s*.55,0,s*(1.1+.6*fl));gr.addColorStop(0,'#fff6c2');gr.addColorStop(.35,'#ffb23f');gr.addColorStop(1,'rgba(255,80,60,0)');g.fillStyle=gr;
     g.beginPath();g.moveTo(-s*.2,s*.55);g.quadraticCurveTo(0,s*(1.25+.7*fl),s*.2,s*.55);g.fill();if(o.rainbow){g.globalAlpha=.6;g.fillStyle=`hsl(${(T*300)%360},90%,65%)`;g.beginPath();g.moveTo(-s*.1,s*.6);g.quadraticCurveTo(0,s*(1+.5*fl),s*.1,s*.6);g.fill();g.globalAlpha=1}}
+  const pn=spShipPic(o);if(pn){const im=hzPic(pn),w=s*2.1,h=w*im.naturalHeight/im.naturalWidth,y0=s*.64-h,dm=SP_DOME[pn]||{x:.5,y:.36,r:.13};g.rotate(-(o.tilt||0)*.25+(o.tilt||0)*.08);
+    g.drawImage(im,-w/2,y0,w,h);const cx=(dm.x-.5)*w,cy=y0+dm.y*h,cr=dm.r*w;g.save();g.beginPath();g.arc(cx,cy,cr*.96,0,7);g.clip();g.fillStyle='#2a2060';g.fill();
+    try{const hh=spHero();withCtx(g,cr*.95,()=>drawSharliz(hh,cx,cy+cr*.38,(o.tilt||0)*-.15,o.mood||'happy',{x:(o.tilt||0)*.5,y:-.5},0))}catch(e){}
+    const gr=g.createRadialGradient(cx-cr*.35,cy-cr*.4,cr*.05,cx,cy,cr);gr.addColorStop(0,'rgba(255,255,255,.55)');gr.addColorStop(.5,'rgba(200,230,255,.12)');gr.addColorStop(1,'rgba(150,200,255,.3)');g.fillStyle=gr;g.fillRect(cx-cr,cy-cr,cr*2,cr*2);g.restore();g.restore()}
+  else{
   // wings
   const wc=o.gold?['#ffe98a','#e0a400']:[['#b99bff','#6b3fe0'],['#8fd3ff','#2f7fe0'],['#ff9ad5','#c2309a']][Math.min(2,o.hull||0)];
   for(const d of [-1,1]){const gr=g.createLinearGradient(0,-s*.1,d*s,s*.5);gr.addColorStop(0,wc[0]);gr.addColorStop(1,wc[1]);g.fillStyle=gr;g.strokeStyle=K;g.lineWidth=Math.max(2,s*.07);
@@ -90,11 +100,11 @@ function spDrawShip(g,x,y,s,o){const T=o.t||0,K='#201c24';g.save();g.translate(x
   {const gr=g.createRadialGradient(-cr*.35,cy-cr*.4,cr*.05,0,cy,cr);gr.addColorStop(0,'rgba(255,255,255,.55)');gr.addColorStop(.5,'rgba(200,230,255,.12)');gr.addColorStop(1,'rgba(150,200,255,.3)');g.fillStyle=gr;g.beginPath();g.arc(0,cy,cr,0,7);g.fill()}
   g.strokeStyle='#ffd23f';g.lineWidth=Math.max(2,s*.08);g.beginPath();g.arc(0,cy,cr,0,7);g.stroke();g.strokeStyle=K;g.lineWidth=Math.max(1.5,s*.035);g.beginPath();g.arc(0,cy,cr+s*.05,0,7);g.stroke();
   g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=Math.max(1.5,s*.05);g.beginPath();g.arc(0,cy,cr*.72,-2.6,-1.9);g.stroke();
-  g.restore();
+  g.restore()}
   if(o.drones)for(const d of [-1,1])spDrone(g,x+d*s*1.45,y+s*.15+Math.sin(T*3+d)*s*.08,s*.22);
   if(o.shield>0){g.save();g.globalAlpha=.35+.1*Math.sin(T*6);const gr=g.createRadialGradient(x,y,s*.6,x,y,s*1.35);gr.addColorStop(0,'rgba(120,230,255,0)');gr.addColorStop(1,'rgba(150,240,255,.9)');g.fillStyle=gr;g.beginPath();g.arc(x,y,s*1.35,0,7);g.fill();
     g.globalAlpha=.9;g.fillStyle='#fff6a8';for(let i=0;i<o.shield*3;i++){const a=T*1.5+i*2.09/(o.shield>1?1:1.5);spStar(g,x+Math.cos(a)*s*1.3,y+Math.sin(a)*s*1.3,s*.13)}g.restore()}}
-function spDrone(g,x,y,r){g.save();g.fillStyle='#e8e4f5';g.strokeStyle='#201c24';g.lineWidth=Math.max(1.5,r*.2);g.beginPath();g.arc(x,y,r,0,7);g.fill();g.stroke();g.fillStyle='#4ee6ff';g.beginPath();g.arc(x,y,r*.45,0,7);g.fill();g.restore()}
+function spDrone(g,x,y,r){const im=SP_ART.includes('sp_drone')&&hzPic('sp_drone');if(im){g.drawImage(im,x-r*1.3,y-r*1.3,r*2.6,r*2.6);return}g.save();g.fillStyle='#e8e4f5';g.strokeStyle='#201c24';g.lineWidth=Math.max(1.5,r*.2);g.beginPath();g.arc(x,y,r,0,7);g.fill();g.stroke();g.fillStyle='#4ee6ff';g.beginPath();g.arc(x,y,r*.45,0,7);g.fill();g.restore()}
 function spStar(g,x,y,r){g.beginPath();for(let i=0;i<10;i++){const a=-Math.PI/2+i*Math.PI/5,rr=i%2?r*.45:r;g.lineTo(x+Math.cos(a)*rr,y+Math.sin(a)*rr)}g.closePath();g.fill()}
 // space boss: the boss picture inside a glass helmet, on a little jet saucer
 function spDrawBoss(g,B,T){if(B.own){const im=hzPic('sp_help_'+B.sid),s=B.s;if(!im)return;const w=s*1.3,h=w*im.naturalHeight/im.naturalWidth;g.save();g.translate(B.x,B.y);g.drawImage(im,-w/2,-h/2,w,h);
@@ -115,9 +125,10 @@ function spRock(g,e){g.save();g.translate(e.x,e.y);g.rotate(e.rot);g.fillStyle=e
 // starfield background (3 layers) + a slow planet
 function spSky(G,g,dt){const W=G.W,H=G.H;if(!G.stars){G.stars=[];for(let i=0;i<110;i++)G.stars.push({x:Math.random()*W,y:Math.random()*H,z:1+Math.floor(Math.random()*3)})}
   const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,'#0b0726');gr.addColorStop(.6,'#1b0f4a');gr.addColorStop(1,'#2a1260');g.fillStyle=gr;g.fillRect(0,0,W,H);
-  const wim=G.sid&&W>20&&hzPic('w3b_'+G.sid);if(wim&&wim.naturalWidth){// flying over this world: its picture scrolls down, mirrored every other copy so the seams match
-    const w=W,h=w*wim.naturalHeight/wim.naturalWidth;G.wy=((G.wy||0)+dt*W*.06)%(2*h);for(let y=G.wy-2*h;y<H;y+=h){const i=Math.round((y-G.wy)/h);g.save();if(i%2){g.translate(0,y+h);g.scale(1,-1);g.drawImage(wim,0,0,w,h)}else g.drawImage(wim,0,y,w,h);g.restore()}
-    g.fillStyle='rgba(11,7,38,.5)';g.fillRect(0,0,W,H);return spSkyStars(G,g,dt)}
+  // the world seen from straight above (sp_bg_<sid>, a seamless vertical tile from the graphics department); until it exists, the world's side picture under a dark veil
+  const top=G.sid&&SP_ART.includes('sp_bg_'+G.sid),wim=G.sid&&W>20&&hzPic((top?'sp_bg_':'w3b_')+G.sid);if(wim&&wim.naturalWidth){// flying over this world: its picture scrolls down, mirrored every other copy so the seams match
+    const w=W,h=w*wim.naturalHeight/wim.naturalWidth;G.wy=((G.wy||0)+dt*W*(top?.14:.06))%(2*h);for(let y=G.wy-2*h;y<H;y+=h){const i=Math.round((y-G.wy)/h);g.save();if(i%2&&!top){g.translate(0,y+h);g.scale(1,-1);g.drawImage(wim,0,0,w,h)}else g.drawImage(wim,0,y,w,h);g.restore()}
+    g.fillStyle=top?'rgba(11,7,38,.12)':'rgba(11,7,38,.5)';g.fillRect(0,0,W,H);return top?void 0:spSkyStars(G,g,dt)}
   const nb=g.createRadialGradient(W*.75,H*.3,10,W*.75,H*.3,W*.7);nb.addColorStop(0,'rgba(255,90,200,.18)');nb.addColorStop(1,'rgba(255,90,200,0)');g.fillStyle=nb;g.fillRect(0,0,W,H);
   G.plY=(G.plY==null?-W*.3:G.plY)+dt*8;if(G.plY>H+W*.4)G.plY=-W*.5;{const px=W*.18,py=G.plY,r=W*.16;const pg=g.createRadialGradient(px-r*.3,py-r*.3,r*.1,px,py,r);pg.addColorStop(0,'#ffb98a');pg.addColorStop(1,'#a04a8a');g.fillStyle=pg;g.beginPath();g.arc(px,py,r,0,7);g.fill();
     g.strokeStyle='rgba(255,220,180,.55)';g.lineWidth=4;g.beginPath();g.ellipse(px,py,r*1.6,r*.35,-.3,0,7);g.stroke()}
@@ -184,9 +195,12 @@ function spEarnRender(nw){const r=SPEL,E=r.querySelector('.sp-earn');E.innerHTML
 
 /* ---------- the flight ---------- */
 function spStop(){if(SPG){SPG.dead=true;cancelAnimationFrame(SPG.raf);if(SPG.off)SPG.off();SPG=null}}
-const spTier=k=>SP_N>1?k/(SP_N-1):0;
-function spWaves(k){const T=spTier(k),R=Math.min(4,3+Math.floor(T*2));// formation / swoop + mini-boss / rocks + formation / big formation + mini-bosses, then the boss's big helper
-  return[{f:'form',rows:Math.min(4,2+Math.floor(T*2)),cols:5},{f:'swoop',n:8+Math.floor(T*8),mini:1},{f:'rocks',n:7+Math.floor(T*8),form:{rows:2,cols:5}},{f:'form',rows:R,cols:6,fire:1.4,mini:T>.5?2:1},{f:'boss'}]}
+// difficulty grows with every space level (by its own count, so adding later seasons never makes the early ones easier): T 0 at level 89, 1 at 299, up to 1.5 later
+const spTier=k=>Math.min(1.5,k/21);
+// longer too (Tzach): 4 waves at level 89, one more every 3 space levels, up to 10 waves; then the boss's big helper
+function spWaves(k){const T=spTier(k),R=Math.min(4,3+Math.floor(T*2)),X=Math.min(6,Math.floor(k/3)),M=T>.5?2:1,
+    EX=[{f:'swoop',n:10+Math.floor(T*8),mini:1},{f:'rocks',n:9+Math.floor(T*8),form:{rows:3,cols:5}},{f:'form',rows:R,cols:6,fire:1.5,mini:M},{f:'swoop',n:12+Math.floor(T*8),mini:M},{f:'rocks',n:12+Math.floor(T*8),form:{rows:R,cols:6}},{f:'form',rows:4,cols:6,fire:1.7,mini:2}];
+  return[{f:'form',rows:Math.min(4,2+Math.floor(T*2)),cols:5},{f:'swoop',n:8+Math.floor(T*8),mini:1},{f:'rocks',n:7+Math.floor(T*8),form:{rows:2,cols:5}},...EX.slice(0,X),{f:'form',rows:R,cols:6,fire:1.4,mini:M},{f:'boss'}]}
 function spStart(k){spHubStop();spStop();const r=spRoot(),D=spD();r.className='sp-game';
   r.innerHTML=`<div class="sp-bar"><button class="x-btn sp-pz-btn" aria-label="pause"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.5"/><rect x="14" y="5" width="4" height="14" rx="1.5"/></svg></button><div class="sp-hearts"></div><div class="sp-wave"></div><div class="arc-score sp-coins">${coinImg()}<b>0</b></div></div><div class="sp-stage"><canvas></canvas><div class="sp-bhp" hidden><img alt=""><span><i></i></span></div></div>`;
   const st=r.querySelector('.sp-stage'),c=st.querySelector('canvas'),g=c.getContext('2d');
