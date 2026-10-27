@@ -99,16 +99,16 @@
 .sp-pz small{display:block;margin-bottom:12px;font-weight:700;color:#d9ceff}
 .sp-pz .btn{min-height:48px;padding:0 26px}
 .lt-mini.ship .lt-ic{background:radial-gradient(circle at 50% 35%,#4ee6ff,#1b3fa8 72%)}
-.lt-mini.ship .lt-ic svg{width:80%;height:80%}
+.lt-mini.ship .lt-ic svg,.lt-mini.ship .lt-ic img{object-fit:contain;width:80%;height:80%}
 .lt-mini.ship .hs-lk{display:none;position:absolute;top:-5px;inset-inline-end:-5px;font-style:normal;font-size:13px;line-height:1;width:22px;height:22px;place-items:center;border-radius:50%;background:#fff;border:2.5px solid #120d2b;box-sizing:border-box}
 .lt-mini.ship.lock .hs-lk{display:grid}
-.lt-mini.ship.lock .lt-ic svg{filter:grayscale(.7) brightness(.85)}
+.lt-mini.ship.lock .lt-ic svg,.lt-mini.ship.lock .lt-ic img{filter:grayscale(.7) brightness(.85)}
 .mode-btn.m-ship .sp-mic{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:radial-gradient(circle at 50% 35%,#4ee6ff,#1b3fa8 72%);border:2.5px solid #120d2b}
-.mode-btn.m-ship .sp-mic svg{width:80%;height:80%}
+.mode-btn.m-ship .sp-mic svg,.mode-btn.m-ship .sp-mic img{width:80%;height:80%}
 .mode-btn.m-ship.lock{filter:saturate(.5)}
 html.no-cq .sp-hangar{height:300px}
 .pin .sp-pin{position:absolute;top:-10px;inset-inline-end:-10px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#4ee6ff,#1b3fa8 72%);border:2.5px solid #120d2b;pointer-events:none}
-.pin .sp-pin svg{width:82%;height:82%}
+.pin .sp-pin svg,.pin .sp-pin img{width:82%;height:82%}
 .sp-pre-ship{display:block;margin:-6px auto 2px;width:120px;height:96px}
 /* endless flight button + weapon card */
 #ship .sp-endless{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 2px;padding:10px 14px;border-radius:18px;border:3px solid #120d2b;background:linear-gradient(135deg,#ff6bd6,#8b5cff 60%,#4ee6ff);color:#fff;text-align:start;box-shadow:0 4px 0 #120d2b}

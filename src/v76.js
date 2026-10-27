@@ -144,7 +144,7 @@ function spDrawDrops(G,g){const T=G.el;
     if(gl)g.drawImage(gl,d.x-R,y-R,R*2,R*2);else{const rg=g.createRadialGradient(d.x,y,0,d.x,y,R);rg.addColorStop(0,d.k==='star'?'rgba(255,120,220,.9)':'rgba(255,220,80,.9)');rg.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=rg;g.beginPath();g.arc(d.x,y,R,0,7);g.fill()}g.restore();
     if(d.k==='coin'){const fr=1+Math.floor((T*10+d.x)%4),im=SP_ART.includes('sp_pk_coin_1')?hzPic('sp_pk_coin_'+fr):hzPic('ic_coin');if(im){const sx=SP_ART.includes('sp_pk_coin_1')?1:Math.abs(Math.cos(T*5+d.x))*.85+.15;g.drawImage(im,d.x-r*sx,y-r,r*2*sx,r*2)}}
     else if(d.k==='bag'){const im=hzPic(SP_ART.includes('sp_pk_bag')?'sp_pk_bag':'ic_coins');if(im)g.drawImage(im,d.x-r,y-r,r*2,r*2)}
-    else{const im=SP_ART.includes('sp_pk_star')&&hzPic('sp_pk_star'),k=1+.12*Math.sin(T*8);g.save();g.translate(d.x,y);g.rotate(Math.sin(T*3)*.3);g.scale(k,k);
+    else{const im=(SP_ART.includes('sp_star')&&hzPic('sp_star'))||(SP_ART.includes('sp_pk_star')&&hzPic('sp_pk_star')),k=1+.12*Math.sin(T*8);g.save();g.translate(d.x,y);g.rotate(Math.sin(T*3)*.3);g.scale(k,k);
       if(im)g.drawImage(im,-r,-r,r*2,r*2);else{g.fillStyle='#ff8ad8';g.strokeStyle='#201c24';g.lineWidth=3;spStar(g,0,0,r);g.fill();g.stroke();g.fillStyle='#fff6a8';spStar(g,0,0,r*.45);g.fill()}g.restore()}
     // sparkles
     if(big||Math.floor(T*3+d.x)%3===0){g.fillStyle='#fff';const a=T*4+d.x,sr=r*1.25;spStar(g,d.x+Math.cos(a)*sr,y+Math.sin(a)*sr,r*.18)}}}
@@ -449,7 +449,8 @@ function spEnd(G,won,stars,got,bonus){const nw=spCheckEarn();setTimeout(()=>{if(
   G.r.appendChild(p);if(got+bonus)setTimeout(()=>sfx.coin(3),500)},won?600:900)}
 
 /* ---------- lobby: rocket in the small column (locked until level 200) + Modes card row + "it's open" once ---------- */
-const SP_ICON='<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c6 4 8 11 7 19l-7 4-7-4c-1-8 1-15 7-19z" fill="#fff" stroke="#120d2b" stroke-width="2.6" stroke-linejoin="round"/><circle cx="20" cy="15" r="4" fill="#4ee6ff" stroke="#120d2b" stroke-width="2.2"/><path d="M13 21l-5 7 6-1M27 21l5 7-6-1" fill="#ff5a7a" stroke="#120d2b" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 29q3 8 6 0" fill="#ffb23f" stroke="#120d2b" stroke-width="2"/></svg>';
+// the graphics department's rocket (sp_icon) when it exists, else the drawn one
+const SP_ICON=SP_ART.includes('sp_icon')?'<img src="art/sp_icon.webp" alt="" draggable="false">':'<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c6 4 8 11 7 19l-7 4-7-4c-1-8 1-15 7-19z" fill="#fff" stroke="#120d2b" stroke-width="2.6" stroke-linejoin="round"/><circle cx="20" cy="15" r="4" fill="#4ee6ff" stroke="#120d2b" stroke-width="2.2"/><path d="M13 21l-5 7 6-1M27 21l5 7-6-1" fill="#ff5a7a" stroke="#120d2b" stroke-width="2.4" stroke-linejoin="round"/><path d="M17 29q3 8 6 0" fill="#ffb23f" stroke="#120d2b" stroke-width="2"/></svg>';
 {const row=document.querySelector('#title .lob-mini');if(row){const b=document.createElement('button');b.className='lt-mini ship';b.id='lobShip';b.innerHTML=`<span class="lt-ic">${SP_ICON}<i class="hs-lk">🔒</i></span><b></b>`;b.onclick=openShip;row.appendChild(b)}}
 {const _ul=updateLobby;updateLobby=function(){const r=_ul.apply(this,arguments);try{const b=document.getElementById('lobShip');if(b){const o=spOpen();b.hidden=!progress.tut;b.classList.toggle('lock',!o);b.querySelector('b').textContent=o?t('spShort'):t('spLvl',{n:SP_OPEN})}
   if(spOpen()&&!(typeof DEV_OPEN!=='undefined'&&DEV_OPEN)&&!spD().intro)spIntroLater(1500)}catch(e){}return r}}
