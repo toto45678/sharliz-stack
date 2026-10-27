@@ -1173,7 +1173,9 @@
   "spBusy": "Sedang dibuat",
   "spSlots": "Sudah ada dua upgrade yang sedang dibuat. Tunggu salah satunya selesai!",
   "spDone": "{u} sudah siap!",
-  "spJobs": "Di bengkel"
+  "spJobs": "Di bengkel",
+  "chMe1": "Hai, aku Charlie! Aku mekanik paling santai di galaksi, dan aku yang mengurus garasi ini.",
+  "chMe2": "Aku selalu pakai topiku, tidak pernah terburu-buru, dan tidak pernah membiarkan pesawat rusak. Dan Sharliz-mu? Dia pembantu terbaikku!"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

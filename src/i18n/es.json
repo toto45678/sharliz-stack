@@ -1173,7 +1173,9 @@
   "spBusy": "En construcción",
   "spSlots": "Ya se están construyendo dos mejoras. ¡Espera a que termine una!",
   "spDone": "¡{u} está lista!",
-  "spJobs": "En el taller"
+  "spJobs": "En el taller",
+  "chMe1": "¡Hola, soy Charlie! Soy el mecánico más tranquilo de la galaxia y dirijo este taller.",
+  "chMe2": "Siempre llevo mi gorra, nunca tengo prisa y nunca dejo una nave rota. ¿Y tu Sharliz? ¡Es mi mejor ayudante!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

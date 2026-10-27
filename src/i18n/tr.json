@@ -1173,7 +1173,9 @@
   "spBusy": "Yapılıyor",
   "spSlots": "Zaten iki geliştirme yapılıyor. Biri bitene kadar bekle!",
   "spDone": "{u} hazır!",
-  "spJobs": "Atölyede"
+  "spJobs": "Atölyede",
+  "chMe1": "Selam, ben Charlie! Galaksinin en sakin tamircisiyim ve bu garajı ben yönetiyorum.",
+  "chMe2": "Şapkam hep başımda, hiç acele etmem ve hiçbir gemiyi bozuk bırakmam. Ya senin Sharliz'in? O benim en iyi yardımcım!"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

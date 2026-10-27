@@ -1173,7 +1173,9 @@
   "spBusy": "En construction",
   "spSlots": "Deux améliorations sont déjà en construction. Attends qu'une se termine !",
   "spDone": "{u} est prêt !",
-  "spJobs": "À l'atelier"
+  "spJobs": "À l'atelier",
+  "chMe1": "Salut, moi c'est Charlie ! Je suis le mécano le plus cool de la galaxie, et je tiens ce garage.",
+  "chMe2": "Je porte toujours ma casquette, je ne suis jamais pressé et je ne laisse jamais un vaisseau en panne. Et ton Sharliz ? C'est mon meilleur assistant !"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",

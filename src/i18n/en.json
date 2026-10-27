@@ -1061,6 +1061,8 @@
   "spWLv": "level {n}/4",
   "wpMax": "The strongest weapon!",
   "chName": "Charlie",
+  "chMe1": "Hi, I'm Charlie! I'm the most chilled-out mechanic in the galaxy, and I run this garage.",
+  "chMe2": "I always wear my cap, I'm never in a hurry, and I never leave a ship broken. And your Sharliz? It's my best helper!",
   "chJob": "Every upgrade takes time to build, and my workshop builds two at once. Come back when it's ready!",
   "spBusy": "Building",
   "spSlots": "Two upgrades are already being built. Wait for one to finish!",

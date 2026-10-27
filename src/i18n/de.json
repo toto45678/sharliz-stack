@@ -1173,7 +1173,9 @@
   "spBusy": "Im Bau",
   "spSlots": "Es werden schon zwei Upgrades gebaut. Warte, bis eins fertig ist!",
   "spDone": "{u} ist fertig!",
-  "spJobs": "In der Werkstatt"
+  "spJobs": "In der Werkstatt",
+  "chMe1": "Hi, ich bin Charlie! Ich bin der entspannteste Mechaniker der Galaxie und leite diese Garage.",
+  "chMe2": "Ich trage immer meine Mütze, habe es nie eilig und lasse nie ein Schiff kaputt zurück. Und dein Sharliz? Der ist mein bester Helfer!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

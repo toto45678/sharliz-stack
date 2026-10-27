@@ -135,6 +135,9 @@ html.no-cq .sp-hangar{height:300px}
 .ch-bub::before{display:none;content:"";position:absolute;top:-14px;left:50%;width:22px;height:22px;background:#fffaf0;border-left:3.5px solid #120d2b;border-top:3.5px solid #120d2b;transform:translateX(-50%) rotate(45deg);border-radius:4px 0 0 0}
 .ch-name{position:absolute;top:-15px;inset-inline-start:16px;padding:3px 14px;border-radius:999px;border:3px solid #120d2b;background:#6b7b2e;color:#fff6c8;font:1.05rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;letter-spacing:.02em;z-index:2}
 .ch-bub h3{margin:0 0 4px;font:1.35rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#ff4fa3}
+.ch-pics{display:flex;justify-content:center;align-items:center;gap:10px;margin:2px 0 8px;min-height:64px}
+.ch-pics img{height:64px;max-width:110px;object-fit:contain;filter:drop-shadow(0 3px 0 rgba(18,13,43,.35));animation:chSwap .3s ease-out}
+.ch-pics span{font-size:2.6rem;line-height:1}
 .ch-bub p{margin:0;min-height:3.6em;font-weight:800;font-size:1.05rem;line-height:1.35}
 .ch-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
 .ch-dots{display:flex;gap:6px}
