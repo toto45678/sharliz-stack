@@ -11,6 +11,8 @@ const V81_ART=new Set(__V81_ART__);
 if(typeof MAPROAD!=='undefined')Object.assign(MAPROAD,__V81_ROADS__);
 // tower base line in each world's own foreground picture (tools/worlds/k3y.py)
 Object.assign(K3Y,__V81_K3Y__);
+// own S5/S6 side columns close by themselves: never borrow the base world's column cap (farm beanstalk on mushroom)
+{const _p=pic;pic=function(n){if(n.startsWith('w3c_')&&S56_IDS.includes(n.slice(4))&&!PIC_SET.has(n))return null;return _p(n)}}
 const S56_IDS=S56.map(q=>q[0]),S6_IDS=S56_IDS.slice(10),zSeason=sid=>{const z=ZONES.find(z=>(z.sid||z.id)===sid);return z?z.season||1:1};
 
 /* ---------- trophy hats ---------- */
