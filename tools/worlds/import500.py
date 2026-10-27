@@ -16,4 +16,5 @@ for id in sys.argv[1:]:
     if os.path.exists(f):os.symlink(f,os.path.join(tmp,f'bg_{id}.png'))
     print(id,'done')
 if roads:subprocess.run([sys.executable,'-I',os.path.join(ROOT,'tools/worlds/road.py')]+roads,check=True)
+subprocess.run([sys.executable,'-I',os.path.join(ROOT,'tools/worlds/k3y.py')]+sys.argv[1:],check=True)
 if os.listdir(tmp):subprocess.run([sys.executable,'-I',os.path.join(ROOT,'tools/backgrounds/make.py'),tmp],check=True)

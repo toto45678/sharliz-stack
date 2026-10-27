@@ -9,6 +9,8 @@
 const V81_ART=new Set(__V81_ART__);
 // own map roads for S5/S6 worlds whose map panel arrived (tools/worlds/road.py traces the white road)
 if(typeof MAPROAD!=='undefined')Object.assign(MAPROAD,__V81_ROADS__);
+// tower base line in each world's own foreground picture (tools/worlds/k3y.py)
+Object.assign(K3Y,__V81_K3Y__);
 const S56_IDS=S56.map(q=>q[0]),S6_IDS=S56_IDS.slice(10),zSeason=sid=>{const z=ZONES.find(z=>(z.sid||z.id)===sid);return z?z.season||1:1};
 
 /* ---------- trophy hats ---------- */
