@@ -1206,7 +1206,12 @@
   "cpGPacks": "altın paket",
   "cpCookies": "kurabiye",
   "cpEgg": "yumurta",
-  "cpBoost": "her güçlendiriciden"
+  "cpBoost": "her güçlendiriciden",
+  "updTitle": "Yeni sürüm!",
+  "updSub": "{n} sürümü mağazada. Tüm yenilikler için güncelle!",
+  "updMust": "Oynamaya devam etmek için oyunu güncelle.",
+  "updNow": "Güncelle",
+  "updLater": "Sonra"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

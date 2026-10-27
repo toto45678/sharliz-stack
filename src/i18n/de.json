@@ -1206,7 +1206,12 @@
   "cpGPacks": "goldene Packs",
   "cpCookies": "Kekse",
   "cpEgg": "Ei",
-  "cpBoost": "von jedem Booster"
+  "cpBoost": "von jedem Booster",
+  "updTitle": "Neue Version!",
+  "updSub": "Version {n} ist im Store. Aktualisiere, um alle Neuheiten zu bekommen!",
+  "updMust": "Bitte aktualisiere das Spiel, um weiterzuspielen.",
+  "updNow": "Aktualisieren",
+  "updLater": "Später"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

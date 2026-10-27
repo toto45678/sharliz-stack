@@ -1183,7 +1183,12 @@
   "spResume": "Resume",
   "spLeave": "Leave flight",
   "spHowTo": "Drag to fly. Your ship shoots by itself!",
-  "spLocked": "Opens at level {n}"
+  "spLocked": "Opens at level {n}",
+  "updTitle": "New version!",
+  "updSub": "Version {n} is in the store. Update to get all the new stuff!",
+  "updMust": "Please update the game to keep playing.",
+  "updNow": "Update",
+  "updLater": "Later"
  },
  "pairs": [
   "3D boss models (season 1)",

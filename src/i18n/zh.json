@@ -1206,7 +1206,12 @@
   "cpGPacks": "金色贴纸包",
   "cpCookies": "饼干",
   "cpEgg": "蛋",
-  "cpBoost": "每种道具"
+  "cpBoost": "每种道具",
+  "updTitle": "新版本！",
+  "updSub": "{n} 版本已上架。更新即可获得所有新内容！",
+  "updMust": "请更新游戏后继续游玩。",
+  "updNow": "更新",
+  "updLater": "稍后"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",
