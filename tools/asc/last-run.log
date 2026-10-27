@@ -1,0 +1,21 @@
+app 6819720504 Sharliz Tower
+version 1.2 PREPARE_FOR_SUBMISSION
+version 1.1 READY_FOR_SALE
+version 1.0 READY_FOR_SALE
+release: MANUAL
+build 85 VALID
+build selected 85
+version languages ['en-US', 'he']
+texts en-US whatsNew 655, promotionalText 141, description 2071
+texts he keywords 89, promotionalText 126, description 799, whatsNew 541, supportUrl 24
+appInfo 675a0b92-0a08-42fd-93b9-9257ca09d936 READY_FOR_SALE
+appInfo 7be6f555-263f-49c0-a7b8-a9f79cc606d0 PREPARE_FOR_SUBMISSION
+app info languages ['en-US', 'he']
+app info he {'name': 'שארליז טאואר: מגדל חמוד', 'subtitle': 'בונים מגדל ומנצחים בוסים', 'privacyPolicyUrl': 'https://toto45678.github.io/sharliz-stack/privacy.html'}
+review notes 3972 | contact set: True True
+screenshots en-US ['APP_IPHONE_67', 'APP_IPHONE_61', 'APP_IPAD_PRO_3GEN_129']
+screenshots he []
+review submission 38963986-2820-4580-a66c-ef7df27b42c2 READY_FOR_REVIEW
+version added to the submission
+SUBMITTED: WAITING_FOR_REVIEW
+version state now WAITING_FOR_REVIEW
