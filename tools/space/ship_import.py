@@ -5,7 +5,7 @@ python3 -I tools/space/ship_import.py <dir>      (every <name>.png in <dir>, nam
 
 Ships: the glass dome is painted pure magenta (#FF00FF) in the drawing. The tool finds it, stores its centre and
 radius in dome.json (fractions of the picture) and makes it transparent: the game draws the player's own Sharliz there.
-A white background is removed by a flood fill from the edges. Ships/add-ons are trimmed and saved 384 px wide;
+A white background is removed by a flood fill from the edges. Ships keep their canvas (480 px wide), add-ons are trimmed (256 px wide at most);
 sp_bg_* (top-view world tiles) keep their shape at 768 px wide.
 """
 import json, os, sys
@@ -42,7 +42,7 @@ def dome(im):
     for y in range(h):
         for x in range(w):
             r, g, b, a = px[x, y]
-            if a > 0 and r > 180 and b > 180 and g < 110:
+            if a > 0 and r > 225 and b > 225 and g < 60 and abs(r - b) < 30:  # flat #FF00FF only: the pink/lilac hulls must stay
                 pts.append((x, y)); px[x, y] = (0, 0, 0, 0)
     if not pts:
         return None
@@ -62,8 +62,9 @@ def main(src):
             print(name, 'background'); continue
         im = unwhite(im)
         d = dome(im) if name.startswith('sp_ship_') else None
-        box = im.getbbox(); im = im.crop(box)
-        W = 384; k = W / im.width; im = im.resize((W, round(im.height * k)), Image.LANCZOS)
+        # ships keep their whole (shared) canvas so a bigger gun level never shrinks the ship; the game scales them by the dome
+        box = (0, 0, im.width, im.height) if d else im.getbbox(); im = im.crop(box)
+        W = 480 if d else 256 if im.width >= 256 else im.width; k = W / im.width; im = im.resize((W, round(im.height * k)), Image.LANCZOS)
         im.save(os.path.join(ART, name + '.webp'), quality=88)
         if d:
             cx, cy, r = d[0] - box[0], d[1] - box[1], d[2]
