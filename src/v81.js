@@ -173,3 +173,15 @@ Object.assign(B3D_RIG,{
   swamp:{head:{y0:.6,py:.56,amp:.05},jig:{amp:.02,y0:.1},yaw:-.32,bob:.015,atk:'jump'},
   fairy:{head:{y0:.66,py:.62,amp:.05},yaw:-.32,bob:.015,atk:'shake'},
   west:{head:{y0:.66,py:.62,amp:.06},yaw:-.32,bob:.015,atk:'lunge'}});
+// season 6 3D bosses (same pipeline)
+Object.assign(B3D_RIG,{
+  ninja:{head:{y0:.66,py:.62,amp:.06},yaw:-.32,bob:.015,atk:'lunge'},
+  pixel:{head:{y0:.64,py:.6,amp:.05},yaw:-.32,hover:.02,atk:'shake'},
+  dream:{head:{y0:.62,py:.58,amp:.05},yaw:-.32,hover:.03,atk:'spin'},
+  kitchen:{head:{y0:.66,py:.62,amp:.04},yaw:-.32,bob:.015,atk:'jump'},
+  clock:{head:{y0:.7,py:.66,amp:.04},yaw:-.32,bob:.012,atk:'shake'},
+  rainbow:{head:{y0:.66,py:.62,amp:.07},sway:{y1:.5,amp:.06,f:2.2},yaw:-.32,bob:.01,atk:'lunge'},
+  dragon:{head:{y0:.7,py:.66,amp:.06},yaw:-.32,hover:.025,atk:'flap'},
+  garden:{head:{y0:.6,py:.56,amp:.05},jig:{amp:.02,y0:.1},yaw:-.32,bob:.015,atk:'jump'},
+  atlantis:{head:{y0:.5,py:.45,amp:.05},yaw:-.32,bob:.015,atk:'lunge'},
+  sky:{jig:{amp:.025,y0:.05},yaw:-.2,hover:.035,atk:'spin'}});
