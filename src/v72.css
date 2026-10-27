@@ -20,7 +20,7 @@
 .bg-it.sp{border-color:#7a4b00;background:linear-gradient(180deg,#ffcf4a,#e08a00)}
 .bg-it.sp img{border-color:#7a4b00}
 .bg-it.on{background:linear-gradient(180deg,var(--g1),var(--g2));box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 4px 0 rgba(8,10,40,.55),0 0 0 3px #fff}
-.bg-it.new::before{content:"NEW";position:absolute;top:-7px;inset-inline-start:-5px;z-index:1;padding:1px 6px;border-radius:8px;background:#ff3ea5;border:2px solid var(--ink);font-size:.7rem;-webkit-text-stroke:0;text-shadow:none;transform:rotate(-8deg)}
+.bg-it.new::before{content:var(--bg-new,"NEW");position:absolute;top:-7px;inset-inline-start:-5px;z-index:1;padding:1px 6px;border-radius:8px;background:#ff3ea5;border:2px solid var(--ink);font-size:.7rem;-webkit-text-stroke:0;text-shadow:none;transform:rotate(-8deg)}
 /* boss win card */
 .bg-strip{display:flex;align-items:center;gap:10px;margin:10px 4px 2px;padding:6px 8px 6px 6px;border-radius:16px;border:3px solid #ffd23f;background:linear-gradient(180deg,#5b2bb8,#3a1680);box-shadow:0 3px 0 #120d2b;animation:arcIn .5s cubic-bezier(.3,1.6,.5,1)}
 .bg-strip img{width:38px;height:57px;object-fit:cover;border-radius:7px;border:2px solid #120d2b;margin-block:-4px;transform:rotate(-4deg)}

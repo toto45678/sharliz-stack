@@ -74,9 +74,15 @@ document.addEventListener('click',e=>{if(e.isTrusted&&performance.now()-TAPGUARD
 // bottom edge fades while there is more below.
 {const card=document.getElementById('card');
  const more=b=>b.classList.toggle('more',b.scrollHeight-b.clientHeight-b.scrollTop>6);
- const hook=b=>{if(b._more)return;b._more=1;b.addEventListener('scroll',()=>more(b),{passive:true});b.addEventListener('load',()=>more(b),true)};
- const reveal=el=>setTimeout(()=>{const b=el.isConnected&&el.parentElement;if(!b||!b.classList.contains('card-body'))return;const B=b.getBoundingClientRect(),E=el.getBoundingClientRect();
-   if(E.bottom>B.bottom-2)b.scrollTo({top:b.scrollTop+E.bottom-B.bottom+8,behavior:reduceMotion?'auto':'smooth'});more(b)},650);
+ const hook=b=>{if(b._more)return;b._more=1;b.addEventListener('scroll',()=>more(b),{passive:true});b.addEventListener('load',()=>more(b),true);
+   for(const ev of ['touchstart','wheel','pointerdown'])b.addEventListener(ev,()=>{b._own=1},{passive:true})};
+ // Nightly Oct 27: on a first boss win four strips arrive at once (XP, egg, sticker pack, new background) while the trophy hat picture
+ // above them is still loading; each strip measured itself before that picture pushed everything down, so the last one (the new
+ // background) stayed hidden under the card's edge. The glide now aims at the lowest strip and looks again once the pictures are in,
+ // until the player touches the card themselves.
+ const reveal=el=>{for(const d of [650,1600,3000])setTimeout(()=>{const b=el.isConnected&&el.parentElement;if(!b||!b.classList.contains('card-body')||b._own)return;
+   const last=[...b.children].reverse().find(n=>/-strip\b/.test(n.className))||el,B=b.getBoundingClientRect(),E=last.getBoundingClientRect();
+   if(E.bottom>B.bottom-2)b.scrollTo({top:b.scrollTop+E.bottom-B.bottom+8,behavior:reduceMotion?'auto':'smooth'});more(b)},d)};
  if(card)new MutationObserver(ms=>{const b=card.querySelector('.card-body');if(b){hook(b);more(b)}
    for(const m of ms)if(m.target===b)for(const n of m.addedNodes)if(n.nodeType===1&&/-strip\b/.test(n.className))reveal(n)}).observe(card,{childList:true,subtree:true})}
 // in-game HUD on a 375 px phone: with a 3-digit level and a 4-5 digit score the pause button was pushed off the screen (the
