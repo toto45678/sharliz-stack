@@ -153,6 +153,7 @@ function sbBookTitle(){if(!SB.el)return;const tt=SB.el.querySelector('.sb-ttl');
   const wrap=el.querySelector('.sb-coverwrap');wrap.parentNode.insertBefore(sw,wrap)}catch(e){console.warn('sb book',e)}return r}}
 
 /* ---------- pictures a new stage doesn't have yet: borrow the art world's (boss picture, album cards, home background) ---------- */
+window.BOSS_OWN2D=new Set(S56_IDS.filter(s=>V81_ART.has('boss_'+s)));
 const v81base=sid=>{const e=S56.find(q=>q[0]===sid);return e?e[1]:sid};
 {const B=STK_PAGES.find(p=>p.id==='boss'),B2=STK_PAGES.find(p=>p.id==='boss2'),Wd=STK_PAGES.find(p=>p.id==='world'),W2=STK_PAGES.find(p=>p.id==='world2');
   const fixB=P=>{if(!P)return;const _i=P.items;P.items=()=>_i().map(it=>{const sid=it.id.slice(5);if(S56_IDS.includes(sid)&&!V81_ART.has('stk_b_'+sid))it.src=V81_ART.has('boss_'+sid)?'art/boss_'+sid+'.webp':'art/stk_b_'+v81base(sid)+'.webp';return it})};
