@@ -11,6 +11,9 @@ for id in sys.argv[1:]:
     a=np.array(Image.open(os.path.join(ROOT,'art',f'w3f_{id}.webp')).convert('RGBA')).astype(int)
     H,W=a.shape[:2];c=a[H//3:,W//2-30:W//2+30];r,g,b,al=c[...,0],c[...,1],c[...,2],c[...,3]
     rows=np.where(((al>200)&(r>180)&(g>120)&(g<185)&(b>60)&(b<130)).mean(1)>.8)[0]
+    if len(rows):D[id]=round((rows[0]+H//3)/H-.025,3);print(id,'K3Y',D[id]);continue
+    # no sand pad (pixel's is a grass block): top of the solid pad rim, which sits ~.022 above the sand line in the other worlds
+    rows=np.where((al>200).mean(1)>.8)[0]
     if not len(rows):print(id,'no pad found, left as is');continue
-    D[id]=round((rows[0]+H//3)/H-.025,3);print(id,'K3Y',D[id])
+    D[id]=round((rows[0]+H//3)/H-.003,3);print(id,'K3Y (pad rim)',D[id])
 json.dump(D,open(OUT,'w'),separators=(',',':'))
