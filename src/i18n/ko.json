@@ -1355,7 +1355,7 @@
   "evTryLeft": "오늘 남은 도전: {n}회",
   "evPrize": "10 스테이지 클리어: 별 방패!",
   "evPrizeGot": "우주선의 별 방패!",
-  "evPrizeSub": "우주선은 레벨 200에서 열려",
+  "evPrizeSub": "우주선은 레벨 {n}에서 열려",
   "cpRow": "선물 코드",
   "cpEnter": "입력",
   "cpTitle": "선물 코드",

@@ -1355,7 +1355,7 @@
   "evTryLeft": "今天还剩{n}次",
   "evPrize": "通关全部10关：星星护盾！",
   "evPrizeGot": "给你飞船的星星护盾！",
-  "evPrizeSub": "飞船在第200关解锁",
+  "evPrizeSub": "飞船在第{n}关解锁",
   "cpRow": "礼物码",
   "cpEnter": "输入",
   "cpTitle": "礼物码",

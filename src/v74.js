@@ -13,10 +13,10 @@ EVENTS.push({id:'christmas',from:[12,15],to:[12,26],sid:'snow',cur:'cane',deco:'
 const EV_TRY={n:3,p:150};// 3 more tries for 150 coins
 Object.assign(I18N.en,{ev_christmas:'Christmas',evs_christmas:'Christmas',cur_cane:'Candy canes',sk_t_snow:'Snowflakes',evTries:'Tries today',evNoTry:'Out of tries!',
   evTryWhy:'Losing a stage uses a try. Winning keeps it.',evTryIn:'New tries in {n}',evBuyTry:'+{n} tries',evLater:'Later',evMore:'More tries',evTryLeft:'Tries left today: {n}',
-  evPrize:'Finish all 10 stages: Star Shield!',evPrizeGot:'Star Shield for your spaceship!',evPrizeSub:'Your spaceship opens at level 200'});
+  evPrize:'Finish all 10 stages: Star Shield!',evPrizeGot:'Star Shield for your spaceship!',evPrizeSub:'Your spaceship opens at level {n}'});
 Object.assign(I18N.he,{ev_christmas:'כריסמס',evs_christmas:'כריסמס',cur_cane:'מקלות סוכר',sk_t_snow:'פתיתי שלג',evTries:'ניסיונות היום',evNoTry:'נגמרו הניסיונות!',
   evTryWhy:'הפסד בשלב מוריד ניסיון. ניצחון לא.',evTryIn:'ניסיונות חדשים בעוד {n}',evBuyTry:'+{n} ניסיונות',evLater:'אחר כך',evMore:'עוד ניסיונות',evTryLeft:'נשארו היום {n} ניסיונות',
-  evPrize:'סיימו את כל 10 השלבים: מגן כוכב!',evPrizeGot:'מגן כוכב לחללית שלך!',evPrizeSub:'החללית שלך נפתחת בשלב 200'});
+  evPrize:'סיימו את כל 10 השלבים: מגן כוכב!',evPrizeGot:'מגן כוכב לחללית שלך!',evPrizeSub:'החללית שלך נפתחת בשלב {n}'});
 WHATX.santa={p:150,w:1,ev:'christmas',n:['Santa hat','כובע סנטה']};
 WHATX.antlers={p:120,w:1,ev:'christmas',n:['Reindeer antlers','קרני אייל']};
 WPAT.cane={p:100,ev:'christmas',n:['Candy cane','מקל סוכר']};
@@ -65,7 +65,7 @@ const EV_SHIELD='<svg class="ev-shield" viewBox="0 0 64 64" aria-hidden="true"><
 const evPrizeGot=E=>!!(progress.ship&&progress.ship.got&&progress.ship.got[E.prize]);
 function evPrizeGive(E){progress.ship=progress.ship||{};progress.ship.got=progress.ship.got||{};progress.ship.got[E.prize]=1}
 function evPrizeRow(E,got){const d=document.createElement('div');d.className='ev-prize'+(got?' got':'');d.innerHTML=EV_SHIELD+'<span><b></b><small></small></span>';
-  d.querySelector('b').textContent=got?t('evPrizeGot'):t('evPrize');d.querySelector('small').textContent=t('evPrizeSub');return d}
+  d.querySelector('b').textContent=got?t('evPrizeGot'):t('evPrize');d.querySelector('small').textContent=t('evPrizeSub',{n:typeof SP_OPEN!=='undefined'?SP_OPEN:89});return d}
 /* ---------- event screen: tries + prize above the Play button ---------- */
 {const _p=evPath;evPath=function(N,body){_p.apply(this,arguments);const E=N.E,foot=body.querySelector('.ev-foot');if(!foot||(!E.tries&&!E.prize))return;const pb=foot.querySelector('.ev-play');
   if(E.prize){const w=body.querySelector('.ev-path');if(w)w.appendChild(evPrizeRow(E,evPrizeGot(E)))}

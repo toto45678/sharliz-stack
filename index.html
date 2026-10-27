@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261027184923"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261027185132"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -11769,10 +11769,10 @@ EVENTS.push({id:'christmas',from:[12,15],to:[12,26],sid:'snow',cur:'cane',deco:'
 const EV_TRY={n:3,p:150};// 3 more tries for 150 coins
 Object.assign(I18N.en,{ev_christmas:'Christmas',evs_christmas:'Christmas',cur_cane:'Candy canes',sk_t_snow:'Snowflakes',evTries:'Tries today',evNoTry:'Out of tries!',
   evTryWhy:'Losing a stage uses a try. Winning keeps it.',evTryIn:'New tries in {n}',evBuyTry:'+{n} tries',evLater:'Later',evMore:'More tries',evTryLeft:'Tries left today: {n}',
-  evPrize:'Finish all 10 stages: Star Shield!',evPrizeGot:'Star Shield for your spaceship!',evPrizeSub:'Your spaceship opens at level 200'});
+  evPrize:'Finish all 10 stages: Star Shield!',evPrizeGot:'Star Shield for your spaceship!',evPrizeSub:'Your spaceship opens at level {n}'});
 Object.assign(I18N.he,{ev_christmas:'כריסמס',evs_christmas:'כריסמס',cur_cane:'מקלות סוכר',sk_t_snow:'פתיתי שלג',evTries:'ניסיונות היום',evNoTry:'נגמרו הניסיונות!',
   evTryWhy:'הפסד בשלב מוריד ניסיון. ניצחון לא.',evTryIn:'ניסיונות חדשים בעוד {n}',evBuyTry:'+{n} ניסיונות',evLater:'אחר כך',evMore:'עוד ניסיונות',evTryLeft:'נשארו היום {n} ניסיונות',
-  evPrize:'סיימו את כל 10 השלבים: מגן כוכב!',evPrizeGot:'מגן כוכב לחללית שלך!',evPrizeSub:'החללית שלך נפתחת בשלב 200'});
+  evPrize:'סיימו את כל 10 השלבים: מגן כוכב!',evPrizeGot:'מגן כוכב לחללית שלך!',evPrizeSub:'החללית שלך נפתחת בשלב {n}'});
 WHATX.santa={p:150,w:1,ev:'christmas',n:[T_('Santa hat'),'כובע סנטה']};
 WHATX.antlers={p:120,w:1,ev:'christmas',n:[T_('Reindeer antlers'),'קרני אייל']};
 WPAT.cane={p:100,ev:'christmas',n:[T_('Candy cane'),'מקל סוכר']};
@@ -11821,7 +11821,7 @@ const EV_SHIELD='<svg class="ev-shield" viewBox="0 0 64 64" aria-hidden="true"><
 const evPrizeGot=E=>!!(progress.ship&&progress.ship.got&&progress.ship.got[E.prize]);
 function evPrizeGive(E){progress.ship=progress.ship||{};progress.ship.got=progress.ship.got||{};progress.ship.got[E.prize]=1}
 function evPrizeRow(E,got){const d=document.createElement('div');d.className='ev-prize'+(got?' got':'');d.innerHTML=EV_SHIELD+'<span><b></b><small></small></span>';
-  d.querySelector('b').textContent=got?t('evPrizeGot'):t('evPrize');d.querySelector('small').textContent=t('evPrizeSub');return d}
+  d.querySelector('b').textContent=got?t('evPrizeGot'):t('evPrize');d.querySelector('small').textContent=t('evPrizeSub',{n:typeof SP_OPEN!=='undefined'?SP_OPEN:89});return d}
 /* ---------- event screen: tries + prize above the Play button ---------- */
 {const _p=evPath;evPath=function(N,body){_p.apply(this,arguments);const E=N.E,foot=body.querySelector('.ev-foot');if(!foot||(!E.tries&&!E.prize))return;const pb=foot.querySelector('.ev-play');
   if(E.prize){const w=body.querySelector('.ev-path');if(w)w.appendChild(evPrizeRow(E,evPrizeGot(E)))}
