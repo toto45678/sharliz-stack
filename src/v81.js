@@ -161,3 +161,15 @@ const v81base=sid=>{const e=S56.find(q=>q[0]===sid);return e?e[1]:sid};
   fixB(B);fixB(B2);fixW(Wd);fixW(W2)}
 // 2D boss picture (pre-boss card, stickers, arcade): a new stage without its own picture shows its art world's boss
 {const _hp=hzPic;hzPic=function(n){const m=/^boss_([a-z]+)(_hurt)?$/.exec(n||'');if(m&&S56_IDS.includes(m[1])&&!V81_ART.has('boss_'+m[1]))n='boss_'+v81base(m[1])+(m[2]||'');return _hp(n)}}
+// season 5 3D bosses (Meshy Image to 3D from the graphics department's pictures, art/b3d_<sid>.*): rig + attack style, as in v45
+Object.assign(B3D_RIG,{
+  pirate:{head:{y0:.66,py:.62,amp:.07},yaw:-.32,bob:.015,atk:'flap'},
+  toys:{head:{y0:.58,py:.55,amp:.08},jig:{amp:.025,y0:.3},yaw:-.32,bob:.02,atk:'jump'},
+  mushroom:{head:{y0:.62,py:.58,amp:.04},yaw:-.32,bob:.015,atk:'shake'},
+  honey:{head:{y0:.66,py:.62,amp:.05},yaw:-.32,hover:.03,atk:'spin'},
+  circus:{head:{y0:.64,py:.6,amp:.06},yaw:-.32,bob:.015,atk:'lunge'},
+  pyramid:{head:{y0:.66,py:.62,amp:.05},yaw:-.32,bob:.012,atk:'shake'},
+  music:{head:{y0:.62,py:.58,amp:.06},yaw:-.32,bob:.018,atk:'spin'},
+  swamp:{head:{y0:.6,py:.56,amp:.05},jig:{amp:.02,y0:.1},yaw:-.32,bob:.015,atk:'jump'},
+  fairy:{head:{y0:.66,py:.62,amp:.05},yaw:-.32,bob:.015,atk:'shake'},
+  west:{head:{y0:.66,py:.62,amp:.06},yaw:-.32,bob:.015,atk:'lunge'}});
