@@ -1190,7 +1190,7 @@
   "evTryLeft": "Versuche heute übrig: {n}",
   "evPrize": "Alle 10 Etappen: Sternschild!",
   "evPrizeGot": "Sternschild für dein Raumschiff!",
-  "evPrizeSub": "Dein Raumschiff kommt bei Level 200",
+  "evPrizeSub": "Dein Raumschiff kommt bei Level {n}",
   "cpRow": "Geschenkcode",
   "cpEnter": "Eingeben",
   "cpTitle": "Geschenkcode",

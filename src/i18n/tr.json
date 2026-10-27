@@ -1190,7 +1190,7 @@
   "evTryLeft": "Bugün kalan hak: {n}",
   "evPrize": "10 aşamayı bitir: Yıldız Kalkan!",
   "evPrizeGot": "Uzay gemin için Yıldız Kalkan!",
-  "evPrizeSub": "Uzay gemin 200. bölümde açılır",
+  "evPrizeSub": "Uzay gemin {n}. bölümde açılır",
   "cpRow": "Hediye kodu",
   "cpEnter": "Gir",
   "cpTitle": "Hediye kodu",

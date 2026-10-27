@@ -1190,7 +1190,7 @@
   "evTryLeft": "今日の残り: {n}回",
   "evPrize": "10ステージ全部クリアでスターシールド!",
   "evPrizeGot": "宇宙船のスターシールド!",
-  "evPrizeSub": "宇宙船はレベル200で解放",
+  "evPrizeSub": "宇宙船はレベル{n}で解放",
   "cpRow": "ギフトコード",
   "cpEnter": "入力",
   "cpTitle": "ギフトコード",

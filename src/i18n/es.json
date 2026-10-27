@@ -1190,7 +1190,7 @@
   "evTryLeft": "Intentos para hoy: {n}",
   "evPrize": "¡Supera las 10 etapas: Escudo Estrella!",
   "evPrizeGot": "¡Escudo Estrella para tu nave!",
-  "evPrizeSub": "Tu nave se abre en el nivel 200",
+  "evPrizeSub": "Tu nave se abre en el nivel {n}",
   "cpRow": "Código regalo",
   "cpEnter": "Escribir",
   "cpTitle": "Código regalo",

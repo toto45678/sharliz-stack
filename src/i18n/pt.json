@@ -1190,7 +1190,7 @@
   "evTryLeft": "Tentativas de hoje: {n}",
   "evPrize": "Vença as 10 etapas: Escudo Estrela!",
   "evPrizeGot": "Escudo Estrela para sua nave!",
-  "evPrizeSub": "Sua nave abre na fase 200",
+  "evPrizeSub": "Sua nave abre na fase {n}",
   "cpRow": "Código de presente",
   "cpEnter": "Digitar",
   "cpTitle": "Código de presente",

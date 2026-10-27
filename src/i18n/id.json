@@ -1190,7 +1190,7 @@
   "evTryLeft": "Sisa kesempatan hari ini: {n}",
   "evPrize": "Selesaikan 10 tahap: Perisai Bintang!",
   "evPrizeGot": "Perisai Bintang untuk pesawatmu!",
-  "evPrizeSub": "Pesawatmu terbuka di level 200",
+  "evPrizeSub": "Pesawatmu terbuka di level {n}",
   "cpRow": "Kode hadiah",
   "cpEnter": "Masukkan",
   "cpTitle": "Kode hadiah",
