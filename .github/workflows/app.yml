@@ -8,7 +8,7 @@ name: Build store apps
 # The store version (iPhone "Version" / Android versionName). Raise it for every new store release:
 # once Apple approves a version, uploads with the same version are refused.
 env:
-  APP_VERSION: '1.1'
+  APP_VERSION: '1.2'
 on:
   workflow_dispatch:
   push:
