@@ -185,17 +185,35 @@ var seen=0,seenT=setInterval(function(){if(document.visibilityState!=='visible')
     cur.falling=true;cur.vy=2;sfx.drop();
   }
   function land(){
-    // the first three drops always land (the offset is capped), so a first-timer sees the tower grow before it can wobble over
+    // real balance (Tzach 27.10: "no matter what I did the tower didn't fall"): a piece that lands too far out slides off,
+    // and a tower whose upper part leans past the edge of the piece below topples from there. Only the very first drop is forgiving.
     var topP=tower[tower.length-1],off=cur.x-topP.x;
-    if(tower.length<4)off=Math.max(-PW*.42,Math.min(PW*.42,off));
-    if(Math.abs(off)<PW*.55){
+    if(tower.length<2)off=Math.max(-PW*.4,Math.min(PW*.4,off));
+    if(Math.abs(off)<PW*.6){
       var perfect=Math.abs(off)<7;
       tower.push({x:perfect?topP.x:topP.x+off,k:cur.k,hat:cur.hat,squash:1});
-      var n=tower.length-1;showHint();
-      perfect?sfx.perfect():sfx.land(n);
-      pops.push({txt:perfect?'PERFECT!':['Nice!','Great!','Wow!'][Math.random()*3|0],x:W/2,y:landY()-40,life:1,col:perfect?'#ffd23f':'#fff'});
-      camT=Math.max(0,(n-3)*STEP);if(n>=MAX){state='won';setTimeout(gameOver,700)}else cur=newPiece();
+      var n=tower.length-1,k=weakest();camT=Math.max(0,(n-3)*STEP);
+      if(k.over>1){topple(k.i,k.dir);return}
+      showHint();perfect?sfx.perfect():sfx.land(n);
+      pops.push({txt:perfect?'PERFECT!':k.over>.75?'Careful!':['Nice!','Great!','Wow!'][Math.random()*3|0],x:W/2,y:landY()-40,life:1,col:perfect||k.over>.75?'#ffd23f':'#fff'});
+      if(n>=MAX){state='won';setTimeout(gameOver,700)}else cur=newPiece();
     }else{cur.fallOff=off>0?1:-1;state='fail';shake=12;sfx.fail();setTimeout(gameOver,900)}
+  }
+  // how far the pieces above each level lean past its edge (1 = right at the edge); the base is wider than a Sharliz
+  function weakest(){
+    var best={over:0,i:0,dir:1},sum=0,cnt=0;
+    for(var i=tower.length-1;i>0;i--){
+      sum+=tower[i].x;cnt++;
+      var b=tower[i-1],d=sum/cnt-b.x,o=Math.abs(d)/(i===1?78:PW*.5);
+      if(o>best.over)best={over:o,i:i,dir:d>0?1:-1};
+    }
+    return best;
+  }
+  // everything from level i up tips over and falls off the side
+  function topple(i,dir){
+    state='fail';cur=null;shake=14;sfx.fail();
+    for(var j=i;j<tower.length;j++){var q=tower[j],h=j-i;q.fall={x:0,y:0,vx:dir*(1.2+h*.5),vy:-1-h*.2,vr:dir*(.035+h*.012),rot:0}}
+    setTimeout(gameOver,1300);
   }
   function gameOver(){
     var n=tower.length-1;
@@ -225,14 +243,21 @@ var seen=0,seenT=setInterval(function(){if(document.visibilityState!=='visible')
     g.save();g.translate(sx,cam);
     g.fillStyle='#e8298a';rr(W/2-80,BASE_Y,160,30,14);g.fill();
     g.fillStyle='#ff8cc6';rr(W/2-80,BASE_Y,160,12,[14,14,0,0]);g.fill();
-    var n=tower.length,wob=Math.sin(t*2.2)*Math.min(n,14)*.6;
-    for(var i=1;i<n;i++){var p=tower[i];if(p.squash)p.squash*=.85;drawPiece(p,p.x+wob*(i/n),BASE_Y-(i-1)*STEP,p.squash)}
-    if(state!=='over'&&state!=='won'){
+    // the sway grows with height and much more when the tower is close to tipping, so players see the danger
+    var n=tower.length,risk=Math.min(1,weakest().over),wob=Math.sin(t*(2.2+risk*1.6))*(Math.min(n,14)*.6+risk*risk*9);
+    for(var i=1;i<n;i++){
+      var p=tower[i],x=p.x+wob*(i/n),y=BASE_Y-(i-1)*STEP;if(p.squash)p.squash*=.85;
+      if(p.fall){var f=p.fall;f.vy+=.55;f.x+=f.vx;f.y+=f.vy;f.rot+=f.vr;g.save();g.translate(x+f.x,y+f.y);g.rotate(f.rot);drawPiece(p,0,0);g.restore()}
+      else drawPiece(p,x,y,p.squash);
+    }
+    if(cur&&state!=='over'&&state!=='won'){
       if(!cur.falling){cur.x=W/2+Math.sin(t*cur.spd+cur.phase)*cur.amp;cur.y=-cam+205}
       else if(state==='play'){cur.vy+=.9;cur.y+=cur.vy;if(cur.y>=landY()){cur.y=landY();land()}}
       else{cur.vy+=.9;cur.y+=cur.vy;cur.x+=cur.fallOff*3;cur.rot+=cur.fallOff*.08}
-      if(state==='play'&&!cur.falling){g.strokeStyle='rgba(255,255,255,.6)';g.lineWidth=2;g.setLineDash([4,7]);g.beginPath();g.moveTo(cur.x,cur.y+4);g.lineTo(cur.x,landY()-PH);g.stroke();g.setLineDash([])}
-      g.save();g.translate(cur.x,cur.y);g.rotate(cur.rot);drawPiece(cur,0,0);g.restore();
+      if(cur){   // null when the tower toppled on this landing
+        if(state==='play'&&!cur.falling){g.strokeStyle='rgba(255,255,255,.6)';g.lineWidth=2;g.setLineDash([4,7]);g.beginPath();g.moveTo(cur.x,cur.y+4);g.lineTo(cur.x,landY()-PH);g.stroke();g.setLineDash([])}
+        g.save();g.translate(cur.x,cur.y);g.rotate(cur.rot);drawPiece(cur,0,0);g.restore();
+      }
     }
     g.textAlign='center';g.font='28px "Titan One", sans-serif';g.lineWidth=6;g.strokeStyle='#7a1d55';g.lineJoin='round';
     pops=pops.filter(function(p){return(p.life-=.02)>0});
