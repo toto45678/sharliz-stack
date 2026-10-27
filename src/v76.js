@@ -239,8 +239,12 @@ function spEarnRender(nw){const r=SPEL,E=r.querySelector('.sp-earn');E.innerHTML
 function spStop(){if(SPG){SPG.dead=true;cancelAnimationFrame(SPG.raf);if(SPG.off)SPG.off();SPG=null}}
 // difficulty grows with every space level (by its own count, so adding later seasons never makes the early ones easier): T 0 at level 89, 1 at 299, up to 1.5 later
 const spTier=k=>Math.min(1.5,k/21);
+// Tzach (Oct 27): 'with the upgrades I beat it in a moment' -> the enemies grow with your ship: every bought upgrade level adds to the tier (shots, speed, aim),
+// and enemy/boss hit points scale with your firepower (shots x damage x fire rate), so upgrades make it fun and fast, not trivial
+const spUpT=()=>Math.min(.9,.06*(spLv('gun')+spLv('rate')+spLv('hull')+spLv('mag')));
+function spPower(){const [n,d]=spGunPat(spLv('gun')+(spHas('rainbow')?1:0));return n*d*(1+.14*spLv('rate'))*(spHas('laser')?1.3:1)}
 // longer too (Tzach): 4 waves at level 89, one more every 3 space levels, up to 10 waves; then the boss's big helper
-function spWaves(k){const T=spTier(k),R=Math.min(4,3+Math.floor(T*2)),X=Math.min(6,Math.floor(k/3)),M=T>.5?2:1,
+function spWaves(k){const T=spTier(k)+spUpT(),R=Math.min(5,3+Math.floor(T*2)),X=Math.min(6,Math.floor(k/3)),M=T>.5?2:1,
     EX=[{f:'swoop',n:10+Math.floor(T*8),mini:1},{f:'rocks',n:9+Math.floor(T*8),form:{rows:3,cols:5}},{f:'form',rows:R,cols:6,fire:1.5,mini:M},{f:'swoop',n:12+Math.floor(T*8),mini:M},{f:'rocks',n:12+Math.floor(T*8),form:{rows:R,cols:6}},{f:'form',rows:4,cols:6,fire:1.7,mini:2}];
   return[{f:'form',rows:Math.min(4,2+Math.floor(T*2)),cols:5},{f:'swoop',n:8+Math.floor(T*8),mini:1},{f:'rocks',n:7+Math.floor(T*8),form:{rows:2,cols:5}},...EX.slice(0,X),{f:'form',rows:R,cols:6,fire:1.4,mini:M},{f:'boss'}]}
 function spStart(k){spHubStop();spStop();const r=spRoot(),D=spD();r.className='sp-game';
@@ -248,7 +252,7 @@ function spStart(k){spHubStop();spStop();const r=spRoot(),D=spD();r.className='s
   const st=r.querySelector('.sp-stage'),c=st.querySelector('canvas'),g=c.getContext('2d');
   const hearts=3+spLv('hull')+(spHas('gold')?1:0);
   const G=SPG={k,r,st,c,g,dead:false,run:false,over:false,el:0,last:performance.now(),waves:spWaves(k),wi:-1,en:[],bul:[],eb:[],drops:[],fx:[],txt:[],
-    hearts,maxH:hearts,lost:0,inv:0,shield:spHas('xmasShield')?2:0,pod:spHas('pod'),pw:spHas('rainbow')?1:0,kills:0,coins:0,fireT:0,droneT:0,shake:0,boss:null,T:spTier(k),L:spLvOf(k),sid:spSid(k),pause:false,banner:null};
+    hearts,maxH:hearts,lost:0,inv:0,shield:spHas('xmasShield')?2:0,pod:spHas('pod'),pw:spHas('rainbow')?1:0,kills:0,coins:0,fireT:0,droneT:0,shake:0,boss:null,T:spTier(k)+spUpT(),pf:spPower(),L:spLvOf(k),sid:spSid(k),pause:false,banner:null};
   const fit=()=>{const d=Math.min(2,devicePixelRatio||1),b=st.getBoundingClientRect();G.W=b.width;G.H=b.height;c.width=Math.round(b.width*d);c.height=Math.round(b.height*d);c.style.width=b.width+'px';c.style.height=b.height+'px';G.d=d;G.u=Math.min(G.W,G.H*.6);G.s=G.u*.11;G.stars=null};
   fit();G.sx=G.tx=G.W/2;G.sy=G.ty=G.H*.82;G.tilt=0;
   // drag anywhere: the ship keeps its distance from the finger (so the finger never hides it)
@@ -268,12 +272,12 @@ function spPause(G){if(G.over)return;G.pause=true;const p=document.createElement
 function spBanner(G,a,b,dur){const o=G.r.querySelector('.sp-ban');if(o)o.remove();const d=document.createElement('div');d.className='sp-ban';d.innerHTML='<b></b><small></small>';d.querySelector('b').textContent=a;d.querySelector('small').textContent=b||'';G.st.appendChild(d);setTimeout(()=>d.remove(),(dur||1.6)*1000)}
 function spHUD(G){const r=G.r,h=r.querySelector('.sp-hearts');let s='';for(let i=0;i<G.maxH;i++)s+=`<img class="${i<G.hearts?'':'off'}" src="art/ic_heart.webp" alt="">`;if(h.dataset.k!==s){h.dataset.k=s;h.innerHTML=s}
   r.querySelector('.sp-coins b').textContent=G.coins;const w=G.waves[G.wi],wv=r.querySelector('.sp-wave'),txt=w&&w.f==='boss'?t('spBossW'):t('spWave',{a:Math.max(1,G.wi+1),b:G.waves.length-1});if(wv.textContent!==txt)wv.textContent=txt;wv.classList.toggle('boss',!!(w&&w.f==='boss'))}
-function spMon(G,k,x,y,o){const T=G.T,kind=1+(k%4),hp=1+Math.floor(T*2.5)+(kind===4?1:0);return Object.assign({k:'mon',pic:(SP_ART.includes('sp_mon'+kind)?'sp_mon':'arc_mon')+kind,x,y,hp,max:hp,r:G.u*.055,t:0,hit:0},o)}
+function spMon(G,k,x,y,o){const T=G.T,kind=1+(k%4),hp=Math.round((2+T*2.5+(kind===4?1:0))*Math.pow(G.pf||1,.7));return Object.assign({k:'mon',pic:(SP_ART.includes('sp_mon'+kind)?'sp_mon':'arc_mon')+kind,x,y,hp,max:hp,r:G.u*.055,t:0,hit:0},o)}
 // the world's mini-boss: its own picture once the graphics department draws it (sp_mini_<sid>_n), else a big minion
-function spMiniBoss(G,i){const n=1+(i%2),own=SP_ART.includes('sp_mini_'+G.sid+'_'+n),hp=Math.round(10+G.T*28);
+function spMiniBoss(G,i){const n=1+(i%2),own=SP_ART.includes('sp_mini_'+G.sid+'_'+n),hp=Math.round((16+G.T*36)*Math.pow(G.pf||1,.85));
   return{k:'mboss',pic:own?'sp_mini_'+G.sid+'_'+n:'arc_mon'+(1+(G.k+i)%4),own,x:G.W*(i%2?.75:.25),y:-60,gy:G.H*(.14+.06*i),hp,max:hp,r:G.u*.1,t:0,hit:0,ph:i*3,fireT:1.5+i*.6}}
 function spNextWave(G){G.wi++;const w=G.waves[G.wi];spHUD(G);if(!w)return spWin(G);const T=G.T,W=G.W,H=G.H;G.wt=0;G.spawnQ=[];
-  if(w.f==='boss'){spBanner(G,t('spBossW'),t('spHelper',{b:spBossName(G.k)}),1.8);if(sfx.ok())sfx.roar&&sfx.roar();const sid=G.sid,hp=Math.round(60+G.T*300),own=SP_ART.includes('sp_help_'+sid);
+  if(w.f==='boss'){spBanner(G,t('spBossW'),t('spHelper',{b:spBossName(G.k)}),1.8);if(sfx.ok())sfx.roar&&sfx.roar();const sid=G.sid,hp=Math.round((90+G.T*320)*Math.pow(G.pf||1,.85)),own=SP_ART.includes('sp_help_'+sid);
     G.boss={sid,own,x:W/2,y:-G.u*.4,s:G.u*(own?.4:.32),hp,max:hp,t:0,atk:1.6,pat:0,hurt:0,in:1};const bh=G.r.querySelector('.sp-bhp');bh.hidden=false;bh.querySelector('img').src='art/'+(own?'sp_help_':'boss_')+sid+'.webp';return}
   spBanner(G,t('spWave',{a:G.wi+1,b:G.waves.length-1}),'',1.2);
   const form=f=>{const cw=Math.min(W*.8/f.cols,G.u*.15),x0=W/2-cw*(f.cols-1)/2;G.form={ox:0,t:0,fire:(.4+T*1.2)*(f.fire||1)};
@@ -281,7 +285,7 @@ function spNextWave(G){G.wi++;const w=G.waves[G.wi];spHUD(G);if(!w)return spWin(
   if(w.mini)for(let i=0;i<w.mini;i++)G.spawnQ.push({at:1.2+i*2.5,mk:()=>{spBanner(G,t('spMini'),'',1);if(sfx.ok())tone({f:180,f2:90,d:.4,type:'sawtooth',v:.05});return spMiniBoss(G,i)}});
   if(w.f==='form')form(w);
   else if(w.f==='swoop'){for(let i=0;i<w.n;i++){const side=i%2?1:-1;G.spawnQ.push({at:.4+i*.45,mk:()=>spMon(G,i,side<0?W*.2:W*.8,-40,{sw:1,side,amp:W*(.25+.1*Math.sin(i)),cx:W/2,vy:G.u*(.28+T*.2),ph:i,fireT:1+Math.random()*2})})}}
-  else if(w.f==='rocks'){for(let i=0;i<w.n;i++)G.spawnQ.push({at:.3+i*.55,mk:()=>{const r=G.u*(.05+Math.random()*.04);return{k:'rock',x:r+Math.random()*(W-2*r),y:-r*2,vy:G.u*(.25+Math.random()*.2+T*.15),vx:(Math.random()-.5)*G.u*.15,r,hp:2+Math.floor(T*3),rot:0,vr:(Math.random()-.5)*3,pts:Array.from({length:9},()=>.78+Math.random()*.3),hit:0}}});
+  else if(w.f==='rocks'){for(let i=0;i<w.n;i++)G.spawnQ.push({at:.3+i*.55,mk:()=>{const r=G.u*(.05+Math.random()*.04);return{k:'rock',x:r+Math.random()*(W-2*r),y:-r*2,vy:G.u*(.25+Math.random()*.2+T*.15),vx:(Math.random()-.5)*G.u*.15,r,hp:Math.round((3+T*3)*Math.pow(G.pf||1,.6)),rot:0,vr:(Math.random()-.5)*3,pts:Array.from({length:9},()=>.78+Math.random()*.3),hit:0}}});
     if(w.form)G.spawnQ.push({at:.3+w.n*.55,fn:()=>form(w.form)})}}
 function spGunPat(L){return[[1,1],[2,1],[3,1],[3,1.3],[4,1.3],[5,1.3],[5,1.6],[7,1.6]][Math.min(7,L)]}
 // shot looks grow with power (Tzach: 'evolve into lasers, fire...'): 1 yellow bolt, 2 orange plasma, 3 cyan laser, 4 pink laser, 5 fireball, 6 rainbow lightning
@@ -313,20 +317,22 @@ function spTick(G,dt){const W=G.W,H=G.H;G.el+=dt;
   G.wt+=dt;if(G.spawnQ)for(const q of G.spawnQ)if(!q.done&&G.wt>=q.at){q.done=1;if(q.fn)q.fn();else G.en.push(q.mk())}
   // formation sways + drops goo
   if(G.form){const F=G.form;F.t+=dt;F.ox=Math.sin(F.t*.7)*W*.09;const fm=G.en.filter(e=>e.f);
-    F.cd=(F.cd==null?1.2:F.cd)-dt;if(F.cd<=0&&fm.length){F.cd=(1/F.fire)*(.6+Math.random()*.8);const e=pick(fm.filter(e=>e.enter<=0)||fm);if(e&&e.enter<=0){const aim=G.T>.35&&Math.random()<.4;const v=G.u*(.38+G.T*.25);
+    F.cd=(F.cd==null?1.2:F.cd)-dt;if(F.cd<=0&&fm.length){F.cd=(1/F.fire)*(.6+Math.random()*.8);const e=pick(fm.filter(e=>e.enter<=0)||fm);if(e&&e.enter<=0){const aim=Math.random()<.3+.25*Math.min(1,G.T);const v=G.u*(.45+G.T*.28);
       if(aim){const dx=G.sx-e.x,dy=G.sy-e.y,L=Math.hypot(dx,dy);G.eb.push({x:e.x,y:e.y+e.r,vx:dx/L*v,vy:dy/L*v,r:G.u*.018,c:'#ff5ad0'})}else G.eb.push({x:e.x,y:e.y+e.r,vx:0,vy:v,r:G.u*.022,c:'#7ef05a',goo:1})}}}
+  if(G.form){const F=G.form;F.dv=(F.dv==null?3:F.dv)-dt;if(F.dv<=0){F.dv=Math.max(1.1,3.2-G.T*1.4);const c=G.en.filter(e=>e.f&&e.enter<=0&&!e.dive);if(c.length){const e=pick(c);e.dive=1;e.f=0;const dx=G.sx-e.x,dy=G.sy-e.y,L=Math.hypot(dx,dy),v=G.u*(.55+G.T*.25);e.vx=dx/L*v;e.vy=dy/L*v;if(sfx.ok())tone({f:500,f2:200,d:.25,type:'square',v:.03})}}}
   for(const e of G.en){e.t+=dt;if(e.hit>0)e.hit-=dt;
-    if(e.f){if(e.enter>0){e.enter-=dt;const k=Math.min(1,dt*3.5);e.x+=(e.gx+(G.form?G.form.ox:0)-e.x)*k;e.y+=(e.gy-e.y)*k}else{e.x=e.gx+G.form.ox;e.y=e.gy+Math.sin(G.form.t*2+e.gx*.05)*5}}
-    else if(e.sw){e.y+=e.vy*dt;e.x=e.cx+e.side*Math.sin(e.t*1.4+e.ph)*e.amp*.9;e.fireT-=dt;if(e.fireT<=0&&e.y>0&&e.y<H*.6){e.fireT=2.5-G.T;const dx=G.sx-e.x,dy=G.sy-e.y,L=Math.hypot(dx,dy),v=G.u*(.4+G.T*.2);G.eb.push({x:e.x,y:e.y,vx:dx/L*v,vy:dy/L*v,r:G.u*.018,c:'#ff5ad0'})}if(e.y>H+50)e.gone=1}
+    if(e.dive){e.x+=e.vx*dt;e.y+=e.vy*dt;e.vx+=(G.sx-e.x)*dt*.6;if(e.y>G.H+50||e.x<-60||e.x>G.W+60)e.gone=1}
+    else if(e.f){if(e.enter>0){e.enter-=dt;const k=Math.min(1,dt*3.5);e.x+=(e.gx+(G.form?G.form.ox:0)-e.x)*k;e.y+=(e.gy-e.y)*k}else{e.x=e.gx+G.form.ox;e.y=e.gy+Math.sin(G.form.t*2+e.gx*.05)*5}}
+    else if(e.sw){e.y+=e.vy*dt;e.x=e.cx+e.side*Math.sin(e.t*1.4+e.ph)*e.amp*.9;e.fireT-=dt;if(e.fireT<=0&&e.y>0&&e.y<H*.6){e.fireT=Math.max(.8,2.1-G.T*.8);const dx=G.sx-e.x,dy=G.sy-e.y,L=Math.hypot(dx,dy),v=G.u*(.4+G.T*.2);G.eb.push({x:e.x,y:e.y,vx:dx/L*v,vy:dy/L*v,r:G.u*.018,c:'#ff5ad0'})}if(e.y>H+50)e.gone=1}
     else if(e.k==='rock'){e.y+=e.vy*dt;e.x+=e.vx*dt;e.rot+=e.vr*dt;if(e.y>H+60)e.gone=1}
     if(e.k==='mboss'){if(e.y<e.gy)e.y+=(e.gy-e.y+20)*Math.min(1,dt*1.5);e.x=G.W/2+Math.sin(e.t*.8+e.ph)*G.W*.3;e.fireT-=dt;
-      if(e.fireT<=0&&e.y>0){e.fireT=1.7-G.T*.5;const a0=Math.atan2(G.sy-e.y,G.sx-e.x),v=G.u*(.38+G.T*.18);for(let i=-1;i<=1;i++){const a=a0+i*.22;G.eb.push({x:e.x,y:e.y+e.r*.5,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff8a3d'})}}}
+      if(e.fireT<=0&&e.y>0){e.fireT=Math.max(.7,1.5-G.T*.45);const a0=Math.atan2(G.sy-e.y,G.sx-e.x),v=G.u*(.38+G.T*.18);for(let i=-1;i<=1;i++){const a=a0+i*.22;G.eb.push({x:e.x,y:e.y+e.r*.5,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff8a3d'})}}}
     if(e.k==='mini'){e.y+=e.vy*dt;e.x+=Math.sin(e.t*3)*e.vx*dt;if(e.y>H+50)e.gone=1}
     if(!e.gone&&Math.hypot(e.x-G.sx,e.y-G.sy)<e.r+G.s*.6){if(G.inv<=0){spHurt(G);e.hp=0;spKill(G,e);e.gone=1}}}
   // boss
   const B=G.boss;if(B){B.t+=dt;if(B.hurt>0)B.hurt-=dt;const ph2=B.hp<B.max/2;
     if(B.in>0){B.in-=dt*.6;B.y+=(H*.2-B.y)*Math.min(1,dt*2.5)}else{B.x=W/2+Math.sin(B.t*(ph2?.95:.65))*Math.max(0,W/2-B.s*.6);B.y=H*.2+Math.sin(B.t*1.3)*G.u*.03;
-      B.atk-=dt;if(B.atk<=0){B.atk=(1.9-G.T*.6)*(ph2?.7:1);const p=B.pat++%4,v=G.u*(.36+G.T*.18)*(ph2?1.15:1);
+      B.atk-=dt;if(B.atk<=0){B.atk=Math.max(.75,(1.7-G.T*.55)*(ph2?.7:1));const p=B.pat++%4,v=G.u*(.36+G.T*.18)*(ph2?1.15:1);
         if(p===0){const a0=Math.atan2(G.sy-B.y,G.sx-B.x),n=ph2?7:5;for(let i=0;i<n;i++){const a=a0+(i-(n-1)/2)*.16;G.eb.push({x:B.x,y:B.y+B.s*.3,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff5ad0'})}}
         else if(p===1){const n=ph2?16:12,o=B.t;for(let i=0;i<n;i++){const a=o+i/n*6.283;G.eb.push({x:B.x,y:B.y,vx:Math.cos(a)*v*.8,vy:Math.sin(a)*v*.8,r:G.u*.02,c:'#ffd23f'})}}
         else if(p===2){for(let i=0;i<6;i++)G.eb.push({x:W*(.1+i*.16)+Math.random()*20,y:-10-i*30,vx:0,vy:v*.9,r:G.u*.024,c:'#7ef05a',goo:1})}
