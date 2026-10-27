@@ -1056,7 +1056,22 @@
   "sp_fairy": "Bosque de hadas",
   "sp_aurora": "Palacio de la aurora",
   "sp_pirate": "Barco pirata",
-  "sp_sakura": "Jardín de cerezos"
+  "sp_sakura": "Jardín de cerezos",
+  "ev_christmas": "Navidad",
+  "evs_christmas": "Navidad",
+  "cur_cane": "Bastones de caramelo",
+  "sk_t_snow": "Copos de nieve",
+  "evTries": "Intentos de hoy",
+  "evNoTry": "¡Sin intentos!",
+  "evTryWhy": "Perder una etapa gasta un intento. Ganar no.",
+  "evTryIn": "Nuevos intentos en {n}",
+  "evBuyTry": "+{n} intentos",
+  "evLater": "Luego",
+  "evMore": "Más intentos",
+  "evTryLeft": "Intentos para hoy: {n}",
+  "evPrize": "¡Supera las 10 etapas: Escudo Estrella!",
+  "evPrizeGot": "¡Escudo Estrella para tu nave!",
+  "evPrizeSub": "Tu nave se abre en el nivel 200"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",
@@ -2098,6 +2113,11 @@
   "Home sweet home": "Hogar, dulce hogar",
   "My house, my sofa, my rules!": "¡Mi casa, mi sofá, mis reglas!",
   "New backdrop": "Fondo nuevo",
-  "Ta-da! Look what's behind me now!": "¡Tachán! ¡Mira lo que hay detrás de mí!"
+  "Ta-da! Look what's behind me now!": "¡Tachán! ¡Mira lo que hay detrás de mí!",
+  "Santa hat": "Gorro de Papá Noel",
+  "Reindeer antlers": "Cuernos de reno",
+  "Candy cane": "Bastón de caramelo",
+  "Christmas surprise": "Sorpresa de Navidad",
+  "Ho ho ho! Look who's in the box!": "¡Jo, jo, jo! ¡Mira quién está en la caja!"
  }
 }

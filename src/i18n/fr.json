@@ -1056,7 +1056,22 @@
   "sp_fairy": "Forêt des fées",
   "sp_aurora": "Palais de l’aurore",
   "sp_pirate": "Bateau pirate",
-  "sp_sakura": "Jardin des cerisiers"
+  "sp_sakura": "Jardin des cerisiers",
+  "ev_christmas": "Noël",
+  "evs_christmas": "Noël",
+  "cur_cane": "Sucres d’orge",
+  "sk_t_snow": "Flocons",
+  "evTries": "Essais du jour",
+  "evNoTry": "Plus d’essais !",
+  "evTryWhy": "Perdre une étape coûte un essai. Gagner, non.",
+  "evTryIn": "Nouveaux essais dans {n}",
+  "evBuyTry": "+{n} essais",
+  "evLater": "Plus tard",
+  "evMore": "Plus d’essais",
+  "evTryLeft": "Essais restants : {n}",
+  "evPrize": "Finis les 10 étapes : Bouclier Étoile !",
+  "evPrizeGot": "Bouclier Étoile pour ton vaisseau !",
+  "evPrizeSub": "Ton vaisseau s’ouvre au niveau 200"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
@@ -2098,6 +2113,11 @@
   "Home sweet home": "Home sweet home",
   "My house, my sofa, my rules!": "Ma maison, mon canapé, mes règles !",
   "New backdrop": "Nouveau décor",
-  "Ta-da! Look what's behind me now!": "Tadaa ! Regarde ce qu’il y a derrière moi !"
+  "Ta-da! Look what's behind me now!": "Tadaa ! Regarde ce qu’il y a derrière moi !",
+  "Santa hat": "Bonnet de Père Noël",
+  "Reindeer antlers": "Bois de renne",
+  "Candy cane": "Sucre d’orge",
+  "Christmas surprise": "Surprise de Noël",
+  "Ho ho ho! Look who's in the box!": "Oh oh oh ! Regarde qui est dans la boîte !"
  }
 }

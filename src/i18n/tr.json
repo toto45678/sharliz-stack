@@ -1056,7 +1056,22 @@
   "sp_fairy": "Peri ormanı",
   "sp_aurora": "Kutup ışıkları sarayı",
   "sp_pirate": "Korsan gemisi",
-  "sp_sakura": "Kiraz bahçesi"
+  "sp_sakura": "Kiraz bahçesi",
+  "ev_christmas": "Noel",
+  "evs_christmas": "Noel",
+  "cur_cane": "Şeker bastonları",
+  "sk_t_snow": "Kar taneleri",
+  "evTries": "Bugünkü haklar",
+  "evNoTry": "Hakkın bitti!",
+  "evTryWhy": "Bir aşamayı kaybetmek bir hak götürür. Kazanmak götürmez.",
+  "evTryIn": "{n} sonra yeni haklar",
+  "evBuyTry": "+{n} hak",
+  "evLater": "Sonra",
+  "evMore": "Daha fazla hak",
+  "evTryLeft": "Bugün kalan hak: {n}",
+  "evPrize": "10 aşamayı bitir: Yıldız Kalkan!",
+  "evPrizeGot": "Uzay gemin için Yıldız Kalkan!",
+  "evPrizeSub": "Uzay gemin 200. bölümde açılır"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
@@ -2098,6 +2113,11 @@
   "Home sweet home": "Evim güzel evim",
   "My house, my sofa, my rules!": "Benim evim, benim kanepem, benim kurallarım!",
   "New backdrop": "Yeni arka plan",
-  "Ta-da! Look what's behind me now!": "Tataa! Bak arkamda şimdi ne var!"
+  "Ta-da! Look what's behind me now!": "Tataa! Bak arkamda şimdi ne var!",
+  "Santa hat": "Noel Baba şapkası",
+  "Reindeer antlers": "Ren geyiği boynuzu",
+  "Candy cane": "Şeker baston",
+  "Christmas surprise": "Noel sürprizi",
+  "Ho ho ho! Look who's in the box!": "Ho ho ho! Bak kutuda kim var!"
  }
 }

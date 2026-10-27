@@ -1056,7 +1056,22 @@
   "sp_fairy": "غابة الجنيّات",
   "sp_aurora": "قصر الشفق القطبي",
   "sp_pirate": "سفينة القراصنة",
-  "sp_sakura": "حديقة الكرز"
+  "sp_sakura": "حديقة الكرز",
+  "ev_christmas": "الكريسماس",
+  "evs_christmas": "الكريسماس",
+  "cur_cane": "عصي الحلوى",
+  "sk_t_snow": "ندف الثلج",
+  "evTries": "محاولات اليوم",
+  "evNoTry": "نفدت المحاولات!",
+  "evTryWhy": "الخسارة في محطة تأخذ محاولة. الفوز لا.",
+  "evTryIn": "محاولات جديدة بعد {n}",
+  "evBuyTry": "+{n} محاولات",
+  "evLater": "لاحقًا",
+  "evMore": "محاولات أكثر",
+  "evTryLeft": "المحاولات الباقية اليوم: {n}",
+  "evPrize": "أنهِ المحطات العشر: درع النجمة!",
+  "evPrizeGot": "درع النجمة لسفينتك الفضائية!",
+  "evPrizeSub": "سفينتك تُفتح في المرحلة 200"
  },
  "pairs": {
   "3D boss models (season 1)": "نماذج 3D للزعماء (الموسم 1)",
@@ -2098,6 +2113,11 @@
   "Home sweet home": "بيتي الحلو",
   "My house, my sofa, my rules!": "بيتي، أريكتي، قواعدي!",
   "New backdrop": "خلفية جديدة",
-  "Ta-da! Look what's behind me now!": "تا-دا! انظروا ماذا خلفي الآن!"
+  "Ta-da! Look what's behind me now!": "تا-دا! انظروا ماذا خلفي الآن!",
+  "Santa hat": "قبعة بابا نويل",
+  "Reindeer antlers": "قرون الرنة",
+  "Candy cane": "عصا الحلوى",
+  "Christmas surprise": "مفاجأة عيد الميلاد",
+  "Ho ho ho! Look who's in the box!": "هو هو هو! انظروا من في الصندوق!"
  }
 }

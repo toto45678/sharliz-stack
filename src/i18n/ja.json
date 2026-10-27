@@ -1056,7 +1056,22 @@
   "sp_fairy": "妖精の森",
   "sp_aurora": "オーロラ宮殿",
   "sp_pirate": "海賊船",
-  "sp_sakura": "桜の庭"
+  "sp_sakura": "桜の庭",
+  "ev_christmas": "クリスマス",
+  "evs_christmas": "クリスマス",
+  "cur_cane": "キャンディケイン",
+  "sk_t_snow": "雪の結晶",
+  "evTries": "今日のチャレンジ",
+  "evNoTry": "チャレンジ切れ!",
+  "evTryWhy": "負けるとチャレンジが1回減る。勝てば減らない。",
+  "evTryIn": "あと{n}で回復",
+  "evBuyTry": "+{n}回",
+  "evLater": "あとで",
+  "evMore": "もっとチャレンジ",
+  "evTryLeft": "今日の残り: {n}回",
+  "evPrize": "10ステージ全部クリアでスターシールド!",
+  "evPrizeGot": "宇宙船のスターシールド!",
+  "evPrizeSub": "宇宙船はレベル200で解放"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
@@ -2098,6 +2113,11 @@
   "Home sweet home": "わが家がいちばん",
   "My house, my sofa, my rules!": "わたしの家、わたしのソファ、わたしのルール！",
   "New backdrop": "新しい背景",
-  "Ta-da! Look what's behind me now!": "じゃーん！うしろを見て！"
+  "Ta-da! Look what's behind me now!": "じゃーん！うしろを見て！",
+  "Santa hat": "サンタ帽",
+  "Reindeer antlers": "トナカイのツノ",
+  "Candy cane": "キャンディケイン",
+  "Christmas surprise": "クリスマスのサプライズ",
+  "Ho ho ho! Look who's in the box!": "ホッホッホー！箱の中にいるのはだれかな？"
  }
 }

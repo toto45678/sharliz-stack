@@ -1056,7 +1056,22 @@
   "sp_fairy": "Feenwald",
   "sp_aurora": "Polarlicht-Palast",
   "sp_pirate": "Piratenschiff",
-  "sp_sakura": "Kirschblüten-Garten"
+  "sp_sakura": "Kirschblüten-Garten",
+  "ev_christmas": "Weihnachten",
+  "evs_christmas": "Weihnachten",
+  "cur_cane": "Zuckerstangen",
+  "sk_t_snow": "Schneeflocken",
+  "evTries": "Versuche heute",
+  "evNoTry": "Keine Versuche mehr!",
+  "evTryWhy": "Verlierst du eine Etappe, kostet das einen Versuch. Gewinnen nicht.",
+  "evTryIn": "Neue Versuche in {n}",
+  "evBuyTry": "+{n} Versuche",
+  "evLater": "Später",
+  "evMore": "Mehr Versuche",
+  "evTryLeft": "Versuche heute übrig: {n}",
+  "evPrize": "Alle 10 Etappen: Sternschild!",
+  "evPrizeGot": "Sternschild für dein Raumschiff!",
+  "evPrizeSub": "Dein Raumschiff kommt bei Level 200"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -2098,6 +2113,11 @@
   "Home sweet home": "Trautes Heim",
   "My house, my sofa, my rules!": "Mein Haus, mein Sofa, meine Regeln!",
   "New backdrop": "Neuer Hintergrund",
-  "Ta-da! Look what's behind me now!": "Tadaa! Schau mal, was jetzt hinter mir ist!"
+  "Ta-da! Look what's behind me now!": "Tadaa! Schau mal, was jetzt hinter mir ist!",
+  "Santa hat": "Weihnachtsmütze",
+  "Reindeer antlers": "Rentiergeweih",
+  "Candy cane": "Zuckerstange",
+  "Christmas surprise": "Weihnachtsüberraschung",
+  "Ho ho ho! Look who's in the box!": "Ho ho ho! Schau, wer in der Kiste ist!"
  }
 }

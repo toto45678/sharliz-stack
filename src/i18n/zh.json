@@ -1056,7 +1056,22 @@
   "sp_fairy": "仙子森林",
   "sp_aurora": "极光宫殿",
   "sp_pirate": "海盗船",
-  "sp_sakura": "樱花庭院"
+  "sp_sakura": "樱花庭院",
+  "ev_christmas": "圣诞节",
+  "evs_christmas": "圣诞节",
+  "cur_cane": "拐杖糖",
+  "sk_t_snow": "雪花",
+  "evTries": "今日次数",
+  "evNoTry": "次数用完了！",
+  "evTryWhy": "输掉一关会用掉一次，赢了不会。",
+  "evTryIn": "{n}后恢复次数",
+  "evBuyTry": "+{n}次",
+  "evLater": "等会儿",
+  "evMore": "更多次数",
+  "evTryLeft": "今天还剩{n}次",
+  "evPrize": "通关全部10关：星星护盾！",
+  "evPrizeGot": "给你飞船的星星护盾！",
+  "evPrizeSub": "飞船在第200关解锁"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",
@@ -2098,6 +2113,11 @@
   "Home sweet home": "甜蜜的家",
   "My house, my sofa, my rules!": "我的家，我的沙发，我做主！",
   "New backdrop": "新背景",
-  "Ta-da! Look what's behind me now!": "当当！看看我身后是什么！"
+  "Ta-da! Look what's behind me now!": "当当！看看我身后是什么！",
+  "Santa hat": "圣诞帽",
+  "Reindeer antlers": "驯鹿角",
+  "Candy cane": "拐杖糖",
+  "Christmas surprise": "圣诞惊喜",
+  "Ho ho ho! Look who's in the box!": "吼吼吼！看看盒子里是谁！"
  }
 }
