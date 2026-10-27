@@ -35,11 +35,10 @@ body{margin:0;overflow:hidden;background:radial-gradient(120% 70% at 50% 0%,#5a2
 /* opening: a frame of the ad video, "Your turn." */
 .intro{position:absolute;inset:0;z-index:2;cursor:pointer;background:#e9b6e8 url(img/hold_poster.webp) center/cover;transition:opacity .25s}
 .intro.gone{opacity:0;pointer-events:none}
-.intro .yt{position:absolute;left:0;right:0;bottom:12%;font:400 30px/1.05 "Titan One",sans-serif;font:400 clamp(26px,13cqw,40px)/1.05 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 #7a1d55,0 0 14px rgba(0,0,0,.45)}
+.intro .yt{position:absolute;left:0;right:0;bottom:12%;font:400 30px/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100vh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100svh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 #7a1d55,0 0 14px rgba(0,0,0,.45)}
 .intro .yt span{display:block;color:#fff;font-size:.62em;margin-top:6px;animation:pulse 1.2s ease-in-out infinite}
-.screen{container-type:size}
 /* the end: tower frozen mid-wobble, no answer */
-.cap{position:absolute;left:0;right:0;top:16%;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s;font:400 30px/1.05 "Titan One",sans-serif;font:400 clamp(26px,13cqw,40px)/1.05 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 #7a1d55,0 0 14px rgba(0,0,0,.45)}
+.cap{position:absolute;left:0;right:0;top:16%;z-index:2;pointer-events:none;opacity:0;transition:opacity .3s;font:400 30px/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100vh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;font:400 clamp(26px,calc((100svh - 210px)*.073),40px)/1.05 "Titan One",sans-serif;color:var(--yellow);text-shadow:0 3px 0 #7a1d55,0 0 14px rgba(0,0,0,.45)}
 .cap span{display:block;color:#fff;font-size:.55em;margin-top:8px}
 .cap.on{opacity:1}
 @keyframes pulse{50%{transform:scale(1.07)}}
