@@ -1071,7 +1071,23 @@
   "evTryLeft": "Sisa kesempatan hari ini: {n}",
   "evPrize": "Selesaikan 10 tahap: Perisai Bintang!",
   "evPrizeGot": "Perisai Bintang untuk pesawatmu!",
-  "evPrizeSub": "Pesawatmu terbuka di level 200"
+  "evPrizeSub": "Pesawatmu terbuka di level 200",
+  "cpRow": "Kode hadiah",
+  "cpEnter": "Masukkan",
+  "cpTitle": "Kode hadiah",
+  "cpSub": "Punya kode rahasia? Ketik di sini dan dapatkan hadiah!",
+  "cpGo": "Ambil hadiahku!",
+  "cpBad": "Hmm, kode itu tidak berhasil. Cek hurufnya dan coba lagi.",
+  "cpUsed": "Kamu sudah mendapat hadiah dari kode ini.",
+  "cpOld": "Kode ini sudah kedaluwarsa.",
+  "cpWait": "Terlalu banyak percobaan. Tunggu satu menit lalu coba lagi.",
+  "cpYay": "Hadiahmu!",
+  "cpCollect": "Ambil!",
+  "cpPacks": "paket stiker",
+  "cpGPacks": "paket emas",
+  "cpCookies": "kue",
+  "cpEgg": "telur",
+  "cpBoost": "dari setiap booster"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
@@ -2118,6 +2134,8 @@
   "Reindeer antlers": "Tanduk rusa kutub",
   "Candy cane": "Permen tongkat",
   "Christmas surprise": "Kejutan Natal",
-  "Ho ho ho! Look who's in the box!": "Ho ho ho! Lihat siapa di dalam kotak!"
+  "Ho ho ho! Look who's in the box!": "Ho ho ho! Lihat siapa di dalam kotak!",
+  "Secret code": "Kode rahasia",
+  "Psst... I know the magic word!": "Ssst... aku tahu kata ajaibnya!"
  }
 }

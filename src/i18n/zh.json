@@ -1071,7 +1071,23 @@
   "evTryLeft": "今天还剩{n}次",
   "evPrize": "通关全部10关：星星护盾！",
   "evPrizeGot": "给你飞船的星星护盾！",
-  "evPrizeSub": "飞船在第200关解锁"
+  "evPrizeSub": "飞船在第200关解锁",
+  "cpRow": "礼物码",
+  "cpEnter": "输入",
+  "cpTitle": "礼物码",
+  "cpSub": "有秘密代码吗？在这里输入就能领礼物！",
+  "cpGo": "领取礼物！",
+  "cpBad": "嗯，这个代码不能用。检查一下字母再试一次吧。",
+  "cpUsed": "你已经领过这个代码的礼物了。",
+  "cpOld": "这个代码已过期。",
+  "cpWait": "尝试次数太多了。等一分钟再试吧。",
+  "cpYay": "你的礼物！",
+  "cpCollect": "领取！",
+  "cpPacks": "贴纸包",
+  "cpGPacks": "金色贴纸包",
+  "cpCookies": "饼干",
+  "cpEgg": "蛋",
+  "cpBoost": "每种道具"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",
@@ -2118,6 +2134,8 @@
   "Reindeer antlers": "驯鹿角",
   "Candy cane": "拐杖糖",
   "Christmas surprise": "圣诞惊喜",
-  "Ho ho ho! Look who's in the box!": "吼吼吼！看看盒子里是谁！"
+  "Ho ho ho! Look who's in the box!": "吼吼吼！看看盒子里是谁！",
+  "Secret code": "秘密代码",
+  "Psst... I know the magic word!": "嘘……我知道魔法咒语！"
  }
 }

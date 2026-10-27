@@ -1071,7 +1071,23 @@
   "evTryLeft": "Tentativi rimasti oggi: {n}",
   "evPrize": "Finisci le 10 tappe: Scudo Stella!",
   "evPrizeGot": "Scudo Stella per la tua astronave!",
-  "evPrizeSub": "La tua astronave si apre al livello 200"
+  "evPrizeSub": "La tua astronave si apre al livello 200",
+  "cpRow": "Codice regalo",
+  "cpEnter": "Inserisci",
+  "cpTitle": "Codice regalo",
+  "cpSub": "Hai un codice segreto? Scrivilo qui e ricevi un regalo!",
+  "cpGo": "Voglio il regalo!",
+  "cpBad": "Mmm, questo codice non funziona. Controlla le lettere e riprova.",
+  "cpUsed": "Hai già ricevuto il regalo di questo codice.",
+  "cpOld": "Questo codice è scaduto.",
+  "cpWait": "Troppi tentativi. Aspetta un minuto e riprova.",
+  "cpYay": "Il tuo regalo!",
+  "cpCollect": "Prendi!",
+  "cpPacks": "bustine di adesivi",
+  "cpGPacks": "bustine d'oro",
+  "cpCookies": "biscotti",
+  "cpEgg": "uovo",
+  "cpBoost": "di ogni potenziamento"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",
@@ -2118,6 +2134,8 @@
   "Reindeer antlers": "Corna di renna",
   "Candy cane": "Bastoncino di zucchero",
   "Christmas surprise": "Sorpresa di Natale",
-  "Ho ho ho! Look who's in the box!": "Oh oh oh! Guarda chi c'è nella scatola!"
+  "Ho ho ho! Look who's in the box!": "Oh oh oh! Guarda chi c'è nella scatola!",
+  "Secret code": "Codice segreto",
+  "Psst... I know the magic word!": "Psst... conosco la parola magica!"
  }
 }

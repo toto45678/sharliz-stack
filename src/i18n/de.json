@@ -1071,7 +1071,23 @@
   "evTryLeft": "Versuche heute übrig: {n}",
   "evPrize": "Alle 10 Etappen: Sternschild!",
   "evPrizeGot": "Sternschild für dein Raumschiff!",
-  "evPrizeSub": "Dein Raumschiff kommt bei Level 200"
+  "evPrizeSub": "Dein Raumschiff kommt bei Level 200",
+  "cpRow": "Geschenkcode",
+  "cpEnter": "Eingeben",
+  "cpTitle": "Geschenkcode",
+  "cpSub": "Du hast einen Geheimcode? Tipp ihn hier ein und hol dir ein Geschenk!",
+  "cpGo": "Geschenk holen!",
+  "cpBad": "Hmm, der Code funktioniert nicht. Prüf die Buchstaben und versuch es nochmal.",
+  "cpUsed": "Das Geschenk von diesem Code hast du schon bekommen.",
+  "cpOld": "Dieser Code ist abgelaufen.",
+  "cpWait": "Zu viele Versuche. Warte eine Minute und versuch es nochmal.",
+  "cpYay": "Dein Geschenk!",
+  "cpCollect": "Einsammeln!",
+  "cpPacks": "Stickerpacks",
+  "cpGPacks": "goldene Packs",
+  "cpCookies": "Kekse",
+  "cpEgg": "Ei",
+  "cpBoost": "von jedem Booster"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
@@ -2118,6 +2134,8 @@
   "Reindeer antlers": "Rentiergeweih",
   "Candy cane": "Zuckerstange",
   "Christmas surprise": "Weihnachtsüberraschung",
-  "Ho ho ho! Look who's in the box!": "Ho ho ho! Schau, wer in der Kiste ist!"
+  "Ho ho ho! Look who's in the box!": "Ho ho ho! Schau, wer in der Kiste ist!",
+  "Secret code": "Geheimcode",
+  "Psst... I know the magic word!": "Psst... ich kenne das Zauberwort!"
  }
 }

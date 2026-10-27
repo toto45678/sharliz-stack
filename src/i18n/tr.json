@@ -1071,7 +1071,23 @@
   "evTryLeft": "Bugün kalan hak: {n}",
   "evPrize": "10 aşamayı bitir: Yıldız Kalkan!",
   "evPrizeGot": "Uzay gemin için Yıldız Kalkan!",
-  "evPrizeSub": "Uzay gemin 200. bölümde açılır"
+  "evPrizeSub": "Uzay gemin 200. bölümde açılır",
+  "cpRow": "Hediye kodu",
+  "cpEnter": "Gir",
+  "cpTitle": "Hediye kodu",
+  "cpSub": "Gizli bir kodun mu var? Buraya yaz, hediyeni al!",
+  "cpGo": "Hediyemi al!",
+  "cpBad": "Hmm, bu kod çalışmıyor. Harfleri kontrol edip tekrar dene.",
+  "cpUsed": "Bu kodun hediyesini zaten aldın.",
+  "cpOld": "Bu kodun süresi doldu.",
+  "cpWait": "Çok fazla deneme. Bir dakika bekleyip tekrar dene.",
+  "cpYay": "Hediyen!",
+  "cpCollect": "Topla!",
+  "cpPacks": "çıkartma paketi",
+  "cpGPacks": "altın paket",
+  "cpCookies": "kurabiye",
+  "cpEgg": "yumurta",
+  "cpBoost": "her güçlendiriciden"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",
@@ -2118,6 +2134,8 @@
   "Reindeer antlers": "Ren geyiği boynuzu",
   "Candy cane": "Şeker baston",
   "Christmas surprise": "Noel sürprizi",
-  "Ho ho ho! Look who's in the box!": "Ho ho ho! Bak kutuda kim var!"
+  "Ho ho ho! Look who's in the box!": "Ho ho ho! Bak kutuda kim var!",
+  "Secret code": "Gizli kod",
+  "Psst... I know the magic word!": "Pst... sihirli kelimeyi biliyorum!"
  }
 }

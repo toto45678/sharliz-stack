@@ -1071,7 +1071,23 @@
   "evTryLeft": "Tentativas de hoje: {n}",
   "evPrize": "Vença as 10 etapas: Escudo Estrela!",
   "evPrizeGot": "Escudo Estrela para sua nave!",
-  "evPrizeSub": "Sua nave abre na fase 200"
+  "evPrizeSub": "Sua nave abre na fase 200",
+  "cpRow": "Código de presente",
+  "cpEnter": "Digitar",
+  "cpTitle": "Código de presente",
+  "cpSub": "Tem um código secreto? Digite aqui e ganhe um presente!",
+  "cpGo": "Quero meu presente!",
+  "cpBad": "Hmm, esse código não funciona. Confira as letras e tente de novo.",
+  "cpUsed": "Você já ganhou o presente deste código.",
+  "cpOld": "Este código expirou.",
+  "cpWait": "Tentativas demais. Espere um minuto e tente de novo.",
+  "cpYay": "Seu presente!",
+  "cpCollect": "Pegar!",
+  "cpPacks": "pacotes de figurinhas",
+  "cpGPacks": "pacotes dourados",
+  "cpCookies": "biscoitos",
+  "cpEgg": "ovo",
+  "cpBoost": "de cada reforço"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",
@@ -2118,6 +2134,8 @@
   "Reindeer antlers": "Chifres de rena",
   "Candy cane": "Bengala doce",
   "Christmas surprise": "Surpresa de Natal",
-  "Ho ho ho! Look who's in the box!": "Ho ho ho! Olha quem está na caixa!"
+  "Ho ho ho! Look who's in the box!": "Ho ho ho! Olha quem está na caixa!",
+  "Secret code": "Código secreto",
+  "Psst... I know the magic word!": "Psiu... eu sei a palavra mágica!"
  }
 }

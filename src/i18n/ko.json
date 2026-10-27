@@ -1071,7 +1071,23 @@
   "evTryLeft": "오늘 남은 도전: {n}회",
   "evPrize": "10 스테이지 클리어: 별 방패!",
   "evPrizeGot": "우주선의 별 방패!",
-  "evPrizeSub": "우주선은 레벨 200에서 열려"
+  "evPrizeSub": "우주선은 레벨 200에서 열려",
+  "cpRow": "선물 코드",
+  "cpEnter": "입력",
+  "cpTitle": "선물 코드",
+  "cpSub": "비밀 코드가 있나요? 여기에 입력하고 선물을 받으세요!",
+  "cpGo": "선물 받기!",
+  "cpBad": "음, 이 코드는 안 돼요. 글자를 확인하고 다시 해 보세요.",
+  "cpUsed": "이 코드의 선물은 이미 받았어요.",
+  "cpOld": "이 코드는 기간이 끝났어요.",
+  "cpWait": "너무 많이 시도했어요. 1분 기다린 뒤 다시 해 보세요.",
+  "cpYay": "선물이에요!",
+  "cpCollect": "받기!",
+  "cpPacks": "스티커 팩",
+  "cpGPacks": "황금 팩",
+  "cpCookies": "쿠키",
+  "cpEgg": "알",
+  "cpBoost": "각 부스터"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",
@@ -2118,6 +2134,8 @@
   "Reindeer antlers": "루돌프 뿔",
   "Candy cane": "사탕 지팡이",
   "Christmas surprise": "크리스마스 깜짝 선물",
-  "Ho ho ho! Look who's in the box!": "호호호! 상자 안에 누가 있는지 봐!"
+  "Ho ho ho! Look who's in the box!": "호호호! 상자 안에 누가 있는지 봐!",
+  "Secret code": "비밀 코드",
+  "Psst... I know the magic word!": "쉿... 나 마법의 주문을 알아!"
  }
 }
