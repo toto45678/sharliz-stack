@@ -110,3 +110,11 @@ html.no-cq .sp-hangar{height:300px}
 .pin .sp-pin{position:absolute;top:-10px;inset-inline-end:-10px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#4ee6ff,#1b3fa8 72%);border:2.5px solid #120d2b;pointer-events:none}
 .pin .sp-pin svg{width:82%;height:82%}
 .sp-pre-ship{display:block;margin:-6px auto 2px;width:120px;height:96px}
+/* endless flight button + weapon card */
+#ship .sp-endless{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 2px;padding:10px 14px;border-radius:18px;border:3px solid #120d2b;background:linear-gradient(135deg,#ff6bd6,#8b5cff 60%,#4ee6ff);color:#fff;text-align:start;box-shadow:0 4px 0 #120d2b}
+#ship .sp-endless .sp-inf{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#120d2b;font:900 1.7rem/1 Lilita One,system-ui;color:#ffe24d}
+#ship .sp-endless .tx{display:flex;flex-direction:column;min-width:0}
+#ship .sp-endless b{font:400 1.15rem/1.1 Lilita One,system-ui;text-shadow:0 2px 0 rgba(18,13,43,.6)}
+#ship .sp-endless small{font:700 .78rem/1.25 Rubik,system-ui;opacity:.95}
+#ship .sp-wic{box-shadow:0 0 0 3px var(--wc,#ffd23f),0 0 14px var(--wc,#ffd23f)}
+#ship .sp-up .pips .sp-wn{font:800 .7rem/1 Rubik,system-ui;color:#c9b8ff;margin-inline-start:6px;font-style:normal;align-self:center}

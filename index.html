@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261027083848"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261027085834"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -2455,6 +2455,14 @@ html.no-cq .sp-hangar{height:300px}
 .pin .sp-pin{position:absolute;top:-10px;inset-inline-end:-10px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#4ee6ff,#1b3fa8 72%);border:2.5px solid #120d2b;pointer-events:none}
 .pin .sp-pin svg{width:82%;height:82%}
 .sp-pre-ship{display:block;margin:-6px auto 2px;width:120px;height:96px}
+/* endless flight button + weapon card */
+#ship .sp-endless{display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 2px;padding:10px 14px;border-radius:18px;border:3px solid #120d2b;background:linear-gradient(135deg,#ff6bd6,#8b5cff 60%,#4ee6ff);color:#fff;text-align:start;box-shadow:0 4px 0 #120d2b}
+#ship .sp-endless .sp-inf{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:#120d2b;font:900 1.7rem/1 Lilita One,system-ui;color:#ffe24d}
+#ship .sp-endless .tx{display:flex;flex-direction:column;min-width:0}
+#ship .sp-endless b{font:400 1.15rem/1.1 Lilita One,system-ui;text-shadow:0 2px 0 rgba(18,13,43,.6)}
+#ship .sp-endless small{font:700 .78rem/1.25 Rubik,system-ui;opacity:.95}
+#ship .sp-wic{box-shadow:0 0 0 3px var(--wc,#ffd23f),0 0 14px var(--wc,#ffd23f)}
+#ship .sp-up .pips .sp-wn{font:800 .7rem/1 Rubik,system-ui;color:#c9b8ff;margin-inline-start:6px;font-style:normal;align-self:center}
 
 </style>
 
@@ -11500,6 +11508,9 @@ function bgPreview(id){
    progress.ship={lv:{gun,rate,hull,mag},got:{id:1},intro}; a space level's stars live in progress.stars like any level.
    Charlie (Tzach's character) shows up in the hangar once art/sp_charlie.webp exists (SP_ART, injected by build.py). */
 Object.assign(I18N.en,{spName:'Space Patrol',spShort:'Space',spLvl:'Level {n}',spLockT:'Space Patrol',spLockP:'Your spaceship is waiting! It opens at level {n}.',spLockNow:'You are at level {n}',
+  wpn1:'Blaster',wpn2:'Zap laser',wpn3:'Fire cannon',wpn4:'Plasma',wpn5:'Ice shards',wpn6:'Rockets',wpn7:'Thunder beam',wpn8:'Star shooter',wpn9:'Sonic waves',wpn10:'Galaxy beam',
+  wps0:'one shot',wps1:'3 shots forward',wps2:'3 shots every way',wps3:'one giant shot',wpb0:'one thin laser',wpb1:'3 lasers',wpb2:'3 lasers every way',wpb3:'a giant laser pillar',spWLv:'level {n}/4',wpMax:'The strongest weapon!',
+  spEndless:'Endless flight',spEDesc:'Never ends, a boss every 5 waves',spEBest:'Best: wave {n}',spEWave:'You reached wave {n}!',spERec:'New record!',spENext:'Next world!',
   spOpenT:'Space Patrol is open!',spOpenP:'Before every boss you now fly your own spaceship: blast the monsters and beat the boss\'s big helper!',spGo:'To the garage',spOk:'OK',
   spLaunch:'Launch',spSector:'Space level {n}',spHelper:"{b}'s big helper",spSectors:'Space levels',spMap:'Map',spToBoss:'To the boss!',spMini:'Mini-boss!',spUps:'Ship upgrades',spEarn:'Earned by finishing',spEarnNote:'These can never be bought. Finish everything to earn them!',
   spMax:'MAX',spYours:'Yours!',spNew:'New ship part!',
@@ -11514,6 +11525,9 @@ Object.assign(I18N.en,{spName:'Space Patrol',spShort:'Space',spLvl:'Level {n}',s
   spWin:'Space level cleared!',spLose:'Ship down!',spCollected:'Coins collected',spFirst:'First clear bonus',spHangar:'Garage',spRetry:'Try again',
   spTipUp:'Tip: upgrade your ship in the garage',spGoal:'Clear 4 waves of monsters, then beat {b}',spSt1:'Win the space level',spSt2:'Lose at most 1 heart',spSt3:'Lose no hearts',spPause:'Paused',spResume:'Resume',spLeave:'Leave flight',spHowTo:'Drag to fly. Your ship shoots by itself!',spLocked:'Opens at level {n}'});
 Object.assign(I18N.he,{spName:'סיירת החלל',spShort:'חלל',spLvl:'שלב {n}',spLockT:'סיירת החלל',spLockP:'החללית שלכם מחכה! היא נפתחת בשלב {n}.',spLockNow:'אתם בשלב {n}',
+  wpn1:'בלאסטר',wpn2:'לייזר חשמלי',wpn3:'תותח אש',wpn4:'פלזמה',wpn5:'רסיסי קרח',wpn6:'טילים',wpn7:'קרן רעם',wpn8:'יורה כוכבים',wpn9:'גלי קול',wpn10:'קרן גלקסיה',
+  wps0:'ירייה אחת',wps1:'3 יריות קדימה',wps2:'3 יריות לכל כיוון',wps3:'ירייה אחת ענקית',wpb0:'לייזר דק אחד',wpb1:'3 לייזרים',wpb2:'3 לייזרים לכל כיוון',wpb3:'עמוד לייזר ענק',spWLv:'רמה {n}/4',wpMax:'הנשק הכי חזק!',
+  spEndless:'טיסה אינסופית',spEDesc:'לא נגמרת, בוס כל 5 גלים',spEBest:'שיא: גל {n}',spEWave:'הגעת לגל {n}!',spERec:'שיא חדש!',spENext:'לעולם הבא!',
   spOpenT:'סיירת החלל נפתחה!',spOpenP:'לפני כל בוס טסים עכשיו בחללית משלכם: מפוצצים מפלצות ומנצחים את העוזר הגדול של הבוס!',spGo:'למוסך',spOk:'אוקיי',
   spLaunch:'המראה',spSector:'שלב חלל {n}',spHelper:'העוזר הגדול של {b}',spSectors:'שלבי חלל',spMap:'מפה',spToBoss:'לבוס!',spMini:'מיני בוס!',spUps:'שדרוגים לחללית',spEarn:'מרוויחים רק בסיום',spEarnNote:'את אלה אי אפשר לקנות. מסיימים הכל ומרוויחים!',
   spMax:'מקס',spYours:'שלכם!',spNew:'חלק חדש לחללית!',
@@ -11541,7 +11555,8 @@ const SP_N=SP_LVS.length,SP_OPEN=SP_LVS[0];
 const spIsLv=L=>SP_LVS.includes(L),spK=L=>SP_LVS.indexOf(L),spLvOf=k=>SP_LVS[k];
 const spReached=k=>(typeof DEV_OPEN!=='undefined'&&DEV_OPEN)||(progress.unlocked||1)>=SP_LVS[k];
 const spSt=k=>progress.stars[SP_LVS[k]-1]||0;
-const SP_UP=[['gun',5,'ic_laser',[300,600,1000,1500,2200]],['rate',5,'ic_bolt',[250,500,850,1300,1900]],['hull',2,'ic_heart',[800,1800]],['mag',3,'ic_coins',[200,450,800]]];
+// gun = 40 steps: 10 weapons x 4 levels (v76 WEAPONS at the end); prices grow slowly so the last weapon is a long-term goal
+const SP_UP=[['gun',39,'ic_laser',Array.from({length:39},(_,i)=>Math.round(120*Math.pow(1.115,i)/10)*10)],['rate',5,'ic_bolt',[250,500,850,1300,1900]],['hull',2,'ic_heart',[800,1800]],['mag',3,'ic_coins',[200,450,800]]];
 const SP_DRONE='<svg viewBox="0 0 40 40" aria-hidden="true"><g stroke="#120d2b" stroke-width="2.5"><circle cx="11" cy="20" r="8" fill="#e8e4f5"/><circle cx="29" cy="20" r="8" fill="#e8e4f5"/></g><circle cx="11" cy="20" r="3.5" fill="#4ee6ff"/><circle cx="29" cy="20" r="3.5" fill="#4ee6ff"/><path d="M11 10V4M29 10V4" stroke="#ffd23f" stroke-width="3" stroke-linecap="round"/></svg>';
 const SP_EARN=['xmasShield','pod','drones','laser','gold','rainbow'];
 const SP_EIC={xmasShield:'ic_shield',pod:'ic_revive',drones:'svg',laser:'ic_laser',gold:'ic_heart',rainbow:'ic_star'};
@@ -11644,7 +11659,14 @@ function spDrawBoss(g,B,T){if(B.own){const im=hzPic('sp_help_'+B.sid),s=B.s;if(!
   g.strokeStyle='rgba(255,255,255,.85)';g.lineWidth=3;g.beginPath();g.arc(0,-s*.02,s*.56,0,7);g.stroke();g.lineWidth=5;g.strokeStyle='rgba(255,255,255,.7)';g.beginPath();g.arc(0,-s*.02,s*.44,-2.5,-1.8);g.stroke();
   if(B.hurt>0){g.globalCompositeOperation='lighter';g.globalAlpha=B.hurt*3;g.fillStyle='#fff';g.beginPath();g.arc(0,-s*.02,s*.56,0,7);g.fill()}
   g.restore()}
-function spRock(g,e){g.save();g.translate(e.x,e.y);g.rotate(e.rot);g.fillStyle=e.hit>0?'#d8c8b8':'#8a7a6e';g.strokeStyle='#201c24';g.lineWidth=3;g.beginPath();e.pts.forEach((p,i)=>{const a=i/e.pts.length*6.283;g.lineTo(Math.cos(a)*e.r*p,Math.sin(a)*e.r*p)});g.closePath();g.fill();g.stroke();
+/* enemy shots + rocks as pictures (Tzach, Oct 27: 'graphics for everything that flies at you'): sp_eb_<zap|goo|fire|star> for the monsters' shots,
+   sp_eb_<sid> for that world's big helper (else the generic one), sp_rock_<sid> / sp_rock_1..3 for rocks. Code shapes until the art exists. */
+const SP_EBK={'#ff5ad0':'zap','#ff8a3d':'fire','#ffd23f':'star'};
+function spEbPic(g,G,b){const k=b.goo?'goo':SP_EBK[b.c]||'zap',n=(b.bs&&SP_ART.includes('sp_eb_'+G.sid))?'sp_eb_'+G.sid:'sp_eb_'+k;if(!SP_ART.includes(n))return false;const im=hzPic(n);if(!im)return false;
+  const S=b.r*3.2,a=Math.atan2(b.vy,b.vx)-Math.PI/2;g.save();g.translate(b.x,b.y);g.rotate(k==='star'?(G.el||0)*6:a);g.drawImage(im,-S/2,-S/2*im.height/im.width,S,S*im.height/im.width);g.restore();return true}
+function spRockPic(g,e){const sid=SPG&&SPG.sid,n=sid&&SP_ART.includes('sp_rock_'+sid)?'sp_rock_'+sid:'sp_rock_'+(1+(e.pts.length%3));if(!SP_ART.includes(n))return false;const im=hzPic(n);if(!im)return false;
+  const S=e.r*2.3;g.save();g.translate(e.x,e.y);g.rotate(e.rot);if(e.hit>0)g.globalAlpha=.75;g.drawImage(im,-S/2,-S/2,S,S);g.restore();return true}
+function spRock(g,e){if(spRockPic(g,e))return;g.save();g.translate(e.x,e.y);g.rotate(e.rot);g.fillStyle=e.hit>0?'#d8c8b8':'#8a7a6e';g.strokeStyle='#201c24';g.lineWidth=3;g.beginPath();e.pts.forEach((p,i)=>{const a=i/e.pts.length*6.283;g.lineTo(Math.cos(a)*e.r*p,Math.sin(a)*e.r*p)});g.closePath();g.fill();g.stroke();
   g.fillStyle='rgba(0,0,0,.18)';g.beginPath();g.arc(e.r*.25,-e.r*.2,e.r*.22,0,7);g.arc(-e.r*.3,e.r*.25,e.r*.15,0,7);g.fill();g.restore()}
 // starfield background (3 layers) + a slow planet
 function spSky(G,g,dt){const W=G.W,H=G.H;if(!G.stars){G.stars=[];for(let i=0;i<110;i++)G.stars.push({x:Math.random()*W,y:Math.random()*H,z:1+Math.floor(Math.random()*3)})}
@@ -11687,7 +11709,6 @@ function spHub(){spStop();spHubStop();const r=spRoot(),D=spD();r.className='sp-h
   r.querySelector('.sp-title').textContent=t('spName');r.querySelector('.coin-pill span').textContent=progress.coins;const x=r.querySelector('.sp-x');x.innerHTML=XSVG;x.onclick=()=>{sfx.click();closeShip()};
   const hs=r.querySelectorAll('.sp-h');hs[0].textContent=t('spSectors');hs[1].textContent=t('spUps');hs[2].textContent=t('spEarn');r.querySelector('.sp-note').textContent=t('spEarnNote');
   // Charlie: waits for his art (Tzach will bring his look)
-  if(SP_ART.includes('sp_charlie')){const ch=r.querySelector('.sp-charlie');ch.hidden=false;ch.querySelector('img').src='art/sp_charlie.webp'}
   const go=r.querySelector('.sp-go');go.querySelector('span').textContent=t('spLaunch');go.onclick=()=>{sfx.click();spPlay(SPV.sel)};
   spSecInfo();
   // sectors strip
@@ -11703,15 +11724,31 @@ function spHub(){spStop();spHubStop();const r=spRoot(),D=spD();r.className='sp-h
     // the hangar picture (cover fit, its landing pad at 58% / 75%), else the starfield
     const hg=SP_ART.includes('sp_hangar')&&hzPic('sp_hangar');let px=H.W/2,py=H.H*.5;
     if(hg){const k=Math.max(H.W/hg.naturalWidth,H.H/hg.naturalHeight),iw=hg.naturalWidth*k,ih=hg.naturalHeight*k,ix=(H.W-iw)/2,iy=(H.H-ih)*.7;g.drawImage(hg,ix,iy,iw,ih);px=ix+iw*.58;py=Math.min(H.H*.62,iy+ih*.75-H.H*.16)}else spSky(H,g,dt*.4);
-    const s=Math.min(H.W*.2,H.H*.32);spDrawShip(g,px,py+Math.sin(H.t*1.6)*6,s,spShipLook(H.t,{tilt:Math.sin(H.t*.8)*.25,shield:spHas('xmasShield')?1:0}));H.raf=requestAnimationFrame(loop)};H.raf=requestAnimationFrame(loop)}
-function spShipLook(T,o){return Object.assign({t:T,gun:spLv('gun'),hull:spLv('hull'),mag:spLv('mag'),gold:spHas('gold'),drones:spHas('drones'),rainbow:spHas('rainbow'),pod:spHas('pod')},o||{})}
+    spGarage(g,H,px,py,dt);H.raf=requestAnimationFrame(loop)};H.raf=requestAnimationFrame(loop)}
+/* GARAGE SCENE (Tzach, Oct 27 08:56): a long shot of the workshop. The ship (it shows every upgrade you bought) stands big on the pad,
+   Charlie the garage boss sits small at its foot and works on it (art/sp_charlie_1..3 = work frames, else sp_charlie; Tzach's own character,
+   drawn by the graphics department from his drawings in /mnt/project-files/game/space-shooter/charlie-ref/), and the player's own Sharliz
+   floats around him. Buying an upgrade = sparks + a flash on the ship (H.up). */
+function spGarage(g,H,px,py,dt){const ch=['sp_charlie_1','sp_charlie_2','sp_charlie_3'].filter(n=>SP_ART.includes(n)),one=SP_ART.includes('sp_charlie'),hasC=ch.length||one;
+  const s=Math.min(H.W*(hasC?.24:.2),H.H*(hasC?.36:.32)),sx=px+(hasC?H.W*.08:0),sy=py+Math.sin(H.t*1.1)*3;
+  spDrawShip(g,sx,sy,s,spShipLook(H.t,{tilt:Math.sin(H.t*.5)*.08,shield:spHas('xmasShield')?1:0,flame:.15}));
+  if(H.up>0){H.up-=dt;const k=Math.max(0,H.up);g.save();g.globalCompositeOperation='lighter';const gr=g.createRadialGradient(sx,sy,0,sx,sy,s*1.6);gr.addColorStop(0,`rgba(255,240,170,${.55*k})`);gr.addColorStop(1,'rgba(255,240,170,0)');g.fillStyle=gr;g.fillRect(sx-s*2,sy-s*2,s*4,s*4);
+    for(let i=0;i<14;i++){const a=i*2.4+H.t*3,r=s*(.3+(1-k)*1.3);g.fillStyle=i%2?'#ffd23f':'#fff';g.globalAlpha=k;g.beginPath();g.arc(sx+Math.cos(a)*r,sy+Math.sin(a)*r*.8,s*.035,0,7);g.fill()}g.restore()}
+  const fx=sx-s*1.15,fy=sy+s*.6;// Charlie's spot: on the floor at the ship's left foot
+  const a=H.t*.8,depth=Math.sin(a),hx=fx+Math.cos(a)*s*.62,hy=fy-s*.62+depth*s*.12+Math.sin(H.t*2.3)*s*.04,hs=s*(.36+.05*depth);
+  const hero=()=>{try{const h=spHero();withCtx(g,hs,()=>drawSharliz(h,hx,hy,Math.cos(a)*.12,'happy',{x:-Math.sin(a)*.5,y:0},0))}catch(e){}};
+  if(depth<0)hero();
+  if(hasC){const n=ch.length?ch[Math.floor(H.t*3)%ch.length]:'sp_charlie',im=hzPic(n);if(im){const w=s*.95,h=w*im.naturalHeight/im.naturalWidth;
+    g.save();g.fillStyle='rgba(18,13,43,.35)';g.beginPath();g.ellipse(fx,fy,w*.42,w*.08,0,0,7);g.fill();g.drawImage(im,fx-w/2,fy-h,w,h);g.restore();H.cx=fx;H.cy=fy-h}}
+  if(depth>=0)hero()}
+function spShipLook(T,o){return Object.assign({t:T,gun:spShipG(spLv('gun')),hull:spLv('hull'),mag:spLv('mag'),gold:spHas('gold'),drones:spHas('drones'),rainbow:spHas('rainbow'),pod:spHas('pod')},o||{})}
 function spSecInfo(){const r=SPEL;if(!r)return;const k=SPV.sel;r.querySelector('.sp-secname b').textContent=t('spSector',{n:spLvOf(k)});r.querySelector('.sp-secname small').textContent=t(ZONES[Math.floor((spLvOf(k)-1)/LPZ)].key)}
 function spUpsRender(){const r=SPEL,U=r.querySelector('.sp-ups');U.innerHTML='';
   SP_UP.forEach(([id,max,ic,pr])=>{const L=spLv(id),c=document.createElement('div');c.className='sp-up';
     c.innerHTML=`<span class="ic"><img src="art/${ic}.webp" alt=""></span><span class="tx"><b></b><small></small><span class="pips">${Array.from({length:max},(_,i)=>`<i class="${i<L?'on':''}"></i>`).join('')}</span></span><button class="btn"></button>`;
     c.querySelector('b').textContent=t('up_'+id);c.querySelector('small').textContent=t('ud_'+id);const b=c.querySelector('button');
     if(L>=max){b.textContent=t('spMax');b.disabled=true;b.className='btn sp-max'}else{const p=pr[L];b.innerHTML=`${coinImg()}<em>${p.toLocaleString()}</em>`;b.className='btn primary'+((progress.coins||0)<p?' poor':'');
-      b.onclick=()=>{if((progress.coins||0)<p){sfx.locked();popupToast(t('needCoins'));return}progress.coins-=p;spD().lv[id]=L+1;saveProgress();updateWalletUI();sfx.flourish&&sfx.flourish(3);r.querySelector('.coin-pill span').textContent=progress.coins;spUpsRender();
+      b.onclick=()=>{if((progress.coins||0)<p){sfx.locked();popupToast(t('needCoins'));return}progress.coins-=p;spD().lv[id]=L+1;if(SPH)SPH.up=1.2;saveProgress();updateWalletUI();sfx.flourish&&sfx.flourish(3);r.querySelector('.coin-pill span').textContent=progress.coins;spUpsRender();
         const n=r.querySelectorAll('.sp-up')[SP_UP.findIndex(u=>u[0]===id)];if(n){n.classList.add('pop');}}}
     U.appendChild(c)})}
 function spEarnRender(nw){const r=SPEL,E=r.querySelector('.sp-earn');E.innerHTML='';
@@ -11726,7 +11763,8 @@ function spStop(){if(SPG){SPG.dead=true;cancelAnimationFrame(SPG.raf);if(SPG.off
 const spTier=k=>Math.min(1.5,k/21);
 // Tzach (Oct 27): 'with the upgrades I beat it in a moment' -> the enemies grow with your ship: every bought upgrade level adds to the tier (shots, speed, aim),
 // and enemy/boss hit points scale with your firepower (shots x damage x fire rate), so upgrades make it fun and fast, not trivial
-const spUpT=()=>Math.min(.9,.06*(spLv('gun')+spLv('rate')+spLv('hull')+spLv('mag')));
+const spUpT=()=>Math.min(.9,.05*(spLv('gun')/3+spLv('rate')+spLv('hull')+spLv('mag')));
+const spShipG=L=>Math.min(5,Math.floor(L/7));// ship picture g0..g5 across the 40 gun steps
 function spPower(){const [n,d]=spGunPat(spLv('gun')+(spHas('rainbow')?1:0));return n*d*(1+.14*spLv('rate'))*(spHas('laser')?1.3:1)}
 // longer too (Tzach): 4 waves at level 89, one more every 3 space levels, up to 10 waves; then the boss's big helper
 function spWaves(k){const T=spTier(k)+spUpT(),R=Math.min(5,3+Math.floor(T*2)),X=Math.min(6,Math.floor(k/3)),M=T>.5?2:1,
@@ -11756,7 +11794,7 @@ function spPause(G){if(G.over)return;G.pause=true;const p=document.createElement
   p.querySelector('.sp-res').onclick=()=>{sfx.click();p.remove();G.pause=false;G.last=performance.now()};p.querySelector('.sp-lv').onclick=()=>{sfx.click();spExit()};G.r.appendChild(p)}
 function spBanner(G,a,b,dur){const o=G.r.querySelector('.sp-ban');if(o)o.remove();const d=document.createElement('div');d.className='sp-ban';d.innerHTML='<b></b><small></small>';d.querySelector('b').textContent=a;d.querySelector('small').textContent=b||'';G.st.appendChild(d);setTimeout(()=>d.remove(),(dur||1.6)*1000)}
 function spHUD(G){const r=G.r,h=r.querySelector('.sp-hearts');let s='';for(let i=0;i<G.maxH;i++)s+=`<img class="${i<G.hearts?'':'off'}" src="art/ic_heart.webp" alt="">`;if(h.dataset.k!==s){h.dataset.k=s;h.innerHTML=s}
-  r.querySelector('.sp-coins b').textContent=G.coins;const w=G.waves[G.wi],wv=r.querySelector('.sp-wave'),txt=w&&w.f==='boss'?t('spBossW'):t('spWave',{a:Math.max(1,G.wi+1),b:G.waves.length-1});if(wv.textContent!==txt)wv.textContent=txt;wv.classList.toggle('boss',!!(w&&w.f==='boss'))}
+  r.querySelector('.sp-coins b').textContent=G.coins;const w=G.waves[G.wi],wv=r.querySelector('.sp-wave'),txt=w&&w.f==='boss'?t('spBossW'):t('spWave',{a:Math.max(1,G.wi+1),b:G.endless?'∞':G.waves.length-1});if(wv.textContent!==txt)wv.textContent=txt;wv.classList.toggle('boss',!!(w&&w.f==='boss'))}
 function spMon(G,k,x,y,o){const T=G.T,kind=1+(k%4),hp=Math.round((2+T*2.5+(kind===4?1:0))*Math.pow(G.pf||1,.7));return Object.assign({k:'mon',pic:(SP_ART.includes('sp_mon'+kind)?'sp_mon':'arc_mon')+kind,x,y,hp,max:hp,r:G.u*.055,t:0,hit:0},o)}
 // the world's mini-boss: its own picture once the graphics department draws it (sp_mini_<sid>_n), else a big minion
 function spMiniBoss(G,i){const n=1+(i%2),own=SP_ART.includes('sp_mini_'+G.sid+'_'+n),hp=Math.round((16+G.T*36)*Math.pow(G.pf||1,.85));
@@ -11764,7 +11802,7 @@ function spMiniBoss(G,i){const n=1+(i%2),own=SP_ART.includes('sp_mini_'+G.sid+'_
 function spNextWave(G){G.wi++;const w=G.waves[G.wi];spHUD(G);if(!w)return spWin(G);const T=G.T,W=G.W,H=G.H;G.wt=0;G.spawnQ=[];
   if(w.f==='boss'){spBanner(G,t('spBossW'),t('spHelper',{b:spBossName(G.k)}),1.8);if(sfx.ok())sfx.roar&&sfx.roar();const sid=G.sid,hp=Math.round((90+G.T*320)*Math.pow(G.pf||1,.85)),own=SP_ART.includes('sp_help_'+sid);
     G.boss={sid,own,x:W/2,y:-G.u*.4,s:G.u*(own?.4:.32),hp,max:hp,t:0,atk:1.6,pat:0,hurt:0,in:1};const bh=G.r.querySelector('.sp-bhp');bh.hidden=false;bh.querySelector('img').src='art/'+(own?'sp_help_':'boss_')+sid+'.webp';return}
-  spBanner(G,t('spWave',{a:G.wi+1,b:G.waves.length-1}),'',1.2);
+  spBanner(G,t('spWave',{a:G.wi+1,b:G.endless?'∞':G.waves.length-1}),'',1.2);
   const form=f=>{const cw=Math.min(W*.8/f.cols,G.u*.15),x0=W/2-cw*(f.cols-1)/2;G.form={ox:0,t:0,fire:(.4+T*1.2)*(f.fire||1)};
     for(let rr=0;rr<f.rows;rr++)for(let cc=0;cc<f.cols;cc++){const m=spMon(G,rr+cc,x0+cc*cw,-40-rr*40,{f:1,gx:x0+cc*cw,gy:H*.1+rr*cw*.85+G.u*.05,enter:.4+cc*.06+rr*.15});G.en.push(m)}};
   if(w.mini)for(let i=0;i<w.mini;i++)G.spawnQ.push({at:1.2+i*2.5,mk:()=>{spBanner(G,t('spMini'),'',1);if(sfx.ok())tone({f:180,f2:90,d:.4,type:'sawtooth',v:.05});return spMiniBoss(G,i)}});
@@ -11775,7 +11813,7 @@ function spNextWave(G){G.wi++;const w=G.waves[G.wi];spHUD(G);if(!w)return spWin(
 function spGunPat(L){return[[1,1],[2,1],[3,1],[3,1.3],[4,1.3],[5,1.3],[5,1.6],[7,1.6]][Math.min(7,L)]}
 // shot looks grow with power (Tzach: 'evolve into lasers, fire...'): 1 yellow bolt, 2 orange plasma, 3 cyan laser, 4 pink laser, 5 fireball, 6 rainbow lightning
 const SP_TIER=[1,2,2,3,4,5,5,6],SP_TC=[null,['#fff6a8','#ffd23f'],['#ffe0a0','#ff8a3d'],['#e8ffff','#4ee6ff'],['#ffe6f6','#ff4fb8'],['#fff2b0','#ff5a1f'],['#ffffff','#b36bff']];
-const spTierOf=L=>Math.max(SP_TIER[Math.min(7,L)],spHas('laser')?3:1);
+let spTierOf=L=>Math.max(SP_TIER[Math.min(7,L)],spHas('laser')?3:1);
 function spShoot(G){const L=spLv('gun')+G.pw,[n,dmg]=spGunPat(L),v=G.u*1.6,x=G.sx,y=G.sy-G.s*.9,pr=spHas('laser')?2:0,tr=spTierOf(L);G.flash=.08;G.ftier=tr;
   for(let i=0;i<n;i++){const off=i-(n-1)/2,par=n===2||(n===4&&Math.abs(off)<1);const a=par?0:off*.11,dx=par?off*G.s*.55:off*G.s*.2;G.bul.push({x:x+dx,y,vx:Math.sin(a)*v,vy:-Math.cos(a)*v,dmg,pierce:pr,hit:[],t:tr})}
   if(sfx.ok()&&!(G.shotN=(G.shotN||0)+1)%3)tone({f:880,f2:1300,d:.04,type:'square',v:.012})}
@@ -11818,17 +11856,17 @@ function spTick(G,dt){const W=G.W,H=G.H;G.el+=dt;
   const B=G.boss;if(B){B.t+=dt;if(B.hurt>0)B.hurt-=dt;const ph2=B.hp<B.max/2;
     if(B.in>0){B.in-=dt*.6;B.y+=(H*.2-B.y)*Math.min(1,dt*2.5)}else{B.x=W/2+Math.sin(B.t*(ph2?.95:.65))*Math.max(0,W/2-B.s*.6);B.y=H*.2+Math.sin(B.t*1.3)*G.u*.03;
       B.atk-=dt;if(B.atk<=0){B.atk=Math.max(.75,(1.7-G.T*.55)*(ph2?.7:1));const p=B.pat++%4,v=G.u*(.36+G.T*.18)*(ph2?1.15:1);
-        if(p===0){const a0=Math.atan2(G.sy-B.y,G.sx-B.x),n=ph2?7:5;for(let i=0;i<n;i++){const a=a0+(i-(n-1)/2)*.16;G.eb.push({x:B.x,y:B.y+B.s*.3,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff5ad0'})}}
-        else if(p===1){const n=ph2?16:12,o=B.t;for(let i=0;i<n;i++){const a=o+i/n*6.283;G.eb.push({x:B.x,y:B.y,vx:Math.cos(a)*v*.8,vy:Math.sin(a)*v*.8,r:G.u*.02,c:'#ffd23f'})}}
-        else if(p===2){for(let i=0;i<6;i++)G.eb.push({x:W*(.1+i*.16)+Math.random()*20,y:-10-i*30,vx:0,vy:v*.9,r:G.u*.024,c:'#7ef05a',goo:1})}
+        if(p===0){const a0=Math.atan2(G.sy-B.y,G.sx-B.x),n=ph2?7:5;for(let i=0;i<n;i++){const a=a0+(i-(n-1)/2)*.16;G.eb.push({x:B.x,y:B.y+B.s*.3,vx:Math.cos(a)*v,vy:Math.sin(a)*v,r:G.u*.02,c:'#ff5ad0',bs:1})}}
+        else if(p===1){const n=ph2?16:12,o=B.t;for(let i=0;i<n;i++){const a=o+i/n*6.283;G.eb.push({x:B.x,y:B.y,vx:Math.cos(a)*v*.8,vy:Math.sin(a)*v*.8,r:G.u*.02,c:'#ffd23f',bs:1})}}
+        else if(p===2){for(let i=0;i<6;i++)G.eb.push({x:W*(.1+i*.16)+Math.random()*20,y:-10-i*30,vx:0,vy:v*.9,r:G.u*.024,c:'#7ef05a',goo:1,bs:1})}
         else if(G.en.length<4){for(let i=0;i<3;i++)G.en.push(spMon(G,i+G.k,B.x+(i-1)*B.s*.5,B.y+B.s*.3,{k:'mini',vy:G.u*(.2+G.T*.1),vx:G.u*.6,hp:1,max:1}))}
         if(sfx.ok())tone({f:220,f2:140,d:.18,type:'sawtooth',v:.04,filter:900})}}
     if(Math.hypot(B.x-G.sx,B.y-G.sy)<B.s*.45+G.s*.5)spHurt(G);
     G.r.querySelector('.sp-bhp i').style.width=Math.max(0,100*B.hp/B.max)+'%'}
   // player bullets
   for(const b of G.bul){b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.y<-20||b.x<-20||b.x>W+20){b.gone=1;continue}
-    for(const e of G.en){if(e.gone||e.hp<=0||b.hit.includes(e))continue;if((e.f&&e.enter>0&&e.y<0))continue;if(Math.hypot(b.x-e.x,b.y-e.y)<e.r+4){e.hp-=b.dmg;e.hit=.08;b.hit.push(e);spAnim(G,'sp_hit_',3,b.x,b.y-4,G.u*.07,.18);if(e.hp<=0){e.gone=1;spKill(G,e)}if(b.pierce--<=0){b.gone=1;break}}}
-    if(!b.gone&&B&&B.in<=0&&Math.hypot(b.x-B.x,b.y-B.y)<B.s*.48){B.hp-=b.dmg;B.hurt=.1;b.gone=1;spAnim(G,'sp_hit_',3,b.x,b.y,G.u*.08,.18);if(sfx.ok()&&Math.random()<.2)noise({d:.04,v:.03,hp:2000});if(B.hp<=0){spBossDown(G);break}}}
+    for(const e of G.en){if(e.gone||e.hp<=0||b.hit.includes(e))continue;if((e.f&&e.enter>0&&e.y<0))continue;if(Math.hypot(b.x-e.x,b.y-e.y)<e.r+(b.rad||4)){e.hp-=b.dmg;e.hit=.08;b.hit.push(e);spAnim(G,'sp_hit_',3,b.x,b.y-4,G.u*.07,.18);if(e.hp<=0){e.gone=1;spKill(G,e)}if(b.pierce--<=0){b.gone=1;break}}}
+    if(!b.gone&&B&&B.in<=0&&Math.hypot(b.x-B.x,b.y-B.y)<B.s*.48+(b.rad||0)){B.hp-=b.dmg;B.hurt=.1;b.gone=1;spAnim(G,'sp_hit_',3,b.x,b.y,G.u*.08,.18);if(sfx.ok()&&Math.random()<.2)noise({d:.04,v:.03,hp:2000});if(B.hp<=0){spBossDown(G);break}}}
   G.bul=G.bul.filter(b=>!b.gone);G.en=G.en.filter(e=>!e.gone);
   // enemy shots
   const hr=G.s*.35;for(const b of G.eb){b.x+=b.vx*dt;b.y+=b.vy*dt;if(b.y>H+20||b.y<-80||b.x<-20||b.x>W+20)b.gone=1;else if(Math.hypot(b.x-G.sx,b.y-G.sy)<b.r+hr){b.gone=1;spHurt(G)}}G.eb=G.eb.filter(b=>!b.gone);
@@ -11850,9 +11888,9 @@ function spDraw(G){const g=G.g,W=G.W,H=G.H;g.setTransform(G.d,0,0,G.d,0,0);spSky
     // tiny space helmet on every minion
     g.globalAlpha=1;if(/^sp_/.test(e.pic)){g.restore();continue}g.fillStyle='rgba(170,220,255,.13)';g.strokeStyle='rgba(220,240,255,.55)';g.lineWidth=2;g.beginPath();g.arc(0,0,r*1.02,0,7);g.fill();g.stroke();g.strokeStyle='rgba(255,255,255,.8)';g.lineWidth=3;g.beginPath();g.arc(0,0,r*.8,3.7,4.4);g.stroke();g.restore()}
   if(G.boss)spDrawBoss(g,G.boss,G.el);
-  for(const b of G.eb){g.fillStyle=b.c;g.strokeStyle='#201c24';g.lineWidth=2;g.beginPath();if(b.goo)g.ellipse(b.x,b.y,b.r*.85,b.r*1.15,0,0,7);else g.arc(b.x,b.y,b.r,0,7);g.fill();g.stroke();g.fillStyle='rgba(255,255,255,.7)';g.beginPath();g.arc(b.x-b.r*.3,b.y-b.r*.3,b.r*.3,0,7);g.fill()}
+  for(const b of G.eb){if(spEbPic(g,G,b))continue;g.fillStyle=b.c;g.strokeStyle='#201c24';g.lineWidth=2;g.beginPath();if(b.goo)g.ellipse(b.x,b.y,b.r*.85,b.r*1.15,0,0,7);else g.arc(b.x,b.y,b.r,0,7);g.fill();g.stroke();g.fillStyle='rgba(255,255,255,.7)';g.beginPath();g.arc(b.x-b.r*.3,b.y-b.r*.3,b.r*.3,0,7);g.fill()}
   spDrawShots(G,g);
-  if(!G.over||G.won){const blink=G.inv>0&&Math.floor(G.el*14)%2;if(!blink)spDrawShip(g,G.sx,G.sy,G.s,spShipLook(G.el,{tilt:G.tilt,shield:G.shield,mood:G.inv>0?'scared':'happy',drones:spHas('drones'),pod:G.pod,gun:Math.min(5,spLv('gun')+G.pw)}))}
+  if(!G.over||G.won){const blink=G.inv>0&&Math.floor(G.el*14)%2;if(!blink)spDrawShip(g,G.sx,G.sy,G.s,spShipLook(G.el,{tilt:G.tilt,shield:G.shield,mood:G.inv>0?'scared':'happy',drones:spHas('drones'),pod:G.pod,gun:spShipG(spLv('gun')+G.pw)}))}
   spDrawAnims(G,g);
   for(const p of G.fx){g.globalAlpha=Math.max(0,p.life*2);g.fillStyle=p.c;g.beginPath();g.arc(p.x,p.y,p.s,0,7);g.fill()}g.globalAlpha=1;
   g.textAlign='center';g.font=`${Math.round(G.u*.06)}px "Lilita One","Secular One",system-ui,sans-serif`;for(const p of G.txt){g.globalAlpha=Math.min(1,p.life*2);g.lineWidth=5;g.strokeStyle='#120d2b';g.strokeText(p.s,p.x,p.y);g.fillStyle=p.c;g.fillText(p.s,p.x,p.y)}g.globalAlpha=1;
@@ -11900,6 +11938,109 @@ function spIntroMaybe(){const D=spD();if(D.intro||!spOpen()||state!=='title'||do
     const c=info.querySelector('canvas');spDrawShip(c.getContext('2d'),100,82,46,spShipLook(0,{tilt:.2}));card.appendChild(info)},
     actions:[{label:t('spLaunch'),icon:'play',primary:true,fn:()=>go(()=>{score=0;mode='levels';modeZi=null;startLevel(lvN)})},{label:t('spHangar'),fn:()=>{hideOverlay();openShip()}},
       {label:t('close'),fn:()=>{if(state==='map'||state==='title')hideOverlay();else go(()=>openMap())}}]}),true)}}
+
+/* ---------- WEAPONS (Tzach, Oct 27 08:40): 10 weapons x 4 levels. Level 1 = one shot, 2 = three forward, 3 = three forward + three each side,
+   4 = one giant shot; the next weapon starts again at one shot but stronger. Lasers are beams: thin zap -> 3 beams -> 3 each way -> a giant pillar.
+   Gun level L 0..39: weapon = floor(L/4), level = L%4. A power star adds one step for the flight. Art from the graphics department shows up by name:
+   sp_w<n>_shot / sp_w<n>_big (projectiles, pointing up), sp_w<n>_beam (a vertical beam segment that tiles). ---------- */
+const SP_WPN=[// [kind, core colour, glow colour]
+  ['shot','#fff6a8','#ffd23f'],// 1 blaster
+  ['beam','#e8ffff','#4ee6ff'],// 2 zap laser (electric)
+  ['fire','#fff2b0','#ff5a1f'],// 3 fire
+  ['shot','#ffe6f6','#ff4fb8'],// 4 plasma
+  ['ice','#f2ffff','#7fdcff'],// 5 ice shards
+  ['rocket','#ffffff','#ff8a3d'],// 6 rockets (homing)
+  ['beam','#f6e8ff','#b36bff'],// 7 thunder beam
+  ['star','#ffffff','#ffd23f'],// 8 rainbow stars
+  ['sonic','#e8fff4','#5effc8'],// 9 sonic waves
+  ['beam','#ffffff','#ff6bf0']];// 10 galaxy beam
+const spWOf=L=>{L=Math.max(0,Math.min(39,L));return{w:Math.floor(L/4),l:L%4,D:1+.3*L}};
+const spBeamW=w=>SP_WPN[w][0]==='beam';
+spPower=function(){const o=spWOf(spLv('gun')+(spHas('rainbow')?1:0));return o.D*[1,1.65,1.8,2.2][o.l]*(spBeamW(o.w)?1.2:1)*(1+.14*spLv('rate'))*(spHas('laser')?1.2:1)};
+spShoot=function(G){const o=spWOf(spLv('gun')+G.pw),k=SP_WPN[o.w][0],v=G.u*1.6,x=G.sx,y=G.sy-G.s*.9,pr=spHas('laser')?2:0;G.flash=.08;G.fw=o.w;
+  if(k==='beam')return;// beams fire all the time (spBeams)
+  const add=(dx,a,dmg,rad,big)=>G.bul.push({x:x+dx,y,vx:Math.sin(a)*v*(k==='rocket'?.75:1),vy:-Math.cos(a)*v*(k==='rocket'?.75:1),dmg,pierce:pr+(big?3:k==='sonic'?1:0),hit:[],w:o.w,big,rad,home:k==='rocket'});
+  const D=o.D,s=G.s,r0=k==='sonic'?G.u*.03:4;
+  if(o.l===0)add(0,0,D,r0);
+  else if(o.l===1)for(const i of[-1,0,1])add(i*s*.32,0,D*.55,r0);
+  else if(o.l===2){for(const i of[-1,0,1]){add(i*s*.3,0,D*.4,r0);add(i*s*.1,-.32-i*.1,D*.4,r0);add(i*s*.1,.32+i*.1,D*.4,r0)}}
+  else add(0,0,D*2.2,G.u*.06,1);
+  if(sfx.ok()&&!((G.shotN=(G.shotN||0)+1)%3))tone({f:k==='fire'?300:880,f2:k==='fire'?160:1300,d:.05,type:k==='fire'?'sawtooth':'square',v:.012})};
+spTierOf=L=>1;
+// beams: continuous damage along each ray from the ship's nose
+function spBeamSet(G){const o=spWOf(spLv('gun')+G.pw);if(!spBeamW(o.w))return null;const s=G.s,D=o.D*(1+.14*spLv('rate'))*(spHas('laser')?1.2:1),B=[];
+  if(o.l===0)B.push({dx:0,a:0,w:G.u*.012,dps:D*5});
+  else if(o.l===1)for(const i of[-1,0,1])B.push({dx:i*s*.32,a:0,w:G.u*.01,dps:D*2.8});
+  else if(o.l===2)for(const i of[-1,0,1]){B.push({dx:i*s*.3,a:0,w:G.u*.009,dps:D*2.1});B.push({dx:0,a:-.3-i*.12,w:G.u*.009,dps:D*1.2});B.push({dx:0,a:.3+i*.12,w:G.u*.009,dps:D*1.2})}
+  else B.push({dx:0,a:0,w:G.u*.11,dps:D*11,big:1});
+  return{o,B}}
+function spBeams(G,dt){if(!G.run||G.over||G.pause)return;const S=spBeamSet(G);G.beams=S;if(!S)return;const x0=G.sx,y0=G.sy-G.s*.9,Bo=G.boss;
+  for(const b of S.B){const ax=x0+b.dx,dx=Math.sin(b.a),dy=-Math.cos(b.a);
+    const hit=(px,py,r)=>{const vx=px-ax,vy=py-y0,along=vx*dx+vy*dy;if(along<0)return false;return Math.abs(vx*dy-vy*dx)<r+b.w/2};
+    for(const e of G.en){if(e.gone||e.hp<=0||(e.f&&e.enter>0&&e.y<0))continue;if(hit(e.x,e.y,e.r)){e.hp-=b.dps*dt;e.hit=.05;if(Math.random()<dt*8)spAnim(G,'sp_hit_',3,e.x,e.y+e.r*.5,G.u*.06,.18);if(e.hp<=0){e.gone=1;spKill(G,e)}}}
+    if(Bo&&Bo.in<=0&&hit(Bo.x,Bo.y,Bo.s*.4)){Bo.hp-=b.dps*dt;Bo.hurt=.06;if(Bo.hp<=0){spBossDown(G);break}}}
+  G.en=G.en.filter(e=>!e.gone)}
+{const _tk=spTick;spTick=function(G,dt){_tk(G,dt);spBeams(G,dt);
+  // rockets home in on the nearest monster
+  for(const b of G.bul)if(b.home){let best=null,bd=1e9;for(const e of G.en){if(e.gone||e.y<0)continue;const d=Math.hypot(e.x-b.x,e.y-b.y);if(d<bd&&e.y<b.y){bd=d;best=e}}if(!best&&G.boss)best=G.boss;
+    if(best){const sp=Math.hypot(b.vx,b.vy),a=Math.atan2(best.y-b.y,best.x-b.x),c=Math.atan2(b.vy,b.vx);let da=a-c;while(da>Math.PI)da-=6.283;while(da<-Math.PI)da+=6.283;const n=c+Math.max(-4*dt,Math.min(4*dt,da));b.vx=Math.cos(n)*sp;b.vy=Math.sin(n)*sp}}}}
+// drawing: projectiles by weapon (picture when it exists), beams with electric crackle, muzzle flash in the weapon's colour
+spDrawShots=function(G,g){g.save();g.globalCompositeOperation='lighter';const T=G.el;
+  for(const b of G.bul){g.save();g.translate(b.x,b.y);g.rotate(Math.atan2(b.vx,-b.vy));
+    if(b.dr){g.fillStyle='#4ee6ff';g.shadowColor='#4ee6ff';g.shadowBlur=8;spRR(g,-2,-7,4,14,2);g.fill();g.restore();continue}
+    const w=b.w||0,[k,c0,c1]=SP_WPN[w],nm='sp_w'+(w+1)+(b.big?'_big':'_shot'),im=SP_ART.includes(nm)&&hzPic(nm);
+    const L=G.u*(b.big?.09:.04),W2=b.big?G.u*.04:G.u*.009;
+    if(im){const h=L*2,ww=h*im.naturalWidth/im.naturalHeight;g.drawImage(im,-ww/2,-h/2,ww,h);g.restore();continue}
+    g.shadowColor=c1;g.shadowBlur=b.big?20:10;const gr=g.createLinearGradient(0,-L,0,L*1.4);gr.addColorStop(0,c0);gr.addColorStop(.4,c1);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;
+    if(k==='fire'){g.beginPath();g.arc(0,-L*.4,W2*1.8,0,7);g.fill();g.beginPath();g.moveTo(-W2*1.6,-L*.4);g.quadraticCurveTo(Math.sin(T*40+b.x)*W2,L*1.6,W2*1.6,-L*.4);g.fill()}
+    else if(k==='ice'){g.beginPath();g.moveTo(0,-L);g.lineTo(W2*1.4,0);g.lineTo(0,L*.8);g.lineTo(-W2*1.4,0);g.closePath();g.fill()}
+    else if(k==='rocket'){g.fillStyle='#f4f0ff';spRR(g,-W2,-L*.6,W2*2,L*1.1,W2);g.fill();g.fillStyle=c1;g.beginPath();g.moveTo(-W2,L*.5);g.quadraticCurveTo(0,L*(1.3+.3*Math.sin(T*50)),W2,L*.5);g.fill()}
+    else if(k==='star'){g.fillStyle=`hsl(${(T*300+b.x)%360},95%,70%)`;g.rotate(T*8);spStar(g,0,0,W2*2.6);g.fill()}
+    else if(k==='sonic'){g.strokeStyle=c1;g.lineWidth=W2*.8;const R0=(b.rad||G.u*.03)*1.2;g.beginPath();g.arc(0,R0*.6,R0,-2.4,-.74);g.stroke();g.strokeStyle=c0;g.lineWidth=W2*.35;g.stroke()}
+    else{spRR(g,-W2,-L,W2*2,L*2,W2);g.fill();g.fillStyle='rgba(255,255,255,.85)';spRR(g,-W2*.4,-L*.85,W2*.8,L*1.2,W2*.4);g.fill()}
+    g.restore()}
+  // beams
+  const S=G.beams;if(S&&!G.over){const [k,c0,c1]=SP_WPN[S.o.w],x0=G.sx,y0=G.sy-G.s*.9,bim=SP_ART.includes('sp_w'+(S.o.w+1)+'_beam')&&hzPic('sp_w'+(S.o.w+1)+'_beam');
+    for(const b of S.B){g.save();g.translate(x0+b.dx,y0);g.rotate(b.a);const Lb=G.H*1.3,w=b.w*(1+.15*Math.sin(T*30+b.dx)),f=b.big?1.9:1;
+      if(bim){const th=w*2.4*f*bim.naturalHeight/bim.naturalWidth,off=(T*G.u*2)%th;for(let yy=off;yy>-Lb;yy-=th)g.drawImage(bim,-w*1.2*f,yy-th,w*2.4*f,th)}
+      else{const gr=g.createLinearGradient(-w*f,0,w*f,0);gr.addColorStop(0,'rgba(0,0,0,0)');gr.addColorStop(.3,c1);gr.addColorStop(.5,c0);gr.addColorStop(.7,c1);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;g.shadowColor=c1;g.shadowBlur=b.big?30:12;g.fillRect(-w*f,-Lb,w*2*f,Lb)}
+      // electric crackle along the beam
+      g.strokeStyle=c0;g.lineWidth=b.big?2.5:1.3;g.shadowColor=c1;g.shadowBlur=8;for(let z=0;z<(b.big?3:1);z++){g.beginPath();g.moveTo(0,0);for(let yy=0;yy>-Lb;yy-=G.u*.04)g.lineTo((Math.random()-.5)*w*(b.big?2.4:3),yy);g.stroke()}
+      g.restore()}}
+  if(G.flash>0||S){const [k,c0,c1]=SP_WPN[G.fw||0],r=G.s*(S&&S.o.l===3?.7:.45),x=G.sx,y=G.sy-G.s*.95;g.globalAlpha=S?.8+.2*Math.sin(T*40):G.flash/.08;const rg=g.createRadialGradient(x,y,0,x,y,r);rg.addColorStop(0,'#fff');rg.addColorStop(.4,c1);rg.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=rg;g.beginPath();g.arc(x,y,r,0,7);g.fill()}
+  g.restore()};
+// garage card: the weapon's name + its level n/4 + what the next step does
+{const _r=spUpsRender;spUpsRender=function(){_r();const r=SPEL;if(!r)return;const c=r.querySelectorAll('.sp-up')[SP_UP.findIndex(u=>u[0]==='gun')];if(!c)return;
+  const L=spLv('gun'),o=spWOf(L),nx=spWOf(Math.min(39,L+1)),bm=w=>spBeamW(w)?'wpb':'wps';
+  c.querySelector('b').textContent=t('wpn'+(o.w+1))+' · '+t('spWLv',{n:o.l+1});
+  c.querySelector('small').textContent=L>=39?t('wpMax'):'→ '+(nx.w!==o.w?t('wpn'+(nx.w+1))+': ':'')+t(bm(nx.w)+nx.l);
+  c.querySelector('.pips').innerHTML=Array.from({length:4},(_,i)=>`<i class="${i<=o.l?'on':''}"></i>`).join('')+`<em class="sp-wn">${o.w+1}/10</em>`;
+  const ic=c.querySelector('.ic');ic.style.setProperty('--wc',SP_WPN[o.w][2]);ic.classList.add('sp-wic')}}
+
+/* ---------- ENDLESS FLIGHT (Tzach, Oct 27 08:41): from the garage, whatever level you are at: waves never end, every 5th wave is a big helper,
+   then the flight moves on to the next world (its top-down picture, its mini-bosses). Gets harder every wave. Best wave in progress.ship.best.
+   Coins collected count like a space level (max SP_CAP a flight), no stars, no unlocks. ---------- */
+function spEWave(i){const T=Math.min(2.6,i*.09),R=Math.min(5,2+Math.floor(i/3));if(i%5===4)return{f:'boss'};
+  return[{f:'form',rows:R,cols:5+(i>6?1:0),fire:1+T*.3,mini:i>=6?1:0},{f:'swoop',n:8+i,mini:i>=3?1:0},{f:'rocks',n:7+i,form:{rows:Math.min(4,1+Math.floor(i/4)),cols:5}},{f:'form',rows:R,cols:6,fire:1.3+T*.3,mini:i>=8?2:1}][i%5]}
+function spEndless(){spD();const best=(spD().best||0);spStart(0);const G=SPG;G.endless=1;G.ew=0;G.waves=[spEWave(0)];G.T=spUpT();G.L=0;
+  spBanner(G,t('spEndless'),t('spEBest',{n:best}),2.2)}
+{const _nw=spNextWave;spNextWave=function(G){if(G.endless){const i=G.wi+1;while(G.waves.length<=i)G.waves.push(spEWave(G.waves.length));G.T=spUpT()+Math.min(2.6,i*.09)}return _nw(G)}}
+{const _w=spWin;spWin=function(G){if(!G.endless)return _w(G);if(G.over)return;// a big helper is down: fly on to the next world
+  G.boss=null;G.k=(G.k+1)%SP_N;G.sid=spSid(G.k);G.wy=0;spBanner(G,t('spENext'),t(ZONES[Math.floor((SP_LVS[G.k]-1)/LPZ)].key),2);setTimeout(()=>{if(!G.dead&&!G.over)spNextWave(G)},1400)}}
+{const _l=spLose;spLose=function(G){if(!G.endless)return _l(G);if(G.over)return;G.over=true;G.run=false;const got=Math.min(SP_CAP,G.coins),D=spD(),wave=G.wi+1,rec=wave>(D.best||0);if(rec)D.best=wave;
+  progress.coins+=got;saveProgress();updateWalletUI();sfx.trombone?sfx.trombone():sfx.heart();
+  setTimeout(()=>{if(G.dead)return;const p=document.createElement('div');p.className='arc-end sp-endc';
+    p.innerHTML=`<div class="arc-panel"><div class="ar-title"></div><div class="sp-rows"></div><p class="sp-tip"></p><div class="ar-acts"><button class="btn primary sp-a"><span></span></button><button class="btn sp-b"><span></span></button></div></div>`;
+    p.querySelector('.ar-title').textContent=t('spEWave',{n:wave});const R=p.querySelector('.sp-rows');
+    const d=document.createElement('div');d.className='sp-row';d.innerHTML=`<span></span><span class="bn-coins">${coinImg()}<b>+${got}</b></span>`;d.querySelector('span').textContent=t('spCollected');R.appendChild(d);
+    p.querySelector('.sp-tip').textContent=rec?t('spERec'):t('spEBest',{n:D.best||0});
+    const a=p.querySelector('.sp-a'),b=p.querySelector('.sp-b');a.querySelector('span').textContent=t('spRetry');b.querySelector('span').textContent=t('spHangar');
+    a.onclick=()=>{sfx.click();spEndless()};b.onclick=()=>{sfx.click();spHub()};G.r.appendChild(p);if(rec&&sfx.flourish)sfx.flourish(3)},900)}}
+// garage button under the hangar
+{const _h=spHub;spHub=function(){_h.apply(this,arguments);const r=SPEL;if(!r||r.querySelector('.sp-endless'))return;const hg=r.querySelector('.sp-hangar');if(!hg)return;
+  const b=document.createElement('button');b.className='btn sp-endless';b.innerHTML=`<span class="sp-inf">∞</span><span class="tx"><b></b><small></small></span>`;
+  b.querySelector('b').textContent=t('spEndless');b.querySelector('small').textContent=(spD().best?t('spEBest',{n:spD().best})+' · ':'')+t('spEDesc');
+  b.onclick=()=>{sfx.click();spEndless()};hg.after(b)}}
 
 requestAnimationFrame(t0=>{last=t0;requestAnimationFrame(frame)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(state==='title')drawTitleArt()});
