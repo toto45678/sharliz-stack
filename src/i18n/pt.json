@@ -1168,7 +1168,12 @@
   "chE1": "Voo sem fim! Até onde você chega? A cada 5 ondas um grande ajudante ataca, depois voamos para o próximo mundo.",
   "chW": "Arma nova: {w}! Vamos testar!",
   "chPart": "Você ganhou uma peça nova: {p}!",
-  "chLockSoon": "Sua nave está quase pronta. Volte no nível {n}!"
+  "chLockSoon": "Sua nave está quase pronta. Volte no nível {n}!",
+  "chJob": "Cada melhoria leva um tempo para ser construída, e minha oficina constrói duas de cada vez. Volte quando estiver pronta!",
+  "spBusy": "Em construção",
+  "spSlots": "Já há duas melhorias em construção. Espere uma terminar!",
+  "spDone": "{u} está pronto!",
+  "spJobs": "Na oficina"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

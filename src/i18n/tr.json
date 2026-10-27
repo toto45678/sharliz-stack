@@ -1168,7 +1168,12 @@
   "chE1": "Sonsuz uçuş! Ne kadar uzağa gidebilirsin? Her 5 dalgada büyük bir yardımcı saldırır, sonra sonraki dünyaya uçarız.",
   "chW": "Yeni silah: {w}! Hadi deneyelim!",
   "chPart": "Yeni bir parça kazandın: {p}!",
-  "chLockSoon": "Uzay gemin neredeyse hazır. {n}. seviyede geri gel!"
+  "chLockSoon": "Uzay gemin neredeyse hazır. {n}. seviyede geri gel!",
+  "chJob": "Her geliştirmenin yapımı zaman alır ve atölyem aynı anda iki tane yapar. Hazır olunca geri gel!",
+  "spBusy": "Yapılıyor",
+  "spSlots": "Zaten iki geliştirme yapılıyor. Biri bitene kadar bekle!",
+  "spDone": "{u} hazır!",
+  "spJobs": "Atölyede"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

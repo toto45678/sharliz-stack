@@ -17,7 +17,7 @@
 Object.assign(I18N.en,{spName:'Space Patrol',spShort:'Space',spLvl:'Level {n}',spLockT:'Space Patrol',spLockP:'Your spaceship is waiting! It opens at level {n}.',spLockNow:'You are at level {n}',
   wpn1:'Blaster',wpn2:'Zap laser',wpn3:'Fire cannon',wpn4:'Plasma',wpn5:'Ice shards',wpn6:'Rockets',wpn7:'Thunder beam',wpn8:'Star shooter',wpn9:'Sonic waves',wpn10:'Galaxy beam',
   wps0:'one shot',wps1:'3 shots forward',wps2:'3 shots every way',wps3:'one giant shot',wpb0:'one thin laser',wpb1:'3 lasers',wpb2:'3 lasers every way',wpb3:'a giant laser pillar',spWLv:'level {n}/4',wpMax:'The strongest weapon!',
-  chName:'Charlie',chNext:'Next',chGo:'Let\'s go!',chOk:'Got it!',chHi:'Hi, I\'m Charlie! I run this garage.',chG1:'This is your spaceship! Before every boss you fly it over the world and fight the boss\'s big helper.',chG2:'Spend coins on upgrades: new weapons, faster shots, armor and a coin magnet.',chG3:'Some parts can never be bought. Finish everything completely to earn them!',chG4:'Want more? Endless flight never ends, and every 5 waves a boss shows up.',chF1:'Drag anywhere to fly. Your ship shoots by itself!',chF2:'Catch coins and power stars, and dodge the shots and rocks!',chE1:'Endless flight! How far can you get? Every 5 waves a big helper attacks, then we fly on to the next world.',chW:'New weapon: {w}! Let\'s try it out!',chPart:'You earned a new part: {p}!',chLockSoon:'Your spaceship is almost ready. Come back at level {n}!',
+  chName:'Charlie',chJob:'Every upgrade takes time to build, and my workshop builds two at once. Come back when it\'s ready!',spBusy:'Building',spSlots:'Two upgrades are already being built. Wait for one to finish!',spDone:'{u} is ready!',spJobs:'In the workshop',chNext:'Next',chGo:'Let\'s go!',chOk:'Got it!',chHi:'Hi, I\'m Charlie! I run this garage.',chG1:'This is your spaceship! Before every boss you fly it over the world and fight the boss\'s big helper.',chG2:'Spend coins on upgrades: new weapons, faster shots, armor and a coin magnet.',chG3:'Some parts can never be bought. Finish everything completely to earn them!',chG4:'Want more? Endless flight never ends, and every 5 waves a boss shows up.',chF1:'Drag anywhere to fly. Your ship shoots by itself!',chF2:'Catch coins and power stars, and dodge the shots and rocks!',chE1:'Endless flight! How far can you get? Every 5 waves a big helper attacks, then we fly on to the next world.',chW:'New weapon: {w}! Let\'s try it out!',chPart:'You earned a new part: {p}!',chLockSoon:'Your spaceship is almost ready. Come back at level {n}!',
   spEndless:'Endless flight',spEDesc:'Never ends, a boss every 5 waves',spEBest:'Best: wave {n}',spEWave:'You reached wave {n}!',spERec:'New record!',spENext:'Next world!',
   spOpenT:'Space Patrol is open!',spOpenP:'Before every boss you now fly your own spaceship: blast the monsters and beat the boss\'s big helper!',spGo:'To the garage',spOk:'OK',
   spLaunch:'Launch',spSector:'Space level {n}',spHelper:"{b}'s big helper",spSectors:'Space levels',spMap:'Map',spToBoss:'To the boss!',spMini:'Mini-boss!',spUps:'Ship upgrades',spEarn:'Earned by finishing',spEarnNote:'These can never be bought. Finish everything to earn them!',
@@ -35,7 +35,7 @@ Object.assign(I18N.en,{spName:'Space Patrol',spShort:'Space',spLvl:'Level {n}',s
 Object.assign(I18N.he,{spName:'סיירת החלל',spShort:'חלל',spLvl:'שלב {n}',spLockT:'סיירת החלל',spLockP:'החללית שלכם מחכה! היא נפתחת בשלב {n}.',spLockNow:'אתם בשלב {n}',
   wpn1:'בלאסטר',wpn2:'לייזר חשמלי',wpn3:'תותח אש',wpn4:'פלזמה',wpn5:'רסיסי קרח',wpn6:'טילים',wpn7:'קרן רעם',wpn8:'יורה כוכבים',wpn9:'גלי קול',wpn10:'קרן גלקסיה',
   wps0:'ירייה אחת',wps1:'3 יריות קדימה',wps2:'3 יריות לכל כיוון',wps3:'ירייה אחת ענקית',wpb0:'לייזר דק אחד',wpb1:'3 לייזרים',wpb2:'3 לייזרים לכל כיוון',wpb3:'עמוד לייזר ענק',spWLv:'רמה {n}/4',wpMax:'הנשק הכי חזק!',
-  chName:'צ׳ארלי',chNext:'הבא',chGo:'יאללה!',chOk:'הבנתי!',chHi:'היי, אני צ׳ארלי! אני מנהל את המוסך.',chG1:'זאת החללית שלך! לפני כל בוס טסים בה מעל העולם ונלחמים בעוזר הגדול של הבוס.',chG2:'עם מטבעות קונים שדרוגים: נשקים חדשים, יריות מהירות, שריון ומגנט מטבעות.',chG3:'יש חלקים שאי אפשר לקנות אף פעם. מסיימים הכל עד הסוף ומרוויחים אותם!',chG4:'רוצים עוד? הטיסה האינסופית לא נגמרת, וכל 5 גלים מגיע בוס.',chF1:'גוררים בכל מקום כדי לטוס. החללית יורה לבד!',chF2:'תופסים מטבעות וכוכבי כוח, ומתחמקים מיריות ומסלעים!',chE1:'טיסה אינסופית! עד כמה רחוק תגיעו? כל 5 גלים תוקף עוזר גדול, ואז טסים לעולם הבא.',chW:'נשק חדש: {w}! בואו ננסה אותו!',chPart:'הרווחתם חלק חדש: {p}!',chLockSoon:'החללית שלך כמעט מוכנה. תחזרו בשלב {n}!',spEndless:'טיסה אינסופית',spEDesc:'לא נגמרת, בוס כל 5 גלים',spEBest:'שיא: גל {n}',spEWave:'הגעת לגל {n}!',spERec:'שיא חדש!',spENext:'לעולם הבא!',
+  chName:'צ׳ארלי',chJob:'כל שדרוג לוקח זמן לבנות, והסדנה שלי בונה שניים בבת אחת. תחזרו כשהוא מוכן!',spBusy:'בבנייה',spSlots:'כבר בונים שני שדרוגים. חכו שאחד יסתיים!',spDone:'{u} מוכן!',spJobs:'בסדנה',chNext:'הבא',chGo:'יאללה!',chOk:'הבנתי!',chHi:'היי, אני צ׳ארלי! אני מנהל את המוסך.',chG1:'זאת החללית שלך! לפני כל בוס טסים בה מעל העולם ונלחמים בעוזר הגדול של הבוס.',chG2:'עם מטבעות קונים שדרוגים: נשקים חדשים, יריות מהירות, שריון ומגנט מטבעות.',chG3:'יש חלקים שאי אפשר לקנות אף פעם. מסיימים הכל עד הסוף ומרוויחים אותם!',chG4:'רוצים עוד? הטיסה האינסופית לא נגמרת, וכל 5 גלים מגיע בוס.',chF1:'גוררים בכל מקום כדי לטוס. החללית יורה לבד!',chF2:'תופסים מטבעות וכוכבי כוח, ומתחמקים מיריות ומסלעים!',chE1:'טיסה אינסופית! עד כמה רחוק תגיעו? כל 5 גלים תוקף עוזר גדול, ואז טסים לעולם הבא.',chW:'נשק חדש: {w}! בואו ננסה אותו!',chPart:'הרווחתם חלק חדש: {p}!',chLockSoon:'החללית שלך כמעט מוכנה. תחזרו בשלב {n}!',spEndless:'טיסה אינסופית',spEDesc:'לא נגמרת, בוס כל 5 גלים',spEBest:'שיא: גל {n}',spEWave:'הגעת לגל {n}!',spERec:'שיא חדש!',spENext:'לעולם הבא!',
   spOpenT:'סיירת החלל נפתחה!',spOpenP:'לפני כל בוס טסים עכשיו בחללית משלכם: מפוצצים מפלצות ומנצחים את העוזר הגדול של הבוס!',spGo:'למוסך',spOk:'אוקיי',
   spLaunch:'המראה',spSector:'שלב חלל {n}',spHelper:'העוזר הגדול של {b}',spSectors:'שלבי חלל',spMap:'מפה',spToBoss:'לבוס!',spMini:'מיני בוס!',spUps:'שדרוגים לחללית',spEarn:'מרוויחים רק בסיום',spEarnNote:'את אלה אי אפשר לקנות. מסיימים הכל ומרוויחים!',
   spMax:'מקס',spYours:'שלכם!',spNew:'חלק חדש לחללית!',
@@ -246,14 +246,22 @@ function spGarage(g,H,px,py,dt,R){const ch=['sp_charlie_1','sp_charlie_2','sp_ch
   if(H.up>0){H.up-=dt;const k=Math.max(0,H.up);g.save();g.globalCompositeOperation='lighter';const gr=g.createRadialGradient(sx,sy,0,sx,sy,s*1.6);gr.addColorStop(0,`rgba(255,240,170,${.55*k})`);gr.addColorStop(1,'rgba(255,240,170,0)');g.fillStyle=gr;g.fillRect(sx-s*2,sy-s*2,s*4,s*4);
     for(let i=0;i<14;i++){const a=i*2.4+H.t*3,r=s*(.3+(1-k)*1.3);g.fillStyle=i%2?'#ffd23f':'#fff';g.globalAlpha=k;g.beginPath();g.arc(sx+Math.cos(a)*r,sy+Math.sin(a)*r*.8,s*.035,0,7);g.fill()}g.restore()}
   const cw=R?R.w*.3:s*.95;// Charlie's picture width (600x700 canvas)
+  // the room comes alive only now and then (Tzach, Oct 27 09:28): a work burst every P s, calm in between. H.at = 'animation time' that runs
+  // at full speed in a burst and almost stops between bursts (eased), so the Sharliz/drones slow down instead of jumping
+  const nb=spQ().length,P=nb?8:13,B=nb?3.4:2.6;H.bt=(H.bt==null?P-1.2:H.bt)+dt;const burst=H.bt%P<B,bv=burst?1:.07;H.v=(H.v==null?bv:H.v)+(bv-(H.v==null?bv:H.v))*Math.min(1,dt*2.5);H.at=(H.at||0)+dt*H.v;
   // the player's Sharliz floats around the room above Charlie, a slow lazy loop
-  const a=H.t*.55,depth=Math.sin(a*1.3),hx=fx-cw*.3+Math.cos(a)*cw*.45,hy=fy-cw*1.32+Math.sin(a*1.3)*cw*.14+Math.sin(H.t*2.1)*cw*.05,hs=cw*(.42+.04*depth);
+  const a=H.at*.55,depth=Math.sin(a*1.3),hx=fx-cw*.3+Math.cos(a)*cw*.45,hy=fy-cw*1.32+Math.sin(a*1.3)*cw*.14+Math.sin(H.t*2.1)*cw*.05,hs=cw*(.42+.04*depth);
   H.hx=hx;H.hy=hy;H.hs=hs;const hero=()=>{try{const h=spHero();withCtx(g,hs,()=>drawSharliz(h,hx,hy,-Math.sin(a)*.14,'happy',{x:Math.cos(a)>0?.5:-.5,y:.2},0))}catch(e){}};
   if(depth<0)hero();
   // Charlie works: wrench up / on the bolt, and every few hits he wipes his forehead; each hit = a small squash + sparks off the hull at the wrench
-  const SEQ=[0,1,0,1,0,1,0,1,2,2],fr=Math.floor(H.t*3.2),f=ch.length>=3?SEQ[fr%SEQ.length]:fr%Math.max(1,ch.length),hit=f===1;
+  // building (progress.ship.q): repair drones circle the ship and weld it, one per build; idle: Charlie rests and wipes his forehead now and then
+  for(let i=0;i<nb;i++){const a2=H.at*(.9+i*.25)+i*Math.PI,dx=sx+Math.cos(a2)*s*1.05,dy=sy-s*.15+Math.sin(a2)*s*.45,front=Math.sin(a2)>0,tx=sx+Math.cos(a2)*s*.32,ty=sy-s*.1+Math.sin(a2)*s*.25;
+    const wk=burst&&(H.t*2+i*.5)%1<.55;if(wk){g.save();g.globalCompositeOperation='lighter';g.strokeStyle='rgba(140,240,255,.85)';g.lineWidth=2;g.beginPath();g.moveTo(dx,dy);g.lineTo(tx,ty);g.stroke();g.restore();
+      H['wt'+i]=(H['wt'+i]||0)+dt;if(H['wt'+i]>.12){H['wt'+i]=0;spGSparks(H,tx,ty,s*.35)}}
+    spDrone(g,dx,dy+Math.sin(H.t*4+i)*2,s*.13)}
+  const SEQ=nb?[0,1,0,1,0,1,0,1,2,2]:[0,0,2,2,2],fr=Math.floor((H.bt%P)*(nb?3.2:2)),f=!burst?0:ch.length>=3?SEQ[fr%SEQ.length]:fr%Math.max(1,ch.length),hit=nb&&f===1;
   if(fr!==H.fr){H.fr=fr;if(hit){spGSparks(H,fx+cw*.18,fy-cw*.62*(700/600)*.66,cw*.5);if(sfx.ok&&sfx.ok()&&!H.mute)tone({f:1900+Math.random()*500,f2:900,d:.05,type:'square',v:.01})}}
-  if(hasC){const n=ch.length?ch[f]:'sp_charlie',im=hzPic(n);if(im){const w=cw,h=w*im.naturalHeight/im.naturalWidth,q=hit?1-.035*Math.max(0,1-(H.t*3.2-fr)*2):1;
+  if(hasC){const n=ch.length?ch[f]:'sp_charlie',im=hzPic(n);if(im){const w=cw,h=w*im.naturalHeight/im.naturalWidth,q=hit?1-.035*Math.max(0,1-((H.bt%P)*3.2-fr)*2):1;
     g.save();g.fillStyle='rgba(18,13,43,.35)';g.beginPath();g.ellipse(fx,fy,w*.3,w*.05,0,0,7);g.fill();g.translate(fx,fy);g.scale(2-q,q);g.drawImage(im,-w/2,-h,w,h);g.restore()}}
   spGSparkDraw(g,H,dt);
   if(depth>=0)hero()}
@@ -273,7 +281,7 @@ function spUpsRender(){const r=SPEL,U=r.querySelector('.sp-ups');U.innerHTML='';
     c.innerHTML=`<span class="ic"><img src="art/${ic}.webp" alt=""></span><span class="tx"><b></b><small></small><span class="pips">${Array.from({length:max},(_,i)=>`<i class="${i<L?'on':''}"></i>`).join('')}</span></span><button class="btn"></button>`;
     c.querySelector('b').textContent=t('up_'+id);c.querySelector('small').textContent=t('ud_'+id);const b=c.querySelector('button');
     if(L>=max){b.textContent=t('spMax');b.disabled=true;b.className='btn sp-max'}else{const p=pr[L];b.innerHTML=`${coinImg()}<em>${p.toLocaleString()}</em>`;b.className='btn primary'+((progress.coins||0)<p?' poor':'');
-      b.onclick=()=>{if((progress.coins||0)<p){sfx.locked();popupToast(t('needCoins'));return}progress.coins-=p;spD().lv[id]=L+1;if(SPH)SPH.up=1.2;saveProgress();if(id==='gun'&&(L+1)%4===0)setTimeout(()=>spChWpn(L+1),500);updateWalletUI();sfx.flourish&&sfx.flourish(3);r.querySelector('.coin-pill span').textContent=progress.coins;spUpsRender();
+      b.onclick=()=>{if((progress.coins||0)<p){sfx.locked();popupToast(t('needCoins'));return}if(!spJobStart(id,L+1)){sfx.locked();noteToast(t('spSlots'));return}progress.coins-=p;if(SPH)SPH.up=1.2;saveProgress();updateWalletUI();sfx.flourish&&sfx.flourish(3);r.querySelector('.coin-pill span').textContent=progress.coins;spUpsRender();
         const n=r.querySelectorAll('.sp-up')[SP_UP.findIndex(u=>u[0]===id)];if(n){n.classList.add('pop');}}}
     U.appendChild(c)})}
 function spEarnRender(nw){const r=SPEL,E=r.querySelector('.sp-earn');E.innerHTML='';
@@ -573,15 +581,21 @@ function spEndless(){spD();const best=(spD().best||0);spStart(0);const G=SPG;G.e
    the first flight, the first endless flight, every new weapon type, newly earned parts. Seen flags in progress.ship.ch. ---------- */
 function spChSeen(k){const D=spD();D.ch=D.ch||{};if(D.ch[k])return true;D.ch[k]=1;saveProgress();return false}
 function spCharlie(pages,o){o=o||{};document.querySelectorAll('.ch-pop').forEach(e=>e.remove());const m=document.createElement('div');m.className='ch-pop';
-  const pic=[o.pose&&'sp_charlie_'+o.pose,'sp_charlie_talk','sp_charlie_wave','sp_charlie_1'].find(n=>n&&SP_ART.includes(n))||null,flap=pic==='sp_charlie_talk'&&SP_ART.includes('sp_charlie_talk_b');
+  // a different face per page so he looks like he is explaining (Tzach, Oct 27 09:28): the popup's pose first, then show / point / idea …;
+  // while the text types, 'talk' and 'talk2' swap (mouth open / closed). The last page of a longer talk ends happy.
+  const has=n=>SP_ART.includes('sp_charlie_'+n),seq=['show','point','idea','talk'].filter(n=>has(n)&&n!==o.pose),
+    faceOf=i=>{const f=i===0?(o.pose&&has(o.pose)?o.pose:['talk','wave','1'].find(has)):i===pages.length-1&&pages.length>2&&has('yay')?'yay':seq.length?seq[(i-1)%seq.length]:['talk','wave','1'].find(has);return f?'sp_charlie_'+f:null},
+    pic=faceOf(0),flap=has('talk')&&has('talk2');
   m.innerHTML=`<div class="ch-box"><div class="ch-face">${pic?`<img src="art/${pic}.webp" alt="">`:''}</div><div class="ch-bub"><span class="ch-name"></span>${o.title?'<h3></h3>':''}<p></p><div class="ch-foot"><span class="ch-dots"></span><button class="btn primary"><span></span></button></div></div></div>`;
   m.querySelector('.ch-name').textContent=t('chName');if(o.title)m.querySelector('h3').textContent=o.title;
   const P=m.querySelector('p'),B=m.querySelector('button'),F=m.querySelector('.ch-face'),dots=m.querySelector('.ch-dots');let i=0,tm=0,full=false;
   const show=()=>{const tx=pages[i];full=false;P.textContent='';clearInterval(tm);let n=0;F.classList.add('talk');
+    const fc=faceOf(i),im0=F.querySelector('img');if(im0&&fc&&!im0.src.endsWith(fc+'.webp')){im0.src='art/'+fc+'.webp';F.classList.remove('swap');void F.offsetWidth;F.classList.add('swap')}
+    const cur=fc,mo=cur==='sp_charlie_talk'||cur==='sp_charlie_talk2';
     dots.innerHTML=pages.length>1?pages.map((_,j)=>`<i class="${j===i?'on':''}"></i>`).join(''):'';
     B.querySelector('span').textContent=i<pages.length-1?t('chNext'):(o.btn||t('chOk'));
-    const im=F.querySelector('img');tm=setInterval(()=>{n+=2;P.textContent=tx.slice(0,n);if(flap&&im&&n%4===0)im.src='art/'+(im.src.includes('talk_b')?'sp_charlie_talk':'sp_charlie_talk_b')+'.webp';if(n%6===0&&sfx.ok&&sfx.ok())tone({f:520+Math.random()*260,d:.035,type:'square',v:.012});if(n>=tx.length){clearInterval(tm);full=true;F.classList.remove('talk');if(flap&&im)im.src='art/'+pic+'.webp'}},28)};
-  const next=e=>{e&&e.stopPropagation();if(!full){clearInterval(tm);P.textContent=pages[i];full=true;F.classList.remove('talk');return}
+    const im=F.querySelector('img');tm=setInterval(()=>{n+=2;P.textContent=tx.slice(0,n);if(flap&&mo&&im&&n%6===0)im.src='art/'+(im.src.includes('talk2')?'sp_charlie_talk':'sp_charlie_talk2')+'.webp';if(n%6===0&&sfx.ok&&sfx.ok())tone({f:520+Math.random()*260,d:.035,type:'square',v:.012});if(n>=tx.length){clearInterval(tm);full=true;F.classList.remove('talk');if(mo&&im)im.src='art/'+cur+'.webp'}},28)};
+  const next=e=>{e&&e.stopPropagation();if(!full){clearInterval(tm);P.textContent=pages[i];full=true;F.classList.remove('talk');const im=F.querySelector('img'),fc=faceOf(i);if(im&&fc)im.src='art/'+fc+'.webp';return}
     sfx.click();if(i<pages.length-1){i++;show();return}m.classList.add('out');setTimeout(()=>m.remove(),220);o.done&&o.done()};
   B.onclick=next;m.onclick=next;document.body.appendChild(m);show();return m}
 // the garage opens (lobby popup) and the locked garage: Charlie says it
@@ -589,10 +603,38 @@ spIntroMaybe=function(){const D=spD();if(D.intro||!spOpen()||state!=='title'||do
   D.intro=1;saveProgress();sfx.flourish&&sfx.flourish(3);spCharlie([t('chHi'),t('spOpenP')],{title:t('spOpenT'),btn:t('spGo'),done:()=>openShip()})};
 spLockPop=function(){sfx.locked();spCharlie([t('chLockSoon',{n:SP_OPEN})+' '+t('spLockNow',{n:Math.min(progress.unlocked||1,TOTAL)})],{title:t('spLockT'),pose:'think'})};
 // first garage visit: the tour
-{const _h=spHub;spHub=function(){_h.apply(this,arguments);if(!spChSeen('g'))setTimeout(()=>{if(SPEL&&!SPEL.hidden&&SPEL.className==='sp-hub')spCharlie([t('chHi'),t('chG1'),t('chG2'),t('chG3'),t('chG4')],{pose:'point'})},500)}}
+{const _h=spHub;spHub=function(){_h.apply(this,arguments);if(!spChSeen('g'))setTimeout(()=>{if(SPEL&&!SPEL.hidden&&SPEL.className==='sp-hub')spCharlie([t('chHi'),t('chG1'),t('chG2'),t('chJob'),t('chG3'),t('chG4')],{pose:'point'})},500)}}
 // first flight / first endless flight: Charlie first, then the flight starts
 {const _p=spEnter;spEnter=function(k){if(spChSeen('f'))return _p.apply(this,arguments);const a=arguments,th=this;spCharlie([t('chF1'),t('chF2')],{btn:t('chGo'),done:()=>_p.apply(th,a)})}}
 {const _e=spEndless;spEndless=function(){if(spChSeen('e'))return _e.apply(this,arguments);spCharlie([t('chE1')],{btn:t('chGo'),done:()=>_e()})}}
 function spChWpn(L){const o=spWOf(L);spCharlie([t('chW',{w:t('wpn'+(o.w+1))})],{btn:t('chGo'),pose:'idea'})}
 // newly earned parts: Charlie announces them in the garage
 {const _r=spEarnRender;spEarnRender=function(nw){_r.call(this,[]);if(nw&&nw.length){sfx.flourish&&sfx.flourish(3);setTimeout(()=>spCharlie(nw.map(id=>t('chPart',{p:t('er_'+id)})+' '+t('ed_'+id)),{pose:'yay'}),700)}}}
+
+/* ---------- BUILD TIMES (Tzach, Oct 27 09:26: 'every ship upgrade takes a while depending on its level, a work animation around the ship,
+   and only two upgrades at a time'). Coins are paid when the build starts; the level counts when the timer ends (real time, also while the
+   game is closed). progress.ship.q = [{id,to,end}] (max 2). Nothing can be bought to skip it. While something builds, Charlie hammers away,
+   a repair drone per build circles the ship welding, and the hangar shows the jobs with their timers. ---------- */
+const SP_TIMES={rate:[30,180,900,3600,10800],hull:[600,7200],mag:[60,600,3600]};
+function spBuildSec(id,to){if(id==='gun')return Math.min(28800,Math.round(15*Math.pow(1.22,to-1)));return(SP_TIMES[id]||[60])[Math.min(to-1,(SP_TIMES[id]||[60]).length-1)]}
+function spQ(){const D=spD();D.q=D.q||[];return D.q}
+function spJobStart(id,to){const q=spQ();if(q.length>=2||q.some(j=>j.id===id))return false;q.push({id,to,end:Date.now()+spBuildSec(id,to)*1000});saveProgress();spJobsUI();return true}
+function spFmt(sec){sec=Math.max(0,Math.ceil(sec));const h=Math.floor(sec/3600),m=Math.floor(sec%3600/60),x=sec%60;return h?`${h}:${String(m).padStart(2,'0')}:${String(x).padStart(2,'0')}`:`${m}:${String(x).padStart(2,'0')}`}
+function spJobsTick(){const D=spD(),q=spQ(),now=Date.now(),done=q.filter(j=>now>=j.end);if(!done.length)return;
+  D.q=q.filter(j=>now<j.end);for(const j of done)D.lv[j.id]=Math.max(D.lv[j.id]||0,j.to);saveProgress();
+  if(SPEL&&!SPEL.hidden&&SPEL.className==='sp-hub'){if(SPH)SPH.up=1.4;sfx.flourish&&sfx.flourish(3);spUpsRender();
+    const g=done.find(j=>j.id==='gun'&&j.to%4===0);if(g)setTimeout(()=>spChWpn(g.to),400);else noteToast(t('spDone',{u:t('up_'+done[0].id)}))}}
+setInterval(spJobsTick,1000);
+// the upgrade rows: a row that is building shows its timer; with two builds running the other buttons wait
+{const _r=spUpsRender;spUpsRender=function(){_r.apply(this,arguments);const r=SPEL;if(!r)return;const q=spQ(),full=q.length>=2;
+  SP_UP.forEach(([id,max],i)=>{const c=r.querySelectorAll('.sp-up')[i];if(!c)return;const b=c.querySelector('button'),j=q.find(x=>x.id===id);if(spLv(id)>=max)return;
+    if(j){b.className='btn sp-busy';b.disabled=true;b.innerHTML=`<i class="sp-wr"></i><em data-end="${j.end}"></em>`;c.classList.add('building')}
+    else{const tm=document.createElement('span');tm.className='sp-time';tm.textContent='⏱ '+spFmt(spBuildSec(id,spLv(id)+1));c.querySelector('.tx').appendChild(tm);if(full)b.classList.add('wait')}});
+  spJobsUI()}}
+function spJobsUI(){const r=SPEL;if(!r)return;const hg=r.querySelector('.sp-hangar');if(!hg)return;let J=hg.querySelector('.sp-jobs');const q=spQ();
+  if(!q.length){if(J)J.remove();return}if(!J){J=document.createElement('div');J.className='sp-jobs';hg.appendChild(J)}
+  J.innerHTML=q.map(j=>`<div class="sp-job"><img src="art/${SP_UP.find(u=>u[0]===j.id)[2]}.webp" alt=""><span><b></b><em data-end="${j.end}" data-len="${spBuildSec(j.id,j.to)}"></em><i class="bar"><i></i></i></span></div>`).join('');
+  J.querySelectorAll('.sp-job b').forEach((e,i)=>e.textContent=t('up_'+q[i].id)+(document.documentElement.dir==='rtl'?' ← ':' → ')+(q[i].id==='gun'?t('wpn'+(spWOf(q[i].to).w+1))+' '+(spWOf(q[i].to).l+1):q[i].to));spTimers()}
+function spTimers(){const r=SPEL;if(!r||r.hidden)return;const now=Date.now();r.querySelectorAll('em[data-end]').forEach(e=>{const left=(+e.dataset.end-now)/1000;e.textContent=spFmt(left);
+  const bar=e.parentNode.querySelector('.bar i');if(bar&&e.dataset.len)bar.style.width=Math.max(0,Math.min(100,100*(1-left/+e.dataset.len)))+'%'})}
+setInterval(spTimers,500);

@@ -1168,7 +1168,12 @@
   "chE1": "Terbang tanpa akhir! Seberapa jauh kamu bisa? Setiap 5 gelombang pembantu besar menyerang, lalu kita terbang ke dunia berikutnya.",
   "chW": "Senjata baru: {w}! Ayo kita coba!",
   "chPart": "Kamu dapat bagian baru: {p}!",
-  "chLockSoon": "Pesawatmu hampir siap. Kembali di level {n}!"
+  "chLockSoon": "Pesawatmu hampir siap. Kembali di level {n}!",
+  "chJob": "Setiap upgrade butuh waktu untuk dibuat, dan bengkelku bisa membuat dua sekaligus. Kembali saat sudah siap!",
+  "spBusy": "Sedang dibuat",
+  "spSlots": "Sudah ada dua upgrade yang sedang dibuat. Tunggu salah satunya selesai!",
+  "spDone": "{u} sudah siap!",
+  "spJobs": "Di bengkel"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

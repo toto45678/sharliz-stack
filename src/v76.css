@@ -123,13 +123,16 @@ html.no-cq .sp-hangar{height:300px}
 .ch-pop.out{opacity:0;transition:opacity .2s}
 @keyframes chFade{from{opacity:0}}
 .ch-box{width:min(380px,100%);display:flex;flex-direction:column;align-items:center}
-.ch-face{height:min(210px,30vh);margin-bottom:-26px;position:relative;z-index:1;animation:chIn .45s cubic-bezier(.3,1.6,.5,1) both;transform-origin:50% 100%}
+.ch-face{height:min(240px,34vh);margin-bottom:calc(-.2 * min(240px,34vh));position:relative;z-index:0;animation:chIn .45s cubic-bezier(.3,1.6,.5,1) both;transform-origin:50% 100%}
 .ch-face img{height:100%;width:auto;display:block;filter:drop-shadow(0 6px 0 rgba(18,13,43,.55))}
 .ch-face.talk img{animation:chTalk .28s ease-in-out infinite alternate}
+/* Charlie stands BEHIND the panel (his lower body is hidden by it); a new face pops a little */
+.ch-face.swap img{animation:chSwap .25s ease-out}
+@keyframes chSwap{from{transform:translateY(6px) scale(.96)}}
 @keyframes chIn{from{transform:translateY(40px) scale(.6);opacity:0}}
 @keyframes chTalk{from{transform:translateY(0) scaleY(1)}to{transform:translateY(-3px) scaleY(1.025)}}
-.ch-bub{position:relative;width:100%;box-sizing:border-box;border-radius:24px;border:3.5px solid #120d2b;box-shadow:0 7px 0 #120d2b;background:linear-gradient(#fffaf0,#ffe9c2);color:#2a1a52;padding:30px 18px 14px;text-align:start;animation:chIn .35s .05s cubic-bezier(.3,1.5,.5,1) both}
-.ch-bub::before{content:"";position:absolute;top:-14px;left:50%;width:22px;height:22px;background:#fffaf0;border-left:3.5px solid #120d2b;border-top:3.5px solid #120d2b;transform:translateX(-50%) rotate(45deg);border-radius:4px 0 0 0}
+.ch-bub{position:relative;z-index:1;width:100%;box-sizing:border-box;border-radius:24px;border:3.5px solid #120d2b;box-shadow:0 7px 0 #120d2b;background:linear-gradient(#fffaf0,#ffe9c2);color:#2a1a52;padding:30px 18px 14px;text-align:start;animation:chIn .35s .05s cubic-bezier(.3,1.5,.5,1) both}
+.ch-bub::before{display:none;content:"";position:absolute;top:-14px;left:50%;width:22px;height:22px;background:#fffaf0;border-left:3.5px solid #120d2b;border-top:3.5px solid #120d2b;transform:translateX(-50%) rotate(45deg);border-radius:4px 0 0 0}
 .ch-name{position:absolute;top:-15px;inset-inline-start:16px;padding:3px 14px;border-radius:999px;border:3px solid #120d2b;background:#6b7b2e;color:#fff6c8;font:1.05rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;letter-spacing:.02em;z-index:2}
 .ch-bub h3{margin:0 0 4px;font:1.35rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#ff4fa3}
 .ch-bub p{margin:0;min-height:3.6em;font-weight:800;font-size:1.05rem;line-height:1.35}
@@ -138,3 +141,19 @@ html.no-cq .sp-hangar{height:300px}
 .ch-dots i{width:9px;height:9px;border-radius:50%;background:#d9c7a8;border:2px solid #120d2b}
 .ch-dots i.on{background:#ff4fa3;width:22px;border-radius:6px}
 .ch-foot .btn{min-height:46px;padding:0 24px;margin-inline-start:auto}
+/* build timers (spJobs) */
+.sp-jobs{position:absolute;top:10px;inset-inline-start:10px;display:flex;flex-direction:column;gap:6px;z-index:2;max-width:62%}
+.sp-job{display:flex;align-items:center;gap:6px;padding:5px 10px 5px 6px;border-radius:14px;border:2.5px solid #120d2b;background:rgba(27,15,74,.86);color:#fff;box-shadow:0 3px 0 #120d2b}
+.sp-job img{width:26px;height:26px}
+.sp-job span{display:flex;flex-direction:column;min-width:0}
+.sp-job b{font:800 .72rem/1.15 Rubik,system-ui,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-job em{font:1rem/1 "Lilita One","Secular One",system-ui,sans-serif;font-style:normal;color:#7ff3ff}
+.sp-job .bar{display:block;height:5px;border-radius:3px;background:#3a2a7a;margin-top:3px;overflow:hidden}
+.sp-job .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#7ff3ff,#ffd23f);transition:width .5s linear}
+.sp-up .btn.sp-busy{background:#3a2a7a;color:#7ff3ff;opacity:1;display:flex;align-items:center;gap:6px;min-width:96px;justify-content:center}
+.sp-up .btn.sp-busy em{font-style:normal;font-weight:900}
+.sp-wr{width:16px;height:16px;border-radius:50%;border:3px solid #7ff3ff;border-top-color:transparent;animation:spSpin .9s linear infinite}
+@keyframes spSpin{to{transform:rotate(360deg)}}
+.sp-up.building{box-shadow:0 0 0 2px #7ff3ff inset}
+.sp-up .btn.wait{filter:saturate(.35) brightness(.85)}
+.sp-time{display:block;font-weight:800;font-size:.72rem;color:#b9a8ff;margin-top:2px}

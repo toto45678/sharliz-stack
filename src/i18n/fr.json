@@ -1168,7 +1168,12 @@
   "chE1": "Vol sans fin ! Jusqu'où iras-tu ? Toutes les 5 vagues un grand assistant attaque, puis on vole vers le monde suivant.",
   "chW": "Nouvelle arme : {w} ! Essayons-la !",
   "chPart": "Tu as gagné une nouvelle pièce : {p} !",
-  "chLockSoon": "Ton vaisseau est presque prêt. Reviens au niveau {n} !"
+  "chLockSoon": "Ton vaisseau est presque prêt. Reviens au niveau {n} !",
+  "chJob": "Chaque amélioration prend du temps à construire, et mon atelier en construit deux à la fois. Reviens quand c'est prêt !",
+  "spBusy": "En construction",
+  "spSlots": "Deux améliorations sont déjà en construction. Attends qu'une se termine !",
+  "spDone": "{u} est prêt !",
+  "spJobs": "À l'atelier"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",

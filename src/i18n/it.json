@@ -1168,7 +1168,12 @@
   "chE1": "Volo infinito! Fin dove arriverai? Ogni 5 ondate attacca un grande aiutante, poi voliamo al mondo successivo.",
   "chW": "Nuova arma: {w}! Proviamola!",
   "chPart": "Hai guadagnato un nuovo pezzo: {p}!",
-  "chLockSoon": "La tua astronave è quasi pronta. Torna al livello {n}!"
+  "chLockSoon": "La tua astronave è quasi pronta. Torna al livello {n}!",
+  "chJob": "Ogni potenziamento richiede tempo per essere costruito, e la mia officina ne costruisce due alla volta. Torna quando è pronto!",
+  "spBusy": "In costruzione",
+  "spSlots": "Si stanno già costruendo due potenziamenti. Aspetta che uno finisca!",
+  "spDone": "{u} è pronto!",
+  "spJobs": "In officina"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

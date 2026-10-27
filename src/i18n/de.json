@@ -1168,7 +1168,12 @@
   "chE1": "Endlosflug! Wie weit kommst du? Alle 5 Wellen greift ein großer Helfer an, dann fliegen wir weiter in die nächste Welt.",
   "chW": "Neue Waffe: {w}! Probieren wir sie aus!",
   "chPart": "Du hast ein neues Teil verdient: {p}!",
-  "chLockSoon": "Dein Raumschiff ist fast fertig. Komm bei Level {n} wieder!"
+  "chLockSoon": "Dein Raumschiff ist fast fertig. Komm bei Level {n} wieder!",
+  "chJob": "Jedes Upgrade braucht Zeit zum Bauen, und meine Werkstatt baut zwei gleichzeitig. Komm wieder, wenn es fertig ist!",
+  "spBusy": "Im Bau",
+  "spSlots": "Es werden schon zwei Upgrades gebaut. Warte, bis eins fertig ist!",
+  "spDone": "{u} ist fertig!",
+  "spJobs": "In der Werkstatt"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",
