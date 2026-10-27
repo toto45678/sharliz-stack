@@ -1,0 +1,9 @@
+/* v81: sticker book switch (Book 1 | Book 2) above the cover + the book 2 cover (midnight blue with gold) */
+.sb-books{display:flex;gap:8px;justify-content:center;padding:4px 16px 0;position:relative;z-index:2}
+.sb-bk{min-width:112px;padding:6px 14px;border-radius:999px;border:3px solid #120d2b;background:#fff4d6;color:#120d2b;font:1rem/1.05 "Lilita One","Secular One",system-ui,sans-serif;box-shadow:0 3px 0 #120d2b;display:flex;flex-direction:column;align-items:center}
+.sb-bk small{font:600 .68rem/1.1 Rubik,system-ui,sans-serif;opacity:.75}
+.sb-bk small:empty{display:none}
+.sb-bk.on{background:#ffd23f}
+.sb-bk.lock{background:#d9d4e8;color:#5a5470}
+.sb-b2 .sb-cover{background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.16),transparent 45%),repeating-linear-gradient(45deg,rgba(255,255,255,.04) 0 6px,transparent 6px 12px),linear-gradient(160deg,#2a3f8f,#1b2466 55%,#0f1440)}
+.sb-b2 .sb-cover h2{color:#ffe28a}
