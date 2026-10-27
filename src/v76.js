@@ -227,29 +227,34 @@ function spHub(){spStop();spHubStop();const r=spRoot(),D=spD();r.className='sp-h
   spUpsRender();spEarnRender(nw);
   // hangar canvas: the ship idles
   const c=r.querySelector('.sp-hangar canvas'),g=c.getContext('2d'),H={dead:false,t:0,last:performance.now()};SPH=H;
-  const fit=()=>{const d=Math.min(2,devicePixelRatio||1),b=c.getBoundingClientRect();H.W=b.width;H.H=b.height;c.width=Math.round(b.width*d);c.height=Math.round(b.height*d);H.d=d};fit();addEventListener('resize',fit);H.off=()=>removeEventListener('resize',fit);
+  const fit=()=>{const d=Math.min(2,devicePixelRatio||1),b=c.getBoundingClientRect();H.W=b.width;H.H=b.height;c.width=Math.round(b.width*d);c.height=Math.round(b.height*d);H.d=d;const l=r.querySelector('.sp-launch');H.bot=l?l.offsetHeight+12:80};fit();addEventListener('resize',fit);H.off=()=>removeEventListener('resize',fit);
   const loop=now=>{if(H.dead)return;const dt=Math.min(.05,(now-H.last)/1000);H.last=now;H.t+=dt;if(!H.W)fit();g.setTransform(H.d,0,0,H.d,0,0);
     // the hangar picture (cover fit, its landing pad at 58% / 75%), else the starfield
     const hg=SP_ART.includes('sp_hangar')&&hzPic('sp_hangar');let px=H.W/2,py=H.H*.5;
-    if(hg){const k=Math.max(H.W/hg.naturalWidth,H.H/hg.naturalHeight),iw=hg.naturalWidth*k,ih=hg.naturalHeight*k,ix=(H.W-iw)/2,iy=(H.H-ih)*.7;g.drawImage(hg,ix,iy,iw,ih);px=ix+iw*.58;py=Math.min(H.H*.62,iy+ih*.75-H.H*.16)}else spSky(H,g,dt*.4);
-    spGarage(g,H,px,py,dt);H.raf=requestAnimationFrame(loop)};H.raf=requestAnimationFrame(loop)}
+    let R=null;if(hg){const k=Math.max(H.W/hg.naturalWidth,H.H/hg.naturalHeight),iw=hg.naturalWidth*k,ih=hg.naturalHeight*k,ix=(H.W-iw)/2,iy=Math.min(0,Math.max(H.H-ih,(H.H-H.bot)-ih*.8));g.drawImage(hg,ix,iy,iw,ih);R={x:ix,y:iy,w:iw,h:ih};if(ih/iw<1.2)R=null,px=ix+iw*.58,py=Math.min(H.H*.62,iy+ih*.75-H.H*.16)}else spSky(H,g,dt*.4);
+    spGarage(g,H,px,py,dt,R);H.raf=requestAnimationFrame(loop)};H.raf=requestAnimationFrame(loop)}
 /* GARAGE SCENE (Tzach, Oct 27 08:56): a long shot of the workshop. The ship (it shows every upgrade you bought) stands big on the pad,
    Charlie the garage boss sits small at its foot and works on it (art/sp_charlie_1..3 = work frames, else sp_charlie; Tzach's own character,
    drawn by the graphics department from his drawings in /mnt/project-files/game/space-shooter/charlie-ref/), and the player's own Sharliz
    floats around him. Buying an upgrade = sparks + a flash on the ship (H.up). */
-function spGarage(g,H,px,py,dt){const ch=['sp_charlie_1','sp_charlie_2','sp_charlie_3'].filter(n=>SP_ART.includes(n)),one=SP_ART.includes('sp_charlie'),hasC=ch.length||one;
-  const s=Math.min(H.W*(hasC?.24:.2),H.H*(hasC?.36:.32)),sx=px+(hasC?H.W*.08:0),sy=py+Math.sin(H.t*1.1)*3;
-  spDrawShip(g,sx,sy,s,spShipLook(H.t,{tilt:Math.sin(H.t*.5)*.08,shield:spHas('xmasShield')?1:0,flame:.15}));
+function spGarage(g,H,px,py,dt,R){const ch=['sp_charlie_1','sp_charlie_2','sp_charlie_3'].filter(n=>SP_ART.includes(n)),one=SP_ART.includes('sp_charlie'),hasC=ch.length||one;
+  // R = the garage picture's rect: the ship stands on its pad (x .65, y .69), Charlie sits left of it on the floor (feet at y .75), close enough to reach the hull
+  let s,sx,sy,fx,fy;if(R){s=R.w*.2;sx=R.x+R.w*.65;sy=R.y+R.h*.69-s*.62;fx=R.x+R.w*.385;fy=R.y+R.h*.752}
+  else{s=Math.min(H.W*(hasC?.24:.2),H.H*(hasC?.36:.32));sx=px+(hasC?H.W*.08:0);sy=py;fx=sx-s*1.15;fy=sy+s*.6}
+  sy+=Math.sin(H.t*1.1)*2;
+  spDrawShip(g,sx,sy,s,spShipLook(H.t,{tilt:Math.sin(H.t*.5)*.06,shield:spHas('xmasShield')?1:0,flame:.12}));
   if(H.up>0){H.up-=dt;const k=Math.max(0,H.up);g.save();g.globalCompositeOperation='lighter';const gr=g.createRadialGradient(sx,sy,0,sx,sy,s*1.6);gr.addColorStop(0,`rgba(255,240,170,${.55*k})`);gr.addColorStop(1,'rgba(255,240,170,0)');g.fillStyle=gr;g.fillRect(sx-s*2,sy-s*2,s*4,s*4);
     for(let i=0;i<14;i++){const a=i*2.4+H.t*3,r=s*(.3+(1-k)*1.3);g.fillStyle=i%2?'#ffd23f':'#fff';g.globalAlpha=k;g.beginPath();g.arc(sx+Math.cos(a)*r,sy+Math.sin(a)*r*.8,s*.035,0,7);g.fill()}g.restore()}
-  const fx=sx-s*1.15,fy=sy+s*.6;// Charlie's spot: on the floor at the ship's left foot
-  const a=H.t*.8,depth=Math.sin(a),hx=fx+Math.cos(a)*s*.62,hy=fy-s*.62+depth*s*.12+Math.sin(H.t*2.3)*s*.04,hs=s*(.36+.05*depth);
-  const hero=()=>{try{const h=spHero();withCtx(g,hs,()=>drawSharliz(h,hx,hy,Math.cos(a)*.12,'happy',{x:-Math.sin(a)*.5,y:0},0))}catch(e){}};
+  const cw=R?R.w*.3:s*.95;// Charlie's picture width (600x700 canvas)
+  // the player's Sharliz floats around the room above Charlie, a slow lazy loop
+  const a=H.t*.55,depth=Math.sin(a*1.3),hx=fx-cw*.3+Math.cos(a)*cw*.45,hy=fy-cw*1.32+Math.sin(a*1.3)*cw*.14+Math.sin(H.t*2.1)*cw*.05,hs=cw*(.42+.04*depth);
+  H.hx=hx;H.hy=hy;H.hs=hs;const hero=()=>{try{const h=spHero();withCtx(g,hs,()=>drawSharliz(h,hx,hy,-Math.sin(a)*.14,'happy',{x:Math.cos(a)>0?.5:-.5,y:.2},0))}catch(e){}};
   if(depth<0)hero();
-  // Charlie works: the wrench frames run at 3 a second (sp_charlie_1..3: up, hit, up); on every hit he squashes a little and sparks fly off the hull
-  const fr=Math.floor(H.t*3),hit=(fr%3)===1;if(fr!==H.fr){H.fr=fr;if(hit){spGSparks(H,sx-s*.42,sy+s*.32,s);if(sfx.ok&&sfx.ok()&&!H.mute)tone({f:1900+Math.random()*500,f2:900,d:.05,type:'square',v:.012})}}
-  if(hasC){const n=ch.length?ch[fr%ch.length]:'sp_charlie',im=hzPic(n);if(im){const w=s*.95,h=w*im.naturalHeight/im.naturalWidth,q=hit?1-.04*Math.max(0,1-(H.t*3-fr)*2):1;
-    g.save();g.fillStyle='rgba(18,13,43,.35)';g.beginPath();g.ellipse(fx,fy,w*.42,w*.08,0,0,7);g.fill();g.translate(fx,fy);g.scale(2-q,q);g.drawImage(im,-w/2,-h,w,h);g.restore();H.cx=fx;H.cy=fy-h}}
+  // Charlie works: wrench up / on the bolt, and every few hits he wipes his forehead; each hit = a small squash + sparks off the hull at the wrench
+  const SEQ=[0,1,0,1,0,1,0,1,2,2],fr=Math.floor(H.t*3.2),f=ch.length>=3?SEQ[fr%SEQ.length]:fr%Math.max(1,ch.length),hit=f===1;
+  if(fr!==H.fr){H.fr=fr;if(hit){spGSparks(H,fx+cw*.18,fy-cw*.62*(700/600)*.66,cw*.5);if(sfx.ok&&sfx.ok()&&!H.mute)tone({f:1900+Math.random()*500,f2:900,d:.05,type:'square',v:.01})}}
+  if(hasC){const n=ch.length?ch[f]:'sp_charlie',im=hzPic(n);if(im){const w=cw,h=w*im.naturalHeight/im.naturalWidth,q=hit?1-.035*Math.max(0,1-(H.t*3.2-fr)*2):1;
+    g.save();g.fillStyle='rgba(18,13,43,.35)';g.beginPath();g.ellipse(fx,fy,w*.3,w*.05,0,0,7);g.fill();g.translate(fx,fy);g.scale(2-q,q);g.drawImage(im,-w/2,-h,w,h);g.restore()}}
   spGSparkDraw(g,H,dt);
   if(depth>=0)hero()}
 // welding sparks from the ship (fixed pattern, nothing random needed for gameplay; Math.random only for the look)
@@ -568,26 +573,26 @@ function spEndless(){spD();const best=(spD().best||0);spStart(0);const G=SPG;G.e
    the first flight, the first endless flight, every new weapon type, newly earned parts. Seen flags in progress.ship.ch. ---------- */
 function spChSeen(k){const D=spD();D.ch=D.ch||{};if(D.ch[k])return true;D.ch[k]=1;saveProgress();return false}
 function spCharlie(pages,o){o=o||{};document.querySelectorAll('.ch-pop').forEach(e=>e.remove());const m=document.createElement('div');m.className='ch-pop';
-  const pic=SP_ART.includes('sp_charlie_talk')?'sp_charlie_talk':SP_ART.includes('sp_charlie_1')?'sp_charlie_1':null;
+  const pic=[o.pose&&'sp_charlie_'+o.pose,'sp_charlie_talk','sp_charlie_wave','sp_charlie_1'].find(n=>n&&SP_ART.includes(n))||null,flap=pic==='sp_charlie_talk'&&SP_ART.includes('sp_charlie_talk_b');
   m.innerHTML=`<div class="ch-box"><div class="ch-face">${pic?`<img src="art/${pic}.webp" alt="">`:''}</div><div class="ch-bub"><span class="ch-name"></span>${o.title?'<h3></h3>':''}<p></p><div class="ch-foot"><span class="ch-dots"></span><button class="btn primary"><span></span></button></div></div></div>`;
   m.querySelector('.ch-name').textContent=t('chName');if(o.title)m.querySelector('h3').textContent=o.title;
   const P=m.querySelector('p'),B=m.querySelector('button'),F=m.querySelector('.ch-face'),dots=m.querySelector('.ch-dots');let i=0,tm=0,full=false;
   const show=()=>{const tx=pages[i];full=false;P.textContent='';clearInterval(tm);let n=0;F.classList.add('talk');
     dots.innerHTML=pages.length>1?pages.map((_,j)=>`<i class="${j===i?'on':''}"></i>`).join(''):'';
     B.querySelector('span').textContent=i<pages.length-1?t('chNext'):(o.btn||t('chOk'));
-    tm=setInterval(()=>{n+=2;P.textContent=tx.slice(0,n);if(n%6===0&&sfx.ok&&sfx.ok())tone({f:520+Math.random()*260,d:.035,type:'square',v:.012});if(n>=tx.length){clearInterval(tm);full=true;F.classList.remove('talk')}},28)};
+    const im=F.querySelector('img');tm=setInterval(()=>{n+=2;P.textContent=tx.slice(0,n);if(flap&&im&&n%4===0)im.src='art/'+(im.src.includes('talk_b')?'sp_charlie_talk':'sp_charlie_talk_b')+'.webp';if(n%6===0&&sfx.ok&&sfx.ok())tone({f:520+Math.random()*260,d:.035,type:'square',v:.012});if(n>=tx.length){clearInterval(tm);full=true;F.classList.remove('talk');if(flap&&im)im.src='art/'+pic+'.webp'}},28)};
   const next=e=>{e&&e.stopPropagation();if(!full){clearInterval(tm);P.textContent=pages[i];full=true;F.classList.remove('talk');return}
     sfx.click();if(i<pages.length-1){i++;show();return}m.classList.add('out');setTimeout(()=>m.remove(),220);o.done&&o.done()};
   B.onclick=next;m.onclick=next;document.body.appendChild(m);show();return m}
 // the garage opens (lobby popup) and the locked garage: Charlie says it
 spIntroMaybe=function(){const D=spD();if(D.intro||!spOpen()||state!=='title'||document.querySelector('.sp-pop,.hs-pop,.ch-pop'))return;if(typeof gdBusy==='function'&&gdBusy()){spIntroLater(2000);return}
   D.intro=1;saveProgress();sfx.flourish&&sfx.flourish(3);spCharlie([t('chHi'),t('spOpenP')],{title:t('spOpenT'),btn:t('spGo'),done:()=>openShip()})};
-spLockPop=function(){sfx.locked();spCharlie([t('chLockSoon',{n:SP_OPEN})+' '+t('spLockNow',{n:Math.min(progress.unlocked||1,TOTAL)})],{title:t('spLockT')})};
+spLockPop=function(){sfx.locked();spCharlie([t('chLockSoon',{n:SP_OPEN})+' '+t('spLockNow',{n:Math.min(progress.unlocked||1,TOTAL)})],{title:t('spLockT'),pose:'think'})};
 // first garage visit: the tour
-{const _h=spHub;spHub=function(){_h.apply(this,arguments);if(!spChSeen('g'))setTimeout(()=>{if(SPEL&&!SPEL.hidden&&SPEL.className==='sp-hub')spCharlie([t('chHi'),t('chG1'),t('chG2'),t('chG3'),t('chG4')])},500)}}
+{const _h=spHub;spHub=function(){_h.apply(this,arguments);if(!spChSeen('g'))setTimeout(()=>{if(SPEL&&!SPEL.hidden&&SPEL.className==='sp-hub')spCharlie([t('chHi'),t('chG1'),t('chG2'),t('chG3'),t('chG4')],{pose:'point'})},500)}}
 // first flight / first endless flight: Charlie first, then the flight starts
 {const _p=spEnter;spEnter=function(k){if(spChSeen('f'))return _p.apply(this,arguments);const a=arguments,th=this;spCharlie([t('chF1'),t('chF2')],{btn:t('chGo'),done:()=>_p.apply(th,a)})}}
 {const _e=spEndless;spEndless=function(){if(spChSeen('e'))return _e.apply(this,arguments);spCharlie([t('chE1')],{btn:t('chGo'),done:()=>_e()})}}
-function spChWpn(L){const o=spWOf(L);spCharlie([t('chW',{w:t('wpn'+(o.w+1))})],{btn:t('chGo')})}
+function spChWpn(L){const o=spWOf(L);spCharlie([t('chW',{w:t('wpn'+(o.w+1))})],{btn:t('chGo'),pose:'idea'})}
 // newly earned parts: Charlie announces them in the garage
-{const _r=spEarnRender;spEarnRender=function(nw){_r.call(this,[]);if(nw&&nw.length){sfx.flourish&&sfx.flourish(3);setTimeout(()=>spCharlie(nw.map(id=>t('chPart',{p:t('er_'+id)})+' '+t('ed_'+id))),700)}}}
+{const _r=spEarnRender;spEarnRender=function(nw){_r.call(this,[]);if(nw&&nw.length){sfx.flourish&&sfx.flourish(3);setTimeout(()=>spCharlie(nw.map(id=>t('chPart',{p:t('er_'+id)})+' '+t('ed_'+id)),{pose:'yay'}),700)}}}

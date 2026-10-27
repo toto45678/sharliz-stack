@@ -7,7 +7,7 @@
 .sp-top .coin-pill{flex:none}
 .sp-title{flex:1;min-width:0;text-align:center;font:clamp(1.2rem,6.4vw,2rem)/1 "Lilita One","Secular One",system-ui,sans-serif;color:#7ff3ff;-webkit-text-stroke:6px #120d2b;paint-order:stroke fill;text-shadow:0 0 18px rgba(80,200,255,.8),0 4px 0 #120d2b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .sp-scroll{flex:1;min-height:0;overflow-y:auto;padding:4px 12px 18px;-webkit-overflow-scrolling:touch}
-.sp-hangar{position:relative;height:min(46vh,340px);border-radius:24px;border:3.5px solid #120d2b;overflow:hidden;box-shadow:0 6px 0 #120d2b;background:#0b0726}
+.sp-hangar{position:relative;height:min(58vh,460px);border-radius:24px;border:3.5px solid #120d2b;overflow:hidden;box-shadow:0 6px 0 #120d2b;background:#0b0726}
 .sp-hangar canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .sp-launch{position:absolute;inset-inline:10px;bottom:10px;display:flex;align-items:center;gap:10px}
 .sp-secname{flex:1;min-width:0;display:flex;flex-direction:column;padding:6px 12px;border-radius:16px;background:rgba(18,13,43,.78);border:2px solid #120d2b}
