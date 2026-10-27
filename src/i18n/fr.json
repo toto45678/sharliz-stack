@@ -1355,7 +1355,7 @@
   "evTryLeft": "Essais restants : {n}",
   "evPrize": "Finis les 10 étapes : Bouclier Étoile !",
   "evPrizeGot": "Bouclier Étoile pour ton vaisseau !",
-  "evPrizeSub": "Ton vaisseau s’ouvre au niveau 200",
+  "evPrizeSub": "Ton vaisseau s’ouvre au niveau {n}",
   "cpRow": "Code cadeau",
   "cpEnter": "Saisir",
   "cpTitle": "Code cadeau",

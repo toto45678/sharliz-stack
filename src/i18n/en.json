@@ -1064,7 +1064,7 @@
   "evTryLeft": "Tries left today: {n}",
   "evPrize": "Finish all 10 stages: Star Shield!",
   "evPrizeGot": "Star Shield for your spaceship!",
-  "evPrizeSub": "Your spaceship opens at level 200",
+  "evPrizeSub": "Your spaceship opens at level {n}",
   "spName": "Space Patrol",
   "spShort": "Space",
   "spLvl": "Level {n}",

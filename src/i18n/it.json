@@ -1355,7 +1355,7 @@
   "evTryLeft": "Tentativi rimasti oggi: {n}",
   "evPrize": "Finisci le 10 tappe: Scudo Stella!",
   "evPrizeGot": "Scudo Stella per la tua astronave!",
-  "evPrizeSub": "La tua astronave si apre al livello 200",
+  "evPrizeSub": "La tua astronave si apre al livello {n}",
   "cpRow": "Codice regalo",
   "cpEnter": "Inserisci",
   "cpTitle": "Codice regalo",
