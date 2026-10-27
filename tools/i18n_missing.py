@@ -5,7 +5,7 @@ and prints, per language, the keys/pairs missing in src/i18n/<code>.json. Missin
 import asyncio,json,os,re,subprocess,sys,time
 from playwright.async_api import async_playwright
 ROOT=os.path.dirname(os.path.dirname(os.path.abspath(__file__)));I=os.path.join(ROOT,'src','i18n')
-EXE='/opt/pw-browsers/chromium-1194/chrome-linux/chrome'
+EXE='/opt/pw-browsers/chromium'
 async def dump():
     srv=subprocess.Popen([sys.executable,'-m','http.server','8794'],cwd=ROOT,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);time.sleep(1)
     try:

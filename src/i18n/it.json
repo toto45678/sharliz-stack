@@ -1371,7 +1371,12 @@
   "cpGPacks": "bustine d'oro",
   "cpCookies": "biscotti",
   "cpEgg": "uovo",
-  "cpBoost": "di ogni potenziamento"
+  "cpBoost": "di ogni potenziamento",
+  "updTitle": "Nuova versione!",
+  "updSub": "La versione {n} è nello store. Aggiorna per avere tutte le novità!",
+  "updMust": "Aggiorna il gioco per continuare a giocare.",
+  "updNow": "Aggiorna",
+  "updLater": "Più tardi"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

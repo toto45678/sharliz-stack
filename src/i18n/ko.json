@@ -1371,7 +1371,12 @@
   "cpGPacks": "황금 팩",
   "cpCookies": "쿠키",
   "cpEgg": "알",
-  "cpBoost": "각 부스터"
+  "cpBoost": "각 부스터",
+  "updTitle": "새 버전!",
+  "updSub": "버전 {n}이(가) 스토어에 나왔어요. 업데이트하고 새로운 것들을 만나 보세요!",
+  "updMust": "계속 플레이하려면 게임을 업데이트해 주세요.",
+  "updNow": "업데이트",
+  "updLater": "나중에"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

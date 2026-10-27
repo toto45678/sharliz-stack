@@ -1371,7 +1371,12 @@
   "cpGPacks": "sobres dorados",
   "cpCookies": "galletas",
   "cpEgg": "huevo",
-  "cpBoost": "de cada potenciador"
+  "cpBoost": "de cada potenciador",
+  "updTitle": "¡Nueva versión!",
+  "updSub": "La versión {n} ya está en la tienda. ¡Actualiza para tener todas las novedades!",
+  "updMust": "Actualiza el juego para seguir jugando.",
+  "updNow": "Actualizar",
+  "updLater": "Luego"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",
