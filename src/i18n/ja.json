@@ -1206,7 +1206,12 @@
   "cpGPacks": "ゴールドパック",
   "cpCookies": "クッキー",
   "cpEgg": "たまご",
-  "cpBoost": "各ブースター"
+  "cpBoost": "各ブースター",
+  "updTitle": "新しいバージョン！",
+  "updSub": "バージョン{n}がストアに登場！アップデートして新しい要素をゲットしよう！",
+  "updMust": "プレイを続けるにはゲームをアップデートしてね。",
+  "updNow": "アップデート",
+  "updLater": "あとで"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",

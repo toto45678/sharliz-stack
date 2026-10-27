@@ -1206,7 +1206,12 @@
   "cpGPacks": "paket emas",
   "cpCookies": "kue",
   "cpEgg": "telur",
-  "cpBoost": "dari setiap booster"
+  "cpBoost": "dari setiap booster",
+  "updTitle": "Versi baru!",
+  "updSub": "Versi {n} sudah ada di toko. Perbarui untuk dapat semua hal baru!",
+  "updMust": "Perbarui game untuk terus bermain.",
+  "updNow": "Perbarui",
+  "updLater": "Nanti"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

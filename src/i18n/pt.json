@@ -1206,7 +1206,12 @@
   "cpGPacks": "pacotes dourados",
   "cpCookies": "biscoitos",
   "cpEgg": "ovo",
-  "cpBoost": "de cada reforço"
+  "cpBoost": "de cada reforço",
+  "updTitle": "Nova versão!",
+  "updSub": "A versão {n} já está na loja. Atualize para ter todas as novidades!",
+  "updMust": "Atualize o jogo para continuar jogando.",
+  "updNow": "Atualizar",
+  "updLater": "Depois"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",
