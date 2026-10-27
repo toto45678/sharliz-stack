@@ -1,0 +1,22 @@
+# Sends a store version to App Review through the App Store Connect API (same key as app.yml), so nobody
+# has to sign in to App Store Connect. Runs on a push to an asc-* branch; tools/asc/run.env says what to do:
+#   VERSION=1.2 / BUILD=85 / TEXTS=tools/asc/texts-1.2.json / MODE=fill (texts + build only) or submit
+name: App Store release
+on:
+  push:
+    branches: ['asc-*']
+    paths: ['tools/asc/**', '.github/workflows/asc.yml']
+jobs:
+  asc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install 'pyjwt[crypto]'
+      - name: App Store Connect
+        env:
+          ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+        run: |
+          set -a; . tools/asc/run.env; set +a
+          python3 tools/asc/release.py
