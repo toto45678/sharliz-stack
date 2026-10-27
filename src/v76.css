@@ -118,3 +118,23 @@ html.no-cq .sp-hangar{height:300px}
 #ship .sp-endless small{font:700 .78rem/1.25 Rubik,system-ui;opacity:.95}
 #ship .sp-wic{box-shadow:0 0 0 3px var(--wc,#ffd23f),0 0 14px var(--wc,#ffd23f)}
 #ship .sp-up .pips .sp-wn{font:800 .7rem/1 Rubik,system-ui;color:#c9b8ff;margin-inline-start:6px;font-style:normal;align-self:center}
+/* Charlie explains (spCharlie): Charlie on top, the speech panel under him */
+.ch-pop{position:fixed;inset:0;z-index:40;display:grid;place-items:end center;background:rgba(10,6,30,.62);padding:16px 16px calc(28px + env(safe-area-inset-bottom,0px));animation:chFade .2s ease-out}
+.ch-pop.out{opacity:0;transition:opacity .2s}
+@keyframes chFade{from{opacity:0}}
+.ch-box{width:min(380px,100%);display:flex;flex-direction:column;align-items:center}
+.ch-face{height:min(210px,30vh);margin-bottom:-26px;position:relative;z-index:1;animation:chIn .45s cubic-bezier(.3,1.6,.5,1) both;transform-origin:50% 100%}
+.ch-face img{height:100%;width:auto;display:block;filter:drop-shadow(0 6px 0 rgba(18,13,43,.55))}
+.ch-face.talk img{animation:chTalk .28s ease-in-out infinite alternate}
+@keyframes chIn{from{transform:translateY(40px) scale(.6);opacity:0}}
+@keyframes chTalk{from{transform:translateY(0) scaleY(1)}to{transform:translateY(-3px) scaleY(1.025)}}
+.ch-bub{position:relative;width:100%;box-sizing:border-box;border-radius:24px;border:3.5px solid #120d2b;box-shadow:0 7px 0 #120d2b;background:linear-gradient(#fffaf0,#ffe9c2);color:#2a1a52;padding:30px 18px 14px;text-align:start;animation:chIn .35s .05s cubic-bezier(.3,1.5,.5,1) both}
+.ch-bub::before{content:"";position:absolute;top:-14px;left:50%;width:22px;height:22px;background:#fffaf0;border-left:3.5px solid #120d2b;border-top:3.5px solid #120d2b;transform:translateX(-50%) rotate(45deg);border-radius:4px 0 0 0}
+.ch-name{position:absolute;top:-15px;inset-inline-start:16px;padding:3px 14px;border-radius:999px;border:3px solid #120d2b;background:#6b7b2e;color:#fff6c8;font:1.05rem/1.2 "Lilita One","Secular One",system-ui,sans-serif;letter-spacing:.02em;z-index:2}
+.ch-bub h3{margin:0 0 4px;font:1.35rem/1.1 "Lilita One","Secular One",system-ui,sans-serif;color:#ff4fa3}
+.ch-bub p{margin:0;min-height:3.6em;font-weight:800;font-size:1.05rem;line-height:1.35}
+.ch-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px}
+.ch-dots{display:flex;gap:6px}
+.ch-dots i{width:9px;height:9px;border-radius:50%;background:#d9c7a8;border:2px solid #120d2b}
+.ch-dots i.on{background:#ff4fa3;width:22px;border-radius:6px}
+.ch-foot .btn{min-height:46px;padding:0 24px;margin-inline-start:auto}

@@ -1153,7 +1153,22 @@
   "spEBest": "Récord: oleada {n}",
   "spEWave": "¡Llegaste a la oleada {n}!",
   "spERec": "¡Nuevo récord!",
-  "spENext": "¡Siguiente mundo!"
+  "spENext": "¡Siguiente mundo!",
+  "chName": "Charlie",
+  "chNext": "Siguiente",
+  "chGo": "¡Vamos!",
+  "chOk": "¡Entendido!",
+  "chHi": "¡Hola, soy Charlie! Dirijo este taller.",
+  "chG1": "¡Esta es tu nave! Antes de cada jefe vuelas sobre el mundo y luchas contra el gran ayudante del jefe.",
+  "chG2": "Con monedas compras mejoras: armas nuevas, disparos más rápidos, blindaje y un imán de monedas.",
+  "chG3": "Algunas piezas nunca se pueden comprar. ¡Termina todo por completo para ganarlas!",
+  "chG4": "¿Quieres más? El vuelo sin fin nunca termina, y cada 5 oleadas aparece un jefe.",
+  "chF1": "Arrastra en cualquier sitio para volar. ¡Tu nave dispara sola!",
+  "chF2": "¡Atrapa monedas y estrellas de poder, y esquiva los disparos y las rocas!",
+  "chE1": "¡Vuelo sin fin! ¿Hasta dónde llegarás? Cada 5 oleadas ataca un gran ayudante y luego volamos al siguiente mundo.",
+  "chW": "¡Arma nueva: {w}! ¡Vamos a probarla!",
+  "chPart": "¡Ganaste una pieza nueva: {p}!",
+  "chLockSoon": "Tu nave está casi lista. ¡Vuelve en el nivel {n}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

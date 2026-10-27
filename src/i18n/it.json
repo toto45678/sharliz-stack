@@ -1153,7 +1153,22 @@
   "spEBest": "Record: ondata {n}",
   "spEWave": "Sei arrivato all'ondata {n}!",
   "spERec": "Nuovo record!",
-  "spENext": "Mondo successivo!"
+  "spENext": "Mondo successivo!",
+  "chName": "Charlie",
+  "chNext": "Avanti",
+  "chGo": "Andiamo!",
+  "chOk": "Capito!",
+  "chHi": "Ciao, sono Charlie! Gestisco questa officina.",
+  "chG1": "Questa è la tua astronave! Prima di ogni boss voli sopra il mondo e combatti il grande aiutante del boss.",
+  "chG2": "Con le monete compri potenziamenti: armi nuove, colpi più veloci, corazza e un magnete per monete.",
+  "chG3": "Alcuni pezzi non si comprano mai. Finisci tutto completamente per guadagnarli!",
+  "chG4": "Vuoi di più? Il volo infinito non finisce mai, e ogni 5 ondate arriva un boss.",
+  "chF1": "Trascina ovunque per volare. La nave spara da sola!",
+  "chF2": "Prendi monete e stelle potere, e schiva colpi e rocce!",
+  "chE1": "Volo infinito! Fin dove arriverai? Ogni 5 ondate attacca un grande aiutante, poi voliamo al mondo successivo.",
+  "chW": "Nuova arma: {w}! Proviamola!",
+  "chPart": "Hai guadagnato un nuovo pezzo: {p}!",
+  "chLockSoon": "La tua astronave è quasi pronta. Torna al livello {n}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

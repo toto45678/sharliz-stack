@@ -1153,7 +1153,22 @@
   "spEBest": "Rekord: Welle {n}",
   "spEWave": "Du hast Welle {n} erreicht!",
   "spERec": "Neuer Rekord!",
-  "spENext": "Nächste Welt!"
+  "spENext": "Nächste Welt!",
+  "chName": "Charlie",
+  "chNext": "Weiter",
+  "chGo": "Los geht's!",
+  "chOk": "Verstanden!",
+  "chHi": "Hi, ich bin Charlie! Ich leite diese Garage.",
+  "chG1": "Das ist dein Raumschiff! Vor jedem Boss fliegst du damit über die Welt und kämpfst gegen den großen Helfer des Bosses.",
+  "chG2": "Mit Münzen kaufst du Upgrades: neue Waffen, schnellere Schüsse, Panzerung und einen Münzmagneten.",
+  "chG3": "Manche Teile kann man nie kaufen. Spiel alles komplett durch, um sie zu verdienen!",
+  "chG4": "Willst du mehr? Der Endlosflug hört nie auf, und alle 5 Wellen kommt ein Boss.",
+  "chF1": "Zieh irgendwo, um zu fliegen. Dein Schiff schießt von allein!",
+  "chF2": "Fang Münzen und Power-Sterne und weich den Schüssen und Felsen aus!",
+  "chE1": "Endlosflug! Wie weit kommst du? Alle 5 Wellen greift ein großer Helfer an, dann fliegen wir weiter in die nächste Welt.",
+  "chW": "Neue Waffe: {w}! Probieren wir sie aus!",
+  "chPart": "Du hast ein neues Teil verdient: {p}!",
+  "chLockSoon": "Dein Raumschiff ist fast fertig. Komm bei Level {n} wieder!"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

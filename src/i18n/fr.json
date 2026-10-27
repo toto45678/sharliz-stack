@@ -1153,7 +1153,22 @@
   "spEBest": "Record : vague {n}",
   "spEWave": "Tu as atteint la vague {n} !",
   "spERec": "Nouveau record !",
-  "spENext": "Monde suivant !"
+  "spENext": "Monde suivant !",
+  "chName": "Charlie",
+  "chNext": "Suivant",
+  "chGo": "C'est parti !",
+  "chOk": "Compris !",
+  "chHi": "Salut, moi c'est Charlie ! Je tiens ce garage.",
+  "chG1": "Voici ton vaisseau ! Avant chaque boss, tu survoles le monde et tu combats le grand assistant du boss.",
+  "chG2": "Avec des pièces tu achètes des améliorations : nouvelles armes, tirs plus rapides, blindage et aimant à pièces.",
+  "chG3": "Certaines pièces ne s'achètent jamais. Termine tout complètement pour les gagner !",
+  "chG4": "Tu en veux plus ? Le vol sans fin ne s'arrête jamais, et toutes les 5 vagues un boss arrive.",
+  "chF1": "Glisse n'importe où pour voler. Ton vaisseau tire tout seul !",
+  "chF2": "Attrape les pièces et les étoiles de pouvoir, et esquive les tirs et les rochers !",
+  "chE1": "Vol sans fin ! Jusqu'où iras-tu ? Toutes les 5 vagues un grand assistant attaque, puis on vole vers le monde suivant.",
+  "chW": "Nouvelle arme : {w} ! Essayons-la !",
+  "chPart": "Tu as gagné une nouvelle pièce : {p} !",
+  "chLockSoon": "Ton vaisseau est presque prêt. Reviens au niveau {n} !"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",

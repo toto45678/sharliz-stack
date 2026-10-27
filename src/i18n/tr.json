@@ -1153,7 +1153,22 @@
   "spEBest": "Rekor: dalga {n}",
   "spEWave": "{n}. dalgaya ulaştın!",
   "spERec": "Yeni rekor!",
-  "spENext": "Sonraki dünya!"
+  "spENext": "Sonraki dünya!",
+  "chName": "Charlie",
+  "chNext": "İleri",
+  "chGo": "Hadi!",
+  "chOk": "Anladım!",
+  "chHi": "Selam, ben Charlie! Bu garajı ben yönetiyorum.",
+  "chG1": "Bu senin uzay gemin! Her bosstan önce onunla dünyanın üstünde uçar ve bossun büyük yardımcısıyla savaşırsın.",
+  "chG2": "Paralarla geliştirme alırsın: yeni silahlar, daha hızlı atışlar, zırh ve para mıknatısı.",
+  "chG3": "Bazı parçalar asla satın alınamaz. Kazanmak için her şeyi tamamen bitir!",
+  "chG4": "Daha fazlası mı? Sonsuz uçuş hiç bitmez ve her 5 dalgada bir boss gelir.",
+  "chF1": "Uçmak için herhangi bir yerde sürükle. Gemin kendi kendine ateş eder!",
+  "chF2": "Paraları ve güç yıldızlarını yakala, atışlardan ve kayalardan kaç!",
+  "chE1": "Sonsuz uçuş! Ne kadar uzağa gidebilirsin? Her 5 dalgada büyük bir yardımcı saldırır, sonra sonraki dünyaya uçarız.",
+  "chW": "Yeni silah: {w}! Hadi deneyelim!",
+  "chPart": "Yeni bir parça kazandın: {p}!",
+  "chLockSoon": "Uzay gemin neredeyse hazır. {n}. seviyede geri gel!"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

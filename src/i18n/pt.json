@@ -1153,7 +1153,22 @@
   "spEBest": "Recorde: onda {n}",
   "spEWave": "Você chegou à onda {n}!",
   "spERec": "Novo recorde!",
-  "spENext": "Próximo mundo!"
+  "spENext": "Próximo mundo!",
+  "chName": "Charlie",
+  "chNext": "Próximo",
+  "chGo": "Vamos lá!",
+  "chOk": "Entendi!",
+  "chHi": "Oi, eu sou o Charlie! Eu cuido desta garagem.",
+  "chG1": "Esta é a sua nave! Antes de cada chefão você voa sobre o mundo e enfrenta o grande ajudante do chefão.",
+  "chG2": "Com moedas você compra melhorias: armas novas, tiros mais rápidos, blindagem e um ímã de moedas.",
+  "chG3": "Algumas peças nunca podem ser compradas. Termine tudo por completo para ganhá-las!",
+  "chG4": "Quer mais? O voo sem fim nunca acaba, e a cada 5 ondas aparece um chefão.",
+  "chF1": "Arraste em qualquer lugar para voar. Sua nave atira sozinha!",
+  "chF2": "Pegue moedas e estrelas de poder, e desvie dos tiros e das rochas!",
+  "chE1": "Voo sem fim! Até onde você chega? A cada 5 ondas um grande ajudante ataca, depois voamos para o próximo mundo.",
+  "chW": "Arma nova: {w}! Vamos testar!",
+  "chPart": "Você ganhou uma peça nova: {p}!",
+  "chLockSoon": "Sua nave está quase pronta. Volte no nível {n}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

@@ -1153,7 +1153,22 @@
   "spEBest": "Terbaik: gelombang {n}",
   "spEWave": "Kamu sampai gelombang {n}!",
   "spERec": "Rekor baru!",
-  "spENext": "Dunia berikutnya!"
+  "spENext": "Dunia berikutnya!",
+  "chName": "Charlie",
+  "chNext": "Lanjut",
+  "chGo": "Ayo!",
+  "chOk": "Mengerti!",
+  "chHi": "Hai, aku Charlie! Aku yang mengurus garasi ini.",
+  "chG1": "Ini pesawatmu! Sebelum setiap bos kamu terbang di atas dunia dan melawan pembantu besar si bos.",
+  "chG2": "Dengan koin kamu beli upgrade: senjata baru, tembakan lebih cepat, pelindung, dan magnet koin.",
+  "chG3": "Ada bagian yang tidak bisa dibeli. Tamatkan semuanya sampai habis untuk mendapatkannya!",
+  "chG4": "Mau lagi? Terbang tanpa akhir tidak pernah selesai, dan setiap 5 gelombang muncul bos.",
+  "chF1": "Geser di mana saja untuk terbang. Pesawatmu menembak sendiri!",
+  "chF2": "Tangkap koin dan bintang kekuatan, hindari tembakan dan batu!",
+  "chE1": "Terbang tanpa akhir! Seberapa jauh kamu bisa? Setiap 5 gelombang pembantu besar menyerang, lalu kita terbang ke dunia berikutnya.",
+  "chW": "Senjata baru: {w}! Ayo kita coba!",
+  "chPart": "Kamu dapat bagian baru: {p}!",
+  "chLockSoon": "Pesawatmu hampir siap. Kembali di level {n}!"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
