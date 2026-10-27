@@ -48,7 +48,7 @@ function evPath(N,body){const E=N.E,D=evData(E.id),nx=Math.min(9,D.done);
   const pts=[];for(let i=0;i<10;i++){const y=i<9?5+i*8.3:88,x=50+Math.sin(i*1.25+.6)*28;pts.push([x,y])}// the boss gets more room: stage 9 hid behind it on small phones
   const svg=`<svg class="ev-road" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="${pts.map((p,i)=>(i?'L':'M')+p[0]+' '+p[1]).join(' ')}"/></svg>`;wrap.innerHTML=svg;
   pts.forEach(([x,y],i)=>{const b=document.createElement('button'),boss=i===9,st=i<D.done?'done':i===nx?'next':'lock';b.className='ev-node '+st+(boss?' boss':'');b.style.left=x+'%';b.style.top=y+'%';
-    b.innerHTML=boss?`<img src="art/ev_boss_${E.id}.webp" alt=""><i>${t('evFinal')}</i>`:`<img src="art/ev_node${st==='lock'?'_off':''}.webp" alt=""><i>${i+1}</i>`;
+    b.innerHTML=boss?`<img src="art/ev_boss_${E.id}.webp" alt=""><i>${t('evFinal')}</i>`:`<img src="art/${E.node||'ev_node'}${st==='lock'?'_off':''}.webp" alt=""><i>${i+1}</i>`;
     b.setAttribute('aria-label',boss?t('evBossStage'):t('evStage',{n:i+1}));
     b.onclick=()=>{if(st==='lock'){sfx.locked();noteToast(t('evWinFirst',{n:nx+1}));return}sfx.click();evStart(i)};wrap.appendChild(b)});
   requestAnimationFrame(()=>{const h=wrap.clientHeight;if(h)wrap.style.setProperty('--evs',Math.max(.68,Math.min(1,h/540)).toFixed(3))});
@@ -84,7 +84,7 @@ function evStageCandy(won){const boss=EVP.i===9,D=evData(EVP.E.id),first=won&&EV
 function evFinish(won){if(evCnt)evCnt.hidden=true;const E=EVP.E,D=evData(E.id),R=evStageCandy(won);D.cur+=R.total;if(won&&EVP.i>=D.done)D.done=Math.min(10,EVP.i+1);saveProgress();
   const boss=EVP.i===9;
   showOverlay(()=>({title:won?(boss?t('evBossClear'):t('evClear')):t('whoops'),big:true,
-    extra:card=>{card.classList.add('ev-res');{const hi=document.createElement('img');hi.className='ev-hero';hi.src=won?(boss?'art/ev_boss_'+E.id+'.webp':'art/ev_icon_'+E.id+'.webp'):'art/ev_node_off.webp';hi.alt='';card.appendChild(hi)}const rows=document.createElement('div');rows.className='ev-rows';
+    extra:card=>{card.classList.add('ev-res');{const hi=document.createElement('img');hi.className='ev-hero';hi.src=won?(boss?'art/ev_boss_'+E.id+'.webp':'art/ev_icon_'+E.id+'.webp'):'art/'+(E.node||'ev_node')+'_off.webp';hi.alt='';card.appendChild(hi)}const rows=document.createElement('div');rows.className='ev-rows';
       const row=(lbl,n)=>{const d=document.createElement('div');d.className='ev-row';d.innerHTML=`<span></span><b><img src="art/ev_${E.cur}.webp" alt="">+${n}</b>`;d.querySelector('span').textContent=lbl;rows.appendChild(d)};
       row(boss?t('evBossStage'):t('evStage',{n:EVP.i+1}),R.base);if(R.perf)row(t('perfect')||'PERFECT',R.perf);if(R.first)row(t('evFirst'),R.first);if(R.jar)row(t('hsf_candyjar'),R.jar);card.appendChild(rows);if(!won){const al=document.createElement('p');al.className='ev-almost';al.textContent=t('evAlmost');card.insertBefore(al,rows)}
       if(won&&boss){card.classList.add('ev-boss');const bl=document.createElement('p');bl.className='ev-climax';bl.textContent=R.first?t('evDoneAll'):t('evBossDown');card.insertBefore(bl,rows)}
@@ -97,7 +97,7 @@ function evExit(toHub){evDeco(false);const L=EVP?EVP.from:level;EVP=null;mode='l
 // wiring: goals/passives/countdown behave like a normal level; win/lose go to the event card
 {const _ml=modeLanded;modeLanded=function(){if(mode==='event')return false;return _ml.apply(this,arguments)}}
 {const _w=win;win=function(){if(mode!=='event'||!EVP)return _w.apply(this,arguments);if(state==='win')return;state='win';balance=computeBalance().maxR;updateHud();freeze=.15;
-  sfx.flourish(3);for(let i=0;i<50;i++)particles.push({x:rnd(0,W),y:camY+rnd(-40,H*.25),vx:rnd(-60,60),vy:rnd(40,200),life:2,c:pick(['#ff7a1a','#8a4dff','#ffd23f','#2a2a2a']),sz:rnd(5,9),rot:rnd(0,6),vr:rnd(-8,8),conf:true});
+  sfx.flourish(3);for(let i=0;i<50;i++)particles.push({x:rnd(0,W),y:camY+rnd(-40,H*.25),vx:rnd(-60,60),vy:rnd(40,200),life:2,c:pick(EVP.E.conf||['#ff7a1a','#8a4dff','#ffd23f','#2a2a2a']),sz:rnd(5,9),rot:rnd(0,6),vr:rnd(-8,8),conf:true});
   setTimeout(()=>{if(mode==='event'&&EVP)evFinish(true)},1300)}}
 {const _mo=modeOver;modeOver=function(won){if(mode!=='event'||!EVP)return _mo.apply(this,arguments);evFinish(false)}}
 {const _sm=startMode;startMode=function(m){if(m==='event'&&EVP){evStart(EVP.i,true);return}return _sm.apply(this,arguments)}}
@@ -115,7 +115,7 @@ function evCounter(on){if(!evCnt){evCnt=document.createElement('div');evCnt.id='
 /* ---------- Halloween decoration on the event world ---------- */
 let EVD=null;
 function evDeco(on){EVD=on&&EVP?{k:EVP.E.deco,bats:Array.from({length:5},()=>({x:rnd(0,1),y:rnd(.08,.4),s:rnd(.6,1.1),p:rnd(0,6),v:rnd(.03,.07)*(Math.random()<.5?-1:1)}))}:null}
-{const _r=render;render=function(){_r.apply(this,arguments);if(!EVD||mode!=='event')return;const g=ctx;g.save();
+{const _r=render;render=function(){_r.apply(this,arguments);if(!EVD||EVD.k!=='halloween'||mode!=='event')return;const g=ctx;g.save();
   const mo=hzPic('ev_moon');if(mo){const s=W*.34;g.globalAlpha=.95;g.drawImage(mo,W*.66-s/2,H*.12-s/2+(camY-camTarget())*.05,s,s)}g.globalAlpha=1;
   const bat=hzPic('ev_bat');for(const b of EVD.bats){b.x+=b.v*frameDt;if(b.x<-.1)b.x=1.1;if(b.x>1.1)b.x=-.1;const fl=Math.sin(time*12+b.p);const s=S*.9*b.s,x=b.x*W,y=b.y*H+Math.sin(time*2+b.p)*10;
     if(bat){g.save();g.translate(x,y);g.scale(b.v<0?-1:1,.75+.25*Math.abs(fl));g.drawImage(bat,-s/2,-s/2,s,s);g.restore()}}
