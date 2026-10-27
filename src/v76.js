@@ -497,7 +497,7 @@ spDrawShots=function(G,g){g.save();g.globalCompositeOperation='lighter';const T=
     if(b.dr){g.fillStyle='#4ee6ff';g.shadowColor='#4ee6ff';g.shadowBlur=8;spRR(g,-2,-7,4,14,2);g.fill();g.restore();continue}
     const w=b.w||0,[k,c0,c1]=SP_WPN[w],nm='sp_w'+(w+1)+(b.big?'_big':'_shot'),im=SP_ART.includes(nm)&&hzPic(nm);
     const L=G.u*(b.big?.09:.04),W2=b.big?G.u*.04:G.u*.009;
-    if(im){const h=L*2,ww=h*im.naturalWidth/im.naturalHeight;g.drawImage(im,-ww/2,-h/2,ww,h);g.restore();continue}
+    if(im){const h=L*(b.big?2.8:3.2),ww=h*im.naturalWidth/im.naturalHeight;g.drawImage(im,-ww/2,-h/2,ww,h);g.restore();continue}
     g.shadowColor=c1;g.shadowBlur=b.big?20:10;const gr=g.createLinearGradient(0,-L,0,L*1.4);gr.addColorStop(0,c0);gr.addColorStop(.4,c1);gr.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=gr;
     if(k==='fire'){g.beginPath();g.arc(0,-L*.4,W2*1.8,0,7);g.fill();g.beginPath();g.moveTo(-W2*1.6,-L*.4);g.quadraticCurveTo(Math.sin(T*40+b.x)*W2,L*1.6,W2*1.6,-L*.4);g.fill()}
     else if(k==='ice'){g.beginPath();g.moveTo(0,-L);g.lineTo(W2*1.4,0);g.lineTo(0,L*.8);g.lineTo(-W2*1.4,0);g.closePath();g.fill()}
