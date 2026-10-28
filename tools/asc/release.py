@@ -48,6 +48,11 @@ if not ver:
     log('created version', VERSION)
 VID = ver['id']
 state = ver['attributes']['appStoreState']
+if MODE == 'release':
+    if state != 'PENDING_DEVELOPER_RELEASE': sys.exit(f'version {VERSION} is {state}, not waiting for release')
+    call('POST', '/appStoreVersionReleaseRequests', {'data': {'type': 'appStoreVersionReleaseRequests',
+        'relationships': {'appStoreVersion': {'data': {'type': 'appStoreVersions', 'id': VID}}}}})
+    log('RELEASED:', call('GET', f'/appStoreVersions/{VID}')['data']['attributes']['appStoreState']); sys.exit(0)
 if state not in ('PREPARE_FOR_SUBMISSION', 'DEVELOPER_REJECTED', 'REJECTED', 'METADATA_REJECTED'):
     sys.exit(f'version {VERSION} is {state}: not editable, nothing changed')
 call('PATCH', f'/appStoreVersions/{VID}', {'data': {'type': 'appStoreVersions', 'id': VID, 'attributes': {'releaseType': 'MANUAL'}}})
