@@ -113,7 +113,7 @@ h1 span{display:block;color:#fff;font-size:.6em;margin-top:2px}
     <div class="hint big" id="hint">TRY ME!<span>Tap to drop</span></div>
     <div class="over" id="over">
       <div class="t" id="overT">NOPE!</div>
-      <p id="overSub">You stacked 0. The full game has 300 levels and 30 bosses.</p>
+      <p id="overSub">You stacked 0. The full game has 500 levels and 50 bosses.</p>
       <a class="badge" href="/go?ct=meta_w1_caau"><img src="img/appstore_badge.svg" alt="Download on the App Store" width="174" height="58"></a>
       <button class="again" id="again" type="button">Try again</button>
     </div>
@@ -218,7 +218,7 @@ var seen=0,seenT=setInterval(function(){if(document.visibilityState!=='visible')
   function gameOver(){
     var n=tower.length-1;
     document.getElementById('overT').textContent=n>=MAX?'IT HELD!':n>=8?'WOW!':'NOPE!';
-    document.getElementById('overSub').textContent=(n>=MAX?'All '+MAX+'! ':n>=8?'You stacked '+n+'! ':'It didn’t hold. ')+'The full game has 300 levels and 30 bosses.';
+    document.getElementById('overSub').textContent=(n>=MAX?'All '+MAX+'! ':n>=8?'You stacked '+n+'! ':'It didn’t hold. ')+'The full game has 500 levels and 50 bosses.';
     state='over';hint.style.display='none';over.classList.add('show','wait');setTimeout(function(){over.classList.remove('wait')},800);bar.classList.add('go');step('stopped');
   }
   function drawPiece(p,x,y,sq){
