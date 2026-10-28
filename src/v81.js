@@ -141,6 +141,8 @@ const b2Open=()=>(progress.unlocked||1)>=B2_LV||(typeof DEV_OPEN!=='undefined'&&
 Object.assign(SB_ICON,{boss2:'ic_boss',world2:'ic_map',gold2:'cup_g'});Object.assign(SB_COL,{boss2:'#9b5cff',world2:'#2fb8a8',gold2:'#ffcf3a'});
 Object.assign(I18N.en,{pg_boss2:'Legend bosses',pg_world2:'Legend worlds',pg_gold2:'Legend gold'});Object.assign(I18N.he,{pg_boss2:'בוסי האגדה',pg_world2:'עולמות האגדה',pg_gold2:'זהב האגדה'});
 if(!I18N.en.pg_gold)Object.assign(I18N.en,{pg_gold:'Gold'});
+// book 2 chapters reuse book 1's 'how to get it' line (the zoom and a locked slot showed the raw key hint_boss2), in every language
+for(const L of Object.keys(I18N)){const D=I18N[L];if(D)for(const k of['boss','world','gold'])if(D['hint_'+k]!==undefined&&D['hint_'+k+'2']===undefined)D['hint_'+k+'2']=D['hint_'+k]}
 sbChapters=function(){return STK_PAGES.filter(P=>(P.book||1)===SB.book)};
 // the gold chapter of book 2 uses the same page dressing as book 1's (v64 checks P.id==='gold')
 {const _pv=sbPageView;sbPageView=function(){const P=sbChapters()[SB.ch];if(P&&P.id==='gold2'){P.id='gold';try{return _pv.apply(this,arguments)}finally{P.id='gold2';try{const b=SB.el.querySelector('.sb-head b');if(b&&b.textContent===t('pg_gold'))b.textContent=t('pg_gold2')}catch(e){}}}return _pv.apply(this,arguments)}}
