@@ -4,5 +4,15 @@ page id 7e41119e-9cc7-473d-9d3f-20d935b14e17
 page version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'PREPARE_FOR_SUBMISSION', 'deepLink': None}
 localization en-US 615e07f3-e442-42c0-ae55-72f2cfce275d promo text set
 screenshot sets before ['APP_IPHONE_67', 'APP_IPAD_PRO_3GEN_129']
-preview app_preview_886x1920.mp4 {'errors': [], 'warnings': None, 'state': 'COMPLETE'} 00:00:05:01
-poster frame 00:00:00:15 set
+Screenshot 01.jpg COMPLETE 
+Screenshot 02.jpg COMPLETE 
+Screenshot 03.jpg COMPLETE 
+Screenshot 04.jpg COMPLETE 
+Screenshot 05.jpg UPLOAD_COMPLETE 
+Screenshot 06.jpg COMPLETE 
+APP_IPAD_PRO_3GEN_129 already has 7 screenshots, kept
+review submission 38963986-2820-4580-a66c-ef7df27b42c2 COMPLETE
+review submission 58247910-79e9-4f08-bb1d-de1787f26b9e COMPLETE
+review submission d9a9a051-d687-4e7b-90c8-011f75230086 COMPLETE
+SUBMITTED: 63fba0da-2a76-48e9-8ebe-c69a0b01fbf0 WAITING_FOR_REVIEW
+page version {'version': '1', 'state': 'WAITING_FOR_REVIEW', 'deepLink': None}
