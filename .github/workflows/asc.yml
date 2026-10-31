@@ -22,7 +22,7 @@ jobs:
         run: |
           set -a; . tools/asc/run.env; set +a
           set -o pipefail
-          python3 tools/asc/release.py 2>&1 | tee tools/asc/last-run.log
+          python3 ${SCRIPT:-tools/asc/release.py} 2>&1 | tee tools/asc/last-run.log
       - name: Save the log on the branch (sessions can't read Actions logs)
         if: always()
         run: |
