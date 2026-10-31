@@ -131,8 +131,8 @@ h1 span{display:block;color:#fff;font-size:.6em;margin-top:2px}
   </div>
 </main>
 <script>
-// a different campaign can reuse this page: /play?ct=<name> swaps the token on every store link (letters, digits, _ and -, max 30); the QR always carries meta_w1_caau
-try{var c=new URLSearchParams(location.search).get('ct');if(c&&/^[\w-]{1,30}$/.test(c))document.querySelectorAll('a[href^="/go"]').forEach(function(a){a.href=a.href.replace(/ct=[^&]*/,'ct='+c)})}catch(e){}
+// a different campaign can reuse this page: /play?ct=<name> swaps the token on every store link (letters, digits, _ and -, max 30), and /play?ppid=<id> adds a Custom Product Page; the QR always carries meta_w1_caau
+try{var q=new URLSearchParams(location.search),c=q.get('ct'),pp=q.get('ppid');document.querySelectorAll('a[href^="/go"]').forEach(function(a){if(c&&/^[\w-]{1,30}$/.test(c))a.href=a.href.replace(/ct=[^&]*/,'ct='+c);if(pp&&/^[0-9a-fA-F-]{8,40}$/.test(pp))a.href+='&ppid='+pp})}catch(e){}
 
 // funnel steps for Cloudflare Web Analytics, no cookies: each step loads /p/<step> once per visit in a hidden frame, which counts as a view of that path.
 // /p/stay5 and /p/stay15 = still here after 5 s / 15 s, started = first drop, stopped = first round over (the tower fell or reached 20), again = first "Try again". App Store taps stay on /go.
