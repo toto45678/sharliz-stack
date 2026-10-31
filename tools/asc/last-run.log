@@ -1,5 +1,34 @@
-app 6819720504 Sharliz Tower
-version 1.2 PENDING_DEVELOPER_RELEASE
-version 1.1 READY_FOR_SALE
-version 1.0 READY_FOR_SALE
-RELEASED: READY_FOR_SALE
+app 6819720504
+created page CA Tower vs Boss
+page id 7e41119e-9cc7-473d-9d3f-20d935b14e17
+page version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'PREPARE_FOR_SUBMISSION', 'deepLink': None}
+localization en-US 615e07f3-e442-42c0-ae55-72f2cfce275d promo text set
+screenshot sets before []
+Screenshot 01.jpg COMPLETE 
+Screenshot 02.jpg COMPLETE 
+Screenshot 03.jpg COMPLETE 
+Screenshot 04.jpg COMPLETE 
+Screenshot 05.jpg COMPLETE 
+Screenshot 06.jpg COMPLETE 
+Screenshot 01_l6.jpg COMPLETE 
+Screenshot 02_boss70.jpg COMPLETE 
+Screenshot 03_boss260.jpg COMPLETE 
+Screenshot 04_l175.jpg COMPLETE 
+Screenshot 05_l285.jpg COMPLETE 
+Screenshot 06_wardrobe.jpg COMPLETE 
+Screenshot 07_album.jpg COMPLETE 
+Preview app_preview_886x1920.mp4 COMPLETE 
+!! PATCH https://api.appstoreconnect.apple.com/v1/appPreviews/81800019-67ca-8d38-8121-974db8eb89bb -> 409
+{
+  "errors" : [ {
+    "id" : "6aeeda9f-820f-4333-b848-e7a971426f16",
+    "status" : "409",
+    "code" : "STATE_ERROR",
+    "title" : "The request cannot be fulfilled because of the state of another resource.",
+    "detail" : "Asset Not in Complete state! can't update Image!"
+  } ]
+}
+poster frame 00:00:00:15 NOT set (set it in ASC)
+screenshot sets now ['APP_IPHONE_67', 'APP_IPAD_PRO_3GEN_129']
+page versions [('a6bca47d-4905-4540-b683-e94b2f4072b4', {'version': '1', 'state': 'PREPARE_FOR_SUBMISSION', 'deepLink': None})]
+READY (not submitted): page CA Tower vs Boss 7e41119e-9cc7-473d-9d3f-20d935b14e17
