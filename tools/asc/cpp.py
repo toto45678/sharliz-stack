@@ -102,10 +102,18 @@ def fill_shots(dtype, files, replace):
     for f in files: upload('appScreenshots', 'appScreenshotSet', s['id'], f)
 
 _, have = ss_set('-'); log('screenshot sets before', have)
-fill_shots(P['iphone'], sorted(glob.glob(f'{D}/iphone/*.jpg')), True)
-fill_shots(P['ipad'], sorted(glob.glob(f'{D}/ipad/*.jpg')), False)  # keeps a set Apple copied from the main page
+if not os.environ.get('POSTER_ONLY'): fill_shots(P['iphone'], sorted(glob.glob(f'{D}/iphone/*.jpg')), True)
+if not os.environ.get('POSTER_ONLY'): fill_shots(P['ipad'], sorted(glob.glob(f'{D}/ipad/*.jpg')), False)  # keeps a set Apple copied from the main page
 
 # --- App Preview ---
+if os.environ.get('POSTER_ONLY'):  # second run: Apple must finish processing the video before the poster frame can be set
+    ps = call('GET', f'/appCustomProductPageLocalizations/{LID}/appPreviewSets?limit=50')['data'][0]
+    for o in call('GET', f'/appPreviewSets/{ps["id"]}/appPreviews?limit=10')['data']:
+        log('preview', o['attributes'].get('fileName'), o['attributes'].get('assetDeliveryState'), o['attributes'].get('previewFrameTimeCode'))
+        r = call('PATCH', f'/appPreviews/{o["id"]}', {'data': {'type': 'appPreviews', 'id': o['id'],
+                 'attributes': {'previewFrameTimeCode': P['posterTimeCode']}}}, soft=True)
+        log('poster frame', P['posterTimeCode'], 'set' if r is not None else 'NOT set')
+    sys.exit(0)
 sets = call('GET', f'/appCustomProductPageLocalizations/{LID}/appPreviewSets?limit=50')['data']
 ps = next((s for s in sets if s['attributes']['previewType'] == P['previewType']), None)
 if not ps:
