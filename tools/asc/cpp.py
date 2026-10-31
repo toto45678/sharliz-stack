@@ -105,7 +105,21 @@ _, have = ss_set('-'); log('screenshot sets before', have)
 if not os.environ.get('POSTER_ONLY'): fill_shots(P['iphone'], sorted(glob.glob(f'{D}/iphone/*.jpg')), True)
 if not os.environ.get('POSTER_ONLY'): fill_shots(P['ipad'], sorted(glob.glob(f'{D}/ipad/*.jpg')), False)  # keeps a set Apple copied from the main page
 
-# --- App Preview ---
+# --- SUBMIT=1: send this page version to App Review (only on Tzach's word; he said 'תעשה את זה אתה' 31.10 20:35 UTC) ---
+if os.environ.get('SUBMIT'):
+    subs = call('GET', f'/apps/{APP}/reviewSubmissions?filter[platform]=IOS&limit=20')['data']
+    for x in subs: log('review submission', x['id'], x['attributes'].get('state'))
+    sub = next((x for x in subs if x['attributes'].get('state') == 'READY_FOR_REVIEW'), None)
+    if not sub:
+        sub = call('POST', '/reviewSubmissions', {'data': {'type': 'reviewSubmissions', 'attributes': {'platform': 'IOS'},
+              'relationships': {'app': {'data': {'type': 'apps', 'id': APP}}}}})['data']
+    call('POST', '/reviewSubmissionItems', {'data': {'type': 'reviewSubmissionItems', 'relationships': {
+         'reviewSubmission': {'data': {'type': 'reviewSubmissions', 'id': sub['id']}},
+         'appCustomProductPageVersion': {'data': {'type': 'appCustomProductPageVersions', 'id': VID}}}}})
+    r = call('PATCH', f'/reviewSubmissions/{sub["id"]}', {'data': {'type': 'reviewSubmissions', 'id': sub['id'], 'attributes': {'submitted': True}}})
+    log('SUBMITTED:', sub['id'], r['data']['attributes'].get('state'))
+    log('page version', call('GET', f'/appCustomProductPageVersions/{VID}')['data']['attributes'])
+    sys.exit(0)
 if os.environ.get('POSTER_ONLY'):  # second run: Apple must finish processing the video before the poster frame can be set
     ps = call('GET', f'/appCustomProductPageLocalizations/{LID}/appPreviewSets?limit=50')['data'][0]
     for o in call('GET', f'/appPreviewSets/{ps["id"]}/appPreviews?limit=10')['data']:
