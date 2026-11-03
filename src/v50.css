@@ -83,3 +83,6 @@
 #card:has(.bn-res) .card-title{font-size:2.3rem}
 .card-body.bn-res{padding-top:10px}
 .bn-stop small{position:relative;z-index:1}.bn-stop.next small{margin-top:2px;font-size:.8rem;padding:1px 7px}
+/* nightly Nov 3: the chest row is shrink-wrapped by the card body (align-items:center), so long 'n floors' labels made it wider than the card on small phones and it was cut off at both edges;
+   keep the row inside the card and let the tiles share it, bnFitCh() then shrinks a label that is wider than its tile */
+.bn-chests{max-width:100%}.bn-ch{min-width:0}
