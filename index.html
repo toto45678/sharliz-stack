@@ -7,7 +7,7 @@
 <style>html,body{overscroll-behavior:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
 #pwaHint{position:fixed;left:12px;right:12px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:99999;background:#1b1240;color:#fff;border:3px solid #120d2b;border-radius:18px;padding:12px 44px 12px 14px;font:600 15px/1.35 Rubik,system-ui,sans-serif;box-shadow:0 6px 0 #0a0620,0 10px 30px rgba(0,0,0,.4);direction:rtl}
 #pwaHint b{color:#ffd23f}#pwaHint button{position:absolute;top:8px;left:10px;background:none;border:0;color:#fff;font-size:22px;line-height:1}</style>
-<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261027185641"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
+<script>(function(){var OK=["en", "he", "es", "pt", "fr", "de", "it", "ru", "tr", "ar", "ja", "ko", "zh", "id"];window.LANG_NAMES={"en": "English", "he": "עברית", "es": "Español", "pt": "Português", "fr": "Français", "de": "Deutsch", "it": "Italiano", "ru": "Русский", "tr": "Türkçe", "ar": "العربية", "ja": "日本語", "ko": "한국어", "zh": "中文", "id": "Indonesia"};function dl(){var a=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||'en'];for(var i=0;i<a.length;i++){var c=String(a[i]||'').toLowerCase().split(/[-_]/)[0];if(c==='iw')c='he';if(c==='in')c='id';if(OK.indexOf(c)>=0)return c}return 'en'}var d=dl(),s=null;try{s=localStorage.getItem('sharliz-lang')}catch(e){}var l=(s==='en'||s===d)?s:d;window.SHZ_DEV=d;window.SHZ_LANG=l;window.LANGX=null;window.T_=function(x){var X=window.LANGX;return X&&X.pairs&&X.pairs[x]!=null?X.pairs[x]:x};if(l!=='en'&&l!=='he')document.write('<script src="art/i18n_'+l+'.js?v=sharliz-20261103024637"><\/script>');document.write('<link rel="preload" as="image" fetchpriority="high" href="art/logo_'+(l==='he'?'he':'en')+'.webp">')})();</script>
 <link rel="preload" as="image" fetchpriority="high" href="art/lobby.webp"><link rel="preload" as="script" href="art/three.min.js">
 </head><body>
 <title>Sharliz Tower</title>
@@ -909,6 +909,9 @@ canvas.wt{position:fixed;inset:0;width:100%;height:100%;z-index:98}
 #card:has(.bn-res) .card-title{font-size:2.3rem}
 .card-body.bn-res{padding-top:10px}
 .bn-stop small{position:relative;z-index:1}.bn-stop.next small{margin-top:2px;font-size:.8rem;padding:1px 7px}
+/* nightly Nov 3: the chest row is shrink-wrapped by the card body (align-items:center), so long 'n floors' labels made it wider than the card on small phones and it was cut off at both edges;
+   keep the row inside the card and let the tiles share it, bnFitCh() then shrinks a label that is wider than its tile */
+.bn-chests{max-width:100%}.bn-ch{min-width:0}
 
 /* ===== v51: mini-games arcade ===== */
 #arcade{position:fixed;inset:0;z-index:8;display:flex;flex-direction:column;color:#fff;font-family:var(--bf,Rubik),system-ui,sans-serif;
@@ -7378,6 +7381,18 @@ function bnCollect(){if(!BN||BN.paid)return;BN.paid=true;const R=bnReward();wall
 {const _t=toTitle;toTitle=function(){if(mode==='bonus'){mode='levels';modeZi=null;BN=null}bnHud(false);return _t.apply(this,arguments)}}
 {const _o=openMap;openMap=function(){if(mode==='bonus'){mode='levels';modeZi=null;if(BN)level=BN.from;BN=null}bnHud(false);return _o.apply(this,arguments)}}
 {const _h=updateHud;updateHud=function(){_h.apply(this,arguments);if(mode==='bonus'&&BN)document.getElementById('score').innerHTML=coinImg()+'<b>'+BN.coins+'</b>'}}
+/* nightly Nov 3: a long 'n floors' chest label ran past its tile and was cut off by the card on small phones ('24 Stockwerke' lost its last letter in German at 375 px):
+   shrink the three labels (one size for all) until each fits the width a tile can have in this card (both cards: the intro and the result).
+   The target comes from the card body, not from the tiles: the row is shrink-wrapped, so the tiles get narrower as the labels shrink. */
+function bnFitCh(n){const bs=[...document.querySelectorAll('#card .bn-ch b')],body=document.querySelector('#card .card-body');if(!bs.length||!body)return;
+  if(!body.clientWidth){if((n||0)<30)requestAnimationFrame(()=>bnFitCh((n||0)+1));return} // the card is not laid out yet
+  const row=bs[0].closest('.bn-chests'),cs=getComputedStyle(bs[0].parentElement),rs=getComputedStyle(row),bd=getComputedStyle(body),px=v=>parseFloat(v)||0;
+  const inner=body.clientWidth-px(bd.paddingLeft)-px(bd.paddingRight),gap=px(rs.columnGap),
+    tw=Math.min(px(cs.maxWidth)||96,(inner-gap*(bs.length-1))/bs.length)-px(cs.paddingLeft)-px(cs.paddingRight)-px(cs.borderLeftWidth)-px(cs.borderRightWidth)-1;
+  bs.forEach(b=>b.style.fontSize='');let fs=parseFloat(getComputedStyle(bs[0]).fontSize);
+  while(bs.some(b=>b.scrollWidth>tw)&&fs>9){fs-=.5;bs.forEach(b=>b.style.fontSize=fs+'px')}}
+{const _i=bnIntro;bnIntro=function(){const r=_i.apply(this,arguments);try{bnFitCh()}catch(e){}return r}}
+{const _r=bnResult;bnResult=function(){const r=_r.apply(this,arguments);try{bnFitCh()}catch(e){}return r}}
 
 /* ===== v51: mini-games ARCADE (lobby button) =====
    Design: ChatGPT mockup (design/arcade/). 3 games for now: coin rain, boss memory, whack-a-monster.
