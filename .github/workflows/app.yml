@@ -8,7 +8,7 @@ name: Build store apps
 # The store version (iPhone "Version" / Android versionName). Raise it for every new store release:
 # once Apple approves a version, uploads with the same version are refused.
 env:
-  APP_VERSION: '1.2'
+  APP_VERSION: '1.3'
 on:
   workflow_dispatch:
   push:
@@ -98,6 +98,9 @@ jobs:
           i=0; for L in en he es pt fr de it ru tr ar ja ko zh-Hans id; do /usr/libexec/PlistBuddy -c "Add :CFBundleLocalizations:$i string $L" $PL; i=$((i+1)); done
           /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Sharliz" $PL || /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string Sharliz" $PL
           npx cap sync ios
+          # v82: our own rating plugin (app/plugins/sharliz-review) must be registered, or Apple's rating card never shows
+          grep -q SharlizReviewPlugin ios/App/App/capacitor.config.json || { echo "::error::SharlizReview plugin missing from the iOS build"; cat ios/App/App/capacitor.config.json; exit 1; }
+          grep -n "SharlizReview" ios/App/Podfile
       - name: Version APP_VERSION, build number = run number
         working-directory: app/ios/App
         run: |
