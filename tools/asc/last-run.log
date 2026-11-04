@@ -1,18 +1,25 @@
-app 6819720504
-existing page CA Tower vs Boss True
-page id 7e41119e-9cc7-473d-9d3f-20d935b14e17
-page version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'PREPARE_FOR_SUBMISSION', 'deepLink': None}
-localization en-US 615e07f3-e442-42c0-ae55-72f2cfce275d promo text set
-screenshot sets before ['APP_IPHONE_67', 'APP_IPAD_PRO_3GEN_129']
-Screenshot 01.jpg COMPLETE 
-Screenshot 02.jpg COMPLETE 
-Screenshot 03.jpg COMPLETE 
-Screenshot 04.jpg COMPLETE 
-Screenshot 05.jpg UPLOAD_COMPLETE 
-Screenshot 06.jpg COMPLETE 
-APP_IPAD_PRO_3GEN_129 already has 7 screenshots, kept
-review submission 38963986-2820-4580-a66c-ef7df27b42c2 COMPLETE
-review submission 58247910-79e9-4f08-bb1d-de1787f26b9e COMPLETE
-review submission d9a9a051-d687-4e7b-90c8-011f75230086 COMPLETE
-SUBMITTED: 63fba0da-2a76-48e9-8ebe-c69a0b01fbf0 WAITING_FOR_REVIEW
-page version {'version': '1', 'state': 'WAITING_FOR_REVIEW', 'deepLink': None}
+sales 2026-11-02 400 {
+  "errors" : [ {
+    "id" : "f232e303-7009-4e89-9c36-7d090ac076a4",
+    "status" : "400",
+    "code" : "PARAMETER_ERROR.REQUIRED",
+    "title" : "A required parameter was not provided",
+    "detail" : "The parameter 'filter[vendorNumber]' is required but was not provided",
+    "source" : {
+      "parameter" : "filter[vendorNumber]"
+    }
+  } ]
+}
+sales 2026-11-03 400 {
+  "errors" : [ {
+    "id" : "cfa47b0f-4d3b-4175-a733-74fd43c025b2",
+    "status" : "400",
+    "code" : "PARAMETER_ERROR.REQUIRED",
+    "title" : "A required parameter was not provided",
+    "detail" : "The parameter 'filter[vendorNumber]' is required but was not provided",
+    "source" : {
+      "parameter" : "filter[vendorNumber]"
+    }
+  } ]
+}
+analytics requests 200 {"data": [], "links": {"self": "https://api.appstoreconnect.apple.com/v1/apps/6819720504/analyticsReportRequests"}, "meta": {"paging": {"total": 0, "limit": 50}}}
