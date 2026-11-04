@@ -1,16 +1,21 @@
-### tools/asc/promo_nominate.py
-live version 1.2
-promo PATCH 200 Stack your tower, beat 50 bosses, fly into space! 500 levels free. No loot boxes, and nothing random is ever sold.
-existing nominations 400 {
-  "errors" : [ {
-    "id" : "3f08ecc0-0294-4838-a8d8-7f6edf501241",
-    "status" : "400",
-    "code" : "PARAMETER_ERROR.REQUIRED",
-    "title" : "A required parameter was not provided",
-    "detail" : "The parameter 'filter[state]' is required but was not provided",
-    "source" : {
-      "parameter" : "filter[state]"
-    }
-  } ]
-}
-nomination POST 201 ('14f31dc4-807a-4e11-9c32-f9365a413440', 'SUBMITTED')
+### tools/asc/meta13.py
+created version 1.3
+version 1.3 PREPARE_FOR_SUBMISSION
+version locales before ['en-US', 'he']
+version text en-US 200 
+version text fr-FR 201 
+version text es-MX 201 
+version text de-DE 201 
+version text ja 201 
+name/subtitle en-US 200 
+name/subtitle fr-FR 200 
+name/subtitle es-MX 200 
+name/subtitle de-DE 200 
+name/subtitle ja 200 
+   es-MX | Sharliz Tower | Apila y vence a 50 jefes
+   fr-FR | Sharliz Tower | Empile et bats 50 boss
+   he | שארליז טאואר: מגדל חמוד | בונים מגדל ומנצחים בוסים
+   en-US | Sharliz Tower | Stack high, beat 50 bosses
+   ja | Sharliz Tower | 積み上げて50体のボスを倒そう
+   de-DE | Sharliz Tower | Stapeln und 50 Bosse besiegen
+SAVED in 1.3 (not submitted)
