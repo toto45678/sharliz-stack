@@ -1,7 +1,7 @@
 # READ-ONLY: Sales and Trends daily SUMMARY from FROM to yesterday + all in-app purchase states + current store texts.
 import os, sys, gzip, datetime as dt, collections
 sys.path.insert(0, os.path.dirname(__file__)); from asc import *
-d0 = dt.date.fromisoformat(os.environ.get('FROM', '2026-10-15')); d1 = dt.date.today() - dt.timedelta(days=1)
+d0 = dt.date.fromisoformat(os.environ.get('FROM', '2026-10-15')); d1 = dt.date.fromisoformat(os.environ['TO']) if os.environ.get('TO') else dt.date.today() - dt.timedelta(days=1)
 units = collections.Counter(); dl_country = collections.Counter(); dl_day = collections.Counter(); proceeds = collections.Counter(); missing = []
 d = d0
 while d <= d1:
@@ -22,6 +22,7 @@ for k, v in sorted(units.items()): log(' ', k, v)
 log('-- first-time downloads by country:', dict(dl_country.most_common()))
 log('-- first-time downloads by day:', dict(sorted(dl_day.items())))
 log('-- proceeds (units x developer proceeds):', {k: round(v, 2) for k, v in proceeds.items() if v})
+if os.environ.get('QUICK'): sys.exit(0)
 log('== IN-APP PURCHASES')
 st, b = call('GET', f'/apps/{APP}/inAppPurchasesV2?limit=50')
 if st != 200: log('iap list', st, b)
