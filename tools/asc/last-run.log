@@ -1,36 +1,16 @@
-### tools/asc/sales.py
-== SALES 2026-10-15 .. 2026-11-03 | days without a report: ['2026-10-15:404', '2026-10-16:404', '2026-10-17:404', '2026-10-18:404', '2026-10-19:404', '2026-10-20:404', '2026-10-21:404', '2026-10-22:404', '2026-11-03:404']
--- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
-  ('1F', 'sharliz-tower-001', 'Sharliz Tower') 37
-  ('3F', 'sharliz-tower-001', 'Sharliz Tower') 3
-  ('7F', 'sharliz-tower-001', 'Sharliz Tower') 38
-  ('IA1', 'coins_s', 'Coins S (600)') 1
--- first-time downloads by country: {'IL': 24, 'CA': 3, 'US': 3, 'AU': 2, 'FR': 2, 'MX': 1, 'DE': 1, 'JP': 1}
--- first-time downloads by day: {'2026-10-23': 6, '2026-10-24': 2, '2026-10-25': 2, '2026-10-26': 14, '2026-10-27': 2, '2026-10-28': 6, '2026-10-29': 1, '2026-10-30': 1, '2026-10-31': 1, '2026-11-01': 1, '2026-11-02': 1}
--- proceeds (units x developer proceeds): {('coins_s', 'ILS'): 4.17}
-== IN-APP PURCHASES
-  astro NON_CONSUMABLE APPROVED Astronaut Suit
-  buddy_cyborg NON_CONSUMABLE APPROVED Buddy Cyborg
-  buddy_dragon NON_CONSUMABLE APPROVED Buddy Dragon
-  buddy_griffin NON_CONSUMABLE APPROVED Buddy Griffin
-  buddy_robodog NON_CONSUMABLE APPROVED Buddy Robodog
-  buddy_unicorn NON_CONSUMABLE APPROVED Buddy Unicorn
-  buddy_whale NON_CONSUMABLE APPROVED Buddy Whale
-  coins_m CONSUMABLE APPROVED Coins 1800
-  coins_l CONSUMABLE APPROVED Coins 4200
-  coins_xl CONSUMABLE APPROVED Coins 9500
-  coins_s CONSUMABLE APPROVED Coins S (600)
-  pass CONSUMABLE APPROVED Sharliz Pass Premium
-  starter NON_CONSUMABLE APPROVED Starter Pack
-  total 13
-== STORE TEXTS
-version d8ec095c-80bc-4280-abd0-3222062c2ea5 1.2 READY_FOR_SALE
-   he | promo: בונים מגדל מדמויות שארליז מרחפות, מנצחים 50 בוסים ומעצבים בית משלכם. 500 שלבים בחינם. בלי קופסאות מזל, ושום דבר אקראי לא נמכר. | kw: ערימה,בלוקים,ילדים,בוס,בית,עיצוב,מדבקות,אלבום,דמויות,פאזל,משפחה,ארקייד,איזון,קומות,רהיטים
-   en-US | promo: Stack floating Sharlizes, beat 50 bosses and fly your own spaceship. 500 levels to play free. No loot boxes, and nothing random is ever sold. | kw: stack,stacking,tower,build,blocks,drop,boss,casual,arcade,family,kids,jump,balance,puzzle
-version aee66c5a-af0a-4a31-bf5a-c941ef8aeb8e 1.1 READY_FOR_SALE
-   en-US | promo: Stack cute Sharlizes, beat 30 bosses and build your dream house. No loot boxes. Nothing random for sale. | kw: stack,stacking,tower,build,blocks,drop,boss,casual,arcade,family,kids,jump,balance,puzzle
-version 6fd80af7-a1ea-4978-b4ca-b99b82a589df 1.0 READY_FOR_SALE
-   en-US | promo: Stack cute Sharlizes and beat 30 bosses across 300 levels. No loot boxes. Nothing random for sale. | kw: stack,stacking,tower,build,blocks,drop,boss,casual,arcade,family,kids,jump,balance,puzzle
-appInfo 7be6f555-263f-49c0-a7b8-a9f79cc606d0 READY_FOR_SALE
-   he | name: שארליז טאואר: מגדל חמוד | subtitle: בונים מגדל ומנצחים בוסים
-   en-US | name: Sharliz Tower | subtitle: Stack the tower, beat the boss
+### tools/asc/promo_nominate.py
+live version 1.2
+promo PATCH 200 Stack your tower, beat 50 bosses, fly into space! 500 levels free. No loot boxes, and nothing random is ever sold.
+existing nominations 400 {
+  "errors" : [ {
+    "id" : "3f08ecc0-0294-4838-a8d8-7f6edf501241",
+    "status" : "400",
+    "code" : "PARAMETER_ERROR.REQUIRED",
+    "title" : "A required parameter was not provided",
+    "detail" : "The parameter 'filter[state]' is required but was not provided",
+    "source" : {
+      "parameter" : "filter[state]"
+    }
+  } ]
+}
+nomination POST 201 ('14f31dc4-807a-4e11-9c32-f9365a413440', 'SUBMITTED')
