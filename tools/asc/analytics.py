@@ -26,7 +26,8 @@ for rq in reqs:
     print('request', rq['id'], rq['attributes'])
     st, rs = call('GET', f'/analyticsReportRequests/{rq["id"]}/reports?limit=200')
     if st != 200: print('  reports', st, rs); continue
-    for r in rs['data']:
+    WANT = ('App Downloads Standard', 'App Store Discovery and Engagement Standard', 'App Store Installation and Deletion Standard')
+    for r in [x for x in rs['data'] if x['attributes'].get('name') in WANT]:
         st, ins = call('GET', f'/analyticsReports/{r["id"]}/instances?limit=50')
         n = len(ins['data']) if st == 200 else st
         print('  report', r['attributes'].get('category'), '|', r['attributes'].get('name'), '| instances', n)
