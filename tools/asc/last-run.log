@@ -1,21 +1,6 @@
-### tools/asc/meta13.py
-created version 1.3
-version 1.3 PREPARE_FOR_SUBMISSION
-version locales before ['en-US', 'he']
-version text en-US 200 
-version text fr-FR 201 
-version text es-MX 201 
-version text de-DE 201 
-version text ja 201 
-name/subtitle en-US 200 
-name/subtitle fr-FR 200 
-name/subtitle es-MX 200 
-name/subtitle de-DE 200 
-name/subtitle ja 200 
-   es-MX | Sharliz Tower | Apila y vence a 50 jefes
-   fr-FR | Sharliz Tower | Empile et bats 50 boss
-   he | שארליז טאואר: מגדל חמוד | בונים מגדל ומנצחים בוסים
-   en-US | Sharliz Tower | Stack high, beat 50 bosses
-   ja | Sharliz Tower | 積み上げて50体のボスを倒そう
-   de-DE | Sharliz Tower | Stapeln und 50 Bosse besiegen
-SAVED in 1.3 (not submitted)
+### tools/asc/sales.py
+== SALES 2026-11-03 .. 2026-11-03 | days without a report: ['2026-11-03:404']
+-- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
+-- first-time downloads by country: {}
+-- first-time downloads by day: {}
+-- proceeds (units x developer proceeds): {}
