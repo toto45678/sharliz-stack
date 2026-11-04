@@ -1,6 +1,39 @@
-### tools/asc/sales.py
-== SALES 2026-11-03 .. 2026-11-03 | days without a report: ['2026-11-03:404']
--- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
--- first-time downloads by country: {}
--- first-time downloads by day: {}
--- proceeds (units x developer proceeds): {}
+### tools/asc/shots13.py
+set APP_IPHONE_61 7 ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg']
+set APP_IPAD_PRO_3GEN_129 7 ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg']
+  uploaded /home/runner/work/sharliz-stack/sharliz-stack/tools/asc/main-1.3/ipad_08_no_loot_boxes.jpg COMPLETE 
+set APP_IPHONE_67 7 ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg']
+  uploaded /home/runner/work/sharliz-stack/sharliz-stack/tools/asc/main-1.3/iphone_08_no_loot_boxes.jpg COMPLETE 
+### tools/asc/cppver.py
+cpp version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'APPROVED', 'deepLink': None}
+new cpp version 201 6195965d-b00e-458f-b53c-9cdd55e7537d
+### tools/asc/cpp.py
+app 6819720504
+existing page CA Tower vs Boss True
+page id 7e41119e-9cc7-473d-9d3f-20d935b14e17
+page version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'APPROVED', 'deepLink': None}
+page version 6195965d-b00e-458f-b53c-9cdd55e7537d {'version': '2', 'state': 'PREPARE_FOR_SUBMISSION', 'deepLink': None}
+localization en-US 78dda2b9-24f4-49de-9872-9f994bdac3fe promo text set
+screenshot sets before ['APP_IPAD_PRO_3GEN_129', 'APP_IPHONE_67']
+Screenshot 01.jpg UPLOAD_COMPLETE 
+Screenshot 02.jpg COMPLETE 
+Screenshot 03.jpg COMPLETE 
+Screenshot 04.jpg COMPLETE 
+Screenshot 05.jpg COMPLETE 
+Screenshot 06.jpg COMPLETE 
+APP_IPAD_PRO_3GEN_129 already has 7 screenshots, kept
+Preview app_preview_886x1920.mp4 COMPLETE 
+!! PATCH https://api.appstoreconnect.apple.com/v1/appPreviews/53c00019-67ca-8d38-8108-ffebc428b394 -> 409
+{
+  "errors" : [ {
+    "id" : "487787be-998c-4df5-b3ee-e570d4c97b0f",
+    "status" : "409",
+    "code" : "STATE_ERROR",
+    "title" : "The request cannot be fulfilled because of the state of another resource.",
+    "detail" : "Asset Not in Complete state! can't update Image!"
+  } ]
+}
+poster frame 00:00:00:15 NOT set (set it in ASC)
+screenshot sets now ['APP_IPAD_PRO_3GEN_129', 'APP_IPHONE_67']
+page versions [('a6bca47d-4905-4540-b683-e94b2f4072b4', {'version': '1', 'state': 'APPROVED', 'deepLink': None}), ('6195965d-b00e-458f-b53c-9cdd55e7537d', {'version': '2', 'state': 'PREPARE_FOR_SUBMISSION', 'deepLink': None})]
+READY (not submitted): page CA Tower vs Boss 7e41119e-9cc7-473d-9d3f-20d935b14e17
