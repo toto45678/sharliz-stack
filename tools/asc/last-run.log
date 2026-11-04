@@ -1,19 +1,4 @@
-### tools/asc/cpp.py
-app 6819720504
-existing page CA Tower vs Boss True
-page id 7e41119e-9cc7-473d-9d3f-20d935b14e17
-page version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'APPROVED', 'deepLink': None}
-page version 6195965d-b00e-458f-b53c-9cdd55e7537d {'version': '2', 'state': 'PREPARE_FOR_SUBMISSION', 'deepLink': None}
-localization en-US 78dda2b9-24f4-49de-9872-9f994bdac3fe promo text set
-screenshot sets before ['APP_IPAD_PRO_3GEN_129', 'APP_IPHONE_67']
-preview app_preview_886x1920.mp4 {'errors': [], 'warnings': None, 'state': 'COMPLETE'} 00:00:05:01
-poster frame 00:00:00:15 set
-### tools/asc/appevent.py
-territories 175
-created event 6830593968
-event text en-US 201 
-event text he 201 
-image EVENT_CARD 200 
-image EVENT_DETAILS_PAGE 200 
-images now [('EVENT_DETAILS_PAGE', 'UPLOAD_COMPLETE'), ('EVENT_CARD', 'COMPLETE')]
-event state DRAFT
+### tools/asc/cppstate.py
+page {'name': 'CA Tower vs Boss', 'url': 'https://apps.apple.com/us/app/sharliz-tower/id6819720504?ppid=7e41119e-9cc7-473d-9d3f-20d935b14e17', 'visible': True}
+version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'REPLACED_WITH_NEW_VERSION', 'deepLink': None}
+version 6195965d-b00e-458f-b53c-9cdd55e7537d {'version': '2', 'state': 'APPROVED', 'deepLink': None}
