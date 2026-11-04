@@ -16,7 +16,7 @@ def get(path, raw=False):
 APP = '6819720504'
 # (a) Sales and Trends: needs the vendor number; without it Apple's error says what is missing
 V = os.environ.get('VENDOR', '')
-for d in ('2026-11-02', '2026-11-03'):
+for d in os.environ.get('DAYS', '2026-11-02 2026-11-03').split():
     st, b = get(f'/salesReports?filter[frequency]=DAILY&filter[reportType]=SALES&filter[reportSubType]=SUMMARY&filter[version]=1_1&filter[reportDate]={d}' + (f'&filter[vendorNumber]={V}' if V else ''), raw=True)
     if st == 200:
         rows = gzip.decompress(b).decode().splitlines()
@@ -25,6 +25,7 @@ for d in ('2026-11-02', '2026-11-03'):
             c = dict(zip(hdr, r.split('\t')))
             if c.get('Apple Identifier') == APP: print('  ', c.get('Country Code'), c.get('Product Type Identifier'), c.get('Units'))
     else: print('sales', d, st, b)
+if os.environ.get('SALES_ONLY'): sys.exit(0)
 # (b) Analytics Reports: list existing requests only (no POST)
 st, b = get(f'/apps/{APP}/analyticsReportRequests')
 print('analytics requests', st, json.dumps(b)[:1500] if st == 200 else b)
