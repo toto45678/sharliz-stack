@@ -1,25 +1,274 @@
-sales 2026-11-02 400 {
-  "errors" : [ {
-    "id" : "f232e303-7009-4e89-9c36-7d090ac076a4",
-    "status" : "400",
-    "code" : "PARAMETER_ERROR.REQUIRED",
-    "title" : "A required parameter was not provided",
-    "detail" : "The parameter 'filter[vendorNumber]' is required but was not provided",
-    "source" : {
-      "parameter" : "filter[vendorNumber]"
-    }
-  } ]
-}
-sales 2026-11-03 400 {
-  "errors" : [ {
-    "id" : "cfa47b0f-4d3b-4175-a733-74fd43c025b2",
-    "status" : "400",
-    "code" : "PARAMETER_ERROR.REQUIRED",
-    "title" : "A required parameter was not provided",
-    "detail" : "The parameter 'filter[vendorNumber]' is required but was not provided",
-    "source" : {
-      "parameter" : "filter[vendorNumber]"
-    }
-  } ]
-}
-analytics requests 200 {"data": [], "links": {"self": "https://api.appstoreconnect.apple.com/v1/apps/6819720504/analyticsReportRequests"}, "meta": {"paging": {"total": 0, "limit": 50}}}
+CREATED ONGOING 201 383444a6-91d7-45f6-9ee9-a4a4bbafa113
+CREATED ONE_TIME_SNAPSHOT 201 0c1b2f26-58b3-46f2-a15c-01138a157bb7
+request 0c1b2f26-58b3-46f2-a15c-01138a157bb7 {'accessType': 'ONE_TIME_SNAPSHOT', 'stoppedDueToInactivity': False}
+  report FRAMEWORK_USAGE | AirPlay Discovery Sessions | instances 0
+  report FRAMEWORK_USAGE | Home Screen Widget Rotations | instances 0
+  report FRAMEWORK_USAGE | File-Based Video Playback Usage | instances 0
+  report FRAMEWORK_USAGE | Safari Extensions Usage | instances 0
+  report FRAMEWORK_USAGE | CRABS-Based Video Playback Usage | instances 0
+  report FRAMEWORK_USAGE | Translation Request Usage | instances 0
+  report FRAMEWORK_USAGE | Safari Extensions Enablement | instances 0
+  report FRAMEWORK_USAGE | Automatic Speech Recognition Usage | instances 0
+  report FRAMEWORK_USAGE | Keyboard Dictation Usage | instances 0
+  report FRAMEWORK_USAGE | Spatial Audio Usage | instances 0
+  report FRAMEWORK_USAGE | Video Duration Information | instances 0
+  report FRAMEWORK_USAGE | Default Browser Usage Rate | instances 0
+  report FRAMEWORK_USAGE | Home Screen Widgets | instances 0
+  report FRAMEWORK_USAGE | Browser Choice Screen Engagement (iOS versions before 18.2) | instances 0
+  report FRAMEWORK_USAGE | File-System Events API Usage | instances 0
+  report FRAMEWORK_USAGE | Home Screen Widget Usage | instances 0
+  report FRAMEWORK_USAGE | VisionKit Image Analysis | instances 0
+  report FRAMEWORK_USAGE | App Extended Launch Usage | instances 0
+  report FRAMEWORK_USAGE | Reminders Usage | instances 0
+  report PERFORMANCE | Cellular Plan Provisioning | instances 0
+  report FRAMEWORK_USAGE | PhotoKit Imports | instances 0
+  report APP_USAGE | Shortcut App Usage | instances 0
+  report PERFORMANCE | Networking Connection Activity | instances 0
+  report FRAMEWORK_USAGE | Speech Framework Transcription Requests | instances 0
+  report FRAMEWORK_USAGE | HTTP Live Streaming Video Playback Usage | instances 0
+  report FRAMEWORK_USAGE | Mode Activity Notifications | instances 0
+  report FRAMEWORK_USAGE | Metal Command Queues | instances 0
+  report FRAMEWORK_USAGE | Lock Screen Widget Configuration | instances 0
+  report FRAMEWORK_USAGE | Local Network Privacy | instances 0
+  report FRAMEWORK_USAGE | Photos Library Access | instances 0
+  report FRAMEWORK_USAGE | Game Controller Sessions | instances 0
+  report FRAMEWORK_USAGE | Speech Framework Transcription Request Audio Duration | instances 0
+  report FRAMEWORK_USAGE | Text-Input Actions | instances 0
+  report FRAMEWORK_USAGE | VisionKit Sessions | instances 0
+  report PERFORMANCE | CAMetalLayer Performance | instances 0
+  report PERFORMANCE | Bluetooth System Wakes | instances 0
+  report FRAMEWORK_USAGE | App Runtime Usage | instances 0
+  report COMMERCE | App Downloads Standard | instances 0
+  report COMMERCE | App Downloads Detailed | instances 0
+  report PERFORMANCE | App Install Performance | instances 0
+  report APP_USAGE | App Store Installation and Deletion Standard | instances 0
+  report APP_USAGE | App Store Installation and Deletion Detailed | instances 0
+  report APP_USAGE | App Sessions Standard | instances 0
+  report APP_USAGE | App Sessions Detailed | instances 0
+  report COMMERCE | App Store Pre-Orders Standard | instances 0
+  report COMMERCE | App Store Pre-Orders Detailed | instances 0
+  report COMMERCE | App Store Purchases Standard | instances 0
+  report COMMERCE | App Store Purchases Detailed | instances 0
+  report APP_STORE_ENGAGEMENT | App Store Discovery and Engagement Standard | instances 0
+  report APP_STORE_ENGAGEMENT | App Store Discovery and Engagement Detailed | instances 0
+  report FRAMEWORK_USAGE | Flashlight Usage | instances 0
+  report FRAMEWORK_USAGE | ARKit World Tracking | instances 0
+  report FRAMEWORK_USAGE | ARKit World Tracking Image Detection | instances 0
+  report FRAMEWORK_USAGE | Photogrammetry ObjectCaptureSession API Usage | instances 0
+  report FRAMEWORK_USAGE | PhotogrammetrySession API Usage | instances 0
+  report FRAMEWORK_USAGE | Haptics Engine Usage | instances 0
+  report FRAMEWORK_USAGE | ShazamKit Usage | instances 0
+  report FRAMEWORK_USAGE | App Added to Focus | instances 0
+  report PERFORMANCE | Streaming Playback Performance | instances 0
+  report PERFORMANCE | Streaming Downloads Performance | instances 0
+  report FRAMEWORK_USAGE | Audio Input Muting | instances 0
+  report PERFORMANCE | AirPlay Performance | instances 0
+  report FRAMEWORK_USAGE | RoomPlan Usage | instances 0
+  report FRAMEWORK_USAGE | Audio Input Route and Duration and Call Mode | instances 0
+  report FRAMEWORK_USAGE | App Disk Space Usage | instances 0
+  report FRAMEWORK_USAGE | Location Sessions | instances 0
+  report FRAMEWORK_USAGE | CarPlay Navigation | instances 0
+  report FRAMEWORK_USAGE | Video PiP Duration | instances 0
+  report PERFORMANCE | HTTP Live Streaming Playback Errors | instances 0
+  report FRAMEWORK_USAGE | HTTP Live Streaming Playback Count | instances 0
+  report FRAMEWORK_USAGE | Bluetooth LE Scans | instances 0
+  report FRAMEWORK_USAGE | Bluetooth LE Advertising | instances 0
+  report FRAMEWORK_USAGE | AccessorySetupKit Usage | instances 0
+  report APP_USAGE | App Clip Usage Standard | instances 0
+  report APP_USAGE | App Clip Usage Detailed | instances 0
+  report APP_USAGE | App Crashes | instances 0
+  report PERFORMANCE | Custom Language Model Builds Failed | instances 0
+  report FRAMEWORK_USAGE | Custom Language Model Builds Started | instances 0
+  report FRAMEWORK_USAGE | Customized Transcription Requests | instances 0
+  report FRAMEWORK_USAGE | DockKit App Usage | instances 0
+  report FRAMEWORK_USAGE | Live Activity Use | instances 0
+  report FRAMEWORK_USAGE | Multiple Game Controllers Usage | instances 0
+  report FRAMEWORK_USAGE | Photos Picker | instances 0
+  report FRAMEWORK_USAGE | Shared With You Content Engagement | instances 0
+  report PERFORMANCE | Spotlight Query Performance | instances 0
+  report FRAMEWORK_USAGE | iBeacon Add Region Usage | instances 0
+  report FRAMEWORK_USAGE | iBeacon Stop Monitoring for Region Usage | instances 0
+  report FRAMEWORK_USAGE | VisionKit Live Text Usage | instances 0
+  report FRAMEWORK_USAGE | Wi-Fi Known Network Modifications | instances 0
+  report FRAMEWORK_USAGE | AccessorySetupKit Accessory Picker Sessions | instances 0
+  report PERFORMANCE | Bluetooth LE Session Duration | instances 0
+  report FRAMEWORK_USAGE | iBeacon Ranging Usage | instances 0
+  report FRAMEWORK_USAGE | Browser Choice Screen Selection | instances 0
+  report APP_STORE_ENGAGEMENT | App Store Web Preview Engagement Standard | instances 0
+  report APP_STORE_ENGAGEMENT | App Store Web Preview Engagement Detailed | instances 0
+  report APP_USAGE | Platform App Installs | instances 0
+  report FRAMEWORK_USAGE | Video Streaming Duration | instances 0
+  report FRAMEWORK_USAGE | App HangTracer Usage | instances 0
+  report FRAMEWORK_USAGE | Nearby Interaction Sessions | instances 0
+  report FRAMEWORK_USAGE | ProRes Video Usage | instances 0
+  report FRAMEWORK_USAGE | Photo Capture Usage | instances 0
+  report PERFORMANCE | Embedding Generation | instances 0
+  report FRAMEWORK_USAGE | Face-Driven Auto Exposure and Auto Focus Usage | instances 0
+  report PERFORMANCE | App Neural Footprint | instances 0
+  report APP_USAGE | Shortcuts Actions Usage | instances 0
+  report PERFORMANCE | AirPlay Errors | instances 0
+  report APP_USAGE | App Opt In | instances 0
+  report COMMERCE | App Store Subscription Event Report Standard | instances 0
+  report COMMERCE | App Store Subscription Event Report Detailed | instances 0
+  report COMMERCE | App Store Subscription State Report Standard | instances 0
+  report COMMERCE | App Store Subscription State Report Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Ad Conversions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Ad Conversions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D7 Paying Conversions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D7 Paying Conversions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D7 Paying Conversions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D7 Paying Conversions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D30 Paying Conversions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D30 Paying Conversions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D30 Paying Conversions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D30 Paying Conversions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D60 Paying Conversions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D60 Paying Conversions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D60 Paying Conversions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D60 Paying Conversions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D7 Free Trial Subscriptions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D7 Free Trial Subscriptions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D7 Free Trial Subscriptions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D7 Free Trial Subscriptions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D30 Free Trial Subscriptions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D30 Free Trial Subscriptions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D30 Free Trial Subscriptions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D30 Free Trial Subscriptions Detailed | instances 0
+  report FRAMEWORK_USAGE | Core Location Geofencing | instances 0
+  report FRAMEWORK_USAGE | SharePlay Usage by Activity Type | instances 0
+  report FRAMEWORK_USAGE | Notification Summary Engagement | instances 0
+  report FRAMEWORK_USAGE | VisionKit Data Detectors | instances 0
+  report FRAMEWORK_USAGE | Call Services and Call Performance | instances 0
+  report FRAMEWORK_USAGE | Load CoreML Models Metrics | instances 0
+  report FRAMEWORK_USAGE | Verify with Wallet Document Requests | instances 0
+  report FRAMEWORK_USAGE | Verify With Wallet Document Request Availability | instances 0
+  report FRAMEWORK_USAGE | App Sessions Context | instances 0
+  report APP_USAGE | CarPlay App Usage | instances 0
+  report FRAMEWORK_USAGE | Audio Volume Levels and Duration | instances 0
+  report FRAMEWORK_USAGE | Bluetooth LE Sessions | instances 0
+  report FRAMEWORK_USAGE | ARKit Video Formats | instances 0
+  report FRAMEWORK_USAGE | ARKit Capture Frame Rate Throttling | instances 0
+  report FRAMEWORK_USAGE | ARKit ARSession Duration | instances 0
+  report FRAMEWORK_USAGE | ARKit ARSession Failures | instances 0
+  report FRAMEWORK_USAGE | ARKit Face Tracking | instances 0
+  report FRAMEWORK_USAGE | Animoji Stickers Sent | instances 0
+  report PERFORMANCE | Display Power Information | instances 0
+  report FRAMEWORK_USAGE | Core Location Authorization Results | instances 0
+  report PERFORMANCE | Launch Image Over Memory Limit | instances 0
+  report FRAMEWORK_USAGE | Game Controller Haptics Engine Creation | instances 0
+  report FRAMEWORK_USAGE | Photos Sharing | instances 0
+  report FRAMEWORK_USAGE | Audio Session Audio Unit Usage | instances 0
+  report FRAMEWORK_USAGE | Collaboration Message Usage | instances 0
+  report FRAMEWORK_USAGE | Dynamic Island Layout Changes | instances 0
+  report PERFORMANCE | App Crashes Expanded | instances 0
+  report PERFORMANCE | App Storage Reads and Writes | instances 0
+  report FRAMEWORK_USAGE | Application Preferred Language Settings | instances 0
+  report FRAMEWORK_USAGE | ARKit Collaborative Session Features | instances 0
+  report PERFORMANCE | Audio Overloads | instances 0
+  report FRAMEWORK_USAGE | Bluetooth LE Connection Results | instances 0
+  report FRAMEWORK_USAGE | Bluetooth LE Connections Per App | instances 0
+  report FRAMEWORK_USAGE | Bluetooth LE Disconnection Results | instances 0
+  report FRAMEWORK_USAGE | Home Screen Widget Installs | instances 0
+  report APP_STORE_ENGAGEMENT | Retention Messaging | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D60 Free Trial Subscriptions | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D60 Free Trial Subscriptions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D60 Free Trial Subscriptions  | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D60 Free Trial Subscriptions Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D7 Conversions By Revenue Range | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D7 Conversions By Revenue Range Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D7 Conversions By Revenue Range | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D7 Conversions By Revenue Range Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D30 Conversions By Revenue Range | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D30 Conversions By Revenue Range Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D30 Conversions By Revenue Range | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D30 Conversions By Revenue Range Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D60 Conversions By Revenue Range | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Auto Reported D60 Conversions By Revenue Range Detailed | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D60 Conversions By Revenue Range | instances 0
+  report AD_ATTRIBUTION_KIT_ANALYTICS | Developer Reported D60 Conversions By Revenue Range Detailed | instances 0
+  report APP_USAGE | Smart Buttons Usage | instances 0
+  report APP_USAGE | Visual Intelligence Image Search Usage | instances 0
+  report FRAMEWORK_USAGE | CGImageSource_PluginRouting | instances 0
+  report FRAMEWORK_USAGE | LocalAuthentication Usage | instances 0
+  report FRAMEWORK_USAGE | Web Presentment Outcomes | instances 0
+  report PERFORMANCE | Audio Session Api Duration | instances 0
+  report APP_USAGE | Dynamic Buttons Usage | instances 0
+  report PERFORMANCE | Media Device Extensions Performance | instances 0
+  report PERFORMANCE | Media Device Extensions Errors | instances 0
+request 383444a6-91d7-45f6-9ee9-a4a4bbafa113 {'accessType': 'ONGOING', 'stoppedDueToInactivity': False}
+  report FRAMEWORK_USAGE | AirPlay Discovery Sessions | instances 0
+  report FRAMEWORK_USAGE | Home Screen Widget Rotations | instances 0
+  report FRAMEWORK_USAGE | File-Based Video Playback Usage | instances 0
+  report FRAMEWORK_USAGE | Safari Extensions Usage | instances 0
+  report FRAMEWORK_USAGE | CRABS-Based Video Playback Usage | instances 0
+  report FRAMEWORK_USAGE | Translation Request Usage | instances 0
+  report FRAMEWORK_USAGE | Safari Extensions Enablement | instances 0
+  report FRAMEWORK_USAGE | Automatic Speech Recognition Usage | instances 0
+  report FRAMEWORK_USAGE | Keyboard Dictation Usage | instances 0
+  report FRAMEWORK_USAGE | Spatial Audio Usage | instances 0
+  report FRAMEWORK_USAGE | Video Duration Information | instances 0
+  report FRAMEWORK_USAGE | Default Browser Usage Rate | instances 0
+  report FRAMEWORK_USAGE | Home Screen Widgets | instances 0
+  report FRAMEWORK_USAGE | Browser Choice Screen Engagement (iOS versions before 18.2) | instances 0
+  report FRAMEWORK_USAGE | File-System Events API Usage | instances 0
+  report FRAMEWORK_USAGE | Home Screen Widget Usage | instances 0
+  report FRAMEWORK_USAGE | VisionKit Image Analysis | instances 0
+  report FRAMEWORK_USAGE | App Extended Launch Usage | instances 0
+  report FRAMEWORK_USAGE | Reminders Usage | instances 0
+  report PERFORMANCE | Cellular Plan Provisioning | instances 0
+  report FRAMEWORK_USAGE | PhotoKit Imports | instances 0
+  report APP_USAGE | Shortcut App Usage | instances 0
+  report PERFORMANCE | Networking Connection Activity | instances 0
+  report FRAMEWORK_USAGE | Speech Framework Transcription Requests | instances 0
+  report FRAMEWORK_USAGE | HTTP Live Streaming Video Playback Usage | instances 0
+  report FRAMEWORK_USAGE | Mode Activity Notifications | instances 0
+  report FRAMEWORK_USAGE | Metal Command Queues | instances 0
+  report FRAMEWORK_USAGE | Lock Screen Widget Configuration | instances 0
+  report FRAMEWORK_USAGE | Local Network Privacy | instances 0
+  report FRAMEWORK_USAGE | Photos Library Access | instances 0
+  report FRAMEWORK_USAGE | Game Controller Sessions | instances 0
+  report FRAMEWORK_USAGE | Speech Framework Transcription Request Audio Duration | instances 0
+  report FRAMEWORK_USAGE | Text-Input Actions | instances 0
+Traceback (most recent call last):
+  File "/home/runner/work/sharliz-stack/sharliz-stack/tools/asc/analytics.py", line 30, in <module>
+    st, ins = call('GET', f'/analyticsReports/{r["id"]}/instances?limit=50')
+              ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/sharliz-stack/sharliz-stack/tools/asc/analytics.py", line 14, in call
+    with urllib.request.urlopen(req, timeout=60) as r: b = r.read(); return r.status, json.loads(b) if b else {}
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 187, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 487, in open
+    response = self._open(req, data)
+  File "/usr/lib/python3.14/urllib/request.py", line 504, in _open
+    result = self._call_chain(self.handle_open, protocol, protocol +
+                              '_open', req)
+  File "/usr/lib/python3.14/urllib/request.py", line 464, in _call_chain
+    result = func(*args)
+  File "/usr/lib/python3.14/urllib/request.py", line 1369, in https_open
+    return self.do_open(http.client.HTTPSConnection, req,
+           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        context=self._context)
+                        ^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/urllib/request.py", line 1325, in do_open
+    r = h.getresponse()
+  File "/usr/lib/python3.14/http/client.py", line 1459, in getresponse
+    response.begin()
+    ~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 336, in begin
+    version, status, reason = self._read_status()
+                              ~~~~~~~~~~~~~~~~~^^
+  File "/usr/lib/python3.14/http/client.py", line 297, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+               ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/socket.py", line 725, in readinto
+    return self._sock.recv_into(b)
+           ~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.14/ssl.py", line 1304, in recv_into
+    return self.read(nbytes, buffer)
+           ~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/ssl.py", line 1138, in read
+    return self._sslobj.read(len, buffer)
+           ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+TimeoutError: The read operation timed out
