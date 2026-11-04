@@ -20,11 +20,12 @@ function rvSeed(){const r=progress.rv=progress.rv||{};if(r.d0)return r;const td=
 function rvOk(){const r=rvSeed();return !r.done&&r.d0!==today()}
 function rvCard(){return state==='win'&&!document.getElementById('overlay').hidden}
 function rvBossWon(){if(rvAsking||!rvOk()||!rvPlug())return;const t0=Date.now();rvAsking=true;
-  const ask=()=>{const P=rvPlug();if(!P||!rvOk()||!rvCard()){rvAsking=false;return}
+  const ask=()=>{const P=rvPlug();if(!P||!rvOk()){rvAsking=false;return}
     progress.rv.done=Date.now();saveProgress();
     try{Promise.resolve(P.requestReview()).catch(()=>{}).finally(()=>{rvAsking=false})}catch(e){rvAsking=false}};
+  // the same win card must still be up: Next/Map open another card (the next level's card keeps state 'win' for a moment)
   const look=()=>{if(state!=='win'){rvAsking=false;return}                     // left the card (Next / Map) before it showed
-    if(rvCard())return setTimeout(()=>rvCard()?ask():(rvAsking=false),RV.delay);
+    if(rvCard()){const own=rerenderOverlay;return setTimeout(()=>rvCard()&&rerenderOverlay===own?ask():(rvAsking=false),RV.delay)}
     if(Date.now()-t0>RV.wait){rvAsking=false;return}setTimeout(look,300)};
   setTimeout(look,300)}
 {const _w=win;win=function(){const b=mode==='levels'&&isBoss(),r=_w.apply(this,arguments);if(b)rvBossWon();return r}}
