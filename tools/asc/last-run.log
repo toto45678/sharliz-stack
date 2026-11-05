@@ -1,4 +1,7 @@
-### tools/asc/cppstate.py
-page {'name': 'CA Tower vs Boss', 'url': 'https://apps.apple.com/us/app/sharliz-tower/id6819720504?ppid=7e41119e-9cc7-473d-9d3f-20d935b14e17', 'visible': True}
-version a6bca47d-4905-4540-b683-e94b2f4072b4 {'version': '1', 'state': 'REPLACED_WITH_NEW_VERSION', 'deepLink': None}
-version 6195965d-b00e-458f-b53c-9cdd55e7537d {'version': '2', 'state': 'APPROVED', 'deepLink': None}
+### tools/asc/sales.py
+== SALES 2026-11-03 .. 2026-11-04 | days without a report: ['2026-11-04:404']
+-- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
+  ('1F', 'sharliz-tower-001', 'Sharliz Tower') 1
+-- first-time downloads by country: {'DK': 1}
+-- first-time downloads by day: {'2026-11-03': 1}
+-- proceeds (units x developer proceeds): {}
