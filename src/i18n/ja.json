@@ -1376,7 +1376,9 @@
   "updSub": "バージョン{n}がストアに登場！アップデートして新しい要素をゲットしよう！",
   "updMust": "プレイを続けるにはゲームをアップデートしてね。",
   "updNow": "アップデート",
-  "updLater": "あとで"
+  "updLater": "あとで",
+  "trFloorsN1": "{n}階",
+  "trFloor1": "階"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",
