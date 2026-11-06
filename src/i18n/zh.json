@@ -1376,7 +1376,9 @@
   "updSub": "{n} 版本已上架。更新即可获得所有新内容！",
   "updMust": "请更新游戏后继续游玩。",
   "updNow": "更新",
-  "updLater": "稍后"
+  "updLater": "稍后",
+  "trFloorsN1": "{n}层",
+  "trFloor1": "层"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

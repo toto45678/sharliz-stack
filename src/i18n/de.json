@@ -1376,7 +1376,9 @@
   "updSub": "Version {n} ist im Store. Aktualisiere, um alle Neuheiten zu bekommen!",
   "updMust": "Bitte aktualisiere das Spiel, um weiterzuspielen.",
   "updNow": "Aktualisieren",
-  "updLater": "Später"
+  "updLater": "Später",
+  "trFloorsN1": "{n} Stockwerk",
+  "trFloor1": "Stockwerk"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

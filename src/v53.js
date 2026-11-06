@@ -2,11 +2,11 @@
    Same challenge for everyone each week (seeded by the week number): one world + one twist (wind / fast / night / gold rush).
    3 hearts, build as high as you can, unlimited tries, best of the week counts. Medals at 10 / 20 / 35 floors pay coins + boosters
    once per week. No server yet → "challenge a friend" shares your best to WhatsApp. Design: ChatGPT (design/tournament/). */
-Object.assign(I18N.en,{trInvite:'Come play the Sharliz weekly tournament with me! 🏆',tourTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
+Object.assign(I18N.en,{trInvite:'Come play the Sharliz weekly tournament with me! 🏆',tourTitle:'Weekly Tournament',trLeft:'{n} days left',trLeft1:'Last day!',trBest:'My best this week',trFloorsN:'{n} floors',trFloorsN1:'{n} floor',trFloor1:'floor',trPlay:'Play',trChallenge:'Challenge a friend',trBack:'Tournament',trAgain:'Again',
   trNew:'New record!',trMedal:'Medal unlocked!',trNext:'{n} more to {m}',trAllMedals:'All medals this week!',trTwist:'This week',
   tw_wind:'Strong wind',twd_wind:'The wind pushes twice as hard',tw_fast:'Speed week',twd_fast:'Everything swings faster',tw_night:'Night tower',twd_night:'Build in the dark',tw_gold:'Golden rush',twd_gold:'Lots of golden Sharliz',
   md_b:'Bronze',md_s:'Silver',md_g:'Gold',trShare:'I built {n} floors in the Sharliz weekly tournament! Can you beat me? 🏆',trModes:'Weekly',trGot:'Collected',trClose:'So close to your record!',trNice:'Nice run!',trPrizes:'Tournament prizes',trReached:'You reached the {m} prize!',trHow:'3 hearts · as high as you can'});
-Object.assign(I18N.he,{trInvite:'בואו לשחק איתי בטורניר השבועי של שארליז! 🏆',tourTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
+Object.assign(I18N.he,{trInvite:'בואו לשחק איתי בטורניר השבועי של שארליז! 🏆',tourTitle:'טורניר שבועי',trLeft:'נותרו {n} ימים',trLeft1:'יום אחרון!',trBest:'השיא שלי השבוע',trFloorsN:'{n} קומות',trFloorsN1:'קומה אחת',trFloor1:'קומה',trPlay:'שחקו',trChallenge:'אתגרו חבר',trBack:'לטורניר',trAgain:'שוב',
   trNew:'שיא חדש!',trMedal:'מדליה חדשה!',trNext:'עוד {n} קומות ל{m}',trAllMedals:'כל המדליות השבוע!',trTwist:'השבוע',
   tw_wind:'רוח חזקה',twd_wind:'הרוח דוחפת פי שניים',tw_fast:'שבוע מהיר',twd_fast:'הכל מתנדנד מהר יותר',tw_night:'מגדל לילה',twd_night:'בונים בחושך',tw_gold:'בהלת זהב',twd_gold:'הרבה שארליז מוזהבות',
   md_b:'ארד',md_s:'כסף',md_g:'זהב',trShare:'בניתי מגדל של {n} קומות בטורניר השבועי של שארליז! תצליחו לעבור אותי? 🏆',trModes:'שבועי',trGot:'נאסף',trClose:'כמעט שיא!',trNice:'סיבוב יפה!',trPrizes:'פרסי הטורניר',trReached:'הגעתם לפרס ה{m}!',trHow:'3 לבבות · כמה שיותר גבוה'});
@@ -64,8 +64,8 @@ function trEnd(){TR.banked=1;const D=trData(),fl=TR.floors,nb=fl>D.best;if(nb)D.
   for(const m of TR_MEDALS){if(D.best>=m.f&&!D.got[m.k]){D.got[m.k]=1;wallet();progress.coins+=m.c;for(let i=0;i<m.bo;i++){const b=pick(['slow','laser','shield','heart']);progress.inv[b]=(progress.inv[b]||0)+1}if(m.pk&&typeof sbGive==='function')sbGive(m.pk);if(m.gpk&&typeof sbGive==='function')sbGive(m.gpk,1);won.push(m)}}
   saveProgress();trHud(false);const nx=TR_MEDALS.find(m=>D.best<m.f);
   if(TRQUIET){if(won.length){popupToast('+'+won.reduce((a,m)=>a+m.c,0));setTimeout(()=>sfx.coin(4),300)}return}
-  showOverlay(()=>({title:nb?t('trNew'):fl>=D.best-3?t('trClose'):t('trNice'),big:true,
-    extra:card=>{card.classList.add('tr-res');const big=document.createElement('div');big.className='tr-big';big.innerHTML=`<b>${fl}</b><span></span>`;big.querySelector('span').textContent=t('trFloorsN',{n:''}).trim();card.appendChild(big);
+  showOverlay(()=>({title:nb?t('trNew'):fl>0&&fl>=D.best-3?t('trClose'):t('trNice'),big:true,
+    extra:card=>{card.classList.add('tr-res');const big=document.createElement('div');big.className='tr-big';big.innerHTML=`<b>${fl}</b><span></span>`;big.querySelector('span').textContent=t(fl===1?'trFloor1':'trFloorsN',{n:''}).trim();card.appendChild(big);
       const bs=document.createElement('div');bs.className='tr-best';bs.innerHTML='<span></span><b></b>';bs.querySelector('span').textContent=t('trBest');bs.querySelector('b').textContent=t('trFloorsN',{n:D.best});card.appendChild(bs);
       if(won.length){const m=won[won.length-1],w=document.createElement('div');w.className='tr-won';w.innerHTML=`<img src="art/tr_medal_${m.k}.webp" alt=""><p></p><div class="tr-rew"></div>`;w.querySelector('p').textContent=t('trReached',{m:t('md_'+m.k)});
         const rw=w.querySelector('.tr-rew');const c=won.reduce((a,m)=>a+m.c,0),bo=won.reduce((a,m)=>a+m.bo,0);rw.innerHTML=`<span class="bn-coins">${coinImg()}<b>+${c}</b></span>`+`<i class="tr-ok">✓ ${t('trGot')}</i>`+(bo?`<span class="bn-bo"><img src="art/ic_gift.webp" alt=""><em>×${bo}</em></span>`:'');card.appendChild(w)}
