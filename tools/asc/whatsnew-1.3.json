@@ -1,0 +1,9 @@
+{
+ "_note": "App Store 'What's New' for version 1.3 (written in the review-prompt PR; the store thread copies it into texts-1.3.json). Never name another platform, '#1' or 'earnable'. If a nightly fix is not merged by submission day, the first line still holds: it names screens, not single fixes.",
+ "en-US": "New in Sharliz Tower:\n• Smoother screens in the Garage, the sticker books, the shop and the bonus stage.\n• Christmas is coming: the snowy event opens on December 15.\n• Lots of small fixes.",
+ "he": "חדש בשארליז טאואר:\n• מסכים חלקים יותר במוסך, באלבומי המדבקות, בחנות ובשלב הבונוס.\n• חג המולד מתקרב: האירוע המושלג נפתח ב-15 בדצמבר.\n• הרבה תיקונים קטנים.",
+ "fr-FR": "Nouveau dans Sharliz Tower :\n• Des écrans plus fluides dans le garage, les albums d'autocollants, la boutique et le niveau bonus.\n• Noël approche : l'événement sous la neige commence le 15 décembre.\n• Plein de petites corrections.",
+ "es-MX": "Novedades en Sharliz Tower:\n• Pantallas más fluidas en el taller, los álbumes de estampas, la tienda y el nivel extra.\n• Ya viene la Navidad: el evento nevado empieza el 15 de diciembre.\n• Muchas pequeñas correcciones.",
+ "de-DE": "Neu in Sharliz Tower:\n• Flüssigere Bildschirme in der Garage, den Stickeralben, dem Shop und dem Bonuslevel.\n• Weihnachten kommt: Das Schnee-Event startet am 15. Dezember.\n• Viele kleine Verbesserungen.",
+ "ja": "Sharliz Towerの新機能：\n• ガレージ、シールアルバム、ショップ、ボーナスステージの画面がより快適に。\n• もうすぐクリスマス：雪のイベントは12月15日にスタート。\n• たくさんの細かな修正。"
+}
