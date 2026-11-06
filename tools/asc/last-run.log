@@ -1,8 +1,21 @@
+### tools/asc/fix13.py
+en urls https://sharliztower.com None
+urls de-DE ['supportUrl'] 200 
+check de-DE missing: []
+check en-US missing: []
+urls es-MX ['supportUrl'] 200 
+check es-MX missing: []
+urls fr-FR ['supportUrl'] 200 
+check fr-FR missing: []
+check he missing: []
+urls ja ['supportUrl'] 200 
+check ja missing: []
+cancel 200 CANCELING
+old submission CANCELING
+old submission COMPLETE
+event state ['DRAFT']
 ### tools/asc/submit13.py
 version 1.3 PREPARE_FOR_SUBMISSION MANUAL
-build 88 NOT_FOUND 200
-build 88 NOT_FOUND 200
-build 88 NOT_FOUND 200
 build 88 VALID
 build attached 204 
 locales ['de-DE', 'en-US', 'es-MX', 'fr-FR', 'he', 'ja']
@@ -15,34 +28,10 @@ whatsNew ja 200
 event deepLink 200 
 event images en-US [('EVENT_DETAILS_PAGE', 'COMPLETE'), ('EVENT_CARD', 'COMPLETE')]
 event images he []
-submission 7fe58f29-91dd-4c5a-93be-53fa3a2a9a40 READY_FOR_REVIEW
+submission eef88463-f743-498a-bee9-b76e50cb74d9 READY_FOR_REVIEW
 items before 0
-add appStoreVersion 409 {
-  "errors" : [ {
-    "id" : "6026d1e2-8889-4122-80c3-3beed6a4436e",
-    "status" : "409",
-    "code" : "STATE_ERROR.ENTITY_STATE_INVALID",
-    "title" : "appStoreVersions with id 'eaa106a3-be2d-4065-8644-79efdce7a67c' is not in valid state.",
-    "detail" : "This resource cannot be reviewed, please check associated errors to see why.",
-    "meta" : {
-      "associatedErrors" : {
-        "/v1/appStoreVersionLocalizations/7acd6d4a-763b-4b2f-969f-d414bf51454b" : [ {
-          "id" : "e729f7c2-3b34-42b9-829b-8760d5a5fad1",
-          "status" : "409",
-          "code" : "ENTITY_ERROR.ATTRIBUTE.REQUIRED",
-          "title" : "The provided entity is missing a required attribute",
-          "detail" : "You must provide a value for the attribute 'supportUrl' with this request",
-          "source" : {
-            "pointer" : "/data/attributes/supportUrl"
-          }
-        } ],
-        "/v1/appStoreVersionLocalizations/b87ec461-27ff-4df1-be71-8b664e74d872" : [ {
-          "id" : "bd2a8ef9-5bd5-4e9f-b7db-1069dbf62dd0",
-          "status" : "409",
-          "code" : "ENTITY_ERROR.ATTRIBUTE.REQUIRED",
-          "title" : "The provided entity is missing a required attribute",
-          "detai
+add appStoreVersion 201 
 add appEvent 201 
 SUBMITTED 200 WAITING_FOR_REVIEW
-version state PREPARE_FOR_SUBMISSION
+version state WAITING_FOR_REVIEW
 event state WAITING_FOR_REVIEW
