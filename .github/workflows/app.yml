@@ -8,7 +8,7 @@ name: Build store apps
 # The store version (iPhone "Version" / Android versionName). Raise it for every new store release:
 # once Apple approves a version, uploads with the same version are refused.
 env:
-  APP_VERSION: '1.2'
+  APP_VERSION: '1.3'
 on:
   workflow_dispatch:
   push:
@@ -34,6 +34,9 @@ jobs:
           npm run assets -- --android
           # portrait only, Play's required target API 36
           sed -i 's/android:name=".MainActivity"/android:name=".MainActivity" android:screenOrientation="portrait"/' android/app/src/main/AndroidManifest.xml
+          # v83: links into the app, sharliztower://event/christmas
+          perl -0pi -e 's#(<activity[^>]*\.MainActivity.*?<intent-filter>.*?</intent-filter>)#$1\n            <intent-filter>\n                <action android:name="android.intent.action.VIEW" />\n                <category android:name="android.intent.category.DEFAULT" />\n                <category android:name="android.intent.category.BROWSABLE" />\n                <data android:scheme="sharliztower" />\n            </intent-filter>#s' android/app/src/main/AndroidManifest.xml
+          grep -q 'android:scheme="sharliztower"' android/app/src/main/AndroidManifest.xml || { echo "::error::sharliztower link missing in AndroidManifest"; exit 1; }
           sed -i -E 's/(targetSdkVersion\s*=\s*)[0-9]+/\136/; s/(compileSdkVersion\s*=\s*)[0-9]+/\136/' android/variables.gradle
           grep -E 'targetSdk|compileSdk|minSdk' android/variables.gradle
           # Google Play needs a higher versionCode on every upload: the run number (same as the iOS build number)
@@ -97,7 +100,14 @@ jobs:
           /usr/libexec/PlistBuddy -c "Add :CFBundleLocalizations array" $PL
           i=0; for L in en he es pt fr de it ru tr ar ja ko zh-Hans id; do /usr/libexec/PlistBuddy -c "Add :CFBundleLocalizations:$i string $L" $PL; i=$((i+1)); done
           /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Sharliz" $PL || /usr/libexec/PlistBuddy -c "Add :CFBundleDisplayName string Sharliz" $PL
+          # v83: links into the app, sharliztower://event/christmas (Apple's In-App Event card needs a deep link)
+          /usr/libexec/PlistBuddy -c "Delete :CFBundleURLTypes" $PL || true
+          /usr/libexec/PlistBuddy -c "Add :CFBundleURLTypes array" -c "Add :CFBundleURLTypes:0 dict" -c "Add :CFBundleURLTypes:0:CFBundleURLName string com.sharlizstack.tower" -c "Add :CFBundleURLTypes:0:CFBundleURLSchemes array" -c "Add :CFBundleURLTypes:0:CFBundleURLSchemes:0 string sharliztower" $PL
           npx cap sync ios
+          # v82: our own rating plugin (app/plugins/sharliz-review) must be registered, or Apple's rating card never shows
+          grep -q SharlizReviewPlugin ios/App/App/capacitor.config.json || { echo "::error::SharlizReview plugin missing from the iOS build"; cat ios/App/App/capacitor.config.json; exit 1; }
+          grep -n "SharlizReview" ios/App/Podfile
+          grep -q '"App"\|AppPlugin' ios/App/App/capacitor.config.json || { echo "::error::@capacitor/app missing (links into the app)"; exit 1; }
       - name: Version APP_VERSION, build number = run number
         working-directory: app/ios/App
         run: |

@@ -1,0 +1,9 @@
+{
+  "name": "sharliz-review",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sharliz Tower: asks iOS to show Apple's own rating card (SKStoreReviewController). No network, no data.",
+  "capacitor": {
+    "ios": { "src": "ios" }
+  }
+}
