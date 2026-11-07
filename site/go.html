@@ -5,18 +5,19 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Opening the App Store… – Sharliz Tower</title>
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#230b4f;color:#fff;font:16px system-ui,sans-serif;text-align:center}a{color:#ffd23f}</style>
+<!-- /go = the App Store link from the ad page (/play) and the ads. ?ct=<name> replaces the App Store campaign token, &ppid=<id> opens a Custom Product Page.
+     It forwards at once (no wait for the page to load), so Cloudflare Web Analytics only counts the views where its beacon loaded first: read the App Store campaign numbers (ct) for taps. -->
+<script>
+(function(){var u='https://apps.apple.com/app/apple-store/id6819720504?pt=129570131&ct=meta_w1_caau&mt=8';try{var q=new URLSearchParams(location.search),c=q.get('ct'),pp=q.get('ppid');if(c&&/^[\w-]{1,30}$/.test(c))u=u.replace(/ct=[^&]*/,'ct='+c);
+// ppid = Apple's Custom Product Page id: hex digits and dashes
+if(pp&&/^[0-9a-fA-F-]{8,40}$/.test(pp))u+='&ppid='+pp}catch(e){}
+window.__to=u;location.replace(u)})();
+</script>
+<noscript><meta http-equiv="refresh" content="0;url=https://apps.apple.com/app/apple-store/id6819720504?pt=129570131&amp;ct=meta_w1_caau&amp;mt=8"></noscript>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#230b4f;color:#fff;font:16px system-ui,sans-serif;text-align:center}.btn{display:inline-block;margin-top:18px;padding:16px 28px;border-radius:999px;background:#ffd23f;color:#230b4f;font-weight:800;font-size:19px;text-decoration:none;box-shadow:0 6px 0 #c99a00}.btn:active{transform:translateY(3px);box-shadow:0 3px 0 #c99a00}</style>
 </head>
 <body>
-<!-- /go counts App Store taps from the ad page (/play) as page views in Cloudflare Web Analytics, then forwards to the store. /go?ct=<name> keeps the App Store campaign token, &ppid=<id> opens a Custom Product Page. -->
-<p>Opening the App Store…<br><a id="to" href="https://apps.apple.com/app/apple-store/id6819720504?pt=129570131&amp;ct=meta_w1_caau&amp;mt=8">Tap here if nothing happens</a></p>
-<script>
-(function(){var a=document.getElementById('to');try{var q=new URLSearchParams(location.search),c=q.get('ct'),pp=q.get('ppid');if(c&&/^[\w-]{1,30}$/.test(c))a.href=a.href.replace(/ct=[^&]*/,'ct='+c);
-// ?ppid=<id> opens a Custom Product Page (Apple's page id: hex digits and dashes)
-if(pp&&/^[0-9a-fA-F-]{8,40}$/.test(pp))a.href+='&ppid='+pp}catch(e){}
-// leave only after the page has loaded, so Cloudflare's deferred analytics beacon (injected at the end of body) has sent the view; 2.5 s at most
-var gone=false;function go(){if(!gone){gone=true;location.replace(a.href)}}
-window.addEventListener('load',function(){setTimeout(go,400)});setTimeout(go,2500)})();
-</script>
+<p>Opening the App Store…<br><a id="to" class="btn" href="https://apps.apple.com/app/apple-store/id6819720504?pt=129570131&amp;ct=meta_w1_caau&amp;mt=8">Open App Store</a></p>
+<script>try{if(window.__to)document.getElementById('to').href=window.__to}catch(e){}</script>
 </body>
 </html>
