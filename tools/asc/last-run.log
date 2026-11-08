@@ -1,6 +1,70 @@
 ### tools/asc/sales.py
-== SALES 2026-11-04 .. 2026-11-06 | days without a report: ['2026-11-04:404', '2026-11-05:404', '2026-11-06:404']
+== SALES 2026-11-04 .. 2026-11-07 | days without a report: ['2026-11-04:404', '2026-11-05:404', '2026-11-07:404']
 -- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
--- first-time downloads by country: {}
--- first-time downloads by day: {}
+  ('1F', 'sharliz-tower-001', 'Sharliz Tower') 2
+-- first-time downloads by country: {'IL': 2}
+-- first-time downloads by day: {'2026-11-06': 2}
 -- proceeds (units x developer proceeds): {}
+### tools/asc/analytics_ca.py
+## 383444a6 App Downloads Standard | daily instances since 2026-11-04 2 ['2026-11-05', '2026-11-07']
+columns ['Date', 'App Name', 'App Apple Identifier', 'Download Type', 'App Version', 'Device', 'Platform Version', 'Source Type', 'Page Type', 'Pre-Order', 'Territory', 'Counts']
+## 383444a6 App Store Discovery and Engagement Standard | daily instances since 2026-11-04 3 ['2026-11-05', '2026-11-06', '2026-11-07']
+columns ['Date', 'App Name', 'App Apple Identifier', 'Event', 'Page Type', 'Source Type', 'Engagement Type', 'Device', 'Platform Version', 'Territory', 'Counts', 'Unique Counts']
+  CA 2026-11-02 | Impression | No page | App Store search = 1
+  CA 2026-11-02 | Page view | Media view | Unavailable = 11
+  CA 2026-11-02 | Page view | Store sheet | App Store browse = 2
+  CA 2026-11-02 | Page view | Store sheet | App referrer = 16
+  CA 2026-11-03 | Impression | No page | App Store search = 2
+  CA 2026-11-03 | Page view | Media view | Unavailable = 72
+  CA 2026-11-03 | Page view | Store sheet | App Store browse = 4
+  CA 2026-11-03 | Page view | Store sheet | App referrer = 74
+  CA 2026-11-04 | Page view | Media view | Unavailable = 84
+  CA 2026-11-04 | Page view | Store sheet | App referrer = 64
+  CA 2026-11-05 | Page view | Media view | Unavailable = 48
+  CA 2026-11-05 | Page view | Store sheet | App Store browse = 2
+  CA 2026-11-05 | Page view | Store sheet | App referrer = 42
+  CA 2026-11-06 | Page view | Media view | Unavailable = 17
+  CA 2026-11-06 | Page view | Store sheet | App Store browse = 1
+  CA 2026-11-06 | Page view | Store sheet | App referrer = 15
+## 0c1b2f26 App Downloads Standard | daily instances since 2026-11-04 1 ['2026-11-04']
+columns ['Date', 'App Name', 'App Apple Identifier', 'Download Type', 'App Version', 'Device', 'Platform Version', 'Source Type', 'Page Type', 'Pre-Order', 'Territory', 'Counts']
+  CA 2026-10-25 | First-time download | Store sheet | App Store browse = 1
+  CA 2026-10-25 | First-time download | Store sheet | App referrer = 1
+  CA 2026-10-27 | Auto-update | Store sheet | App Store browse = 1
+  CA 2026-10-27 | Auto-update | Store sheet | App referrer = 1
+  CA 2026-10-28 | Auto-update | Store sheet | App Store browse = 2
+  CA 2026-10-29 | Auto-update | Store sheet | App referrer = 1
+  CA 2026-10-29 | First-time download | Store sheet | App referrer = 1
+  CA 2026-10-30 | Auto-update | Store sheet | App Store browse = 1
+## 0c1b2f26 App Store Discovery and Engagement Standard | daily instances since 2026-11-04 1 ['2026-11-04']
+columns ['Date', 'App Name', 'App Apple Identifier', 'Event', 'Page Type', 'Source Type', 'Engagement Type', 'Device', 'Platform Version', 'Territory', 'Counts', 'Unique Counts']
+  CA 2026-10-24 | Page view | Store sheet | App Store browse = 1
+  CA 2026-10-24 | Page view | Store sheet | App referrer = 3
+  CA 2026-10-25 | Page view | Store sheet | App Store browse = 2
+  CA 2026-10-25 | Page view | Store sheet | App referrer = 6
+  CA 2026-10-25 | Tap | Store sheet | App Store browse = 2
+  CA 2026-10-27 | Impression | No page | App Store search = 1
+  CA 2026-10-27 | Page view | Product page | App referrer = 5
+  CA 2026-10-27 | Page view | Store sheet | App referrer = 10
+  CA 2026-10-28 | Page view | Product page | App referrer = 2
+  CA 2026-10-28 | Page view | Store sheet | App referrer = 17
+  CA 2026-10-29 | Impression | No page | App Store search = 2
+  CA 2026-10-29 | Page view | Product page | App referrer = 2
+  CA 2026-10-29 | Page view | Store sheet | App Store browse = 1
+  CA 2026-10-29 | Page view | Store sheet | App referrer = 27
+  CA 2026-10-29 | Tap | Store sheet | App Store browse = 1
+  CA 2026-10-30 | Page view | Store sheet | App Store browse = 1
+  CA 2026-10-30 | Page view | Store sheet | App referrer = 28
+  CA 2026-10-31 | Page view | Store sheet | App referrer = 29
+  CA 2026-11-02 | Impression | No page | App Store search = 1
+  CA 2026-11-02 | Page view | Media view | Unavailable = 11
+  CA 2026-11-02 | Page view | Store sheet | App Store browse = 2
+  CA 2026-11-02 | Page view | Store sheet | App referrer = 16
+  CA 2026-11-03 | Impression | No page | App Store search = 1
+  CA 2026-11-03 | Page view | Media view | Unavailable = 36
+  CA 2026-11-03 | Page view | Store sheet | App Store browse = 2
+  CA 2026-11-03 | Page view | Store sheet | App referrer = 37
+  CA 2026-11-04 | Page view | Media view | Unavailable = 28
+  CA 2026-11-04 | Page view | Store sheet | App referrer = 21
+versions [('1.3', 'WAITING_FOR_REVIEW'), ('1.2', 'READY_FOR_SALE'), ('1.1', 'READY_FOR_SALE')]
+events [('Christmas 2026', 'WAITING_FOR_REVIEW')]
