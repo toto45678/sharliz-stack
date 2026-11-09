@@ -1,11 +1,5 @@
-### tools/asc/sales.py
-== SALES 2026-11-02 .. 2026-11-08 | days without a report: ['2026-11-04:404', '2026-11-05:404', '2026-11-07:404', '2026-11-08:404']
--- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
-  ('1F', 'sharliz-tower-001', 'Sharliz Tower') 4
-  ('7F', 'sharliz-tower-001', 'Sharliz Tower') 1
--- first-time downloads by country: {'IL': 3, 'DK': 1}
--- first-time downloads by day: {'2026-11-02': 1, '2026-11-03': 1, '2026-11-06': 2}
--- proceeds (units x developer proceeds): {}
-### tools/asc/analytics_week.py
-## Page view by day (all / CA): {'2026-11-02': (33, 29), '2026-11-03': (76, 75), '2026-11-04': (51, 50), '2026-11-05': (47, 46), '2026-11-06': (33, 33), '2026-11-07': (22, 22)}
-## First-time download by day (all / CA): {'2026-11-03': (1, 0), '2026-11-06': (2, 0)}
+### tools/asc/release13.py
+1.3 PENDING_DEVELOPER_RELEASE
+release request 201 
+1.3 now READY_FOR_SALE
+events [('Christmas 2026', 'APPROVED')]
