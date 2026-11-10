@@ -1378,7 +1378,10 @@
   "updNow": "アップデート",
   "updLater": "あとで",
   "trFloorsN1": "{n}階",
-  "trFloor1": "階"
+  "trFloor1": "階",
+  "hint_boss2": "ボスをたおす",
+  "hint_world2": "ワールドをクリア",
+  "hint_gold2": "伝説の大わざ"
  },
  "pairs": {
   "3D boss models (season 1)": "3Dボスモデル(シーズン1)",

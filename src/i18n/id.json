@@ -1378,7 +1378,10 @@
   "updNow": "Perbarui",
   "updLater": "Nanti",
   "trFloorsN1": "{n} lantai",
-  "trFloor1": "lantai"
+  "trFloor1": "lantai",
+  "hint_boss2": "Kalahkan bosnya",
+  "hint_world2": "Selesaikan dunianya",
+  "hint_gold2": "Prestasi legendaris"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",

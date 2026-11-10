@@ -1378,7 +1378,10 @@
   "updNow": "Обновить",
   "updLater": "Позже",
   "trFloorsN1": "{n} этаж",
-  "trFloor1": "этаж"
+  "trFloor1": "этаж",
+  "hint_boss2": "Победи босса",
+  "hint_world2": "Пройди мир",
+  "hint_gold2": "Легендарный подвиг"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-модели боссов (сезон 1)",

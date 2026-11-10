@@ -1378,7 +1378,10 @@
   "updNow": "Atualizar",
   "updLater": "Depois",
   "trFloorsN1": "{n} andar",
-  "trFloor1": "andar"
+  "trFloor1": "andar",
+  "hint_boss2": "Derrote o chefão",
+  "hint_world2": "Conclua o mundo",
+  "hint_gold2": "Uma façanha lendária"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

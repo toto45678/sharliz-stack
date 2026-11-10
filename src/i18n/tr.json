@@ -1378,7 +1378,10 @@
   "updNow": "Güncelle",
   "updLater": "Sonra",
   "trFloorsN1": "{n} kat",
-  "trFloor1": "kat"
+  "trFloor1": "kat",
+  "hint_boss2": "Boss'u yen",
+  "hint_world2": "Dünyayı bitir",
+  "hint_gold2": "Efsanevi bir başarı"
  },
  "pairs": {
   "3D boss models (season 1)": "3B boss modelleri (sezon 1)",

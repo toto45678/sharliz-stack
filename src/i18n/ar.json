@@ -1378,7 +1378,10 @@
   "updNow": "تحديث",
   "updLater": "لاحقًا",
   "trFloorsN1": "طابق واحد",
-  "trFloor1": "طابق"
+  "trFloor1": "طابق",
+  "hint_boss2": "اهزم الزعيم",
+  "hint_world2": "أنهِ العالم",
+  "hint_gold2": "إنجاز أسطوري"
  },
  "pairs": {
   "3D boss models (season 1)": "نماذج 3D للزعماء (الموسم 1)",

@@ -1378,7 +1378,10 @@
   "updNow": "更新",
   "updLater": "稍后",
   "trFloorsN1": "{n}层",
-  "trFloor1": "层"
+  "trFloor1": "层",
+  "hint_boss2": "打败Boss",
+  "hint_world2": "通关这个世界",
+  "hint_gold2": "传奇壮举"
  },
  "pairs": {
   "3D boss models (season 1)": "3D Boss模型（第1季）",

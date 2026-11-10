@@ -1378,7 +1378,10 @@
   "updNow": "Aggiorna",
   "updLater": "Più tardi",
   "trFloorsN1": "{n} piano",
-  "trFloor1": "piano"
+  "trFloor1": "piano",
+  "hint_boss2": "Batti il boss",
+  "hint_world2": "Completa il mondo",
+  "hint_gold2": "Un'impresa leggendaria"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelli 3D dei boss (stagione 1)",

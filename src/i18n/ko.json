@@ -1378,7 +1378,10 @@
   "updNow": "업데이트",
   "updLater": "나중에",
   "trFloorsN1": "{n}층",
-  "trFloor1": "층"
+  "trFloor1": "층",
+  "hint_boss2": "보스 격파",
+  "hint_world2": "월드 완료",
+  "hint_gold2": "전설의 업적"
  },
  "pairs": {
   "3D boss models (season 1)": "3D 보스 모델 (시즌 1)",

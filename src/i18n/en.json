@@ -1355,7 +1355,10 @@
   "sbCover2": "Legends · Shadows · Glory!",
   "pg_boss2": "Legend bosses",
   "pg_world2": "Legend worlds",
-  "pg_gold2": "Legend gold"
+  "pg_gold2": "Legend gold",
+  "hint_boss2": "Beat the boss",
+  "hint_world2": "Finish the world",
+  "hint_gold2": "A legendary feat"
  },
  "pairs": [
   "3D boss models (season 1)",

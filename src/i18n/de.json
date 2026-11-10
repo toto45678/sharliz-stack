@@ -1378,7 +1378,10 @@
   "updNow": "Aktualisieren",
   "updLater": "Später",
   "trFloorsN1": "{n} Stockwerk",
-  "trFloor1": "Stockwerk"
+  "trFloor1": "Stockwerk",
+  "hint_boss2": "Besiege den Boss",
+  "hint_world2": "Schaffe die Welt",
+  "hint_gold2": "Eine legendäre Leistung"
  },
  "pairs": {
   "3D boss models (season 1)": "3D-Bossmodelle (Saison 1)",

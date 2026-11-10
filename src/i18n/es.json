@@ -1378,7 +1378,10 @@
   "updNow": "Actualizar",
   "updLater": "Luego",
   "trFloorsN1": "{n} piso",
-  "trFloor1": "piso"
+  "trFloor1": "piso",
+  "hint_boss2": "Vence al jefe",
+  "hint_world2": "Termina el mundo",
+  "hint_gold2": "Una hazaña legendaria"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D de jefes (temporada 1)",

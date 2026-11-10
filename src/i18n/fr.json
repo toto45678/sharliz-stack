@@ -1378,7 +1378,10 @@
   "updNow": "Mettre à jour",
   "updLater": "Plus tard",
   "trFloorsN1": "{n} étage",
-  "trFloor1": "étage"
+  "trFloor1": "étage",
+  "hint_boss2": "Bats le boss",
+  "hint_world2": "Termine le monde",
+  "hint_gold2": "Un exploit légendaire"
  },
  "pairs": {
   "3D boss models (season 1)": "Modèles 3D des boss (saison 1)",
