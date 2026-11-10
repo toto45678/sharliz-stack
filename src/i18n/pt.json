@@ -1376,7 +1376,9 @@
   "updSub": "A versão {n} já está na loja. Atualize para ter todas as novidades!",
   "updMust": "Atualize o jogo para continuar jogando.",
   "updNow": "Atualizar",
-  "updLater": "Depois"
+  "updLater": "Depois",
+  "trFloorsN1": "{n} andar",
+  "trFloor1": "andar"
  },
  "pairs": {
   "3D boss models (season 1)": "Modelos 3D dos chefões (temporada 1)",

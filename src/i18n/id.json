@@ -1376,7 +1376,9 @@
   "updSub": "Versi {n} sudah ada di toko. Perbarui untuk dapat semua hal baru!",
   "updMust": "Perbarui game untuk terus bermain.",
   "updNow": "Perbarui",
-  "updLater": "Nanti"
+  "updLater": "Nanti",
+  "trFloorsN1": "{n} lantai",
+  "trFloor1": "lantai"
  },
  "pairs": {
   "3D boss models (season 1)": "Model bos 3D (musim 1)",
