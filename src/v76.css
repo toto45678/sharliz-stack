@@ -56,11 +56,12 @@
 .sp-er .bar{position:relative;display:block;height:14px;margin-top:3px;border-radius:7px;background:rgba(18,13,43,.7);border:1.5px solid #120d2b;overflow:hidden}
 .sp-er .bar i{position:absolute;inset-block:0;inset-inline-start:0;background:linear-gradient(90deg,#ffd23f,#ffb800)}
 .sp-er .bar em{position:relative;display:block;text-align:center;font:800 .66rem/12px system-ui;font-style:normal;text-shadow:0 1px 0 #120d2b}
-.sp-er.own{background:linear-gradient(180deg,#ffd23f,#e09a00);color:#120d2b}
-.sp-er.own b{color:#fff}
-.sp-er.own .ic img,.sp-er.own .ic svg{filter:none}
-.sp-er.own .lk{display:none}
-.sp-er.own .hw{color:#120d2b}
+/* owned part = .got, not .own: base.html has a global .own badge (absolute, stroked text) that pulled the card out of the list over the close button */
+.sp-er.got{background:linear-gradient(180deg,#ffd23f,#e09a00);color:#120d2b}
+.sp-er.got b{color:#fff}
+.sp-er.got .ic img,.sp-er.got .ic svg{filter:none}
+.sp-er.got .lk{display:none}
+.sp-er.got .hw{color:#120d2b}
 .sp-er .ok{flex:none;font:900 1.6rem/1 system-ui;color:#fff;text-shadow:0 2px 0 #120d2b}
 .sp-er.new{animation:arcBump .5s ease-out 3}
 /* flight */
