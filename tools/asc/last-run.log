@@ -1,5 +1,56 @@
-### tools/asc/release13.py
-1.3 PENDING_DEVELOPER_RELEASE
-release request 201 
-1.3 now READY_FOR_SALE
-events [('Christmas 2026', 'APPROVED')]
+### tools/asc/check14.py
+== de-DE | desc 1112 | kw: stapeln,turm,blöcke,bauen,balance,arcade,familie,kinder,rätsel,weltraum,süß,offline,geschick
+   promo: Stapel deinen Turm, besiege 50 Bosse und flieg ins All! 500 Level gratis. Keine Lootboxen, und nichts Zufälliges wird je verkauft.
+   num: ist kostenlos, und alle 500 Level und Bosse lassen s
+   num: Das Spiel gibt es in 14 Sprachen
+   num: Weltraum-Level: Ab Level 89 fliegst du vor jedem Bos
+   num: akter, alle 10 Level ein Boss
+   num: arliz-Haus: 4 Zimmer und 225 Möbel-Designs zur Auswah
+   num: • 19 Begleiter in 3D, jeder m
+   num: • 50 Bosse mit Namen und Char
+   num: • 500 Level in 6 Staffeln: Tag
+== en-US | desc 2110 | kw: stack,block,drop,build,balance,casual,arcade,family,kids,puzzle,space,ship,cute,offline,physics
+   promo: Stack your tower, beat 50 bosses, fly into space! 500 levels free. No loot boxes, and nothing random is ever sold.
+   num: All 500 levels and bosses are fr
+   num: unlock 10 designs for each one
+   num: 50 EPIC BOSSES
+   num: 500 LEVELS, 6 SEASONS
+   num: Decorate four rooms with 25 pieces of furniture, and
+   num: From level 89, fly your spaceship over
+   num: Plays in 14 languages: English, Hebr
+   num: Reach player level 10 to open your own house
+   shots APP_IPHONE_61 ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg']
+   shots APP_IPAD_PRO_3GEN_129 ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg', '08_no_loot_boxes.jpg']
+   shots APP_IPHONE_67 ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg', '08_no_loot_boxes.jpg']
+== es-MX | desc 1104 | kw: apilar,torre,bloques,construir,equilibrio,arcade,familia,niños,rompecabezas,espacio,sin internet
+   promo: ¡Apila tu torre, vence a 50 jefes y vuela al espacio! 500 niveles gratis. Sin cajas de botín, y nunca se vende nada al azar.
+   num: harliz: 4 habitaciones y 225 diseños de muebles para
+   num: juego está disponible en 14 idiomas
+   num: l juego es gratis, y los 500 niveles y todos los jefe
+   num: nalidad, un jefe cada 10 niveles
+   num: paciales: desde el nivel 89, vuela una nave sobre ca
+   num: • 19 compañeros en 3D, cada u
+   num: • 50 jefes con nombre y perso
+   num: • 500 niveles en 6 temporadas:
+== fr-FR | desc 1201 | kw: empiler,tour,blocs,construire,équilibre,arcade,famille,enfants,casse-tête,espace,mignon,hors ligne
+   promo: Empile ta tour, bats 50 boss et pars dans l'espace ! 500 niveaux gratuits. Pas de loot box, et rien d'aléatoire n'est jamais vendu.
+   num: jeu est gratuit, et les 500 niveaux et tous les boss
+   num: Le jeu est disponible en 14 langues
+   num: actère, un boss tous les 10 niveaux
+   num: aux : à partir du niveau 89, pilote un vaisseau au-d
+   num: es Sharliz : 4 pièces et 225 designs de meubles au ch
+   num: • 19 compagnons en 3D, chacun
+   num: • 50 boss avec leur nom et le
+   num: • 500 niveaux en 6 saisons : j
+== he | desc 799 | kw: ערימה,בלוקים,ילדים,בוס,בית,עיצוב,מדבקות,אלבום,דמויות,פאזל,משפחה,ארקייד,איזון,קומות,רהיטים
+   promo: None
+   num: בית השארליזים: 4 חדרים ו-225 עיצובי רהיטים לבחור מהם
+   num: המשחק זמין ב-14 שפות
+   num: המשחק חינמי, וכל 500 השלבים והבוסים פתוחים בל
+   num: • 19 חברים בתלת ממד, כל אחד ע
+   num: • 42 מכשולים שמשנים את המשחק:
+   num: • 50 בוסים עם שמות ואופי, בוס
+   num: • 500 שלבים ב-6 עונות: יום, לי
+   num: • שלבי חלל: משלב 89, לפני כל בוס טסים בחללית
+== ja | desc 498 | kw: 積み上げ,タワー,ブロック,バランス,カジュアル,アーケード,家族,子供,パズル,宇宙,かわいい,オフライン
+   promo: タワーを積み上げ、50体のボスを倒し、宇宙へ飛び立とう！500ステージ無料。ルートボックスなし、ランダムな商品は一切販売しません。
