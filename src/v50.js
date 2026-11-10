@@ -81,3 +81,15 @@ function bnCollect(){if(!BN||BN.paid)return;BN.paid=true;const R=bnReward();wall
 {const _t=toTitle;toTitle=function(){if(mode==='bonus'){mode='levels';modeZi=null;BN=null}bnHud(false);return _t.apply(this,arguments)}}
 {const _o=openMap;openMap=function(){if(mode==='bonus'){mode='levels';modeZi=null;if(BN)level=BN.from;BN=null}bnHud(false);return _o.apply(this,arguments)}}
 {const _h=updateHud;updateHud=function(){_h.apply(this,arguments);if(mode==='bonus'&&BN)document.getElementById('score').innerHTML=coinImg()+'<b>'+BN.coins+'</b>'}}
+/* nightly Nov 3: a long 'n floors' chest label ran past its tile and was cut off by the card on small phones ('24 Stockwerke' lost its last letter in German at 375 px):
+   shrink the three labels (one size for all) until each fits the width a tile can have in this card (both cards: the intro and the result).
+   The target comes from the card body, not from the tiles: the row is shrink-wrapped, so the tiles get narrower as the labels shrink. */
+function bnFitCh(n){const bs=[...document.querySelectorAll('#card .bn-ch b')],body=document.querySelector('#card .card-body');if(!bs.length||!body)return;
+  if(!body.clientWidth){if((n||0)<30)requestAnimationFrame(()=>bnFitCh((n||0)+1));return} // the card is not laid out yet
+  const row=bs[0].closest('.bn-chests'),cs=getComputedStyle(bs[0].parentElement),rs=getComputedStyle(row),bd=getComputedStyle(body),px=v=>parseFloat(v)||0;
+  const inner=body.clientWidth-px(bd.paddingLeft)-px(bd.paddingRight),gap=px(rs.columnGap),
+    tw=Math.min(px(cs.maxWidth)||96,(inner-gap*(bs.length-1))/bs.length)-px(cs.paddingLeft)-px(cs.paddingRight)-px(cs.borderLeftWidth)-px(cs.borderRightWidth)-1;
+  bs.forEach(b=>b.style.fontSize='');let fs=parseFloat(getComputedStyle(bs[0]).fontSize);
+  while(bs.some(b=>b.scrollWidth>tw)&&fs>9){fs-=.5;bs.forEach(b=>b.style.fontSize=fs+'px')}}
+{const _i=bnIntro;bnIntro=function(){const r=_i.apply(this,arguments);try{bnFitCh()}catch(e){}return r}}
+{const _r=bnResult;bnResult=function(){const r=_r.apply(this,arguments);try{bnFitCh()}catch(e){}return r}}
