@@ -111,3 +111,7 @@
 [dir=rtl] .bk-rings{left:auto;right:6px}
 [dir=rtl] .bk-page{transform-origin:right center;border-radius:14px 8px 8px 14px;box-shadow:inset -8px 0 14px -8px rgba(60,30,10,.35);padding:12px 14px 16px 10px}
 .shop-tabs button{font-size:.92rem;padding-inline:4px;min-width:0}
+/* nightly Nov 4: a finger swipe on the lobby hero (spin, and the dizzy gag) and on My hero (turn the hero) was cancelled after ~20 px:
+   the canvas inherited the page's touch-action:manipulation, so the browser took the swipe as a pan and sent pointercancel.
+   Nothing on this canvas scrolls or zooms, so the game keeps every touch on it. */
+#titleArt{touch-action:none}
