@@ -1,63 +1,6 @@
-### tools/asc/prep14.py
-created version 1.4
-version 1.4 PREPARE_FOR_SUBMISSION
-release: scheduled >= 23.11 00:00 Israel 200 
-build 89 VALID
-attach build 89 204 
-  version build now: 89
-texts de-DE 200 
-texts en-US 200 
-texts es-MX 200 
-texts fr-FR 200 
-he keywords before ערימה,בלוקים,ילדים,בוס,בית,עיצוב,מדבקות,אלבום,דמויות,פאזל,משפחה,ארקייד,איזון,קומות,רהיטים
-he removed ['בית', 'עיצוב', 'אלבום', 'דמויות'] -> after ערימה,בלוקים,ילדים,בוס,מדבקות,פאזל,משפחה,ארקייד,איזון,קומות,רהיטים,קוביות,בנייה,מגדלים 86
-texts he 200 
-texts ja 200 
-check fr-FR OK | kw 98 | wn Préparez-vous : l'événement de Noël commence le 15 décembre !
-check es-MX OK | kw 96 | wn ¡Prepárate: el evento de Navidad empieza el 15 de diciembre!
-check he OK | kw 86 | wn מתכוננים: אירוע חג המולד מתחיל ב-15 בדצמבר!
-check de-DE OK | kw 92 | wn Macht euch bereit: Das Weihnachts-Event startet am 15. Dezember!
-check en-US OK | kw 95 | wn Get ready: the Christmas event starts Dec 15!
-check ja OK | kw 54 | wn 準備はいい？クリスマスイベントは12月15日スタート！
-en-US sets ['APP_IPAD_PRO_3GEN_129', 'APP_IPHONE_61', 'APP_IPHONE_67']
-APP_IPHONE_67 before ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg', '08_no_loot_boxes.jpg']
-  delete 01_l6.jpg 204
-  delete 02_boss70.jpg 204
-  delete 03_boss260.jpg 204
-  delete 04_l175.jpg 204
-  delete 05_l285.jpg 204
-  delete 06_wardrobe.jpg 204
-  delete 07_album.jpg 204
-  delete 08_no_loot_boxes.jpg 204
-  uploaded 01_stack_it_beat_him.jpg COMPLETE 
-  uploaded 02_will_it_hold.jpg COMPLETE 
-  uploaded 03_50_bosses.jpg COMPLETE 
-  uploaded 04_no_loot_boxes.jpg COMPLETE 
-  uploaded 05_dress_up.jpg COMPLETE 
-APP_IPHONE_67 after ['01_stack_it_beat_him.jpg', '02_will_it_hold.jpg', '03_50_bosses.jpg', '04_no_loot_boxes.jpg', '05_dress_up.jpg']
-APP_IPAD_PRO_3GEN_129 before ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg', '08_no_loot_boxes.jpg']
-  delete 01_l6.jpg 204
-  delete 02_boss70.jpg 204
-  delete 03_boss260.jpg 204
-  delete 04_l175.jpg 204
-  delete 05_l285.jpg 204
-  delete 06_wardrobe.jpg 204
-  delete 07_album.jpg 204
-  delete 08_no_loot_boxes.jpg 204
-  uploaded 01_stack_it_beat_him.jpg COMPLETE 
-  uploaded 02_will_it_hold.jpg COMPLETE 
-  uploaded 03_50_bosses.jpg COMPLETE 
-  uploaded 04_no_loot_boxes.jpg COMPLETE 
-  uploaded 05_dress_up.jpg COMPLETE 
-APP_IPAD_PRO_3GEN_129 after ['01_stack_it_beat_him.jpg', '02_will_it_hold.jpg', '03_50_bosses.jpg', '04_no_loot_boxes.jpg', '05_dress_up.jpg']
-old set APP_IPHONE_61 ['01_l6.jpg', '02_boss70.jpg', '03_boss260.jpg', '04_l175.jpg', '05_l285.jpg', '06_wardrobe.jpg', '07_album.jpg'] -> delete set 204
-en-US sets now ['APP_IPAD_PRO_3GEN_129', 'APP_IPHONE_67']
-PREPARED 1.4 (not submitted)
-### tools/asc/ranks.py
-us {'stack tower': None, 'tower stack': None, 'stacking game': None, 'boss battle kids': None, 'block drop': None, 'balance tower': None, 'cute stack game': None, 'offline kids game': None, 'sharliz': 1, 'tower builder': None, 'stack': None, 'block': None, 'drop': None, 'build': None, 'balance': None, 'casual': None, 'arcade': None, 'family': None, 'kids': None, 'puzzle': None}
-il {'מגדל': 61, 'משחק מגדל': None, 'שארליז': 1, 'ערימה': 25, 'בלוקים': 132, 'ילדים': None, 'בוס': 148, 'בית': None, 'עיצוב': None, 'מדבקות': None, 'אלבום': None, 'דמויות': None, 'פאזל': None}
-fr {'empiler tour': 53, 'jeu tour': None, 'empiler': 134, 'tour': None, 'blocs': None, 'construire': None, 'équilibre': None, 'arcade': None, 'famille': None, 'enfants': None, 'casse-tête': None, 'espace': None}
-mx {'apilar torre': 47, 'juego torre': None, 'apilar': 152, 'torre': None, 'bloques': None, 'construir': None, 'equilibrio': None, 'arcade': None, 'familia': None, 'niños': None, 'rompecabezas': None, 'espacio': None}
-de {'turm stapeln': 69, 'stapel spiel': None, 'stapeln': 149, 'turm': None, 'blöcke': None, 'bauen': None, 'balance': None, 'arcade': None, 'familie': None, 'kinder': None, 'rätsel': None, 'weltraum': None}
-jp {'タワー 積み上げ': 48, '積み上げ ゲーム': None, '積み上げ': None, 'タワー': None, 'ブロック': None, 'バランス': None, 'カジュアル': None, 'アーケード': None, '家族': None, '子供': None, 'パズル': None, '宇宙': None}
-RANKS_JSON {"us:stack tower": null, "us:tower stack": null, "us:stacking game": null, "us:boss battle kids": null, "us:block drop": null, "us:balance tower": null, "us:cute stack game": null, "us:offline kids game": null, "us:sharliz": 1, "us:tower builder": null, "us:stack": null, "us:block": null, "us:drop": null, "us:build": null, "us:balance": null, "us:casual": null, "us:arcade": null, "us:family": null, "us:kids": null, "us:puzzle": null, "il:מגדל": 61, "il:משחק מגדל": null, "il:שארליז": 1, "il:ערימה": 25, "il:בלוקים": 132, "il:ילדים": null, "il:בוס": 148, "il:בית": null, "il:עיצוב": null, "il:מדבקות": null, "il:אלבום": null, "il:דמויות": null, "il:פאזל": null, "fr:empiler tour": 53, "fr:jeu tour": null, "fr:empiler": 134, "fr:tour": null, "fr:blocs": null, "fr:construire": null, "fr:équilibre": null, "fr:arcade": null, "fr:famille": null, "fr:enfants": null, "fr:casse-tête": null, "fr:espace": null, "mx:apilar torre": 47, "mx:juego torre": null, "mx:apilar": 152, "mx:torre": null, "mx:bloques": null, "mx:construir": null, "mx:equilibrio": null, "mx:arcade": null, "mx:familia": null, "mx:niños": null, "mx:rompecabezas": null, "mx:espacio": null, "de:turm stapeln": 69, "de:stapel spiel": null, "de:stapeln": 149, "de:turm": null, "de:blöcke": null, "de:bauen": null, "de:balance": null, "de:arcade": null, "de:familie": null, "de:kinder": null, "de:rätsel": null, "de:weltraum": null, "jp:タワー 積み上げ": 48, "jp:積み上げ ゲーム": null, "jp:積み上げ": null, "jp:タワー": null, "jp:ブロック": null, "jp:バランス": null, "jp:カジュアル": null, "jp:アーケード": null, "jp:家族": null, "jp:子供": null, "jp:パズル": null, "jp:宇宙": null}
+### tools/asc/sales.py
+== SALES 2026-11-16 .. 2026-11-17 | days without a report: ['2026-11-16:404', '2026-11-17:404']
+-- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
+-- first-time downloads by country: {}
+-- first-time downloads by day: {}
+-- proceeds (units x developer proceeds): {}
