@@ -1,16 +1,6 @@
-### tools/asc/submit14.py
-1.4 PREPARE_FOR_SUBMISSION SCHEDULED 2026-11-22T14:00:00-08:00
-build 89
-whatsNew fr-FR Préparez-vous : l'événement de Noël commence le 15 décembre !
-whatsNew es-MX ¡Prepárate: el evento de Navidad empieza el 15 de diciembre!
-whatsNew he מתכוננים: אירוע חג המולד מתחיל ב-15 בדצמבר!
-whatsNew de-DE Macht euch bereit: Das Weihnachts-Event startet am 15. Dezember!
-whatsNew en-US Get ready: the Christmas event starts Dec 15!
-whatsNew ja 準備はいい？クリスマスイベントは12月15日スタート！
-shots APP_IPAD_PRO_3GEN_129 ['01_stack_it_beat_him.jpg', '02_will_it_hold.jpg', '03_50_bosses.jpg', '04_no_loot_boxes.jpg', '05_dress_up.jpg']
-shots APP_IPHONE_67 ['01_stack_it_beat_him.jpg', '02_will_it_hold.jpg', '03_50_bosses.jpg', '04_no_loot_boxes.jpg', '05_dress_up.jpg']
-submission 960e4015-b4f7-451f-b415-2d608d450221
-items before 0
-add 1.4 201 
-SUBMIT 200 WAITING_FOR_REVIEW
-1.4 now WAITING_FOR_REVIEW 2026-11-22T14:00:00-08:00
+### tools/asc/sales.py
+== SALES 2026-11-17 .. 2026-11-18 | days without a report: ['2026-11-17:404', '2026-11-18:404']
+-- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
+-- first-time downloads by country: {}
+-- first-time downloads by day: {}
+-- proceeds (units x developer proceeds): {}
