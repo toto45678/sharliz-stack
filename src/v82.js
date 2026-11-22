@@ -10,7 +10,8 @@
    iPhone/iPad only. The web game and Android do nothing. Apple decides whether the card really shows (at most 3 times a year,
    never in TestFlight), so we mark it done as soon as we asked. */
 const RV={plugin:'SharlizReview',delay:1800,wait:15000};
-let rvAsking=false;
+let rvAsking=false,rvBtnAt=0;
+for(const ev of ['pointerdown','click'])addEventListener(ev,e=>{const t=e.target;if(t&&t.closest&&t.closest('#card button'))rvBtnAt=Date.now()},true);
 function rvPlug(){try{const C=window.Capacitor;if(!C||!C.isNativePlatform||!C.isNativePlatform()||C.getPlatform()!=='ios')return null;
   if(C.isPluginAvailable&&!C.isPluginAvailable(RV.plugin))return null;
   return C.registerPlugin?C.registerPlugin(RV.plugin):(C.Plugins&&C.Plugins[RV.plugin])||null}catch(e){return null}}
@@ -25,7 +26,9 @@ function rvBossWon(){if(rvAsking||!rvOk()||!rvPlug())return;const t0=Date.now();
     try{Promise.resolve(P.requestReview()).catch(()=>{}).finally(()=>{rvAsking=false})}catch(e){rvAsking=false}};
   // the same win card must still be up: Next/Map open another card (the next level's card keeps state 'win' for a moment)
   const look=()=>{if(state!=='win'){rvAsking=false;return}                     // left the card (Next / Map) before it showed
-    if(rvCard()){const own=rerenderOverlay;return setTimeout(()=>rvCard()&&rerenderOverlay===own?ask():(rvAsking=false),RV.delay)}
+    // a tap on any card button after it appeared (Bonus stage, Next, Map...) also counts as leaving: those buttons play a short
+    // transition first, so state/overlay still look like the win card for ~0.4 s and Apple's card popped over the bonus intro
+    if(rvCard()){const own=rerenderOverlay,seen=Date.now();return setTimeout(()=>rvCard()&&rerenderOverlay===own&&rvBtnAt<seen?ask():(rvAsking=false),RV.delay)}
     if(Date.now()-t0>RV.wait){rvAsking=false;return}setTimeout(look,300)};
   setTimeout(look,300)}
 {const _w=win;win=function(){const b=mode==='levels'&&isBoss(),r=_w.apply(this,arguments);if(b)rvBossWon();return r}}
