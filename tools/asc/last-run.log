@@ -1,8 +1,16 @@
+### tools/asc/relcheck.py
+1.4 READY_FOR_SALE SCHEDULED 2026-11-22T14:00:00-08:00
+### tools/asc/lookup_il.py
+country=il&lang=he | version 1.4 | 2026-11-22T22:09:31Z | שארליז טאואר: מגדל חמוד | השארליזים מרחפים מהמנוף, ואתם מחליטים מתי להפיל. נגיעה אחת, עוד קומה. יחזיק?  • 
+country=us | version 1.4 | 2026-11-22T22:09:31Z | Sharliz Tower | Stack the Sharliz as high as you can!  Sharliz Tower is a one-tap stacking game.
 ### tools/asc/sales.py
-== SALES 2026-11-16 .. 2026-11-20 | days without a report: ['2026-11-16:404', '2026-11-17:404', '2026-11-18:404']
+== SALES 2026-11-16 .. 2026-11-22 | days without a report: ['2026-11-16:404', '2026-11-17:404', '2026-11-18:404', '2026-11-21:404', '2026-11-22:404']
 -- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
   ('1F', 'sharliz-tower-001', 'Sharliz Tower') 1
   ('7F', 'sharliz-tower-001', 'Sharliz Tower') 3
 -- first-time downloads by country: {'US': 1}
 -- first-time downloads by day: {'2026-11-19': 1}
 -- proceeds (units x developer proceeds): {}
+### tools/asc/analytics_week.py
+## Page view by day (all / CA): {'2026-11-19': (1, 0)}
+## First-time download by day (all / CA): {'2026-11-19': (1, 0)}
