@@ -26,6 +26,13 @@ jobs:
         with: { repository: toto45678/kalori, path: kalori }
       - uses: actions/setup-node@v4
         with: { node-version: 22 }
+      - name: Check the AI server
+        continue-on-error: true
+        run: |
+          mkdir -p "$RUNNER_TEMP/logs"; U=$(grep -o "const AI_SERVER='[^']*'" kalori/index.html | cut -d"'" -f2)
+          { echo "server $U"; echo "ping: $(curl -s -m 20 $U/v1/ping)";
+            echo "models: $(curl -s -m 30 -H 'x-device: ci-check' $U/v1/models | grep -o '"name": *"models/gemini[^"]*flash[^"]*"' | head -5 | tr '\n' ' ')";
+            echo "no device: $(curl -s -m 20 -o /dev/null -w '%{http_code}' $U/v1/models)"; } | tee "$RUNNER_TEMP/logs/0-server.txt"
       - name: Create the iOS project
         working-directory: kalori/app
         run: |
