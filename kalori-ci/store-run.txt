@@ -9,8 +9,7 @@ app 6839171884
 info loc he קלוריות - יומן אישי
 
 == age rating
-current {"advertising": null, "alcoholTobaccoOrDrugUseOrReferences": null, "contests": null, "datingAndRelationships": null, "gambling": null, "gamblingSimulated": null, "gunsOrOtherWeapons": null, "healthOrWellnessTopics": null, "kidsAgeBand": null, "lootBox": null, "medicalOrTreatmentInformation": null, "messagingAndChat": null, "parentalControls": null, "profanityOrCrudeHumor": null, "ageAssurance": null, "sexualContentGraphicAndNudity": null, "sexualContentOrNudity": null, "sharedLocation": null, "socialMedia": null, "socialMediaAgeRestricted": null, "horrorOrFearThemes": null, "matureOrSuggestive
-age try 0 datingAndRelationships:Unexpected json type provided for attribute 'datingAndRelationships'. Expected a|sharedLocation:Unexpected json type provided for attribute 'sharedLocation'. Expected a BOOLEAN|socialMedia:Unexpected json type provided for attribute 'socialMedia'. Expected a BOOLEAN bu|socialMediaAgeRestricted:Unexpected json type provided for attribute 'socialMediaAgeRestricted'. Expected
+current {"advertising": false, "alcoholTobaccoOrDrugUseOrReferences": "NONE", "contests": "NONE", "datingAndRelationships": false, "gambling": false, "gamblingSimulated": "NONE", "gunsOrOtherWeapons": "NONE", "healthOrWellnessTopics": true, "kidsAgeBand": null, "lootBox": false, "medicalOrTreatmentInformation": "NONE", "messagingAndChat": false, "parentalControls": false, "profanityOrCrudeHumor": "NONE", "ageAssurance": false, "sexualContentGraphicAndNudity": "NONE", "sexualContentOrNudity": "NONE", "sharedLocation": false, "socialMedia": false, "socialMediaAgeRestricted": false, "horrorOrFearThemes":
 age rating set {"advertising": false, "alcoholTobaccoOrDrugUseOrReferences": "NONE", "contests": "NONE", "datingAndRelationships": false, "gambling": false, "gamblingSimulated": "NONE", "gunsOrOtherWeapons": "NONE", "healthOrWellnessTopics": true, "lootBox": false, "medicalOrTreatmentInformation": "NONE", "messagingAndChat": false, "parentalControls": false, "profanityOrCrudeHumor": "NONE", "ageAssurance": false, "sexualContentGraphicAndNudity": "NONE", "sexualContentOrNudity": "NONE", "sharedLocation": false, "socialMedia": false, "socialMediaAgeRestricted": false, "horrorOrFearThemes": "NONE", "matureOrSuggestiveThemes": "NONE", "unrestrictedWebAccess": false, "userGeneratedContent": false, "violenceCartoonOrFantasy": "NONE", "violenceRealisticProlongedGraphicOrSadistic": "NONE", "violenceRealistic": "NONE"}
 
 == version texts
@@ -42,23 +41,7 @@ app price set
 
 == app availability ['ISR']
 territories 175
-ERROR POST /v2/appAvailabilities 409: {
-  "errors" : [ {
-    "id" : "fd21f8be-fde2-49c0-8981-de8cde730aac",
-    "status" : "409",
-    "code" : "ENTITY_ERROR.INCLUDED.INVALID_ID",
-    "title" : "The provided entity id is invalid",
-    "detail" : "The provided included entity id 'AFG' has invalid format. For inline creation, the id must be a local id with the format '${local-id}'.",
-    "source" : {
-      "pointer" : "/included/175/id"
-    }
-  }, {
-    "id" : "d0bbfb89-1a2f-4f1c-9de1-95f6638f08cc",
-    "status" : "409",
-    "code" : "ENTITY_ERROR.INCLUDED.INVALID_ID",
-    "title" : "The provided entity id is invalid",
-    "detail" : "The provided included entity id 'AGO' has invalid format. For inline creation, the id must be a lo
-availability NOT set
+availability set
 
 == IAP ai_50
 exists 6839184498 MISSING_METADATA
