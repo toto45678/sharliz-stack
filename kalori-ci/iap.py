@@ -38,8 +38,7 @@ allt = [t['id'] for t in allpages('/v1/territories?limit=200')]
 print('territories', len(allt))
 r = api('POST', '/v2/appAvailabilities', {'data': {'type': 'appAvailabilities', 'attributes': {'availableInNewTerritories': False}, 'relationships': {
     'app': {'data': {'type': 'apps', 'id': AID}}, 'territoryAvailabilities': {'data': [{'type': 'territoryAvailabilities', 'id': '${%s}' % t} for t in allt]}}},
-    'included': [{'type': 'territoryAvailabilities', 'id': '${%s}' % t, 'attributes': {'available': t in TERR}, 'relationships': {'territory': {'data': {'type': 'territories', 'id': t}}}} for t in allt]
-              + [{'type': 'territories', 'id': t} for t in allt]})
+    'included': [{'type': 'territoryAvailabilities', 'id': '${%s}' % t, 'attributes': {'available': t in TERR}, 'relationships': {'territory': {'data': {'type': 'territories', 'id': t}}}} for t in allt]})
 print('availability set' if r else 'availability NOT set')
 shot = open(f'{ROOT}/iap_review.png', 'rb').read()
 for pid, info in M['iap'].items():
