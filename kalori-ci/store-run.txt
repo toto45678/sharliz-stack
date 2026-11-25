@@ -1,5 +1,11 @@
+build 7 VALID 
 build 6 VALID 
 build 5 VALID 
 group בודקים 3b39cea1-a210-414a-a55b-ce0ba10cab0f
-user צח ['ACCOUNT_HOLDER', 'ADMIN'] adding
+user צח ['ACCOUNT_HOLDER', 'ADMIN'] in group
+beta 7 {'autoNotifyEnabled': True, 'internalBuildState': 'IN_BETA_TESTING', 'externalBuildState': 'READY_FOR_BETA_SUBMISSION'}
+beta 6 {'autoNotifyEnabled': True, 'internalBuildState': 'IN_BETA_TESTING', 'externalBuildState': 'READY_FOR_BETA_SUBMISSION'}
+beta 5 {'autoNotifyEnabled': True, 'internalBuildState': 'IN_BETA_TESTING', 'externalBuildState': 'READY_FOR_BETA_SUBMISSION'}
+tester צח EMAIL INVITED
+  invitation sent
 DONE
