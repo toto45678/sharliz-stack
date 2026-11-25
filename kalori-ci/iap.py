@@ -34,10 +34,13 @@ if pp:
         'included': [{'type': 'appPrices', 'id': '${p1}', 'attributes': {'startDate': None}, 'relationships': {'appPricePoint': {'data': {'type': 'appPricePoints', 'id': pp['id']}}}}]})
     print('app price set' if r else 'app price NOT set')
 print('\n== app availability', TERR)
+allt = [t['id'] for t in allpages('/v1/territories?limit=200')]
+print('territories', len(allt))
 r = api('POST', '/v2/appAvailabilities', {'data': {'type': 'appAvailabilities', 'attributes': {'availableInNewTerritories': False}, 'relationships': {
-    'app': {'data': {'type': 'apps', 'id': AID}}, 'territoryAvailabilities': {'data': [{'type': 'territoryAvailabilities', 'id': '${t%d}' % i} for i, _ in enumerate(TERR)]}}},
-    'included': [{'type': 'territoryAvailabilities', 'id': '${t%d}' % i, 'attributes': {'available': True}, 'relationships': {'territory': {'data': {'type': 'territories', 'id': t}}}} for i, t in enumerate(TERR)]})
-print('availability set' if r else 'availability NOT set (maybe already set)')
+    'app': {'data': {'type': 'apps', 'id': AID}}, 'territoryAvailabilities': {'data': [{'type': 'territoryAvailabilities', 'id': '${%s}' % t} for t in allt]}}},
+    'included': [{'type': 'territoryAvailabilities', 'id': '${%s}' % t, 'attributes': {'available': t in TERR}, 'relationships': {'territory': {'data': {'type': 'territories', 'id': t}}}} for t in allt]
+              + [{'type': 'territories', 'id': t} for t in allt]})
+print('availability set' if r else 'availability NOT set')
 shot = open(f'{ROOT}/iap_review.png', 'rb').read()
 for pid, info in M['iap'].items():
     print('\n== IAP', pid)

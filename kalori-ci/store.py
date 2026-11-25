@@ -35,6 +35,7 @@ if ar:
     want = {}
     for k, v in a.items():
         if k in ('healthOrWellnessTopics',): want[k] = True
+        elif k.startswith('grac') or 'korea' in k.lower(): continue
         elif isinstance(v, bool) or k in ('gambling', 'unrestrictedWebAccess', 'lootBox', 'messagingAndChat', 'parentalControls', 'ageAssurance', 'userGeneratedContent', 'advertising', 'seventeenPlus', 'kidsAgeBand'):
             if k not in ('kidsAgeBand', 'ageRatingOverride', 'koreaAgeRatingOverride', 'ageRatingOverrideV2'): want[k] = False
         elif v is None or isinstance(v, str):
@@ -54,6 +55,9 @@ if ar:
                 k = (er.get('source') or {}).get('pointer', '').split('/')[-1]; d = er.get('detail', '')
                 if 'Expected a BOOLEAN' in d: want[k] = (k == 'healthOrWellnessTopics'); changed = True
                 elif 'Expected a STRING' in d or 'Expected an ENUM' in d: want[k] = 'NONE'; changed = True
+                elif "cannot be set" in d:
+                    import re as _re
+                    for x in _re.findall(r"attribute '([A-Za-z]+)' cannot be set", d): want.pop(x, None); changed = True
                 elif 'not allowed' in d.lower() or 'unknown' in d.lower() or 'cannot' in d.lower(): want.pop(k, None); changed = True
                 elif er.get('code') == 'ENTITY_ERROR.ATTRIBUTE.REQUIRED' and k not in want: want[k] = False; changed = True
                 else: print('age rating:', d[:200])
