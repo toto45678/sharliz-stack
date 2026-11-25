@@ -1,8 +1,7 @@
-run 2 · failure · 2026-11-25 10:02 UTC · kalori db3aad0
+run 3 · failure · 2026-11-25 10:46 UTC · kalori 086550b
 
 ===== 1-project.txt
 ----- tail
-Generating assets for ios
 CREATE ios icon /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png (397.82 KB)
 CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@1x~universal~anyany.png (305.06 KB)
 CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@2x~universal~anyany.png (305.06 KB)
@@ -15,16 +14,17 @@ CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app
 Totals:
 ios: 7 generated, 2.18 MB total
 Delete: Entry, ":CFBundleLocalizations", Does Not Exist
-✔ Copying web assets from www to ios/App/App/public in 38.91ms
-✔ Creating capacitor.config.json in ios/App/App in 1.94ms
-✔ copy ios in 55.36ms
-✔ Updating iOS plugins in 518.21μs
-✔ Updating iOS native dependencies with pod install in 5.98s
-[info] Found 2 Capacitor plugins for ios:
+✔ Copying web assets from www to ios/App/App/public in 28.32ms
+✔ Creating capacitor.config.json in ios/App/App in 2.48ms
+✔ copy ios in 42.65ms
+✔ Updating iOS plugins in 699.33μs
+✔ Updating iOS native dependencies with pod install in 11.10s
+[info] Found 3 Capacitor plugins for ios:
        @capacitor/local-notifications@8.3.1
        kalori-health@1.0.0
-✔ update ios in 6.03s
-[info] Sync finished in 6.117s
+       @capacitor/preferences@8.0.1
+✔ update ios in 11.14s
+[info] Sync finished in 11.23s
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharlizstack.kalori; CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharlizstack.kalori; CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 
