@@ -126,6 +126,7 @@ jobs:
             echo "run ${{ github.run_number }} · ${{ job.status }} · $(date -u '+%Y-%m-%d %H:%M UTC') · kalori $(git -C kalori rev-parse --short HEAD 2>/dev/null)"
             for f in $(ls "$L" 2>/dev/null | sort); do
               echo; echo "===== $f"
+              if [ "$f" = 3-archive.txt ]; then grep -E ' error:|ARCHIVE (SUCCEEDED|FAILED)' "$L/$f" | head -30; continue; fi
               grep -iE 'error|warning: .*(entitle|provision|sign)|exists|created|capabilit|HealthKit|record|EXPORT SUCCEEDED|Upload|uploaded|succeeded|failed' "$L/$f" | grep -v '^\s*$' | head -60
               echo "----- tail"; tail -25 "$L/$f"
             done
