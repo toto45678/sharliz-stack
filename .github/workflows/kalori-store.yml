@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
   push:
     branches: [claude/epic-bell-vty98f]
-    paths: ['kalori-ci/store-trigger.txt', 'kalori-ci/store.py', 'kalori-ci/iap.py', '.github/workflows/kalori-store.yml']
+    paths: ['kalori-ci/tf-trigger.txt', 'kalori-ci/tf.py', 'kalori-ci/store-trigger.txt', 'kalori-ci/store.py', 'kalori-ci/iap.py', '.github/workflows/kalori-store.yml']
 permissions: { contents: write }
 jobs:
   store:
@@ -22,6 +22,7 @@ jobs:
         run: |
           pip install --quiet pyjwt cryptography
           set -a; [ -f kalori-ci/store-env.txt ] && . kalori-ci/store-env.txt; set +a
+          if git log -1 --name-only --format= | grep -q "kalori-ci/tf"; then python3 kalori-ci/tf.py 2>&1 | tee "$RUNNER_TEMP/store.txt"; exit 0; fi
           python3 kalori-ci/store.py 2>&1 | tee "$RUNNER_TEMP/store.txt"
           echo "======== IAP + price" | tee -a "$RUNNER_TEMP/store.txt"
           python3 kalori-ci/iap.py 2>&1 | tee -a "$RUNNER_TEMP/store.txt"
