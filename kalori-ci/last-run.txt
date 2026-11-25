@@ -1,30 +1,30 @@
-run 3 · failure · 2026-11-25 10:46 UTC · kalori 086550b
+run 4 · failure · 2026-11-25 11:50 UTC · kalori 1553f96
 
 ===== 1-project.txt
 ----- tail
-CREATE ios icon /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png (397.82 KB)
-CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@1x~universal~anyany.png (305.06 KB)
-CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@2x~universal~anyany.png (305.06 KB)
-CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@3x~universal~anyany.png (305.06 KB)
-CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@1x~universal~anyany-dark.png (304.76 KB)
-CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@2x~universal~anyany-dark.png (304.76 KB)
-CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@3x~universal~anyany-dark.png (304.76 KB)
+CREATE ios icon /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png (1.23 MB)
+CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@1x~universal~anyany.png (595.31 KB)
+CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@2x~universal~anyany.png (595.31 KB)
+CREATE ios splash /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@3x~universal~anyany.png (595.31 KB)
+CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@1x~universal~anyany-dark.png (595.24 KB)
+CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@2x~universal~anyany-dark.png (595.24 KB)
+CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app/ios/App/App/Assets.xcassets/Splash.imageset/Default@3x~universal~anyany-dark.png (595.24 KB)
 
 
 Totals:
-ios: 7 generated, 2.18 MB total
+ios: 7 generated, 4.72 MB total
 Delete: Entry, ":CFBundleLocalizations", Does Not Exist
-✔ Copying web assets from www to ios/App/App/public in 28.32ms
-✔ Creating capacitor.config.json in ios/App/App in 2.48ms
-✔ copy ios in 42.65ms
-✔ Updating iOS plugins in 699.33μs
-✔ Updating iOS native dependencies with pod install in 11.10s
+✔ Copying web assets from www to ios/App/App/public in 50.26ms
+✔ Creating capacitor.config.json in ios/App/App in 2.00ms
+✔ copy ios in 68.60ms
+✔ Updating iOS plugins in 1.45ms
+✔ Updating iOS native dependencies with pod install in 7.29s
 [info] Found 3 Capacitor plugins for ios:
        @capacitor/local-notifications@8.3.1
        kalori-health@1.0.0
        @capacitor/preferences@8.0.1
-✔ update ios in 11.14s
-[info] Sync finished in 11.23s
+✔ update ios in 7.34s
+[info] Sync finished in 7.444s
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharlizstack.kalori; CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharlizstack.kalori; CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 
