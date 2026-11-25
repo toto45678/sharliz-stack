@@ -10,6 +10,18 @@ info loc he קלוריות - יומן אישי
 
 == age rating
 current {"advertising": null, "alcoholTobaccoOrDrugUseOrReferences": null, "contests": null, "datingAndRelationships": null, "gambling": null, "gamblingSimulated": null, "gunsOrOtherWeapons": null, "healthOrWellnessTopics": null, "kidsAgeBand": null, "lootBox": null, "medicalOrTreatmentInformation": null, "messagingAndChat": null, "parentalControls": null, "profanityOrCrudeHumor": null, "ageAssurance": null, "sexualContentGraphicAndNudity": null, "sexualContentOrNudity": null, "sharedLocation": null, "socialMedia": null, "socialMediaAgeRestricted": null, "horrorOrFearThemes": null, "matureOrSuggestive
+age try 0 datingAndRelationships:Unexpected json type provided for attribute 'datingAndRelationships'. Expected a|sharedLocation:Unexpected json type provided for attribute 'sharedLocation'. Expected a BOOLEAN|socialMedia:Unexpected json type provided for attribute 'socialMedia'. Expected a BOOLEAN bu|socialMediaAgeRestricted:Unexpected json type provided for attribute 'socialMediaAgeRestricted'. Expected
+age try 1 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 2 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 3 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 4 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 5 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 6 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 7 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 8 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 9 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 10 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
+age try 11 :The attribute 'gracRatingClassificationNumber' cannot be set unless 'koreaAgeRat
 
 == version texts
 version 1.0 PREPARE_FOR_SUBMISSION
@@ -23,10 +35,56 @@ uploaded appstore_4.png
 uploaded appstore_5.png
 
 == build
+build 6 VALID
 build 5 VALID
-attached build 5
+attached build 6
 
 == App Review contact
 skipped: no phone yet
+
+DONE
+======== IAP + price
+app 6839171884
+
+== app price 19.90 ISR
+price points 801 match {'customerPrice': '19.9', 'proceeds': '16.92'}
+app price set
+
+== app availability ['ISR']
+ERROR POST /v2/appAvailabilities 409: {
+  "errors" : [ {
+    "id" : "9c9fed49-411d-420d-8dde-08975c2b3ae7",
+    "status" : "409",
+    "code" : "ENTITY_ERROR.RELATIONSHIP.INVALID",
+    "title" : "The provided entity includes a relationship with an invalid value",
+    "detail" : "The relationship 'territoryAvailabilities.territory' expects an included resource with type 'territories' and id 'CZE' but no matching resource was included.",
+    "source" : {
+      "pointer" : "/included"
+    }
+  }, {
+    "id" : "9c254b96-ce92-49e0-b627-15cb7578244a",
+    "status" : "409",
+    "code" : "ENTITY_ERROR.RELATIONSHIP.INVALID",
+    "title" : "The provided entity includes a relationship with an invalid value",
+    "detail" : "The relationship 
+availability NOT set (maybe already set)
+
+== IAP ai_50
+created 6839184498
+localization he
+iap price points 800 match {'customerPrice': '9.9', 'proceeds': '8.42'}
+iap price set
+iap availability set
+review screenshot uploaded
+state MISSING_METADATA
+
+== IAP ai_200
+created 6839184755
+localization he
+iap price points 800 match {'customerPrice': '29.9', 'proceeds': '25.42'}
+iap price set
+iap availability set
+review screenshot uploaded
+state MISSING_METADATA
 
 DONE
