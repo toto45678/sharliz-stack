@@ -1,4 +1,4 @@
-run 4 · failure · 2026-11-25 11:50 UTC · kalori 1553f96
+run 5 · success · 2026-11-25 12:06 UTC · kalori cadfda4
 
 ===== 1-project.txt
 ----- tail
@@ -14,28 +14,28 @@ CREATE ios splash-dark /Users/runner/work/sharliz-stack/sharliz-stack/kalori/app
 Totals:
 ios: 7 generated, 4.72 MB total
 Delete: Entry, ":CFBundleLocalizations", Does Not Exist
-✔ Copying web assets from www to ios/App/App/public in 50.26ms
-✔ Creating capacitor.config.json in ios/App/App in 2.00ms
-✔ copy ios in 68.60ms
-✔ Updating iOS plugins in 1.45ms
-✔ Updating iOS native dependencies with pod install in 7.29s
+✔ Copying web assets from www to ios/App/App/public in 58.13ms
+✔ Creating capacitor.config.json in ios/App/App in 2.42ms
+✔ copy ios in 78.60ms
+✔ Updating iOS plugins in 521.33μs
+✔ Updating iOS native dependencies with pod install in 10.10s
 [info] Found 3 Capacitor plugins for ios:
        @capacitor/local-notifications@8.3.1
        kalori-health@1.0.0
        @capacitor/preferences@8.0.1
-✔ update ios in 7.34s
-[info] Sync finished in 7.444s
+✔ update ios in 10.16s
+[info] Sync finished in 10.283s
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharlizstack.kalori; CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sharlizstack.kalori; CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 
 ===== 2-asc.txt
 bundle id exists JAR632RWA6
 capabilities: ['IN_APP_PURCHASE', 'HEALTHKIT']
-app record exists: False
+app record exists: True
 ----- tail
 bundle id exists JAR632RWA6
 capabilities: ['IN_APP_PURCHASE', 'HEALTHKIT']
-app record exists: False
+app record exists: True
 
 ===== 3-archive.txt
 ** ARCHIVE SUCCEEDED **
@@ -46,6 +46,44 @@ app record exists: False
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd"><plist version="1.0"><dict><key>com.apple.developer.healthkit</key><true/><key>com.apple.developer.healthkit.access</key><array></array></dict></plist>
 
 ===== 5-export.txt
-::error::No app record for com.sharlizstack.kalori in App Store Connect yet. Create it (My Apps → + → New App), then run again.
+2026-11-25 12:05:25.105 xcodebuild[5362:18869] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path "/var/folders/9d/l02zfgrs7c16twd3wbpdmhkc0000gn/T/App_2026-11-25_12-05-25.098.xcdistributionlogs".
+2026-11-25 12:05:43.127 xcodebuild[5362:18869] Starting upload
+2026-11-25 12:05:43.624 xcodebuild[5362:18948] Progress 0%: Preparing to upload ‘App.ipa’…
+2026-11-25 12:06:14.201 xcodebuild[5362:18948] Progress 0%: Requesting upload instructions from App Store Connect…
+2026-11-25 12:06:14.646 xcodebuild[5362:18948] Progress 0%: Preparing file for upload to App Store Connect…
+2026-11-25 12:06:14.652 xcodebuild[5362:18948] Progress 0%: Preparing file for upload to App Store Connect…
+2026-11-25 12:06:14.652 xcodebuild[5362:18948] Progress 0%: Uploading to App Store Connect…
+2026-11-25 12:06:14.747 xcodebuild[5362:18948] Progress 41%: Uploading to App Store Connect…
+2026-11-25 12:06:14.748 xcodebuild[5362:18948] Progress 41%: Uploading to App Store Connect…
+2026-11-25 12:06:15.331 xcodebuild[5362:18948] Progress 41%: Completing upload…
+2026-11-25 12:06:17.264 xcodebuild[5362:18948] Progress 41%: Uploaded package is processing.
+2026-11-25 12:06:17.267 xcodebuild[5362:18948] Progress 41%: Upload succeeded.
+warning: exportArchive App Store Connect Warning. SDK version issue. This app was built with the iOS 26.2 SDK. Starting April 2027, iOS and iPadOS apps must be built with the iOS 27 SDK or later, included in Xcode 27 or later, in order to be uploaded to App Store Connect or submitted for distribution.
+Uploaded App
+** EXPORT SUCCEEDED **
 ----- tail
-::error::No app record for com.sharlizstack.kalori in App Store Connect yet. Create it (My Apps → + → New App), then run again.
+2026-11-25 12:05:25.105 xcodebuild[5362:18869] [MT] IDEDistribution: -[IDEDistributionLogging _createLoggingBundleAtPath:]: Created bundle at path "/var/folders/9d/l02zfgrs7c16twd3wbpdmhkc0000gn/T/App_2026-11-25_12-05-25.098.xcdistributionlogs".
+2026-11-25 12:05:43.127 xcodebuild[5362:18869] Starting upload
+2026-11-25 12:05:43.622 xcodebuild[5362:18948] Progress 0%: Making copy of ‘App.ipa’…
+2026-11-25 12:05:43.623 xcodebuild[5362:18948] Progress 0%: Making copy of ‘App.ipa’…
+2026-11-25 12:05:43.624 xcodebuild[5362:18948] Progress 0%: Preparing to upload ‘App.ipa’…
+2026-11-25 12:05:43.682 xcodebuild[5362:18948] Progress 0%: Analyzing package…
+2026-11-25 12:05:54.107 xcodebuild[5362:18948] Progress 0%: Sending analysis to App Store Connect…
+2026-11-25 12:05:55.058 xcodebuild[5362:18948] Progress 0%: Waiting for App Store Connect analysis response…
+2026-11-25 12:06:02.290 xcodebuild[5362:18948] Progress 0%: Sending SPI analysis to App Store Connect…
+2026-11-25 12:06:02.871 xcodebuild[5362:18948] Progress 0%: Waiting for App Store Connect SPI analysis response…
+2026-11-25 12:06:14.201 xcodebuild[5362:18948] Progress 0%: Requesting upload instructions from App Store Connect…
+2026-11-25 12:06:14.646 xcodebuild[5362:18948] Progress 0%: Preparing file for upload to App Store Connect…
+2026-11-25 12:06:14.652 xcodebuild[5362:18948] Progress 0%: Preparing file for upload to App Store Connect…
+2026-11-25 12:06:14.652 xcodebuild[5362:18948] Progress 0%: Uploading to App Store Connect…
+2026-11-25 12:06:14.747 xcodebuild[5362:18948] Progress 41%: Uploading to App Store Connect…
+2026-11-25 12:06:14.748 xcodebuild[5362:18948] Progress 41%: Uploading to App Store Connect…
+2026-11-25 12:06:15.331 xcodebuild[5362:18948] Progress 41%: Completing upload…
+2026-11-25 12:06:17.035 xcodebuild[5362:18948] Progress 41%: Waiting for package to begin processing…
+2026-11-25 12:06:17.264 xcodebuild[5362:18948] Progress 41%: Uploaded package is processing.
+2026-11-25 12:06:17.267 xcodebuild[5362:18948] Progress 41%: Upload succeeded.
+warning: exportArchive App Store Connect Warning. SDK version issue. This app was built with the iOS 26.2 SDK. Starting April 2027, iOS and iPadOS apps must be built with the iOS 27 SDK or later, included in Xcode 27 or later, in order to be uploaded to App Store Connect or submitted for distribution.
+
+Uploaded App
+** EXPORT SUCCEEDED **
+
