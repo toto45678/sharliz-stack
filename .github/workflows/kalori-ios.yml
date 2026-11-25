@@ -64,6 +64,7 @@ jobs:
           npx cap sync ios
           grep -q KaloriHealthPlugin ios/App/App/capacitor.config.json || { echo "::error::KaloriHealth plugin missing from the iOS build"; cat ios/App/App/capacitor.config.json; exit 1; }
           grep -q LocalNotifications ios/App/App/capacitor.config.json || { echo "::error::LocalNotifications missing"; exit 1; }
+          grep -q PreferencesPlugin ios/App/App/capacitor.config.json || { echo "::error::Preferences (durable storage) missing"; exit 1; }
           grep -E 'CODE_SIGN_ENTITLEMENTS|PRODUCT_BUNDLE_IDENTIFIER' ios/App/App.xcodeproj/project.pbxproj
           sed -i '' -E "s/MARKETING_VERSION = [^;]+;/MARKETING_VERSION = ${{ env.APP_VERSION }};/; s/CURRENT_PROJECT_VERSION = [^;]+;/CURRENT_PROJECT_VERSION = ${{ github.run_number }};/" ios/App/App.xcodeproj/project.pbxproj
           } 2>&1 | tee "$RUNNER_TEMP/logs/1-project.txt"
