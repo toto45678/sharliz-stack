@@ -1,0 +1,32 @@
+# Fills the Kalori App Store page (texts, screenshots, rating, build) via the App Store Connect API.
+# Does NOT submit for review. Log goes back to kalori-ci/store-run.txt on this branch.
+name: Kalori App Store page
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/epic-bell-vty98f]
+    paths: ['kalori-ci/store-trigger.txt', 'kalori-ci/store.py', '.github/workflows/kalori-store.yml']
+permissions: { contents: write }
+jobs:
+  store:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with: { repository: toto45678/kalori, path: kalori }
+      - name: Fill the store page
+        env:
+          ASC_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          ASC_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+        run: |
+          pip install --quiet pyjwt cryptography
+          set -a; [ -f kalori-ci/store-env.txt ] && . kalori-ci/store-env.txt; set +a
+          python3 kalori-ci/store.py 2>&1 | tee "$RUNNER_TEMP/store.txt"
+      - name: Write the log back
+        if: always()
+        run: |
+          cp "$RUNNER_TEMP/store.txt" kalori-ci/store-run.txt 2>/dev/null || echo "no log" > kalori-ci/store-run.txt
+          git config user.name kalori-ci; git config user.email kalori-ci@users.noreply.github.com
+          git add kalori-ci/store-run.txt; git commit -m "kalori-ci: store page log" || exit 0
+          for i in 1 2 3; do git pull --rebase -q origin "${GITHUB_REF_NAME}" && git push -q origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 5; done
