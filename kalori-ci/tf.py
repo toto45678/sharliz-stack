@@ -26,4 +26,14 @@ for u in users:
     if em in have: continue
     api('POST', '/v1/betaTesters', {'data': {'type': 'betaTesters', 'attributes': {'email': em, 'firstName': u['attributes'].get('firstName') or '', 'lastName': u['attributes'].get('lastName') or ''},
         'relationships': {'betaGroups': {'data': [{'type': 'betaGroups', 'id': g['id']}]}}}})
+
+for b in api('GET', f'/v1/builds?filter[app]={AID}&sort=-uploadedDate&limit=3&include=buildBetaDetail')['data'][:3]:
+    d = api('GET', f'/v1/builds/{b["id"]}/buildBetaDetail')
+    print('beta', b['attributes']['version'], d and d['data']['attributes'])
+    if b['attributes'].get('usesNonExemptEncryption') is None: print('  encryption not answered')
+tl = api('GET', f'/v1/betaTesters?filter[apps]={AID}&limit=50') or {'data': []}
+for t in tl['data']:
+    a = t['attributes']; print('tester', a.get('firstName'), a.get('inviteType'), a.get('state'))
+    api('POST', '/v1/betaTesterInvitations', {'data': {'type': 'betaTesterInvitations', 'relationships': {'app': {'data': {'type': 'apps', 'id': AID}}, 'betaTester': {'data': {'type': 'betaTesters', 'id': t['id']}}}}})
+    print('  invitation sent')
 print('DONE')
