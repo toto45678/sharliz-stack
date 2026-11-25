@@ -13,7 +13,7 @@ def api(method, path, body=None, ok_fail=False):
     except urllib.error.HTTPError as e:
         print(('note ' if ok_fail else 'ERROR ') + f'{method} {path[:90]} {e.code}: {e.read().decode()[:500]}'); return None
 def step(n): print('\n== ' + n)
-for u in (M['privacyPolicyUrl'], M['supportUrl']):
+for u in (M['privacyPolicyUrl'], M['supportUrl'], M['privacyPolicyUrl'].replace('/Kalori/','/kalori/')):
     try: print('url', u, urllib.request.urlopen(u, timeout=20).status)
     except Exception as e: print('ERROR url', u, e)
 app = api('GET', f'/v1/apps?filter[bundleId]={BID}')['data'][0]; AID = app['id']; print('app', AID)
@@ -39,9 +39,24 @@ if ar:
             if k not in ('kidsAgeBand', 'ageRatingOverride', 'koreaAgeRatingOverride', 'ageRatingOverrideV2'): want[k] = False
         elif v is None or isinstance(v, str):
             if k not in ('kidsAgeBand', 'ageRatingOverride', 'koreaAgeRatingOverride', 'ageRatingOverrideV2', 'developerAgeRatingInfoUrl'): want[k] = 'NONE'
-    r = api('PATCH', f'/v1/ageRatingDeclarations/{ar["data"]["id"]}', {'data': {'type': 'ageRatingDeclarations', 'id': ar['data']['id'], 'attributes': want}})
-    if r is None:   # retry key by key so one unknown field does not block the rest
-        for k, v in want.items(): api('PATCH', f'/v1/ageRatingDeclarations/{ar["data"]["id"]}', {'data': {'type': 'ageRatingDeclarations', 'id': ar['data']['id'], 'attributes': {k: v}}}, ok_fail=True)
+    # Apple's field types change between versions: send everything, and flip the type of any field it rejects
+    import re
+    for attempt in range(12):
+        req = urllib.request.Request('https://api.appstoreconnect.apple.com/v1/ageRatingDeclarations/' + ar['data']['id'], method='PATCH',
+            data=json.dumps({'data': {'type': 'ageRatingDeclarations', 'id': ar['data']['id'], 'attributes': want}}).encode(),
+            headers={'Authorization': 'Bearer ' + tok(), 'Content-Type': 'application/json'})
+        try:
+            urllib.request.urlopen(req).read(); print('age rating set', json.dumps(want)); break
+        except urllib.error.HTTPError as e:
+            errs = json.loads(e.read() or b'{}').get('errors', []); changed = False
+            for er in errs:
+                k = (er.get('source') or {}).get('pointer', '').split('/')[-1]; d = er.get('detail', '')
+                if 'Expected a BOOLEAN' in d: want[k] = (k == 'healthOrWellnessTopics'); changed = True
+                elif 'Expected a STRING' in d or 'Expected an ENUM' in d: want[k] = 'NONE'; changed = True
+                elif 'not allowed' in d.lower() or 'unknown' in d.lower() or 'cannot' in d.lower(): want.pop(k, None); changed = True
+                elif er.get('code') == 'ENTITY_ERROR.ATTRIBUTE.REQUIRED' and k not in want: want[k] = False; changed = True
+                else: print('age rating:', d[:200])
+            if not changed: break
 step('version texts')
 vers = api('GET', f'/v1/apps/{AID}/appStoreVersions?filter[platform]=IOS')['data']
 ver = next(v for v in vers if v['attributes']['appStoreState'] in ('PREPARE_FOR_SUBMISSION', 'DEVELOPER_REJECTED', 'REJECTED', 'METADATA_REJECTED')); VID = ver['id']
