@@ -1,1 +1,1 @@
-build 6 (iPhone only, store)
+build 7 (AI packs)

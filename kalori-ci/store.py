@@ -49,6 +49,7 @@ if ar:
             urllib.request.urlopen(req).read(); print('age rating set', json.dumps(want)); break
         except urllib.error.HTTPError as e:
             errs = json.loads(e.read() or b'{}').get('errors', []); changed = False
+            print('age try', attempt, '|'.join(((er.get('source') or {}).get('pointer','').split('/')[-1]+':'+er.get('detail','')[:80]) for er in errs))
             for er in errs:
                 k = (er.get('source') or {}).get('pointer', '').split('/')[-1]; d = er.get('detail', '')
                 if 'Expected a BOOLEAN' in d: want[k] = (k == 'healthOrWellnessTopics'); changed = True
