@@ -1,8 +1,8 @@
 ### tools/asc/sales.py
-== SALES 2026-11-16 .. 2026-11-23 | days without a report: ['2026-11-16:404', '2026-11-17:404', '2026-11-18:404', '2026-11-21:404']
+== SALES 2026-11-16 .. 2026-11-24 | days without a report: ['2026-11-16:404', '2026-11-17:404', '2026-11-18:404', '2026-11-21:404']
 -- units by product type / SKU (1/1F = first-time download, 7/7F = update, 3F = redownload, IA* = in-app purchase)
   ('1F', 'sharliz-tower-001', 'Sharliz Tower') 1
-  ('7F', 'sharliz-tower-001', 'Sharliz Tower') 25
+  ('7F', 'sharliz-tower-001', 'Sharliz Tower') 26
 -- first-time downloads by country: {'US': 1}
 -- first-time downloads by day: {'2026-11-19': 1}
 -- proceeds (units x developer proceeds): {}
