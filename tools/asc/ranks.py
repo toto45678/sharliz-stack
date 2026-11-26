@@ -9,7 +9,7 @@ KW = {'us': 'stack,block,drop,build,balance,casual,arcade,family,kids,puzzle,spa
       'jp': '積み上げ,タワー,ブロック,バランス,カジュアル,アーケード,家族,子供,パズル,宇宙,かわいい,オフライン'}
 # 2-word phrases a player would type, built from the app's own keywords
 PH = {'us': ['stack tower', 'tower stack', 'stacking game', 'boss battle kids', 'block drop', 'balance tower', 'cute stack game', 'offline kids game', 'sharliz', 'tower builder'],
-      'il': ['מגדל', 'משחק מגדל', 'שארליז'], 'fr': ['empiler tour', 'jeu tour'], 'mx': ['apilar torre', 'juego torre'], 'de': ['turm stapeln', 'stapel spiel'], 'jp': ['タワー 積み上げ', '積み上げ ゲーム']}
+      'il': ['מגדל', 'משחק מגדל', 'שארליז', 'קוביות', 'בנייה', 'מגדלים'], 'fr': ['empiler tour', 'jeu tour'], 'mx': ['apilar torre', 'juego torre'], 'de': ['turm stapeln', 'stapel spiel'], 'jp': ['タワー 積み上げ', '積み上げ ゲーム']}
 out = {}
 for c in KW:
     terms = PH[c] + KW[c].split(',')[:10]
