@@ -1,1 +1,1 @@
-build 8 server
+build 9 burn
